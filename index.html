@@ -79,35 +79,30 @@
           </div>
           <div class="filter-body open" id="filterBody">
             <div class="filter-row">
-              <div class="filter-label">이체 상태</div>
-              <div class="filter-fields">
-                <div class="radio-btn-group" data-name="transferStatus">
-                  <button class="radio-btn" data-value="all">전체</button>
-                  <button class="radio-btn active" data-value="wait">이체 대기</button>
-                  <button class="radio-btn" data-value="approved">이체 승인</button>
-                  <button class="radio-btn" data-value="requested">실행 요청</button>
-                  <button class="radio-btn" data-value="executing">이체 실행</button>
-                  <button class="radio-btn" data-value="success">이체 성공</button>
-                  <button class="radio-btn" data-value="fail">이체 실패</button>
+              <div class="filter-label">조건 설정</div>
+              <div class="filter-fields filter-fields-wrap">
+                <div class="filter-inline-group">
+                  <label>이체 상태</label>
+                  <div class="radio-btn-group" data-name="transferStatus">
+                    <button class="radio-btn" data-value="all">전체</button>
+                    <button class="radio-btn active" data-value="wait">이체 대기</button>
+                    <button class="radio-btn" data-value="approved">이체 승인</button>
+                    <button class="radio-btn" data-value="requested">실행 요청</button>
+                    <button class="radio-btn" data-value="executing">이체 실행</button>
+                    <button class="radio-btn" data-value="success">이체 성공</button>
+                    <button class="radio-btn" data-value="fail">이체 실패</button>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            <div class="filter-row">
-              <div class="filter-label">거래처 구분</div>
-              <div class="filter-fields">
-                <div class="radio-btn-group" data-name="partnerType">
-                  <button class="radio-btn active" data-value="all">전체</button>
-                  <button class="radio-btn" data-value="corp">법인</button>
-                  <button class="radio-btn" data-value="personal">개인</button>
+                <div class="filter-inline-group">
+                  <label>거래처 구분</label>
+                  <div class="radio-btn-group" data-name="partnerType">
+                    <button class="radio-btn active" data-value="all">전체</button>
+                    <button class="radio-btn" data-value="corp">법인</button>
+                    <button class="radio-btn" data-value="personal">개인</button>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            <div class="filter-row">
-              <div class="filter-label">출금 계좌</div>
-              <div class="filter-fields">
-                <div class="filter-group">
+                <div class="filter-inline-group">
+                  <label>출금 계좌</label>
                   <select>
                     <option value="">전체</option>
                     <option value="1">식권대장 (우리 1005202419107)</option>
@@ -129,52 +124,37 @@
             </div>
 
             <div class="filter-row">
-              <div class="filter-label">지급예정일</div>
-              <div class="filter-fields">
-                <div class="filter-group">
+              <div class="filter-label">기간 설정</div>
+              <div class="filter-fields filter-fields-wrap">
+                <div class="filter-inline-group">
+                  <label>지급예정일</label>
                   <div class="btn-group-period">
                     <button class="btn-period">오늘</button>
                     <button class="btn-period active">이번 달</button>
                     <button class="btn-period">지난 달</button>
                   </div>
-                </div>
-                <div class="filter-group">
                   <div class="date-range">
                     <input type="date" value="2026-04-01"> <span>~</span> <input type="date" value="2026-04-30">
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div class="filter-row">
-              <div class="filter-label">생성일자</div>
-              <div class="filter-fields">
-                <div class="filter-group">
+                <div class="filter-inline-group">
+                  <label>생성일자</label>
                   <div class="btn-group-period">
                     <button class="btn-period">오늘</button>
                     <button class="btn-period">이번 달</button>
                     <button class="btn-period">지난 달</button>
                   </div>
-                </div>
-                <div class="filter-group">
                   <div class="date-range">
                     <input type="date"> <span>~</span> <input type="date">
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div class="filter-row">
-              <div class="filter-label">이체요청일</div>
-              <div class="filter-fields">
-                <div class="filter-group">
+                <div class="filter-inline-group">
+                  <label>이체요청일</label>
                   <div class="btn-group-period">
                     <button class="btn-period">오늘</button>
                     <button class="btn-period">이번 달</button>
                     <button class="btn-period">지난 달</button>
                   </div>
-                </div>
-                <div class="filter-group">
                   <div class="date-range">
                     <input type="date"> <span>~</span> <input type="date">
                   </div>
