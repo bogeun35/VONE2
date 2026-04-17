@@ -127,8 +127,8 @@ const gridOptions = {
   suppressRowClickSelection: true,
   animateRows: true,
   defaultColDef: { sortable: true, resizable: true, filter: true },
-  rowHeight: 30,
-  headerHeight: 30,
+  rowHeight: 28,
+  headerHeight: 28,
   getRowStyle: p => {
     if (p.data && p.data.status === '이체 실패') return { background: '#fff8f8' };
     return null;
