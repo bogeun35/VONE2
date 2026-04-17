@@ -75,7 +75,7 @@ input, select, button { font-family: inherit; font-size: 11px; }
 /* ===== Content ===== */
 .content {
   flex: 1; overflow: hidden;
-  padding: 12px 16px;
+  padding: 12px 16px 0;
   min-width: 0;
   display: flex; flex-direction: column;
 }
@@ -271,8 +271,8 @@ input, select, button { font-family: inherit; font-size: 11px; }
 /* AG Grid Custom */
 .ag-theme-alpine {
   --ag-font-size: 11px;
-  --ag-row-height: 30px;
-  --ag-header-height: 30px;
+  --ag-row-height: 28px;
+  --ag-header-height: 28px;
   --ag-cell-horizontal-padding: 6px;
   --ag-borders: solid 1px;
   --ag-border-color: #e8e8e8;
@@ -285,7 +285,7 @@ input, select, button { font-family: inherit; font-size: 11px; }
   font-size: 11px !important;
 }
 .ag-theme-alpine .ag-header-cell-label { font-size: 11px !important; font-weight: 500; }
-.ag-theme-alpine .ag-cell { font-size: 11px !important; line-height: 30px; }
+.ag-theme-alpine .ag-cell { font-size: 11px !important; line-height: 28px; }
 .ag-theme-alpine .ag-header-cell,
 .ag-theme-alpine .ag-header-group-cell { font-size: 11px !important; }
 .ag-theme-alpine .ag-root-wrapper { font-size: 11px !important; }

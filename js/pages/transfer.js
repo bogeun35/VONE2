@@ -86,7 +86,7 @@ function BizTypeRenderer(p) {
 }
 
 const columnDefs = [
-  { headerCheckboxSelection: true, checkboxSelection: true, width: 32, pinned: 'left', suppressMenu: true, resizable: false },
+  { headerName: '', field: '_check', headerCheckboxSelection: true, checkboxSelection: true, width: 32, maxWidth: 32, pinned: 'left', suppressMenu: true, resizable: false, sortable: false, filter: false },
   { headerName: '이체관리 IDX', field: 'seq', width: 95, cellRenderer: LinkRenderer },
   { headerName: '정산서 IDX', field: 'settleIdx', width: 85, cellRenderer: LinkRenderer },
   { headerName: '정산서명', field: 'settleName', width: 200 },
@@ -127,8 +127,8 @@ const gridOptions = {
   suppressRowClickSelection: true,
   animateRows: true,
   defaultColDef: { sortable: true, resizable: true, filter: true },
-  rowHeight: 30,
-  headerHeight: 30,
+  rowHeight: 28,
+  headerHeight: 28,
   getRowStyle: p => {
     if (p.data && p.data.status === '이체 실패') return { background: '#fff8f8' };
     return null;
