@@ -41,17 +41,22 @@ const gridData = enrichData(realData);
 // Cell Renderers
 function StatusRenderer(p) {
   if (!p.value) return '';
-  const map = { '이체 성공': 'badge-success', '이체 실패': 'badge-fail', '이체 대기': 'badge-pending', '이체 승인': 'badge-approved', '실행 요청': 'badge-requested' };
-  return `<span class="badge ${map[p.value] || 'badge-pending'}">${p.value}</span>`;
+  const colorMap = { '이체 성공': '#16a34a', '이체 실패': '#ef4444', '이체 대기': '#d97706', '이체 승인': '#7c3aed', '실행 요청': '#2563eb' };
+  return `<span style="color:${colorMap[p.value] || '#333'}">${p.value}</span>`;
+}
+
+function BizTypeRenderer(p) {
+  if (!p.value) return '';
+  return p.value;
 }
 
 function ActionRenderer(p) {
   if (!p.data) return '';
   if (p.data.status === '이체 실패') {
-    return `<button class="grid-action-btn success" onclick="openSuccessModal(${p.data.seq})">성공 처리</button><button class="grid-action-btn primary">이체 확인</button>`;
+    return `<a class="grid-link" style="color:#16a34a;margin-right:6px" onclick="openSuccessModal(${p.data.seq})">성공 처리</a><a class="grid-link" style="color:#2563eb">이체 확인</a>`;
   }
-  if (p.data.status === '이체 성공') return `<button class="grid-action-btn">실패 처리</button>`;
-  if (p.data.status === '이체 대기') return `<button class="grid-action-btn primary">이체 요청</button>`;
+  if (p.data.status === '이체 성공') return `<a class="grid-link" style="color:#888">실패 처리</a>`;
+  if (p.data.status === '이체 대기') return `<a class="grid-link">이체 요청</a>`;
   return '';
 }
 
@@ -66,27 +71,21 @@ function AmountRenderer(p) {
 function MatchRenderer(p) {
   if (p.value == null) return '';
   const v = Number(p.value);
-  const label = v + '%';
-  if (v >= 60) return `<span class="match-high">${label}</span>`;
-  return `<span class="match-low">${label}</span>`;
+  const color = v >= 60 ? '#16a34a' : '#ef4444';
+  const style = v < 60 ? `color:${color};font-weight:600` : `color:${color}`;
+  return `<span style="${style}">${v}%</span>`;
 }
 
 function MatchTotalRenderer(p) {
   if (!p.data) return '';
   const v = p.data.matchTotal;
-  const label = v + '% (' + p.data.matchTotalLabel + ')';
-  if (v >= 60) return `<span class="match-high">${label}</span>`;
-  return `<span class="match-low">${label}</span>`;
-}
-
-function BizTypeRenderer(p) {
-  if (!p.value) return '';
-  const cls = p.value === '법인' ? 'badge-approved' : 'badge-requested';
-  return `<span class="badge ${cls}">${p.value}</span>`;
+  const color = v >= 60 ? '#16a34a' : '#ef4444';
+  const style = v < 60 ? `color:${color};font-weight:600` : `color:${color}`;
+  return `<span style="${style}">${v}% (${p.data.matchTotalLabel})</span>`;
 }
 
 const columnDefs = [
-  { headerName: '', field: '_check', headerCheckboxSelection: true, checkboxSelection: true, width: 32, maxWidth: 32, pinned: 'left', suppressMenu: true, resizable: false, sortable: false, filter: false },
+  { headerName: '', field: '_check', headerCheckboxSelection: true, checkboxSelection: true, width: 36, maxWidth: 36, minWidth: 36, pinned: 'left', suppressMenu: true, resizable: false, sortable: false, filter: false },
   { headerName: '이체관리 IDX', field: 'seq', width: 95, cellRenderer: LinkRenderer },
   { headerName: '정산서 IDX', field: 'settleIdx', width: 85, cellRenderer: LinkRenderer },
   { headerName: '정산서명', field: 'settleName', width: 200 },

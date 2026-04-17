@@ -273,7 +273,7 @@ input, select, button { font-family: inherit; font-size: 11px; }
   --ag-font-size: 11px;
   --ag-row-height: 28px;
   --ag-header-height: 28px;
-  --ag-cell-horizontal-padding: 6px;
+  --ag-cell-horizontal-padding: 3px;
   --ag-borders: solid 1px;
   --ag-border-color: #e8e8e8;
   --ag-header-background-color: #f8f9fb;
@@ -304,11 +304,17 @@ input, select, button { font-family: inherit; font-size: 11px; }
   display: flex !important; align-items: center !important; justify-content: center !important;
   height: 100% !important;
 }
-.ag-theme-alpine .ag-cell[col-id="0"] {
+.ag-theme-alpine .ag-cell[col-id="_check"] {
   display: flex !important; align-items: center !important; justify-content: center !important;
+  overflow: visible !important;
 }
-.ag-theme-alpine .ag-header-cell[col-id="0"] .ag-header-cell-comp-wrapper {
+.ag-theme-alpine .ag-header-cell[col-id="_check"] .ag-header-cell-comp-wrapper {
   display: flex !important; align-items: center !important; justify-content: center !important;
+  overflow: visible !important;
+}
+.ag-theme-alpine .ag-pinned-left-header,
+.ag-theme-alpine .ag-pinned-left-cols-container {
+  overflow: visible !important;
 }
 
 /* ===== Pagination ===== */
