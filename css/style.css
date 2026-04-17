@@ -135,7 +135,7 @@ input, select, button { font-family: inherit; font-size: 11px; }
 .filter-row:last-child { border-bottom: none; }
 .filter-label {
   flex: 0 0 80px;
-  font-size: 11px; font-weight: 600; color: #555;
+  font-size: 11px; font-weight: 700; color: #222;
   white-space: nowrap;
 }
 .filter-fields { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; align-items: center; }
@@ -146,11 +146,16 @@ input, select, button { font-family: inherit; font-size: 11px; }
   background: #fff; min-width: 140px; color: #333; font-size: 11px;
 }
 .filter-text-input:focus { outline: none; border-color: #2563eb; }
+/* Placeholder 공통 — 필터 타이틀과 대비되게 연하게 */
+input::placeholder,
+textarea::placeholder { color: #c4c4c4; opacity: 1; }
+input::-webkit-input-placeholder { color: #c4c4c4; }
 .filter-inline-group {
   display: flex; align-items: center; gap: 6px;
 }
 .filter-inline-group label {
-  font-size: 10px; color: #aaa; white-space: nowrap; min-width: fit-content;
+  font-size: 11px; color: #333; font-weight: 600;
+  white-space: nowrap; min-width: fit-content;
 }
 .filter-inline-group select {
   height: 26px; padding: 0 6px;
