@@ -81,27 +81,38 @@ function MatchTotalRenderer(p) {
   const v = p.data.matchTotal;
   const color = v >= 60 ? '#16a34a' : '#ef4444';
   const style = v < 60 ? `color:${color};font-weight:600` : `color:${color}`;
-  return `<span style="${style}">${v}% (${p.data.matchTotalLabel})</span>`;
+  return `<span style="${style}">${v}</span>`;
 }
 
+function MatchNumRenderer(p) {
+  if (p.value == null) return '';
+  const v = Number(p.value);
+  const color = v >= 60 ? '#16a34a' : '#ef4444';
+  const style = v < 60 ? `color:${color};font-weight:600` : `color:${color}`;
+  return `<span style="${style}">${v}</span>`;
+}
+
+const rightAlign = { textAlign: 'right' };
+const centerAlign = { textAlign: 'center' };
+
 const columnDefs = [
-  { headerName: '이체관리 IDX', field: 'seq', width: 72, minWidth: 60, cellRenderer: LinkRenderer },
-  { headerName: '정산서 IDX', field: 'settleIdx', width: 68, minWidth: 55, cellRenderer: LinkRenderer },
+  { headerName: '이체관리 IDX', field: 'seq', width: 40, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, filter: 'agNumberColumnFilter' },
+  { headerName: '정산서 IDX', field: 'settleIdx', width: 40, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, filter: 'agNumberColumnFilter' },
   { headerName: '정산서명', field: 'settleName', width: 150, minWidth: 90 },
   { headerName: '사업자구분', field: 'bizType', width: 58, minWidth: 50, cellRenderer: BizTypeRenderer },
   { headerName: '사업자명', field: 'bizName', width: 100, minWidth: 70 },
-  { headerName: '사업자 등록번호', field: 'bizNo', width: 88, minWidth: 80 },
+  { headerName: '사업자 등록번호', field: 'bizNo', width: 88, minWidth: 80, cellStyle: rightAlign },
   { headerName: '대표자명', field: 'ceoName', width: 68, minWidth: 55 },
-  { headerName: '출금예정 계좌', field: 'withdrawAccount', width: 92, minWidth: 80 },
+  { headerName: '출금예정 계좌', field: 'withdrawAccount', width: 92, minWidth: 80, cellStyle: rightAlign },
   { headerName: '은행명', field: 'bankName', width: 58, minWidth: 50 },
   { headerName: '예금주명', field: 'ownerName', width: 96, minWidth: 70 },
-  { headerName: '계좌번호', field: 'accountNo', width: 100, minWidth: 85 },
-  { headerName: '이체예정금액', field: 'transferAmount', width: 84, minWidth: 70, cellRenderer: AmountRenderer, cellStyle: { textAlign: 'right' } },
+  { headerName: '계좌번호', field: 'accountNo', width: 100, minWidth: 85, cellStyle: rightAlign },
+  { headerName: '이체예정금액', field: 'transferAmount', width: 84, minWidth: 70, cellRenderer: AmountRenderer, cellStyle: rightAlign, filter: 'agNumberColumnFilter' },
   { headerName: '지급예정일', field: 'payDueDate', width: 78, minWidth: 70 },
-  { headerName: '검증(대표자)', field: 'matchCeo', width: 70, minWidth: 60, cellRenderer: MatchRenderer, cellStyle: { textAlign: 'center' } },
-  { headerName: '검증(사업자)', field: 'matchBiz', width: 70, minWidth: 60, cellRenderer: MatchRenderer, cellStyle: { textAlign: 'center' } },
-  { headerName: '검증(종합)', field: 'matchTotal', width: 82, minWidth: 72, cellRenderer: MatchTotalRenderer, cellStyle: { textAlign: 'center' } },
-  { headerName: '거래처 IDX', field: 'partnerIdx', width: 66, minWidth: 55, cellRenderer: LinkRenderer },
+  { headerName: '검증(대표자)', field: 'matchCeo', width: 70, minWidth: 60, cellRenderer: MatchNumRenderer, cellStyle: rightAlign, filter: 'agNumberColumnFilter' },
+  { headerName: '검증(사업자)', field: 'matchBiz', width: 70, minWidth: 60, cellRenderer: MatchNumRenderer, cellStyle: rightAlign, filter: 'agNumberColumnFilter' },
+  { headerName: '검증(%)', field: 'matchTotal', width: 60, minWidth: 50, cellRenderer: MatchTotalRenderer, cellStyle: rightAlign, filter: 'agNumberColumnFilter' },
+  { headerName: '거래처 IDX', field: 'partnerIdx', width: 40, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, filter: 'agNumberColumnFilter' },
   { headerName: '거래처명', field: 'partnerName', width: 108, minWidth: 70 },
   { headerName: '제휴점명', field: 'shopName', width: 108, minWidth: 70 },
   { headerName: '생성일시', field: 'createdAt', width: 92, minWidth: 85 },
