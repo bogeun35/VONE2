@@ -388,9 +388,21 @@ input::-webkit-input-placeholder { color: #c4c4c4; }
 .ag-theme-alpine .ag-header-cell[col-id="_select"] {
   padding-left: 0 !important; padding-right: 0 !important;
 }
-.ag-theme-alpine .ag-cell.cell-select .ag-selection-checkbox,
+.ag-theme-alpine .ag-cell.cell-select {
+  display: flex; align-items: center; justify-content: center;
+}
+.ag-theme-alpine .ag-cell.cell-select .ag-selection-checkbox {
+  margin: 0;
+}
+.ag-theme-alpine .ag-header-cell[col-id="_select"] .ag-header-cell-comp-wrapper {
+  justify-content: center;
+}
 .ag-theme-alpine .ag-header-cell[col-id="_select"] .ag-header-select-all {
   margin: 0 auto;
+}
+/* 헤더 중앙정렬 공통 */
+.ag-theme-alpine .ag-header-cell.header-center .ag-header-cell-label {
+  justify-content: center;
 }
 
 .grid-link { color: #2563eb; cursor: pointer; text-decoration: none; }
