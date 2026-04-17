@@ -110,8 +110,8 @@
                 </div>
                 <div class="grid-tpl-item-actions">
                   <button class="btn btn-xs btn-primary" data-act="load">불러오기</button>
-                  <button class="btn btn-xs btn-outline" data-act="overwrite">덮어쓰기</button>
-                  <button class="btn btn-xs btn-danger" data-act="delete">삭제</button>
+                  <button class="btn btn-xs btn-outline-primary" data-act="overwrite">덮어쓰기</button>
+                  <button class="btn btn-xs btn-outline-danger" data-act="delete">삭제</button>
                 </div>
               </li>
             `;

@@ -62,6 +62,26 @@ document.querySelectorAll('.btn-group-period').forEach(group => {
   });
 });
 
+// ===== Date Input Year Clamp (4자리 제한) =====
+// HTML5 <input type="date">는 키보드 입력 시 연도에 5자리 이상을 허용함 → 4자리로 강제
+document.querySelectorAll('input[type="date"]').forEach(input => {
+  if (!input.max) input.max = '9999-12-31';
+  if (!input.min) input.min = '1000-01-01';
+  const clamp = () => {
+    const v = input.value;
+    if (!v) return;
+    // value는 'YYYY-MM-DD' 형식이지만 5자리 연도 시 'YYYYY-MM-DD'가 됨
+    const parts = v.split('-');
+    if (parts[0] && parts[0].length > 4) {
+      parts[0] = parts[0].slice(0, 4);
+      input.value = parts.join('-');
+    }
+  };
+  input.addEventListener('input', clamp);
+  input.addEventListener('blur', clamp);
+  input.addEventListener('change', clamp);
+});
+
 // ===== Document Sidebar Toggle =====
 const btnDocToggle = document.getElementById('btnDocToggle');
 const btnDocClose = document.getElementById('btnDocClose');
