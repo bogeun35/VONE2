@@ -118,7 +118,7 @@ input, select, button { font-family: inherit; font-size: 11px; }
 }
 .filter-body.open {
   max-height: 400px;
-  padding: 8px 14px 10px;
+  padding: 2px 14px 4px;
   border-top: 1px solid #f0f0f0;
 }
 .filter-flat {
@@ -127,20 +127,19 @@ input, select, button { font-family: inherit; font-size: 11px; }
   align-items: center;
 }
 .filter-row {
-  display: flex; align-items: flex-start;
+  display: flex; align-items: center;
   gap: 10px;
-  padding: 6px 0;
+  padding: 2px 0;
   border-bottom: 1px dashed #eee;
 }
 .filter-row:last-child { border-bottom: none; }
 .filter-label {
   flex: 0 0 80px;
   font-size: 11px; font-weight: 600; color: #555;
-  padding-top: 5px;
   white-space: nowrap;
 }
 .filter-fields { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; align-items: center; }
-.filter-fields-wrap { flex-wrap: wrap; gap: 6px 16px; }
+.filter-fields-wrap { flex-wrap: wrap; gap: 2px 16px; }
 .filter-text-input {
   height: 26px; padding: 0 6px;
   border: 1px solid #ddd; border-radius: 3px;
