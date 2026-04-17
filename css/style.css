@@ -317,30 +317,6 @@ input, select, button { font-family: inherit; font-size: 11px; }
 .ag-theme-alpine .ag-header-cell-menu-button { display: none; }
 .ag-theme-alpine .ag-header-cell:hover .ag-header-cell-menu-button { display: flex; }
 
-.ag-theme-alpine .ag-checkbox-input-wrapper {
-  display: flex !important; align-items: center !important; justify-content: center !important;
-}
-.ag-theme-alpine .ag-selection-checkbox {
-  display: flex !important; align-items: center !important; justify-content: center !important;
-  height: 100% !important;
-}
-.ag-theme-alpine .ag-header-select-all {
-  display: flex !important; align-items: center !important; justify-content: center !important;
-  height: 100% !important;
-}
-.ag-theme-alpine .ag-cell[col-id="_check"] {
-  display: flex !important; align-items: center !important; justify-content: center !important;
-  overflow: visible !important;
-}
-.ag-theme-alpine .ag-header-cell[col-id="_check"] .ag-header-cell-comp-wrapper {
-  display: flex !important; align-items: center !important; justify-content: center !important;
-  overflow: visible !important;
-}
-.ag-theme-alpine .ag-pinned-left-header,
-.ag-theme-alpine .ag-pinned-left-cols-container {
-  overflow: visible !important;
-}
-
 /* ===== Pagination ===== */
 .pagination { display: inline-flex; align-items: center; gap: 2px; margin-left: 6px; }
 .page-btn {
