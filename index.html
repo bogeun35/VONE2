@@ -78,106 +78,121 @@
             </div>
           </div>
           <div class="filter-body open" id="filterBody">
-            <div class="filter-flat">
-              <div class="filter-inline-group">
-                <label>이체 상태</label>
-                <div class="radio-btn-group" data-name="transferStatus">
-                  <button class="radio-btn" data-value="all">전체</button>
-                  <button class="radio-btn active" data-value="wait">이체 대기</button>
-                  <button class="radio-btn" data-value="approved">이체 승인</button>
-                  <button class="radio-btn" data-value="requested">실행 요청</button>
-                  <button class="radio-btn" data-value="executing">이체 실행</button>
-                  <button class="radio-btn" data-value="success">이체 성공</button>
-                  <button class="radio-btn" data-value="fail">이체 실패</button>
+            <div class="filter-row">
+              <div class="filter-label">조건 검색</div>
+              <div class="filter-fields filter-fields-wrap">
+                <div class="filter-inline-group">
+                  <label>이체 상태</label>
+                  <div class="radio-btn-group" data-name="transferStatus">
+                    <button class="radio-btn" data-value="all">전체</button>
+                    <button class="radio-btn active" data-value="wait">이체 대기</button>
+                    <button class="radio-btn" data-value="approved">이체 승인</button>
+                    <button class="radio-btn" data-value="requested">실행 요청</button>
+                    <button class="radio-btn" data-value="executing">이체 실행</button>
+                    <button class="radio-btn" data-value="success">이체 성공</button>
+                    <button class="radio-btn" data-value="fail">이체 실패</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>거래처 구분</label>
+                  <div class="radio-btn-group" data-name="partnerType">
+                    <button class="radio-btn active" data-value="all">전체</button>
+                    <button class="radio-btn" data-value="corp">법인</button>
+                    <button class="radio-btn" data-value="personal">개인</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>출금 계좌</label>
+                  <select>
+                    <option value="">전체</option>
+                    <option value="1">식권대장 (우리 1005202419107)</option>
+                    <option value="2">식권대장 (씨티 104730802402)</option>
+                    <option value="3">복지대장 (우리 1005803794671)</option>
+                    <option value="4">식권대장 (신한 140013837960)</option>
+                    <option value="5">식권대장 (신한 140012526343)</option>
+                    <option value="6">퀵대장 (우리 1005102805622)</option>
+                    <option value="7">광고대장 (우리 1005003575980)</option>
+                    <option value="8">단체선물대장 (우리 1005103314735)</option>
+                    <option value="9">식권대장 외 매입지급용 (우리 1005702490310)</option>
+                    <option value="10">보증금 관리 (우리 1005103285374)</option>
+                    <option value="11">식권대장 외 지급모계좌 (씨티 104730882404)</option>
+                    <option value="12">결제대행사 (우리 1005502805620)</option>
+                    <option value="13">재무계좌 (우리 1005202418280)</option>
+                  </select>
                 </div>
               </div>
-              <div class="filter-inline-group">
-                <label>거래처 구분</label>
-                <div class="radio-btn-group" data-name="partnerType">
-                  <button class="radio-btn active" data-value="all">전체</button>
-                  <button class="radio-btn" data-value="corp">법인</button>
-                  <button class="radio-btn" data-value="personal">개인</button>
+            </div>
+
+            <div class="filter-row">
+              <div class="filter-label">날짜 검색</div>
+              <div class="filter-fields filter-fields-wrap">
+                <div class="filter-inline-group">
+                  <label>지급예정일</label>
+                  <div class="btn-group-period">
+                    <button class="btn-period">오늘</button>
+                    <button class="btn-period active">이번 달</button>
+                    <button class="btn-period">지난 달</button>
+                  </div>
+                  <div class="date-range">
+                    <input type="date" value="2026-04-01"> <span>~</span> <input type="date" value="2026-04-30">
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>생성일자</label>
+                  <div class="btn-group-period">
+                    <button class="btn-period">오늘</button>
+                    <button class="btn-period">이번 달</button>
+                    <button class="btn-period">지난 달</button>
+                  </div>
+                  <div class="date-range">
+                    <input type="date"> <span>~</span> <input type="date">
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>이체요청일</label>
+                  <div class="btn-group-period">
+                    <button class="btn-period">오늘</button>
+                    <button class="btn-period">이번 달</button>
+                    <button class="btn-period">지난 달</button>
+                  </div>
+                  <div class="date-range">
+                    <input type="date"> <span>~</span> <input type="date">
+                  </div>
                 </div>
               </div>
-              <div class="filter-inline-group">
-                <label>출금 계좌</label>
-                <select>
-                  <option value="">전체</option>
-                  <option value="1">식권대장 (우리 1005202419107)</option>
-                  <option value="2">식권대장 (씨티 104730802402)</option>
-                  <option value="3">복지대장 (우리 1005803794671)</option>
-                  <option value="4">식권대장 (신한 140013837960)</option>
-                  <option value="5">식권대장 (신한 140012526343)</option>
-                  <option value="6">퀵대장 (우리 1005102805622)</option>
-                  <option value="7">광고대장 (우리 1005003575980)</option>
-                  <option value="8">단체선물대장 (우리 1005103314735)</option>
-                  <option value="9">식권대장 외 매입지급용 (우리 1005702490310)</option>
-                  <option value="10">보증금 관리 (우리 1005103285374)</option>
-                  <option value="11">식권대장 외 지급모계좌 (씨티 104730882404)</option>
-                  <option value="12">결제대행사 (우리 1005502805620)</option>
-                  <option value="13">재무계좌 (우리 1005202418280)</option>
-                </select>
-              </div>
-              <div class="filter-inline-group">
-                <label>지급예정일</label>
-                <div class="btn-group-period">
-                  <button class="btn-period">오늘</button>
-                  <button class="btn-period active">이번 달</button>
-                  <button class="btn-period">지난 달</button>
+            </div>
+
+            <div class="filter-row">
+              <div class="filter-label">키워드 검색</div>
+              <div class="filter-fields filter-fields-wrap">
+                <div class="filter-inline-group">
+                  <label>이체관리 IDX</label>
+                  <input type="text" class="filter-text-input" placeholder="이체관리 IDX">
                 </div>
-                <div class="date-range">
-                  <input type="date" value="2026-04-01"> <span>~</span> <input type="date" value="2026-04-30">
+                <div class="filter-inline-group">
+                  <label>정산서 IDX</label>
+                  <input type="text" class="filter-text-input" placeholder="정산서 IDX, 정산서명">
                 </div>
-              </div>
-              <div class="filter-inline-group">
-                <label>생성일자</label>
-                <div class="btn-group-period">
-                  <button class="btn-period">오늘</button>
-                  <button class="btn-period">이번 달</button>
-                  <button class="btn-period">지난 달</button>
+                <div class="filter-inline-group">
+                  <label>거래처</label>
+                  <input type="text" class="filter-text-input" placeholder="거래처 IDX, 거래처명">
                 </div>
-                <div class="date-range">
-                  <input type="date"> <span>~</span> <input type="date">
+                <div class="filter-inline-group">
+                  <label>계약서명</label>
+                  <input type="text" class="filter-text-input" placeholder="계약서명">
                 </div>
-              </div>
-              <div class="filter-inline-group">
-                <label>이체요청일</label>
-                <div class="btn-group-period">
-                  <button class="btn-period">오늘</button>
-                  <button class="btn-period">이번 달</button>
-                  <button class="btn-period">지난 달</button>
+                <div class="filter-inline-group">
+                  <label>예금주명</label>
+                  <input type="text" class="filter-text-input" placeholder="예금주명">
                 </div>
-                <div class="date-range">
-                  <input type="date"> <span>~</span> <input type="date">
+                <div class="filter-inline-group">
+                  <label>계좌번호</label>
+                  <input type="text" class="filter-text-input" placeholder="계좌번호">
                 </div>
-              </div>
-              <div class="filter-inline-group">
-                <label>이체관리 IDX</label>
-                <input type="text" class="filter-text-input" placeholder="이체관리 IDX">
-              </div>
-              <div class="filter-inline-group">
-                <label>정산서 IDX</label>
-                <input type="text" class="filter-text-input" placeholder="정산서 IDX, 정산서명">
-              </div>
-              <div class="filter-inline-group">
-                <label>거래처</label>
-                <input type="text" class="filter-text-input" placeholder="거래처 IDX, 거래처명">
-              </div>
-              <div class="filter-inline-group">
-                <label>계약서명</label>
-                <input type="text" class="filter-text-input" placeholder="계약서명">
-              </div>
-              <div class="filter-inline-group">
-                <label>예금주명</label>
-                <input type="text" class="filter-text-input" placeholder="예금주명">
-              </div>
-              <div class="filter-inline-group">
-                <label>계좌번호</label>
-                <input type="text" class="filter-text-input" placeholder="계좌번호">
-              </div>
-              <div class="filter-inline-group">
-                <label>제휴점</label>
-                <input type="text" class="filter-text-input" placeholder="제휴점명, SID">
+                <div class="filter-inline-group">
+                  <label>제휴점</label>
+                  <input type="text" class="filter-text-input" placeholder="제휴점명, SID">
+                </div>
               </div>
             </div>
           </div>
