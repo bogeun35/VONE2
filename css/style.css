@@ -353,6 +353,31 @@ input, select, button { font-family: inherit; font-size: 11px; }
 .grid-link { color: #2563eb; cursor: pointer; text-decoration: none; }
 .grid-link:hover { text-decoration: underline; }
 
+/* ===== Column Context Menu ===== */
+.col-context-menu {
+  position: fixed;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  padding: 4px 0;
+  min-width: 160px;
+  z-index: 300;
+}
+.col-ctx-item {
+  padding: 6px 14px;
+  font-size: 11px;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.col-ctx-item:hover { background: #f0f4ff; color: #2563eb; }
+.col-ctx-separator {
+  height: 1px;
+  background: #f0f0f0;
+  margin: 3px 0;
+}
+
 /* ===== Grid Action Footer ===== */
 .grid-action-footer {
   flex-shrink: 0;

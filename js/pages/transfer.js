@@ -118,6 +118,8 @@ const columnDefs = [
   { headerName: '상태 변경', field: '_action', width: 140, cellRenderer: ActionRenderer, sortable: false, filter: false, pinned: 'right' }
 ];
 
+let gridApi = null;
+
 const gridOptions = {
   columnDefs,
   rowData: gridData,
@@ -130,12 +132,76 @@ const gridOptions = {
   getRowStyle: p => {
     if (p.data && p.data.status === '이체 실패') return { background: '#fff8f8' };
     return null;
+  },
+  onSelectionChanged: () => {
+    const count = gridApi ? gridApi.getSelectedRows().length : 0;
+    const el = document.querySelector('.selected-count strong');
+    if (el) el.textContent = count;
   }
 };
 
+// 커스텀 컬럼 우클릭 메뉴
+function createColumnContextMenu() {
+  const menu = document.createElement('div');
+  menu.className = 'col-context-menu';
+  menu.innerHTML = `
+    <div class="col-ctx-item" data-action="pinLeft">📌 Pin Left</div>
+    <div class="col-ctx-item" data-action="pinRight">📌 Pin Right</div>
+    <div class="col-ctx-separator"></div>
+    <div class="col-ctx-item" data-action="unpin">✕ No Pin</div>
+    <div class="col-ctx-separator"></div>
+    <div class="col-ctx-item" data-action="autosize">↔ Auto Size</div>
+    <div class="col-ctx-item" data-action="autosizeAll">↔ Auto Size All</div>
+    <div class="col-ctx-separator"></div>
+    <div class="col-ctx-item" data-action="resetCols">⟲ Reset Columns</div>
+  `;
+  menu.style.display = 'none';
+  document.body.appendChild(menu);
+  return menu;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const gridDiv = document.getElementById('transferGrid');
-  if (gridDiv) agGrid.createGrid(gridDiv, gridOptions);
+  if (!gridDiv) return;
+
+  const result = agGrid.createGrid(gridDiv, gridOptions);
+  gridApi = result;
+
+  const ctxMenu = createColumnContextMenu();
+  let targetColId = null;
+
+  gridDiv.addEventListener('contextmenu', (e) => {
+    const headerCell = e.target.closest('.ag-header-cell');
+    if (!headerCell) return;
+
+    e.preventDefault();
+    targetColId = headerCell.getAttribute('col-id');
+
+    ctxMenu.style.display = 'block';
+    ctxMenu.style.left = e.pageX + 'px';
+    ctxMenu.style.top = e.pageY + 'px';
+
+    const rect = ctxMenu.getBoundingClientRect();
+    if (rect.right > window.innerWidth) ctxMenu.style.left = (e.pageX - rect.width) + 'px';
+    if (rect.bottom > window.innerHeight) ctxMenu.style.top = (e.pageY - rect.height) + 'px';
+  });
+
+  ctxMenu.addEventListener('click', (e) => {
+    const item = e.target.closest('.col-ctx-item');
+    if (!item || !targetColId || !gridApi) return;
+
+    const action = item.dataset.action;
+    if (action === 'pinLeft') gridApi.setColumnPinned(targetColId, 'left');
+    else if (action === 'pinRight') gridApi.setColumnPinned(targetColId, 'right');
+    else if (action === 'unpin') gridApi.setColumnPinned(targetColId, null);
+    else if (action === 'autosize') gridApi.autoSizeColumns([targetColId]);
+    else if (action === 'autosizeAll') gridApi.autoSizeAllColumns();
+    else if (action === 'resetCols') gridApi.resetColumnState();
+
+    ctxMenu.style.display = 'none';
+  });
+
+  document.addEventListener('click', () => { ctxMenu.style.display = 'none'; });
 });
 
 // 성공 처리 모달
