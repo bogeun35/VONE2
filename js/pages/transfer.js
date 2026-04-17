@@ -123,7 +123,6 @@ let gridApi = null;
 const gridOptions = {
   columnDefs,
   rowData: gridData,
-  rowSelection: 'multiple',
   suppressRowClickSelection: true,
   animateRows: true,
   defaultColDef: { sortable: true, resizable: true, filter: true },
