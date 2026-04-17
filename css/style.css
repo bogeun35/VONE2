@@ -313,8 +313,9 @@ input::-webkit-input-placeholder { color: #c4c4c4; }
   --ag-font-size: 11px !important;
   --ag-row-height: 28px !important;
   --ag-header-height: 28px !important;
-  --ag-cell-horizontal-padding: 3px !important;
-  --ag-grid-size: 2px !important;
+  /* AG Grid 내부 rule이 calc(var - 1px)로 셀 패딩을 계산하므로 5px로 설정해 실제 4px 좌우 여백 */
+  --ag-cell-horizontal-padding: 5px !important;
+  --ag-grid-size: 4px !important;
   --ag-borders: solid 1px;
   --ag-border-color: #e8e8e8;
   --ag-header-background-color: #f8f9fb;
