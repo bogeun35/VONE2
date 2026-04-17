@@ -135,7 +135,7 @@ input, select, button { font-family: inherit; font-size: 11px; }
 .filter-row:last-child { border-bottom: none; }
 .filter-label {
   flex: 0 0 80px;
-  font-size: 11px; font-weight: 700; color: #222;
+  font-size: 11px; color: #333;
   white-space: nowrap;
 }
 .filter-fields { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; align-items: center; }
@@ -154,7 +154,7 @@ input::-webkit-input-placeholder { color: #c4c4c4; }
   display: flex; align-items: center; gap: 6px;
 }
 .filter-inline-group label {
-  font-size: 11px; color: #333; font-weight: 600;
+  font-size: 11px; color: #333;
   white-space: nowrap; min-width: fit-content;
 }
 .filter-inline-group select {
@@ -382,6 +382,15 @@ input::-webkit-input-placeholder { color: #c4c4c4; }
 .ag-theme-alpine .ag-cell.cell-action-buttons {
   display: flex; align-items: center; line-height: normal;
   padding-left: 4px; padding-right: 4px;
+}
+/* 체크박스 선택 컬럼 — 셀/헤더 중앙정렬, 패딩 최소화 */
+.ag-theme-alpine .ag-cell.cell-select,
+.ag-theme-alpine .ag-header-cell[col-id="_select"] {
+  padding-left: 0 !important; padding-right: 0 !important;
+}
+.ag-theme-alpine .ag-cell.cell-select .ag-selection-checkbox,
+.ag-theme-alpine .ag-header-cell[col-id="_select"] .ag-header-select-all {
+  margin: 0 auto;
 }
 
 .grid-link { color: #2563eb; cursor: pointer; text-decoration: none; }

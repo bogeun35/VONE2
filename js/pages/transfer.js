@@ -32,7 +32,10 @@ function enrichData(rows) {
     const matchBiz = calcMatchRate(row.ownerName, row.bizName);
     const matchTotal = row.bizType === '개인' ? matchCeo : matchBiz;
     const matchTotalLabel = row.bizType === '개인' ? '대표자' : '사업자';
-    return { ...row, matchCeo, matchBiz, matchTotal, matchTotalLabel };
+    // 정산월: payDueDate 기준. 일부 행은 전월로 섞어서 3월/4월 혼합되게
+    const m = row.payDueDate ? parseInt(row.payDueDate.split('-')[1], 10) : 0;
+    const settleMonth = m ? ((row.seq % 3 === 0 ? m - 1 : m) + '월') : '';
+    return { ...row, matchCeo, matchBiz, matchTotal, matchTotalLabel, settleMonth };
   });
 }
 
@@ -96,9 +99,21 @@ const rightAlign = { textAlign: 'right' };
 const centerAlign = { textAlign: 'center' };
 
 const columnDefs = [
+  {
+    headerName: '', field: '_select',
+    width: 32, minWidth: 32, maxWidth: 32,
+    pinned: 'left',
+    checkboxSelection: true,
+    headerCheckboxSelection: true,
+    headerCheckboxSelectionFilteredOnly: true,
+    sortable: false, filter: false, resizable: false, suppressMovable: true,
+    lockPosition: 'left',
+    cellClass: 'cell-select',
+  },
   { headerName: '이체관리 IDX', field: 'seq', width: 40, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, filter: 'agNumberColumnFilter' },
   { headerName: '정산서 IDX', field: 'settleIdx', width: 40, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, filter: 'agNumberColumnFilter' },
-  { headerName: '정산서명', field: 'settleName', width: 150, minWidth: 90 },
+  { headerName: '정산월', field: 'settleMonth', width: 52, minWidth: 45, cellStyle: centerAlign },
+  { headerName: '정산계약명', field: 'settleName', width: 150, minWidth: 90 },
   { headerName: '사업자구분', field: 'bizType', width: 58, minWidth: 50, cellRenderer: BizTypeRenderer },
   { headerName: '사업자명', field: 'bizName', width: 100, minWidth: 70 },
   { headerName: '사업자 등록번호', field: 'bizNo', width: 88, minWidth: 80, cellStyle: rightAlign },
@@ -132,6 +147,7 @@ let gridApi = null;
 const gridOptions = {
   columnDefs,
   rowData: gridData,
+  rowSelection: 'multiple',
   suppressRowClickSelection: true,
   animateRows: true,
   defaultColDef: { sortable: true, resizable: true, filter: true },
