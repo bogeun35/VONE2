@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VONE 기획 디자인</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.3.2/dist/ag-grid-community.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <span class="header-logo">VONE</span>
+      <span class="header-divider"></span>
+      <span class="header-title">기획 디자인 시스템</span>
+    </div>
+    <div class="header-right">
+      <button class="btn-doc-toggle" id="btnDocToggle" title="기획문서 보기">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 2h8l4 4v8a1 1 0 01-1 1H2a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M10 2v4h4M4 9h6M4 11h6M4 7h3" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+        <span>기획문서</span>
+      </button>
+      <span class="header-user">관리자</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <!-- LNB -->
+    <nav class="lnb" id="lnb">
+      <div class="lnb-category">
+        <div class="lnb-category-header" data-toggle="menu-settle">
+          <svg class="lnb-arrow" width="10" height="10" viewBox="0 0 10 10"><path d="M3 2l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+          정산/청구
+        </div>
+        <ul class="lnb-menu" id="menu-settle">
+          <li><a href="#거래처관리">거래처 관리</a></li>
+          <li><a href="#청구계약관리">청구 계약 관리</a></li>
+          <li><a href="#청구서관리">청구서 관리</a></li>
+          <li><a href="#정산계약관리">정산 계약 관리</a></li>
+          <li><a href="#정산서관리">정산서 관리</a></li>
+          <li><a href="#계산서관리">(세금)계산서 관리</a></li>
+          <li><a href="#현금영수증관리">현금영수증 관리</a></li>
+          <li><a href="#기타증빙관리">기타증빙 관리</a></li>
+          <li class="active"><a href="#이체관리">이체관리</a></li>
+          <li><a href="#통장거래내역">통장거래내역</a></li>
+          <li><a href="#일괄작업현황">일괄 작업 현황</a></li>
+          <li><a href="#결제원장">결제원장</a></li>
+          <li><a href="#대장포인트환불관리">대장포인트 환불 관리</a></li>
+          <li><a href="#고객사제휴점정산방식설정">고객사 제휴점 정산방식 설정</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content" id="content">
+      <!-- 이체관리 페이지 -->
+      <div class="page" id="page-transfer" data-doc="transfer">
+        <div class="breadcrumb">정산/청구 &gt; 이체관리</div>
+        <h1 class="page-title">이체관리</h1>
+
+        <!-- Filter Section -->
+        <div class="filter-box">
+          <div class="filter-row">
+            <div class="filter-label">조건 설정</div>
+            <div class="filter-fields">
+              <div class="filter-group">
+                <label>이체 상태</label>
+                <select><option>전체</option><option>대기</option><option>요청됨</option><option>성공</option><option>실패</option></select>
+              </div>
+              <div class="filter-group">
+                <label>거래처 구분</label>
+                <select><option>전체</option></select>
+              </div>
+              <div class="filter-group">
+                <label>출금 계좌</label>
+                <select><option>전체</option></select>
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-row">
+            <div class="filter-label">기간 설정</div>
+            <div class="filter-fields">
+              <div class="filter-group">
+                <label>간편 검색</label>
+                <div class="btn-group-period">
+                  <button class="btn-period">전체</button>
+                  <button class="btn-period">오늘</button>
+                  <button class="btn-period active">이번 달</button>
+                  <button class="btn-period">지난 달</button>
+                </div>
+              </div>
+              <div class="filter-group">
+                <label>지급예정일</label>
+                <div class="date-range">
+                  <input type="date" value="2026-04-01"> <span>~</span> <input type="date" value="2026-04-30">
+                </div>
+              </div>
+              <div class="filter-group">
+                <label>생성일자</label>
+                <div class="date-range">
+                  <input type="date" placeholder="YYYY-MM-DD"> <span>~</span> <input type="date" placeholder="YYYY-MM-DD">
+                </div>
+              </div>
+              <div class="filter-group">
+                <label>이체요청일</label>
+                <div class="date-range">
+                  <input type="date" placeholder="YYYY-MM-DD"> <span>~</span> <input type="date" placeholder="YYYY-MM-DD">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-row">
+            <div class="filter-label">키워드 검색</div>
+            <div class="filter-fields filter-fields-keyword">
+              <div class="filter-group">
+                <label>이체관리 IDX</label>
+                <input type="text" placeholder="이체관리 IDX">
+              </div>
+              <div class="filter-group">
+                <label>정산서 IDX</label>
+                <input type="text" placeholder="정산서 IDX, 정산서명">
+              </div>
+              <div class="filter-group">
+                <label>거래처</label>
+                <input type="text" placeholder="거래처 IDX, 거래처명, 사업자등록">
+              </div>
+              <div class="filter-group">
+                <label>계약서명</label>
+                <input type="text" placeholder="계약서명">
+              </div>
+              <div class="filter-group">
+                <label>예금주명</label>
+                <input type="text" placeholder="예금주명">
+              </div>
+              <div class="filter-group">
+                <label>계좌번호</label>
+                <input type="text" placeholder="계좌번호">
+              </div>
+              <div class="filter-group">
+                <label>제휴점</label>
+                <input type="text" placeholder="제휴점명, 제휴점 SID">
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-actions">
+            <button class="btn btn-reset">필터 초기화</button>
+            <button class="btn btn-search">데이터 조회 <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="white" stroke-width="1.2"/><path d="M9.5 9.5L13 13" stroke="white" stroke-width="1.2"/></svg></button>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-box">
+          <h3 class="section-title">요약</h3>
+          <div class="summary-cards">
+            <div class="summary-card">
+              <span class="summary-label">대기</span>
+              <span class="summary-value"><strong>0원</strong> / 0건</span>
+            </div>
+            <div class="summary-card">
+              <span class="summary-label">요청됨</span>
+              <span class="summary-value"><strong>0원</strong> / 0건</span>
+            </div>
+            <div class="summary-card summary-success">
+              <span class="summary-label">성공</span>
+              <span class="summary-value"><strong>13,109,440,921원</strong> / 7,409건</span>
+            </div>
+            <div class="summary-card summary-fail">
+              <span class="summary-label">실패</span>
+              <span class="summary-value"><strong>41,370,398원</strong> / 37건</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid Section -->
+        <div class="grid-section">
+          <h3 class="section-title">검색 결과</h3>
+          <div class="grid-toolbar">
+            <span class="grid-total">전체 : 7,446건</span>
+            <div class="grid-toolbar-right">
+              <button class="btn btn-sm btn-outline">컬럼 초기화</button>
+              <select class="page-size-select">
+                <option>1000개씩 보기</option>
+                <option>500개씩 보기</option>
+                <option>100개씩 보기</option>
+              </select>
+            </div>
+          </div>
+          <div id="transferGrid" class="ag-theme-alpine grid-container"></div>
+          <div class="pagination">
+            <button class="page-btn">&lt;</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">4</button>
+            <button class="page-btn">5</button>
+            <span class="page-dots">...</span>
+            <button class="page-btn">8</button>
+            <button class="page-btn">&gt;</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Document Sidebar -->
+    <aside class="doc-sidebar" id="docSidebar">
+      <div class="doc-sidebar-header">
+        <h3>기획문서</h3>
+        <button class="btn-close-doc" id="btnDocClose">&times;</button>
+      </div>
+      <div class="doc-sidebar-content" id="docContent">
+        <p class="doc-placeholder">페이지를 선택하면 해당 기획문서가 표시됩니다.</p>
+      </div>
+    </aside>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/pages/transfer.js"></script>
+</body>
+</html>
