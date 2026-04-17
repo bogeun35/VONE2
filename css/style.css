@@ -293,11 +293,11 @@ input, select, button { font-family: inherit; font-size: 11px; }
 
 /* AG Grid Custom */
 .ag-theme-alpine {
-  --ag-font-size: 11px;
-  --ag-row-height: 28px;
-  --ag-header-height: 28px;
-  --ag-cell-horizontal-padding: 1px;
-  --ag-grid-size: 2px;
+  --ag-font-size: 11px !important;
+  --ag-row-height: 28px !important;
+  --ag-header-height: 28px !important;
+  --ag-cell-horizontal-padding: 3px !important;
+  --ag-grid-size: 2px !important;
   --ag-borders: solid 1px;
   --ag-border-color: #e8e8e8;
   --ag-header-background-color: #f8f9fb;
