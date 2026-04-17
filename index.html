@@ -9,6 +9,7 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
+  <!-- Header -->
   <header class="header">
     <div class="header-left">
       <span class="header-logo">VONE</span>
@@ -21,6 +22,7 @@
   </header>
 
   <div class="layout">
+    <!-- LNB -->
     <nav class="lnb" id="lnb">
       <div class="lnb-category">
         <div class="lnb-category-header" data-toggle="menu-settle">
@@ -46,51 +48,38 @@
       </div>
     </nav>
 
+    <!-- Main Content -->
     <main class="content" id="content">
       <div class="page" id="page-transfer" data-doc="transfer">
-
-        <!-- Top Bar: Title + Summary -->
-        <div class="page-topbar">
-          <div class="page-topbar-left">
+        <div class="page-header">
+          <div>
+            <div class="breadcrumb">정산/청구 &gt; 이체관리</div>
             <h1 class="page-title">이체관리</h1>
-            <span class="breadcrumb">정산/청구</span>
           </div>
-          <div class="page-topbar-right">
-            <div class="summary-inline">
-              <span class="si-item">대기 <strong>0</strong><em>건</em></span>
-              <span class="si-divider"></span>
-              <span class="si-item si-approved">승인 <strong>0</strong><em>건</em></span>
-              <span class="si-divider"></span>
-              <span class="si-item">요청 <strong>0</strong><em>건</em></span>
-              <span class="si-divider"></span>
-              <span class="si-item si-success">성공 <strong>7,409</strong><em>건</em> <b>13,109,440,921원</b></span>
-              <span class="si-divider"></span>
-              <span class="si-item si-fail">실패 <strong>37</strong><em>건</em> <b>41,370,398원</b></span>
-            </div>
-            <button class="btn-doc-toggle" id="btnDocToggle" title="기획문서 보기">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                <path d="M2 2h8l4 4v8a1 1 0 01-1 1H2a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.2"/>
-                <path d="M10 2v4h4M4 9h6M4 11h6M4 7h3" stroke="currentColor" stroke-width="1.2"/>
-              </svg>
-            </button>
-          </div>
+          <button class="btn-doc-toggle" id="btnDocToggle" title="기획문서 보기">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M2 2h8l4 4v8a1 1 0 01-1 1H2a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M10 2v4h4M4 9h6M4 11h6M4 7h3" stroke="currentColor" stroke-width="1.2"/>
+            </svg>
+            <span>기획문서</span>
+          </button>
         </div>
 
-        <!-- Filter -->
+        <!-- Filter Section (Accordion) -->
         <div class="filter-box">
           <div class="filter-header" id="filterToggle">
             <span class="filter-header-title">
-              <svg class="filter-arrow" width="8" height="8" viewBox="0 0 10 10"><path d="M3 2l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+              <svg class="filter-arrow" width="10" height="10" viewBox="0 0 10 10"><path d="M3 2l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
               조건 검색
             </span>
             <div class="filter-header-actions">
-              <button class="btn btn-xs btn-ghost" onclick="event.stopPropagation()">초기화</button>
-              <button class="btn btn-xs btn-primary" onclick="event.stopPropagation()">조회</button>
+              <button class="btn btn-sm btn-reset" onclick="event.stopPropagation()">필터 초기화</button>
+              <button class="btn btn-sm btn-search" onclick="event.stopPropagation()">데이터 조회 <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="white" stroke-width="1.2"/><path d="M9.5 9.5L13 13" stroke="white" stroke-width="1.2"/></svg></button>
             </div>
           </div>
           <div class="filter-body open" id="filterBody">
             <div class="filter-row">
-              <div class="filter-label">조건</div>
+              <div class="filter-label">조건 설정</div>
               <div class="filter-fields filter-fields-wrap">
                 <div class="filter-inline-group">
                   <label>이체 상태</label>
@@ -105,7 +94,7 @@
                   </div>
                 </div>
                 <div class="filter-inline-group">
-                  <label>구분</label>
+                  <label>거래처 구분</label>
                   <div class="radio-btn-group" data-name="partnerType">
                     <button class="radio-btn active" data-value="all">전체</button>
                     <button class="radio-btn" data-value="corp">법인</button>
@@ -113,7 +102,7 @@
                   </div>
                 </div>
                 <div class="filter-inline-group">
-                  <label>출금계좌</label>
+                  <label>출금 계좌</label>
                   <select>
                     <option value="">전체</option>
                     <option value="1">식권대장 (우리 1005202419107)</option>
@@ -133,49 +122,122 @@
                 </div>
               </div>
             </div>
+
             <div class="filter-row">
-              <div class="filter-label">기간</div>
+              <div class="filter-label">기간 설정</div>
               <div class="filter-fields filter-fields-wrap">
                 <div class="filter-inline-group">
                   <label>지급예정일</label>
-                  <div class="btn-group-period"><button class="btn-period">오늘</button><button class="btn-period active">이번 달</button><button class="btn-period">지난 달</button></div>
-                  <div class="date-range"><input type="date" value="2026-04-01"><span>~</span><input type="date" value="2026-04-30"></div>
+                  <div class="btn-group-period">
+                    <button class="btn-period">오늘</button>
+                    <button class="btn-period active">이번 달</button>
+                    <button class="btn-period">지난 달</button>
+                  </div>
+                  <div class="date-range">
+                    <input type="date" value="2026-04-01"> <span>~</span> <input type="date" value="2026-04-30">
+                  </div>
                 </div>
                 <div class="filter-inline-group">
                   <label>생성일자</label>
-                  <div class="btn-group-period"><button class="btn-period">오늘</button><button class="btn-period">이번 달</button><button class="btn-period">지난 달</button></div>
-                  <div class="date-range"><input type="date"><span>~</span><input type="date"></div>
+                  <div class="btn-group-period">
+                    <button class="btn-period">오늘</button>
+                    <button class="btn-period">이번 달</button>
+                    <button class="btn-period">지난 달</button>
+                  </div>
+                  <div class="date-range">
+                    <input type="date"> <span>~</span> <input type="date">
+                  </div>
                 </div>
                 <div class="filter-inline-group">
                   <label>이체요청일</label>
-                  <div class="btn-group-period"><button class="btn-period">오늘</button><button class="btn-period">이번 달</button><button class="btn-period">지난 달</button></div>
-                  <div class="date-range"><input type="date"><span>~</span><input type="date"></div>
+                  <div class="btn-group-period">
+                    <button class="btn-period">오늘</button>
+                    <button class="btn-period">이번 달</button>
+                    <button class="btn-period">지난 달</button>
+                  </div>
+                  <div class="date-range">
+                    <input type="date"> <span>~</span> <input type="date">
+                  </div>
                 </div>
               </div>
             </div>
+
             <div class="filter-row">
-              <div class="filter-label">키워드</div>
+              <div class="filter-label">키워드 검색</div>
               <div class="filter-fields filter-fields-keyword">
-                <div class="filter-group"><label>이체관리 IDX</label><input type="text" placeholder="이체관리 IDX"></div>
-                <div class="filter-group"><label>정산서 IDX</label><input type="text" placeholder="정산서 IDX, 정산서명"></div>
-                <div class="filter-group"><label>거래처</label><input type="text" placeholder="거래처 IDX, 거래처명, 사업자등록"></div>
-                <div class="filter-group"><label>계약서명</label><input type="text" placeholder="계약서명"></div>
-                <div class="filter-group"><label>예금주명</label><input type="text" placeholder="예금주명"></div>
-                <div class="filter-group"><label>계좌번호</label><input type="text" placeholder="계좌번호"></div>
-                <div class="filter-group"><label>제휴점</label><input type="text" placeholder="제휴점명, 제휴점 SID"></div>
+                <div class="filter-group">
+                  <label>이체관리 IDX</label>
+                  <input type="text" placeholder="이체관리 IDX">
+                </div>
+                <div class="filter-group">
+                  <label>정산서 IDX</label>
+                  <input type="text" placeholder="정산서 IDX, 정산서명">
+                </div>
+                <div class="filter-group">
+                  <label>거래처</label>
+                  <input type="text" placeholder="거래처 IDX, 거래처명, 사업자등록">
+                </div>
+                <div class="filter-group">
+                  <label>계약서명</label>
+                  <input type="text" placeholder="계약서명">
+                </div>
+                <div class="filter-group">
+                  <label>예금주명</label>
+                  <input type="text" placeholder="예금주명">
+                </div>
+                <div class="filter-group">
+                  <label>계좌번호</label>
+                  <input type="text" placeholder="계좌번호">
+                </div>
+                <div class="filter-group">
+                  <label>제휴점</label>
+                  <input type="text" placeholder="제휴점명, 제휴점 SID">
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Grid -->
+        <!-- Summary -->
+        <div class="summary-box">
+          <h3 class="section-title">요약</h3>
+          <div class="summary-cards">
+            <div class="summary-card">
+              <span class="summary-label">대기</span>
+              <span class="summary-value"><strong>0원</strong> / 0건</span>
+            </div>
+            <div class="summary-card summary-approved">
+              <span class="summary-label">승인됨</span>
+              <span class="summary-value"><strong>0원</strong> / 0건</span>
+            </div>
+            <div class="summary-card">
+              <span class="summary-label">요청됨</span>
+              <span class="summary-value"><strong>0원</strong> / 0건</span>
+            </div>
+            <div class="summary-card summary-success">
+              <span class="summary-label">성공</span>
+              <span class="summary-value"><strong>13,109,440,921원</strong> / 7,409건</span>
+            </div>
+            <div class="summary-card summary-fail">
+              <span class="summary-label">실패</span>
+              <span class="summary-value"><strong>41,370,398원</strong> / 37건</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid Section -->
         <div class="grid-section">
+          <h3 class="section-title">검색 결과</h3>
           <div class="grid-toolbar">
-            <span class="grid-total">전체 <strong>7,446</strong>건</span>
+            <span class="grid-total">전체 : 7,446건</span>
             <div class="grid-toolbar-right">
-              <button class="btn btn-xs btn-ghost">컬럼 초기화</button>
+              <button class="btn btn-sm btn-outline">컬럼 초기화</button>
               <select class="page-size-select">
-                <option>1,000건</option><option>2,000건</option><option>5,000건</option><option>10,000건</option><option>20,000건</option>
+                <option>1000개씩 보기</option>
+                <option>2000개씩 보기</option>
+                <option>5000개씩 보기</option>
+                <option>10000개씩 보기</option>
+                <option>20000개씩 보기</option>
               </select>
               <div class="pagination">
                 <button class="page-btn">&lt;</button>
@@ -191,7 +253,6 @@
             </div>
           </div>
           <div id="transferGrid" class="ag-theme-alpine grid-container"></div>
-          <!-- Action Footer -->
           <div class="grid-action-footer">
             <div class="grid-action-footer-left">
               <span class="selected-count">선택 <strong>0</strong>건</span>
@@ -206,6 +267,7 @@
       </div>
     </main>
 
+    <!-- Document Sidebar -->
     <aside class="doc-sidebar" id="docSidebar">
       <div class="doc-sidebar-header">
         <div class="doc-tabs">
@@ -215,12 +277,12 @@
         <button class="btn-close-doc" id="btnDocClose">&times;</button>
       </div>
       <div class="doc-sidebar-content" id="docContent">
-        <p class="doc-placeholder">문서를 불러오는 중...</p>
+        <p class="doc-placeholder">페이지를 선택하면 해당 문서가 표시됩니다.</p>
       </div>
     </aside>
   </div>
 
-  <!-- Modal -->
+  <!-- 성공 처리 Modal -->
   <div class="modal-overlay" id="successModal">
     <div class="modal">
       <div class="modal-header">
@@ -228,16 +290,38 @@
         <button class="modal-close" id="modalClose">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="modal-info"><span class="modal-info-label">정산서명</span><span class="modal-info-value" id="modalSettleName">-</span></div>
-        <div class="modal-info"><span class="modal-info-label">이체예정금액</span><span class="modal-info-value" id="modalAmount">-</span></div>
+        <div class="modal-info">
+          <span class="modal-info-label">정산서명</span>
+          <span class="modal-info-value" id="modalSettleName">-</span>
+        </div>
+        <div class="modal-info">
+          <span class="modal-info-label">이체예정금액</span>
+          <span class="modal-info-value" id="modalAmount">-</span>
+        </div>
         <hr>
         <p class="modal-desc">통장 거래내역에서 매칭할 입금 건을 조회합니다.</p>
         <div class="modal-form">
-          <div class="modal-form-row"><label>거래일시</label><div class="date-range"><input type="date" id="modalDateFrom"><span>~</span><input type="date" id="modalDateTo"></div></div>
-          <div class="modal-form-row"><label>금액 범위</label><div class="date-range"><input type="number" id="modalAmountFrom" placeholder="최소"><span>~</span><input type="number" id="modalAmountTo" placeholder="최대"></div></div>
-          <div class="modal-form-row"><label>입출금 구분</label><span class="modal-fixed-value">입금</span></div>
+          <div class="modal-form-row">
+            <label>거래일시</label>
+            <div class="date-range">
+              <input type="date" id="modalDateFrom"> <span>~</span> <input type="date" id="modalDateTo">
+            </div>
+          </div>
+          <div class="modal-form-row">
+            <label>금액 범위</label>
+            <div class="date-range">
+              <input type="number" id="modalAmountFrom" placeholder="최소 금액"> <span>~</span> <input type="number" id="modalAmountTo" placeholder="최대 금액">
+            </div>
+          </div>
+          <div class="modal-form-row">
+            <label>입출금 구분</label>
+            <span class="modal-fixed-value">입금</span>
+          </div>
         </div>
-        <div class="modal-actions"><button class="btn btn-sm btn-ghost" id="modalCancel">취소</button><button class="btn btn-sm btn-primary">조회</button></div>
+        <div class="modal-actions">
+          <button class="btn btn-sm btn-outline" id="modalCancel">취소</button>
+          <button class="btn btn-sm btn-search">조회</button>
+        </div>
       </div>
     </div>
   </div>
