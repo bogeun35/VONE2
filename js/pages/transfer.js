@@ -210,6 +210,22 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.addEventListener('click', () => { ctxMenu.style.display = 'none'; });
+
+  // 컬럼 초기화 버튼
+  const resetBtn = document.getElementById('gridResetBtn');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      if (gridApi) gridApi.resetColumnState();
+    });
+  }
+
+  // 템플릿 설정 버튼 (localStorage 기반)
+  const tplBtn = document.getElementById('gridTplBtn');
+  if (tplBtn && window.GridTemplate) {
+    tplBtn.addEventListener('click', () => {
+      window.GridTemplate.openModal('transferGrid', gridApi);
+    });
+  }
 });
 
 // 성공 처리 모달

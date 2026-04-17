@@ -588,3 +588,85 @@ input, select, button { font-family: inherit; font-size: 11px; }
 
 /* ===== Pretendard Font ===== */
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+/* ===== Grid Template Modal ===== */
+.grid-tpl-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  animation: gridTplFadeIn 0.15s ease;
+}
+@keyframes gridTplFadeIn { from { opacity: 0; } to { opacity: 1; } }
+.grid-tpl-modal {
+  width: 520px; max-width: 90vw; max-height: 80vh;
+  background: #fff; border-radius: 6px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.grid-tpl-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+.grid-tpl-title { font-size: 13px; font-weight: 700; color: #333; }
+.grid-tpl-close {
+  background: none; border: none; font-size: 20px; color: #999;
+  cursor: pointer; line-height: 1; padding: 0 4px;
+}
+.grid-tpl-close:hover { color: #333; }
+.grid-tpl-body {
+  padding: 14px 16px;
+  overflow-y: auto;
+}
+.grid-tpl-section { margin-bottom: 16px; }
+.grid-tpl-section:last-child { margin-bottom: 0; }
+.grid-tpl-label {
+  display: block;
+  font-size: 11px; font-weight: 600; color: #555;
+  margin-bottom: 6px;
+}
+.grid-tpl-save-row { display: flex; gap: 6px; }
+.grid-tpl-input {
+  flex: 1;
+  height: 28px; padding: 0 8px;
+  border: 1px solid #ddd; border-radius: 3px;
+  background: #fff; color: #333; font-size: 11px;
+}
+.grid-tpl-input:focus { outline: none; border-color: #2563eb; }
+.grid-tpl-hint {
+  margin-top: 6px; font-size: 10px; color: #999;
+}
+.grid-tpl-list {
+  border: 1px solid #eee; border-radius: 4px;
+  max-height: 320px; overflow-y: auto;
+}
+.grid-tpl-empty {
+  padding: 20px;
+  text-align: center;
+  color: #999; font-size: 11px;
+}
+.grid-tpl-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.grid-tpl-item:last-child { border-bottom: none; }
+.grid-tpl-item:hover { background: #fafbfc; }
+.grid-tpl-item-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.grid-tpl-item-name { font-size: 12px; font-weight: 600; color: #333; }
+.grid-tpl-item-date { font-size: 10px; color: #999; }
+.grid-tpl-item-actions { display: flex; gap: 4px; flex-shrink: 0; }
+.btn-xs {
+  height: 22px; padding: 0 8px;
+  font-size: 10px; border-radius: 3px;
+  border: 1px solid #ddd; background: #fff; color: #555;
+  cursor: pointer;
+}
+.btn-xs.btn-primary { background: #2563eb; color: #fff; border-color: #2563eb; }
+.btn-xs.btn-primary:hover { background: #1d4ed8; }
+.btn-xs.btn-outline { background: #fff; color: #555; }
+.btn-xs.btn-outline:hover { background: #f5f5f5; }
+.btn-xs.btn-danger { background: #fff; color: #ef4444; border-color: #fecaca; }
+.btn-xs.btn-danger:hover { background: #fef2f2; }
