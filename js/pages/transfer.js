@@ -1,6 +1,10 @@
 // ===== 이체관리 실 데이터 기반 AG Grid =====
 
 const realData = [
+  { seq: 32884, settleIdx: 512004, settleName: '채인석커피(판교점)_계약서', bizNo: '1148800321', withdrawAccount: '104730802402', bankName: '국민은행', ownerName: '채인석', accountNo: '80420104123777', transferAmount: 295901, partnerIdx: 512004, partnerName: '채인석커피', shopId: 'A01F5B10-1111-2222-3333-444455556666', shopName: '채인석커피(판교점)', createdAt: '2026-04-17 09:10', createdBy: '이주환', requestedAt: '', requestedBy: '', paidAt: '', updatedAt: '2026-04-17 09:10', updatedBy: '이주환', txIdx: '', failReason: '', status: '이체 대기', bizType: '개인', ceoName: '채인석', bizName: '채인석커피', payDueDate: '2026-04-18' },
+  { seq: 32883, settleIdx: 511877, settleName: '성수공방_계약서', bizNo: '2098702215', withdrawAccount: '104730802402', bankName: '신한은행', ownerName: '박지은', accountNo: '110555123456', transferAmount: 412300, partnerIdx: 511877, partnerName: '성수공방', shopId: 'B01F5B10-1111-2222-3333-444455556666', shopName: '성수공방', createdAt: '2026-04-17 08:55', createdBy: '전은혜', requestedAt: '2026-04-17 09:02', requestedBy: '전은혜', paidAt: '', updatedAt: '2026-04-17 09:02', updatedBy: '전은혜', txIdx: '', failReason: '', status: '이체 승인', bizType: '개인', ceoName: '박지은', bizName: '성수공방', payDueDate: '2026-04-18' },
+  { seq: 32882, settleIdx: 511590, settleName: '(주)그린테이블_계약서', bizNo: '3308801007', withdrawAccount: '104730802402', bankName: '우리은행', ownerName: '(주)그린테이블', accountNo: '1005704555821', transferAmount: 1820500, partnerIdx: 511590, partnerName: '주식회사 그린테이블', shopId: 'C01F5B10-1111-2222-3333-444455556666', shopName: '(주)그린테이블', createdAt: '2026-04-17 08:40', createdBy: '이샛별', requestedAt: '2026-04-17 08:45', requestedBy: '이샛별', paidAt: '', updatedAt: '2026-04-17 08:45', updatedBy: '이샛별', txIdx: '', failReason: '', status: '실행 요청', bizType: '법인', ceoName: '최정우', bizName: '주식회사 그린테이블', payDueDate: '2026-04-18' },
+  { seq: 32881, settleIdx: 511412, settleName: '미소베이커리_계약서', bizNo: '4185100884', withdrawAccount: '104730802402', bankName: '농협은행', ownerName: '송미소', accountNo: '3020112244335', transferAmount: 184720, partnerIdx: 511412, partnerName: '미소베이커리', shopId: 'D01F5B10-1111-2222-3333-444455556666', shopName: '미소베이커리', createdAt: '2026-04-16 18:30', createdBy: '전은혜', requestedAt: '2026-04-16 18:35', requestedBy: '전은혜', paidAt: '2026-04-16 18:35', updatedAt: '2026-04-16 18:36', updatedBy: '전은혜', txIdx: '', failReason: '계좌정보 불일치(예금주명 상이)로 지급이체를 실패하였습니다.', status: '이체 실패', bizType: '개인', ceoName: '송미소', bizName: '미소베이커리', payDueDate: '2026-04-17' },
   { seq: 32877, settleIdx: 508856, settleName: '전주식당(성남)_계약서', bizNo: '8616100099', withdrawAccount: '104730802402', bankName: '농협은행', ownerName: '김순모', accountNo: '3020111803611', transferAmount: 2732742, partnerIdx: 508856, partnerName: '전주식당(성남)', shopId: '4EF9C582-AF44-4ACF-B272-2CECA08EC42C', shopName: '전주식당(성남)', createdAt: '2026-04-16 15:19', createdBy: '이주환', requestedAt: '', requestedBy: '이주환', paidAt: '2026-04-16 15:40', updatedAt: '2026-04-16 15:40', updatedBy: '전은혜', txIdx: '', failReason: '', status: '이체 성공', bizType: '개인', ceoName: '김순모', bizName: '전주식당', payDueDate: '2026-04-17' },
   { seq: 32876, settleIdx: 504190, settleName: '호호미역(경희궁 직영점)_계약서', bizNo: '2257100313', withdrawAccount: '104730802402', bankName: '신한은행', ownerName: '임영제(호호미역)', accountNo: '110484273518', transferAmount: 1538497, partnerIdx: 504190, partnerName: '호호미역 경희궁 직영점', shopId: 'DC2504BF-7CD9-AB76-4956-5584F18216DF', shopName: '호호미역(경희궁 직영점)', createdAt: '2026-04-15 18:04', createdBy: '전은혜', requestedAt: '2026-04-15 18:04', requestedBy: '전은혜', paidAt: '2026-04-15 18:04', updatedAt: '2026-04-15 19:41', updatedBy: '전은혜', txIdx: '', failReason: '', status: '이체 성공', bizType: '개인', ceoName: '임영제', bizName: '호호미역', payDueDate: '2026-04-16' },
   { seq: 32875, settleIdx: 500286, settleName: '투썸플레이스(을지로입구역점)_계약서', bizNo: '4048601054', withdrawAccount: '104730802402', bankName: '우리은행', ownerName: '투썸플레이스주식회사', accountNo: '27837054218114', transferAmount: 590807, partnerIdx: 500286, partnerName: '투썸플레이스 주식회사', shopId: 'CF5714DD-DC5C-76F5-DC24-606571F03BEB', shopName: '투썸플레이스(을지로입구역점)', createdAt: '2026-04-15 17:22', createdBy: '전은혜', requestedAt: '2026-04-15 17:25', requestedBy: '전은혜', paidAt: '2026-04-15 17:25', updatedAt: '2026-04-15 19:41', updatedBy: '전은혜', txIdx: '', failReason: '', status: '이체 성공', bizType: '법인', ceoName: '송정석', bizName: '투썸플레이스주식회사', payDueDate: '2026-04-16' },
@@ -35,7 +39,9 @@ function enrichData(rows) {
     // 정산월: payDueDate 기준. 일부 행은 전월로 섞어서 3월/4월 혼합되게
     const m = row.payDueDate ? parseInt(row.payDueDate.split('-')[1], 10) : 0;
     const settleMonth = m ? ((row.seq % 3 === 0 ? m - 1 : m) + '월') : '';
-    return { ...row, matchCeo, matchBiz, matchTotal, matchTotalLabel, settleMonth };
+    // 이체 성공 건에만 매칭된 통장거래 IDX(입금Idx) 부여
+    const depositIdx = row.status === '이체 성공' ? 563570 + (row.seq % 20) : null;
+    return { ...row, matchCeo, matchBiz, matchTotal, matchTotalLabel, settleMonth, depositIdx };
   });
 }
 
@@ -56,10 +62,10 @@ function BizTypeRenderer(p) {
 function ActionRenderer(p) {
   if (!p.data) return '';
   if (p.data.status === '이체 실패') {
-    return `<button class="grid-action-btn success" onclick="openSuccessModal(${p.data.seq})">성공 처리</button><button class="grid-action-btn primary">이체 확인</button>`;
+    return `<button class="grid-action-btn outline-primary" onclick="openSuccessModal(${p.data.seq})">성공 처리</button><button class="grid-action-btn primary">이체 확인</button>`;
   }
   if (p.data.status === '이체 성공') return `<button class="grid-action-btn" disabled>실패 처리</button>`;
-  if (p.data.status === '이체 대기') return `<button class="grid-action-btn primary">이체 요청</button>`;
+  if (p.data.status === '이체 대기' || p.data.status === '이체 승인') return `<button class="grid-action-btn primary">정보갱신</button>`;
   return '';
 }
 
@@ -129,6 +135,7 @@ const columnDefs = [
   { headerName: '검증(사업자)', field: 'matchBiz', width: 70, minWidth: 60, cellRenderer: MatchNumRenderer, cellStyle: rightAlign, headerClass: 'header-right', filter: 'agNumberColumnFilter' },
   { headerName: '검증(%)', field: 'matchTotal', width: 60, minWidth: 50, cellRenderer: MatchTotalRenderer, cellStyle: rightAlign, headerClass: 'header-right', filter: 'agNumberColumnFilter' },
   { headerName: '거래처 IDX', field: 'partnerIdx', width: 40, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', filter: 'agNumberColumnFilter' },
+  { headerName: '통장거래 IDX', field: 'depositIdx', width: 70, minWidth: 60, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', filter: 'agNumberColumnFilter' },
   { headerName: '거래처명', field: 'partnerName', width: 108, minWidth: 70 },
   { headerName: '제휴점명', field: 'shopName', width: 108, minWidth: 70 },
   { headerName: '생성일시', field: 'createdAt', width: 92, minWidth: 85 },
@@ -245,31 +252,225 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// 성공 처리 모달
+// ===== 성공 처리 모달 =====
+// 통장 거래내역 샘플 데이터 (입금 건)
+const bankTxData = [
+  { idx: 563571, txAt: '2026-04-17T17:02:44', bankName: '우리은행', accountNo: '1005202418280', ownerName: '주식회사 현대벤디스', alias: '재무계좌', memo1: '채인석', withdrawAmount: 0, depositAmount: 295901, linkable: 295901, billIdx: '-', settleIdx: '-', memo: '', createdAt: '2026-04-17T19:00:01', createdBy: 'SYSTEM', updatedAt: '2026-04-17T19:00:01', updatedBy: '' },
+  { idx: 563572, txAt: '2026-04-17T15:22:11', bankName: '우리은행', accountNo: '1005202418280', ownerName: '주식회사 현대벤디스', alias: '재무계좌', memo1: '전주식당', withdrawAmount: 0, depositAmount: 2732742, linkable: 2732742, billIdx: '-', settleIdx: '-', memo: '', createdAt: '2026-04-17T19:00:01', createdBy: 'SYSTEM', updatedAt: '2026-04-17T19:00:01', updatedBy: '' },
+  { idx: 563573, txAt: '2026-04-17T14:50:08', bankName: '우리은행', accountNo: '1005202418280', ownerName: '주식회사 현대벤디스', alias: '재무계좌', memo1: '호호미역', withdrawAmount: 0, depositAmount: 1538497, linkable: 1538497, billIdx: '-', settleIdx: '-', memo: '', createdAt: '2026-04-17T19:00:01', createdBy: 'SYSTEM', updatedAt: '2026-04-17T19:00:01', updatedBy: '' },
+  { idx: 563574, txAt: '2026-04-17T12:15:03', bankName: '우리은행', accountNo: '1005202418280', ownerName: '주식회사 현대벤디스', alias: '재무계좌', memo1: '서현양갈비', withdrawAmount: 0, depositAmount: 93315, linkable: 93315, billIdx: '-', settleIdx: '-', memo: '', createdAt: '2026-04-17T19:00:01', createdBy: 'SYSTEM', updatedAt: '2026-04-17T19:00:01', updatedBy: '' },
+  { idx: 563575, txAt: '2026-04-17T10:02:55', bankName: '우리은행', accountNo: '1005202418280', ownerName: '주식회사 현대벤디스', alias: '재무계좌', memo1: '투썸플레이스', withdrawAmount: 0, depositAmount: 590807, linkable: 590807, billIdx: '-', settleIdx: '-', memo: '', createdAt: '2026-04-17T19:00:01', createdBy: 'SYSTEM', updatedAt: '2026-04-17T19:00:01', updatedBy: '' },
+  { idx: 563576, txAt: '2026-04-17T09:44:32', bankName: '우리은행', accountNo: '1005202418280', ownerName: '주식회사 현대벤디스', alias: '재무계좌', memo1: '제비면가', withdrawAmount: 0, depositAmount: 777021, linkable: 777021, billIdx: '-', settleIdx: '-', memo: '', createdAt: '2026-04-17T19:00:01', createdBy: 'SYSTEM', updatedAt: '2026-04-17T19:00:01', updatedBy: '' },
+  { idx: 563577, txAt: '2026-04-17T13:05:12', bankName: '우리은행', accountNo: '1005202418280', ownerName: '주식회사 현대벤디스', alias: '재무계좌', memo1: '서현양갈비(중복)', withdrawAmount: 0, depositAmount: 93315, linkable: 93315, billIdx: '-', settleIdx: '-', memo: '', createdAt: '2026-04-17T19:00:01', createdBy: 'SYSTEM', updatedAt: '2026-04-17T19:00:01', updatedBy: '' },
+  { idx: 563578, txAt: '2026-04-17T11:40:27', bankName: '우리은행', accountNo: '1005202418280', ownerName: '주식회사 현대벤디스', alias: '재무계좌', memo1: 'JINJINGYU', withdrawAmount: 0, depositAmount: 93315, linkable: 93315, billIdx: '-', settleIdx: '-', memo: '', createdAt: '2026-04-17T19:00:01', createdBy: 'SYSTEM', updatedAt: '2026-04-17T19:00:01', updatedBy: '' },
+  { idx: 563579, txAt: '2026-04-17T18:22:05', bankName: '우리은행', accountNo: '1005202418280', ownerName: '주식회사 현대벤디스', alias: '재무계좌', memo1: '미소베이커리', withdrawAmount: 0, depositAmount: 184720, linkable: 184720, billIdx: '-', settleIdx: '-', memo: '', createdAt: '2026-04-17T19:00:01', createdBy: 'SYSTEM', updatedAt: '2026-04-17T19:00:01', updatedBy: '' },
+  { idx: 563583, txAt: '2026-04-17T06:12:45', bankName: '우리은행', accountNo: '1005202418280', ownerName: '주식회사 현대벤디스', alias: '재무계좌', memo1: '송미소', withdrawAmount: 0, depositAmount: 184720, linkable: 184720, billIdx: '-', settleIdx: '-', memo: '', createdAt: '2026-04-17T19:00:01', createdBy: 'SYSTEM', updatedAt: '2026-04-17T19:00:01', updatedBy: '' },
+  { idx: 563580, txAt: '2026-04-17T16:33:49', bankName: '우리은행', accountNo: '1005202418280', ownerName: '주식회사 현대벤디스', alias: '재무계좌', memo1: '그린테이블', withdrawAmount: 0, depositAmount: 1820500, linkable: 1820500, billIdx: '-', settleIdx: '-', memo: '', createdAt: '2026-04-17T19:00:01', createdBy: 'SYSTEM', updatedAt: '2026-04-17T19:00:01', updatedBy: '' },
+  { idx: 563581, txAt: '2026-04-17T08:12:03', bankName: '우리은행', accountNo: '1005202418280', ownerName: '주식회사 현대벤디스', alias: '재무계좌', memo1: '성수공방', withdrawAmount: 0, depositAmount: 412300, linkable: 412300, billIdx: '-', settleIdx: '-', memo: '', createdAt: '2026-04-17T19:00:01', createdBy: 'SYSTEM', updatedAt: '2026-04-17T19:00:01', updatedBy: '' },
+  { idx: 563582, txAt: '2026-04-17T07:55:18', bankName: '우리은행', accountNo: '1005202418280', ownerName: '주식회사 현대벤디스', alias: '재무계좌', memo1: '채인석커피(중복)', withdrawAmount: 0, depositAmount: 295901, linkable: 295901, billIdx: '-', settleIdx: '-', memo: '', createdAt: '2026-04-17T19:00:01', createdBy: 'SYSTEM', updatedAt: '2026-04-17T19:00:01', updatedBy: '' },
+].map(r => ({
+  ...r,
+  txAt: r.txAt.replace('T', ' '),
+  createdAt: r.createdAt.replace('T', ' '),
+  updatedAt: r.updatedAt.replace('T', ' '),
+  withdrawAmount: r.linkable, // 샘플: 출금액 = 연결 가능 금액
+}));
+
+let modalGridApi = null;
+let modalCurrentSeq = null;
+
+const modalColumnDefs = [
+  { headerName: '통장거래내역 IDX', field: 'idx', width: 80, headerClass: 'header-right', cellStyle: { textAlign: 'right' } },
+  { headerName: '거래일시', field: 'txAt', width: 150 },
+  { headerName: '거래 은행명', field: 'bankName', width: 80 },
+  { headerName: '계좌번호', field: 'accountNo', width: 110, headerClass: 'header-right', cellStyle: { textAlign: 'right' } },
+  { headerName: '예금주명', field: 'ownerName', width: 130 },
+  { headerName: '별칭', field: 'alias', width: 80 },
+  { headerName: '적요', field: 'memo1', width: 90 },
+  { headerName: '출금액', field: 'withdrawAmount', width: 70, headerClass: 'header-right', cellStyle: { textAlign: 'right' }, valueFormatter: p => p.value != null ? Number(p.value).toLocaleString() : '' },
+  { headerName: '연결 가능 금액', field: 'linkable', width: 100, headerClass: 'header-right', cellStyle: { textAlign: 'right' }, valueFormatter: p => p.value != null ? Number(p.value).toLocaleString() : '' },
+  { headerName: '청구서 IDX', field: 'billIdx', width: 70, headerClass: 'header-right', cellStyle: { textAlign: 'right' } },
+  { headerName: '정산서 IDX', field: 'settleIdx', width: 70, headerClass: 'header-right', cellStyle: { textAlign: 'right' } },
+  { headerName: '메모', field: 'memo', width: 80 },
+  { headerName: '생성일시', field: 'createdAt', width: 150 },
+  { headerName: '생성자', field: 'createdBy', width: 70 },
+  { headerName: '수정일시', field: 'updatedAt', width: 150 },
+  { headerName: '수정자', field: 'updatedBy', width: 70 },
+];
+
+function filterBankTx() {
+  // datetime-local 값은 'YYYY-MM-DDTHH:MM' → 공백 치환해 txAt 포맷과 정렬
+  const fromRaw = document.getElementById('modalDateFrom').value;
+  const toRaw = document.getElementById('modalDateTo').value;
+  const from = fromRaw ? fromRaw.replace('T', ' ') : '';
+  const to = toRaw ? toRaw.replace('T', ' ') : '';
+  const minAmt = parseInt(document.getElementById('modalAmountFrom').value, 10) || 0;
+  const maxAmt = parseInt(document.getElementById('modalAmountTo').value, 10) || Number.MAX_SAFE_INTEGER;
+  return bankTxData.filter(r => {
+    if (from && r.txAt < from) return false;
+    if (to && r.txAt > to) return false;
+    if (r.linkable < minAmt || r.linkable > maxAmt) return false;
+    return true;
+  });
+}
+
+function runModalQuery() {
+  if (!modalGridApi) return;
+  const rows = filterBankTx();
+  modalGridApi.setGridOption('rowData', rows);
+  document.getElementById('modalResultCount').textContent = `조회 결과 : ${rows.length}건`;
+  updateModalSelectionUI();
+}
+
+function updateModalSelectionUI() {
+  const selected = modalGridApi ? modalGridApi.getSelectedRows().length : 0;
+  document.getElementById('modalSelectedCount').textContent = selected;
+  const btn = document.getElementById('modalConfirmBtn');
+  if (btn) btn.disabled = selected !== 1;
+}
+
+// 3-버튼 커스텀 confirm (닫기 / 정산서도 연결 후 성공처리 / 그냥 성공처리)
+function confirmSuccessChoice(msg, onLinkAndSuccess, onJustSuccess) {
+  const overlay = document.createElement('div');
+  overlay.className = 'confirm-overlay';
+  overlay.innerHTML = `
+    <div class="confirm-dialog">
+      <div class="confirm-body">${msg.replace(/\n/g, '<br>')}</div>
+      <div class="confirm-actions">
+        <button class="btn btn-sm btn-outline-primary" data-act="close">닫기</button>
+        <button class="btn btn-sm btn-primary" data-act="link">정산서도 연결 후 성공처리</button>
+        <button class="btn btn-sm btn-primary" data-act="success">그냥 성공처리</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', (e) => {
+    const act = e.target.closest('button')?.dataset.act;
+    if (!act) return;
+    overlay.remove();
+    if (act === 'link') onLinkAndSuccess();
+    else if (act === 'success') onJustSuccess();
+  });
+}
+
 function openSuccessModal(seq) {
   const row = gridData.find(r => r.seq === seq);
   if (!row) return;
+  modalCurrentSeq = seq;
 
   const modal = document.getElementById('successModal');
-  document.getElementById('modalSettleName').textContent = row.settleName;
-  document.getElementById('modalAmount').textContent = row.transferAmount.toLocaleString() + '원';
+  document.getElementById('modalSeq').value = row.seq;
+  document.getElementById('modalSettleMonth').value = row.settleMonth || '-';
+  document.getElementById('modalSettleIdx').value = row.settleIdx;
+  document.getElementById('modalSettleName').value = row.settleName;
+  document.getElementById('modalAmount').value = row.transferAmount.toLocaleString() + '원';
+  document.getElementById('modalShopName').value = row.shopName || '-';
 
-  const today = new Date().toISOString().slice(0, 10);
-  document.getElementById('modalDateFrom').value = today;
-  document.getElementById('modalDateTo').value = today;
+  // 디폴트: 해당 날짜의 00:00 ~ 23:59 (datetime-local 포맷)
+  const sampleDate = '2026-04-17';
+  document.getElementById('modalDateFrom').value = `${sampleDate}T00:00`;
+  document.getElementById('modalDateTo').value = `${sampleDate}T23:59`;
   document.getElementById('modalAmountFrom').value = row.transferAmount;
   document.getElementById('modalAmountTo').value = row.transferAmount;
 
   modal.classList.add('open');
+
+  // 모달 그리드는 모달이 실제 레이아웃된 후에 초기화해야 사이즈가 잡힘
+  // rAF 2회 → 브라우저 첫 페인트/레이아웃이 끝난 뒤 생성
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const gridDiv = document.getElementById('modalGrid');
+    if (!modalGridApi) {
+      modalGridApi = agGrid.createGrid(gridDiv, {
+        columnDefs: modalColumnDefs,
+        rowData: [],
+        rowSelection: 'single',
+        suppressRowClickSelection: false,
+        animateRows: false,
+        defaultColDef: { sortable: true, resizable: true, filter: false },
+        rowHeight: 28,
+        headerHeight: 28,
+        domLayout: 'normal',
+        onSelectionChanged: updateModalSelectionUI,
+        onGridReady: () => {
+          // ag-root-wrapper가 height:2px(border만)로 계산되는 이슈 우회 —
+          // 부모(#modalGrid) 픽셀 높이를 직접 !important로 주입
+          const wrapper = gridDiv.querySelector('.ag-root-wrapper');
+          if (wrapper) {
+            const applyH = () => {
+              const h = gridDiv.clientHeight;
+              if (h > 10) wrapper.style.setProperty('height', h + 'px', 'important');
+            };
+            applyH();
+            // 모달 열림/전환 이후에도 한 번 더
+            requestAnimationFrame(() => requestAnimationFrame(applyH));
+            // 필터 토글 등에 대응해 ResizeObserver로 추적
+            if (window.ResizeObserver) new ResizeObserver(applyH).observe(gridDiv);
+          }
+        },
+      });
+    } else {
+      // 기존 그리드가 있으면 사이즈 재계산
+      modalGridApi.onGridSizeChanged && modalGridApi.onGridSizeChanged();
+    }
+    runModalQuery();
+  }));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('successModal');
   const closeBtn = document.getElementById('modalClose');
   const cancelBtn = document.getElementById('modalCancel');
+  const searchBtn = document.getElementById('modalSearchBtn');
+  const confirmBtn = document.getElementById('modalConfirmBtn');
 
   function closeModal() { modal.classList.remove('open'); }
   if (closeBtn) closeBtn.addEventListener('click', closeModal);
   if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
   if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  if (searchBtn) searchBtn.addEventListener('click', runModalQuery);
+
+  // 모달 필터 아코디언
+  const modalFilterToggle = document.getElementById('modalFilterToggle');
+  const modalFilterBody = document.getElementById('modalFilterBody');
+  if (modalFilterToggle && modalFilterBody) {
+    modalFilterToggle.addEventListener('click', () => {
+      modalFilterToggle.classList.toggle('open');
+      modalFilterBody.classList.toggle('open');
+      if (modalGridApi) {
+        requestAnimationFrame(() => modalGridApi.onGridSizeChanged && modalGridApi.onGridSizeChanged());
+      }
+    });
+  }
+
+  // 모달 이체정보 아코디언
+  const modalInfoToggle = document.getElementById('modalInfoToggle');
+  const modalInfoBody = document.getElementById('modalInfoBody');
+  if (modalInfoToggle && modalInfoBody) {
+    modalInfoToggle.addEventListener('click', () => {
+      modalInfoToggle.classList.toggle('open');
+      modalInfoBody.classList.toggle('open');
+      if (modalGridApi) {
+        requestAnimationFrame(() => modalGridApi.onGridSizeChanged && modalGridApi.onGridSizeChanged());
+      }
+    });
+  }
+  if (confirmBtn) confirmBtn.addEventListener('click', () => {
+    if (!modalGridApi) return;
+    const sel = modalGridApi.getSelectedRows();
+    if (sel.length !== 1) return;
+    const row = gridData.find(r => r.seq === modalCurrentSeq);
+    const tx = sel[0];
+    const amt = tx.linkable.toLocaleString();
+    const msg = `정산서IDX: ${row.settleIdx} 에 해당 통장내역(IDX ${tx.idx})을 연결하여 성공 처리합니다.\n정산서도 연결하시겠습니까?\n\n연결금액: ${amt}원\n연결가능금액: ${amt}원`;
+    confirmSuccessChoice(
+      msg,
+      () => { // 정산서도 연결 + 성공처리
+        alert(`정산서 ${row.settleIdx} 연결 + 이체 ${modalCurrentSeq} 성공 처리 완료 (통장거래 ${tx.idx}, ${amt}원)`);
+        closeModal();
+      },
+      () => { // 그냥 성공처리
+        alert(`이체 ${modalCurrentSeq} 성공 처리 완료 (통장거래 ${tx.idx}, ${amt}원)`);
+        closeModal();
+      }
+    );
+  });
 });
