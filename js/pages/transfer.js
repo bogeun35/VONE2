@@ -53,10 +53,10 @@ function BizTypeRenderer(p) {
 function ActionRenderer(p) {
   if (!p.data) return '';
   if (p.data.status === '이체 실패') {
-    return `<a class="grid-link" style="color:#16a34a;margin-right:6px" onclick="openSuccessModal(${p.data.seq})">성공 처리</a><a class="grid-link" style="color:#2563eb">이체 확인</a>`;
+    return `<button class="grid-action-btn success" onclick="openSuccessModal(${p.data.seq})">성공 처리</button><button class="grid-action-btn primary">이체 확인</button>`;
   }
-  if (p.data.status === '이체 성공') return `<a class="grid-link" style="color:#888">실패 처리</a>`;
-  if (p.data.status === '이체 대기') return `<a class="grid-link">이체 요청</a>`;
+  if (p.data.status === '이체 성공') return `<button class="grid-action-btn" disabled>실패 처리</button>`;
+  if (p.data.status === '이체 대기') return `<button class="grid-action-btn primary">이체 요청</button>`;
   return '';
 }
 
@@ -85,7 +85,6 @@ function MatchTotalRenderer(p) {
 }
 
 const columnDefs = [
-  { headerName: '', field: '_check', headerCheckboxSelection: true, checkboxSelection: true, width: 36, maxWidth: 36, minWidth: 36, pinned: 'left', suppressMenu: true, resizable: false, sortable: false, filter: false },
   { headerName: '이체관리 IDX', field: 'seq', width: 95, cellRenderer: LinkRenderer },
   { headerName: '정산서 IDX', field: 'settleIdx', width: 85, cellRenderer: LinkRenderer },
   { headerName: '정산서명', field: 'settleName', width: 200 },
@@ -114,7 +113,7 @@ const columnDefs = [
   { headerName: '수정자', field: 'updatedBy', width: 60 },
   { headerName: '실패 사유', field: 'failReason', width: 200 },
   { headerName: '상태', field: 'status', width: 80, cellRenderer: StatusRenderer, pinned: 'right' },
-  { headerName: '상태 변경', field: '_action', width: 140, cellRenderer: ActionRenderer, sortable: false, filter: false, pinned: 'right' }
+  { headerName: '상태 변경', field: '_action', width: 160, cellRenderer: ActionRenderer, sortable: false, filter: false, pinned: 'right', cellClass: 'cell-action-buttons' }
 ];
 
 let gridApi = null;

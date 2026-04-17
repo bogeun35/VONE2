@@ -75,7 +75,7 @@ input, select, button { font-family: inherit; font-size: 11px; }
 /* ===== Content ===== */
 .content {
   flex: 1; overflow: hidden;
-  padding: 12px 16px 0;
+  padding: 12px 8px 0;
   min-width: 0;
   display: flex; flex-direction: column;
 }
@@ -118,22 +118,22 @@ input, select, button { font-family: inherit; font-size: 11px; }
 }
 .filter-body.open {
   max-height: 400px;
-  padding: 0 14px 10px;
+  padding: 8px 14px 10px;
   border-top: 1px solid #f0f0f0;
 }
-.filter-row {
-  display: flex; align-items: center;
-  padding: 5px 0;
-  border-bottom: 1px solid #f5f5f5;
-}
-.filter-row:last-child { border-bottom: none; }
-.filter-label {
-  width: 72px; min-width: 72px;
-  font-size: 11px; font-weight: 600; color: #555;
+.filter-flat {
+  display: flex; flex-wrap: wrap;
+  gap: 6px 16px;
+  align-items: center;
 }
 .filter-fields { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; align-items: center; }
 .filter-fields-wrap { flex-wrap: wrap; gap: 6px 16px; }
-.filter-fields-keyword { gap: 6px; }
+.filter-text-input {
+  height: 26px; padding: 0 6px;
+  border: 1px solid #ddd; border-radius: 3px;
+  background: #fff; min-width: 140px; color: #333; font-size: 11px;
+}
+.filter-text-input:focus { outline: none; border-color: #2563eb; }
 .filter-inline-group {
   display: flex; align-items: center; gap: 6px;
 }
@@ -217,8 +217,31 @@ input, select, button { font-family: inherit; font-size: 11px; }
 .btn-sm { height: 24px; padding: 0 8px; font-size: 10px; }
 .btn-outline { border: 1px solid #ddd; background: #fff; }
 
-/* ===== Summary ===== */
-.summary-box { margin-bottom: 8px; flex-shrink: 0; }
+/* ===== Summary (Accordion) ===== */
+.summary-box {
+  margin-bottom: 8px; flex-shrink: 0;
+  background: #fff; border: 1px solid #e8e8e8; border-radius: 6px;
+}
+.summary-header {
+  display: flex; align-items: center;
+  padding: 8px 14px; cursor: pointer; user-select: none;
+  border-bottom: 1px solid transparent;
+}
+.summary-header:hover { background: #fafbfc; }
+.summary-header-title {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: #333;
+}
+.summary-arrow { transition: transform 0.2s; }
+.summary-header.open .summary-arrow { transform: rotate(90deg); }
+.summary-body {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+.summary-body.open {
+  max-height: 120px;
+  border-top: 1px solid #f0f0f0;
+}
 .section-title {
   font-size: 12px; font-weight: 600; color: #333;
   margin-bottom: 6px;
@@ -227,7 +250,7 @@ input, select, button { font-family: inherit; font-size: 11px; }
 .section-title::before { content: ':'; font-weight: 700; color: #2563eb; }
 .summary-cards {
   display: flex; gap: 0;
-  background: #fff; border: 1px solid #e8e8e8; border-radius: 6px;
+  background: #fff;
   overflow: hidden;
 }
 .summary-card {
@@ -273,7 +296,8 @@ input, select, button { font-family: inherit; font-size: 11px; }
   --ag-font-size: 11px;
   --ag-row-height: 28px;
   --ag-header-height: 28px;
-  --ag-cell-horizontal-padding: 3px;
+  --ag-cell-horizontal-padding: 2px;
+  --ag-grid-size: 2px;
   --ag-borders: solid 1px;
   --ag-border-color: #e8e8e8;
   --ag-header-background-color: #f8f9fb;
@@ -348,14 +372,25 @@ input, select, button { font-family: inherit; font-size: 11px; }
 
 /* Action Buttons in Grid */
 .grid-action-btn {
-  display: inline-flex; align-items: center;
-  height: 20px; padding: 0 6px;
-  border: 1px solid #ddd; border-radius: 2px;
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 20px; padding: 0 8px;
+  border: 1px solid #ddd; border-radius: 3px;
   background: #fff; color: #555; cursor: pointer;
   font-size: 10px; margin-right: 3px; white-space: nowrap;
+  font-family: inherit;
 }
+.grid-action-btn:hover { background: #f5f6fa; border-color: #bbb; }
 .grid-action-btn.primary { background: #2563eb; color: #fff; border-color: #2563eb; }
+.grid-action-btn.primary:hover { background: #1d4ed8; border-color: #1d4ed8; }
 .grid-action-btn.success { background: #16a34a; color: #fff; border-color: #16a34a; }
+.grid-action-btn.success:hover { background: #15803d; border-color: #15803d; }
+.grid-action-btn:disabled {
+  background: #f5f5f5; color: #bbb; border-color: #e5e5e5; cursor: not-allowed;
+}
+.ag-theme-alpine .ag-cell.cell-action-buttons {
+  display: flex; align-items: center; line-height: normal;
+  padding-left: 4px; padding-right: 4px;
+}
 
 .grid-link { color: #2563eb; cursor: pointer; text-decoration: none; }
 .grid-link:hover { text-decoration: underline; }

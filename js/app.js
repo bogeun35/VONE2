@@ -29,6 +29,17 @@ if (filterToggle && filterBody) {
   });
 }
 
+// ===== Summary Accordion =====
+const summaryToggle = document.getElementById('summaryToggle');
+const summaryBody = document.getElementById('summaryBody');
+if (summaryToggle && summaryBody) {
+  summaryToggle.classList.add('open');
+  summaryToggle.addEventListener('click', () => {
+    summaryToggle.classList.toggle('open');
+    summaryBody.classList.toggle('open');
+  });
+}
+
 // ===== Radio Button Groups =====
 document.querySelectorAll('.radio-btn-group').forEach(group => {
   group.querySelectorAll('.radio-btn').forEach(btn => {
