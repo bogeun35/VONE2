@@ -97,8 +97,8 @@ const gridOptions = {
     filter: true,
     suppressMovable: false
   },
-  rowHeight: 34,
-  headerHeight: 34,
+  rowHeight: 30,
+  headerHeight: 30,
   getRowStyle: params => {
     if (params.data && params.data.status === '이체 실패') {
       return { background: '#fff8f8' };
