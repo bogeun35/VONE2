@@ -23,7 +23,7 @@ status: 살아있는 문서(growing)
 - **Filled(primary)** = 실행/이동 (저장·조회·승인·이체)
 - **Stroke(outline)** = 모달 오픈 (필터 초기화·컬럼 선택·신규 생성 등)
 - **빨강** = 삭제 **전용** (`btn-outline-danger`, `btn-danger`)
-- **검정** = input 옆 검증/검색 보조 버튼
+- **검정** = input 옆 검증/검색 보조 버튼 · **프론트 전용 핫키** (ex: 날짜 검색의 `오늘·이번 달·지난 달`, `.btn-period`)
 
 ## 2. 그리드 페이지네이션
 

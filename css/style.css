@@ -391,7 +391,7 @@ input::-webkit-input-placeholder { color: #c4c4c4; }
 .btn-group-period { display: flex; gap: 0; }
 .btn-period {
   height: 26px; padding: 0 10px;
-  border: 1px solid #ddd; background: #fff; color: #555;
+  border: 1px solid #333; background: #fff; color: #333;
   cursor: pointer; font-size: 11px; transition: all 0.15s;
 }
 .btn-period:first-child { border-radius: 3px 0 0 3px; }
@@ -399,7 +399,7 @@ input::-webkit-input-placeholder { color: #c4c4c4; }
 .btn-period + .btn-period { margin-left: -1px; }
 .btn-period:hover { background: #f5f6fa; }
 .btn-period.active {
-  background: #2563eb; color: #fff; border-color: #2563eb;
+  background: #333; color: #fff; border-color: #333;
   z-index: 1; position: relative;
 }
 
