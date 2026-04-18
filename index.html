@@ -338,6 +338,221 @@
           </div>
         </div>
       </div>
+
+      <!-- ============================================================ -->
+      <!-- 정산계약 관리 페이지                                            -->
+      <!-- ============================================================ -->
+      <div class="page" id="page-settle-contract-list" data-doc="settle-contract" style="display:none">
+        <div class="page-header">
+          <div>
+            <div class="breadcrumb">정산/청구 &gt; 정산 계약 관리</div>
+            <h1 class="page-title">정산 계약 관리</h1>
+          </div>
+          <button class="btn-doc-toggle" title="기획문서 보기">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 2h8l4 4v8a1 1 0 01-1 1H2a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.2"/><path d="M10 2v4h4M4 9h6M4 11h6M4 7h3" stroke="currentColor" stroke-width="1.2"/></svg>
+            <span>기획문서</span>
+          </button>
+        </div>
+
+        <!-- Filter -->
+        <div class="filter-box">
+          <div class="filter-header open" id="scFilterToggle">
+            <span class="filter-header-title">
+              <svg class="filter-arrow" width="10" height="10" viewBox="0 0 10 10"><path d="M3 2l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+              조건 검색
+            </span>
+            <div class="filter-header-actions">
+              <button class="btn btn-sm btn-outline-primary" id="scFilterReset" onclick="event.stopPropagation()">필터 초기화</button>
+              <button class="btn btn-sm btn-primary" id="scSearchBtn" onclick="event.stopPropagation()">데이터 조회 <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="white" stroke-width="1.2"/><path d="M9.5 9.5L13 13" stroke="white" stroke-width="1.2"/></svg></button>
+            </div>
+          </div>
+          <div class="filter-body open" id="scFilterBody">
+            <!-- 조건 검색 row 1 : 계약서타입(멀티) + 태그(서치앤드랍) -->
+            <div class="filter-row">
+              <div class="filter-label">조건 검색</div>
+              <div class="filter-fields filter-fields-wrap">
+                <div class="filter-inline-group">
+                  <label>계약서 타입</label>
+                  <div class="checkbox-btn-group" data-name="contractType">
+                    <button class="checkbox-btn" data-value="식권대장">식권대장</button>
+                    <button class="checkbox-btn" data-value="복지대장">복지대장</button>
+                    <button class="checkbox-btn" data-value="퀵대장">퀵대장</button>
+                    <button class="checkbox-btn" data-value="단체선물대장">단체선물대장</button>
+                    <button class="checkbox-btn" data-value="기타">기타</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>태그</label>
+                  <div class="tag-select" data-name="tag">
+                    <div class="tag-select-control">
+                      <div class="tag-select-chips"></div>
+                      <input type="text" class="tag-select-input" placeholder="태그 검색">
+                      <svg class="tag-select-arrow" width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+                    </div>
+                    <div class="tag-select-dropdown" style="display:none"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 조건 검색 row 2 : 증빙 수취 유형(멀티) -->
+            <div class="filter-row">
+              <div class="filter-label">증빙/상계</div>
+              <div class="filter-fields filter-fields-wrap">
+                <div class="filter-inline-group">
+                  <label>증빙 수취 유형</label>
+                  <div class="checkbox-btn-group" data-name="proofType">
+                    <button class="checkbox-btn" data-value="공급자발행">공급자 발행</button>
+                    <button class="checkbox-btn" data-value="시스템발행">시스템 발행</button>
+                    <button class="checkbox-btn" data-value="종이세금계산서">종이세금계산서</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>증빙 상계 여부</label>
+                  <div class="radio-btn-group" data-name="proofOffset">
+                    <button class="radio-btn active" data-value="all">전체</button>
+                    <button class="radio-btn" data-value="상계">상계</button>
+                    <button class="radio-btn" data-value="별도">별도</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>이체 상계 여부</label>
+                  <div class="radio-btn-group" data-name="transferOffset">
+                    <button class="radio-btn active" data-value="all">전체</button>
+                    <button class="radio-btn" data-value="상계">상계</button>
+                    <button class="radio-btn" data-value="별도">별도</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 조건 검색 row 3 : 그룹정산 · 계약상태 · 폐업여부 -->
+            <div class="filter-row">
+              <div class="filter-label">상태</div>
+              <div class="filter-fields filter-fields-wrap">
+                <div class="filter-inline-group">
+                  <label>그룹 정산 여부</label>
+                  <div class="radio-btn-group" data-name="groupSettle">
+                    <button class="radio-btn active" data-value="all">전체</button>
+                    <button class="radio-btn" data-value="group">그룹</button>
+                    <button class="radio-btn" data-value="single">개별</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>계약 상태</label>
+                  <div class="radio-btn-group" data-name="contractStatus">
+                    <button class="radio-btn active" data-value="all">전체</button>
+                    <button class="radio-btn" data-value="유효">유효</button>
+                    <button class="radio-btn" data-value="만료">만료</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>폐업 여부</label>
+                  <div class="radio-btn-group" data-name="closedBiz">
+                    <button class="radio-btn active" data-value="all">전체</button>
+                    <button class="radio-btn" data-value="정상">정상</button>
+                    <button class="radio-btn" data-value="폐업">폐업</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 날짜 검색 : 계약시작일 / 계약종료일 / 계약해지일 -->
+            <div class="filter-row">
+              <div class="filter-label">날짜 검색</div>
+              <div class="filter-fields filter-fields-wrap">
+                <div class="filter-inline-group">
+                  <label>계약 시작일</label>
+                  <div class="btn-group-period">
+                    <button class="btn-period">오늘</button>
+                    <button class="btn-period">이번 달</button>
+                    <button class="btn-period">지난 달</button>
+                  </div>
+                  <div class="date-range">
+                    <input type="date" lang="sv-SE"> <span>~</span> <input type="date" lang="sv-SE">
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>계약 종료일</label>
+                  <div class="btn-group-period">
+                    <button class="btn-period">오늘</button>
+                    <button class="btn-period">이번 달</button>
+                    <button class="btn-period">지난 달</button>
+                  </div>
+                  <div class="date-range">
+                    <input type="date" lang="sv-SE"> <span>~</span> <input type="date" lang="sv-SE">
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>계약 해지일</label>
+                  <div class="btn-group-period">
+                    <button class="btn-period">오늘</button>
+                    <button class="btn-period">이번 달</button>
+                    <button class="btn-period">지난 달</button>
+                  </div>
+                  <div class="date-range">
+                    <input type="date" lang="sv-SE"> <span>~</span> <input type="date" lang="sv-SE">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 키워드 검색 -->
+            <div class="filter-row">
+              <div class="filter-label">키워드 검색</div>
+              <div class="filter-fields filter-fields-wrap">
+                <div class="filter-inline-group">
+                  <label>계약 검색</label>
+                  <input type="text" class="filter-text-input" placeholder="계약명, 계약 IDX">
+                </div>
+                <div class="filter-inline-group">
+                  <label>거래처 검색</label>
+                  <input type="text" class="filter-text-input" placeholder="거래처명, 거래처 IDX">
+                </div>
+                <div class="filter-inline-group">
+                  <label>거래처 사업자번호 검색</label>
+                  <input type="text" class="filter-text-input" placeholder="사업자번호">
+                </div>
+                <div class="filter-inline-group">
+                  <label>제휴점 검색</label>
+                  <input type="text" class="filter-text-input" placeholder="제휴점ID, 제휴점명">
+                </div>
+                <div class="filter-inline-group">
+                  <label>계약 담당자 검색</label>
+                  <input type="text" class="filter-text-input" placeholder="담당자ID, 담당자명">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid -->
+        <div class="grid-section">
+          <div class="grid-toolbar">
+            <div class="grid-toolbar-left">
+              <span class="grid-table-name">정산 계약 조회 테이블</span>
+              <span class="grid-total" id="scGridTotal">검색결과 : 0건</span>
+              <span class="selected-count">선택 <strong id="scSelectedCount">0</strong>건</span>
+              <span class="cell-range-status" id="scCellRangeStatus"></span>
+            </div>
+            <div class="grid-toolbar-right">
+              <button class="btn btn-sm btn-outline-primary" id="scCopyAllBtn">전체 복사</button>
+              <button class="btn btn-sm btn-outline-primary" id="scColPickerBtn">컬럼 선택</button>
+              <button class="btn btn-sm btn-outline-primary" id="scResetBtn">컬럼 초기화</button>
+              <button class="btn btn-sm btn-outline-primary" id="scTplBtn">템플릿 설정</button>
+            </div>
+          </div>
+          <div id="settleContractGrid" class="ag-theme-alpine grid-container"></div>
+        </div>
+
+        <!-- Footer -->
+        <div class="grid-action-footer">
+          <div class="grid-action-footer-left">
+            <button class="btn btn-sm btn-outline-primary" id="scNewBtn">정산계약 신규 생성</button>
+          </div>
+        </div>
+      </div>
+
     </main>
 
     <!-- Document Sidebar -->
@@ -449,5 +664,6 @@
   <script src="js/components/doc-editor.js"></script>
   <script src="js/components/page-stub.js"></script>
   <script src="js/pages/transfer.js"></script>
+  <script src="js/pages/settle-contract.js"></script>
 </body>
 </html>
