@@ -1,4 +1,5 @@
 ---
+id: VPLAN-001
 title: 성공처리 모달 3버튼 플로우
 author: 정보근
 issueDate: 2026-04-17

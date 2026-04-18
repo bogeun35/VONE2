@@ -1,4 +1,5 @@
 ---
+id: VPLAN-003
 title: 정보갱신 버튼 추가 (이체 대기/승인)
 author: 정보근
 issueDate: 2026-04-18

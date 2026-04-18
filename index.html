@@ -7,21 +7,56 @@
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.3.2/dist/ag-grid-community.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Firebase Auth (planvendys 와 동일 프로젝트 공유) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 </head>
 <body>
+  <!-- Login Screen (인증 전까지 전체 차단) -->
+  <div class="login-screen" id="loginScreen" style="display:none">
+    <div class="login-card">
+      <div class="login-logo">VONE</div>
+      <div class="login-title">기획 디자인 시스템</div>
+      <button class="login-btn" id="loginBtn" onclick="window.vendysAuth.signIn()">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        Google 로그인
+      </button>
+      <div class="login-notice">@vendys.co.kr 계정만 접근 가능합니다</div>
+      <div class="login-error" id="loginError" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- Loading (auth 확인 중) -->
+  <div class="auth-loading" id="authLoading">
+    <div class="auth-spinner"></div>
+  </div>
+
   <!-- Header -->
-  <header class="header">
+  <header class="header" id="appHeader" style="display:none">
     <div class="header-left">
       <span class="header-logo">VONE</span>
       <span class="header-divider"></span>
       <span class="header-title">기획 디자인 시스템</span>
     </div>
     <div class="header-right">
-      <span class="header-user">관리자</span>
+      <div class="header-user-wrap" id="headerUserWrap">
+        <div class="header-user-avatar" id="headerUserAvatar"></div>
+        <span class="header-user-name" id="headerUserName">-</span>
+        <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <div class="header-user-menu" id="headerUserMenu">
+          <div class="header-user-email" id="headerUserEmail">-</div>
+          <div class="header-user-menu-item danger" onclick="window.vendysAuth.signOut()">로그아웃</div>
+        </div>
+      </div>
     </div>
   </header>
 
-  <div class="layout">
+  <div class="layout" id="appLayout" style="display:none">
     <!-- LNB -->
     <nav class="lnb" id="lnb">
       <div class="lnb-category">
@@ -380,6 +415,7 @@
     </div>
   </div>
 
+  <script src="js/auth.js"></script>
   <script src="js/app.js"></script>
   <script src="js/components/grid-template.js"></script>
   <script src="js/pages/transfer.js"></script>

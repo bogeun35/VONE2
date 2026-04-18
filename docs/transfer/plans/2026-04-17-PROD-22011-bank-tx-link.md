@@ -1,4 +1,5 @@
 ---
+id: VPLAN-002
 title: 통장거래 IDX 컬럼 추가
 author: 정보근
 issueDate: 2026-04-17

@@ -869,3 +869,82 @@ input.modal-info-value:focus { outline: 1px solid #2563eb; outline-offset: -1px;
 .grid-tpl-item-name { font-size: 12px; font-weight: 600; color: #333; }
 .grid-tpl-item-date { font-size: 10px; color: #999; }
 .grid-tpl-item-actions { display: flex; gap: 4px; flex-shrink: 0; }
+
+/* ===== Auth: Login Screen / Loading / User Widget ===== */
+.login-screen {
+  position: fixed; inset: 0; z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+  background: #f8fafd;
+}
+.login-card { text-align: center; padding: 48px; max-width: 360px; }
+.login-logo { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #2563eb; margin-bottom: 6px; }
+.login-title { font-size: 20px; font-weight: 300; color: #1a2332; margin-bottom: 36px; }
+.login-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 11px 24px; background: #fff; border: 1px solid #e2e8f0; border-radius: 6px;
+  color: #1a2332; font-size: 13px; font-family: inherit; cursor: pointer;
+  transition: all 0.15s; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.login-btn:hover { background: #f0f4f9; border-color: rgba(37,99,235,0.2); }
+.login-btn svg { width: 16px; height: 16px; }
+.login-notice { margin-top: 20px; font-size: 11px; color: #94a3b8; }
+.login-error {
+  margin-top: 14px; padding: 9px 14px;
+  background: rgba(232,93,93,0.06); border: 1px solid rgba(232,93,93,0.15);
+  border-radius: 5px; font-size: 12px; color: #e85d5d;
+}
+
+.auth-loading {
+  position: fixed; inset: 0; z-index: 10001;
+  display: flex; align-items: center; justify-content: center;
+  background: #f8fafd;
+}
+.auth-spinner {
+  width: 22px; height: 22px; border: 2px solid #e2e8f0;
+  border-top-color: #2563eb; border-radius: 50%;
+  animation: auth-spin 0.6s linear infinite;
+}
+@keyframes auth-spin { to { transform: rotate(360deg); } }
+
+/* Header user widget */
+.header-user-wrap {
+  position: relative; display: flex; align-items: center; gap: 8px;
+  padding: 5px 10px; border-radius: 5px; cursor: pointer;
+  transition: background 0.12s; color: #555;
+}
+.header-user-wrap:hover { background: #f0f4f9; }
+.header-user-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: #e0edff; overflow: hidden; border: 1px solid #e2e8f0;
+  display: flex; align-items: center; justify-content: center;
+}
+.header-user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.header-user-initial { font-size: 12px; font-weight: 600; color: #2563eb; }
+.header-user-name { font-size: 12px; font-weight: 500; color: #333; }
+.header-user-menu {
+  display: none; position: absolute; top: calc(100% + 6px); right: 0;
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 6px;
+  min-width: 180px; overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08); z-index: 200;
+}
+.header-user-menu.open { display: block; }
+.header-user-email {
+  padding: 10px 14px; font-size: 11px; color: #555;
+  border-bottom: 1px solid #edf1f7; word-break: break-all;
+}
+.header-user-menu-item {
+  padding: 9px 14px; font-size: 12px; color: #4a5568;
+  cursor: pointer; transition: background 0.1s;
+}
+.header-user-menu-item:hover { background: #f0f4f9; color: #1a2332; }
+.header-user-menu-item.danger { color: #e85d5d; }
+.header-user-menu-item.danger:hover { background: rgba(232,93,93,0.04); }
+
+/* Plan ID badge */
+.plan-id-badge {
+  display: inline-block; font-family: ui-monospace, Consolas, monospace;
+  font-size: 11px; font-weight: 600; color: #2563eb;
+  background: #eef4fb; border: 1px solid #cfe0f5;
+  padding: 1px 6px; border-radius: 3px; letter-spacing: 0.3px;
+}
+.plan-list .plan-id { width: 88px; }

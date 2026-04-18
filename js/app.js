@@ -276,13 +276,14 @@ function renderPlanList(docs, docBase) {
 
   const rows = docs.length ? docs.map((d, i) => `
     <tr class="plan-row" data-idx="${i}">
+      <td class="plan-id"><span class="plan-id-badge">${escapeHtmlText(d.meta.id || '-')}</span></td>
       <td class="plan-title">${escapeHtmlText(d.meta.title || d.file.name.replace(/\.md$/, ''))}</td>
       <td>${escapeHtmlText(d.meta.author || '-')}</td>
       <td>${escapeHtmlText(d.meta.issueDate || '-')}</td>
       <td>${renderJiraLink(d.meta.issueNumber)}</td>
       <td>${statusBadge(d.meta.status)}</td>
     </tr>
-  `).join('') : '<tr><td colspan="5" class="plan-empty">아직 기획문서가 없습니다.</td></tr>';
+  `).join('') : '<tr><td colspan="6" class="plan-empty">아직 기획문서가 없습니다.</td></tr>';
 
   docContent.innerHTML = `
     <div class="plan-list-header">
@@ -291,7 +292,7 @@ function renderPlanList(docs, docBase) {
     </div>
     <table class="plan-list">
       <thead><tr>
-        <th>제목</th><th>기획자</th><th>이슈일자</th><th>이슈번호</th><th>상태</th>
+        <th>ID</th><th>제목</th><th>기획자</th><th>이슈일자</th><th>이슈번호</th><th>상태</th>
       </tr></thead>
       <tbody>${rows}</tbody>
     </table>
@@ -338,9 +339,11 @@ function renderPlanDetailHeader(meta) {
   const statusMap = { '작성중': 'ver-status-wip', '검토중': 'ver-status-review', '확정': 'ver-status-done' };
   const statusCls = statusMap[meta.status] || 'ver-status-wip';
   const jira = meta.issueNumber ? `<a class="plan-jira-link" href="${jiraHref(meta.issueNumber)}" target="_blank" rel="noopener">${escapeHtmlText(meta.issueNumber)}</a>` : '-';
+  const id = meta.id ? `<span class="plan-id-badge">${escapeHtmlText(meta.id)}</span>` : '';
   return `
     <div class="doc-version-bar">
       <div class="doc-version-info">
+        ${id}
         <span class="plan-jira-key">${jira}</span>
         <span class="doc-version-status ${statusCls}">${escapeHtmlText(meta.status || '작성중')}</span>
       </div>
@@ -350,6 +353,18 @@ function renderPlanDetailHeader(meta) {
         <span>${escapeHtmlText(meta.author || '-')}</span>
       </div>
     </div>`;
+}
+
+// 다음 Plan ID 계산 (기존 목록에서 최대값 + 1). 페이지별로 prefix는 고정.
+function computeNextPlanId(docBase) {
+  const prefix = 'VPLAN';  // 향후 페이지별 prefix 매핑 시 ${docBase} 활용 가능
+  let max = 0;
+  for (const d of planDocs) {
+    const id = (d.meta && d.meta.id) || '';
+    const m = id.match(/^VPLAN-(\d+)$/);
+    if (m) max = Math.max(max, parseInt(m[1], 10));
+  }
+  return `${prefix}-${String(max + 1).padStart(3, '0')}`;
 }
 
 // 렌더된 HTML 안의 Jira 키를 링크로 치환 (이미 <a>안에 있는 키는 건너뜀)
@@ -382,6 +397,10 @@ function openNewPlan(docBase) {
   const existing = document.getElementById('planNewOverlay');
   if (existing) existing.remove();
   const today = new Date().toISOString().slice(0, 10);
+  const nextId = computeNextPlanId(docBase);
+  // 인증된 사용자 이름 자동 세팅
+  const user = window.vendysUser;
+  const authorDefault = user ? (user.displayName || (user.email || '').split('@')[0]) : '';
   const overlay = document.createElement('div');
   overlay.id = 'planNewOverlay';
   overlay.className = 'gh-settings-overlay';
@@ -389,12 +408,16 @@ function openNewPlan(docBase) {
     <div class="gh-settings-dialog">
       <div class="gh-settings-title">새 기획문서</div>
       <div class="gh-settings-field">
+        <label>고유 ID</label>
+        <input type="text" id="pnId" value="${nextId}" readonly style="background:#f5f6fa;color:#2563eb;font-weight:600">
+      </div>
+      <div class="gh-settings-field">
         <label>제목</label>
         <input type="text" id="pnTitle" placeholder="예: 통장거래 IDX 컬럼 추가">
       </div>
       <div class="gh-settings-field">
-        <label>기획자</label>
-        <input type="text" id="pnAuthor" placeholder="예: 정보근">
+        <label>기획자 ${user ? '(로그인 계정 기준 자동 입력)' : ''}</label>
+        <input type="text" id="pnAuthor" value="${escapeHtmlText(authorDefault)}" ${user ? 'readonly style="background:#f5f6fa"' : ''}>
       </div>
       <div class="gh-settings-field">
         <label>이슈일자</label>
@@ -420,6 +443,7 @@ function openNewPlan(docBase) {
   overlay.querySelector('#pnCancel').addEventListener('click', close);
 
   overlay.querySelector('#pnCreate').addEventListener('click', async () => {
+    const id = overlay.querySelector('#pnId').value.trim();
     const title = overlay.querySelector('#pnTitle').value.trim();
     const author = overlay.querySelector('#pnAuthor').value.trim();
     const date = overlay.querySelector('#pnDate').value;
@@ -440,6 +464,7 @@ function openNewPlan(docBase) {
     const fileName = `${date}-${issue}-${slug}.md`;
     const path = `docs/${docBase}/plans/${fileName}`;
     const body = `---
+id: ${id}
 title: ${title}
 author: ${author}
 issueDate: ${date}
