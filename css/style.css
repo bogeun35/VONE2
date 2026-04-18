@@ -244,6 +244,8 @@ input, select, button { font-family: inherit; font-size: 11px; }
   max-height: 400px;
   padding: 2px 14px 4px;
   border-top: 1px solid #f0f0f0;
+  /* 드롭다운(태그 검색 등) 이 아코디언 밖으로 나와야 하므로 열린 상태에서는 visible */
+  overflow: visible;
 }
 .filter-flat {
   display: flex; flex-wrap: wrap;
