@@ -28,25 +28,25 @@
 
   // ---------- 담당자 mock 주입 ----------
   // 구분:
-  //   - 계약담당자(contractManager): 계약을 따낸 사람(우리쪽 세일즈). 단일 이름.
-  //   - 성약담당자(closer): 거래처 측에서 이 계약을 실무 진행하는 담당자. 여러 명 가능 —
-  //     여러 명일 때는 "가장 최근" 한 명만 대표로 표시.
-  const _CLOSERS = [
+  //   - 계약담당자(contractManager): 계약을 따낸 사람(우리쪽 세일즈). 이름/이메일/전화번호.
+  //   - 성약담당자(closer): 거래처 측 실무 담당자. 이름만. 여러 명일 수 있어 수(count) 도 표시.
+  const _CONTRACT_MGRS = [
     { name: '전은혜', email: 'eh.jeon@vendys.co.kr', phone: '01023415820' },
     { name: '이샛별', email: 'sb.lee@vendys.co.kr',  phone: '01077129103' },
     { name: '김지혜', email: 'jh.kim@vendys.co.kr',  phone: '01044207788' },
     { name: '이주환', email: 'jh.lee@vendys.co.kr',  phone: '01088210127' },
     { name: '박지원', email: 'jw.park@vendys.co.kr', phone: '01055673311' },
   ];
-  const _SALES_POOL = ['이동현', '윤태현', '최수진', '홍지민', '정하늘'];
+  const _CLOSER_POOL = ['이동현', '윤태현', '최수진', '홍지민', '정하늘'];
   rawRows.forEach(r => {
-    const base = _CLOSERS.find(m => m.name === r.managerName) || _CLOSERS[r.idx % _CLOSERS.length];
+    const mgr = _CONTRACT_MGRS.find(m => m.name === r.managerName) || _CONTRACT_MGRS[r.idx % _CONTRACT_MGRS.length];
+    // 계약담당자: 이름/이메일/전화번호
+    r.contractManagerName = mgr.name;
+    r.contractManagerEmail = mgr.email;
+    r.contractManagerPhone = mgr.phone;
+    // 성약담당자: 이름만 + 수(여러 명일 때 가장 최근 한 명 대표)
     r.closerCount = r.isGroup === 'Y' ? 2 + (r.idx % 3) : 1;
-    r.closerName = base.name;
-    r.closerEmail = base.email;
-    r.closerPhone = base.phone;
-    // 계약담당자: mock 으로 순환 풀에서 할당 (이름만)
-    r.contractManager = _SALES_POOL[r.idx % _SALES_POOL.length];
+    r.closerName = _CLOSER_POOL[r.idx % _CLOSER_POOL.length];
     delete r.managerId; delete r.managerName; delete r.managerCount;
     delete r.managerEmail; delete r.managerPhone;
   });
@@ -134,11 +134,11 @@
         ? { textAlign: 'center', background: '#fee2e2' }
         : { textAlign: 'center' }
     },
-    { headerName: '계약담당자', field: 'contractManager', width: 80 },
+    { headerName: '계약담당자명', field: 'contractManagerName', width: 80 },
+    { headerName: '계약담당자 이메일', field: 'contractManagerEmail', width: 150 },
+    { headerName: '계약담당자 전화번호', field: 'contractManagerPhone', width: 108, cellStyle: rightAlign, headerClass: 'header-right' },
     { headerName: '성약담당자 수', field: 'closerCount', width: 66, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
     { headerName: '성약담당자명', field: 'closerName', width: 80 },
-    { headerName: '성약담당자 이메일', field: 'closerEmail', width: 150 },
-    { headerName: '성약담당자 전화번호', field: 'closerPhone', width: 108, cellStyle: rightAlign, headerClass: 'header-right' },
     { headerName: '생성일시', field: 'createdAt', width: 130, valueFormatter: fmtDateTime },
     { headerName: '생성자', field: 'createdBy', width: 54 },
     { headerName: '수정일시', field: 'updatedAt', width: 130, valueFormatter: fmtDateTime },
