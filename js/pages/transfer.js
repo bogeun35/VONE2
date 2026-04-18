@@ -36,9 +36,15 @@ function enrichData(rows) {
     const matchBiz = calcMatchRate(row.ownerName, row.bizName);
     const matchTotal = row.bizType === '개인' ? matchCeo : matchBiz;
     const matchTotalLabel = row.bizType === '개인' ? '대표자' : '사업자';
-    // 정산월: payDueDate 기준. 일부 행은 전월로 섞어서 3월/4월 혼합되게
-    const m = row.payDueDate ? parseInt(row.payDueDate.split('-')[1], 10) : 0;
-    const settleMonth = m ? ((row.seq % 3 === 0 ? m - 1 : m) + '월') : '';
+    // 정산년월: payDueDate 기준. 일부 행은 전월로 섞어서 3월/4월 혼합되게
+    let settleMonth = '';
+    if (row.payDueDate) {
+      const [yy, mmStr] = row.payDueDate.split('-');
+      let mm = parseInt(mmStr, 10);
+      let y = parseInt(yy, 10);
+      if (row.seq % 3 === 0) { mm -= 1; if (mm === 0) { mm = 12; y -= 1; } }
+      settleMonth = `${String(y).slice(2)}년 ${mm}월`;
+    }
     // 이체 성공 건에만 매칭된 통장거래 IDX(입금Idx) 부여
     const depositIdx = row.status === '이체 성공' ? 563570 + (row.seq % 20) : null;
     // 처리 IDX (txIdx): 실제 은행 이체 API 호출이 발생한 성공/실패 건에 번호 부여
@@ -141,7 +147,7 @@ const columnDefs = [
   },
   { headerName: '이체관리 IDX', field: 'seq', width: 40, minWidth: 40, pinned: 'left', cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', filter: 'agNumberColumnFilter' },
   { headerName: '정산서 IDX', field: 'settleIdx', width: 40, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', filter: 'agNumberColumnFilter' },
-  { headerName: '정산월', field: 'settleMonth', width: 52, minWidth: 45, cellStyle: centerAlign, headerClass: 'header-center' },
+  { headerName: '정산년월', field: 'settleMonth', width: 72, cellStyle: centerAlign, headerClass: 'header-center' },
   { headerName: '계약구분', field: 'ctype', width: 72, cellStyle: centerAlign, headerClass: 'header-center' },
   { headerName: '정산계약명', field: 'settleName', width: 150, minWidth: 90 },
   { headerName: '사업자구분', field: 'bizType', width: 58, minWidth: 50, cellRenderer: BizTypeRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
