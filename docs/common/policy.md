@@ -60,7 +60,7 @@ status: 살아있는 문서(growing)
 - 일반 텍스트: `70~110`
 - 우측 고정(액션 버튼): `72~82`
 - **원칙**: 모든 컬럼이 한 화면에 들어오도록 **타이트**하게. 사용자가 리사이즈 후 템플릿으로 저장.
-- **AG Grid `defaultColDef.minWidth = 40`** 로 설정 — AG Grid 내부 기본값(100)이 너무 커서 IDX 같은 좁은 컬럼이 40으로 줄어들지 않는다.
+- **AG Grid `defaultColDef.minWidth = 10`** 로 설정 — 사용자가 자유롭게 10px 까지 줄일 수 있도록 floor 최소화. 개별 컬럼에도 `minWidth` 를 **달지 않는다** (달면 공통 floor 가 막혀 불편함). 기본 폭(`width`) 만 지정.
 - AG Grid 셀/헤더 공통 패딩: `--ag-cell-horizontal-padding: 5px`, `--ag-grid-size: 4px` (style.css 에 정의됨). 페이지별로 재정의 금지.
 
 ### 4.1 헤더 우클릭 컨텍스트 메뉴 (필수)
