@@ -48,7 +48,13 @@
     return p.value || '';
   }
   function LockedRenderer(p) {
-    return p.value ? '<span style="color:#d97706">🔒 잠금</span>' : '<span style="color:#9aa3af">-</span>';
+    if (!p.data) return '';
+    const on = !!p.value;
+    // 토글 스위치 — 클릭 시 locked 뒤집고 행 갱신 (실제 API 연동 시점에는 fetch 호출)
+    return `<span class="lock-toggle ${on ? 'on' : 'off'}" data-idx="${p.data.idx}" title="${on ? '잠금 해제' : '잠금'}" onclick="window.SettleContract.toggleLock(${p.data.idx})">
+      <span class="lock-toggle-track"><span class="lock-toggle-thumb"></span></span>
+      <span class="lock-toggle-label">${on ? '🔒 잠금' : '열림'}</span>
+    </span>`;
   }
   function PctRenderer(p) { return p.value != null ? (Number(p.value) * 100).toFixed(2) + '%' : ''; }
   function DetailBtnRenderer(p) {
@@ -68,9 +74,9 @@
   // 기본은 타이트하게 — 사용자가 필요 시 리사이즈 후 템플릿 저장.
   const columnDefs = [
     { headerName: '', field: '_select', width: 32, minWidth: 32, maxWidth: 32, pinned: 'left', checkboxSelection: true, headerCheckboxSelection: true, headerCheckboxSelectionFilteredOnly: true, sortable: false, filter: false, resizable: false, suppressMovable: true, lockPosition: 'left', cellClass: 'cell-select', headerClass: 'header-center' },
-    { headerName: '정산계약 IDX', field: 'idx', width: 44, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    { headerName: '정산계약 IDX', field: 'idx', width: 44, minWidth: 40, pinned: 'left', cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
     { headerName: '계약명', field: 'name', width: 160, minWidth: 100 },
-    { headerName: '계약서 타입', field: 'ctype', width: 72, minWidth: 56, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '계약서 타입', field: 'ctype', width: 72, minWidth: 56, pinned: 'left', cellStyle: centerAlign, headerClass: 'header-center' },
     { headerName: '태그', field: 'tags', width: 120, minWidth: 70, cellRenderer: TagsRenderer, valueFormatter: p => (p.value || []).join(', ') },
     { headerName: '거래처 IDX', field: 'partnerIdx', width: 44, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
     { headerName: '거래처명', field: 'partnerName', width: 108, minWidth: 70 },
@@ -98,14 +104,18 @@
     { headerName: '계약 종료일', field: 'endAt', width: 82, minWidth: 70, cellStyle: centerAlign, headerClass: 'header-center' },
     { headerName: '계약 해지일', field: 'terminatedAt', width: 82, minWidth: 70, cellStyle: centerAlign, headerClass: 'header-center' },
     { headerName: '연장검토', field: 'extReview', width: 58, minWidth: 48, cellRenderer: YNRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '상태', field: 'status', width: 54, minWidth: 44, cellRenderer: StatusRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '상태', field: 'status', width: 54, minWidth: 44, pinned: 'right', cellRenderer: StatusRenderer, headerClass: 'header-center',
+      cellStyle: p => p && p.value && p.value !== '유효'
+        ? { textAlign: 'center', background: '#fee2e2' }
+        : { textAlign: 'center' }
+    },
     { headerName: '계약담당자 ID', field: 'managerId', width: 74, minWidth: 56 },
     { headerName: '계약담당자', field: 'managerName', width: 70, minWidth: 54 },
     { headerName: '생성일시', field: 'createdAt', width: 110, minWidth: 80 },
     { headerName: '생성자', field: 'createdBy', width: 54, minWidth: 44 },
     { headerName: '수정일시', field: 'updatedAt', width: 110, minWidth: 80 },
     { headerName: '수정자', field: 'updatedBy', width: 54, minWidth: 44 },
-    { headerName: '잠금', field: 'locked', width: 58, minWidth: 48, cellRenderer: LockedRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '잠금', field: 'locked', width: 78, minWidth: 64, pinned: 'right', cellRenderer: LockedRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
     { headerName: '정산서 보기', field: '_viewSettle', width: 82, minWidth: 70, cellRenderer: SettleBtnRenderer, pinned: 'right', sortable: false, filter: false, cellClass: 'cell-action-buttons' },
     { headerName: '상세보기', field: '_detail', width: 72, minWidth: 64, cellRenderer: DetailBtnRenderer, pinned: 'right', sortable: false, filter: false, cellClass: 'cell-action-buttons' },
   ];
@@ -126,6 +136,7 @@
     groupSettle: 'all',
     contractStatus: '유효',                  // 기본: 유효
     closedBiz: 'all',
+    locked: 'all',
   };
 
   function applyFilter() {
@@ -154,6 +165,10 @@
         const isClosed = !!r.closedAt;
         if (state.closedBiz === '정상' && isClosed) return false;
         if (state.closedBiz === '폐업' && !isClosed) return false;
+      }
+      if (state.locked !== 'all') {
+        if (state.locked === 'locked' && !r.locked) return false;
+        if (state.locked === 'unlocked' && r.locked) return false;
       }
       return true;
     });
@@ -268,6 +283,7 @@
     state.groupSettle = 'all';
     state.contractStatus = '유효';
     state.closedBiz = 'all';
+    state.locked = 'all';
 
     const page = document.getElementById('page-settle-contract-list');
     if (!page) return;
@@ -511,5 +527,18 @@
   });
 
   // 외부 공개 (렌더러에서 호출)
-  window.SettleContract = { openDetail, openSettleList, openShopDetail, openNew };
+  // 잠금 토글 (향후 API: PATCH /settle-contract/:idx { locked })
+  function toggleLock(idx) {
+    const row = rawRows.find(r => r.idx === idx);
+    if (!row) return;
+    row.locked = !row.locked;
+    // TODO: 실제 연동 시 fetch(...) 후 성공 콜백에서 refresh
+    if (gridApi) {
+      gridApi.forEachNode(node => {
+        if (node.data && node.data.idx === idx) node.setData(row);
+      });
+    }
+  }
+
+  window.SettleContract = { openDetail, openSettleList, openShopDetail, openNew, toggleLock };
 })();
