@@ -356,7 +356,7 @@
       headerHeight: 28,
       floatingFiltersHeight: 26,
       pagination: true,
-      paginationPageSize: 100,
+      paginationPageSize: 1000,
       suppressPaginationPanel: true,   // 커스텀 페이지네이션 사용
       onSelectionChanged: () => {
         const count = gridApi ? gridApi.getSelectedRows().length : 0;
@@ -404,7 +404,7 @@
     const pageSizeSel = document.getElementById('scPageSizeSelect');
     if (pageSizeSel) {
       pageSizeSel.addEventListener('change', () => {
-        const n = parseInt(pageSizeSel.value, 10) || 100;
+        const n = parseInt(pageSizeSel.value, 10) || 1000;
         gridApi.setGridOption('paginationPageSize', n);
         gridApi.paginationGoToPage(0);
       });
