@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.3.2/dist/ag-grid-community.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script defer src="js/tab-manager.js"></script>
   <!-- Firebase Auth (planvendys 와 동일 프로젝트 공유) -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
@@ -56,6 +57,22 @@
     </div>
   </header>
 
+  <!-- Page Tab Bar -->
+  <div class="tab-bar" id="tabBar" style="display:none">
+    <div class="tab-bar-scroll">
+      <div class="tab-list" id="tabList"></div>
+    </div>
+    <div class="tab-bar-actions">
+      <button class="tab-bar-action" id="tabActionRefresh" title="현재 탭 새로고침" aria-label="새로고침">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v4h-4"/><path d="M2 14v-4h4"/><path d="M13.5 6A6 6 0 003 4.5L2 6"/><path d="M2.5 10A6 6 0 0013 11.5L14 10"/></svg>
+      </button>
+      <button class="tab-bar-action" id="tabActionAll" title="전체 탭 목록" aria-label="전체보기">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 4h12M2 8h12M2 12h12"/></svg>
+      </button>
+    </div>
+    <div class="tab-all-menu" id="tabAllMenu" style="display:none"></div>
+  </div>
+
   <div class="layout" id="appLayout" style="display:none">
     <!-- LNB -->
     <nav class="lnb" id="lnb">
@@ -65,20 +82,20 @@
           정산/청구
         </div>
         <ul class="lnb-menu" id="menu-settle">
-          <li><a href="#거래처관리">거래처 관리</a></li>
-          <li><a href="#청구계약관리">청구 계약 관리</a></li>
-          <li><a href="#청구서관리">청구서 관리</a></li>
-          <li><a href="#정산계약관리">정산 계약 관리</a></li>
-          <li><a href="#정산서관리">정산서 관리</a></li>
-          <li><a href="#계산서관리">(세금)계산서 관리</a></li>
-          <li><a href="#현금영수증관리">현금영수증 관리</a></li>
-          <li><a href="#기타증빙관리">기타증빙 관리</a></li>
-          <li class="active"><a href="#이체관리">이체관리</a></li>
-          <li><a href="#통장거래내역">통장거래내역</a></li>
-          <li><a href="#일괄작업현황">일괄 작업 현황</a></li>
-          <li><a href="#결제원장">결제원장</a></li>
-          <li><a href="#대장포인트환불관리">대장포인트 환불 관리</a></li>
-          <li><a href="#고객사제휴점정산방식설정">고객사 제휴점 정산방식 설정</a></li>
+          <li><a href="#거래처관리" data-tab-id="partner-list" data-tab-title="거래처 관리">거래처 관리</a></li>
+          <li><a href="#청구계약관리" data-tab-id="bill-contract-list" data-tab-title="청구 계약 관리">청구 계약 관리</a></li>
+          <li><a href="#청구서관리" data-tab-id="bill-list" data-tab-title="청구서 관리">청구서 관리</a></li>
+          <li><a href="#정산계약관리" data-tab-id="settle-contract-list" data-tab-title="정산 계약 관리">정산 계약 관리</a></li>
+          <li><a href="#정산서관리" data-tab-id="settle-list" data-tab-title="정산서 관리">정산서 관리</a></li>
+          <li><a href="#계산서관리" data-tab-id="tax-invoice-list" data-tab-title="(세금)계산서 관리">(세금)계산서 관리</a></li>
+          <li><a href="#현금영수증관리" data-tab-id="cash-receipt-list" data-tab-title="현금영수증 관리">현금영수증 관리</a></li>
+          <li><a href="#기타증빙관리" data-tab-id="etc-proof-list" data-tab-title="기타증빙 관리">기타증빙 관리</a></li>
+          <li class="active"><a href="#이체관리" data-tab-id="transfer-list" data-tab-title="이체관리">이체관리</a></li>
+          <li><a href="#통장거래내역" data-tab-id="bank-tx-list" data-tab-title="통장거래내역">통장거래내역</a></li>
+          <li><a href="#일괄작업현황" data-tab-id="batch-status" data-tab-title="일괄 작업 현황">일괄 작업 현황</a></li>
+          <li><a href="#결제원장" data-tab-id="payment-ledger" data-tab-title="결제원장">결제원장</a></li>
+          <li><a href="#대장포인트환불관리" data-tab-id="point-refund" data-tab-title="대장포인트 환불 관리">대장포인트 환불 관리</a></li>
+          <li><a href="#고객사제휴점정산방식설정" data-tab-id="shop-settle-config" data-tab-title="고객사 제휴점 정산방식 설정">고객사 제휴점 정산방식 설정</a></li>
         </ul>
       </div>
     </nav>
@@ -169,7 +186,7 @@
                     <button class="btn-period">지난 달</button>
                   </div>
                   <div class="date-range">
-                    <input type="date" value="2026-04-01"> <span>~</span> <input type="date" value="2026-04-30">
+                    <input type="date" value="2026-04-01" lang="sv-SE"> <span>~</span> <input type="date" value="2026-04-30" lang="sv-SE">
                   </div>
                 </div>
                 <div class="filter-inline-group">
@@ -180,18 +197,18 @@
                     <button class="btn-period">지난 달</button>
                   </div>
                   <div class="date-range">
-                    <input type="date"> <span>~</span> <input type="date">
+                    <input type="date" lang="sv-SE"> <span>~</span> <input type="date" lang="sv-SE">
                   </div>
                 </div>
                 <div class="filter-inline-group">
-                  <label>이체요청일</label>
+                  <label>이체실행일</label>
                   <div class="btn-group-period">
                     <button class="btn-period">오늘</button>
                     <button class="btn-period">이번 달</button>
                     <button class="btn-period">지난 달</button>
                   </div>
                   <div class="date-range">
-                    <input type="date"> <span>~</span> <input type="date">
+                    <input type="date" lang="sv-SE"> <span>~</span> <input type="date" lang="sv-SE">
                   </div>
                 </div>
               </div>
@@ -275,10 +292,14 @@
         <div class="grid-section">
           <div class="grid-toolbar">
             <div class="grid-toolbar-left">
-              <h3 class="section-title">검색 결과</h3>
-              <span class="grid-total">전체 : 7,446건</span>
+              <span class="grid-table-name">이체 조회 테이블</span>
+              <span class="grid-total">검색결과 : 7,446건</span>
+              <span class="selected-count">선택 <strong>0</strong>건</span>
+              <span class="cell-range-status" id="cellRangeStatus"></span>
             </div>
             <div class="grid-toolbar-right">
+              <button class="btn btn-sm btn-outline-primary" id="gridCopyAllBtn">전체 복사</button>
+              <button class="btn btn-sm btn-outline-primary" id="gridColPickerBtn">컬럼 선택</button>
               <button class="btn btn-sm btn-outline-primary" id="gridResetBtn">컬럼 초기화</button>
               <button class="btn btn-sm btn-outline-primary" id="gridTplBtn">템플릿 설정</button>
               <select class="page-size-select">
@@ -302,16 +323,13 @@
             </div>
           </div>
           <div id="transferGrid" class="ag-theme-alpine grid-container"></div>
-          <div class="grid-action-footer">
-            <div class="grid-action-footer-left">
-              <button class="btn btn-sm btn-primary">선택 이체 승인</button>
-              <button class="btn btn-sm btn-primary">선택 이체 요청</button>
-              <button class="btn btn-sm btn-outline-danger">선택 삭제</button>
-            </div>
-            <div class="grid-action-footer-right">
-              <span class="selected-count">선택 <strong>0</strong>건</span>
-            </div>
-          </div>
+        </div>
+      </div>
+      <div class="grid-action-footer">
+        <div class="grid-action-footer-left">
+          <button class="btn btn-sm btn-primary">선택 이체 승인</button>
+          <button class="btn btn-sm btn-primary">선택 이체 요청</button>
+          <button class="btn btn-sm btn-outline-danger">선택 삭제</button>
         </div>
       </div>
     </main>
@@ -384,7 +402,7 @@
               <div class="filter-label">거래일시</div>
               <div class="filter-inline-group">
                 <div class="date-range">
-                  <input type="datetime-local" id="modalDateFrom"> <span>~</span> <input type="datetime-local" id="modalDateTo">
+                  <input type="text" id="modalDateFrom" class="dtl24-input" placeholder="yyyy-mm-dd hh:mm:ss" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" maxlength="19"> <span>~</span> <input type="text" id="modalDateTo" class="dtl24-input" placeholder="yyyy-mm-dd hh:mm:ss" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" maxlength="19">
                 </div>
               </div>
               <div class="filter-inline-group">
@@ -418,6 +436,10 @@
   <script src="js/auth.js"></script>
   <script src="js/app.js"></script>
   <script src="js/components/grid-template.js"></script>
+  <script src="js/components/grid-column-picker.js"></script>
+  <script src="js/components/grid-range-select.js"></script>
+  <script src="js/components/vone-table-filter.js"></script>
+  <script src="js/components/date-input-placeholder.js"></script>
   <script src="js/pages/transfer.js"></script>
 </body>
 </html>

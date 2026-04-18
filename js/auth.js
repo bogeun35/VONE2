@@ -13,6 +13,36 @@
   const ALLOWED_DOMAIN = "vendys.co.kr";
   const ALLOWED_EMAILS = ["pomez971@gmail.com"];
 
+  // ===== 개발/프리뷰 우회 =====
+  // localhost / 127.0.0.1 / ?dev=1 일 때 Firebase 팝업 로그인 없이 mock user 로 앱 진입
+  const isDevHost =
+    location.hostname === 'localhost' ||
+    location.hostname === '127.0.0.1' ||
+    location.hostname === '' ||
+    location.protocol === 'file:';
+  const devFlag = new URLSearchParams(location.search).get('dev') === '1';
+  const DEV_BYPASS = isDevHost || devFlag;
+
+  if (DEV_BYPASS) {
+    const mockUser = {
+      uid: 'dev-local',
+      email: 'dev@vendys.co.kr',
+      displayName: '개발자(로컬)',
+      photoURL: null,
+    };
+    window.vendysUser = mockUser;
+    // DOM 준비 후 앱 화면 표시
+    document.addEventListener('DOMContentLoaded', () => {
+      showApp(mockUser);
+    });
+    window.vendysAuth = {
+      signIn: () => {},
+      signOut: () => { console.info('[dev] signOut ignored in bypass mode'); },
+    };
+    console.info('[auth] DEV_BYPASS active — Firebase 로그인을 건너뜁니다.');
+    return; // Firebase 초기화 스킵
+  }
+
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
 
@@ -40,6 +70,7 @@
     document.getElementById("loginScreen").style.display = "flex";
     document.getElementById("appHeader").style.display = "none";
     document.getElementById("appLayout").style.display = "none";
+    const tabBar = document.getElementById("tabBar"); if (tabBar) tabBar.style.display = "none";
   }
 
   function showApp(user) {
@@ -47,6 +78,8 @@
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("appHeader").style.display = "";
     document.getElementById("appLayout").style.display = "";
+    const tabBar = document.getElementById("tabBar"); if (tabBar) tabBar.style.display = "flex";
+    if (window.TabManager && typeof window.TabManager.boot === "function") window.TabManager.boot();
 
     const nameEl = document.getElementById("headerUserName");
     const emailEl = document.getElementById("headerUserEmail");

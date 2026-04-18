@@ -41,7 +41,22 @@ function enrichData(rows) {
     const settleMonth = m ? ((row.seq % 3 === 0 ? m - 1 : m) + '월') : '';
     // 이체 성공 건에만 매칭된 통장거래 IDX(입금Idx) 부여
     const depositIdx = row.status === '이체 성공' ? 563570 + (row.seq % 20) : null;
-    return { ...row, matchCeo, matchBiz, matchTotal, matchTotalLabel, settleMonth, depositIdx };
+    // 처리 IDX (txIdx): 실제 은행 이체 API 호출이 발생한 성공/실패 건에 번호 부여
+    const txIdx = (row.status === '이체 성공' || row.status === '이체 실패')
+      ? (row.txIdx || 7812340 + (row.seq % 97))
+      : (row.txIdx || null);
+    // 승인일시/승인자: 요청 이후 상태(이체 승인/실행 요청/이체 성공/이체 실패)에만 값 부여
+    const approvedStatuses = ['이체 승인', '실행 요청', '이체 성공', '이체 실패'];
+    let approvedAt = '', approvedBy = '';
+    if (approvedStatuses.includes(row.status) && row.requestedAt) {
+      // 요청일시 + 몇 분 뒤를 승인일시로 샘플링
+      const base = new Date(row.requestedAt.replace(' ', 'T'));
+      base.setMinutes(base.getMinutes() + (row.seq % 5 + 1));
+      const pad = n => String(n).padStart(2, '0');
+      approvedAt = `${base.getFullYear()}-${pad(base.getMonth()+1)}-${pad(base.getDate())} ${pad(base.getHours())}:${pad(base.getMinutes())}`;
+      approvedBy = row.seq % 2 === 0 ? '김승인' : '이주환';
+    }
+    return { ...row, matchCeo, matchBiz, matchTotal, matchTotalLabel, settleMonth, depositIdx, txIdx, approvedAt, approvedBy };
   });
 }
 
@@ -136,12 +151,15 @@ const columnDefs = [
   { headerName: '검증(%)', field: 'matchTotal', width: 60, minWidth: 50, cellRenderer: MatchTotalRenderer, cellStyle: rightAlign, headerClass: 'header-right', filter: 'agNumberColumnFilter' },
   { headerName: '거래처 IDX', field: 'partnerIdx', width: 40, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', filter: 'agNumberColumnFilter' },
   { headerName: '통장거래 IDX', field: 'depositIdx', width: 70, minWidth: 60, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', filter: 'agNumberColumnFilter' },
+  { headerName: '처리 IDX', field: 'txIdx', width: 70, minWidth: 60, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', filter: 'agNumberColumnFilter' },
   { headerName: '거래처명', field: 'partnerName', width: 108, minWidth: 70 },
   { headerName: '제휴점명', field: 'shopName', width: 108, minWidth: 70 },
   { headerName: '생성일시', field: 'createdAt', width: 92, minWidth: 85 },
   { headerName: '생성자', field: 'createdBy', width: 52, minWidth: 45 },
   { headerName: '요청일시', field: 'requestedAt', width: 92, minWidth: 85 },
   { headerName: '요청자', field: 'requestedBy', width: 52, minWidth: 45 },
+  { headerName: '승인일시', field: 'approvedAt', width: 92, minWidth: 85 },
+  { headerName: '승인자', field: 'approvedBy', width: 52, minWidth: 45 },
   { headerName: '지급일시', field: 'paidAt', width: 92, minWidth: 85 },
   { headerName: '수정일시', field: 'updatedAt', width: 92, minWidth: 85 },
   { headerName: '수정자', field: 'updatedBy', width: 52, minWidth: 45 },
@@ -152,15 +170,24 @@ const columnDefs = [
 
 let gridApi = null;
 
+// VoneTable 필터 정책서 기반 공통 커스텀 필터 일괄 적용
+if (window.VoneTableFilterLib) {
+  window.VoneTableFilterLib.installAll(columnDefs, {
+    exclude: ['_select', '_action'],  // 시스템 컬럼 제외
+  });
+  window.VoneTableFilterLib.installHintHeader(columnDefs, '_select');
+}
+
 const gridOptions = {
   columnDefs,
   rowData: gridData,
   rowSelection: 'multiple',
   suppressRowClickSelection: true,
   animateRows: true,
-  defaultColDef: { sortable: true, resizable: true, filter: true },
+  defaultColDef: { sortable: true, resizable: true, filter: true, floatingFilter: true },
   rowHeight: 28,
   headerHeight: 28,
+  floatingFiltersHeight: 26,
   getRowStyle: p => {
     if (p.data && p.data.status === '이체 실패') return { background: '#fff8f8' };
     return null;
@@ -198,6 +225,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const result = agGrid.createGrid(gridDiv, gridOptions);
   gridApi = result;
+  // 디버그/외부 조작용 글로벌 노출
+  window.gridApi = gridApi;
+
+  // 셀 범위 선택 + 엑셀 복붙 + 상태바 (Community 버전 대체)
+  let rangeCtl = null;
+  if (window.GridRangeSelect) {
+    rangeCtl = window.GridRangeSelect.attach({
+      gridDiv,
+      gridApi,
+      statusEl: document.getElementById('cellRangeStatus'),
+    });
+  }
+
+  // 전체 복사 버튼
+  const copyAllBtn = document.getElementById('gridCopyAllBtn');
+  if (copyAllBtn && rangeCtl) {
+    copyAllBtn.addEventListener('click', () => {
+      rangeCtl.copyAll({ includeHeaders: true, onlyFiltered: true });
+    });
+  }
 
   const ctxMenu = createColumnContextMenu();
   let targetColId = null;
@@ -243,11 +290,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 템플릿 설정 버튼 (localStorage 기반)
+  // 컬럼 선택 팝오버 버튼
+  const colPickerBtn = document.getElementById('gridColPickerBtn');
+  if (colPickerBtn && window.GridColumnPicker) {
+    colPickerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      window.GridColumnPicker.open({
+        gridApi,
+        anchorEl: colPickerBtn,
+        tableName: '이체 조회 테이블',
+      });
+    });
+  }
+
+  // 템플릿 설정 버튼 (GitHub 공유 저장소 기반)
   const tplBtn = document.getElementById('gridTplBtn');
   if (tplBtn && window.GridTemplate) {
     tplBtn.addEventListener('click', () => {
-      window.GridTemplate.openModal('transferGrid', gridApi);
+      window.GridTemplate.openModal({
+        gridId: 'transferGrid',
+        gridApi,
+        tableName: '이체 조회 테이블',
+      });
     });
   }
 });
@@ -299,11 +363,9 @@ const modalColumnDefs = [
 ];
 
 function filterBankTx() {
-  // datetime-local 값은 'YYYY-MM-DDTHH:MM' → 공백 치환해 txAt 포맷과 정렬
-  const fromRaw = document.getElementById('modalDateFrom').value;
-  const toRaw = document.getElementById('modalDateTo').value;
-  const from = fromRaw ? fromRaw.replace('T', ' ') : '';
-  const to = toRaw ? toRaw.replace('T', ' ') : '';
+  // 24시간 포맷 텍스트 입력: 'YYYY-MM-DD HH:MM:SS' — txAt 형식과 동일해 문자열 비교 가능
+  const from = (document.getElementById('modalDateFrom').value || '').trim();
+  const to = (document.getElementById('modalDateTo').value || '').trim();
   const minAmt = parseInt(document.getElementById('modalAmountFrom').value, 10) || 0;
   const maxAmt = parseInt(document.getElementById('modalAmountTo').value, 10) || Number.MAX_SAFE_INTEGER;
   return bankTxData.filter(r => {
@@ -365,10 +427,19 @@ function openSuccessModal(seq) {
   document.getElementById('modalAmount').value = row.transferAmount.toLocaleString() + '원';
   document.getElementById('modalShopName').value = row.shopName || '-';
 
-  // 디폴트: 해당 날짜의 00:00 ~ 23:59 (datetime-local 포맷)
-  const sampleDate = '2026-04-17';
-  document.getElementById('modalDateFrom').value = `${sampleDate}T00:00`;
-  document.getElementById('modalDateTo').value = `${sampleDate}T23:59`;
+  // 거래일시 디폴트: 해당 행의 지급일시(paidAt) ± 10초 (24시간 포맷)
+  // paidAt 이 비어있는 실패 건은 요청일시 → 생성일시 순서로 폴백해 "이체 시도 시점" 주변을 잡는다
+  const pad = n => String(n).padStart(2, '0');
+  const fmt24 = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  const baseStr = row.paidAt || row.requestedAt || row.createdAt;
+  if (baseStr) {
+    const base = new Date(baseStr.replace(' ', 'T'));
+    document.getElementById('modalDateFrom').value = fmt24(new Date(base.getTime() - 10000));
+    document.getElementById('modalDateTo').value   = fmt24(new Date(base.getTime() + 10000));
+  } else {
+    document.getElementById('modalDateFrom').value = '2026-04-17 00:00:00';
+    document.getElementById('modalDateTo').value   = '2026-04-17 23:59:59';
+  }
   document.getElementById('modalAmountFrom').value = row.transferAmount;
   document.getElementById('modalAmountTo').value = row.transferAmount;
 
@@ -453,6 +524,47 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+  // ===== 날짜 빠른선택 핫키 (오늘 / 이번 달 / 지난 달) → date input 값 설정 =====
+  (function bindDatePresetButtons() {
+    const pad = n => String(n).padStart(2, '0');
+    const fmt = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    function getRange(label) {
+      const now = new Date();
+      const y = now.getFullYear(), m = now.getMonth(), d = now.getDate();
+      if (label.includes('오늘')) {
+        const today = fmt(new Date(y, m, d));
+        return [today, today];
+      }
+      if (label.includes('지난')) {
+        const first = new Date(y, m - 1, 1);
+        const last = new Date(y, m, 0); // 지난달 말일
+        return [fmt(first), fmt(last)];
+      }
+      // 이번 달 기본
+      const first = new Date(y, m, 1);
+      const last = new Date(y, m + 1, 0);
+      return [fmt(first), fmt(last)];
+    }
+    document.querySelectorAll('.filter-inline-group').forEach(group => {
+      const btns = group.querySelectorAll('.btn-group-period .btn-period');
+      const dateInputs = group.querySelectorAll('.date-range input[type="date"]');
+      if (!btns.length || dateInputs.length < 2) return;
+      btns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const [from, to] = getRange(btn.textContent.trim());
+          dateInputs[0].value = from;
+          dateInputs[1].value = to;
+          btns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          // change 이벤트로 연계된 리스너(검증/검색 등)에도 알림
+          dateInputs[0].dispatchEvent(new Event('change', { bubbles: true }));
+          dateInputs[1].dispatchEvent(new Event('change', { bubbles: true }));
+        });
+      });
+    });
+  })();
+
   if (confirmBtn) confirmBtn.addEventListener('click', () => {
     if (!modalGridApi) return;
     const sel = modalGridApi.getSelectedRows();
