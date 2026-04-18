@@ -78,8 +78,9 @@ const gridData = enrichData(realData);
 // Cell Renderers
 function StatusRenderer(p) {
   if (!p.value) return '';
-  const colorMap = { '이체 성공': '#16a34a', '이체 실패': '#ef4444', '이체 대기': '#d97706', '이체 승인': '#7c3aed', '실행 요청': '#2563eb' };
-  return `<span style="color:${colorMap[p.value] || '#333'}">${p.value}</span>`;
+  // 실패만 강조. 나머지는 평범하게.
+  if (p.value === '이체 실패') return `<span style="color:#ef4444;font-weight:600">${p.value}</span>`;
+  return p.value;
 }
 
 function BizTypeRenderer(p) {
