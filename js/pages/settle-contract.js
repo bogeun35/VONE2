@@ -26,6 +26,26 @@
     { idx: 20601, name: '제비면가_계약서', ctype: '식권대장', tags: null, partnerIdx: 32055, partnerName: '제비면가', bizNo: '7560202084', subBizNo: '0000', isGroup: 'N', shopCount: 1, shopId: '6A14FF0F-81D3-2116-76D6-5DEF4A44AAA1', shopName: '제비면가', cycleType: '정기', cycleDay: 10, payCycle: '월', pointFeeRate: 0.03, payFeeRate: 0.03, proofType: '공급자발행', linkType: 'BAROBILL', certExpire: '', closedAt: '', proofOffset: '상계', transferOffset: '상계', settleBank: '케이뱅크', settleAccount: '100216198463', settleOwner: '김수영(제비면가)', startAt: '2024-05-01', endAt: '2027-04-30', terminatedAt: '', extReview: 'Y', status: '유효', managerId: 'U0112', managerName: '전은혜', createdAt: '2024-05-02T10:00:00', createdBy: '전은혜', updatedAt: '2026-04-12T14:00:00', updatedBy: '전은혜', locked: false },
   ];
 
+  // ---------- 담당자 mock 주입 ----------
+  // managerId 제거, 담당자 수 + 대표(가장 최근) 담당자 정보로 대체.
+  // 담당자가 여러명이면 가장 최근에 등록된 한 명만 표시.
+  const _MANAGERS = [
+    { name: '전은혜', email: 'eh.jeon@vendys.co.kr', phone: '010-2341-5820' },
+    { name: '이샛별', email: 'sb.lee@vendys.co.kr',  phone: '010-7712-9103' },
+    { name: '김지혜', email: 'jh.kim@vendys.co.kr',  phone: '010-4420-7788' },
+    { name: '이주환', email: 'jh.lee@vendys.co.kr',  phone: '010-8821-0127' },
+    { name: '박지원', email: 'jw.park@vendys.co.kr', phone: '010-5567-3311' },
+  ];
+  rawRows.forEach(r => {
+    // 기존 managerName 이 있으면 그 인물의 연락처로, 없으면 랜덤
+    const base = _MANAGERS.find(m => m.name === r.managerName) || _MANAGERS[r.idx % _MANAGERS.length];
+    r.managerCount = r.isGroup === 'Y' ? 2 + (r.idx % 3) : (r.managerName ? 1 : 0);
+    r.managerName = r.managerCount > 0 ? base.name : '';
+    r.managerEmail = r.managerCount > 0 ? base.email : '';
+    r.managerPhone = r.managerCount > 0 ? base.phone : '';
+    delete r.managerId;
+  });
+
   // ---------- Cell Renderers ----------
   function LinkRenderer(p) { return p.value != null && p.value !== '' ? `<a class="grid-link">${p.value}</a>` : ''; }
   function ShopLinkRenderer(p) {
@@ -109,8 +129,10 @@
         ? { textAlign: 'center', background: '#fee2e2' }
         : { textAlign: 'center' }
     },
-    { headerName: '계약담당자 ID', field: 'managerId', width: 74, minWidth: 56 },
-    { headerName: '계약담당자', field: 'managerName', width: 70, minWidth: 54 },
+    { headerName: '담당자 수', field: 'managerCount', width: 56, minWidth: 48, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    { headerName: '담당자명', field: 'managerName', width: 80, minWidth: 54 },
+    { headerName: '담당자 이메일', field: 'managerEmail', width: 140, minWidth: 90 },
+    { headerName: '담당자 전화번호', field: 'managerPhone', width: 100, minWidth: 80, cellStyle: rightAlign, headerClass: 'header-right' },
     { headerName: '생성일시', field: 'createdAt', width: 110, minWidth: 80 },
     { headerName: '생성자', field: 'createdBy', width: 54, minWidth: 44 },
     { headerName: '수정일시', field: 'updatedAt', width: 110, minWidth: 80 },
