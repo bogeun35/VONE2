@@ -66,61 +66,97 @@
   const centerAlign = { textAlign: 'center' };
 
   // ---------- Column Defs ----------
-  const columnDefs = [
-    { headerName: '', field: '_select', width: 32, maxWidth: 32, pinned: 'left', checkboxSelection: true, headerCheckboxSelection: true, headerCheckboxSelectionFilteredOnly: true, sortable: false, filter: false, resizable: false, suppressMovable: true, lockPosition: 'left', cellClass: 'cell-select', headerClass: 'header-center' },
-    { headerName: '정산서 IDX', field: 'idx', width: 60, pinned: 'left', cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '거래처 IDX', field: 'partnerIdx', width: 48, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '정산 시작일', field: 'startAt', width: 82, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '정산 종료일', field: 'endAt', width: 82, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '정산계약 IDX', field: 'contractIdx', width: 54, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '제휴점 ID', field: 'shopId', width: 140, cellRenderer: ShopLinkRenderer },
-    { headerName: '계약서 타입', field: 'ctype', width: 72, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '정산계약명', field: 'contractName', width: 180 },
-    { headerName: '태그', field: 'tags', width: 100, cellRenderer: TagsRenderer, valueFormatter: p => (p.value || []).join(', ') },
-    { headerName: '연결 제휴점', field: 'shopName', width: 140 },
-    { headerName: '사업자번호', field: 'bizNo', width: 82, cellStyle: rightAlign, headerClass: 'header-right' },
-    { headerName: '대표자명', field: 'ceoName', width: 70 },
-    { headerName: '거래처명', field: 'partnerName', width: 120 },
-    { headerName: '폐업일자', field: 'closedAt', width: 74, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '지급 예정일', field: 'payDueDate', width: 82, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '예금주', field: 'acctOwner', width: 100 },
-    { headerName: '은행', field: 'acctBank', width: 70 },
-    { headerName: '계좌번호', field: 'acctNo', width: 110, cellStyle: rightAlign, headerClass: 'header-right' },
-    { headerName: '계좌 검증 일시', field: 'acctVerifyAt', width: 130, valueFormatter: fmtDateTime },
-    { headerName: '검증 성공 여부', field: 'acctVerifyOk', width: 72, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '검증 실패 사유', field: 'acctVerifyFailReason', width: 120 },
-    { headerName: '거래 금액', field: 'tradeAmount', width: 92, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '수수료', field: 'feeAmount', width: 82, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '매입증빙수취유형', field: 'proofType', width: 110 },
-    { headerName: '연동사 타입', field: 'linkType', width: 68 },
-    { headerName: '증빙상계여부', field: 'proofOffset', width: 72, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '매입 증빙 필요 금액', field: 'purchaseNeed', width: 98, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '매입 증빙 완료 금액', field: 'purchaseDone', width: 98, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '매입 증빙 상태', field: 'purchaseStatus', width: 92, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '매출 증빙 필요 금액', field: 'salesNeed', width: 98, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '매출 증빙 완료 금액', field: 'salesDone', width: 98, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '매출 증빙 상태', field: 'salesStatus', width: 92, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '작성일자', field: 'writeAt', width: 82, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '발급일자', field: 'issueAt', width: 130, valueFormatter: fmtDateTime },
-    { headerName: '전송일자', field: 'sendAt', width: 130, valueFormatter: fmtDateTime },
-    { headerName: '매입 비고', field: 'purchaseMemo', width: 100 },
-    { headerName: '매출 비고', field: 'salesMemo', width: 100 },
-    { headerName: '이체상계여부', field: 'transferOffset', width: 72, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '지급 상태', field: 'payStatus', width: 72, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '지급 필요 금액', field: 'payNeed', width: 98, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '이체 대기 금액', field: 'payWait', width: 98, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '지급 비고', field: 'payMemo', width: 100 },
-    { headerName: '정산서 메모', field: 'settleMemo', width: 120 },
-    { headerName: '지급 완료 금액', field: 'payDone', width: 98, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '정산 상태', field: 'status', width: 72, pinned: 'right', cellRenderer: StatusRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '잠금', field: 'locked', width: 48, pinned: 'right', cellRenderer: LockedRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '상세보기', field: '_detail', width: 72, cellRenderer: DetailBtnRenderer, pinned: 'right', sortable: false, filter: false, cellClass: 'cell-action-buttons' },
-  ];
+  // 평탄한 column 정의. 그룹은 아래 columnDefs 에서 children 으로 재구성.
+  const C = {
+    _select:      { headerName: '', field: '_select', width: 32, maxWidth: 32, pinned: 'left', checkboxSelection: true, headerCheckboxSelection: true, headerCheckboxSelectionFilteredOnly: true, sortable: false, filter: false, resizable: false, suppressMovable: true, lockPosition: 'left', cellClass: 'cell-select', headerClass: 'header-center' },
+    idx:          { headerName: '정산서 IDX', field: 'idx', width: 60, pinned: 'left', cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    startAt:      { headerName: '정산 시작일', field: 'startAt', width: 82, cellStyle: centerAlign, headerClass: 'header-center' },
+    endAt:        { headerName: '정산 종료일', field: 'endAt', width: 82, cellStyle: centerAlign, headerClass: 'header-center' },
+    tradeAmount:  { headerName: '거래 금액', field: 'tradeAmount', width: 92, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    feeAmount:    { headerName: '수수료', field: 'feeAmount', width: 82, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    writeAt:      { headerName: '작성일자', field: 'writeAt', width: 82, cellStyle: centerAlign, headerClass: 'header-center' },
+    issueAt:      { headerName: '발급일자', field: 'issueAt', width: 130, valueFormatter: fmtDateTime },
+    sendAt:       { headerName: '전송일자', field: 'sendAt', width: 130, valueFormatter: fmtDateTime },
+    settleMemo:   { headerName: '정산서 메모', field: 'settleMemo', width: 120 },
+    status:       { headerName: '정산 상태', field: 'status', width: 72, pinned: 'right', cellRenderer: StatusRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
+    locked:       { headerName: '잠금', field: 'locked', width: 48, pinned: 'right', cellRenderer: LockedRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
 
+    contractIdx:  { headerName: '정산계약 IDX', field: 'contractIdx', width: 54, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    ctype:        { headerName: '계약서 타입', field: 'ctype', width: 72, cellStyle: centerAlign, headerClass: 'header-center' },
+    contractName: { headerName: '정산계약명', field: 'contractName', width: 180 },
+    tags:         { headerName: '태그', field: 'tags', width: 100, cellRenderer: TagsRenderer, valueFormatter: p => (p.value || []).join(', ') },
+    shopId:       { headerName: '제휴점 ID', field: 'shopId', width: 140, cellRenderer: ShopLinkRenderer },
+    shopName:     { headerName: '연결 제휴점', field: 'shopName', width: 140 },
+    payDueDate:   { headerName: '지급 예정일', field: 'payDueDate', width: 82, cellStyle: centerAlign, headerClass: 'header-center' },
+    acctOwner:    { headerName: '예금주', field: 'acctOwner', width: 100 },
+    acctBank:     { headerName: '은행', field: 'acctBank', width: 70 },
+    acctNo:       { headerName: '계좌번호', field: 'acctNo', width: 110, cellStyle: rightAlign, headerClass: 'header-right' },
+    acctVerifyAt: { headerName: '계좌 검증 일시', field: 'acctVerifyAt', width: 130, valueFormatter: fmtDateTime },
+    acctVerifyOk: { headerName: '검증 성공 여부', field: 'acctVerifyOk', width: 72, cellStyle: centerAlign, headerClass: 'header-center' },
+    acctVerifyFailReason: { headerName: '검증 실패 사유', field: 'acctVerifyFailReason', width: 120 },
+
+    partnerIdx:   { headerName: '거래처 IDX', field: 'partnerIdx', width: 48, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    partnerName:  { headerName: '거래처명', field: 'partnerName', width: 120 },
+    bizNo:        { headerName: '사업자번호', field: 'bizNo', width: 82, cellStyle: rightAlign, headerClass: 'header-right' },
+    ceoName:      { headerName: '대표자명', field: 'ceoName', width: 70 },
+    closedAt:     { headerName: '폐업일자', field: 'closedAt', width: 74, cellStyle: centerAlign, headerClass: 'header-center' },
+
+    salesNeed:    { headerName: '매출 증빙 필요 금액', field: 'salesNeed', width: 98, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    salesDone:    { headerName: '매출 증빙 완료 금액', field: 'salesDone', width: 98, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    salesStatus:  { headerName: '매출 증빙 상태', field: 'salesStatus', width: 92, cellStyle: centerAlign, headerClass: 'header-center' },
+    salesMemo:    { headerName: '매출 비고', field: 'salesMemo', width: 100 },
+
+    proofType:    { headerName: '매입증빙수취유형', field: 'proofType', width: 110 },
+    linkType:     { headerName: '연동사 타입', field: 'linkType', width: 68 },
+    proofOffset:  { headerName: '증빙상계여부', field: 'proofOffset', width: 72, cellStyle: centerAlign, headerClass: 'header-center' },
+    purchaseNeed: { headerName: '매입 증빙 필요 금액', field: 'purchaseNeed', width: 98, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    purchaseDone: { headerName: '매입 증빙 완료 금액', field: 'purchaseDone', width: 98, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    purchaseStatus: { headerName: '매입 증빙 상태', field: 'purchaseStatus', width: 92, cellStyle: centerAlign, headerClass: 'header-center' },
+    purchaseMemo: { headerName: '매입 비고', field: 'purchaseMemo', width: 100 },
+
+    transferOffset: { headerName: '이체상계여부', field: 'transferOffset', width: 72, cellStyle: centerAlign, headerClass: 'header-center' },
+    payStatus:    { headerName: '지급 상태', field: 'payStatus', width: 72, cellStyle: centerAlign, headerClass: 'header-center' },
+    payNeed:      { headerName: '지급 필요 금액', field: 'payNeed', width: 98, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    payWait:      { headerName: '이체 대기 금액', field: 'payWait', width: 98, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    payMemo:      { headerName: '지급 비고', field: 'payMemo', width: 100 },
+    payDone:      { headerName: '지급 완료 금액', field: 'payDone', width: 98, cellRenderer: AmountRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+
+    _detail:      { headerName: '상세보기', field: '_detail', width: 72, cellRenderer: DetailBtnRenderer, pinned: 'right', sortable: false, filter: false, cellClass: 'cell-action-buttons' },
+  };
+
+  // VoneTableFilter 는 평탄한 리스트에만 install (children 순회 안 함)
+  const flatCols = Object.values(C);
   if (window.VoneTableFilterLib) {
-    window.VoneTableFilterLib.installAll(columnDefs, { exclude: ['_select', '_detail'] });
-    window.VoneTableFilterLib.installHintHeader(columnDefs, '_select');
+    window.VoneTableFilterLib.installAll(flatCols, { exclude: ['_select', '_detail'] });
+    window.VoneTableFilterLib.installHintHeader(flatCols, '_select');
   }
+
+  // 그룹 헤더 구성 (정책: 정산서 / 계약 / 거래처 / 매출 / 매입 / 이체)
+  const groupClass = 'header-center ts-group-header';
+  const columnDefs = [
+    C._select,
+    { headerName: '정산서 데이터', headerClass: groupClass, children: [
+      C.idx, C.startAt, C.endAt, C.tradeAmount, C.feeAmount,
+      C.writeAt, C.issueAt, C.sendAt, C.settleMemo, C.status, C.locked,
+    ]},
+    { headerName: '계약 데이터', headerClass: groupClass, children: [
+      C.contractIdx, C.ctype, C.contractName, C.tags, C.shopId, C.shopName,
+      C.payDueDate, C.acctOwner, C.acctBank, C.acctNo, C.acctVerifyAt, C.acctVerifyOk, C.acctVerifyFailReason,
+    ]},
+    { headerName: '거래처 데이터', headerClass: groupClass, children: [
+      C.partnerIdx, C.partnerName, C.bizNo, C.ceoName, C.closedAt,
+    ]},
+    { headerName: '매출 데이터', headerClass: groupClass, children: [
+      C.salesNeed, C.salesDone, C.salesStatus, C.salesMemo,
+    ]},
+    { headerName: '매입 데이터', headerClass: groupClass, children: [
+      C.proofType, C.linkType, C.proofOffset, C.purchaseNeed, C.purchaseDone, C.purchaseStatus, C.purchaseMemo,
+    ]},
+    { headerName: '이체 데이터', headerClass: groupClass, children: [
+      C.transferOffset, C.payStatus, C.payNeed, C.payWait, C.payMemo, C.payDone,
+    ]},
+    C._detail,
+  ];
 
   // ---------- 상태 ----------
   let gridApi = null;
@@ -312,6 +348,7 @@
       defaultColDef: { sortable: true, resizable: true, filter: true, floatingFilter: true, minWidth: 10 },
       rowHeight: 28,
       headerHeight: 28,
+      groupHeaderHeight: 24,
       floatingFiltersHeight: 26,
       pagination: true,
       paginationPageSize: 1000,
