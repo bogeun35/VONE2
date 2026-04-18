@@ -308,7 +308,7 @@
     if (!window.TabManager) return;
     window.TabManager.open({
       id: 'settle-contract-detail',
-      title: `정산계약 상세 #${idx}`,
+      title: '정산계약 상세',
       detailOf: 'settle-contract-list',
       context: { idx },
     });
@@ -317,7 +317,7 @@
     if (!window.TabManager) return;
     window.TabManager.open({
       id: 'settle-list-by-contract',
-      title: `정산서 (계약 #${idx})`,
+      title: '정산서',
       detailOf: 'settle-contract-list',
       context: { contractIdx: idx },
     });
@@ -326,7 +326,7 @@
     if (!window.TabManager) return;
     window.TabManager.open({
       id: 'shop-detail',
-      title: `제휴점 상세 #${String(shopId).slice(0, 8)}`,
+      title: '제휴점 상세',
       detailOf: 'settle-contract-list',
       context: { shopId },
     });
