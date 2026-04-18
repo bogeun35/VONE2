@@ -399,7 +399,7 @@ input::-webkit-input-placeholder { color: #c4c4c4; }
 .btn-period + .btn-period { margin-left: -1px; }
 .btn-period:hover { background: #f5f6fa; }
 .btn-period.active {
-  background: #333; color: #fff; border-color: #333;
+  background: #6b7280; color: #fff; border-color: #6b7280;
   z-index: 1; position: relative;
 }
 
