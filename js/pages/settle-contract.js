@@ -351,7 +351,7 @@
       rowSelection: 'multiple',
       suppressRowClickSelection: true,
       animateRows: true,
-      defaultColDef: { sortable: true, resizable: true, filter: true, floatingFilter: true },
+      defaultColDef: { sortable: true, resizable: true, filter: true, floatingFilter: true, minWidth: 40 },
       rowHeight: 28,
       headerHeight: 28,
       floatingFiltersHeight: 26,
