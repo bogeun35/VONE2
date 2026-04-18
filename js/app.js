@@ -110,15 +110,38 @@ let planDocs = [];          // 기획문서 목록 (메타+본문 캐시)
 let planDetailIdx = -1;     // 기획문서 상세 뷰에서 선택된 인덱스 (-1 = 목록 뷰)
 let docEditorInstance = null; // 현재 마운트된 Toast UI 에디터 핸들
 
+// 현재 화면에 보이는 .page 를 반환 (display:none 제외)
+function getVisiblePage() {
+  const pages = document.querySelectorAll('.content .page');
+  for (const p of pages) {
+    if (p.offsetParent !== null) return p;
+  }
+  return pages[0] || null;
+}
+
+function syncDocToggleActive(isOpen) {
+  document.querySelectorAll('.btn-doc-toggle').forEach(b => b.classList.toggle('active', isOpen));
+}
+
 function toggleDocSidebar() {
   const isOpen = docSidebar.classList.toggle('open');
-  btnDocToggle.classList.toggle('active', isOpen);
+  syncDocToggleActive(isOpen);
   if (isOpen) loadDocForCurrentPage();
 }
-btnDocToggle.addEventListener('click', toggleDocSidebar);
+// 모든 페이지의 .btn-doc-toggle 에 대응 (이벤트 위임)
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.btn-doc-toggle')) toggleDocSidebar();
+});
 btnDocClose.addEventListener('click', () => {
   docSidebar.classList.remove('open');
-  btnDocToggle.classList.remove('active');
+  syncDocToggleActive(false);
+});
+
+// 탭/페이지 전환 시 사이드바가 열려있다면 해당 페이지 문서를 다시 로드
+window.addEventListener('page:shown', () => {
+  if (docSidebar && docSidebar.classList.contains('open')) {
+    loadDocForCurrentPage();
+  }
 });
 
 // Doc Tabs
@@ -186,10 +209,13 @@ function renderVersionHeader(meta) {
 }
 
 async function loadDocForCurrentPage() {
-  const activePage = document.querySelector('.page');
+  const activePage = getVisiblePage();
   if (!activePage) return;
   const docBase = activePage.dataset.doc;
-  if (!docBase) return;
+  if (!docBase) {
+    docContent.innerHTML = '<p class="doc-placeholder">이 페이지에는 연결된 문서가 없습니다.</p>';
+    return;
+  }
 
   editorMode = false;
   btnDocEdit.classList.remove('active');

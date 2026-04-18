@@ -59,48 +59,50 @@
   const centerAlign = { textAlign: 'center' };
 
   // ---------- Column Defs ----------
+  // 폭 정책: IDX 40~44, Y/N·짧은라벨 50~60, 금액/날짜 82~92, 일반 텍스트 70~110.
+  // 기본은 타이트하게 — 사용자가 필요 시 리사이즈 후 템플릿 저장.
   const columnDefs = [
     { headerName: '', field: '_select', width: 32, minWidth: 32, maxWidth: 32, pinned: 'left', checkboxSelection: true, headerCheckboxSelection: true, headerCheckboxSelectionFilteredOnly: true, sortable: false, filter: false, resizable: false, suppressMovable: true, lockPosition: 'left', cellClass: 'cell-select', headerClass: 'header-center' },
-    { headerName: '정산계약 IDX', field: 'idx', width: 90, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '계약명', field: 'name', width: 240, minWidth: 120 },
-    { headerName: '계약서 타입', field: 'ctype', width: 90, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '태그', field: 'tags', width: 160, cellRenderer: TagsRenderer, valueFormatter: p => (p.value || []).join(', ') },
-    { headerName: '거래처 IDX', field: 'partnerIdx', width: 80, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '거래처명', field: 'partnerName', width: 150, minWidth: 100 },
-    { headerName: '거래처 사업자번호', field: 'bizNo', width: 110, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '종사업장 번호', field: 'subBizNo', width: 90, cellStyle: rightAlign, headerClass: 'header-right' },
-    { headerName: '그룹정산 여부', field: 'isGroup', width: 90, cellRenderer: YNRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '연결 제휴점 수', field: 'shopCount', width: 90, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '제휴점 ID', field: 'shopId', width: 200 },
-    { headerName: '연결 제휴점명', field: 'shopName', width: 170, minWidth: 110 },
-    { headerName: '정산 주기', field: 'cycleType', width: 80, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '정산주기일', field: 'cycleDay', width: 80, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '지급 주기', field: 'payCycle', width: 70, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '서비스 포인트 수수료율 (%)', field: 'pointFeeRate', width: 120, cellRenderer: PctRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '대장페이 수수료율 (%)', field: 'payFeeRate', width: 120, cellRenderer: PctRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '매입 증빙 수취 유형', field: 'proofType', width: 150 },
-    { headerName: '연동사 타입', field: 'linkType', width: 90 },
-    { headerName: '공동인증서 만료일', field: 'certExpire', width: 110, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '폐업일자', field: 'closedAt', width: 90, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '적격 증빙 상계 여부', field: 'proofOffset', width: 120, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '이체 상계 여부', field: 'transferOffset', width: 100, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '정산 은행명', field: 'settleBank', width: 100 },
-    { headerName: '정산 계좌번호', field: 'settleAccount', width: 130, cellStyle: rightAlign, headerClass: 'header-right' },
-    { headerName: '정산 예금주', field: 'settleOwner', width: 130 },
-    { headerName: '계약 시작일', field: 'startAt', width: 100, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '계약 종료일', field: 'endAt', width: 100, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '계약 해지일', field: 'terminatedAt', width: 100, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '연장검토 여부', field: 'extReview', width: 90, cellRenderer: YNRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '상태', field: 'status', width: 70, cellRenderer: StatusRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '계약 담당자 ID', field: 'managerId', width: 100 },
-    { headerName: '계약 담당자', field: 'managerName', width: 90 },
-    { headerName: '생성일시', field: 'createdAt', width: 150 },
-    { headerName: '생성자', field: 'createdBy', width: 70 },
-    { headerName: '수정일시', field: 'updatedAt', width: 150 },
-    { headerName: '수정자', field: 'updatedBy', width: 70 },
-    { headerName: '잠금여부', field: 'locked', width: 90, cellRenderer: LockedRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '정산서 보기', field: '_viewSettle', width: 110, cellRenderer: SettleBtnRenderer, pinned: 'right', sortable: false, filter: false, cellClass: 'cell-action-buttons' },
-    { headerName: '상세보기', field: '_detail', width: 100, cellRenderer: DetailBtnRenderer, pinned: 'right', sortable: false, filter: false, cellClass: 'cell-action-buttons' },
+    { headerName: '정산계약 IDX', field: 'idx', width: 44, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    { headerName: '계약명', field: 'name', width: 160, minWidth: 100 },
+    { headerName: '계약서 타입', field: 'ctype', width: 72, minWidth: 56, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '태그', field: 'tags', width: 120, minWidth: 70, cellRenderer: TagsRenderer, valueFormatter: p => (p.value || []).join(', ') },
+    { headerName: '거래처 IDX', field: 'partnerIdx', width: 44, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    { headerName: '거래처명', field: 'partnerName', width: 108, minWidth: 70 },
+    { headerName: '거래처 사업자번호', field: 'bizNo', width: 88, minWidth: 80, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    { headerName: '종사업장 번호', field: 'subBizNo', width: 60, minWidth: 48, cellStyle: rightAlign, headerClass: 'header-right' },
+    { headerName: '그룹정산', field: 'isGroup', width: 56, minWidth: 48, cellRenderer: YNRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '연결 제휴점 수', field: 'shopCount', width: 68, minWidth: 56, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    { headerName: '제휴점 ID', field: 'shopId', width: 140, minWidth: 90 },
+    { headerName: '연결 제휴점명', field: 'shopName', width: 120, minWidth: 80 },
+    { headerName: '정산 주기', field: 'cycleType', width: 60, minWidth: 50, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '정산주기일', field: 'cycleDay', width: 60, minWidth: 50, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    { headerName: '지급 주기', field: 'payCycle', width: 54, minWidth: 48, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '서비스 포인트 수수료율', field: 'pointFeeRate', width: 84, minWidth: 70, cellRenderer: PctRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    { headerName: '대장페이 수수료율', field: 'payFeeRate', width: 84, minWidth: 70, cellRenderer: PctRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    { headerName: '매입 증빙 수취 유형', field: 'proofType', width: 110, minWidth: 80 },
+    { headerName: '연동사 타입', field: 'linkType', width: 68, minWidth: 56 },
+    { headerName: '공동인증서 만료일', field: 'certExpire', width: 82, minWidth: 70, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '폐업일자', field: 'closedAt', width: 74, minWidth: 64, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '적격증빙상계', field: 'proofOffset', width: 78, minWidth: 64, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '이체상계', field: 'transferOffset', width: 64, minWidth: 54, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '정산 은행명', field: 'settleBank', width: 76, minWidth: 60 },
+    { headerName: '정산 계좌번호', field: 'settleAccount', width: 108, minWidth: 80, cellStyle: rightAlign, headerClass: 'header-right' },
+    { headerName: '정산 예금주', field: 'settleOwner', width: 100, minWidth: 72 },
+    { headerName: '계약 시작일', field: 'startAt', width: 82, minWidth: 70, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '계약 종료일', field: 'endAt', width: 82, minWidth: 70, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '계약 해지일', field: 'terminatedAt', width: 82, minWidth: 70, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '연장검토', field: 'extReview', width: 58, minWidth: 48, cellRenderer: YNRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '상태', field: 'status', width: 54, minWidth: 44, cellRenderer: StatusRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '계약담당자 ID', field: 'managerId', width: 74, minWidth: 56 },
+    { headerName: '계약담당자', field: 'managerName', width: 70, minWidth: 54 },
+    { headerName: '생성일시', field: 'createdAt', width: 110, minWidth: 80 },
+    { headerName: '생성자', field: 'createdBy', width: 54, minWidth: 44 },
+    { headerName: '수정일시', field: 'updatedAt', width: 110, minWidth: 80 },
+    { headerName: '수정자', field: 'updatedBy', width: 54, minWidth: 44 },
+    { headerName: '잠금', field: 'locked', width: 58, minWidth: 48, cellRenderer: LockedRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '정산서 보기', field: '_viewSettle', width: 82, minWidth: 70, cellRenderer: SettleBtnRenderer, pinned: 'right', sortable: false, filter: false, cellClass: 'cell-action-buttons' },
+    { headerName: '상세보기', field: '_detail', width: 72, minWidth: 64, cellRenderer: DetailBtnRenderer, pinned: 'right', sortable: false, filter: false, cellClass: 'cell-action-buttons' },
   ];
 
   if (window.VoneTableFilterLib) {
@@ -111,13 +113,13 @@
   // ---------- 상태 ----------
   let gridApi = null;
   const state = {
-    contractType: new Set(),        // 멀티
-    proofType: new Set(),           // 멀티
-    tag: new Set(),                 // 멀티 (서치 드롭)
+    contractType: new Set(CONTRACT_TYPES),  // 멀티 · 기본: 전체 선택
+    proofType: 'all',                        // 라디오 (전체·공급자발행·시스템발행·종이세금계산서)
+    tag: new Set(),                          // 멀티 (서치 드롭)
     proofOffset: 'all',
     transferOffset: 'all',
     groupSettle: 'all',
-    contractStatus: 'all',
+    contractStatus: '유효',                  // 기본: 유효
     closedBiz: 'all',
   };
 
@@ -125,9 +127,9 @@
     if (!gridApi) return;
     const filtered = rawRows.filter(r => {
       if (state.contractType.size && !state.contractType.has(r.ctype)) return false;
-      if (state.proofType.size) {
+      if (state.proofType !== 'all') {
         const key = (r.proofType || '').replace(/\s/g, '').replace(/^전자세금용인증서등록$/, '시스템발행');
-        if (!state.proofType.has(key)) return false;
+        if (key !== state.proofType) return false;
       }
       if (state.tag.size) {
         const rowTags = r.tags || [];
@@ -252,25 +254,34 @@
   }
 
   function resetFilter() {
-    // 상태 초기화
-    state.contractType.clear();
-    state.proofType.clear();
+    // 상태 초기화 — 기본값: 계약서타입 전체선택, 계약상태=유효, 나머지 전체
+    state.contractType = new Set(CONTRACT_TYPES);
+    state.proofType = 'all';
     state.tag.clear();
     state.proofOffset = 'all';
     state.transferOffset = 'all';
     state.groupSettle = 'all';
-    state.contractStatus = 'all';
+    state.contractStatus = '유효';
     state.closedBiz = 'all';
 
     const page = document.getElementById('page-settle-contract-list');
     if (!page) return;
-    // 체크박스 버튼
-    page.querySelectorAll('.checkbox-btn.active').forEach(b => b.classList.remove('active'));
-    // 라디오 → 첫 번째(전체) 활성
+    // 체크박스 버튼 — 계약서타입은 전체 선택 상태로 복원
+    page.querySelectorAll('.checkbox-btn-group').forEach(group => {
+      const name = group.dataset.name;
+      const set = state[name];
+      group.querySelectorAll('.checkbox-btn').forEach(btn => {
+        const on = (set instanceof Set) && set.has(btn.dataset.value);
+        btn.classList.toggle('active', on);
+      });
+    });
+    // 라디오 → state 값에 맞춰 활성
     page.querySelectorAll('.radio-btn-group').forEach(group => {
-      group.querySelectorAll('.radio-btn').forEach(b => b.classList.remove('active'));
-      const first = group.querySelector('.radio-btn');
-      if (first) first.classList.add('active');
+      const name = group.dataset.name;
+      const val = state[name];
+      group.querySelectorAll('.radio-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.value === val);
+      });
     });
     // 태그 chips
     const chips = page.querySelector('.tag-select-chips');
@@ -286,17 +297,33 @@
     applyFilter();
   }
 
-  // ---------- 상세/정산서 (placeholder) ----------
+  // ---------- 상세/정산서 (빈 탭 페이지로 오픈) ----------
   function openDetail(idx) {
+    if (!window.TabManager) return;
     const row = rawRows.find(r => r.idx === idx);
-    alert(`[상세보기]\n정산계약 IDX : ${idx}\n계약명: ${row ? row.name : ''}\n(실제 상세 페이지는 추후 구현)`);
+    const title = row ? `정산계약 상세 #${idx}` : `정산계약 상세 #${idx}`;
+    window.TabManager.open({
+      id: `settle-contract-detail-${idx}`,
+      title,
+      detailOf: 'settle-contract-list',
+    });
   }
   function openSettleList(idx) {
-    const row = rawRows.find(r => r.idx === idx);
-    alert(`[정산서 보기]\n정산계약 IDX : ${idx}\n계약명: ${row ? row.name : ''}\n해당 계약에 속한 정산서 목록을 새 탭으로 열 예정`);
+    if (!window.TabManager) return;
+    // 향후: 정산서관리 페이지로 이동 + 해당 계약 IDX 로 사전 필터
+    window.TabManager.open({
+      id: `settle-list-by-contract-${idx}`,
+      title: `정산서 (계약 #${idx})`,
+      detailOf: 'settle-contract-list',
+    });
   }
   function openNew() {
-    alert('[정산계약 신규 생성 모달]\n아직 미구현 — 추후 작업에서 계약 생성 폼을 여기서 띄웁니다');
+    if (!window.TabManager) return;
+    window.TabManager.open({
+      id: 'settle-contract-new',
+      title: '정산계약 신규 생성',
+      detailOf: 'settle-contract-list',
+    });
   }
 
   // ---------- 그리드 초기화 ----------
@@ -322,6 +349,9 @@
     window.scGridApi = gridApi;
     const totalEl = document.getElementById('scGridTotal');
     if (totalEl) totalEl.textContent = `검색결과 : ${rawRows.length.toLocaleString()}건`;
+
+    // 초기 기본 필터 반영 (계약상태=유효)
+    applyFilter();
 
     if (window.GridRangeSelect) {
       const rangeCtl = window.GridRangeSelect.attach({

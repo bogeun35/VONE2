@@ -53,69 +53,101 @@
     return document.getElementById(resolvePageId(tabId));
   }
 
+  /** TabManager 에서 탭 메타(제목/부모) 조회 */
+  function lookupTabMeta(tabId) {
+    const tabs = (window.TabManager && window.TabManager.getTabs && window.TabManager.getTabs()) || [];
+    return tabs.find(t => t.id === tabId) || null;
+  }
+
   /** 공통 스키마 빈 페이지 생성 */
   function createStubPage(tabId) {
-    const m = meta.get(tabId) || { title: tabId, category: '', pageNo: '' };
+    // 1) LNB 메타 우선 → 2) TabManager 탭 메타 → 3) tabId fallback
+    const lnb = meta.get(tabId);
+    const tab = lookupTabMeta(tabId);
+    const title = (lnb && lnb.title) || (tab && tab.title) || tabId;
+    const category = (lnb && lnb.category) || '';
+    const pageNo = (lnb && lnb.pageNo) || '';
+    const detailOf = (tab && tab.detailOf) || null;
+
+    // detail/new 탭 (LNB 가 아닌 자식 탭) → 간소한 "빈 페이지"
+    const isDetailTab = !lnb && !!tab;
+
     const pageId = resolvePageId(tabId);
     const wrap = document.createElement('div');
-    wrap.className = 'page page-stub';
+    wrap.className = 'page page-stub' + (isDetailTab ? ' page-stub-blank' : '');
     wrap.id = pageId;
     wrap.dataset.tabId = tabId;
-    if (m.pageNo) wrap.dataset.pageNo = m.pageNo;
-    wrap.innerHTML = `
-      <div class="page-header">
-        <div>
-          <div class="breadcrumb">${escapeHtml(m.category || '')} &gt; ${escapeHtml(m.title)}</div>
-          <h1 class="page-title">${escapeHtml(m.title)}</h1>
-        </div>
-      </div>
+    if (pageNo) wrap.dataset.pageNo = pageNo;
 
-      <!-- Filter Section -->
-      <div class="filter-box">
-        <div class="filter-header">
-          <span class="filter-header-title">
-            <svg class="filter-arrow" width="10" height="10" viewBox="0 0 10 10"><path d="M3 2l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-            조건 검색
-          </span>
-          <div class="filter-header-actions">
-            <button class="btn btn-sm btn-outline-primary" onclick="event.stopPropagation()">필터 초기화</button>
-            <button class="btn btn-sm btn-primary" onclick="event.stopPropagation()">데이터 조회 <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="white" stroke-width="1.2"/><path d="M9.5 9.5L13 13" stroke="white" stroke-width="1.2"/></svg></button>
+    if (isDetailTab) {
+      // 부모 탭명으로 breadcrumb 구성
+      const parentMeta = detailOf ? (meta.get(detailOf) || lookupTabMeta(detailOf)) : null;
+      const crumb = parentMeta ? `${escapeHtml(parentMeta.category || '')} &gt; ${escapeHtml(parentMeta.title || '')} &gt; ${escapeHtml(title)}` : escapeHtml(title);
+      wrap.innerHTML = `
+        <div class="page-header">
+          <div>
+            <div class="breadcrumb">${crumb}</div>
+            <h1 class="page-title">${escapeHtml(title)}</h1>
           </div>
         </div>
-        <div class="filter-body open">
-          <div class="filter-row">
-            <div class="filter-label">조건 검색</div>
-            <div class="filter-fields filter-fields-wrap">
-              <div class="page-empty-body" style="margin:0;min-height:40px;flex:1;">조건 필드는 추후 정의됩니다</div>
+        <div class="page-empty-body">빈 페이지 — 추후 구현됩니다</div>
+      `;
+    } else {
+      wrap.innerHTML = `
+        <div class="page-header">
+          <div>
+            <div class="breadcrumb">${escapeHtml(category)} &gt; ${escapeHtml(title)}</div>
+            <h1 class="page-title">${escapeHtml(title)}</h1>
+          </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-box">
+          <div class="filter-header">
+            <span class="filter-header-title">
+              <svg class="filter-arrow" width="10" height="10" viewBox="0 0 10 10"><path d="M3 2l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+              조건 검색
+            </span>
+            <div class="filter-header-actions">
+              <button class="btn btn-sm btn-outline-primary" onclick="event.stopPropagation()">필터 초기화</button>
+              <button class="btn btn-sm btn-primary" onclick="event.stopPropagation()">데이터 조회 <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="white" stroke-width="1.2"/><path d="M9.5 9.5L13 13" stroke="white" stroke-width="1.2"/></svg></button>
+            </div>
+          </div>
+          <div class="filter-body open">
+            <div class="filter-row">
+              <div class="filter-label">조건 검색</div>
+              <div class="filter-fields filter-fields-wrap">
+                <div class="page-empty-body" style="margin:0;min-height:40px;flex:1;">조건 필드는 추후 정의됩니다</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Grid Section -->
-      <div class="grid-section">
-        <div class="grid-toolbar">
-          <div class="grid-toolbar-left">
-            <span class="grid-table-name">${escapeHtml(m.title)} 테이블</span>
-            <span class="grid-total">검색결과 : 0건</span>
-            <span class="selected-count">선택 <strong>0</strong>건</span>
+        <!-- Grid Section -->
+        <div class="grid-section">
+          <div class="grid-toolbar">
+            <div class="grid-toolbar-left">
+              <span class="grid-table-name">${escapeHtml(title)} 테이블</span>
+              <span class="grid-total">검색결과 : 0건</span>
+              <span class="selected-count">선택 <strong>0</strong>건</span>
+            </div>
+            <div class="grid-toolbar-right">
+              <button class="btn btn-sm btn-outline-primary" disabled>전체 복사</button>
+              <button class="btn btn-sm btn-outline-primary" disabled>컬럼 선택</button>
+              <button class="btn btn-sm btn-outline-primary" disabled>컬럼 초기화</button>
+            </div>
           </div>
-          <div class="grid-toolbar-right">
-            <button class="btn btn-sm btn-outline-primary" disabled>전체 복사</button>
-            <button class="btn btn-sm btn-outline-primary" disabled>컬럼 선택</button>
-            <button class="btn btn-sm btn-outline-primary" disabled>컬럼 초기화</button>
+          <div class="grid-container-stub">테이블 영역 (준비 중)</div>
+        </div>
+
+        <!-- Footer -->
+        <div class="grid-action-footer">
+          <div class="grid-action-footer-left">
+            <button class="btn btn-sm btn-primary" disabled>액션 버튼</button>
           </div>
         </div>
-        <div class="grid-container-stub">테이블 영역 (준비 중)</div>
-      </div>
-
-      <!-- Footer -->
-      <div class="grid-action-footer">
-        <div class="grid-action-footer-left">
-          <button class="btn btn-sm btn-primary" disabled>액션 버튼</button>
-        </div>
-      </div>
-    `;
+      `;
+    }
     const content = getContent();
     if (content) content.appendChild(wrap);
     return wrap;

@@ -367,18 +367,18 @@
             </div>
           </div>
           <div class="filter-body open" id="scFilterBody">
-            <!-- 조건 검색 row 1 : 계약서타입(멀티) + 태그(서치앤드랍) -->
+            <!-- 조건 검색 — 한 줄에 모두 (너비 초과 시 wrap) -->
             <div class="filter-row">
               <div class="filter-label">조건 검색</div>
               <div class="filter-fields filter-fields-wrap">
                 <div class="filter-inline-group">
                   <label>계약서 타입</label>
                   <div class="checkbox-btn-group" data-name="contractType">
-                    <button class="checkbox-btn" data-value="식권대장">식권대장</button>
-                    <button class="checkbox-btn" data-value="복지대장">복지대장</button>
-                    <button class="checkbox-btn" data-value="퀵대장">퀵대장</button>
-                    <button class="checkbox-btn" data-value="단체선물대장">단체선물대장</button>
-                    <button class="checkbox-btn" data-value="기타">기타</button>
+                    <button class="checkbox-btn active" data-value="식권대장">식권대장</button>
+                    <button class="checkbox-btn active" data-value="복지대장">복지대장</button>
+                    <button class="checkbox-btn active" data-value="퀵대장">퀵대장</button>
+                    <button class="checkbox-btn active" data-value="단체선물대장">단체선물대장</button>
+                    <button class="checkbox-btn active" data-value="기타">기타</button>
                   </div>
                 </div>
                 <div class="filter-inline-group">
@@ -392,19 +392,13 @@
                     <div class="tag-select-dropdown" style="display:none"></div>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <!-- 조건 검색 row 2 : 증빙 수취 유형(멀티) -->
-            <div class="filter-row">
-              <div class="filter-label">증빙/상계</div>
-              <div class="filter-fields filter-fields-wrap">
                 <div class="filter-inline-group">
                   <label>증빙 수취 유형</label>
-                  <div class="checkbox-btn-group" data-name="proofType">
-                    <button class="checkbox-btn" data-value="공급자발행">공급자 발행</button>
-                    <button class="checkbox-btn" data-value="시스템발행">시스템 발행</button>
-                    <button class="checkbox-btn" data-value="종이세금계산서">종이세금계산서</button>
+                  <div class="radio-btn-group" data-name="proofType">
+                    <button class="radio-btn active" data-value="all">전체</button>
+                    <button class="radio-btn" data-value="공급자발행">공급자 발행</button>
+                    <button class="radio-btn" data-value="시스템발행">시스템 발행</button>
+                    <button class="radio-btn" data-value="종이세금계산서">종이세금계산서</button>
                   </div>
                 </div>
                 <div class="filter-inline-group">
@@ -423,13 +417,6 @@
                     <button class="radio-btn" data-value="별도">별도</button>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <!-- 조건 검색 row 3 : 그룹정산 · 계약상태 · 폐업여부 -->
-            <div class="filter-row">
-              <div class="filter-label">상태</div>
-              <div class="filter-fields filter-fields-wrap">
                 <div class="filter-inline-group">
                   <label>그룹 정산 여부</label>
                   <div class="radio-btn-group" data-name="groupSettle">
@@ -441,8 +428,8 @@
                 <div class="filter-inline-group">
                   <label>계약 상태</label>
                   <div class="radio-btn-group" data-name="contractStatus">
-                    <button class="radio-btn active" data-value="all">전체</button>
-                    <button class="radio-btn" data-value="유효">유효</button>
+                    <button class="radio-btn" data-value="all">전체</button>
+                    <button class="radio-btn active" data-value="유효">유효</button>
                     <button class="radio-btn" data-value="만료">만료</button>
                   </div>
                 </div>
