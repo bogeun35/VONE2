@@ -391,7 +391,7 @@ input::-webkit-input-placeholder { color: #c4c4c4; }
 .btn-group-period { display: flex; gap: 0; }
 .btn-period {
   height: 26px; padding: 0 10px;
-  border: 1px solid #333; background: #fff; color: #333;
+  border: 1px solid #ddd; background: #fff; color: #555;
   cursor: pointer; font-size: 11px; transition: all 0.15s;
 }
 .btn-period:first-child { border-radius: 3px 0 0 3px; }
