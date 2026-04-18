@@ -825,8 +825,28 @@ input.modal-info-value:focus { outline: 1px solid #2563eb; outline-offset: -1px;
 .btn-doc-icon.active { background: #e0edff; color: #2563eb; }
 .btn-doc-icon[disabled] { opacity: 0.4; cursor: not-allowed; }
 
-/* Doc editor (textarea mode) */
+/* Doc editor (Toast UI) */
 .doc-editor { display: flex; flex-direction: column; height: 100%; gap: 8px; padding: 10px 12px; }
+.doc-editor-mount {
+  flex: 1; min-height: 320px;
+  border: 1px solid #d0d7de; border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+}
+/* Toast UI 내부 툴바/에디터 폰트 — 프로젝트 톤과 맞추기 */
+.doc-editor-mount .toastui-editor-defaultUI { border: none; }
+.doc-editor-mount .toastui-editor-toolbar { border-bottom: 1px solid #eef1f5; }
+.doc-editor-mount .toastui-editor-main,
+.doc-editor-mount .toastui-editor-md-container,
+.doc-editor-mount .toastui-editor-ww-container { font-size: 13px; }
+.doc-editor-mount .toastui-editor-contents { font-size: 13px; line-height: 1.65; }
+/* 이미지 드롭 존 시각화 */
+.doc-editor-mount .toastui-editor-md-container .ProseMirror,
+.doc-editor-mount .toastui-editor-ww-container .ProseMirror {
+  min-height: 240px;
+}
+
+/* 레거시 textarea 스타일 (혹시 fallback 시 대비) */
 .doc-editor-textarea {
   flex: 1; min-height: 200px; width: 100%;
   padding: 10px; border: 1px solid #d0d7de; border-radius: 4px;

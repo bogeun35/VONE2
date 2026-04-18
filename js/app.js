@@ -108,6 +108,7 @@ let currentDocRaw = null;   // 원본 md 텍스트
 let editorMode = false;
 let planDocs = [];          // 기획문서 목록 (메타+본문 캐시)
 let planDetailIdx = -1;     // 기획문서 상세 뷰에서 선택된 인덱스 (-1 = 목록 뷰)
+let docEditorInstance = null; // 현재 마운트된 Toast UI 에디터 핸들
 
 function toggleDocSidebar() {
   const isOpen = docSidebar.classList.toggle('open');
@@ -521,13 +522,13 @@ async function ghCreateFile(path, content, message) {
   return res.json();
 }
 
-// ===== 에디터 모드 =====
+// ===== 에디터 모드 (Toast UI Editor) =====
 function renderEditor() {
   if (!currentDocRaw) return;
   const hasToken = !!getGhToken();
   docContent.innerHTML = `
     <div class="doc-editor">
-      <textarea class="doc-editor-textarea" id="docEditorTextarea" spellcheck="false"></textarea>
+      <div class="doc-editor-mount" id="docEditorMount"></div>
       <div class="doc-editor-commit">
         <label for="docEditorMsg">커밋 메시지</label>
         <input type="text" id="docEditorMsg" placeholder="docs: update ${currentDocPath}">
@@ -538,20 +539,62 @@ function renderEditor() {
         <button class="btn btn-sm btn-primary" id="docEditorSave" ${hasToken ? '' : 'disabled'}>저장</button>
       </div>
     </div>`;
-  const ta = document.getElementById('docEditorTextarea');
-  ta.value = currentDocRaw;
-  ta.focus();
+
+  // 기존 인스턴스가 살아 있다면 정리
+  if (docEditorInstance) {
+    try { docEditorInstance.destroy(); } catch {}
+    docEditorInstance = null;
+  }
+
+  const mount = document.getElementById('docEditorMount');
+  const statusEl = document.getElementById('docEditorStatus');
+
+  if (!window.DocEditor) {
+    mount.innerHTML = '<div style="padding:16px;color:#c62828">DocEditor 로드 실패 (Toast UI 스크립트 확인)</div>';
+    return;
+  }
+
+  try {
+    docEditorInstance = window.DocEditor.create({
+      containerEl: mount,
+      initialValue: currentDocRaw,
+      getToken: getGhToken,
+      gh: { owner: GH.owner, repo: GH.repo, branch: GH.branch },
+      height: 'calc(100vh - 260px)',
+      onImageUploadStart: () => {
+        statusEl.className = 'doc-editor-status';
+        statusEl.textContent = '이미지 업로드 중...';
+      },
+      onImageUploadEnd: () => {
+        statusEl.className = 'doc-editor-status success';
+        statusEl.textContent = '이미지 업로드 완료';
+        setTimeout(() => {
+          if (statusEl.textContent === '이미지 업로드 완료') {
+            statusEl.className = 'doc-editor-status';
+            statusEl.textContent = hasToken ? '' : 'GitHub 토큰이 없습니다 — 우측 상단 ⚙ 에서 설정';
+          }
+        }, 2000);
+      },
+      onImageUploadError: (e) => {
+        statusEl.className = 'doc-editor-status error';
+        statusEl.textContent = `이미지 업로드 실패: ${e.message}`;
+      },
+    });
+    docEditorInstance.focus();
+  } catch (e) {
+    mount.innerHTML = `<div style="padding:16px;color:#c62828">에디터 초기화 실패: ${e.message}</div>`;
+  }
 
   document.getElementById('docEditorCancel').addEventListener('click', () => {
     editorMode = false;
     btnDocEdit.classList.remove('active');
+    if (docEditorInstance) { try { docEditorInstance.destroy(); } catch {} docEditorInstance = null; }
     renderDocFromRaw();
   });
   document.getElementById('docEditorSave').addEventListener('click', saveDocToGithub);
 }
 
 async function saveDocToGithub() {
-  const ta = document.getElementById('docEditorTextarea');
   const msgInput = document.getElementById('docEditorMsg');
   const statusEl = document.getElementById('docEditorStatus');
   const saveBtn = document.getElementById('docEditorSave');
@@ -561,7 +604,12 @@ async function saveDocToGithub() {
     statusEl.className = 'doc-editor-status error';
     return;
   }
-  const newText = ta.value;
+  if (!docEditorInstance) {
+    statusEl.textContent = '에디터가 초기화되지 않았습니다';
+    statusEl.className = 'doc-editor-status error';
+    return;
+  }
+  const newText = docEditorInstance.getMarkdown();
   const message = (msgInput.value || '').trim() || `docs: update ${currentDocPath}`;
 
   saveBtn.disabled = true;
