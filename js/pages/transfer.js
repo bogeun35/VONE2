@@ -56,7 +56,14 @@ function enrichData(rows) {
       approvedAt = `${base.getFullYear()}-${pad(base.getMonth()+1)}-${pad(base.getDate())} ${pad(base.getHours())}:${pad(base.getMinutes())}`;
       approvedBy = row.seq % 2 === 0 ? '김승인' : '이주환';
     }
-    return { ...row, matchCeo, matchBiz, matchTotal, matchTotalLabel, settleMonth, depositIdx, txIdx, approvedAt, approvedBy };
+    // 계약구분 (mock): 계약서명 키워드 기반 → 없으면 seq mod 기반
+    const _TYPES = ['식권대장', '복지대장', '퀵대장', '단체선물대장', '기타'];
+    let ctype = _TYPES[row.seq % _TYPES.length];
+    if (row.settleName) {
+      if (row.settleName.includes('뉴빌리티') || row.settleName.includes('로봇')) ctype = '퀵대장';
+      else if (row.settleName.includes('선물')) ctype = '단체선물대장';
+    }
+    return { ...row, matchCeo, matchBiz, matchTotal, matchTotalLabel, settleMonth, depositIdx, txIdx, approvedAt, approvedBy, ctype };
   });
 }
 
@@ -135,6 +142,7 @@ const columnDefs = [
   { headerName: '이체관리 IDX', field: 'seq', width: 40, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', filter: 'agNumberColumnFilter' },
   { headerName: '정산서 IDX', field: 'settleIdx', width: 40, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', filter: 'agNumberColumnFilter' },
   { headerName: '정산월', field: 'settleMonth', width: 52, minWidth: 45, cellStyle: centerAlign, headerClass: 'header-center' },
+  { headerName: '계약구분', field: 'ctype', width: 72, cellStyle: centerAlign, headerClass: 'header-center' },
   { headerName: '정산계약명', field: 'settleName', width: 150, minWidth: 90 },
   { headerName: '사업자구분', field: 'bizType', width: 58, minWidth: 50, cellRenderer: BizTypeRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
   { headerName: '사업자명', field: 'bizName', width: 100, minWidth: 70 },

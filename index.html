@@ -144,6 +144,16 @@
               <div class="filter-label">조건 검색</div>
               <div class="filter-fields filter-fields-wrap">
                 <div class="filter-inline-group">
+                  <label>계약서 타입</label>
+                  <div class="checkbox-btn-group" data-name="contractType">
+                    <button class="checkbox-btn active" data-value="식권대장">식권대장</button>
+                    <button class="checkbox-btn active" data-value="복지대장">복지대장</button>
+                    <button class="checkbox-btn active" data-value="퀵대장">퀵대장</button>
+                    <button class="checkbox-btn active" data-value="단체선물대장">단체선물대장</button>
+                    <button class="checkbox-btn active" data-value="기타">기타</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
                   <label>이체 상태</label>
                   <div class="radio-btn-group" data-name="transferStatus">
                     <button class="radio-btn" data-value="all">전체</button>
@@ -272,27 +282,33 @@
             <div class="summary-cards">
               <div class="summary-card">
                 <span class="summary-label">이체 대기</span>
-                <span class="summary-value"><strong>0원</strong> / 0건</span>
+                <span class="summary-count">0건</span>
+                <span class="summary-value"><strong>0원</strong></span>
               </div>
               <div class="summary-card summary-approved">
                 <span class="summary-label">이체 승인</span>
-                <span class="summary-value"><strong>0원</strong> / 0건</span>
+                <span class="summary-count">0건</span>
+                <span class="summary-value"><strong>0원</strong></span>
               </div>
               <div class="summary-card">
                 <span class="summary-label">실행 요청</span>
-                <span class="summary-value"><strong>0원</strong> / 0건</span>
+                <span class="summary-count">0건</span>
+                <span class="summary-value"><strong>0원</strong></span>
               </div>
               <div class="summary-card">
                 <span class="summary-label">이체 실행</span>
-                <span class="summary-value"><strong>0원</strong> / 0건</span>
+                <span class="summary-count">0건</span>
+                <span class="summary-value"><strong>0원</strong></span>
               </div>
               <div class="summary-card summary-success">
                 <span class="summary-label">이체 성공</span>
-                <span class="summary-value"><strong>13,109,440,921원</strong> / 7,409건</span>
+                <span class="summary-count">7,409건</span>
+                <span class="summary-value"><strong>13,109,440,921원</strong></span>
               </div>
               <div class="summary-card summary-fail">
                 <span class="summary-label">이체 실패</span>
-                <span class="summary-value"><strong>41,370,398원</strong> / 37건</span>
+                <span class="summary-count">37건</span>
+                <span class="summary-value"><strong>41,370,398원</strong></span>
               </div>
             </div>
           </div>
