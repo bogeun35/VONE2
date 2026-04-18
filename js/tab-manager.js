@@ -32,19 +32,20 @@
   }
 
   /** 탭 열기 — 이미 있으면 activate, 없으면 push */
-  function openTab({ id, title, detailOf }) {
+  function openTab({ id, title, detailOf, context }) {
     if (!id) return;
     let idx = findIndex(id);
     if (idx === -1) {
-      tabs.push({ id, title: title || id, pinned: false, detailOf: detailOf || null });
+      tabs.push({ id, title: title || id, pinned: false, detailOf: detailOf || null, context: context || null });
     } else {
-      // 타이틀 갱신 (최신 우선)
+      // 타이틀/컨텍스트 갱신 (최신 우선 — 같은 id 탭에 다른 대상으로 재오픈)
       if (title) tabs[idx].title = title;
+      if (context) tabs[idx].context = context;
     }
     activeId = id;
     save();
     render();
-    dispatch('tab:activated', { id });
+    dispatch('tab:activated', { id, context: context || (idx !== -1 ? tabs[idx].context : null) });
   }
 
   function closeTab(id) {

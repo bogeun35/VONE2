@@ -168,7 +168,12 @@
   function showPage(tabId) {
     if (!tabId) return;
     let page = findPage(tabId);
-    if (!page) page = createStubPage(tabId);
+    if (!page) {
+      page = createStubPage(tabId);
+    } else if (page.classList.contains('page-stub-blank')) {
+      // 기존 stub 페이지 — 같은 탭 id 로 다른 대상(다른 idx 등) 이 열렸다면 제목/breadcrumb 를 갱신
+      refreshStubPage(page, tabId);
+    }
     hideAllPages();
     page.style.display = '';
     syncLnbActive(tabId);
@@ -176,6 +181,22 @@
     window.dispatchEvent(new CustomEvent('page:shown', {
       detail: { tabId, pageId: page.id, meta: meta.get(tabId) || null },
     }));
+  }
+
+  /** 기존 stub 페이지의 제목/브레드크럼 갱신 (동일 탭 id 에 다른 대상이 들어올 때) */
+  function refreshStubPage(page, tabId) {
+    const tab = lookupTabMeta(tabId);
+    if (!tab) return;
+    const title = tab.title || tabId;
+    const detailOf = tab.detailOf || null;
+    const parentMeta = detailOf ? (meta.get(detailOf) || lookupTabMeta(detailOf)) : null;
+    const crumb = parentMeta
+      ? `${escapeHtml(parentMeta.category || '')} &gt; ${escapeHtml(parentMeta.title || '')} &gt; ${escapeHtml(title)}`
+      : escapeHtml(title);
+    const h1 = page.querySelector('.page-title');
+    const bc = page.querySelector('.breadcrumb');
+    if (h1) h1.textContent = title;
+    if (bc) bc.innerHTML = crumb;
   }
 
   function cssEsc(s) {
