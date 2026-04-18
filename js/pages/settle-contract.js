@@ -34,8 +34,7 @@
     return `<a class="grid-link" onclick="window.SettleContract.openShopDetail('${p.value}')">${p.value}</a>`;
   }
   function TagsRenderer(p) {
-    if (p.value == null) return '<span style="color:#c9ced6">NULL</span>';
-    if (!p.value.length) return '';
+    if (!p.value || !p.value.length) return '';
     return p.value.map(t => `<span class="tag-chip">${t}</span>`).join(' ');
   }
   function StatusRenderer(p) {
@@ -72,7 +71,7 @@
     { headerName: '정산계약 IDX', field: 'idx', width: 44, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
     { headerName: '계약명', field: 'name', width: 160, minWidth: 100 },
     { headerName: '계약서 타입', field: 'ctype', width: 72, minWidth: 56, cellStyle: centerAlign, headerClass: 'header-center' },
-    { headerName: '태그', field: 'tags', width: 120, minWidth: 70, cellRenderer: TagsRenderer, valueFormatter: p => p.value == null ? 'NULL' : (p.value || []).join(', ') },
+    { headerName: '태그', field: 'tags', width: 120, minWidth: 70, cellRenderer: TagsRenderer, valueFormatter: p => (p.value || []).join(', ') },
     { headerName: '거래처 IDX', field: 'partnerIdx', width: 44, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
     { headerName: '거래처명', field: 'partnerName', width: 108, minWidth: 70 },
     { headerName: '거래처 사업자번호', field: 'bizNo', width: 88, minWidth: 80, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
@@ -371,6 +370,11 @@
 
     // 초기 기본 필터 반영 (계약상태=유효)
     applyFilter();
+
+    // 헤더 우클릭 컨텍스트 메뉴 (Pin Left/Right · Auto Size · Reset)
+    if (window.GridColumnContext) {
+      window.GridColumnContext.attach({ gridDiv, gridApi });
+    }
 
     if (window.GridRangeSelect) {
       const rangeCtl = window.GridRangeSelect.attach({

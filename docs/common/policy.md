@@ -41,7 +41,7 @@ status: 살아있는 문서(growing)
 
 | 데이터 | 표시 규칙 |
 | --- | --- |
-| NULL | `NULL` 라벨(회색 `#c9ced6`) — 빈 문자열과 구분 |
+| NULL | **빈 셀** — "NULL" 등 라벨 표시 금지 |
 | 빈 문자열 | 공백 (렌더하지 않음) |
 | Y/N | Y=파랑 굵게, N=회색 |
 | 숫자 | `tabular-nums`, 우측 정렬 |
@@ -60,6 +60,11 @@ status: 살아있는 문서(growing)
 - **원칙**: 모든 컬럼이 한 화면에 들어오도록 **타이트**하게. 사용자가 리사이즈 후 템플릿으로 저장.
 - **AG Grid `defaultColDef.minWidth = 40`** 로 설정 — AG Grid 내부 기본값(100)이 너무 커서 IDX 같은 좁은 컬럼이 40으로 줄어들지 않는다.
 - AG Grid 셀/헤더 공통 패딩: `--ag-cell-horizontal-padding: 5px`, `--ag-grid-size: 4px` (style.css 에 정의됨). 페이지별로 재정의 금지.
+
+### 4.1 헤더 우클릭 컨텍스트 메뉴 (필수)
+- 모든 AG Grid 는 `GridColumnContext.attach({ gridDiv, gridApi })` 호출로 공통 컨텍스트 메뉴를 붙인다
+- 제공 액션: **Pin Left / Pin Right / No Pin · Auto Size / Auto Size All · Reset Columns**
+- AG Grid Community 에는 기본 제공되지 않으므로 공통 컴포넌트(`js/components/grid-column-context.js`) 를 반드시 연결
 
 ## 5. 링크 / 액션 셀
 

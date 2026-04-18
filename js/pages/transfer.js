@@ -200,25 +200,6 @@ const gridOptions = {
 };
 
 // 커스텀 컬럼 우클릭 메뉴
-function createColumnContextMenu() {
-  const menu = document.createElement('div');
-  menu.className = 'col-context-menu';
-  menu.innerHTML = `
-    <div class="col-ctx-item" data-action="pinLeft">📌 Pin Left</div>
-    <div class="col-ctx-item" data-action="pinRight">📌 Pin Right</div>
-    <div class="col-ctx-separator"></div>
-    <div class="col-ctx-item" data-action="unpin">✕ No Pin</div>
-    <div class="col-ctx-separator"></div>
-    <div class="col-ctx-item" data-action="autosize">↔ Auto Size</div>
-    <div class="col-ctx-item" data-action="autosizeAll">↔ Auto Size All</div>
-    <div class="col-ctx-separator"></div>
-    <div class="col-ctx-item" data-action="resetCols">⟲ Reset Columns</div>
-  `;
-  menu.style.display = 'none';
-  document.body.appendChild(menu);
-  return menu;
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   const gridDiv = document.getElementById('transferGrid');
   if (!gridDiv) return;
@@ -246,41 +227,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const ctxMenu = createColumnContextMenu();
-  let targetColId = null;
-
-  gridDiv.addEventListener('contextmenu', (e) => {
-    const headerCell = e.target.closest('.ag-header-cell');
-    if (!headerCell) return;
-
-    e.preventDefault();
-    targetColId = headerCell.getAttribute('col-id');
-
-    ctxMenu.style.display = 'block';
-    ctxMenu.style.left = e.pageX + 'px';
-    ctxMenu.style.top = e.pageY + 'px';
-
-    const rect = ctxMenu.getBoundingClientRect();
-    if (rect.right > window.innerWidth) ctxMenu.style.left = (e.pageX - rect.width) + 'px';
-    if (rect.bottom > window.innerHeight) ctxMenu.style.top = (e.pageY - rect.height) + 'px';
-  });
-
-  ctxMenu.addEventListener('click', (e) => {
-    const item = e.target.closest('.col-ctx-item');
-    if (!item || !targetColId || !gridApi) return;
-
-    const action = item.dataset.action;
-    if (action === 'pinLeft') gridApi.setColumnPinned(targetColId, 'left');
-    else if (action === 'pinRight') gridApi.setColumnPinned(targetColId, 'right');
-    else if (action === 'unpin') gridApi.setColumnPinned(targetColId, null);
-    else if (action === 'autosize') gridApi.autoSizeColumns([targetColId]);
-    else if (action === 'autosizeAll') gridApi.autoSizeAllColumns();
-    else if (action === 'resetCols') gridApi.resetColumnState();
-
-    ctxMenu.style.display = 'none';
-  });
-
-  document.addEventListener('click', () => { ctxMenu.style.display = 'none'; });
+  // 헤더 우클릭 컨텍스트 메뉴 (공통 컴포넌트)
+  if (window.GridColumnContext) {
+    window.GridColumnContext.attach({ gridDiv, gridApi });
+  }
 
   // 컬럼 초기화 버튼
   const resetBtn = document.getElementById('gridResetBtn');
