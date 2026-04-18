@@ -48,6 +48,10 @@
       <span class="header-title">기획 디자인 시스템</span>
     </div>
     <div class="header-right">
+      <button class="header-policy-btn" id="btnOpenCommonPolicy" title="공통 정책문서">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 2h7l3 3v9a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M10 2v3h3M5 9h6M5 11h6M5 7h3"/></svg>
+        공통 정책
+      </button>
       <div class="header-user-wrap" id="headerUserWrap">
         <div class="header-user-avatar" id="headerUserAvatar"></div>
         <span class="header-user-name" id="headerUserName">-</span>
@@ -514,6 +518,10 @@
                 </div>
                 <div class="filter-inline-group">
                   <label>계약 담당자 검색</label>
+                  <input type="text" class="filter-text-input" placeholder="이름">
+                </div>
+                <div class="filter-inline-group">
+                  <label>성약 담당자 검색</label>
                   <input type="text" class="filter-text-input" placeholder="이름, 전화번호, 이메일">
                 </div>
               </div>
@@ -582,6 +590,22 @@
         <p class="doc-placeholder">페이지를 선택하면 해당 문서가 표시됩니다.</p>
       </div>
     </aside>
+  </div>
+
+  <!-- 공통 정책문서 Modal -->
+  <div class="modal-overlay" id="commonPolicyModal">
+    <div class="modal modal-wide">
+      <div class="modal-header">
+        <h3>VONE2 공통 정책문서</h3>
+        <div style="display:flex; gap:6px; align-items:center;">
+          <a class="btn btn-sm btn-outline-primary" id="commonPolicyEditLink" target="_blank" rel="noopener">GitHub 에서 편집</a>
+          <button class="modal-close" id="commonPolicyClose">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div id="commonPolicyContent" class="doc-rendered"><p class="doc-placeholder">로딩 중...</p></div>
+      </div>
+    </div>
   </div>
 
   <!-- 성공 처리 Modal -->
@@ -667,6 +691,7 @@
   <script src="js/components/date-input-placeholder.js"></script>
   <script src="js/components/doc-editor.js"></script>
   <script src="js/components/page-stub.js"></script>
+  <script src="js/components/common-policy-modal.js"></script>
   <script src="js/pages/transfer.js"></script>
   <script src="js/pages/settle-contract.js"></script>
 </body>

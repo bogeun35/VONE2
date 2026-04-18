@@ -29,7 +29,32 @@ input, select, button { font-family: inherit; font-size: 11px; }
 .header-logo { font-size: 20px; font-weight: 700; color: #2563eb; letter-spacing: -0.5px; }
 .header-divider { width: 1px; height: 20px; background: #ddd; }
 .header-title { font-size: 13px; color: #666; }
-.header-right { display: flex; align-items: center; gap: 16px; }
+.header-right { display: flex; align-items: center; gap: 12px; }
+.header-policy-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 26px; padding: 0 10px;
+  border: 1px solid #d4dbe3; background: #fff; color: #333;
+  border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 500;
+  transition: all 0.15s;
+}
+.header-policy-btn:hover { background: #f0f4f9; border-color: #2563eb; color: #2563eb; }
+.doc-rendered { padding: 16px 20px; overflow-y: auto; max-height: calc(80vh - 54px); font-size: 12px; line-height: 1.7; color: #333; }
+.doc-rendered h1 { font-size: 18px; margin: 0 0 12px; padding-bottom: 8px; border-bottom: 2px solid #e8e8e8; }
+.doc-rendered h2 { font-size: 15px; margin: 20px 0 8px; color: #111; }
+.doc-rendered h3 { font-size: 13px; margin: 14px 0 6px; color: #111; }
+.doc-rendered p { margin: 6px 0; }
+.doc-rendered ul, .doc-rendered ol { padding-left: 22px; margin: 6px 0; }
+.doc-rendered li { margin: 3px 0; }
+.doc-rendered table { border-collapse: collapse; margin: 10px 0; width: 100%; }
+.doc-rendered th, .doc-rendered td { border: 1px solid #e8e8e8; padding: 6px 10px; text-align: left; font-size: 11px; }
+.doc-rendered th { background: #f8f9fb; font-weight: 600; }
+.doc-rendered code { background: #f5f6fa; padding: 1px 5px; border-radius: 3px; font-size: 11px; color: #d6336c; }
+.doc-rendered pre { background: #f5f6fa; padding: 10px 12px; border-radius: 4px; overflow-x: auto; }
+.doc-rendered pre code { background: transparent; padding: 0; color: #333; }
+.doc-rendered blockquote { margin: 10px 0; padding: 6px 12px; border-left: 3px solid #d4dbe3; background: #fafbfc; color: #555; }
+.doc-rendered hr { border: none; border-top: 1px solid #e8e8e8; margin: 16px 0; }
+.doc-rendered a { color: #2563eb; text-decoration: none; }
+.doc-rendered a:hover { text-decoration: underline; }
 .header-user { font-size: 12px; color: #888; }
 
 .btn-doc-toggle {

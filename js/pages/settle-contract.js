@@ -27,23 +27,28 @@
   ];
 
   // ---------- 담당자 mock 주입 ----------
-  // managerId 제거, 담당자 수 + 대표(가장 최근) 담당자 정보로 대체.
-  // 담당자가 여러명이면 가장 최근에 등록된 한 명만 표시.
-  const _MANAGERS = [
-    { name: '전은혜', email: 'eh.jeon@vendys.co.kr', phone: '010-2341-5820' },
-    { name: '이샛별', email: 'sb.lee@vendys.co.kr',  phone: '010-7712-9103' },
-    { name: '김지혜', email: 'jh.kim@vendys.co.kr',  phone: '010-4420-7788' },
-    { name: '이주환', email: 'jh.lee@vendys.co.kr',  phone: '010-8821-0127' },
-    { name: '박지원', email: 'jw.park@vendys.co.kr', phone: '010-5567-3311' },
+  // 구분:
+  //   - 계약담당자(contractManager): 계약을 따낸 사람(우리쪽 세일즈). 단일 이름.
+  //   - 성약담당자(closer): 거래처 측에서 이 계약을 실무 진행하는 담당자. 여러 명 가능 —
+  //     여러 명일 때는 "가장 최근" 한 명만 대표로 표시.
+  const _CLOSERS = [
+    { name: '전은혜', email: 'eh.jeon@vendys.co.kr', phone: '01023415820' },
+    { name: '이샛별', email: 'sb.lee@vendys.co.kr',  phone: '01077129103' },
+    { name: '김지혜', email: 'jh.kim@vendys.co.kr',  phone: '01044207788' },
+    { name: '이주환', email: 'jh.lee@vendys.co.kr',  phone: '01088210127' },
+    { name: '박지원', email: 'jw.park@vendys.co.kr', phone: '01055673311' },
   ];
+  const _SALES_POOL = ['이동현', '윤태현', '최수진', '홍지민', '정하늘'];
   rawRows.forEach(r => {
-    // 기존 managerName 이 있으면 그 인물의 연락처로, 없으면 랜덤
-    const base = _MANAGERS.find(m => m.name === r.managerName) || _MANAGERS[r.idx % _MANAGERS.length];
-    r.managerCount = r.isGroup === 'Y' ? 2 + (r.idx % 3) : (r.managerName ? 1 : 0);
-    r.managerName = r.managerCount > 0 ? base.name : '';
-    r.managerEmail = r.managerCount > 0 ? base.email : '';
-    r.managerPhone = r.managerCount > 0 ? base.phone : '';
-    delete r.managerId;
+    const base = _CLOSERS.find(m => m.name === r.managerName) || _CLOSERS[r.idx % _CLOSERS.length];
+    r.closerCount = r.isGroup === 'Y' ? 2 + (r.idx % 3) : 1;
+    r.closerName = base.name;
+    r.closerEmail = base.email;
+    r.closerPhone = base.phone;
+    // 계약담당자: mock 으로 순환 풀에서 할당 (이름만)
+    r.contractManager = _SALES_POOL[r.idx % _SALES_POOL.length];
+    delete r.managerId; delete r.managerName; delete r.managerCount;
+    delete r.managerEmail; delete r.managerPhone;
   });
 
   // ---------- Cell Renderers ----------
@@ -70,13 +75,13 @@
   function LockedRenderer(p) {
     if (!p.data) return '';
     const on = !!p.value;
-    // 토글 스위치 — 클릭 시 locked 뒤집고 행 갱신 (실제 API 연동 시점에는 fetch 호출)
-    return `<span class="lock-toggle ${on ? 'on' : 'off'}" data-idx="${p.data.idx}" title="${on ? '잠금 해제' : '잠금'}" onclick="window.SettleContract.toggleLock(${p.data.idx})">
+    return `<span class="lock-toggle ${on ? 'on' : 'off'}" title="${on ? '잠금 해제' : '잠금'}" onclick="window.SettleContract.toggleLock(${p.data.idx})">
       <span class="lock-toggle-track"><span class="lock-toggle-thumb"></span></span>
-      <span class="lock-toggle-label">${on ? '🔒 잠금' : '열림'}</span>
     </span>`;
   }
   function PctRenderer(p) { return p.value != null ? (Number(p.value) * 100).toFixed(2) + '%' : ''; }
+  // 공통 정책: ISO 타임스탬프의 'T' 는 공백으로 치환해서 표기 ('2026-04-17T14:36:49' → '2026-04-17 14:36:49')
+  const fmtDateTime = (p) => (p && p.value ? String(p.value).replace('T', ' ') : '');
   function DetailBtnRenderer(p) {
     if (!p.data) return '';
     return `<button class="grid-action-btn outline-primary" onclick="window.SettleContract.openDetail(${p.data.idx})">상세보기</button>`;
@@ -129,15 +134,16 @@
         ? { textAlign: 'center', background: '#fee2e2' }
         : { textAlign: 'center' }
     },
-    { headerName: '담당자 수', field: 'managerCount', width: 56, minWidth: 48, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
-    { headerName: '담당자명', field: 'managerName', width: 80, minWidth: 54 },
-    { headerName: '담당자 이메일', field: 'managerEmail', width: 140, minWidth: 90 },
-    { headerName: '담당자 전화번호', field: 'managerPhone', width: 100, minWidth: 80, cellStyle: rightAlign, headerClass: 'header-right' },
-    { headerName: '생성일시', field: 'createdAt', width: 110, minWidth: 80 },
+    { headerName: '계약담당자', field: 'contractManager', width: 80, minWidth: 56 },
+    { headerName: '성약담당자 수', field: 'closerCount', width: 66, minWidth: 54, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    { headerName: '성약담당자명', field: 'closerName', width: 80, minWidth: 54 },
+    { headerName: '성약담당자 이메일', field: 'closerEmail', width: 150, minWidth: 90 },
+    { headerName: '성약담당자 전화번호', field: 'closerPhone', width: 108, minWidth: 80, cellStyle: rightAlign, headerClass: 'header-right' },
+    { headerName: '생성일시', field: 'createdAt', width: 130, minWidth: 100, valueFormatter: fmtDateTime },
     { headerName: '생성자', field: 'createdBy', width: 54, minWidth: 44 },
-    { headerName: '수정일시', field: 'updatedAt', width: 110, minWidth: 80 },
+    { headerName: '수정일시', field: 'updatedAt', width: 130, minWidth: 100, valueFormatter: fmtDateTime },
     { headerName: '수정자', field: 'updatedBy', width: 54, minWidth: 44 },
-    { headerName: '잠금', field: 'locked', width: 78, minWidth: 64, pinned: 'right', cellRenderer: LockedRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
+    { headerName: '잠금', field: 'locked', width: 48, minWidth: 40, pinned: 'right', cellRenderer: LockedRenderer, cellStyle: centerAlign, headerClass: 'header-center' },
     { headerName: '정산서 보기', field: '_viewSettle', width: 82, minWidth: 70, cellRenderer: SettleBtnRenderer, pinned: 'right', sortable: false, filter: false, cellClass: 'cell-action-buttons' },
     { headerName: '상세보기', field: '_detail', width: 72, minWidth: 64, cellRenderer: DetailBtnRenderer, pinned: 'right', sortable: false, filter: false, cellClass: 'cell-action-buttons' },
   ];

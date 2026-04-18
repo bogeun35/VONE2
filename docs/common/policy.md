@@ -47,6 +47,8 @@ status: 살아있는 문서(growing)
 | 숫자 | `tabular-nums`, 우측 정렬 |
 | 비율 | `(value*100).toFixed(2) + '%'` |
 | 날짜 | `YYYY-MM-DD` (input 은 `lang="sv-SE"`) |
+| 일시(datetime) | `YYYY-MM-DD HH:MM:SS` — **ISO 의 `T` 는 공백으로 치환**. AG Grid 에서는 공통 `fmtDateTime` valueFormatter 사용 |
+| 전화번호 | **하이픈 없이** 숫자만 (`01012345678`). 포맷은 화면 레벨에서만 붙이고 저장/비교는 숫자 문자열 |
 | 금액 | 3자리 콤마, 화폐기호 없음 |
 
 ## 4. 그리드 컬럼 폭 (기본값)
