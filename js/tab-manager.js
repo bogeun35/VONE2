@@ -104,6 +104,17 @@
     dispatch('tab:activated', { id });
   }
 
+  /** 모든 탭 닫기 (고정 탭은 유지). 전체가 pinned 뿐이면 변화 없음 */
+  function closeAll() {
+    const pinned = tabs.filter(t => t.pinned);
+    tabs = pinned;
+    if (!tabs.find(t => t.id === activeId)) {
+      activeId = tabs[0] ? tabs[0].id : null;
+    }
+    save(); render();
+    if (activeId) dispatch('tab:activated', { id: activeId });
+  }
+
   function closeRight(id) {
     const idx = findIndex(id);
     if (idx === -1) return;
@@ -197,6 +208,7 @@
     const refreshBtn = document.getElementById('tabActionRefresh');
     const allBtn = document.getElementById('tabActionAll');
     const allMenu = document.getElementById('tabAllMenu');
+    const closeAllBtn = document.getElementById('tabActionCloseAll');
 
     // 탭 클릭
     listEl && listEl.addEventListener('click', (e) => {
@@ -236,6 +248,14 @@
 
     // 새로고침 버튼
     refreshBtn && refreshBtn.addEventListener('click', refreshActive);
+
+    // 모든 탭 닫기 버튼 (고정 탭 제외)
+    closeAllBtn && closeAllBtn.addEventListener('click', () => {
+      const closable = tabs.filter(t => !t.pinned);
+      if (closable.length === 0) return;
+      if (closable.length >= 2 && !confirm(`${closable.length}개 탭을 모두 닫을까요? (고정 탭은 유지됩니다)`)) return;
+      closeAll();
+    });
 
     // 전체보기 드롭다운
     allBtn && allBtn.addEventListener('click', (e) => {
@@ -298,6 +318,7 @@
   window.TabManager = {
     open: openTab,
     close: closeTab,
+    closeAll,
     activate,
     togglePin,
     refresh: refreshActive,

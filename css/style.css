@@ -172,12 +172,28 @@ input, select, button { font-family: inherit; font-size: 11px; }
 .lnb-category-header.open .lnb-arrow { transform: rotate(90deg); }
 .lnb-menu { display: none; }
 .lnb-menu.open { display: block; }
+/* LNB 메뉴 — 순서 기반 자동 번호 (CSS counter) */
+.lnb-menu { counter-reset: lnb-item; }
+.lnb-menu li { counter-increment: lnb-item; }
 .lnb-menu li a {
-  display: block; padding: 6px 16px 6px 32px;
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 16px 6px 20px;
   font-size: 12px; color: #555; transition: all 0.15s;
 }
+.lnb-menu li a::before {
+  content: counter(lnb-item);
+  flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 20px; height: 16px;
+  padding: 0 5px;
+  font-size: 10px; font-weight: 600; color: #94a3b8;
+  background: #eef1f6; border-radius: 3px;
+  font-variant-numeric: tabular-nums;
+}
 .lnb-menu li a:hover { background: #f5f6fa; color: #333; }
+.lnb-menu li a:hover::before { background: #e2e7ef; color: #64748b; }
 .lnb-menu li.active a { color: #0ea5a0; font-weight: 600; background: #f0faf9; }
+.lnb-menu li.active a::before { background: #0ea5a0; color: #fff; }
 
 /* ===== Content ===== */
 .content {
@@ -1374,3 +1390,24 @@ input.modal-info-value:focus { outline: 1px solid #2563eb; outline-offset: -1px;
 /* AG Grid floating filter 행 높이 조정 */
 .ag-theme-alpine .ag-floating-filter { padding: 0 !important; }
 .ag-theme-alpine .ag-floating-filter-body { height: 100%; }
+
+/* ===== Page Stub (LNB로 생성된 빈 페이지) ===== */
+.page-stub { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+.page-stub .page-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: 12px 20px 8px; border-bottom: 1px solid #eef0f4;
+}
+.page-stub .page-empty-body {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  color: #9aa3af; font-size: 12px;
+  border: 1px dashed #dfe3eb; border-radius: 6px;
+  margin: 8px 20px; background: #fafbfc;
+}
+.page-stub .grid-section { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.page-stub .grid-container-stub {
+  flex: 1; min-height: 240px;
+  border: 1px dashed #dfe3eb; border-radius: 4px;
+  background: #fafbfc;
+  display: flex; align-items: center; justify-content: center;
+  color: #9aa3af; font-size: 12px;
+}

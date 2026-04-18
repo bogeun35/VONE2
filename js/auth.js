@@ -79,6 +79,8 @@
     document.getElementById("appHeader").style.display = "";
     document.getElementById("appLayout").style.display = "";
     const tabBar = document.getElementById("tabBar"); if (tabBar) tabBar.style.display = "flex";
+    // PageStub 은 TabManager 보다 먼저 부팅해 'tab:activated' 리스너를 먼저 등록
+    if (window.PageStub && typeof window.PageStub.boot === "function") window.PageStub.boot();
     if (window.TabManager && typeof window.TabManager.boot === "function") window.TabManager.boot();
 
     const nameEl = document.getElementById("headerUserName");

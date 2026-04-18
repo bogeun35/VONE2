@@ -72,6 +72,9 @@
       <button class="tab-bar-action" id="tabActionAll" title="전체 탭 목록" aria-label="전체보기">
         <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 4h12M2 8h12M2 12h12"/></svg>
       </button>
+      <button class="tab-bar-action" id="tabActionCloseAll" title="모든 탭 닫기 (고정 제외)" aria-label="모두 닫기">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg>
+      </button>
     </div>
     <div class="tab-all-menu" id="tabAllMenu" style="display:none"></div>
   </div>
@@ -327,12 +330,12 @@
           </div>
           <div id="transferGrid" class="ag-theme-alpine grid-container"></div>
         </div>
-      </div>
-      <div class="grid-action-footer">
-        <div class="grid-action-footer-left">
-          <button class="btn btn-sm btn-primary">선택 이체 승인</button>
-          <button class="btn btn-sm btn-primary">선택 이체 요청</button>
-          <button class="btn btn-sm btn-outline-danger">선택 삭제</button>
+        <div class="grid-action-footer">
+          <div class="grid-action-footer-left">
+            <button class="btn btn-sm btn-primary">선택 이체 승인</button>
+            <button class="btn btn-sm btn-primary">선택 이체 요청</button>
+            <button class="btn btn-sm btn-outline-danger">선택 삭제</button>
+          </div>
         </div>
       </div>
     </main>
@@ -444,6 +447,7 @@
   <script src="js/components/vone-table-filter.js"></script>
   <script src="js/components/date-input-placeholder.js"></script>
   <script src="js/components/doc-editor.js"></script>
+  <script src="js/components/page-stub.js"></script>
   <script src="js/pages/transfer.js"></script>
 </body>
 </html>
