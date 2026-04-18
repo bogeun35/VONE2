@@ -99,7 +99,7 @@
   // 기본은 타이트하게 — 사용자가 필요 시 리사이즈 후 템플릿 저장.
   const columnDefs = [
     { headerName: '', field: '_select', width: 32, maxWidth: 32, pinned: 'left', checkboxSelection: true, headerCheckboxSelection: true, headerCheckboxSelectionFilteredOnly: true, sortable: false, filter: false, resizable: false, suppressMovable: true, lockPosition: 'left', cellClass: 'cell-select', headerClass: 'header-center' },
-    { headerName: '정산계약 IDX', field: 'idx', width: 44, pinned: 'left', cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
+    { headerName: '정산계약 IDX', field: 'idx', width: 44, pinned: 'left', cellStyle: rightAlign, headerClass: 'header-right', context: { voneIsNumeric: true } },
     { headerName: '계약명', field: 'name', width: 160 },
     { headerName: '계약서 타입', field: 'ctype', width: 72, pinned: 'left', cellStyle: centerAlign, headerClass: 'header-center' },
     { headerName: '태그', field: 'tags', width: 120, cellRenderer: TagsRenderer, valueFormatter: p => (p.value || []).join(', ') },

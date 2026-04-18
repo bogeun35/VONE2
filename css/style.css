@@ -1532,3 +1532,33 @@ input.modal-info-value:focus { outline: 1px solid #2563eb; outline-offset: -1px;
   display: flex; align-items: center; justify-content: center;
   color: #9aa3af; font-size: 12px;
 }
+
+/* ===== 테이블 정의서 Modal ===== */
+.table-schema-modal { width: 90vw; max-width: 1200px; height: 82vh; display: flex; flex-direction: column; }
+.modal.modal-wide .modal-body.table-schema-body { flex: 1; display: flex; flex-direction: row; gap: 0; padding: 0; overflow: hidden; min-height: 0; }
+.ts-sidebar { width: 280px; flex-shrink: 0; border-right: 1px solid #e8e8e8; display: flex; flex-direction: column; background: #fafbfc; min-height: 0; }
+.ts-detail { min-width: 0; }
+.ts-filter { margin: 8px; padding: 5px 8px; border: 1px solid #dfe3eb; border-radius: 3px; font-size: 12px; }
+.ts-list { flex: 1; overflow-y: auto; }
+.ts-item { padding: 6px 10px; border-bottom: 1px solid #f0f0f0; cursor: pointer; display: flex; flex-direction: column; gap: 1px; }
+.ts-item:hover { background: #f5f6fa; }
+.ts-item.active { background: #e8f0ff; border-left: 3px solid #2563eb; padding-left: 7px; }
+.ts-item-en { font-size: 12px; font-weight: 500; color: #333; }
+.ts-item-ko { font-size: 11px; color: #666; }
+.ts-undef { color: #c9ced6; font-style: italic; }
+.ts-detail { flex: 1; overflow-y: auto; padding: 12px 16px; }
+.ts-empty { color: #9aa3af; text-align: center; padding: 40px 0; }
+.ts-detail-header h4 { margin: 0 0 4px; font-size: 15px; }
+.ts-detail-ko { font-size: 13px; font-weight: 400; color: #666; margin-left: 6px; }
+.ts-detail-desc { margin: 4px 0; font-size: 12px; color: #555; }
+.ts-detail-meta { font-size: 11px; color: #9aa3af; margin-bottom: 10px; }
+.ts-detail-meta code { background: #f0f0f0; padding: 1px 4px; border-radius: 2px; font-family: monospace; }
+.ts-cols-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.ts-cols-table th, .ts-cols-table td { padding: 5px 8px; text-align: left; border-bottom: 1px solid #f0f0f0; }
+.ts-cols-table th { background: #f5f6fa; font-weight: 500; font-size: 11px; color: #666; position: sticky; top: 0; }
+.ts-cols-table tr:hover td { background: #fafbfc; }
+.ts-col-no { color: #9aa3af; text-align: right; font-variant-numeric: tabular-nums; }
+.ts-col-en { font-family: monospace; }
+.ts-tag { display: inline-block; font-size: 9px; padding: 1px 4px; border-radius: 2px; margin-left: 4px; font-weight: 600; }
+.ts-tag-pk { background: #2563eb; color: #fff; }
+.ts-tag-fk { background: #e8f0ff; color: #2563eb; }

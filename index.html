@@ -52,6 +52,10 @@
         <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 2h7l3 3v9a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M10 2v3h3M5 9h6M5 11h6M5 7h3"/></svg>
         공통 정책
       </button>
+      <button class="header-policy-btn" id="btnOpenTableSchema" title="DB 테이블 정의서">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M2 6h12M2 9h12M6 6v7M10 6v7"/></svg>
+        테이블 정의
+      </button>
       <div class="header-user-wrap" id="headerUserWrap">
         <div class="header-user-avatar" id="headerUserAvatar"></div>
         <span class="header-user-name" id="headerUserName">-</span>
@@ -580,6 +584,273 @@
         </div>
       </div>
 
+      <!-- ============================================================ -->
+      <!-- 정산서 관리 페이지 (settle-list)                                -->
+      <!-- ============================================================ -->
+      <div class="page" id="page-settle-list" data-doc="settle-bill" style="display:none">
+        <div class="page-header">
+          <div>
+            <div class="breadcrumb">정산/청구 &gt; 정산서 관리</div>
+            <h1 class="page-title">정산서 관리</h1>
+          </div>
+          <button class="btn-doc-toggle" title="기획문서 보기">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 2h8l4 4v8a1 1 0 01-1 1H2a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.2"/><path d="M10 2v4h4M4 9h6M4 11h6M4 7h3" stroke="currentColor" stroke-width="1.2"/></svg>
+            <span>기획문서</span>
+          </button>
+        </div>
+
+        <!-- Filter -->
+        <div class="filter-box">
+          <div class="filter-header open" id="slFilterToggle">
+            <span class="filter-header-title">
+              <svg class="filter-arrow" width="10" height="10" viewBox="0 0 10 10"><path d="M3 2l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+              조건 검색
+            </span>
+            <div class="filter-header-actions">
+              <button class="btn btn-sm btn-outline-primary" id="slFilterReset" onclick="event.stopPropagation()">필터 초기화</button>
+              <button class="btn btn-sm btn-primary" id="slSearchBtn" onclick="event.stopPropagation()">데이터 조회 <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="white" stroke-width="1.2"/><path d="M9.5 9.5L13 13" stroke="white" stroke-width="1.2"/></svg></button>
+            </div>
+          </div>
+          <div class="filter-body open" id="slFilterBody">
+            <!-- 조건 검색 -->
+            <div class="filter-row">
+              <div class="filter-label">조건 검색</div>
+              <div class="filter-fields filter-fields-wrap">
+                <div class="filter-inline-group">
+                  <label>계약서 타입</label>
+                  <div class="checkbox-btn-group" data-name="contractType">
+                    <button class="checkbox-btn active" data-value="식권대장">식권대장</button>
+                    <button class="checkbox-btn active" data-value="복지대장">복지대장</button>
+                    <button class="checkbox-btn active" data-value="퀵대장">퀵대장</button>
+                    <button class="checkbox-btn active" data-value="단체선물대장">단체선물대장</button>
+                    <button class="checkbox-btn active" data-value="기타">기타</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>정산 상태</label>
+                  <div class="checkbox-btn-group" data-name="settleStatus">
+                    <button class="checkbox-btn active" data-value="정산 대기">정산 대기</button>
+                    <button class="checkbox-btn active" data-value="정산 확정">정산 확정</button>
+                    <button class="checkbox-btn active" data-value="증빙 완료">증빙 완료</button>
+                    <button class="checkbox-btn active" data-value="거래 완료">거래 완료</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>태그</label>
+                  <div class="tag-select" data-name="tag">
+                    <div class="tag-select-control">
+                      <div class="tag-select-chips"></div>
+                      <input type="text" class="tag-select-input" placeholder="태그 검색">
+                      <svg class="tag-select-arrow" width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+                    </div>
+                    <div class="tag-select-dropdown" style="display:none"></div>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>증빙 수취 유형</label>
+                  <div class="radio-btn-group" data-name="proofType">
+                    <button class="radio-btn active" data-value="all">전체</button>
+                    <button class="radio-btn" data-value="공급자발행">공급자 발행</button>
+                    <button class="radio-btn" data-value="시스템발행">시스템 발행</button>
+                    <button class="radio-btn" data-value="종이세금계산서">종이세금계산서</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>증빙 상계</label>
+                  <div class="radio-btn-group" data-name="proofOffset">
+                    <button class="radio-btn active" data-value="all">전체</button>
+                    <button class="radio-btn" data-value="상계">상계</button>
+                    <button class="radio-btn" data-value="별도">별도</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>이체 상계</label>
+                  <div class="radio-btn-group" data-name="transferOffset">
+                    <button class="radio-btn active" data-value="all">전체</button>
+                    <button class="radio-btn" data-value="상계">상계</button>
+                    <button class="radio-btn" data-value="별도">별도</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>계좌 검증</label>
+                  <div class="radio-btn-group" data-name="acctVerify">
+                    <button class="radio-btn active" data-value="all">전체</button>
+                    <button class="radio-btn" data-value="성공">성공</button>
+                    <button class="radio-btn" data-value="실패">실패</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>매입 증빙 필요 금액</label>
+                  <div class="radio-btn-group" data-name="purchaseAmount">
+                    <button class="radio-btn active" data-value="all">전체</button>
+                    <button class="radio-btn" data-value="yes">있음</button>
+                    <button class="radio-btn" data-value="no">없음</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>매입 증빙 상태</label>
+                  <select data-name="purchaseStatus">
+                    <option value="all">전체</option>
+                    <option value="증빙 생성 필요">증빙 생성 필요</option>
+                    <option value="실패">실패</option>
+                    <option value="완료">완료</option>
+                    <option value="승인 대기">승인 대기</option>
+                    <option value="국세청 전송">국세청 전송</option>
+                  </select>
+                </div>
+                <div class="filter-inline-group">
+                  <label>매출 증빙 필요 금액</label>
+                  <div class="radio-btn-group" data-name="salesAmount">
+                    <button class="radio-btn active" data-value="all">전체</button>
+                    <button class="radio-btn" data-value="yes">있음</button>
+                    <button class="radio-btn" data-value="no">없음</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>매출 증빙 상태</label>
+                  <select data-name="salesStatus">
+                    <option value="all">전체</option>
+                    <option value="증빙 생성 필요">증빙 생성 필요</option>
+                    <option value="실패">실패</option>
+                    <option value="완료">완료</option>
+                    <option value="승인 대기">승인 대기</option>
+                    <option value="국세청 전송">국세청 전송</option>
+                  </select>
+                </div>
+                <div class="filter-inline-group">
+                  <label>지급 대상 금액</label>
+                  <div class="radio-btn-group" data-name="payAmount">
+                    <button class="radio-btn active" data-value="all">전체</button>
+                    <button class="radio-btn" data-value="yes">있음</button>
+                    <button class="radio-btn" data-value="no">없음</button>
+                  </div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>이체 상태</label>
+                  <select data-name="transferStatus">
+                    <option value="all">전체</option>
+                    <option value="이체 대기">이체 대기</option>
+                    <option value="이체 승인">이체 승인</option>
+                    <option value="실행 요청">실행 요청</option>
+                    <option value="이체 성공">이체 성공</option>
+                    <option value="이체 실패">이체 실패</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- 기간 검색 -->
+            <div class="filter-row">
+              <div class="filter-label">기간 검색</div>
+              <div class="filter-fields filter-fields-wrap">
+                <div class="filter-inline-group">
+                  <label>정산일자</label>
+                  <div class="btn-group-period">
+                    <button class="btn-period">오늘</button>
+                    <button class="btn-period">이번 달</button>
+                    <button class="btn-period">지난 달</button>
+                  </div>
+                  <div class="date-range"><input type="date" lang="sv-SE"> <span>~</span> <input type="date" lang="sv-SE"></div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>작성일자</label>
+                  <div class="btn-group-period">
+                    <button class="btn-period">오늘</button>
+                    <button class="btn-period">이번 달</button>
+                    <button class="btn-period">지난 달</button>
+                  </div>
+                  <div class="date-range"><input type="date" lang="sv-SE"> <span>~</span> <input type="date" lang="sv-SE"></div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>지급 예정일자</label>
+                  <div class="btn-group-period">
+                    <button class="btn-period">오늘</button>
+                    <button class="btn-period">이번 달</button>
+                    <button class="btn-period">지난 달</button>
+                  </div>
+                  <div class="date-range"><input type="date" lang="sv-SE"> <span>~</span> <input type="date" lang="sv-SE"></div>
+                </div>
+                <div class="filter-inline-group">
+                  <label>전송일자</label>
+                  <div class="btn-group-period">
+                    <button class="btn-period">오늘</button>
+                    <button class="btn-period">이번 달</button>
+                    <button class="btn-period">지난 달</button>
+                  </div>
+                  <div class="date-range"><input type="date" lang="sv-SE"> <span>~</span> <input type="date" lang="sv-SE"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 키워드 검색 -->
+            <div class="filter-row">
+              <div class="filter-label">키워드 검색</div>
+              <div class="filter-fields filter-fields-wrap">
+                <div class="filter-inline-group">
+                  <label>정산서 검색</label>
+                  <input type="text" class="filter-text-input" placeholder="정산서 IDX">
+                </div>
+                <div class="filter-inline-group">
+                  <label>계약 검색</label>
+                  <input type="text" class="filter-text-input" placeholder="계약명, 계약 IDX">
+                </div>
+                <div class="filter-inline-group">
+                  <label>사업자번호 검색</label>
+                  <input type="text" class="filter-text-input" placeholder="사업자번호">
+                </div>
+                <div class="filter-inline-group">
+                  <label>거래처 검색</label>
+                  <input type="text" class="filter-text-input" placeholder="거래처명, 거래처 IDX">
+                </div>
+                <div class="filter-inline-group">
+                  <label>제휴점 검색</label>
+                  <input type="text" class="filter-text-input" placeholder="제휴점 ID, 제휴점명">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid -->
+        <div class="grid-section">
+          <div class="grid-toolbar">
+            <div class="grid-toolbar-left">
+              <span class="grid-table-name">정산서 조회 테이블</span>
+              <span class="grid-total" id="slGridTotal">검색결과 : 0건</span>
+              <span class="selected-count">선택 <strong id="slSelectedCount">0</strong>건</span>
+              <span class="cell-range-status" id="slCellRangeStatus"></span>
+            </div>
+            <div class="grid-toolbar-right">
+              <button class="btn btn-sm btn-outline-primary" id="slCopyAllBtn">전체 복사</button>
+              <button class="btn btn-sm btn-outline-primary" id="slColPickerBtn">컬럼 선택</button>
+              <button class="btn btn-sm btn-outline-primary" id="slResetBtn">컬럼 초기화</button>
+              <button class="btn btn-sm btn-outline-primary" id="slTplBtn">템플릿 설정</button>
+              <select class="page-size-select" id="slPageSizeSelect">
+                <option value="1000" selected>1000개씩 보기</option>
+                <option value="2000">2000개씩 보기</option>
+                <option value="5000">5000개씩 보기</option>
+                <option value="10000">10000개씩 보기</option>
+                <option value="20000">20000개씩 보기</option>
+              </select>
+              <div class="pagination" id="slPagination"></div>
+            </div>
+          </div>
+          <div id="settleListGrid" class="ag-theme-alpine grid-container"></div>
+        </div>
+
+        <!-- Footer -->
+        <div class="grid-action-footer">
+          <div class="grid-action-footer-left">
+            <button class="btn btn-sm btn-primary" id="slCreateBtn">정산서 생성</button>
+            <button class="btn btn-sm btn-primary" id="slVerifyBtn">계좌 검증</button>
+            <button class="btn btn-sm btn-primary" id="slTransferBtn">이체 생성</button>
+            <button class="btn btn-sm btn-outline-primary" id="slLockBtn">일괄 잠금</button>
+            <button class="btn btn-sm btn-outline-primary" id="slUnlockBtn">잠금 해제</button>
+            <button class="btn btn-sm btn-outline-primary" id="slBulkEditBtn">일괄 수정</button>
+          </div>
+        </div>
+      </div>
+
     </main>
 
     <!-- Document Sidebar -->
@@ -606,6 +877,28 @@
         <p class="doc-placeholder">페이지를 선택하면 해당 문서가 표시됩니다.</p>
       </div>
     </aside>
+  </div>
+
+  <!-- DB 테이블 정의서 Modal -->
+  <div class="modal-overlay" id="tableSchemaModal">
+    <div class="modal modal-wide table-schema-modal">
+      <div class="modal-header">
+        <h3>VONE2 DB 테이블 정의서</h3>
+        <div style="display:flex; gap:6px; align-items:center;">
+          <a class="btn btn-sm btn-outline-primary" id="tableSchemaEditLink" target="_blank" rel="noopener">한글 번역 편집</a>
+          <button class="modal-close" id="tableSchemaClose">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body table-schema-body">
+        <div class="ts-sidebar">
+          <input type="text" id="tableSchemaFilter" class="ts-filter" placeholder="테이블 검색 (영문/한글)">
+          <div class="ts-list" id="tableSchemaList"></div>
+        </div>
+        <div class="ts-detail" id="tableSchemaDetail">
+          <div class="ts-empty">좌측에서 테이블을 선택하세요.</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- 공통 정책문서 Modal -->
@@ -710,5 +1003,7 @@
   <script src="js/components/common-policy-modal.js"></script>
   <script src="js/pages/transfer.js"></script>
   <script src="js/pages/settle-contract.js"></script>
+  <script src="js/pages/settle-list.js"></script>
+  <script src="js/components/table-schema-modal.js"></script>
 </body>
 </html>

@@ -146,7 +146,7 @@ const columnDefs = [
     cellClass: 'cell-select',
     headerClass: 'header-center',
   },
-  { headerName: '이체관리 IDX', field: 'seq', width: 40, minWidth: 40, pinned: 'left', cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', filter: 'agNumberColumnFilter' },
+  { headerName: '이체관리 IDX', field: 'seq', width: 40, minWidth: 40, pinned: 'left', cellStyle: rightAlign, headerClass: 'header-right', filter: 'agNumberColumnFilter' },
   { headerName: '정산서 IDX', field: 'settleIdx', width: 40, minWidth: 40, cellRenderer: LinkRenderer, cellStyle: rightAlign, headerClass: 'header-right', filter: 'agNumberColumnFilter' },
   { headerName: '정산년월', field: 'settleMonth', width: 72, cellStyle: centerAlign, headerClass: 'header-center' },
   { headerName: '계약구분', field: 'ctype', width: 72, cellStyle: centerAlign, headerClass: 'header-center' },
