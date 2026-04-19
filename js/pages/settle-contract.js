@@ -568,5 +568,5 @@
     }
   }
 
-  window.SettleContract = { openDetail, openSettleList, openShopDetail, openNew, toggleLock };
+  window.SettleContract = { openDetail, openSettleList, openShopDetail, openNew, toggleLock, _rows: rawRows };
 })();

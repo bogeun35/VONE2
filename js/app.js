@@ -251,35 +251,40 @@ async function ghFetchRaw(path) {
   return res.text();
 }
 
-// 기획문서 목록 조회 (Contents API)
+// 기획문서 목록 조회 — plans-index.json (local, single source of truth)
+//   + localStorage overlay (메타 수정 반영)
+//   해당 페이지의 slug 로 필터링
 async function loadPlanList(docBase) {
-  const dirPath = `docs/${docBase}/plans`;
-  const listUrl = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${dirPath}?ref=${GH.branch}`;
-  const headers = { 'Accept': 'application/vnd.github+json' };
-  const tok = getGhToken();
-  if (tok) headers['Authorization'] = `Bearer ${tok}`;
-
   try {
-    const listRes = await fetch(listUrl, { headers });
-    if (listRes.status === 404) {
-      renderPlanList([], docBase);
-      return;
-    }
-    if (!listRes.ok) throw new Error(`목록 조회 실패 (${listRes.status})`);
-    const files = (await listRes.json()).filter(f => f.type === 'file' && f.name.endsWith('.md'));
-
-    // 각 파일 frontmatter 병렬 fetch
-    const docs = await Promise.all(files.map(async (f) => {
-      try {
-        const text = await ghFetchRaw(f.path);
-        const { meta } = parseFrontmatter(text);
-        return { file: f, meta, text };
-      } catch {
-        return { file: f, meta: {}, text: '' };
-      }
+    const r = await fetch('docs/plans-index.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) throw new Error(`인덱스 조회 실패 (${r.status})`);
+    const json = await r.json();
+    let list = Array.isArray(json.plans) ? json.plans : [];
+    // localStorage overlay 병합 (plans-modal 과 동일 규약)
+    try {
+      const ov = JSON.parse(localStorage.getItem('vone:plans:overrides') || '{}');
+      list = list.map(p => ({ ...p, ...(ov[p.planId] || {}) }));
+    } catch {}
+    // 2뎁스 필터 — Level 1: slug(도메인) 공용 · Level 2: tabId(특정 페이지) 전용
+    //  - plan.tabId 가 활성 탭과 일치하면 표시 (level 2)
+    //  - plan.tabId 가 비어있고 slug 가 일치하면 표시 (level 1 도메인 공용)
+    const activeTabId = (window.TabManager && window.TabManager.getActive && window.TabManager.getActive()) || '';
+    const docs = list.filter(p => {
+      if (p.tabId) return p.tabId === activeTabId;
+      return p.slug === docBase;
+    }).map(p => ({
+      file: { name: p.file || '', path: `docs/${p.slug}/plans/${p.file}` },
+      meta: {
+        id: p.planId || '',
+        title: p.title || '',
+        author: p.planner || '',
+        issueDate: p.issueDate || '',
+        issueNumber: p.issueNo || '',
+        status: p.status || '',
+      },
+      text: '',
+      _plan: p,
     }));
-
-    // 이슈일자 내림차순
     docs.sort((a, b) => (b.meta.issueDate || '').localeCompare(a.meta.issueDate || ''));
     planDocs = docs;
     renderPlanList(docs, docBase);
@@ -335,12 +340,21 @@ function renderPlanList(docs, docBase) {
   if (newBtn) newBtn.addEventListener('click', () => openNewPlan(docBase));
 }
 
-function openPlanDetail(idx) {
+async function openPlanDetail(idx) {
   const d = planDocs[idx];
   if (!d) return;
   planDetailIdx = idx;
   currentDocPath = d.file.path;
-  currentDocRaw = d.text;
+  // 본문을 아직 안 가져왔으면 로컬 md 파일 fetch (커밋 안된 파일도 로컬에선 읽힘)
+  if (!d.text && d.file.path) {
+    try {
+      const r = await fetch(d.file.path + '?t=' + Date.now(), { cache: 'no-store' });
+      if (r.ok) d.text = await r.text();
+    } catch (e) { /* ignore */ }
+  }
+  // 본문이 없으면 플레이스홀더로 구성 (편집 시 생성)
+  const body = d.text || `# ${d.meta.title || '(제목 없음)'}\n\n> 본문 없음 — "편집" 버튼으로 작성 후 저장.\n`;
+  currentDocRaw = body;
   btnDocEdit.disabled = false;
   renderDocFromRaw();
 }

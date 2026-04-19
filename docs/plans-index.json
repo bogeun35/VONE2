@@ -1,0 +1,148 @@
+{
+  "_meta": {
+    "description": "VONE2 기획문서(plan) 인덱스. 각 항목은 docs/<slug>/plans/<file> 에 해당.",
+    "statusValues": ["작성중", "확정", "완료", "보류"],
+    "schema": {
+      "planId": "VPLAN-### (기획문서 ID, readonly) — 비어있으면 draft",
+      "title": "제목 (editable)",
+      "planner": "기획자",
+      "issueDate": "이슈일자 YYYY-MM-DD",
+      "issueNo": "연결 이슈번호 — Jira 등 외부 PROD-##### (editable)",
+      "status": "statusValues 중 하나",
+      "tags": "편집 가능, 쉼표 구분"
+    },
+    "note": "보류 = 소프트 삭제. 기본 리스트 숨김 (필터 토글로 노출). planId 가 빈 값이면 draft (아직 발번 전)."
+  },
+  "plans": [
+    {
+      "planId": "VPLAN-001",
+      "title": "성공처리 모달 3버튼 플로우",
+      "planner": "정보근",
+      "issueDate": "2026-04-17",
+      "issueNo": "PROD-22010",
+      "status": "확정",
+      "slug": "transfer",
+      "tabId": "transfer",
+      "page": "이체관리",
+      "file": "2026-04-17-success-modal-3btn.md",
+      "tags": ["이체관리", "모달"]
+    },
+    {
+      "planId": "",
+      "title": "2026-04-17-PROD-22011-bank-tx-link",
+      "planner": "",
+      "issueDate": "",
+      "issueNo": "",
+      "status": "작성중",
+      "slug": "transfer",
+      "tabId": "transfer",
+      "page": "이체관리",
+      "file": "2026-04-17-PROD-22011-bank-tx-link.md",
+      "tags": ["이체관리", "통장거래"]
+    },
+    {
+      "planId": "VPLAN-003",
+      "title": "정보갱신 버튼 추가 (이체 대기/승인)",
+      "planner": "정보근",
+      "issueDate": "2026-04-18",
+      "issueNo": "PROD-22012",
+      "status": "작성중",
+      "slug": "transfer",
+      "tabId": "transfer",
+      "page": "이체관리",
+      "file": "2026-04-18-refresh-btn.md",
+      "tags": ["이체관리", "버튼"]
+    },
+    {
+      "planId": "VPLAN-004",
+      "title": "이체관리 조건 필터 + 컬럼 Pin 고정",
+      "planner": "전은혜",
+      "issueDate": "2026-04-08",
+      "issueNo": "",
+      "status": "완료",
+      "slug": "transfer",
+      "tabId": "transfer",
+      "page": "이체관리",
+      "file": "2026-04-08-filter-and-pin.md",
+      "tags": ["이체관리", "필터", "그리드"]
+    },
+    {
+      "planId": "VPLAN-005",
+      "title": "이체 상태 셀 색상 최소화",
+      "planner": "전은혜",
+      "issueDate": "2026-04-15",
+      "issueNo": "",
+      "status": "완료",
+      "slug": "transfer",
+      "tabId": "transfer",
+      "page": "이체관리",
+      "file": "2026-04-15-status-color-cleanup.md",
+      "tags": ["이체관리", "UI"]
+    },
+    {
+      "planId": "VPLAN-006",
+      "title": "정산계약 관리 페이지 신규",
+      "planner": "이샛별",
+      "issueDate": "2026-04-16",
+      "issueNo": "",
+      "status": "완료",
+      "slug": "settle-contract",
+      "tabId": "settle-contract-list",
+      "page": "정산계약 관리",
+      "file": "2026-04-16-settle-contract-list.md",
+      "tags": ["정산계약", "리스트"]
+    },
+    {
+      "planId": "VPLAN-007",
+      "title": "정산서 관리 페이지 신규 + 그룹 헤더 6종",
+      "planner": "김지혜",
+      "issueDate": "2026-04-18",
+      "issueNo": "",
+      "status": "완료",
+      "slug": "settle-bill",
+      "tabId": "settle-list",
+      "page": "정산서 관리",
+      "file": "2026-04-18-settle-list.md",
+      "tags": ["정산서", "리스트", "AG Grid"]
+    },
+    {
+      "planId": "VPLAN-008",
+      "title": "정산계약 상세 페이지 — 메타바+탭+섹션+푸터",
+      "planner": "이주환",
+      "issueDate": "2026-04-19",
+      "issueNo": "",
+      "status": "완료",
+      "slug": "settle-contract",
+      "tabId": "settle-contract-detail",
+      "page": "정산계약 상세",
+      "file": "2026-04-19-settle-contract-detail.md",
+      "tags": ["정산계약", "상세", "detail-policy"]
+    },
+    {
+      "planId": "VPLAN-009",
+      "title": "정산서 상세 페이지 — 정산계약 패턴 정렬",
+      "planner": "이주환",
+      "issueDate": "2026-04-20",
+      "issueNo": "",
+      "status": "확정",
+      "slug": "settle-bill",
+      "tabId": "settle-bill-detail",
+      "page": "정산서 상세",
+      "file": "2026-04-20-settle-bill-detail.md",
+      "tags": ["정산서", "상세"]
+    },
+    {
+      "planId": "VPLAN-010",
+      "title": "기획문서 매니저 (이슈 관리)",
+      "planner": "이주환",
+      "issueDate": "2026-04-20",
+      "issueNo": "",
+      "status": "작성중",
+      "slug": "common",
+      "tabId": "",
+      "page": "공통",
+      "file": "2026-04-20-plans-manager.md",
+      "tags": ["공통", "기획문서", "이슈관리"]
+    }
+  ]
+}

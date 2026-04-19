@@ -495,5 +495,5 @@
     if (active === 'settle-list') onPageShown(active);
   });
 
-  window.SettleList = { openDetail, openShopDetail, toggleLock };
+  window.SettleList = { openDetail, openShopDetail, toggleLock, _rows: rawRows };
 })();

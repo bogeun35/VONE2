@@ -5,6 +5,10 @@
 
 > ⚠️ **먼저 [`docs/common/policy.md`](common/policy.md) 를 읽을 것.**
 > 숫자·색상·단계·기본값 등 **임의 값 금지**. 정책에 없으면 반드시 사용자에게 확인 후 공통 정책문서에 추가한다.
+>
+> **페이지 타입별 정책:**
+> - 리스트/조회: `policy.md` + `table-policy.md` (미작성)
+> - **상세(Detail)**: [`common/detail-policy.md`](common/detail-policy.md) — 메타바·탭·섹션·푸터 구조
 
 ---
 
