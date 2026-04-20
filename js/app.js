@@ -761,26 +761,33 @@ async function saveDocToGithub() {
   statusEl.textContent = '저장 중...';
 
   try {
-    const metaUrl = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${currentDocPath}?ref=${GH.branch}`;
-    const metaRes = await fetch(metaUrl, {
-      headers: { 'Accept': 'application/vnd.github+json', 'Authorization': `Bearer ${token}` },
-    });
-
-    let sha = null;
-    if (metaRes.ok) {
-      const metaJson = await metaRes.json();
-      sha = metaJson.sha;
+    async function fetchSha() {
+      const metaUrl = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${currentDocPath}?ref=${GH.branch}&t=${Date.now()}`;
+      const metaRes = await fetch(metaUrl, {
+        headers: { 'Accept': 'application/vnd.github+json', 'Authorization': `Bearer ${token}` },
+        cache: 'no-store',
+      });
+      if (metaRes.ok) return (await metaRes.json()).sha;
+      return null;
     }
 
-    const putBody = { message, content: b64EncodeUtf8(newText), branch: GH.branch };
-    if (sha) putBody.sha = sha;
+    async function tryPut(sha) {
+      const putBody = { message, content: b64EncodeUtf8(newText), branch: GH.branch };
+      if (sha) putBody.sha = sha;
+      const putUrl = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${currentDocPath}`;
+      return fetch(putUrl, {
+        method: 'PUT',
+        headers: { 'Accept': 'application/vnd.github+json', 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(putBody),
+      });
+    }
 
-    const putUrl = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${currentDocPath}`;
-    const putRes = await fetch(putUrl, {
-      method: 'PUT',
-      headers: { 'Accept': 'application/vnd.github+json', 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify(putBody),
-    });
+    let sha = await fetchSha();
+    let putRes = await tryPut(sha);
+    if (putRes.status === 409 || putRes.status === 422) {
+      sha = await fetchSha();
+      putRes = await tryPut(sha);
+    }
     if (!putRes.ok) {
       const err = await putRes.json().catch(() => ({}));
       throw new Error(err.message || `저장 실패 (${putRes.status})`);
