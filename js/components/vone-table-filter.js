@@ -290,14 +290,21 @@
     col.suppressFloatingFilterButton = true;
   }
 
-  // 힌트 floating filter — `?` 버튼 + hover 툴팁
+  // 힌트 floating filter — `?` 버튼 + 클릭 팝업 (fixed position)
   class VoneHintFloatingFilter {
     init() {
       this.eGui = document.createElement('div');
       this.eGui.className = 'vone-floating-filter-wrap vone-hint-wrap';
-      this.eGui.innerHTML = `
-        <button class="vone-hint-btn" type="button" aria-label="필터 문법 도움말">?</button>
-        <div class="vone-hint-popup" role="tooltip">
+      this.eGui.innerHTML = `<button class="vone-hint-btn" type="button" aria-label="필터 문법 도움말">?</button>`;
+      this.eGui.querySelector('.vone-hint-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        const existing = document.getElementById('voneHintPopup');
+        if (existing) { existing.remove(); return; }
+        const rect = e.target.getBoundingClientRect();
+        const popup = document.createElement('div');
+        popup.id = 'voneHintPopup';
+        popup.className = 'vone-hint-popup show';
+        popup.innerHTML = `
           <div class="vone-hint-title">VoneTable 필터 문법</div>
           <table class="vone-hint-table vone-hint-md">
             <thead>
@@ -315,13 +322,17 @@
               <tr class="vone-hint-and"><td>AND 결합</td><td><code>status=이체 성공</code> + <code>transferAmount&gt;500000</code></td><td>8·7 교집합 = 6</td></tr>
             </tbody>
           </table>
-          <div class="vone-hint-footer">여러 컬럼 조건은 <b>AND</b> 로 결합 · 대소문자 무시 · 숫자 쉼표 자동 제거</div>
-        </div>
-      `;
+          <div class="vone-hint-footer">여러 컬럼 조건은 <b>AND</b> 로 결합 · 대소문자 무시 · 숫자 쉼표 자동 제거</div>`;
+        popup.style.top = (rect.bottom + 4) + 'px';
+        popup.style.left = rect.left + 'px';
+        document.body.appendChild(popup);
+        const close = (ev) => { if (!popup.contains(ev.target) && ev.target !== e.target) { popup.remove(); document.removeEventListener('click', close); } };
+        setTimeout(() => document.addEventListener('click', close), 0);
+      });
     }
     getGui() { return this.eGui; }
     onParentModelChanged() {}
-    destroy() {}
+    destroy() { const p = document.getElementById('voneHintPopup'); if (p) p.remove(); }
   }
 
   // 전역 노출
