@@ -24,7 +24,7 @@
       "slug": "transfer",
       "tabId": "transfer",
       "page": "이체관리",
-      "file": "2026-04-17-success-modal-3btn.md",
+      "file": "2026-04-17-PROD-22010-success-modal-flow.md",
       "tags": ["이체관리", "모달"]
     },
     {
@@ -50,7 +50,7 @@
       "slug": "transfer",
       "tabId": "transfer",
       "page": "이체관리",
-      "file": "2026-04-18-refresh-btn.md",
+      "file": "2026-04-18-PROD-22012-info-refresh.md",
       "tags": ["이체관리", "버튼"]
     },
     {
