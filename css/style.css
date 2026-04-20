@@ -9,6 +9,8 @@ html, body {
   color: #333;
   background: #f5f6fa;
   font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a { color: inherit; text-decoration: none; }
