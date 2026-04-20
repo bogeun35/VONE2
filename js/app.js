@@ -82,41 +82,74 @@ document.querySelectorAll('input[type="date"]').forEach(input => {
   input.addEventListener('change', clamp);
 });
 
-// ===== Document Sidebar Toggle =====
-const btnDocToggle = document.getElementById('btnDocToggle');
+// ===== Document Sidebar =====
 const btnDocClose = document.getElementById('btnDocClose');
 const btnDocRefresh = document.getElementById('btnDocRefresh');
 const btnDocEdit = document.getElementById('btnDocEdit');
 const btnDocSettings = document.getElementById('btnDocSettings');
 const docSidebar = document.getElementById('docSidebar');
 const docContent = document.getElementById('docContent');
+const docPageFilter = document.getElementById('docPageFilter');
 
-// GitHub 설정 (public repo 읽기 + PAT로 쓰기)
 const GH = { owner: 'bogeun35', repo: 'VONE2', branch: 'main' };
 const GH_TOKEN_KEY = 'vone:ghToken';
 const getGhToken = () => localStorage.getItem(GH_TOKEN_KEY) || '';
 const setGhToken = (t) => localStorage.setItem(GH_TOKEN_KEY, t);
 
-// Jira 연동 (이슈번호 자동 링크화)
 const JIRA = { baseUrl: 'https://vendysdev.atlassian.net/browse/' };
 const JIRA_KEY_RE = /\b[A-Z][A-Z0-9]+-\d+\b/g;
 const jiraHref = (key) => JIRA.baseUrl + encodeURIComponent(key);
 
-let currentDocTab = 'policy';
-let currentDocPath = null;  // 현재 로드된 md 경로
-let currentDocRaw = null;   // 원본 md 텍스트
-let editorMode = false;
-let planDocs = [];          // 기획문서 목록 (메타+본문 캐시)
-let planDetailIdx = -1;     // 기획문서 상세 뷰에서 선택된 인덱스 (-1 = 목록 뷰)
-let docEditorInstance = null; // 현재 마운트된 Toast UI 에디터 핸들
+const OVERRIDE_KEY = 'vone:plans:overrides';
+const STATUS_VALUES = ['작성중', '확정', '완료', '보류'];
 
-// 현재 화면에 보이는 .page 를 반환 (display:none 제외)
+// 페이지 필터 → slug|tabId 매핑
+const PAGE_FILTER_MAP = {
+  'common|': { slug: 'common', tabId: '', label: '공통' },
+  'transfer|transfer': { slug: 'transfer', tabId: 'transfer', label: '이체관리' },
+  'settle-contract|settle-contract-list': { slug: 'settle-contract', tabId: 'settle-contract-list', label: '정산계약 관리' },
+  'settle-contract|settle-contract-detail': { slug: 'settle-contract', tabId: 'settle-contract-detail', label: '정산계약 상세' },
+  'settle-bill|settle-list': { slug: 'settle-bill', tabId: 'settle-list', label: '정산서 관리' },
+  'settle-bill|settle-bill-detail': { slug: 'settle-bill', tabId: 'settle-bill-detail', label: '정산서 상세' },
+};
+
+let currentDocTab = 'policy';
+let currentDocPath = null;
+let currentDocRaw = null;
+let editorMode = false;
+let planDocs = [];
+let planDetailIdx = -1;
+let docEditorInstance = null;
+let allPlansCache = null;
+
 function getVisiblePage() {
   const pages = document.querySelectorAll('.content .page');
   for (const p of pages) {
     if (p.offsetParent !== null) return p;
   }
   return pages[0] || null;
+}
+
+// 현재 페이지 기준으로 필터 기본값 세팅
+function syncFilterToCurrentPage() {
+  const page = getVisiblePage();
+  if (!page) return;
+  const doc = page.dataset.doc || '';
+  const tabId = (window.TabManager && window.TabManager.getActive && window.TabManager.getActive()) || '';
+  const key = `${doc}|${tabId}`;
+  if (PAGE_FILTER_MAP[key]) {
+    docPageFilter.value = key;
+  } else {
+    const fallback = Object.keys(PAGE_FILTER_MAP).find(k => k.startsWith(doc + '|'));
+    if (fallback) docPageFilter.value = fallback;
+  }
+}
+
+function getFilterSelection() {
+  const val = docPageFilter.value;
+  if (val === 'all') return { slug: null, tabId: null };
+  const [slug, tabId] = val.split('|');
+  return { slug: slug || null, tabId: tabId || null };
 }
 
 function syncDocToggleActive(isOpen) {
@@ -126,9 +159,12 @@ function syncDocToggleActive(isOpen) {
 function toggleDocSidebar() {
   const isOpen = docSidebar.classList.toggle('open');
   syncDocToggleActive(isOpen);
-  if (isOpen) loadDocForCurrentPage();
+  if (isOpen) {
+    syncFilterToCurrentPage();
+    loadDocByFilter();
+  }
 }
-// 모든 페이지의 .btn-doc-toggle 에 대응 (이벤트 위임)
+
 document.addEventListener('click', (e) => {
   if (e.target.closest('.btn-doc-toggle')) toggleDocSidebar();
 });
@@ -137,35 +173,43 @@ btnDocClose.addEventListener('click', () => {
   syncDocToggleActive(false);
 });
 
-// 탭/페이지 전환 시 사이드바가 열려있다면 해당 페이지 문서를 다시 로드
+// 페이지 전환 시 필터 자동 동기화
 window.addEventListener('page:shown', () => {
   if (docSidebar && docSidebar.classList.contains('open')) {
-    loadDocForCurrentPage();
+    syncFilterToCurrentPage();
+    loadDocByFilter();
   }
 });
 
-// Doc Tabs
+// 필터 변경 시 문서 다시 로드
+docPageFilter.addEventListener('change', () => {
+  if (editorMode && !confirm('편집 중인 내용이 사라집니다. 필터를 변경할까요?')) {
+    syncFilterToCurrentPage();
+    return;
+  }
+  exitEditorMode();
+  loadDocByFilter();
+});
+
+// 탭 전환 (정책문서 / 기획문서)
 document.querySelectorAll('.doc-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     if (editorMode && !confirm('편집 중인 내용이 사라집니다. 탭을 전환할까요?')) return;
     document.querySelectorAll('.doc-tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     currentDocTab = tab.dataset.tab;
-    editorMode = false;
-    btnDocEdit.classList.remove('active');
-    loadDocForCurrentPage();
+    exitEditorMode();
+    loadDocByFilter();
   });
 });
 
-// 새로고침
 btnDocRefresh.addEventListener('click', () => {
   if (editorMode && !confirm('편집 중인 내용이 사라집니다. 새로고침할까요?')) return;
-  editorMode = false;
-  btnDocEdit.classList.remove('active');
-  loadDocForCurrentPage();
+  exitEditorMode();
+  allPlansCache = null;
+  loadDocByFilter();
 });
 
-// 편집 토글
 btnDocEdit.addEventListener('click', () => {
   if (!currentDocPath) return;
   editorMode = !editorMode;
@@ -174,8 +218,36 @@ btnDocEdit.addEventListener('click', () => {
   else renderDocFromRaw();
 });
 
-// 설정 (PAT 입력)
 btnDocSettings.addEventListener('click', openGhSettings);
+
+function exitEditorMode() {
+  if (docEditorInstance) { try { docEditorInstance.destroy(); } catch {} docEditorInstance = null; }
+  editorMode = false;
+  btnDocEdit.classList.remove('active');
+}
+
+// ===== 통합 로드 함수 (필터 기반) =====
+async function loadDocByFilter() {
+  exitEditorMode();
+  currentDocRaw = null;
+  btnDocEdit.disabled = true;
+  docContent.innerHTML = '<p class="doc-placeholder">불러오는 중...</p>';
+
+  const { slug, tabId } = getFilterSelection();
+
+  if (currentDocTab === 'policy') {
+    if (!slug) {
+      docContent.innerHTML = '<p class="doc-placeholder">페이지를 선택하면 정책문서가 표시됩니다.</p>';
+      return;
+    }
+    currentDocPath = `docs/${slug}/policy.md`;
+    await loadPolicyDoc();
+  } else {
+    planDetailIdx = -1;
+    currentDocPath = null;
+    await loadPlanList(slug, tabId);
+  }
+}
 
 // ===== Parse Frontmatter =====
 function parseFrontmatter(text) {
@@ -208,31 +280,6 @@ function renderVersionHeader(meta) {
     </div>`;
 }
 
-async function loadDocForCurrentPage() {
-  const activePage = getVisiblePage();
-  if (!activePage) return;
-  const docBase = activePage.dataset.doc;
-  if (!docBase) {
-    docContent.innerHTML = '<p class="doc-placeholder">이 페이지에는 연결된 문서가 없습니다.</p>';
-    return;
-  }
-
-  editorMode = false;
-  btnDocEdit.classList.remove('active');
-  currentDocRaw = null;
-  btnDocEdit.disabled = true;
-  docContent.innerHTML = '<p class="doc-placeholder">불러오는 중...</p>';
-
-  if (currentDocTab === 'policy') {
-    currentDocPath = `docs/${docBase}/policy.md`;
-    await loadPolicyDoc();
-  } else {
-    planDetailIdx = -1;
-    currentDocPath = null;
-    await loadPlanList(docBase);
-  }
-}
-
 async function loadPolicyDoc() {
   try {
     const raw = await ghFetchRaw(currentDocPath);
@@ -240,7 +287,7 @@ async function loadPolicyDoc() {
     btnDocEdit.disabled = false;
     renderDocFromRaw();
   } catch {
-    docContent.innerHTML = `<p class="doc-placeholder">정책문서를 불러올 수 없습니다. (${currentDocPath})</p>`;
+    docContent.innerHTML = `<p class="doc-placeholder">정책문서를 불러올 수 없습니다.<br><code>${currentDocPath}</code></p>`;
   }
 }
 
@@ -251,58 +298,59 @@ async function ghFetchRaw(path) {
   return res.text();
 }
 
-// 기획문서 목록 조회 — plans-index.json (local, single source of truth)
-//   + localStorage overlay (메타 수정 반영)
-//   해당 페이지의 slug 로 필터링
-async function loadPlanList(docBase) {
+// ===== 기획문서 목록 =====
+async function fetchAllPlans() {
+  if (allPlansCache) return allPlansCache;
   try {
     const r = await fetch('docs/plans-index.json?t=' + Date.now(), { cache: 'no-store' });
     if (!r.ok) throw new Error(`인덱스 조회 실패 (${r.status})`);
     const json = await r.json();
     let list = Array.isArray(json.plans) ? json.plans : [];
-    // localStorage overlay 병합 (plans-modal 과 동일 규약)
     try {
-      const ov = JSON.parse(localStorage.getItem('vone:plans:overrides') || '{}');
+      const ov = JSON.parse(localStorage.getItem(OVERRIDE_KEY) || '{}');
       list = list.map(p => ({ ...p, ...(ov[p.planId] || {}) }));
     } catch {}
-    // 2뎁스 필터 — Level 1: slug(도메인) 공용 · Level 2: tabId(특정 페이지) 전용
-    //  - plan.tabId 가 활성 탭과 일치하면 표시 (level 2)
-    //  - plan.tabId 가 비어있고 slug 가 일치하면 표시 (level 1 도메인 공용)
-    const activeTabId = (window.TabManager && window.TabManager.getActive && window.TabManager.getActive()) || '';
-    const docs = list.filter(p => {
-      if (p.tabId) return p.tabId === activeTabId;
-      return p.slug === docBase;
-    }).map(p => ({
+    allPlansCache = list;
+    return list;
+  } catch (e) {
+    allPlansCache = null;
+    throw e;
+  }
+}
+
+async function loadPlanList(filterSlug, filterTabId) {
+  try {
+    const list = await fetchAllPlans();
+    const filtered = list.filter(p => {
+      if (p.status === '보류') return false;
+      if (!filterSlug) return true;
+      if (filterTabId) {
+        return p.tabId === filterTabId || (!p.tabId && p.slug === filterSlug);
+      }
+      return p.slug === filterSlug;
+    });
+    const docs = filtered.map(p => ({
       file: { name: p.file || '', path: `docs/${p.slug}/plans/${p.file}` },
-      meta: {
-        id: p.planId || '',
-        title: p.title || '',
-        author: p.planner || '',
-        issueDate: p.issueDate || '',
-        issueNumber: p.issueNo || '',
-        status: p.status || '',
-      },
+      meta: { id: p.planId || '', title: p.title || '', author: p.planner || '', issueDate: p.issueDate || '', issueNumber: p.issueNo || '', status: p.status || '' },
       text: '',
       _plan: p,
     }));
     docs.sort((a, b) => (b.meta.issueDate || '').localeCompare(a.meta.issueDate || ''));
     planDocs = docs;
-    renderPlanList(docs, docBase);
+    renderPlanList(docs);
   } catch (e) {
-    docContent.innerHTML = `<p class="doc-placeholder">기획문서 목록을 불러올 수 없습니다. (${e.message})</p>`;
+    docContent.innerHTML = `<p class="doc-placeholder">기획문서 목록을 불러올 수 없습니다.<br>${escapeHtmlText(e.message)}</p>`;
   }
 }
 
-function renderPlanList(docs, docBase) {
+function renderPlanList(docs) {
   planDetailIdx = -1;
   currentDocPath = null;
   currentDocRaw = null;
   btnDocEdit.disabled = true;
 
   const statusBadge = (s) => {
-    const cls = s === '확정' ? 'ver-status-done'
-             : s === '검토중' ? 'ver-status-review'
-             : 'ver-status-wip';
+    const cls = { '확정': 'ver-status-done', '완료': 'ver-status-done', '검토중': 'ver-status-review' }[s] || 'ver-status-wip';
     return `<span class="doc-version-status ${cls}">${escapeHtmlText(s || '작성중')}</span>`;
   };
 
@@ -315,7 +363,7 @@ function renderPlanList(docs, docBase) {
       <td>${renderJiraLink(d.meta.issueNumber)}</td>
       <td>${statusBadge(d.meta.status)}</td>
     </tr>
-  `).join('') : '<tr><td colspan="6" class="plan-empty">아직 기획문서가 없습니다.</td></tr>';
+  `).join('') : '<tr><td colspan="6" class="plan-empty">기획문서가 없습니다.</td></tr>';
 
   docContent.innerHTML = `
     <div class="plan-list-header">
@@ -323,131 +371,183 @@ function renderPlanList(docs, docBase) {
       <button class="btn btn-sm btn-primary" id="planNewBtn">+ 새 기획문서</button>
     </div>
     <table class="plan-list">
-      <thead><tr>
-        <th>ID</th><th>제목</th><th>기획자</th><th>이슈일자</th><th>이슈번호</th><th>상태</th>
-      </tr></thead>
+      <thead><tr><th>ID</th><th>제목</th><th>기획자</th><th>이슈일자</th><th>이슈번호</th><th>상태</th></tr></thead>
       <tbody>${rows}</tbody>
-    </table>
-  `;
+    </table>`;
 
   docContent.querySelectorAll('.plan-row').forEach(row => {
     row.addEventListener('click', (e) => {
-      if (e.target.closest('a')) return; // Jira 링크 클릭은 별도
+      if (e.target.closest('a')) return;
       openPlanDetail(+row.dataset.idx);
     });
   });
   const newBtn = document.getElementById('planNewBtn');
-  if (newBtn) newBtn.addEventListener('click', () => openNewPlan(docBase));
+  if (newBtn) newBtn.addEventListener('click', openNewPlan);
 }
 
+// ===== 기획문서 상세 — 메타(옵션) / 본문(내용) 분리 =====
 async function openPlanDetail(idx) {
   const d = planDocs[idx];
   if (!d) return;
   planDetailIdx = idx;
   currentDocPath = d.file.path;
-  // 본문을 아직 안 가져왔으면 로컬 md 파일 fetch (커밋 안된 파일도 로컬에선 읽힘)
+
   if (!d.text && d.file.path) {
     try {
       const r = await fetch(d.file.path + '?t=' + Date.now(), { cache: 'no-store' });
-      if (r.ok) d.text = await r.text();
-    } catch (e) { /* ignore */ }
+      if (r.ok) {
+        let raw = await r.text();
+        const parsed = parseFrontmatter(raw);
+        d.text = parsed.body;
+      }
+    } catch {}
   }
-  // 본문이 없으면 플레이스홀더로 구성 (편집 시 생성)
-  const body = d.text || `# ${d.meta.title || '(제목 없음)'}\n\n> 본문 없음 — "편집" 버튼으로 작성 후 저장.\n`;
-  currentDocRaw = body;
+  currentDocRaw = d.text || '';
   btnDocEdit.disabled = false;
-  renderDocFromRaw();
+  renderPlanDetailView(d);
+}
+
+function renderPlanDetailView(d) {
+  const plan = d._plan;
+  const statusOpts = STATUS_VALUES.map(s =>
+    `<option${s === (plan.status || '작성중') ? ' selected' : ''}>${s}</option>`
+  ).join('');
+
+  const metaHtml = `
+    <div class="plan-detail-back">
+      <button class="btn btn-sm btn-outline-primary" id="planBackBtn">← 목록</button>
+      <button class="btn btn-sm btn-outline-danger" id="planDeleteBtn" title="보류 처리">삭제</button>
+    </div>
+    <div class="plan-meta-panel">
+      <div class="plan-meta-row">
+        <label>ID</label>
+        <span class="plan-meta-value plan-id-badge">${escapeHtmlText(plan.planId || '(draft)')}</span>
+      </div>
+      <div class="plan-meta-row">
+        <label>제목</label>
+        <input type="text" class="plan-meta-input" data-field="title" value="${escapeHtmlText(plan.title || '')}">
+      </div>
+      <div class="plan-meta-row">
+        <label>기획자</label>
+        <input type="text" class="plan-meta-input" data-field="planner" value="${escapeHtmlText(plan.planner || '')}">
+      </div>
+      <div class="plan-meta-row">
+        <label>이슈일자</label>
+        <input type="date" class="plan-meta-input" data-field="issueDate" value="${plan.issueDate || ''}">
+      </div>
+      <div class="plan-meta-row">
+        <label>이슈번호</label>
+        <input type="text" class="plan-meta-input" data-field="issueNo" value="${escapeHtmlText(plan.issueNo || '')}" placeholder="PROD-#####">
+      </div>
+      <div class="plan-meta-row">
+        <label>상태</label>
+        <select class="plan-meta-input" data-field="status">${statusOpts}</select>
+      </div>
+      <div class="plan-meta-actions">
+        <span class="plan-meta-status" id="planMetaStatus"></span>
+        <button class="btn btn-sm btn-primary" id="planMetaSaveBtn">옵션 저장</button>
+      </div>
+    </div>
+    <div class="plan-content-divider">
+      <span>본문</span>
+    </div>`;
+
+  const bodyHtml = currentDocRaw
+    ? jiraLinkify(marked.parse(currentDocRaw))
+    : '<p class="doc-placeholder">본문 없음 — 상단 편집(✎) 버튼으로 작성</p>';
+
+  docContent.innerHTML = metaHtml + `<div class="plan-body-preview">${bodyHtml}</div>`;
+  initChangelogToggle();
+
+  // 목록 복귀
+  document.getElementById('planBackBtn').addEventListener('click', () => {
+    exitEditorMode();
+    const { slug, tabId } = getFilterSelection();
+    loadPlanList(slug, tabId);
+  });
+
+  // 삭제 (보류 처리)
+  document.getElementById('planDeleteBtn').addEventListener('click', () => {
+    if (!confirm(`"${plan.title}" 을(를) 보류(삭제) 처리할까요?`)) return;
+    savePlanMeta(plan.planId, 'status', '보류');
+    exitEditorMode();
+    allPlansCache = null;
+    const { slug, tabId } = getFilterSelection();
+    loadPlanList(slug, tabId);
+  });
+
+  // 메타 저장 — 명시적 버튼 클릭으로만 저장
+  document.getElementById('planMetaSaveBtn').addEventListener('click', () => {
+    const statusEl = document.getElementById('planMetaStatus');
+    const fields = docContent.querySelectorAll('.plan-meta-input');
+    let changed = 0;
+    fields.forEach(el => {
+      const field = el.dataset.field;
+      const newVal = el.value.trim();
+      if (plan[field] !== newVal) {
+        savePlanMeta(plan.planId, field, newVal);
+        plan[field] = newVal;
+        if (field === 'title') d.meta.title = newVal;
+        if (field === 'planner') d.meta.author = newVal;
+        if (field === 'issueDate') d.meta.issueDate = newVal;
+        if (field === 'issueNo') d.meta.issueNumber = newVal;
+        if (field === 'status') d.meta.status = newVal;
+        changed++;
+      }
+    });
+    if (changed > 0) {
+      statusEl.className = 'plan-meta-status success';
+      statusEl.textContent = `${changed}개 항목 저장됨`;
+      allPlansCache = null;
+    } else {
+      statusEl.className = 'plan-meta-status';
+      statusEl.textContent = '변경사항 없음';
+    }
+    setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 2000);
+  });
+}
+
+function savePlanMeta(planId, field, value) {
+  if (!planId) return;
+  const ov = JSON.parse(localStorage.getItem(OVERRIDE_KEY) || '{}');
+  if (!ov[planId]) ov[planId] = {};
+  ov[planId][field] = value;
+  localStorage.setItem(OVERRIDE_KEY, JSON.stringify(ov));
 }
 
 function renderDocFromRaw() {
-  if (!currentDocRaw) return;
-  const { meta, body } = parseFrontmatter(currentDocRaw);
-  const isPlan = currentDocTab === 'plan';
-  const header = isPlan ? renderPlanDetailHeader(meta) : renderVersionHeader(meta);
-  const backBtn = isPlan ? `<div class="plan-detail-back"><button class="btn btn-sm btn-outline-primary" id="planBackBtn">← 목록</button></div>` : '';
-  docContent.innerHTML = backBtn + header + jiraLinkify(marked.parse(body));
-  initChangelogToggle();
-  const back = document.getElementById('planBackBtn');
-  if (back) back.addEventListener('click', () => {
-    editorMode = false;
-    btnDocEdit.classList.remove('active');
-    const activePage = document.querySelector('.page');
-    loadPlanList(activePage.dataset.doc);
-  });
-}
-
-function renderPlanDetailHeader(meta) {
-  const statusMap = { '작성중': 'ver-status-wip', '검토중': 'ver-status-review', '확정': 'ver-status-done' };
-  const statusCls = statusMap[meta.status] || 'ver-status-wip';
-  const jira = meta.issueNumber ? `<a class="plan-jira-link" href="${jiraHref(meta.issueNumber)}" target="_blank" rel="noopener">${escapeHtmlText(meta.issueNumber)}</a>` : '-';
-  const id = meta.id ? `<span class="plan-id-badge">${escapeHtmlText(meta.id)}</span>` : '';
-  return `
-    <div class="doc-version-bar">
-      <div class="doc-version-info">
-        ${id}
-        <span class="plan-jira-key">${jira}</span>
-        <span class="doc-version-status ${statusCls}">${escapeHtmlText(meta.status || '작성중')}</span>
-      </div>
-      <div class="doc-version-detail">
-        <span>${escapeHtmlText(meta.issueDate || '-')}</span>
-        <span class="doc-version-sep">|</span>
-        <span>${escapeHtmlText(meta.author || '-')}</span>
-      </div>
-    </div>`;
-}
-
-// 다음 Plan ID 계산 (기존 목록에서 최대값 + 1). 페이지별로 prefix는 고정.
-function computeNextPlanId(docBase) {
-  const prefix = 'VPLAN';  // 향후 페이지별 prefix 매핑 시 ${docBase} 활용 가능
-  let max = 0;
-  for (const d of planDocs) {
-    const id = (d.meta && d.meta.id) || '';
-    const m = id.match(/^VPLAN-(\d+)$/);
-    if (m) max = Math.max(max, parseInt(m[1], 10));
+  if (currentDocRaw == null) return;
+  if (currentDocTab === 'plan' && planDetailIdx >= 0) {
+    renderPlanDetailView(planDocs[planDetailIdx]);
+    return;
   }
-  return `${prefix}-${String(max + 1).padStart(3, '0')}`;
+  const { meta, body } = parseFrontmatter(currentDocRaw);
+  docContent.innerHTML = renderVersionHeader(meta) + jiraLinkify(marked.parse(body));
+  initChangelogToggle();
 }
 
-// 렌더된 HTML 안의 Jira 키를 링크로 치환 (이미 <a>안에 있는 키는 건너뜀)
-function jiraLinkify(html) {
-  // <a>…</a> 구간은 자리표시자로 빼둔 뒤 치환하고 복원
-  const anchors = [];
-  const stashed = html.replace(/<a\b[^>]*>[\s\S]*?<\/a>/g, (m) => {
-    anchors.push(m);
-    return `@@ANCHOR${anchors.length - 1}@@`;
-  });
-  const linked = stashed.replace(JIRA_KEY_RE, (key) =>
-    `<a href="${jiraHref(key)}" target="_blank" rel="noopener" class="jira-key">${key}</a>`
-  );
-  return linked.replace(/@@ANCHOR(\d+)@@/g, (_, i) => anchors[+i]);
-}
-
-function renderJiraLink(key) {
-  if (!key || key === '-') return '-';
-  return `<a href="${jiraHref(key)}" target="_blank" rel="noopener" class="jira-key">${escapeHtmlText(key)}</a>`;
-}
-
-function escapeHtmlText(s) {
-  return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-  }[c]));
-}
-
-// 새 기획문서 생성 다이얼로그
-function openNewPlan(docBase) {
+// ===== 새 기획문서 생성 =====
+function openNewPlan() {
   const existing = document.getElementById('planNewOverlay');
   if (existing) existing.remove();
+
+  const { slug, tabId } = getFilterSelection();
+  const targetSlug = slug || 'common';
+  const targetTabId = tabId || '';
+  const filterInfo = PAGE_FILTER_MAP[`${targetSlug}|${targetTabId}`];
+  const pageName = filterInfo ? filterInfo.label : '공통';
+
   const today = new Date().toISOString().slice(0, 10);
-  const nextId = computeNextPlanId(docBase);
-  // 인증된 사용자 이름 자동 세팅
+  const nextId = computeNextPlanId();
   const user = window.vendysUser;
   const authorDefault = user ? (user.displayName || (user.email || '').split('@')[0]) : '';
+
   const overlay = document.createElement('div');
   overlay.id = 'planNewOverlay';
   overlay.className = 'gh-settings-overlay';
   overlay.innerHTML = `
     <div class="gh-settings-dialog">
-      <div class="gh-settings-title">새 기획문서</div>
+      <div class="gh-settings-title">새 기획문서 <span style="color:#999;font-size:11px;font-weight:400">— ${escapeHtmlText(pageName)}</span></div>
       <div class="gh-settings-field">
         <label>고유 ID</label>
         <input type="text" id="pnId" value="${nextId}" readonly style="background:#f5f6fa;color:#2563eb;font-weight:600">
@@ -457,7 +557,7 @@ function openNewPlan(docBase) {
         <input type="text" id="pnTitle" placeholder="예: 통장거래 IDX 컬럼 추가">
       </div>
       <div class="gh-settings-field">
-        <label>기획자 ${user ? '(로그인 계정 기준 자동 입력)' : ''}</label>
+        <label>기획자</label>
         <input type="text" id="pnAuthor" value="${escapeHtmlText(authorDefault)}" ${user ? 'readonly style="background:#f5f6fa"' : ''}>
       </div>
       <div class="gh-settings-field">
@@ -470,7 +570,7 @@ function openNewPlan(docBase) {
       </div>
       <div class="gh-settings-field">
         <label>상태</label>
-        <select id="pnStatus"><option>작성중</option><option>검토중</option><option>확정</option></select>
+        <select id="pnStatus"><option>작성중</option><option>확정</option></select>
       </div>
       <div class="gh-settings-actions">
         <span class="doc-editor-status" id="pnStatusMsg" style="flex:1"></span>
@@ -491,55 +591,55 @@ function openNewPlan(docBase) {
     const issue = overlay.querySelector('#pnIssue').value.trim();
     const status = overlay.querySelector('#pnStatus').value;
     const msgEl = overlay.querySelector('#pnStatusMsg');
-    if (!title || !author || !date || !issue) {
+    if (!title) {
       msgEl.className = 'doc-editor-status error';
-      msgEl.textContent = '제목/기획자/이슈일자/이슈번호는 필수입니다';
+      msgEl.textContent = '제목은 필수입니다';
       return;
     }
-    if (!getGhToken()) {
-      msgEl.className = 'doc-editor-status error';
-      msgEl.textContent = 'GitHub 토큰이 필요합니다 — 우측 ⚙ 에서 설정';
-      return;
+    // localStorage에 메타 저장 (GitHub 없이도 동작)
+    const ov = JSON.parse(localStorage.getItem(OVERRIDE_KEY) || '{}');
+    ov[id] = {
+      planId: id, title, planner: author, issueDate: date, issueNo: issue, status,
+      slug: targetSlug, tabId: targetTabId, page: pageName,
+      file: '', tags: [], _new: true,
+    };
+    localStorage.setItem(OVERRIDE_KEY, JSON.stringify(ov));
+    allPlansCache = null;
+    close();
+    // GitHub에 md 파일 생성 시도 (토큰 있으면)
+    if (getGhToken() && issue) {
+      const fileSlug = title.toLowerCase().replace(/[^a-z0-9ㄱ-ㅎ가-힣]+/gi, '-').replace(/(^-|-$)/g, '').slice(0, 40) || 'plan';
+      const fileName = `${date}-${issue}-${fileSlug}.md`;
+      const path = `docs/${targetSlug}/plans/${fileName}`;
+      const body = `# ${title}\n\n## 배경\n\n(배경 설명)\n\n## 요구사항\n\n- (요구사항 1)\n`;
+      try {
+        await ghCreateFile(path, body, `docs(${targetSlug}): add ${fileName}`);
+        ov[id].file = fileName;
+        localStorage.setItem(OVERRIDE_KEY, JSON.stringify(ov));
+      } catch (e) {
+        console.warn('[새 기획문서] GitHub 파일 생성 실패 (메타는 로컬 저장됨):', e.message);
+      }
     }
-    const slug = title.toLowerCase().replace(/[^a-z0-9ㄱ-ㅎ가-힣]+/gi, '-').replace(/(^-|-$)/g, '').slice(0, 40) || 'plan';
-    const fileName = `${date}-${issue}-${slug}.md`;
-    const path = `docs/${docBase}/plans/${fileName}`;
-    const body = `---
-id: ${id}
-title: ${title}
-author: ${author}
-issueDate: ${date}
-issueNumber: ${issue}
-status: ${status}
----
-
-# ${title}
-
-## 배경
-
-(배경 설명)
-
-## 요구사항
-
-- (요구사항 1)
-
-## 변경이력
-| 버전 | 날짜 | 작성자 | 변경내용 |
-|------|------|--------|----------|
-| v0.1 | ${date} | ${author} | 최초 작성 |
-`;
-    try {
-      msgEl.className = 'doc-editor-status';
-      msgEl.textContent = '생성 중...';
-      await ghCreateFile(path, body, `docs(${docBase}): add ${fileName}`);
-      close();
-      await loadPlanList(docBase);
-    } catch (e) {
-      msgEl.className = 'doc-editor-status error';
-      msgEl.textContent = e.message || '생성 실패';
-    }
+    loadPlanList(targetSlug, targetTabId);
   });
   setTimeout(() => overlay.querySelector('#pnTitle').focus(), 0);
+}
+
+function computeNextPlanId() {
+  let max = 0;
+  for (const d of planDocs) {
+    const m = String(d.meta.id || '').match(/^VPLAN-(\d+)$/);
+    if (m) max = Math.max(max, parseInt(m[1], 10));
+  }
+  // localStorage overrides에서도 확인
+  try {
+    const ov = JSON.parse(localStorage.getItem(OVERRIDE_KEY) || '{}');
+    Object.keys(ov).forEach(k => {
+      const m = k.match(/^VPLAN-(\d+)$/);
+      if (m) max = Math.max(max, parseInt(m[1], 10));
+    });
+  } catch {}
+  return `VPLAN-${String(max + 1).padStart(3, '0')}`;
 }
 
 async function ghCreateFile(path, content, message) {
@@ -562,29 +662,25 @@ async function ghCreateFile(path, content, message) {
   return res.json();
 }
 
-// ===== 에디터 모드 (Toast UI Editor) =====
+// ===== 에디터 모드 (Toast UI Editor) — 본문만 편집 =====
 function renderEditor() {
-  if (!currentDocRaw) return;
+  if (currentDocRaw == null) currentDocRaw = '';
   const hasToken = !!getGhToken();
   docContent.innerHTML = `
     <div class="doc-editor">
       <div class="doc-editor-mount" id="docEditorMount"></div>
       <div class="doc-editor-commit">
         <label for="docEditorMsg">커밋 메시지</label>
-        <input type="text" id="docEditorMsg" placeholder="docs: update ${currentDocPath}">
+        <input type="text" id="docEditorMsg" placeholder="docs: update ${currentDocPath || '(새 파일)'}">
       </div>
       <div class="doc-editor-actions">
-        <span class="doc-editor-status" id="docEditorStatus">${hasToken ? '' : 'GitHub 토큰이 없습니다 — 우측 상단 ⚙ 에서 설정'}</span>
+        <span class="doc-editor-status" id="docEditorStatus">${hasToken ? '' : 'GitHub 토큰 필요 — ⚙ 에서 설정'}</span>
         <button class="btn btn-sm btn-outline-primary" id="docEditorCancel">취소</button>
-        <button class="btn btn-sm btn-primary" id="docEditorSave" ${hasToken ? '' : 'disabled'}>저장</button>
+        <button class="btn btn-sm btn-primary" id="docEditorSave" ${hasToken ? '' : 'disabled'}>본문 저장</button>
       </div>
     </div>`;
 
-  // 기존 인스턴스가 살아 있다면 정리
-  if (docEditorInstance) {
-    try { docEditorInstance.destroy(); } catch {}
-    docEditorInstance = null;
-  }
+  if (docEditorInstance) { try { docEditorInstance.destroy(); } catch {} docEditorInstance = null; }
 
   const mount = document.getElementById('docEditorMount');
   const statusEl = document.getElementById('docEditorStatus');
@@ -599,26 +695,11 @@ function renderEditor() {
       containerEl: mount,
       initialValue: currentDocRaw,
       getToken: getGhToken,
-      gh: { owner: GH.owner, repo: GH.repo, branch: GH.branch },
+      gh: GH,
       height: 'calc(100vh - 260px)',
-      onImageUploadStart: () => {
-        statusEl.className = 'doc-editor-status';
-        statusEl.textContent = '이미지 업로드 중...';
-      },
-      onImageUploadEnd: () => {
-        statusEl.className = 'doc-editor-status success';
-        statusEl.textContent = '이미지 업로드 완료';
-        setTimeout(() => {
-          if (statusEl.textContent === '이미지 업로드 완료') {
-            statusEl.className = 'doc-editor-status';
-            statusEl.textContent = hasToken ? '' : 'GitHub 토큰이 없습니다 — 우측 상단 ⚙ 에서 설정';
-          }
-        }, 2000);
-      },
-      onImageUploadError: (e) => {
-        statusEl.className = 'doc-editor-status error';
-        statusEl.textContent = `이미지 업로드 실패: ${e.message}`;
-      },
+      onImageUploadStart: () => { statusEl.className = 'doc-editor-status'; statusEl.textContent = '이미지 업로드 중...'; },
+      onImageUploadEnd: () => { statusEl.className = 'doc-editor-status success'; statusEl.textContent = '이미지 업로드 완료'; setTimeout(() => { statusEl.textContent = ''; }, 2000); },
+      onImageUploadError: (e) => { statusEl.className = 'doc-editor-status error'; statusEl.textContent = `이미지 업로드 실패: ${e.message}`; },
     });
     docEditorInstance.focus();
   } catch (e) {
@@ -626,9 +707,7 @@ function renderEditor() {
   }
 
   document.getElementById('docEditorCancel').addEventListener('click', () => {
-    editorMode = false;
-    btnDocEdit.classList.remove('active');
-    if (docEditorInstance) { try { docEditorInstance.destroy(); } catch {} docEditorInstance = null; }
+    exitEditorMode();
     renderDocFromRaw();
   });
   document.getElementById('docEditorSave').addEventListener('click', saveDocToGithub);
@@ -639,16 +718,10 @@ async function saveDocToGithub() {
   const statusEl = document.getElementById('docEditorStatus');
   const saveBtn = document.getElementById('docEditorSave');
   const token = getGhToken();
-  if (!token) {
-    statusEl.textContent = 'GitHub 토큰이 필요합니다';
-    statusEl.className = 'doc-editor-status error';
-    return;
-  }
-  if (!docEditorInstance) {
-    statusEl.textContent = '에디터가 초기화되지 않았습니다';
-    statusEl.className = 'doc-editor-status error';
-    return;
-  }
+  if (!token) { statusEl.textContent = 'GitHub 토큰이 필요합니다'; statusEl.className = 'doc-editor-status error'; return; }
+  if (!docEditorInstance) { statusEl.textContent = '에디터가 초기화되지 않았습니다'; statusEl.className = 'doc-editor-status error'; return; }
+  if (!currentDocPath) { statusEl.textContent = '저장할 파일 경로가 없습니다'; statusEl.className = 'doc-editor-status error'; return; }
+
   const newText = docEditorInstance.getMarkdown();
   const message = (msgInput.value || '').trim() || `docs: update ${currentDocPath}`;
 
@@ -657,45 +730,38 @@ async function saveDocToGithub() {
   statusEl.textContent = '저장 중...';
 
   try {
-    // 1) 최신 sha 확보 (충돌 방지)
     const metaUrl = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${currentDocPath}?ref=${GH.branch}`;
     const metaRes = await fetch(metaUrl, {
       headers: { 'Accept': 'application/vnd.github+json', 'Authorization': `Bearer ${token}` },
     });
-    if (!metaRes.ok) throw new Error(`메타 조회 실패 (${metaRes.status})`);
-    const metaJson = await metaRes.json();
-    const sha = metaJson.sha;
 
-    // 2) PUT contents
+    let sha = null;
+    if (metaRes.ok) {
+      const metaJson = await metaRes.json();
+      sha = metaJson.sha;
+    }
+
+    const putBody = { message, content: b64EncodeUtf8(newText), branch: GH.branch };
+    if (sha) putBody.sha = sha;
+
     const putUrl = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${currentDocPath}`;
-    const body = {
-      message,
-      content: b64EncodeUtf8(newText),
-      sha,
-      branch: GH.branch,
-    };
     const putRes = await fetch(putUrl, {
       method: 'PUT',
-      headers: {
-        'Accept': 'application/vnd.github+json',
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
+      headers: { 'Accept': 'application/vnd.github+json', 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(putBody),
     });
     if (!putRes.ok) {
       const err = await putRes.json().catch(() => ({}));
       throw new Error(err.message || `저장 실패 (${putRes.status})`);
     }
+
     statusEl.className = 'doc-editor-status success';
-    statusEl.textContent = '저장 완료 — 새로고침 중...';
+    statusEl.textContent = '저장 완료';
     currentDocRaw = newText;
-    // raw CDN 반영까지 살짝 딜레이
-    setTimeout(() => {
-      editorMode = false;
-      btnDocEdit.classList.remove('active');
-      loadDocForCurrentPage();
-    }, 800);
+    if (planDetailIdx >= 0 && planDocs[planDetailIdx]) {
+      planDocs[planDetailIdx].text = newText;
+    }
+    setTimeout(() => { exitEditorMode(); renderDocFromRaw(); }, 800);
   } catch (e) {
     statusEl.className = 'doc-editor-status error';
     statusEl.textContent = e.message || '저장 실패';
@@ -703,12 +769,26 @@ async function saveDocToGithub() {
   }
 }
 
-// UTF-8 안전 base64 (한글 지원)
 function b64EncodeUtf8(str) {
   return btoa(unescape(encodeURIComponent(str)));
 }
 
-// ===== GitHub 토큰 설정 다이얼로그 =====
+// ===== Jira 링크 =====
+function jiraLinkify(html) {
+  const anchors = [];
+  const stashed = html.replace(/<a\b[^>]*>[\s\S]*?<\/a>/g, (m) => { anchors.push(m); return `@@A${anchors.length - 1}@@`; });
+  const linked = stashed.replace(JIRA_KEY_RE, (key) => `<a href="${jiraHref(key)}" target="_blank" rel="noopener" class="jira-key">${key}</a>`);
+  return linked.replace(/@@A(\d+)@@/g, (_, i) => anchors[+i]);
+}
+function renderJiraLink(key) {
+  if (!key || key === '-') return '-';
+  return `<a href="${jiraHref(key)}" target="_blank" rel="noopener" class="jira-key">${escapeHtmlText(key)}</a>`;
+}
+function escapeHtmlText(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+// ===== GitHub 토큰 설정 =====
 function openGhSettings() {
   const existing = document.getElementById('ghSettingsOverlay');
   if (existing) existing.remove();
@@ -721,15 +801,11 @@ function openGhSettings() {
       <div class="gh-settings-desc">
         문서 저장을 위해 <strong>Personal Access Token (PAT)</strong>이 필요합니다.<br>
         <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Fine-grained PAT 생성</a> —
-        Repository access: <code>${GH.owner}/${GH.repo}</code>, Permissions: <code>Contents: Read and write</code>
+        Repository: <code>${GH.owner}/${GH.repo}</code>, Permissions: <code>Contents: Read and write</code>
       </div>
       <div class="gh-settings-field">
         <label for="ghTokenInput">Access Token</label>
         <input type="password" id="ghTokenInput" placeholder="github_pat_... 또는 ghp_..." autocomplete="off">
-      </div>
-      <div class="gh-settings-field">
-        <label>Repository</label>
-        <input type="text" value="${GH.owner}/${GH.repo} (${GH.branch})" readonly>
       </div>
       <div class="gh-settings-actions">
         <button class="btn btn-sm btn-outline-danger" id="ghTokenClear">삭제</button>
@@ -742,7 +818,6 @@ function openGhSettings() {
   const input = overlay.querySelector('#ghTokenInput');
   input.value = getGhToken();
   setTimeout(() => input.focus(), 0);
-
   const close = () => overlay.remove();
   overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
   overlay.querySelector('#ghTokenCancel').addEventListener('click', close);
@@ -750,14 +825,12 @@ function openGhSettings() {
     if (!confirm('저장된 토큰을 삭제할까요?')) return;
     localStorage.removeItem(GH_TOKEN_KEY);
     input.value = '';
-    if (editorMode) renderEditor();
   });
   overlay.querySelector('#ghTokenSave').addEventListener('click', () => {
     const v = input.value.trim();
     if (!v) return;
     setGhToken(v);
     close();
-    if (editorMode) renderEditor();
   });
 }
 
@@ -769,10 +842,7 @@ function initChangelogToggle() {
       h2.innerHTML = `<span class="changelog-arrow">&#9654;</span> 변경이력`;
       const siblings = [];
       let el = h2.nextElementSibling;
-      while (el && el.tagName !== 'H2' && el.tagName !== 'H1') {
-        siblings.push(el);
-        el = el.nextElementSibling;
-      }
+      while (el && el.tagName !== 'H2' && el.tagName !== 'H1') { siblings.push(el); el = el.nextElementSibling; }
       const wrapper = document.createElement('div');
       wrapper.className = 'changelog-body collapsed';
       h2.parentNode.insertBefore(wrapper, h2.nextSibling);
