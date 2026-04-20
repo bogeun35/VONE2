@@ -640,7 +640,7 @@ function openNewPlan() {
   overlay.className = 'gh-settings-overlay';
   overlay.innerHTML = `
     <div class="gh-settings-dialog">
-      <div class="gh-settings-title">새 기획문서 <span style="color:#999;font-size:11px;font-weight:400">— ${escapeHtmlText(pageName)}</span></div>
+      <div class="gh-settings-title">새 기획문서 <span style="color:#999;font-size:12px;font-weight:400">— ${escapeHtmlText(pageName)}</span></div>
       <div class="gh-settings-field">
         <label>고유 ID</label>
         <input type="text" id="pnId" value="${nextId}" readonly style="background:#f5f6fa;color:#2563eb;font-weight:600">

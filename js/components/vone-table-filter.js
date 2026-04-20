@@ -124,7 +124,7 @@
       this.predicate = null;
       this.eGui = document.createElement('div');
       this.eGui.className = 'vone-filter-popup';
-      this.eGui.innerHTML = '<div style="padding:8px;font-size:11px;color:#888">헤더 아래 입력란을 사용해주세요</div>';
+      this.eGui.innerHTML = '<div style="padding:8px;font-size:12px;color:#888">헤더 아래 입력란을 사용해주세요</div>';
       // 필드 이름 해석: colDef.field > column.getColId()
       const colDef = params.colDef || (params.column && params.column.getColDef && params.column.getColDef());
       this._field = (colDef && colDef.field) || (params.column && params.column.getColId && params.column.getColId()) || null;
