@@ -265,7 +265,7 @@ async function loadDocByFilter() {
 
 // ===== Parse Frontmatter =====
 function parseFrontmatter(text) {
-  const match = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
   if (!match) return { meta: {}, body: text };
   const meta = {};
   match[1].split('\n').forEach(line => {
