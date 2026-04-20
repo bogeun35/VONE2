@@ -64,6 +64,7 @@
   function createPanel() {
     const panel = document.createElement('div');
     panel.className = 'quick-date-panel';
+    panel.style.display = 'none';
     panel.innerHTML =
       '<div class="qdp-row">' +
         ['오늘','어제','이번주','전주','당월','전월','오늘까지'].map(k => `<button type="button" class="qdp-btn" data-key="${k}">${k}</button>`).join('') +
@@ -96,11 +97,14 @@
     wrap.style.position = 'relative';
     wrap.appendChild(panel);
 
+    function showPanel() { panel.style.display = 'block'; panel.classList.add('show'); }
+    function hidePanel() { panel.style.display = 'none'; panel.classList.remove('show'); }
+    function hideAllOthers() { document.querySelectorAll('.quick-date-panel').forEach(p => { if (p !== panel) { p.style.display = 'none'; p.classList.remove('show'); } }); }
+
     trigger.addEventListener('click', (e) => {
       e.stopPropagation();
-      // close all other panels
-      document.querySelectorAll('.quick-date-panel.show').forEach(p => { if (p !== panel) p.classList.remove('show'); });
-      panel.classList.toggle('show');
+      hideAllOthers();
+      if (panel.style.display === 'none') showPanel(); else hidePanel();
     });
 
     panel.addEventListener('click', (e) => {
@@ -123,11 +127,11 @@
       panel.querySelectorAll('.qdp-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      panel.classList.remove('show');
+      hidePanel();
     });
 
     document.addEventListener('click', (e) => {
-      if (!wrap.contains(e.target)) panel.classList.remove('show');
+      if (!wrap.contains(e.target)) hidePanel();
     });
   }
 
