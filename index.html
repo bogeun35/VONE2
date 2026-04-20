@@ -1248,6 +1248,295 @@
       </div>
 
       <!-- ============================================================ -->
+      <!-- 정산계약 신규 생성 페이지 (settle-contract-create)               -->
+      <!-- ============================================================ -->
+      <div class="page" id="page-settle-contract-create" data-doc="settle-contract" style="display:none">
+        <div class="page-header">
+          <div>
+            <div class="breadcrumb">정산/청구 &gt; 정산 계약 관리 &gt; 정산 계약 신규 생성</div>
+            <h1 class="page-title">정산 계약 신규 생성</h1>
+          </div>
+          <button class="btn-doc-toggle" title="기획문서 보기">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 2h8l4 4v8a1 1 0 01-1 1H2a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.2"/><path d="M10 2v4h4M4 9h6M4 11h6M4 7h3" stroke="currentColor" stroke-width="1.2"/></svg>
+            <span>기획문서</span>
+          </button>
+        </div>
+
+        <div class="detail-tab-content">
+
+        <!-- 1. 계약서 기본 정보 -->
+        <div class="detail-section">
+          <div class="detail-section-title">계약서 기본 정보</div>
+          <div class="detail-form-grid">
+            <label class="df-label req">계약 타입</label>
+            <div class="df-value"><select class="df-input" id="sccCtype">
+              <option value="">선택</option>
+              <option>식권대장</option>
+              <option>복지대장</option>
+              <option>퀵대장</option>
+              <option>단체선물대장</option>
+              <option>기타</option>
+            </select></div>
+            <label class="df-label req">계약명</label>
+            <div class="df-value"><input type="text" class="df-input" id="sccContractName" placeholder="계약명을 입력하세요"></div>
+            <label class="df-label">태그</label>
+            <div class="df-value">
+              <div class="tag-select" data-name="sccTags">
+                <div class="tag-select-control">
+                  <div class="tag-select-chips"></div>
+                  <input type="text" class="tag-select-input" placeholder="태그 검색">
+                  <svg class="tag-select-arrow" width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+                </div>
+                <div class="tag-select-dropdown" style="display:none"></div>
+              </div>
+            </div>
+
+            <label class="df-label req">거래처</label>
+            <div class="df-value df-value-span3">
+              <input type="text" class="df-input df-input-readonly" id="sccPartnerName" readonly placeholder="거래처를 검색하세요">
+              <input type="hidden" id="sccPartnerIdx">
+              <button class="btn btn-sm btn-primary" id="sccFindPartnerBtn">거래처 찾기</button>
+            </div>
+            <label class="df-label">사업자번호</label>
+            <div class="df-value"><input type="text" class="df-input df-input-readonly" id="sccBizNo" readonly></div>
+          </div>
+        </div>
+
+        <!-- 2. 정산 생성 정보 -->
+        <div class="detail-section">
+          <div class="detail-section-title">정산 생성 정보</div>
+          <div class="detail-form-grid">
+            <label class="df-label req">정산 주기 설정<span class="help-tip" data-tip="정기: 매월 자동으로 정산서가 생성&#10;비정기: [정산서 관리] 에서 수동으로 정산서 생성">?</span></label>
+            <div class="df-value">
+              <div class="radio-btn-group" data-name="sccCycleType">
+                <button class="radio-btn active" data-value="정기">정기</button>
+                <button class="radio-btn" data-value="비정기">비정기</button>
+              </div>
+            </div>
+            <label class="df-label req">정산 주기 시작일</label>
+            <div class="df-value"><select class="df-input" id="sccCycleDay"></select></div>
+            <label class="df-label req">매입 증빙 수취 유형</label>
+            <div class="df-value">
+              <div class="radio-btn-group" data-name="sccProofType">
+                <button class="radio-btn active" data-value="시스템 발행">시스템 발행</button>
+                <button class="radio-btn" data-value="공급자 발행">공급자 발행</button>
+                <button class="radio-btn" data-value="종이세금계산서">종이세금계산서</button>
+              </div>
+            </div>
+            <label class="df-label req">연동사 타입</label>
+            <div class="df-value">
+              <div class="radio-btn-group" data-name="sccLinkType">
+                <button class="radio-btn active" data-value="BAROBILL">바로빌</button>
+                <button class="radio-btn" data-value="BOLTA">볼타</button>
+              </div>
+            </div>
+
+            <label class="df-label req">지급 주기</label>
+            <div class="df-value">
+              <div class="radio-btn-group" data-name="sccPayCycle">
+                <button class="radio-btn active" data-value="월">월</button>
+                <button class="radio-btn" data-value="일">일</button>
+              </div>
+            </div>
+            <label class="df-label req">지급일</label>
+            <div class="df-value"><select class="df-input" id="sccPayDay"></select></div>
+            <label class="df-label req">증빙 작성일자</label>
+            <div class="df-value">
+              <div class="radio-btn-group" data-name="sccEvWriteDate">
+                <button class="radio-btn active" data-value="END">종료일</button>
+                <button class="radio-btn" data-value="END_NEXT">다음날</button>
+              </div>
+            </div>
+            <label class="df-label req">그룹 정산 여부</label>
+            <div class="df-value">
+              <div class="radio-btn-group" data-name="sccGroupSettle">
+                <button class="radio-btn" data-value="Y">그룹</button>
+                <button class="radio-btn active" data-value="N">단일</button>
+              </div>
+            </div>
+
+            <label class="df-label req">정산 지급 기준 설정<span class="help-tip" data-tip="영업일: 매월 N번째 영업일을 기준으로 지급&#10;지정일: 매월 특정 날짜를 기준으로 지급">?</span></label>
+            <div class="df-value">
+              <div class="radio-btn-group" data-name="sccPayBase">
+                <button class="radio-btn" data-value="BUSINESS">영업일</button>
+                <button class="radio-btn active" data-value="FIXED">지정일</button>
+              </div>
+            </div>
+            <label class="df-label req">공휴일 보정 방식<span class="help-tip" data-tip="지정일 기준에서만 적용되며, 해당일이 공휴일이면 설정에 따라 전날 또는 다음날에 지급">?</span></label>
+            <div class="df-value">
+              <div class="radio-btn-group" data-name="sccHolidayAdj">
+                <button class="radio-btn active" data-value="PREV">전날</button>
+                <button class="radio-btn" data-value="NEXT">다음날</button>
+              </div>
+            </div>
+
+            <label class="df-label req">적격 증빙 상계</label>
+            <div class="df-value">
+              <div class="radio-btn-group" data-name="sccProofOffset">
+                <button class="radio-btn active" data-value="상계">상계</button>
+                <button class="radio-btn" data-value="별도">별도</button>
+              </div>
+            </div>
+            <label class="df-label req">이체 상계</label>
+            <div class="df-value">
+              <div class="radio-btn-group" data-name="sccTransferOffset">
+                <button class="radio-btn active" data-value="상계">상계</button>
+                <button class="radio-btn" data-value="별도">별도</button>
+              </div>
+            </div>
+            <label class="df-label req">연장검토</label>
+            <div class="df-value">
+              <div class="radio-btn-group" data-name="sccExtReview">
+                <button class="radio-btn" data-value="Y">검토</button>
+                <button class="radio-btn active" data-value="N">미검토</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. 계약서 상세 정보 -->
+        <div class="detail-section">
+          <div class="detail-section-title">계약서 상세 정보</div>
+          <div class="detail-form-grid">
+            <label class="df-label req">계약 시작일</label>
+            <div class="df-value"><input type="date" lang="sv-SE" class="df-input df-input-date" id="sccStartAt"></div>
+            <label class="df-label req">계약 종료일</label>
+            <div class="df-value"><input type="date" lang="sv-SE" class="df-input df-input-date" id="sccEndAt"></div>
+            <label class="df-label req">계약 만료일</label>
+            <div class="df-value"><input type="date" lang="sv-SE" class="df-input df-input-date" id="sccExpireAt"></div>
+
+            <label class="df-label">제휴점 지급 계좌<span class="help-tip" data-tip="제휴점 사장님이 정산금을 지급받는 계좌입니다.">?</span></label>
+            <div class="df-value df-acct-row">
+              <select class="df-input df-input-bank" id="sccSettleBank"></select>
+              <input type="text" class="df-input" id="sccSettleAccount" placeholder="계좌번호">
+              <input type="text" class="df-input" id="sccSettleOwner" placeholder="예금주">
+              <button class="btn btn-sm btn-dark" id="sccVerifyAcct">검증</button>
+            </div>
+
+            <label class="df-label req">벤디스 출금 계좌<span class="help-tip" data-tip="정산 지급금이 출금되는 계좌입니다.">?</span></label>
+            <div class="df-value"><select class="df-input" id="sccVendysWithdraw"></select></div>
+            <label class="df-label">벤디스 입금 계좌<span class="help-tip" data-tip="수수료를 지급받을 계좌번호입니다.">?</span></label>
+            <div class="df-value"><select class="df-input" id="sccVendysDeposit"></select></div>
+            <label class="df-label">입금적요</label>
+            <div class="df-value"><input type="text" class="df-input" id="sccDepositRemark"></div>
+
+            <label class="df-label">계약서 메모</label>
+            <div class="df-value"><textarea class="df-input df-textarea" id="sccMemo" rows="1"></textarea></div>
+          </div>
+        </div>
+
+        <!-- 4. 수수료 정보 -->
+        <div class="detail-section">
+          <div class="detail-section-title">수수료 정보<span class="help-tip" data-tip="• 식권대장, 복지대장만 거래금액에 대한 수수료율 자동 산출이 가능합니다. 그 외 서비스는 입력하더라도 정산서에 반영되지 않습니다.&#10;• 품목명 란에 입력한 내용은 정산서 품목명으로 적용되며, 메모는 정산서에 반영되지 않습니다.">?</span></div>
+          <div class="detail-form-grid">
+            <label class="df-label req">수수료 계산 방법</label>
+            <div class="df-value">
+              <div class="radio-btn-group" data-name="sccFeeCalc">
+                <button class="radio-btn" data-value="TXN">거래 건별</button>
+                <button class="radio-btn active" data-value="CLIENT">고객사별</button>
+                <button class="radio-btn" data-value="SHOP">제휴점별</button>
+              </div>
+            </div>
+            <label class="df-label req">서비스 포인트 수수료율</label>
+            <div class="df-value df-fee-row">
+              <div class="seg-btn-group seg-btn-front" data-name="sccPointFeeInput">
+                <button class="seg-btn active" data-value="EXCL_VAT">제외</button>
+                <button class="seg-btn" data-value="INCL_VAT">포함</button>
+              </div>
+              <input type="text" class="df-input df-input-num" id="sccPointFeeExcl"> <span>%</span>
+              <span class="df-arrow">↔</span>
+              <input type="text" class="df-input df-input-num df-input-readonly" id="sccPointFeeIncl" readonly> <span>%</span>
+            </div>
+            <label class="df-label req">대장페이 수수료율</label>
+            <div class="df-value df-fee-row">
+              <div class="seg-btn-group seg-btn-front" data-name="sccPayFeeInput">
+                <button class="seg-btn active" data-value="EXCL_VAT">제외</button>
+                <button class="seg-btn" data-value="INCL_VAT">포함</button>
+              </div>
+              <input type="text" class="df-input df-input-num" id="sccPayFeeExcl"> <span>%</span>
+              <span class="df-arrow">↔</span>
+              <input type="text" class="df-input df-input-num df-input-readonly" id="sccPayFeeIncl" readonly> <span>%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. 연결 제휴점 정보 -->
+        <div class="detail-section">
+          <div class="detail-section-title">연결 제휴점 정보</div>
+          <div class="detail-mini-grid-toolbar">
+            <span class="grid-total">전체 : <span id="sccShopTotal">0</span>건</span>
+            <button class="btn btn-sm btn-primary" id="sccFindShopBtn">제휴점 찾기</button>
+            <button class="btn btn-sm btn-outline-danger" id="sccShopRemoveBtn">선택 제거</button>
+          </div>
+          <table class="detail-mini-grid" id="sccShopGrid">
+            <thead><tr>
+              <th style="width:32px"><input type="checkbox" id="sccShopCheckAll"></th>
+              <th>제휴점 IDX</th><th>제휴점명</th><th>사업자번호</th><th>대표자명</th>
+              <th>주소</th><th>연락처</th><th>상태</th>
+            </tr></thead>
+            <tbody id="sccShopBody"></tbody>
+          </table>
+        </div>
+
+        <!-- 6. 첨부자료 정보 -->
+        <div class="detail-section">
+          <div class="detail-section-title">첨부자료 정보<span class="help-tip" data-tip="• 파일: PDF, JPG, JPEG, PNG, ZIP 지원 (워드 등 문서확장자 미지원)&#10;• URL: 입력 후 [URL 추가] 버튼을 클릭. 파일과 URL 모두 계약을 저장해야 등록이 완료됩니다.">?</span></div>
+          <div class="detail-form-grid">
+            <label class="df-label">첨부자료</label>
+            <div class="df-value df-value-span5">
+              <input type="text" class="df-input" id="sccAttachUrl" placeholder="URL을 입력해 주세요">
+              <button class="btn btn-sm btn-primary" id="sccAttachAddUrl">URL 추가</button>
+              <button class="btn btn-sm btn-primary" id="sccAttachPickFile">파일 선택</button>
+            </div>
+          </div>
+          <div class="detail-mini-grid-toolbar"><span class="grid-total">전체 : <span id="sccAttachTotal">0</span>건</span></div>
+          <table class="detail-mini-grid" id="sccAttachGrid">
+            <thead><tr>
+              <th>첨부파일 IDX</th><th>첨부 자료 유형</th><th>첨부자료명</th><th>첨부 자료 URL</th>
+              <th>생성일자</th><th>생성자</th><th>삭제</th><th>미리보기</th>
+            </tr></thead>
+            <tbody id="sccAttachBody"></tbody>
+          </table>
+        </div>
+
+        </div><!-- /.detail-tab-content -->
+
+        <!-- 푸터 -->
+        <div class="detail-footer">
+          <button class="btn btn-sm btn-primary" id="sccSaveBtn">계약 생성</button>
+          <button class="btn btn-sm btn-outline-secondary" id="sccCancelBtn">취소</button>
+        </div>
+      </div>
+
+      <!-- 제휴점 찾기 모달 -->
+      <div class="modal-backdrop" id="shopSearchModalBg" style="display:none">
+        <div class="modal" style="width:780px;max-height:80vh">
+          <div class="modal-header">
+            <h3>제휴점 찾기</h3>
+            <button class="modal-close" id="shopSearchModalClose">&times;</button>
+          </div>
+          <div class="modal-body" style="padding:16px">
+            <div style="display:flex;gap:8px;margin-bottom:12px">
+              <input type="text" class="filter-text-input" id="shopSearchInput" placeholder="제휴점명, 사업자번호, IDX" style="flex:1">
+              <button class="btn btn-sm btn-primary" id="shopSearchBtn">검색</button>
+            </div>
+            <table class="detail-mini-grid" id="shopSearchGrid">
+              <thead><tr>
+                <th style="width:32px"><input type="checkbox" id="shopSearchCheckAll"></th>
+                <th>제휴점 IDX</th><th>제휴점명</th><th>사업자번호</th><th>대표자명</th>
+                <th>주소</th><th>연락처</th><th>상태</th>
+              </tr></thead>
+              <tbody id="shopSearchBody"></tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-secondary" id="shopSearchCancelBtn">취소</button>
+            <button class="btn btn-sm btn-primary" id="shopSearchConfirmBtn">선택 추가</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
       <!-- 정산서 상세 페이지 (settle-bill-detail)                          -->
       <!-- ============================================================ -->
       <div class="page" id="page-settle-bill-detail" data-doc="settle-bill" style="display:none">
@@ -1897,12 +2186,14 @@
   <script src="js/components/vone-table-filter.js"></script>
   <script src="js/components/date-input-placeholder.js"></script>
   <script src="js/components/doc-editor.js"></script>
+  <script src="js/components/quick-date-picker.js"></script>
   <script src="js/components/page-stub.js"></script>
   <script src="js/components/common-policy-modal.js"></script>
   <script src="js/pages/transfer.js"></script>
   <script src="js/pages/settle-contract.js"></script>
   <script src="js/pages/settle-list.js"></script>
   <script src="js/pages/settle-contract-detail.js"></script>
+  <script src="js/pages/settle-contract-create.js"></script>
   <script src="js/pages/settle-bill-detail.js"></script>
   <script src="js/components/detail-accordion.js"></script>
   <script src="js/components/table-schema-modal.js"></script>

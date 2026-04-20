@@ -1043,6 +1043,33 @@ input.modal-info-value:focus { outline: 1px solid #2563eb; outline-offset: -1px;
   font-size: 12px; height: 30px; background: #fff;
 }
 
+/* 기획문서 필터 바 */
+.plan-filter-bar {
+  padding: 8px 0 6px; border-bottom: 1px solid #eee; margin-bottom: 8px;
+}
+.plan-filter-row {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+}
+.plan-filter-row:last-child { margin-bottom: 0; }
+.plan-filter-label { font-size: 11px; color: #888; min-width: 28px; flex-shrink: 0; }
+.plan-filter-btns { display: flex; gap: 0; }
+.plan-filter-btn {
+  height: 24px; padding: 0 10px;
+  border: 1px solid #ddd; background: #fff; color: #555;
+  cursor: pointer; font-size: 11px; transition: all 0.12s;
+}
+.plan-filter-btn:first-child { border-radius: 3px 0 0 3px; }
+.plan-filter-btn:last-child { border-radius: 0 3px 3px 0; }
+.plan-filter-btn + .plan-filter-btn { margin-left: -1px; }
+.plan-filter-btn:hover { background: #f5f6fa; }
+.plan-filter-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; z-index: 1; position: relative; }
+.plan-filter-input {
+  flex: 1; height: 24px; padding: 0 8px;
+  border: 1px solid #ddd; border-radius: 3px;
+  font-size: 11px; color: #333; outline: none;
+}
+.plan-filter-input:focus { border-color: #2563eb; }
+
 /* 기획문서 목록 */
 .plan-list-header {
   display: flex; align-items: center; justify-content: space-between;
@@ -1964,3 +1991,34 @@ textarea.pd-field { height: auto; min-height: 40px; }
 
 /* ID 배지 한 줄 고정 */
 .pm-col-id code, .plan-id-badge { white-space: nowrap; }
+
+/* ===== Quick Date Picker (간편날짜) ===== */
+.quick-date-wrap { position: relative; display: inline-block; }
+.btn-quick-date {
+  height: 26px; padding: 0 10px;
+  border: 1px solid #ddd; border-radius: 3px;
+  background: #fff; color: #555; cursor: pointer;
+  font-size: 11px; transition: all 0.15s; white-space: nowrap;
+}
+.btn-quick-date:hover { background: #f5f6fa; border-color: #bbb; }
+.btn-quick-date:active,
+.btn-quick-date.active { background: #6b7280; color: #fff; border-color: #6b7280; }
+
+.quick-date-panel {
+  display: none; position: absolute; top: calc(100% + 4px); left: 0;
+  z-index: 200; background: #fff; border: 1px solid #ddd; border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.12); padding: 6px 8px;
+  min-width: 380px;
+}
+.quick-date-panel.show { display: block; }
+.qdp-row { display: flex; gap: 2px; margin-bottom: 2px; flex-wrap: wrap; }
+.qdp-row:last-child { margin-bottom: 0; }
+.qdp-btn {
+  height: 26px; padding: 0 8px;
+  border: 1px solid #e0e0e0; border-radius: 3px;
+  background: #fafafa; color: #555; cursor: pointer;
+  font-size: 11px; transition: all 0.12s; white-space: nowrap;
+}
+.qdp-btn:hover { background: #eef0f4; border-color: #bbb; }
+.qdp-btn.active { background: #6b7280; color: #fff; border-color: #6b7280; }
+.qdp-btn-month { min-width: 0; padding: 0 6px; }

@@ -136,6 +136,8 @@ let planDetailIdx = -1;
 let docEditorInstance = null;
 let allPlansCache = null;
 let showHeldPlans = false;
+let planFilterStatus = '전체';
+let planFilterKeyword = '';
 
 function getVisiblePage() {
   const pages = document.querySelectorAll('.content .page');
@@ -331,6 +333,11 @@ async function fetchAllPlans() {
     try {
       const ov = JSON.parse(localStorage.getItem(OVERRIDE_KEY) || '{}');
       list = list.map(p => ({ ...p, ...(ov[p.planId] || {}) }));
+      Object.entries(ov).forEach(([k, v]) => {
+        if (v && v._new && !list.find(p => p.planId === k)) {
+          list.push(v);
+        }
+      });
     } catch {}
     allPlansCache = list;
     return list;
@@ -376,21 +383,47 @@ function renderPlanList(docs) {
     return `<span class="doc-version-status ${cls}">${escapeHtmlText(s || '작성중')}</span>`;
   };
 
-  const rows = docs.length ? docs.map((d, i) => `
-    <tr class="plan-row${d.meta.status === '보류' ? ' held' : ''}" data-idx="${i}">
+  const statuses = ['전체', '작성중', '확정', '완료', '보류'];
+  const statusBtns = statuses.map(s =>
+    `<button class="plan-filter-btn${planFilterStatus === s ? ' active' : ''}" data-status="${s}">${s}</button>`
+  ).join('');
+
+  const q = planFilterKeyword.trim().toLowerCase();
+  const filtered = docs.filter(d => {
+    if (planFilterStatus !== '전체' && d.meta.status !== planFilterStatus) return false;
+    if (q) {
+      const haystack = [d.meta.id, d.meta.title, d.meta.author, d.meta.issueNumber].join(' ').toLowerCase();
+      if (!haystack.includes(q)) return false;
+    }
+    return true;
+  });
+
+  const rows = filtered.length ? filtered.map((d) => {
+    const origIdx = docs.indexOf(d);
+    return `
+    <tr class="plan-row${d.meta.status === '보류' ? ' held' : ''}" data-idx="${origIdx}">
       <td class="plan-id"><span class="plan-id-badge">${escapeHtmlText(d.meta.id || '-')}</span></td>
       <td class="plan-title">${escapeHtmlText(d.meta.title || d.file.name.replace(/\.md$/, ''))}</td>
       <td>${escapeHtmlText(d.meta.author || '-')}</td>
       <td>${escapeHtmlText(d.meta.issueDate || '-')}</td>
       <td>${renderJiraLink(d.meta.issueNumber)}</td>
       <td>${statusBadge(d.meta.status)}</td>
-    </tr>
-  `).join('') : '<tr><td colspan="6" class="plan-empty">기획문서가 없습니다.</td></tr>';
+    </tr>`;
+  }).join('') : '<tr><td colspan="6" class="plan-empty">기획문서가 없습니다.</td></tr>';
 
   docContent.innerHTML = `
+    <div class="plan-filter-bar">
+      <div class="plan-filter-row">
+        <span class="plan-filter-label">상태</span>
+        <div class="plan-filter-btns" id="planStatusFilter">${statusBtns}</div>
+      </div>
+      <div class="plan-filter-row">
+        <span class="plan-filter-label">검색</span>
+        <input type="text" class="plan-filter-input" id="planKeywordInput" placeholder="제목, ID, 이슈번호, 기획자" value="${escapeHtmlText(planFilterKeyword)}">
+      </div>
+    </div>
     <div class="plan-list-header">
-      <span class="plan-list-count">총 ${docs.length}건</span>
-      <label class="plan-held-toggle"><input type="checkbox" id="planShowHeld" ${showHeldPlans ? 'checked' : ''}> 보류 포함</label>
+      <span class="plan-list-count">총 ${filtered.length}건${filtered.length !== docs.length ? ' / ' + docs.length + '건' : ''}</span>
       <button class="btn btn-sm btn-primary" id="planNewBtn">+ 새 기획문서</button>
     </div>
     <table class="plan-list">
@@ -406,13 +439,27 @@ function renderPlanList(docs) {
   });
   const newBtn = document.getElementById('planNewBtn');
   if (newBtn) newBtn.addEventListener('click', openNewPlan);
-  const heldCb = document.getElementById('planShowHeld');
-  if (heldCb) heldCb.addEventListener('change', () => {
-    showHeldPlans = heldCb.checked;
-    allPlansCache = null;
-    const { slug, tabId } = getFilterSelection();
-    loadPlanList(slug, tabId);
+
+  const statusFilter = document.getElementById('planStatusFilter');
+  if (statusFilter) statusFilter.addEventListener('click', (e) => {
+    const btn = e.target.closest('.plan-filter-btn');
+    if (!btn) return;
+    planFilterStatus = btn.dataset.status;
+    if (planFilterStatus === '보류') showHeldPlans = true;
+    renderPlanList(docs);
   });
+
+  const kwInput = document.getElementById('planKeywordInput');
+  if (kwInput) {
+    let kwTimer;
+    kwInput.addEventListener('input', () => {
+      clearTimeout(kwTimer);
+      kwTimer = setTimeout(() => { planFilterKeyword = kwInput.value; renderPlanList(docs); }, 200);
+    });
+    kwInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { kwInput.value = ''; planFilterKeyword = ''; renderPlanList(docs); }
+    });
+  }
 }
 
 // ===== 기획문서 상세 — 메타(옵션) / 본문(내용) 분리 =====
