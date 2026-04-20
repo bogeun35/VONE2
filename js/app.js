@@ -474,11 +474,20 @@ function renderPlanDetailView(d) {
       <span>본문</span>
     </div>`;
 
-  const bodyHtml = currentDocRaw
-    ? jiraLinkify(marked.parse(currentDocRaw))
-    : '<p class="doc-placeholder">본문 없음 — 상단 편집(✎) 버튼으로 작성</p>';
+  docContent.innerHTML = metaHtml + '<div class="plan-body-preview" id="planBodyViewer"></div>';
 
-  docContent.innerHTML = metaHtml + `<div class="plan-body-preview">${bodyHtml}</div>`;
+  const viewerEl = document.getElementById('planBodyViewer');
+  if (currentDocRaw && window.toastui && window.toastui.Editor) {
+    new window.toastui.Editor.factory({
+      el: viewerEl,
+      viewer: true,
+      initialValue: currentDocRaw,
+    });
+  } else if (currentDocRaw) {
+    viewerEl.innerHTML = jiraLinkify(marked.parse(currentDocRaw));
+  } else {
+    viewerEl.innerHTML = '<p class="doc-placeholder">본문 없음 — 상단 편집(✎) 버튼으로 작성</p>';
+  }
   initChangelogToggle();
 
   // 목록 복귀
