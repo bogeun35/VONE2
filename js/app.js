@@ -360,7 +360,7 @@ async function loadPlanList(filterSlug, filterTabId) {
     });
     const docs = filtered.map(p => ({
       file: { name: p.file || '', path: `docs/${p.slug}/plans/${p.file}` },
-      meta: { id: p.planId || '', title: p.title || '', author: p.planner || '', issueDate: p.issueDate || '', issueNumber: p.issueNo || '', status: p.status || '' },
+      meta: { id: p.planId || '', title: p.title || '', author: p.planner || '', issueDate: p.issueDate || '', issueNumber: p.issueNo || '', status: p.status || '', page: p.page || '' },
       text: '',
       _plan: p,
     }));
@@ -392,7 +392,7 @@ function renderPlanList(docs) {
   const filtered = docs.filter(d => {
     if (planFilterStatus !== '전체' && d.meta.status !== planFilterStatus) return false;
     if (q) {
-      const haystack = [d.meta.id, d.meta.title, d.meta.author, d.meta.issueNumber].join(' ').toLowerCase();
+      const haystack = [d.meta.id, d.meta.title, d.meta.author, d.meta.issueNumber, d.meta.page].join(' ').toLowerCase();
       if (!haystack.includes(q)) return false;
     }
     return true;
@@ -404,12 +404,13 @@ function renderPlanList(docs) {
     <tr class="plan-row${d.meta.status === '보류' ? ' held' : ''}" data-idx="${origIdx}">
       <td class="plan-id"><span class="plan-id-badge">${escapeHtmlText(d.meta.id || '-')}</span></td>
       <td class="plan-title">${escapeHtmlText(d.meta.title || d.file.name.replace(/\.md$/, ''))}</td>
+      <td>${escapeHtmlText(d.meta.page || '-')}</td>
       <td>${escapeHtmlText(d.meta.author || '-')}</td>
       <td>${escapeHtmlText(d.meta.issueDate || '-')}</td>
       <td>${renderJiraLink(d.meta.issueNumber)}</td>
       <td>${statusBadge(d.meta.status)}</td>
     </tr>`;
-  }).join('') : '<tr><td colspan="6" class="plan-empty">기획문서가 없습니다.</td></tr>';
+  }).join('') : '<tr><td colspan="7" class="plan-empty">기획문서가 없습니다.</td></tr>';
 
   docContent.innerHTML = `
     <div class="plan-filter-bar">
@@ -419,7 +420,7 @@ function renderPlanList(docs) {
       </div>
       <div class="plan-filter-row">
         <span class="plan-filter-label">검색</span>
-        <input type="text" class="plan-filter-input" id="planKeywordInput" placeholder="제목, ID, 이슈번호, 기획자" value="${escapeHtmlText(planFilterKeyword)}">
+        <input type="text" class="plan-filter-input" id="planKeywordInput" placeholder="제목, ID, 페이지, 이슈번호, 기획자" value="${escapeHtmlText(planFilterKeyword)}">
       </div>
     </div>
     <div class="plan-list-header">
@@ -427,7 +428,7 @@ function renderPlanList(docs) {
       <button class="btn btn-sm btn-primary" id="planNewBtn">+ 새 기획문서</button>
     </div>
     <table class="plan-list">
-      <thead><tr><th>ID</th><th>제목</th><th>기획자</th><th>이슈일자</th><th>이슈번호</th><th>상태</th></tr></thead>
+      <thead><tr><th>ID</th><th>제목</th><th>페이지</th><th>기획자</th><th>이슈일자</th><th>이슈번호</th><th>상태</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>`;
 
