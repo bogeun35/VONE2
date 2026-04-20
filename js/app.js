@@ -106,11 +106,24 @@ const STATUS_VALUES = ['작성중', '확정', '완료', '보류'];
 // 페이지 필터 → slug|tabId 매핑
 const PAGE_FILTER_MAP = {
   'common|': { slug: 'common', tabId: '', label: '공통' },
-  'transfer|transfer': { slug: 'transfer', tabId: 'transfer', label: '이체관리' },
+  'partner|partner-list': { slug: 'partner', tabId: 'partner-list', label: '거래처 관리' },
+  'bill-contract|bill-contract-list': { slug: 'bill-contract', tabId: 'bill-contract-list', label: '청구계약 관리' },
+  'bill|bill-list': { slug: 'bill', tabId: 'bill-list', label: '청구서 관리' },
   'settle-contract|settle-contract-list': { slug: 'settle-contract', tabId: 'settle-contract-list', label: '정산계약 관리' },
+  'settle-contract|settle-contract-create': { slug: 'settle-contract', tabId: 'settle-contract-create', label: '정산계약 생성' },
   'settle-contract|settle-contract-detail': { slug: 'settle-contract', tabId: 'settle-contract-detail', label: '정산계약 상세' },
   'settle-bill|settle-list': { slug: 'settle-bill', tabId: 'settle-list', label: '정산서 관리' },
+  'settle-bill|settle-bill-create': { slug: 'settle-bill', tabId: 'settle-bill-create', label: '정산서 생성' },
   'settle-bill|settle-bill-detail': { slug: 'settle-bill', tabId: 'settle-bill-detail', label: '정산서 상세' },
+  'tax-invoice|tax-invoice-list': { slug: 'tax-invoice', tabId: 'tax-invoice-list', label: '(세금)계산서 관리' },
+  'cash-receipt|cash-receipt-list': { slug: 'cash-receipt', tabId: 'cash-receipt-list', label: '현금영수증 관리' },
+  'etc-proof|etc-proof-list': { slug: 'etc-proof', tabId: 'etc-proof-list', label: '기타증빙 관리' },
+  'transfer|transfer': { slug: 'transfer', tabId: 'transfer', label: '이체관리' },
+  'bank-tx|bank-tx-list': { slug: 'bank-tx', tabId: 'bank-tx-list', label: '통장거래내역' },
+  'batch|batch-status': { slug: 'batch', tabId: 'batch-status', label: '일괄작업 현황' },
+  'payment-ledger|payment-ledger': { slug: 'payment-ledger', tabId: 'payment-ledger', label: '결제원장' },
+  'point-refund|point-refund': { slug: 'point-refund', tabId: 'point-refund', label: '대장포인트 환불 관리' },
+  'shop-settle-config|shop-settle-config': { slug: 'shop-settle-config', tabId: 'shop-settle-config', label: '고객사 제휴점 정산방식 설정' },
 };
 
 let currentDocTab = 'policy';
