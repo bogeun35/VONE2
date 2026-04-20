@@ -115,7 +115,7 @@
     const editor = new Editor({
       el: containerEl,
       height,
-      initialEditType: 'markdown',      // 기본은 MD 모드 (원시 편집)
+      initialEditType: 'wysiwyg',
       previewStyle: 'vertical',         // MD 모드에서 우측 프리뷰
       usageStatistics: false,
       initialValue,
