@@ -813,7 +813,25 @@ async function saveDocToGithub() {
   const token = getGhToken();
   if (!token) { statusEl.textContent = 'GitHub 토큰이 필요합니다'; statusEl.className = 'doc-editor-status error'; return; }
   if (!docEditorInstance) { statusEl.textContent = '에디터가 초기화되지 않았습니다'; statusEl.className = 'doc-editor-status error'; return; }
-  if (!currentDocPath) { statusEl.textContent = '저장할 파일 경로가 없습니다'; statusEl.className = 'doc-editor-status error'; return; }
+  // 파일 경로가 슬래시로 끝나면 (file 미지정) 자동 생성
+  if (!currentDocPath || currentDocPath.endsWith('/')) {
+    if (planDetailIdx >= 0 && planDocs[planDetailIdx]) {
+      const plan = planDocs[planDetailIdx]._plan;
+      if (plan) {
+        const date = plan.issueDate || new Date().toISOString().slice(0, 10);
+        const issue = plan.issueNo || '';
+        const slug = (plan.title || 'plan').toLowerCase().replace(/[^a-z0-9ㄱ-ㅎ가-힣]+/gi, '-').replace(/(^-|-$)/g, '').slice(0, 40) || 'plan';
+        const fileName = issue ? `${date}-${issue}-${slug}.md` : `${date}-${slug}.md`;
+        currentDocPath = `docs/${plan.slug || 'common'}/plans/${fileName}`;
+        plan.file = fileName;
+        const ov = JSON.parse(localStorage.getItem(OVERRIDE_KEY) || '{}');
+        if (ov[plan.planId]) { ov[plan.planId].file = fileName; localStorage.setItem(OVERRIDE_KEY, JSON.stringify(ov)); }
+      }
+    }
+    if (!currentDocPath || currentDocPath.endsWith('/')) {
+      statusEl.textContent = '저장할 파일 경로가 없습니다'; statusEl.className = 'doc-editor-status error'; return;
+    }
+  }
 
   const editorText = docEditorInstance.getMarkdown();
   const newText = currentDocFrontmatter ? currentDocFrontmatter + editorText : editorText;
