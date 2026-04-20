@@ -129,6 +129,7 @@ const PAGE_FILTER_MAP = {
 let currentDocTab = 'policy';
 let currentDocPath = null;
 let currentDocRaw = null;
+let currentDocFrontmatter = '';
 let editorMode = false;
 let planDocs = [];
 let planDetailIdx = -1;
@@ -297,7 +298,14 @@ function renderVersionHeader(meta) {
 async function loadPolicyDoc() {
   try {
     const raw = await ghFetchRaw(currentDocPath);
-    currentDocRaw = raw;
+    const fmMatch = raw.match(/^(---\r?\n[\s\S]*?\r?\n---\r?\n)/);
+    if (fmMatch) {
+      currentDocFrontmatter = fmMatch[1];
+      currentDocRaw = raw.slice(fmMatch[1].length);
+    } else {
+      currentDocFrontmatter = '';
+      currentDocRaw = raw;
+    }
     btnDocEdit.disabled = false;
     renderDocFromRaw();
   } catch {
@@ -552,8 +560,14 @@ function renderDocFromRaw() {
     renderPlanDetailView(planDocs[planDetailIdx]);
     return;
   }
-  const { meta, body } = parseFrontmatter(currentDocRaw);
-  docContent.innerHTML = renderVersionHeader(meta) + jiraLinkify(marked.parse(body));
+  const { meta } = parseFrontmatter(currentDocFrontmatter + currentDocRaw);
+  docContent.innerHTML = renderVersionHeader(meta) + '<div id="policyBodyViewer"></div>';
+  const viewerEl = document.getElementById('policyBodyViewer');
+  if (currentDocRaw && window.toastui && window.toastui.Editor) {
+    new window.toastui.Editor.factory({ el: viewerEl, viewer: true, initialValue: currentDocRaw });
+  } else {
+    viewerEl.innerHTML = jiraLinkify(marked.parse(currentDocRaw || ''));
+  }
   initChangelogToggle();
 }
 
@@ -753,7 +767,8 @@ async function saveDocToGithub() {
   if (!docEditorInstance) { statusEl.textContent = '에디터가 초기화되지 않았습니다'; statusEl.className = 'doc-editor-status error'; return; }
   if (!currentDocPath) { statusEl.textContent = '저장할 파일 경로가 없습니다'; statusEl.className = 'doc-editor-status error'; return; }
 
-  const newText = docEditorInstance.getMarkdown();
+  const editorText = docEditorInstance.getMarkdown();
+  const newText = currentDocFrontmatter ? currentDocFrontmatter + editorText : editorText;
   const message = (msgInput.value || '').trim() || `docs: update ${currentDocPath}`;
 
   saveBtn.disabled = true;
@@ -795,7 +810,7 @@ async function saveDocToGithub() {
 
     statusEl.className = 'doc-editor-status success';
     statusEl.textContent = '저장 완료';
-    currentDocRaw = newText;
+    currentDocRaw = editorText;
     if (planDetailIdx >= 0 && planDocs[planDetailIdx]) {
       planDocs[planDetailIdx].text = newText;
     }
