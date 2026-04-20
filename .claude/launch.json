@@ -4,8 +4,9 @@
     {
       "name": "vone2-serve",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-l", "3000", "."],
-      "port": 3000
+      "runtimeArgs": ["serve", "."],
+      "port": 3000,
+      "autoPort": true
     },
     {
       "name": "vone2-python",

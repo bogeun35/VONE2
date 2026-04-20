@@ -121,6 +121,7 @@ let planDocs = [];
 let planDetailIdx = -1;
 let docEditorInstance = null;
 let allPlansCache = null;
+let showHeldPlans = false;
 
 function getVisiblePage() {
   const pages = document.querySelectorAll('.content .page');
@@ -322,7 +323,7 @@ async function loadPlanList(filterSlug, filterTabId) {
   try {
     const list = await fetchAllPlans();
     const filtered = list.filter(p => {
-      if (p.status === '보류') return false;
+      if (p.status === '보류' && !showHeldPlans) return false;
       if (!filterSlug) return true;
       if (filterTabId) {
         return p.tabId === filterTabId || (!p.tabId && p.slug === filterSlug);
@@ -355,7 +356,7 @@ function renderPlanList(docs) {
   };
 
   const rows = docs.length ? docs.map((d, i) => `
-    <tr class="plan-row" data-idx="${i}">
+    <tr class="plan-row${d.meta.status === '보류' ? ' held' : ''}" data-idx="${i}">
       <td class="plan-id"><span class="plan-id-badge">${escapeHtmlText(d.meta.id || '-')}</span></td>
       <td class="plan-title">${escapeHtmlText(d.meta.title || d.file.name.replace(/\.md$/, ''))}</td>
       <td>${escapeHtmlText(d.meta.author || '-')}</td>
@@ -368,6 +369,7 @@ function renderPlanList(docs) {
   docContent.innerHTML = `
     <div class="plan-list-header">
       <span class="plan-list-count">총 ${docs.length}건</span>
+      <label class="plan-held-toggle"><input type="checkbox" id="planShowHeld" ${showHeldPlans ? 'checked' : ''}> 보류 포함</label>
       <button class="btn btn-sm btn-primary" id="planNewBtn">+ 새 기획문서</button>
     </div>
     <table class="plan-list">
@@ -383,6 +385,13 @@ function renderPlanList(docs) {
   });
   const newBtn = document.getElementById('planNewBtn');
   if (newBtn) newBtn.addEventListener('click', openNewPlan);
+  const heldCb = document.getElementById('planShowHeld');
+  if (heldCb) heldCb.addEventListener('change', () => {
+    showHeldPlans = heldCb.checked;
+    allPlansCache = null;
+    const { slug, tabId } = getFilterSelection();
+    loadPlanList(slug, tabId);
+  });
 }
 
 // ===== 기획문서 상세 — 메타(옵션) / 본문(내용) 분리 =====

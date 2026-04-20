@@ -1059,6 +1059,12 @@ input.modal-info-value:focus { outline: 1px solid #2563eb; outline-offset: -1px;
 .plan-list .plan-row:hover { background: #f5f8ff; }
 .plan-list .plan-title { font-weight: 500; color: #111; }
 .plan-list .plan-empty { text-align: center; color: #999; padding: 24px 0; }
+.plan-list .plan-row.held { opacity: 0.5; }
+.plan-held-toggle {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 10px; color: #888; cursor: pointer; user-select: none;
+}
+.plan-held-toggle input { cursor: pointer; }
 
 /* Jira 키 링크 */
 .jira-key, .plan-jira-link {
