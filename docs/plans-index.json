@@ -15,19 +15,6 @@
   },
   "plans": [
     {
-      "planId": "VPLAN-001",
-      "title": "성공처리 모달 3버튼 플로우",
-      "planner": "정보근",
-      "issueDate": "2026-04-17",
-      "issueNo": "PROD-22010",
-      "status": "확정",
-      "slug": "transfer",
-      "tabId": "transfer",
-      "page": "이체관리",
-      "file": "2026-04-17-PROD-22010-success-modal-flow.md",
-      "tags": ["이체관리", "모달"]
-    },
-    {
       "planId": "",
       "title": "2026-04-17-PROD-22011-bank-tx-link",
       "planner": "",
@@ -52,32 +39,6 @@
       "page": "이체관리",
       "file": "2026-04-18-PROD-22012-info-refresh.md",
       "tags": ["이체관리", "버튼"]
-    },
-    {
-      "planId": "VPLAN-004",
-      "title": "이체관리 조건 필터 + 컬럼 Pin 고정",
-      "planner": "전은혜",
-      "issueDate": "2026-04-08",
-      "issueNo": "",
-      "status": "완료",
-      "slug": "transfer",
-      "tabId": "transfer",
-      "page": "이체관리",
-      "file": "2026-04-08-filter-and-pin.md",
-      "tags": ["이체관리", "필터", "그리드"]
-    },
-    {
-      "planId": "VPLAN-005",
-      "title": "이체 상태 셀 색상 최소화",
-      "planner": "전은혜",
-      "issueDate": "2026-04-15",
-      "issueNo": "",
-      "status": "완료",
-      "slug": "transfer",
-      "tabId": "transfer",
-      "page": "이체관리",
-      "file": "2026-04-15-status-color-cleanup.md",
-      "tags": ["이체관리", "UI"]
     },
     {
       "planId": "VPLAN-006",
