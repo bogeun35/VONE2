@@ -1,11 +1,11 @@
 {
  "schemaVersion": 1,
  "title": "참치파크 라이브 10라운드 사람 기준 난이도 판정",
- "generatedAt": "2026-10-11T12:41:36.402Z",
+ "generatedAt": "2026-10-11T13:46:25.661Z",
  "target": {
   "entry": "https://bogeun35.github.io/chamchicode/coop.html",
   "resolvedUrl": "https://bogeun35.github.io/chamchicode/park/source-play/index.html?v=20261011-08",
-  "cacheVersion": "20261011-08",
+  "cacheVersion": "20261011-08 (1차), 20261011-09 (재점검)",
   "note": "배포 클론 HEAD 의 park/source-play 와 라이브 응답(줄바꿈 무시)이 같은지 확인한 뒤 측정. 시뮬레이션은 같은 내용인 루트 source-stage-runtime.js + play/data 조합."
  },
  "scope": "사람이 이 웹판을 깰 수 있는가만 본다. 원작과 같은지는 판정 대상이 아니다.",
@@ -1360,6 +1360,1350 @@
    }
   ]
  },
+ "liveCheckNew": {
+  "version": "20261011-09",
+  "resolvedUrl": "https://bogeun35.github.io/chamchicode/park/source-play/index.html?v=20261011-09",
+  "checkedAt": "2026-10-11T13:23:29.338Z",
+  "note": "시뮬레이션 모듈·데이터는 -08 과 같음(줄바꿈 무시 해시 비교). 바뀐 것: play.js, camera.js, index.html, park-art.js(새 그림)",
+  "audio": {
+   "silenced": true,
+   "musicButton": "false",
+   "afterM": "false",
+   "finalMusicButton": "false"
+  },
+  "totals": {
+   "loads": 30,
+   "pageErrors": 0
+  },
+  "rows": [
+   {
+    "stage": "st_w_01_01",
+    "title": "2편 1–1",
+    "count": 2,
+    "loadMs": 144,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 2명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 2"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 57,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.18,
+     "wallSeconds": 20.2,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_01_01",
+    "title": "2편 1–1",
+    "count": 4,
+    "loadMs": 334,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 4명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 4"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.08,
+     "wallSeconds": 20.1,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_01_01",
+    "title": "2편 1–1",
+    "count": 8,
+    "loadMs": 331,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 8명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 8"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.02,
+     "wallSeconds": 20.04,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_01_02",
+    "title": "2편 1–2",
+    "count": 2,
+    "loadMs": 292,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 2명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 2"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 57,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.02,
+     "wallSeconds": 20.03,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_01_02",
+    "title": "2편 1–2",
+    "count": 4,
+    "loadMs": 336,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 4명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 4"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.1,
+     "wallSeconds": 20.1,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_01_02",
+    "title": "2편 1–2",
+    "count": 8,
+    "loadMs": 334,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 8명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 8"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.25,
+     "wallSeconds": 20.25,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_01_03",
+    "title": "2편 1–3",
+    "count": 2,
+    "loadMs": 355,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 2명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 2"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 54,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.12,
+     "wallSeconds": 20.11,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_01_03",
+    "title": "2편 1–3",
+    "count": 4,
+    "loadMs": 316,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 4명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 4"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.23,
+     "wallSeconds": 20.24,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_01_03",
+    "title": "2편 1–3",
+    "count": 8,
+    "loadMs": 386,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 8명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 8"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.02,
+     "wallSeconds": 20.02,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_01_04",
+    "title": "2편 1–4",
+    "count": 2,
+    "loadMs": 335,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 2명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 2"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 57,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.22,
+     "wallSeconds": 20.24,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_01_04",
+    "title": "2편 1–4",
+    "count": 4,
+    "loadMs": 327,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 4명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 4"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.07,
+     "wallSeconds": 20.08,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_01_04",
+    "title": "2편 1–4",
+    "count": 8,
+    "loadMs": 335,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 8명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 8"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.22,
+     "wallSeconds": 20.23,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_04_01",
+    "title": "2편 4–1",
+    "count": 2,
+    "loadMs": 338,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 2명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 2"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 54,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.2,
+     "wallSeconds": 20.22,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_04_01",
+    "title": "2편 4–1",
+    "count": 4,
+    "loadMs": 365,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 4명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 4"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 34.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.02,
+     "wallSeconds": 20.03,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_04_01",
+    "title": "2편 4–1",
+    "count": 8,
+    "loadMs": 317,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 8명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 8"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.2,
+     "wallSeconds": 20.22,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_04_03",
+    "title": "2편 4–3",
+    "count": 2,
+    "loadMs": 312,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 2명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 2"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 57,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowLeft",
+      "dx": -57,
+      "other": 0
+     },
+     "jumpProbe": false,
+     "p1JumpRise": 0,
+     "statusAfter": "play",
+     "firstProbe": {
+      "withJump": true,
+      "statusAfter": "dead",
+      "elapsed": 1.12
+     }
+    },
+    "idle": {
+     "endedAtGameSeconds": 1.37,
+     "observedGameSeconds": 1.37,
+     "wallSeconds": 1.56,
+     "failure": {
+      "playerId": "p2",
+      "reason": "전기에 닿았어요"
+     },
+     "overlay": {
+      "headline": "다시 한번",
+      "detail": "전기에 닿았어요"
+     }
+    },
+    "idleSimulated": {
+     "tick": 82,
+     "seconds": 1.37,
+     "reason": "전기에 닿았어요",
+     "playerId": "p2"
+    }
+   },
+   {
+    "stage": "st_w_04_03",
+    "title": "2편 4–3",
+    "count": 4,
+    "loadMs": 320,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 4명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 4"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 57,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowLeft",
+      "dx": -57,
+      "other": 0
+     },
+     "jumpProbe": false,
+     "p1JumpRise": 0,
+     "statusAfter": "dead",
+     "firstProbe": {
+      "withJump": true,
+      "statusAfter": "dead",
+      "elapsed": 1.12
+     }
+    },
+    "idle": {
+     "endedAtGameSeconds": 1.37,
+     "observedGameSeconds": 1.37,
+     "wallSeconds": 1.57,
+     "failure": {
+      "playerId": "p2",
+      "reason": "전기에 닿았어요"
+     },
+     "overlay": {
+      "headline": "다시 한번",
+      "detail": "전기에 닿았어요"
+     }
+    },
+    "idleSimulated": {
+     "tick": 82,
+     "seconds": 1.37,
+     "reason": "전기에 닿았어요",
+     "playerId": "p2"
+    }
+   },
+   {
+    "stage": "st_w_04_03",
+    "title": "2편 4–3",
+    "count": 8,
+    "loadMs": 115,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 8명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 8"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 57,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowLeft",
+      "dx": -57,
+      "other": 0
+     },
+     "jumpProbe": false,
+     "p1JumpRise": 0,
+     "statusAfter": "dead",
+     "firstProbe": {
+      "withJump": true,
+      "statusAfter": "dead",
+      "elapsed": 1.15
+     }
+    },
+    "idle": {
+     "endedAtGameSeconds": 1.37,
+     "observedGameSeconds": 1.37,
+     "wallSeconds": 1.58,
+     "failure": {
+      "playerId": "p2",
+      "reason": "전기에 닿았어요"
+     },
+     "overlay": {
+      "headline": "다시 한번",
+      "detail": "전기에 닿았어요"
+     }
+    },
+    "idleSimulated": {
+     "tick": 82,
+     "seconds": 1.37,
+     "reason": "전기에 닿았어요",
+     "playerId": "p2"
+    }
+   },
+   {
+    "stage": "st_w_04_04",
+    "title": "2편 4–4",
+    "count": 2,
+    "loadMs": 319,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 2명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 2"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": false,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 12,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": null,
+      "dx": 0,
+      "other": 0
+     },
+     "jumpProbe": false,
+     "p1JumpRise": 0,
+     "statusAfter": "dead",
+     "firstProbe": {
+      "withJump": true,
+      "statusAfter": "dead",
+      "elapsed": 0.02
+     }
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.02,
+     "wallSeconds": 20.02,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_04_04",
+    "title": "2편 4–4",
+    "count": 4,
+    "loadMs": 297,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 4명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 4"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": false,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 12,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": null,
+      "dx": 0,
+      "other": 0
+     },
+     "jumpProbe": false,
+     "p1JumpRise": 0,
+     "statusAfter": "dead",
+     "firstProbe": {
+      "withJump": true,
+      "statusAfter": "dead",
+      "elapsed": 0.02
+     }
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.07,
+     "wallSeconds": 20.09,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_04_04",
+    "title": "2편 4–4",
+    "count": 8,
+    "loadMs": 328,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 8명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 8"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": false,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 12,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": null,
+      "dx": 0,
+      "other": 0
+     },
+     "jumpProbe": false,
+     "p1JumpRise": 0,
+     "statusAfter": "dead",
+     "firstProbe": {
+      "withJump": true,
+      "statusAfter": "dead",
+      "elapsed": 0.02
+     }
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.15,
+     "wallSeconds": 20.17,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_05_02",
+    "title": "2편 5–2",
+    "count": 2,
+    "loadMs": 344,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 2명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 2"
+    ],
+    "timerShown": true,
+    "timerReadouts": [
+     "0:15",
+     "0:14",
+     "0:13",
+     "0:12",
+     "0:11",
+     "0:10",
+     "0:09!",
+     "0:08!",
+     "0:07!",
+     "0:06!",
+     "0:05!",
+     "0:04!",
+     "0:03!",
+     "0:02!",
+     "0:01!",
+     "0:00!"
+    ],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 57,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": 15,
+     "observedGameSeconds": 15,
+     "wallSeconds": 15.06,
+     "failure": {
+      "playerId": "p1",
+      "reason": "시간이 다 됐어요"
+     },
+     "overlay": {
+      "headline": "다시 한번",
+      "detail": "시간이 다 됐어요"
+     }
+    },
+    "idleSimulated": {
+     "tick": 900,
+     "seconds": 15,
+     "reason": "시간이 다 됐어요",
+     "playerId": "p1"
+    }
+   },
+   {
+    "stage": "st_w_05_02",
+    "title": "2편 5–2",
+    "count": 4,
+    "loadMs": 399,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 4명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 4"
+    ],
+    "timerShown": true,
+    "timerReadouts": [
+     "0:15",
+     "0:14",
+     "0:13",
+     "0:12",
+     "0:11",
+     "0:10",
+     "0:09!",
+     "0:08!",
+     "0:07!",
+     "0:06!",
+     "0:05!",
+     "0:04!",
+     "0:03!",
+     "0:02!",
+     "0:01!",
+     "0:00!"
+    ],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": 15,
+     "observedGameSeconds": 15,
+     "wallSeconds": 15.1,
+     "failure": {
+      "playerId": "p1",
+      "reason": "시간이 다 됐어요"
+     },
+     "overlay": {
+      "headline": "다시 한번",
+      "detail": "시간이 다 됐어요"
+     }
+    },
+    "idleSimulated": {
+     "tick": 900,
+     "seconds": 15,
+     "reason": "시간이 다 됐어요",
+     "playerId": "p1"
+    }
+   },
+   {
+    "stage": "st_w_05_02",
+    "title": "2편 5–2",
+    "count": 8,
+    "loadMs": 333,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 8명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 8"
+    ],
+    "timerShown": true,
+    "timerReadouts": [
+     "0:15",
+     "0:14",
+     "0:13",
+     "0:12",
+     "0:11",
+     "0:10",
+     "0:09!",
+     "0:08!",
+     "0:07!",
+     "0:06!",
+     "0:05!",
+     "0:04!",
+     "0:03!",
+     "0:02!",
+     "0:01!",
+     "0:00!"
+    ],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 18,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": 15,
+     "observedGameSeconds": 15,
+     "wallSeconds": 15.12,
+     "failure": {
+      "playerId": "p1",
+      "reason": "시간이 다 됐어요"
+     },
+     "overlay": {
+      "headline": "다시 한번",
+      "detail": "시간이 다 됐어요"
+     }
+    },
+    "idleSimulated": {
+     "tick": 900,
+     "seconds": 15,
+     "reason": "시간이 다 됐어요",
+     "playerId": "p1"
+    }
+   },
+   {
+    "stage": "st_w_10_02",
+    "title": "2편 10–2",
+    "count": 2,
+    "loadMs": 321,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 2명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 2"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 57,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowLeft",
+      "dx": -54,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.15,
+     "wallSeconds": 20.16,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_10_02",
+    "title": "2편 10–2",
+    "count": 4,
+    "loadMs": 339,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 4명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 4"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 57,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowLeft",
+      "dx": -57,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.23,
+     "wallSeconds": 20.25,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_10_02",
+    "title": "2편 10–2",
+    "count": 8,
+    "loadMs": 326,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 8명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 8"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 54,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowLeft",
+      "dx": -54,
+      "other": 0
+     },
+     "jumpProbe": true,
+     "p1JumpRise": 39.84,
+     "statusAfter": "play",
+     "firstProbe": null
+    },
+    "idle": {
+     "endedAtGameSeconds": null,
+     "observedGameSeconds": 20.05,
+     "wallSeconds": 20.06,
+     "failure": null,
+     "overlay": null
+    },
+    "idleSimulated": null
+   },
+   {
+    "stage": "st_w_11_04",
+    "title": "2편 11–4",
+    "count": 2,
+    "loadMs": 360,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 2명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 2"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 16,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 57,
+      "other": 0
+     },
+     "jumpProbe": false,
+     "p1JumpRise": 0,
+     "statusAfter": "play",
+     "firstProbe": {
+      "withJump": true,
+      "statusAfter": "dead",
+      "elapsed": 0.08
+     }
+    },
+    "idle": {
+     "endedAtGameSeconds": 5.85,
+     "observedGameSeconds": 5.85,
+     "wallSeconds": 6.06,
+     "failure": {
+      "playerId": "p1",
+      "reason": "가시에 닿았어요"
+     },
+     "overlay": {
+      "headline": "다시 한번",
+      "detail": "가시에 닿았어요"
+     }
+    },
+    "idleSimulated": {
+     "tick": 351,
+     "seconds": 5.85,
+     "reason": "가시에 닿았어요",
+     "playerId": "p1"
+    }
+   },
+   {
+    "stage": "st_w_11_04",
+    "title": "2편 11–4",
+    "count": 4,
+    "loadMs": 343,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 4명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 4"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 16,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 16,
+      "other": 0
+     },
+     "jumpProbe": false,
+     "p1JumpRise": 0,
+     "statusAfter": "play",
+     "firstProbe": {
+      "withJump": true,
+      "statusAfter": "dead",
+      "elapsed": 0.08
+     }
+    },
+    "idle": {
+     "endedAtGameSeconds": 5.85,
+     "observedGameSeconds": 5.85,
+     "wallSeconds": 6.05,
+     "failure": {
+      "playerId": "p1",
+      "reason": "가시에 닿았어요"
+     },
+     "overlay": {
+      "headline": "다시 한번",
+      "detail": "가시에 닿았어요"
+     }
+    },
+    "idleSimulated": {
+     "tick": 351,
+     "seconds": 5.85,
+     "reason": "가시에 닿았어요",
+     "playerId": "p1"
+    }
+   },
+   {
+    "stage": "st_w_11_04",
+    "title": "2편 11–4",
+    "count": 8,
+    "loadMs": 136,
+    "errors": 0,
+    "readyOverlay": "함께 출발 / 8명 · 1–8로 조작할 캐릭터 선택",
+    "hudProgress": [
+     "🔑　0 / 8"
+    ],
+    "timerShown": false,
+    "timerReadouts": [],
+    "controls": {
+     "ok": true,
+     "p1Walk": {
+      "key": "ArrowRight",
+      "dx": 16,
+      "other": 0
+     },
+     "p2WalkAfterDigit2": {
+      "key": "ArrowRight",
+      "dx": 16,
+      "other": 0
+     },
+     "jumpProbe": false,
+     "p1JumpRise": 0,
+     "statusAfter": "play",
+     "firstProbe": {
+      "withJump": true,
+      "statusAfter": "dead",
+      "elapsed": 0.13
+     }
+    },
+    "idle": {
+     "endedAtGameSeconds": 5.85,
+     "observedGameSeconds": 5.85,
+     "wallSeconds": 6.01,
+     "failure": {
+      "playerId": "p2",
+      "reason": "가시에 닿았어요"
+     },
+     "overlay": {
+      "headline": "다시 한번",
+      "detail": "가시에 닿았어요"
+     }
+    },
+    "idleSimulated": {
+     "tick": 351,
+     "seconds": 5.85,
+     "reason": "가시에 닿았어요",
+     "playerId": "p2"
+    }
+   }
+  ]
+ },
  "rendering": {
   "method": "라이브 play.js(?v=20261011-08)에서 상태 필드 참조를 검색하고, 4개 라운드를 해당 시각에 캔버스 캡처해 눈으로 대조",
   "drawnStates": [
@@ -1424,16 +2768,1369 @@
    "st_w_04_03",
    "st_w_04_04",
    "st_w_11_04"
+  ],
+  "versions": {
+   "-08": "아래 notDrawn 전부 안 그려짐",
+   "-09": "park-art.js 가 Bridge·Thunder·BlinkBlock·BlinkThunder·ThornCeiling(+체력 하트)을 그림. 4-4/11-4/4-3 캡처로 확인(4-1 문은 카메라 밖이라 캡처 대신 소스 확인)"
+  },
+  "cameraNew": "-09 카메라: 기본 배율 = 화면높이/표시높이(10타일 판 1.406), scrollType 0 판(4-4, 10-2, 11-4)은 맵 전체. 흩어지면 즉시 축소해 전원을 화면에 둠 → 화면 밖으로 사라지는 캐릭터는 없음"
+ },
+ "rounds": [
+  {
+   "stage": "st_w_01_01",
+   "title": "2편 1–1",
+   "mechanic": "스프링 줄 위에 n명 계단식 탑 → 첫 계단 → 스위치 → 딜레이 스위치(5초) 뒤 스프링 발사, 날면서 ↑로 골",
+   "needs": {
+    "simultaneous": "탑 쌓기(정지 상태라 동시 입력 불필요). 6인 이상은 꼭대기 점프 직후 바로 아래 사람이 이어 뛰는 2인 연속 점프 필요",
+    "timing": "딜레이 스위치 5초 카운트 동안 스프링 위 정렬",
+    "precision": "탑 정렬 ±16px 수준",
+    "timeLimit": "없음"
+   },
+   "measured": {
+    "perfectBotSeconds": {
+     "2": 68.2,
+     "4": 108.5,
+     "8": 193.7
+    },
+    "directTopJumpEnough": "2~5인 가능, 6~8인 불가(연속 점프 필요)",
+    "closedLoopJitterOnly_pm3ticks": [
+     {
+      "count": 2,
+      "trials": 10,
+      "jitterOnly": {
+       "cleared": 10,
+       "dead": 0
+      },
+      "jitterAndSlips": {
+       "cleared": 10,
+       "dead": 0
+      }
+     },
+     {
+      "count": 4,
+      "trials": 10,
+      "jitterOnly": {
+       "cleared": 2,
+       "dead": 0
+      },
+      "jitterAndSlips": {
+       "cleared": 1,
+       "dead": 0
+      }
+     },
+     {
+      "count": 8,
+      "trials": 10,
+      "jitterOnly": {
+       "cleared": 0,
+       "dead": 0
+      },
+      "jitterAndSlips": {
+       "cleared": 0,
+       "dead": 0
+      }
+     }
+    ],
+    "openLoop8p": "±1틱만 흔들어도 0/20 (사망 0, 진행 멈춤)",
+    "deaths": "흔들림 넣은 모든 시도에서 사망 0회"
+   },
+   "estimated": {
+    "local": "연속 점프(6인+)는 ~14틱(0.23초) 안에 캐릭터 전환+점프가 필요할 것으로 봄. 발사 파동은 한 번에 한 명만 조종 가능 → 파동을 n번 반복"
+   },
+   "grade": {
+    "online": {
+     "2": "보통",
+     "4": "보통",
+     "8": "어려움"
+    },
+    "local": {
+     "2": "보통",
+     "4": "어려움",
+     "8": "어려움"
+    }
+   },
+   "basis": "사망 위험 없음(실패=재시도). 8인은 탑+연속 점프 협응. 4·8인 봇은 지터만으로도 2/10·0/10 진행 멈춤 → 정렬 요구가 까다로움(봇 한계 포함)"
+  },
+  {
+   "stage": "st_w_01_02",
+   "title": "2편 1–2",
+   "mechanic": "상자를 상층에서 떨어뜨림 → 가시 통로(접촉 스위치 25개, 가시 25개, 낙하 36px/틱) → 2인 탑으로 열쇠",
+   "needs": {
+    "simultaneous": "상자 밀기 n−1명 동시(2인 1명, 4인 3명, 8인 7명)",
+    "timing": "스위치 띠(x 642~654 등, 통로 전체 높이) 첫 접촉 다음 틱에 이미 반대로 움직여야 생존",
+    "precision": "상자 방패로 갈 경우 미는 사람 오른쪽 끝이 띠 시작+1~2px 안에서 멈춰야 함",
+    "timeLimit": "없음"
+   },
+   "measured": {
+    "tapWindowTicks": 1,
+    "tapSweep": "접촉 후 오른쪽 k틱 더 → k=0만 생존, k≥1 전부 사망 (2·8인 동일)",
+    "boxShield": "머리 위 상자(PushBox1 48×40)가 사람과 함께 움직이지 않음: 사람이 90px 걸어도 상자 x=528 그대로, 떨어진 뒤 사망",
+    "boxHeight": 40,
+    "playerHeight": 46,
+    "openLoop8p": "±1틱 0/20, 20/20 가시 사망"
+   },
+   "grade": {
+    "online": {
+     "2": "사실상 불가",
+     "4": "사실상 불가",
+     "8": "사실상 불가"
+    },
+    "local": {
+     "2": "사실상 불가",
+     "4": "사실상 불가",
+     "8": "사실상 불가"
+    }
+   },
+   "basis": "1틱(16.7ms) 반전을 25번 연속 성공해야 함. 원래 기믹(상자를 머리에 이고 통과)이 이 포트에서 성립 안 함",
+   "bug": "B3"
+  },
+  {
+   "stage": "st_w_01_03",
+   "title": "2편 1–3",
+   "mechanic": "대시보드로 날아가 쓰러지는 벽(10블록)을 n회 쳐서 넘어뜨림. 일정 시간 안 치면 회복",
+   "needs": {
+    "simultaneous": "없음(교대)",
+    "timing": "타격 간격 < 회복시간 4.0초(2인)/3.2초(4인)/3.0초(8인)",
+    "precision": "대시보드 진입만",
+    "timeLimit": "타격 간 회복시간"
+   },
+   "measured": {
+    "hitsRequired": {
+     "2": 8,
+     "4": 10,
+     "8": 10
+    },
+    "resilienceTicks": {
+     "2": 240,
+     "4": 192,
+     "8": 180
+    },
+    "twoDashersGapTicks": "117~134",
+    "oneDasherGapTicks": "202~223 (2인만 통과, 4·8인은 회복시간 초과로 실패)",
+    "closedLoopHuman": [
+     {
+      "count": 2,
+      "mode": "online",
+      "trials": 20,
+      "cleared": 20,
+      "perfectSeconds": 23.18,
+      "failures": {}
+     },
+     {
+      "count": 4,
+      "mode": "online",
+      "trials": 20,
+      "cleared": 20,
+      "perfectSeconds": 31.95,
+      "failures": {}
+     },
+     {
+      "count": 8,
+      "mode": "online",
+      "trials": 20,
+      "cleared": 20,
+      "perfectSeconds": 30.83,
+      "failures": {}
+     }
+    ]
+   },
+   "estimated": {
+    "local": "한 사람은 복귀 조종을 겹칠 수 없어 1명 왕복과 같음 → 2인은 여유 22~38틱, 4·8인은 미리 줄 세운 캐릭터를 차례로 발사하며 복귀를 쪼개 해야 함"
+   },
+   "grade": {
+    "online": {
+     "2": "쉬움",
+     "4": "쉬움",
+     "8": "쉬움"
+    },
+    "local": {
+     "2": "어려움",
+     "4": "어려움",
+     "8": "어려움"
+    }
+   },
+   "basis": "온라인 흔들림 20/20×3"
+  },
+  {
+   "stage": "st_w_01_04",
+   "title": "2편 1–4",
+   "mechanic": "스위치 7개를 동시에 눌린 상태로(관찰자) → 열쇠. 일부는 누르고 있어야(hold), 일부는 한 번만(latch). 문 3개",
+   "needs": {
+    "simultaneous": "hold 스위치: 2인 1개, 4인 3개, 8인 7개(7명이 서 있고 1명이 열쇠)",
+    "timing": "없음(정지)",
+    "precision": "스위치 감지 18×9px",
+    "timeLimit": "없음"
+   },
+   "measured": {
+    "holdSwitches": {
+     "2": 1,
+     "4": 3,
+     "8": 7
+    },
+    "openLoop8p": "±1틱 0/20(14/20 가시 사망), 사람 흔들림 0/20(19/20 가시 사망: x 887,y 960 고정 가시)",
+    "teammate8pTicks": 8903
+   },
+   "estimated": {
+    "all": "2·4인용 닫힌 루프 봇 없음 → 구조 판단. 서 있는 사람은 입력이 필요 없어 로컬도 가능하나 길다"
+   },
+   "grade": {
+    "online": {
+     "2": "보통",
+     "4": "보통",
+     "8": "어려움"
+    },
+    "local": {
+     "2": "보통",
+     "4": "어려움",
+     "8": "어려움"
+    }
+   },
+   "basis": "추정(정적 배치 위주, 8인은 7명 배치 순서 의존)"
+  },
+  {
+   "stage": "st_w_04_01",
+   "title": "2편 4–1",
+   "mechanic": "열쇠를 잡으면 문(Bridge)이 1px/틱으로 내려와 통로를 막고, 첫 칸 전기 줄이 0.3px/틱으로 내려옴. 한 명이 문 아래 반쯤 서서 받치고 열쇠 든 사람이 옆으로 들어온 뒤 함께 나감",
+   "needs": {
+    "simultaneous": "없음(받치는 사람은 가만히)",
+    "timing": "문은 받침 없으면 42틱 뒤 통과 불가. 전기 줄은 머리 높이까지 900틱(15초)",
+    "precision": "받치는 위치 x 945~975 (32px 창)",
+    "timeLimit": "열쇠 후 15초"
+   },
+   "measured": {
+    "perfectSeconds": {
+     "online": {
+      "2": 19.7,
+      "4": 23.4
+     },
+     "local": {
+      "2": 28.6,
+      "4": 44.7
+     }
+    },
+    "closedLoopHuman": [
+     {
+      "count": 2,
+      "mode": "online",
+      "trials": 30,
+      "cleared": 29,
+      "perfectSeconds": 19.67,
+      "failures": {
+       "no key": 1
+      }
+     },
+     {
+      "count": 2,
+      "mode": "local",
+      "trials": 30,
+      "cleared": 28,
+      "perfectSeconds": 28.62,
+      "failures": {
+       "전기에 닿았어요": 2
+      }
+     },
+     {
+      "count": 4,
+      "mode": "online",
+      "trials": 30,
+      "cleared": 30,
+      "perfectSeconds": 23.37,
+      "failures": {}
+     },
+     {
+      "count": 4,
+      "mode": "local",
+      "trials": 30,
+      "cleared": 29,
+      "perfectSeconds": 44.73,
+      "failures": {
+       "전기에 닿았어요": 1
+      }
+     }
+    ],
+    "teammate8pTicks": 5875
+   },
+   "estimated": {
+    "n8": "문 4개+4인 탑 → 문마다 손바꿈 필요(추정)"
+   },
+   "grade": {
+    "online": {
+     "2": "쉬움",
+     "4": "쉬움",
+     "8": "어려움"
+    },
+    "local": {
+     "2": "쉬움",
+     "4": "쉬움",
+     "8": "어려움"
+    }
+   },
+   "gradeOldLive": "어려움(문·전기 줄이 안 보여 받치기 기믹을 알 수 없고 15초 뒤 원인 모를 사망)"
+  },
+  {
+   "stage": "st_w_04_03",
+   "title": "2편 4–3",
+   "mechanic": "깜빡 발판(1초 켜짐/1초 꺼짐) 위에서 시작, 천장 가시 6개가 1·2초에 떨어짐, 바닥 틈은 전기",
+   "needs": {
+    "simultaneous": "시작 1.0초 안에 전원이 바닥 판 위로 이동(가장자리 캐릭터는 57px)",
+    "timing": "무입력 1.37초 사망",
+    "precision": "가시 피하기 x≤171 또는 x≥275 (판 192~288)",
+    "timeLimit": "-"
+   },
+   "measured": {
+    "idleDeathSeconds": 1.37,
+    "key": {
+     "x": 224,
+     "y": 452,
+     "w": 32,
+     "h": 56
+    },
+    "keyInsideTile": {
+     "x": 192,
+     "y": 432,
+     "w": 96,
+     "h": 48
+    },
+    "beamY": "454~458 (x 48~864, 모든 틈 덮음)"
+   },
+   "grade": {
+    "online": {
+     "2": "사실상 불가",
+     "4": "사실상 불가",
+     "8": "사실상 불가"
+    },
+    "local": {
+     "2": "사실상 불가",
+     "4": "사실상 불가",
+     "8": "사실상 불가"
+    }
+   },
+   "basis": "열쇠가 바닥 타일 안(아래 절반은 맵 밖)에 있어 어떤 위치에서도 겹칠 수 없음",
+   "bug": "B1"
+  },
+  {
+   "stage": "st_w_04_04",
+   "title": "2편 4–4",
+   "mechanic": "세로 전기 9~10줄 + 가로 1줄이 3.0초 켜짐/0.9초 꺼짐을 동시에 반복. 꺼진 동안 한 줄씩 건너 칸(54px)에 멈춤. 열쇠는 왼쪽 아래",
+   "needs": {
+    "simultaneous": "없음",
+    "timing": "꺼짐 창 54틱. 한 줄 건너기 19틱 → 반응 150~250ms 넣어도 20~26틱 여유",
+    "precision": "칸 54px − 몸 32px = 22px 여유(빔에서 10px 띄워 정지)",
+    "timeLimit": "없음. 시작 3초는 레이저 사이 10~12px 칸에 갇혀 정지"
+   },
+   "measured": {
+    "perfectSeconds": {
+     "online": {
+      "2": 51.2,
+      "4": 59,
+      "8": 86.8
+     },
+     "local": {
+      "2": 82.6,
+      "4": 141.6,
+      "8": 204.8
+     }
+    },
+    "windowsPerRun": "13~52",
+    "closedLoopHuman": [
+     {
+      "count": 2,
+      "mode": "online",
+      "trials": 30,
+      "cleared": 20,
+      "perfectSeconds": 51.15,
+      "failures": {
+       "전기에 닿았어요 (잘못 누름 직후)": 10
+      }
+     },
+     {
+      "count": 2,
+      "mode": "local",
+      "trials": 30,
+      "cleared": 17,
+      "perfectSeconds": 82.62,
+      "failures": {
+       "전기에 닿았어요 (잘못 누름 직후)": 13
+      }
+     },
+     {
+      "count": 4,
+      "mode": "online",
+      "trials": 30,
+      "cleared": 15,
+      "perfectSeconds": 59.02,
+      "failures": {
+       "전기에 닿았어요 (잘못 누름 직후)": 15
+      }
+     },
+     {
+      "count": 4,
+      "mode": "local",
+      "trials": 30,
+      "cleared": 16,
+      "perfectSeconds": 141.62,
+      "failures": {
+       "전기에 닿았어요 (잘못 누름 직후)": 14
+      }
+     },
+     {
+      "count": 8,
+      "mode": "online",
+      "trials": 30,
+      "cleared": 11,
+      "perfectSeconds": 86.83,
+      "failures": {
+       "전기에 닿았어요 (잘못 누름 직후)": 19
+      }
+     },
+     {
+      "count": 8,
+      "mode": "local",
+      "trials": 30,
+      "cleared": 17,
+      "perfectSeconds": 204.83,
+      "failures": {
+       "전기에 닿았어요 (잘못 누름 직후)": 13
+      }
+     }
+    ],
+    "failuresAllAfterWrongPress": true,
+    "openLoop8p": "±1틱 0/20 전부 감전"
+   },
+   "grade": {
+    "online": {
+     "2": "보통",
+     "4": "보통",
+     "8": "어려움"
+    },
+    "local": {
+     "2": "보통",
+     "4": "보통",
+     "8": "어려움"
+    }
+   },
+   "gradeOldLive": "사실상 불가(레이저가 안 보임, 첫 입력에 즉사)",
+   "basis": "봇 실패는 전부 잘못 누름 직후 감전. 타이밍만으로는 실패 0"
+  },
+  {
+   "stage": "st_w_05_02",
+   "title": "2편 5–2",
+   "mechanic": "DeadTimer 15초. 왼쪽 통로 스위치(+2초 의도) → 상자로 벽 스위치 → 층 상자 계단으로 열쇠 → 큰 상자(96px, n명 필요)를 벽(144px)에 붙이고 작은 상자를 계단 삼아 마지막 사람까지 넘김",
+   "needs": {
+    "simultaneous": "큰 상자 n명 동시 밀기(전원). 벽 스위치 상자 2인 1명/4인 2명/8인 3명",
+    "timing": "첫 통로 스위치까지 약 4초(여유 11초)",
+    "precision": "2인 탑, 상자 위 점프",
+    "timeLimit": "15초 → 첫 스위치에서 타이머 정지(버그)"
+   },
+   "measured": {
+    "timerFrozenAt": "첫 통로 스위치(t≈5.3초) 이후 9.88초에서 멈춤",
+    "perfectSecondsN2": 72.2,
+    "closedLoopHuman": [
+     {
+      "count": 2,
+      "mode": "online",
+      "trials": 20,
+      "cleared": 6,
+      "perfectSeconds": 72.2,
+      "failures": {
+       "together-timeout": 13,
+       "timeout": 1
+      }
+     }
+    ],
+    "noDeathsInNoisyRuns": true,
+    "teammate8pTicks": 10529,
+    "openLoop8p": "±1틱 0/20(사망 0)"
+   },
+   "estimated": {
+    "ifTimerFixed": "2인 예산 15+2×16=47초 < 측정 경로 72초 → 시간 안에 불가할 가능성 큼"
+   },
+   "grade": {
+    "online": {
+     "2": "보통",
+     "4": "보통",
+     "8": "보통"
+    },
+    "local": {
+     "2": "사실상 불가",
+     "4": "사실상 불가",
+     "8": "사실상 불가"
+    }
+   },
+   "basis": "온라인: 타이머 정지 후 사망 경로 없음(흔들림 실패 14/20은 봇이 재시도 안 해서 멈춘 것). 로컬: 큰 상자는 동시에 n명이 →를 눌러야 움직이는데 로컬은 선택한 1명만 입력",
+   "bug": "B2,B5"
+  },
+  {
+   "stage": "st_w_10_02",
+   "title": "2편 10–2",
+   "mechanic": "구덩이(WarpInitPos)로 떨어지면 자기 출발점 위 하늘로 돌아와 위 발판에 섬. 좌우 대시보드(vx ±40)로 동시에 날아 가운데서 부딪혀 떨어지며 열쇠·골 통과",
+   "needs": {
+    "simultaneous": "2명이 같은 틱에 대시(쌍마다)",
+    "timing": "발사 틱 차이 −1~+1틱(3틱=50ms) 안이면 둘 다 골. +2·+3틱은 왼쪽 사람이 오른쪽 밖으로 떨어져 사망, 그 외는 재시도 가능",
+    "precision": "-",
+    "timeLimit": "없음"
+   },
+   "measured": {
+    "syncWindowTicks": [
+     -1,
+     0,
+     1
+    ],
+    "deathOffsets": [
+     2,
+     3
+    ],
+    "pairsNeeded": {
+     "2": 1,
+     "4": 2,
+     "8": 4
+    },
+    "teammate8pTicks": 700,
+    "openLoop8p": "±1틱 0/20(16/20 낙사)"
+   },
+   "estimated": {
+    "perAttemptOnline": "반응 9~15틱+지터±3틱 독립 가정 시 성공 28%, 사망 16%, 재시도 56% (계산)",
+    "fullRunNoDeath": {
+     "2": 0.64,
+     "4": 0.41,
+     "8": 0.17
+    },
+    "local": "왼쪽 →로 발사 후 다음 프레임에 2+←(→ 떼기)까지 끝내야 함 → 1프레임 입력"
+   },
+   "grade": {
+    "online": {
+     "2": "어려움",
+     "4": "어려움",
+     "8": "어려움"
+    },
+    "local": {
+     "2": "사실상 불가",
+     "4": "사실상 불가",
+     "8": "사실상 불가"
+    }
+   },
+   "bug": "B6"
+  },
+  {
+   "stage": "st_w_11_04",
+   "title": "2편 11–4",
+   "mechanic": "천장 가시 줄(안전 칸·함정 칸), 공용 체력 2인1/4인2/8인3. 처음 20초는 머리 위 전기 줄(y 552~556)로 점프 금지(2프레임 이상 누르면 즉사). 끝으로 갈수록 안전 칸 1~4개로 줄어 쌓아야 함",
+   "needs": {
+    "simultaneous": "함정 칸에 선 묶음은 일반 가시가 바닥에 닿는 순간 옆으로 비켜야 함",
+    "timing": "비키기 시작 창: 일반 가시 충돌 종료 기준 −6~+10틱(쌓인 2명, 17틱=283ms) / −6~+15틱(1명, 22틱)",
+    "precision": "1칸 1명이면 ±20px, 1칸 2명 나란히는 ±4px",
+    "timeLimit": "버티기 30초"
+   },
+   "measured": {
+    "dodgeWindowTicks": {
+     "stacked": 17,
+     "single": 22
+    },
+    "rows": {
+     "2": 8,
+     "4": 8,
+     "8": 6
+    },
+    "rowWarningSeconds": {
+     "2": 3,
+     "4": 3,
+     "8": 5
+    },
+    "teammate8pTicks": 3129,
+    "openLoop8p": "±1틱 0/20 전부 사망"
+   },
+   "estimated": {
+    "dodgesPerRun": {
+     "2": "약 5(체력 여유 0)",
+     "4": "약 14(1회 허용)",
+     "8": "약 18(2회 허용)"
+    },
+    "perDodgeReactionOnly": {
+     "stacked": 0.31,
+     "single": 0.88
+    },
+    "perDodgeAnticipating": "지터 ±3틱만이면 창 안(≈100%)",
+    "local": "4·8인은 같은 줄에서 함정 묶음 2~4개가 같은 17틱 안에 비켜야 함 → 한 사람 불가, 체력 초과"
+   },
+   "grade": {
+    "online": {
+     "2": "어려움",
+     "4": "어려움",
+     "8": "어려움"
+    },
+    "local": {
+     "2": "어려움",
+     "4": "사실상 불가",
+     "8": "사실상 불가"
+    }
+   },
+   "gradeOldLive": "사실상 불가(가시·전기·체력이 안 보임)"
+  }
+ ],
+ "jitter": {
+  "method": {
+   "closedLoop": "라운드별 상태 보고 판단하는 봇. 사람 흔들림: 외부 사건 뒤 반응 9~15틱(150~250ms), 스스로 정한 누름/뗌 ±3틱(걷기 정지 위치 ±9px), 행동 시작마다 3% 확률로 4~10틱 잘못 누름. 로컬은 한 번에 1명만 입력, 캐릭터 전환 9~15틱",
+   "openLoop": "다른 팀원의 8인 녹화(whole-route-input-replay.json rounds[], 9/10 라운드) 입력을 그대로 흔듦: ±1틱, ±3틱, 사람(±3틱+20틱 이상 쉰 뒤 반응 9~15틱+3% 잘못 누름). 각 20회"
+  },
+  "openLoop8p": [
+   {
+    "stage": "st_w_01_01",
+    "count": 8,
+    "recordedTicks": 11624,
+    "exact": {
+     "trials": 1,
+     "cleared": 1,
+     "dead": 0,
+     "avgExited": 8,
+     "deaths": {}
+    },
+    "jitter1": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 0,
+     "avgExited": 0,
+     "deaths": {}
+    },
+    "jitter3": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 0,
+     "avgExited": 0,
+     "deaths": {}
+    },
+    "human": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 0,
+     "avgExited": 0,
+     "deaths": {}
+    }
+   },
+   {
+    "stage": "st_w_01_02",
+    "count": 8,
+    "recordedTicks": 4451,
+    "exact": {
+     "trials": 1,
+     "cleared": 1,
+     "dead": 0,
+     "avgExited": 8,
+     "deaths": {}
+    },
+    "jitter1": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 20,
+     "avgExited": 0,
+     "deaths": {
+      "가시에 닿았어요": 20
+     }
+    },
+    "jitter3": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 20,
+     "avgExited": 0,
+     "deaths": {
+      "가시에 닿았어요": 20
+     }
+    },
+    "human": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 20,
+     "avgExited": 0,
+     "deaths": {
+      "가시에 닿았어요": 20
+     }
+    }
+   },
+   {
+    "stage": "st_w_01_03",
+    "count": 8,
+    "recordedTicks": 1850,
+    "exact": {
+     "trials": 1,
+     "cleared": 1,
+     "dead": 0,
+     "avgExited": 8,
+     "deaths": {}
+    },
+    "jitter1": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 0,
+     "avgExited": 0,
+     "deaths": {}
+    },
+    "jitter3": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 0,
+     "avgExited": 0,
+     "deaths": {}
+    },
+    "human": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 0,
+     "avgExited": 0,
+     "deaths": {}
+    }
+   },
+   {
+    "stage": "st_w_01_04",
+    "count": 8,
+    "recordedTicks": 8903,
+    "exact": {
+     "trials": 1,
+     "cleared": 1,
+     "dead": 0,
+     "avgExited": 8,
+     "deaths": {}
+    },
+    "jitter1": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 14,
+     "avgExited": 0,
+     "deaths": {
+      "가시에 닿았어요": 14
+     }
+    },
+    "jitter3": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 18,
+     "avgExited": 0,
+     "deaths": {
+      "가시에 닿았어요": 18
+     }
+    },
+    "human": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 19,
+     "avgExited": 0,
+     "deaths": {
+      "가시에 닿았어요": 19
+     }
+    }
+   },
+   {
+    "stage": "st_w_04_01",
+    "count": 8,
+    "recordedTicks": 5875,
+    "exact": {
+     "trials": 1,
+     "cleared": 1,
+     "dead": 0,
+     "avgExited": 8,
+     "deaths": {}
+    },
+    "jitter1": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 1,
+     "avgExited": 0,
+     "deaths": {
+      "전기에 닿았어요": 1
+     }
+    },
+    "jitter3": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 0,
+     "avgExited": 0,
+     "deaths": {}
+    },
+    "human": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 0,
+     "avgExited": 0,
+     "deaths": {}
+    }
+   },
+   {
+    "stage": "st_w_04_03",
+    "count": 8,
+    "recorded": "no-policy"
+   },
+   {
+    "stage": "st_w_04_04",
+    "count": 8,
+    "recordedTicks": 2362,
+    "exact": {
+     "trials": 1,
+     "cleared": 1,
+     "dead": 0,
+     "avgExited": 8,
+     "deaths": {}
+    },
+    "jitter1": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 20,
+     "avgExited": 0.1,
+     "deaths": {
+      "전기에 닿았어요": 20
+     }
+    },
+    "jitter3": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 20,
+     "avgExited": 0,
+     "deaths": {
+      "전기에 닿았어요": 20
+     }
+    },
+    "human": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 20,
+     "avgExited": 0,
+     "deaths": {
+      "전기에 닿았어요": 20
+     }
+    }
+   },
+   {
+    "stage": "st_w_05_02",
+    "count": 8,
+    "recordedTicks": 10529,
+    "exact": {
+     "trials": 1,
+     "cleared": 1,
+     "dead": 0,
+     "avgExited": 8,
+     "deaths": {}
+    },
+    "jitter1": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 0,
+     "avgExited": 0,
+     "deaths": {}
+    },
+    "jitter3": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 0,
+     "avgExited": 0,
+     "deaths": {}
+    },
+    "human": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 0,
+     "avgExited": 0,
+     "deaths": {}
+    }
+   },
+   {
+    "stage": "st_w_10_02",
+    "count": 8,
+    "recordedTicks": 700,
+    "exact": {
+     "trials": 1,
+     "cleared": 1,
+     "dead": 0,
+     "avgExited": 8,
+     "deaths": {}
+    },
+    "jitter1": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 16,
+     "avgExited": 1.3,
+     "deaths": {
+      "fall": 16
+     }
+    },
+    "jitter3": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 6,
+     "avgExited": 0.8,
+     "deaths": {
+      "fall": 6
+     }
+    },
+    "human": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 8,
+     "avgExited": 0.6,
+     "deaths": {
+      "fall": 8
+     }
+    }
+   },
+   {
+    "stage": "st_w_11_04",
+    "count": 8,
+    "recordedTicks": 3129,
+    "exact": {
+     "trials": 1,
+     "cleared": 1,
+     "dead": 0,
+     "avgExited": 8,
+     "deaths": {}
+    },
+    "jitter1": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 20,
+     "avgExited": 0,
+     "deaths": {
+      "가시에 닿았어요": 20
+     }
+    },
+    "jitter3": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 20,
+     "avgExited": 0,
+     "deaths": {
+      "가시에 닿았어요": 20
+     }
+    },
+    "human": {
+     "trials": 20,
+     "cleared": 0,
+     "dead": 20,
+     "avgExited": 0,
+     "deaths": {
+      "가시에 닿았어요": 19,
+      "전기에 닿았어요": 1
+     }
+    }
+   }
+  ],
+  "note": "열린 루프 재생은 ±1틱에서도 전 라운드 0/20 → 사람은 보고 고치므로 이 수치는 난이도가 아니라 \"녹화 입력이 상태에 얼마나 민감한가\"의 척도로만 쓴다",
+  "closedLoop": {
+   "st_w_04_04": [
+    {
+     "count": 2,
+     "mode": "online",
+     "trials": 30,
+     "cleared": 20,
+     "perfectSeconds": 51.15,
+     "failures": {
+      "전기에 닿았어요 (잘못 누름 직후)": 10
+     }
+    },
+    {
+     "count": 2,
+     "mode": "local",
+     "trials": 30,
+     "cleared": 17,
+     "perfectSeconds": 82.62,
+     "failures": {
+      "전기에 닿았어요 (잘못 누름 직후)": 13
+     }
+    },
+    {
+     "count": 4,
+     "mode": "online",
+     "trials": 30,
+     "cleared": 15,
+     "perfectSeconds": 59.02,
+     "failures": {
+      "전기에 닿았어요 (잘못 누름 직후)": 15
+     }
+    },
+    {
+     "count": 4,
+     "mode": "local",
+     "trials": 30,
+     "cleared": 16,
+     "perfectSeconds": 141.62,
+     "failures": {
+      "전기에 닿았어요 (잘못 누름 직후)": 14
+     }
+    },
+    {
+     "count": 8,
+     "mode": "online",
+     "trials": 30,
+     "cleared": 11,
+     "perfectSeconds": 86.83,
+     "failures": {
+      "전기에 닿았어요 (잘못 누름 직후)": 19
+     }
+    },
+    {
+     "count": 8,
+     "mode": "local",
+     "trials": 30,
+     "cleared": 17,
+     "perfectSeconds": 204.83,
+     "failures": {
+      "전기에 닿았어요 (잘못 누름 직후)": 13
+     }
+    }
+   ],
+   "st_w_04_01": [
+    {
+     "count": 2,
+     "mode": "online",
+     "trials": 30,
+     "cleared": 29,
+     "perfectSeconds": 19.67,
+     "failures": {
+      "no key": 1
+     }
+    },
+    {
+     "count": 2,
+     "mode": "local",
+     "trials": 30,
+     "cleared": 28,
+     "perfectSeconds": 28.62,
+     "failures": {
+      "전기에 닿았어요": 2
+     }
+    },
+    {
+     "count": 4,
+     "mode": "online",
+     "trials": 30,
+     "cleared": 30,
+     "perfectSeconds": 23.37,
+     "failures": {}
+    },
+    {
+     "count": 4,
+     "mode": "local",
+     "trials": 30,
+     "cleared": 29,
+     "perfectSeconds": 44.73,
+     "failures": {
+      "전기에 닿았어요": 1
+     }
+    }
+   ],
+   "st_w_01_03": [
+    {
+     "count": 2,
+     "mode": "online",
+     "trials": 20,
+     "cleared": 20,
+     "perfectSeconds": 23.18,
+     "failures": {}
+    },
+    {
+     "count": 4,
+     "mode": "online",
+     "trials": 20,
+     "cleared": 20,
+     "perfectSeconds": 31.95,
+     "failures": {}
+    },
+    {
+     "count": 8,
+     "mode": "online",
+     "trials": 20,
+     "cleared": 20,
+     "perfectSeconds": 30.83,
+     "failures": {}
+    }
+   ],
+   "st_w_05_02": [
+    {
+     "count": 2,
+     "mode": "online",
+     "trials": 20,
+     "cleared": 6,
+     "perfectSeconds": 72.2,
+     "failures": {
+      "together-timeout": 13,
+      "timeout": 1
+     }
+    }
+   ],
+   "st_w_01_01": [
+    {
+     "count": 2,
+     "trials": 10,
+     "jitterOnly": {
+      "cleared": 10,
+      "dead": 0
+     },
+     "jitterAndSlips": {
+      "cleared": 10,
+      "dead": 0
+     }
+    },
+    {
+     "count": 4,
+     "trials": 10,
+     "jitterOnly": {
+      "cleared": 2,
+      "dead": 0
+     },
+     "jitterAndSlips": {
+      "cleared": 1,
+      "dead": 0
+     }
+    },
+    {
+     "count": 8,
+     "trials": 10,
+     "jitterOnly": {
+      "cleared": 0,
+      "dead": 0
+     },
+     "jitterAndSlips": {
+      "cleared": 0,
+      "dead": 0
+     }
+    }
+   ]
+  },
+  "teammateRecording": {
+   "source": "reference-analysis/source-migration/play/whole-route-input-replay.json (origin/main bd61553 시점)",
+   "recordedAt": "2026-10-11T13:32:26.079Z",
+   "runtimeSha256": "be3d824fed3a2847cfd305555efd7643c3aaae7aef8b01e9712eaceef9df8f34"
+  }
+ },
+ "grades": {
+  "scale": [
+   "쉬움",
+   "보통",
+   "어려움",
+   "사실상 불가"
+  ],
+  "live": "새 라이브(-09) 기준. 이전 라이브(-08)와 다른 곳은 gradeOldLive",
+  "rows": [
+   {
+    "stage": "st_w_01_01",
+    "title": "2편 1–1",
+    "online": {
+     "2": "보통",
+     "4": "보통",
+     "8": "어려움"
+    },
+    "local": {
+     "2": "보통",
+     "4": "어려움",
+     "8": "어려움"
+    },
+    "oldLive": "같음",
+    "bug": null
+   },
+   {
+    "stage": "st_w_01_02",
+    "title": "2편 1–2",
+    "online": {
+     "2": "사실상 불가",
+     "4": "사실상 불가",
+     "8": "사실상 불가"
+    },
+    "local": {
+     "2": "사실상 불가",
+     "4": "사실상 불가",
+     "8": "사실상 불가"
+    },
+    "oldLive": "같음",
+    "bug": "B3"
+   },
+   {
+    "stage": "st_w_01_03",
+    "title": "2편 1–3",
+    "online": {
+     "2": "쉬움",
+     "4": "쉬움",
+     "8": "쉬움"
+    },
+    "local": {
+     "2": "어려움",
+     "4": "어려움",
+     "8": "어려움"
+    },
+    "oldLive": "같음",
+    "bug": null
+   },
+   {
+    "stage": "st_w_01_04",
+    "title": "2편 1–4",
+    "online": {
+     "2": "보통",
+     "4": "보통",
+     "8": "어려움"
+    },
+    "local": {
+     "2": "보통",
+     "4": "어려움",
+     "8": "어려움"
+    },
+    "oldLive": "같음",
+    "bug": null
+   },
+   {
+    "stage": "st_w_04_01",
+    "title": "2편 4–1",
+    "online": {
+     "2": "쉬움",
+     "4": "쉬움",
+     "8": "어려움"
+    },
+    "local": {
+     "2": "쉬움",
+     "4": "쉬움",
+     "8": "어려움"
+    },
+    "oldLive": "어려움(문·전기 줄이 안 보여 받치기 기믹을 알 수 없고 15초 뒤 원인 모를 사망)",
+    "bug": null
+   },
+   {
+    "stage": "st_w_04_03",
+    "title": "2편 4–3",
+    "online": {
+     "2": "사실상 불가",
+     "4": "사실상 불가",
+     "8": "사실상 불가"
+    },
+    "local": {
+     "2": "사실상 불가",
+     "4": "사실상 불가",
+     "8": "사실상 불가"
+    },
+    "oldLive": "같음",
+    "bug": "B1"
+   },
+   {
+    "stage": "st_w_04_04",
+    "title": "2편 4–4",
+    "online": {
+     "2": "보통",
+     "4": "보통",
+     "8": "어려움"
+    },
+    "local": {
+     "2": "보통",
+     "4": "보통",
+     "8": "어려움"
+    },
+    "oldLive": "사실상 불가(레이저가 안 보임, 첫 입력에 즉사)",
+    "bug": null
+   },
+   {
+    "stage": "st_w_05_02",
+    "title": "2편 5–2",
+    "online": {
+     "2": "보통",
+     "4": "보통",
+     "8": "보통"
+    },
+    "local": {
+     "2": "사실상 불가",
+     "4": "사실상 불가",
+     "8": "사실상 불가"
+    },
+    "oldLive": "같음",
+    "bug": "B2,B5"
+   },
+   {
+    "stage": "st_w_10_02",
+    "title": "2편 10–2",
+    "online": {
+     "2": "어려움",
+     "4": "어려움",
+     "8": "어려움"
+    },
+    "local": {
+     "2": "사실상 불가",
+     "4": "사실상 불가",
+     "8": "사실상 불가"
+    },
+    "oldLive": "같음",
+    "bug": "B6"
+   },
+   {
+    "stage": "st_w_11_04",
+    "title": "2편 11–4",
+    "online": {
+     "2": "어려움",
+     "4": "어려움",
+     "8": "어려움"
+    },
+    "local": {
+     "2": "어려움",
+     "4": "사실상 불가",
+     "8": "사실상 불가"
+    },
+    "oldLive": "사실상 불가(가시·전기·체력이 안 보임)",
+    "bug": null
+   }
   ]
  },
- "rounds": null,
- "jitter": null,
- "grades": null,
- "bugCandidates": null,
+ "bugCandidates": [
+  {
+   "id": "B1",
+   "stage": "st_w_04_03",
+   "title": "열쇠가 바닥 타일 안에 있어 집을 수 없음",
+   "where": "열쇠 충돌 사각 (224,452)~(256,508), 앵커 (240,480)=맵 바닥선. 타일 (192,432,96,48) 안이고 아래 28px는 맵(높이 480) 밖. 틈 아래 전기 줄 y 454~458이 x 48~864 전체를 덮어 아래로 돌아갈 길도 없음",
+   "tick": "정적(0틱부터)",
+   "effect": "2~8인 전부 클리어 불가",
+   "confidence": "직접 측정(좌표·충돌 규칙)"
+  },
+  {
+   "id": "B2",
+   "stage": "st_w_05_02",
+   "title": "+2초 스위치가 DeadTimer를 멈춤",
+   "where": "spring-switch-runtime notify 가 보내는 61 이벤트에 timerAddSecond 가 없어 switchtimer signal 이 add=0 → stopped",
+   "tick": "통로 첫 스위치 접촉(2인 경로 t≈5.3초)에서 9.88초로 정지, 이후 계속",
+   "effect": "라이브에서는 시간 압박이 사라져 쉬워짐. 고치면 2인 예산 47초 < 측정 경로 72초(추정: 불가 가능성 큼)",
+   "confidence": "직접 측정(다른 팀원도 같은 결과 보고)"
+  },
+  {
+   "id": "B3",
+   "stage": "st_w_01_02",
+   "title": "상자 방패 기믹이 동작하지 않음",
+   "where": "PushBox1(48×40)를 사람 머리 위에 떨어뜨려도 사람이 걸으면 상자는 x=528에 남아 떨어짐. 상자 높이 40 < 사람 46이라 밀고 가도 가시가 머리에 먼저 닿음",
+   "tick": "가시 통로 첫 띠 x 642, 접촉 후 2틱 발사·3틱 낙하",
+   "effect": "남은 해법은 접촉 다음 틱 반전(1틱 창) ×25 → 사람 불가",
+   "confidence": "직접 측정"
+  },
+  {
+   "id": "B4",
+   "stage": "4-1, 4-3, 4-4, 11-4",
+   "title": "(이전 라이브 -08만) 치명 장치가 화면에 안 그려짐",
+   "where": "BlinkThunder, ThornCeiling+체력, Thunder, Bridge, BlinkBlock",
+   "tick": "-",
+   "effect": "-09 에서 해결 확인(캡처+소스)",
+   "confidence": "직접 측정"
+  },
+  {
+   "id": "B5",
+   "stage": "st_w_05_02 (로컬), st_w_01_02 (로컬 4·8인)",
+   "title": "로컬 조작은 2명 이상이 함께 미는 상자를 못 움직임",
+   "where": "play.js 는 선택한 1명에게만 입력을 주고, 상자 pushers()는 →를 누른 사람만 셈. 5-2 큰 상자 requiredPushers=n, 벽 스위치 상자 4인 2·8인 3, 1-2 상자 4인 3·8인 7",
+   "tick": "-",
+   "effect": "해당 라운드·인원은 로컬에서 구조적으로 불가",
+   "confidence": "직접 확인(코드)+추론"
+  },
+  {
+   "id": "B6",
+   "stage": "st_w_10_02 (로컬)",
+   "title": "로컬로는 두 대시를 1틱 안에 맞출 수 없음",
+   "where": "왼쪽 사람은 →, 오른쪽 사람은 ←로 대시보드(1408~1472)에 들어가야 하고(왼쪽에서 접근 불가: 점프 거리 96px < 필요 108px), 발사 차이 ±1틱이어야 함",
+   "tick": "발사 차이 +2·+3틱이면 사망",
+   "effect": "로컬 전 인원 불가. 온라인은 가능(어려움)",
+   "confidence": "창은 직접 측정, 로컬 불가는 추론"
+  }
+ ],
  "pending": {
-  "liveCheck": "done",
-  "rounds": "진행 중",
-  "jitter": "진행 중",
-  "grades": "진행 중"
+  "teammateRecording": "4-3 은 녹화 없음(no-policy) - B1 로 녹화 불가가 정상",
+  "notMeasured": [
+   "1-4 2·4인 닫힌 루프 봇",
+   "11-4 닫힌 루프 봇(창·횟수로 계산)",
+   "10-2 전체 봇(쌍 동기 창으로 계산)",
+   "5-2 4·8인, 4-1 8인(다른 팀원 8인 녹화 존재)"
+  ]
  }
 }
