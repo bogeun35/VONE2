@@ -1,0 +1,227 @@
+{
+  "schemaVersion": 1,
+  "device": "BlinkThunder",
+  "stage": "st_w_04_04",
+  "module": "source-blinkthunder-devices.js",
+  "status": "compiles-and-device-tests-passed-not-full-route",
+  "imageBase": "0x180000000",
+  "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll",
+  "nativeCodeExecuted": false,
+  "behaviour": {
+    "summary": "BlinkThunder is a ThunderBase emitter (QActorType 220) that periodically appears and disappears. On appearing it stays lethal for m_AppearTime seconds, on disappearing it is fully inert for m_DisappearTime seconds, and the cycle repeats forever. It never moves, never vanishes permanently, and has no switch wiring.",
+    "startup": "OnStart 0x1817d28a0 calls ActorComponent.SetVisible(m_IsAppearAtStart > 0) and sets m_Timer = m_IsAppearAtStart ? m_AppearTime : m_DisappearTime (0x1817d2924-0x1817d2930).",
+    "tick": "OnUpdate 0x1817d2950 runs blinkProc 0x1817d2a30 unless ThunderBase m_Flags bit3 (IsPretendPause 0x1816cf970) is set, then always calls ThunderBaseComponent.OnUpdate 0x18172ac00.",
+    "blinkProc": "m_Timer -= Frame.DeltaTime (0x1817d2aa2). While the remainder is still greater than QFP._0 nothing happens (0x1817d2acf cmp / 0x1817d2ad2 jg). Otherwise ActorComponent m_Flags bit3 decides the flip (0x1817d2af0): hidden -> SetVisible(true) and m_Timer = m_AppearTime (0x1817d2b14-0x1817d2b26); visible -> SetVisible(false) and m_Timer = m_DisappearTime (0x1817d2b59-0x1817d2b6b).",
+    "lethality": "ActorComponent.setVisible 0x18169ee20 toggles m_Flags bit3 and calls ActorComponent.SetCollisionActive with the same flag (0x18169ef39), so a disappeared BlinkThunder has no live collider at all. ThunderBaseComponent.OnCollided 0x18172b000 sends event 0x1a to any actor of type 0x1b (player) at 0x18172b0b4-0x18172b1a2, and 0x18172b064 rejects collision slot 1, so only the beam kills and never the 32x32 emitter probe.",
+    "beamGeometry": "ThunderBaseComponent..cctor 0x18172b4b0 sets LASER_WIDTH = 0x40000 (4) at 0x18172b6ec and LASER_LEN = 0x9600000 (2400) at 0x18172b702. CollisionTable[direction] (built 0x18172b716-0x18172b8b4) is {ySize, xSize, offsetX, offsetY}: dir0 {L,W,-W/2,-L} up, dir1 {L,W,-W/2,0} down, dir2 {W,L,-L,-W/2} left, dir3 {W,L,0,-W/2} right. VectorTable (0x18172b99c-0x18172ba2d) confirms 0=(0,-L) up, 1=(0,L) down, 2=(-L,0) left, 3=(L,0) right. TestCollisionRect (0x18172b925-0x18172b958) is {32,32,-16,-16}, a 32x32 probe centred on the emitter.",
+    "beamLength": "ThunderBaseComponent.OnUpdate 0x18172ac5f runs the length pass only while the actor is visible. getLengthToMap 0x18172acc0 sweeps the 32x32 probe LASER_LEN along VectorTable[direction] with MapComponent.Move and adds half the probe back (0x18172ae81-0x18172aea5), i.e. the distance from the emitter centre to the first map face within a 32 px wide band. The result is cached in m_Flags bit2 (tested 0x18172ad1e, set 0x18172aeb8) and only invalidated by a move or EnableGetLengthToMap 0x18172b490, so a stationary emitter measures its beam once. modifyCollison 0x18172b380 writes m_Length into the beam rect per direction. Through (m_Flags bit0) only decides whether non-map actors shorten the beam (0x18172b0df -> calcLengthCollided 0x18172b1c0); the map limit always applies.",
+    "events": "BlinkThunderComponent.OnRecvEvent 0x1817d2c40 forwards everything to ThunderBaseComponent.OnRecvEvent 0x18172af10, which handles only event 0x35: a non-zero parameter byte sets m_Flags bit3 (pretend pause) and a zero clears it (0x18172af9b-0x18172afee). Every other event falls through to ActorComponent.OnRecvEvent."
+  },
+  "nativeEvidence": {
+    "BlinkThunderComponent.Creator": "0x1817d2340",
+    "BlinkThunderComponent.ParseParameter": "0x1817d2660",
+    "BlinkThunderComponent.OnStart": "0x1817d28a0",
+    "BlinkThunderComponent.OnUpdate": "0x1817d2950",
+    "BlinkThunderComponent.blinkProc": "0x1817d2a30",
+    "BlinkThunderComponent.OnCollided": "0x1817d2b80",
+    "BlinkThunderComponent.OnRecvEvent": "0x1817d2c40",
+    "BlinkThunderComponent.GetThunderBase": "0x1817d22e0",
+    "BlinkThunderComponent.Serialize": "0x1817d20b0",
+    "BlinkThunderComponent.GetHashCode": "0x1817d2050",
+    "ThunderBaseComponent.SetDirection": "0x18172a9b0",
+    "ThunderBaseComponent.SetThrough": "0x18172a9d0",
+    "ThunderBaseComponent.SetShootBlock": "0x181728e90",
+    "ThunderBaseComponent.ExistShootBlock": "0x1816b9080",
+    "ThunderBaseComponent.IsPretendPause": "0x1816cf970",
+    "ThunderBaseComponent.Initialize": "0x18172a9e0",
+    "ThunderBaseComponent.InitCollision": "0x18172aa50",
+    "ThunderBaseComponent.OnUpdate": "0x18172ac00",
+    "ThunderBaseComponent.getLengthToMap": "0x18172acc0",
+    "ThunderBaseComponent.OnRecvEvent": "0x18172af10",
+    "ThunderBaseComponent.OnCollided": "0x18172b000",
+    "ThunderBaseComponent.calcLengthCollided": "0x18172b1c0",
+    "ThunderBaseComponent.modifyCollison": "0x18172b380",
+    "ThunderBaseComponent.EnableGetLengthToMap": "0x18172b490",
+    "ThunderBaseComponent..cctor": "0x18172b4b0",
+    "ActorComponent.setVisible": "0x18169ee20",
+    "ActorComponent.SetVisible": "0x18169ef70",
+    "ActorComponent.IsVisible": "0x18169f010",
+    "ActorComponent.SetCollisionActive": "0x18169ff50",
+    "metadataFieldNames": "quantum-field-offsets.json BlinkThunderComponent {m_Flags@16, m_IsAppearAtStart@20, m_EntityRef@24, m_AppearTime@32, m_DisappearTime@40, m_Timer@48} and QFP {_0@0, _1@240, _4@312, Minus_1@576}; il2cpp offsets minus the 16 byte header give struct offsets 0x00/0x04/0x08/0x10/0x18/0x20."
+  },
+  "componentLayout": {
+    "0x00": "m_Flags (ushort) - never written by ParseParameter and never read by any BlinkThunderComponent method; only hashed (0x1817d207b) and serialized (0x1817d210f). No observable behaviour found.",
+    "0x04": "m_IsAppearAtStart (int32) - written as the (slot5 != 0) predicate at 0x1817d287e",
+    "0x08": "m_EntityRef - set by Creator 0x1817d25f8",
+    "0x10": "m_AppearTime (FP) - slot3, written at 0x1817d2852",
+    "0x18": "m_DisappearTime (FP) - slot4, written at 0x1817d285b",
+    "0x20": "m_Timer (FP) - runtime countdown, initialised by OnStart 0x1817d2930"
+  },
+  "dataSlots": {
+    "0": {
+      "field": "ThunderBaseComponent.m_Direction (byte, offset 0x00)",
+      "meaning": "0 up, 1 down, 2 left, 3 right",
+      "native": "0x1817d26e6 reads the integer part, 0x1817d27e6 takes the low byte and collapses anything above 3 to 0 (same clamp as SetDirection 0x18172a9b0)",
+      "sourceValues": [1, 3]
+    },
+    "1": {
+      "field": "ThunderBaseComponent.m_Flags bit0 (Through)",
+      "meaning": "set when > 0; the beam is not shortened by non-player actors",
+      "native": "0x1817d27f5-0x1817d2817, same bit as SetThrough 0x18172a9d0",
+      "sourceValues": [1]
+    },
+    "2": {
+      "field": "ThunderBaseComponent.m_Flags bit1 (ShootBlock)",
+      "meaning": "set when > 0; keeps the 32x32 emitter probe collision alive (getLengthToMap 0x18172ae9d)",
+      "native": "0x1817d281c-0x1817d2843, same bit as SetShootBlock 0x181728e90 / ExistShootBlock 0x1816b9080",
+      "sourceValues": [0]
+    },
+    "3": {
+      "field": "BlinkThunderComponent.m_AppearTime (FP, offset 0x10)",
+      "meaning": "seconds the beam stays appeared (and lethal)",
+      "native": "stored raw at 0x1817d2852; reloaded into m_Timer when the beam appears (0x1817d2b22)",
+      "sourceValues": [3]
+    },
+    "4": {
+      "field": "BlinkThunderComponent.m_DisappearTime (FP, offset 0x18)",
+      "meaning": "seconds the beam stays disappeared (collider deactivated)",
+      "native": "stored raw at 0x1817d285b; reloaded into m_Timer when the beam disappears (0x1817d2b67)",
+      "sourceValues": [0.9]
+    },
+    "5": {
+      "field": "BlinkThunderComponent.m_IsAppearAtStart (int32, offset 0x04)",
+      "meaning": "non-zero starts appeared with m_AppearTime, zero starts disappeared with m_DisappearTime",
+      "native": "0x1817d2864-0x1817d287e, consumed by OnStart 0x1817d28e4",
+      "sourceValues": [1]
+    },
+    "6..31": {
+      "field": null,
+      "meaning": "ParseParameter bounds-checks exactly six entries (last check 0x1817d27a4) and never reads past slot 5, so higher slots are provably ignored. All 20 source instances leave them unset (t=0) anyway."
+    }
+  },
+  "sourceInstances": {
+    "total": 20,
+    "stages": ["st_w_04_04"],
+    "perVariant": 10,
+    "distinctParameterSets": [
+      {"slots": [1, 1, 0, 3, 0.9, 1], "count": 18, "names": ["BlinkThunder1..3", "BlinkThunder7..12"]},
+      {"slots": [3, 1, 0, 3, 0.9, 1], "count": 2, "names": ["BlinkThunder13"]}
+    ],
+    "note": "BlinkThunder12 carries playerCount -4, so it is dropped above four players (9 emitters for counts 5..8). Names 4..6 do not exist in the source data.",
+    "levelCrossCheck": "The nine down-beams sit 58 px apart on y=48 and the players spawn in the gaps between them; the single right-beam on y=140 passes 2.5 px above a standing player's head (spawn y=144.5, height 46) and so punishes jumping. The 3 s on / 0.9 s off reading is what makes the stage a rhythm gauntlet across the Rect platforms, and it is the only reading consistent with that layout."
+  },
+  "implementation": {
+    "api": [
+      "compile(actors,count)",
+      "create(compiled)",
+      "signal(state,event)",
+      "solids(state)",
+      "hazards(state,options)",
+      "beamLength(thunder,{platforms,blockers,width,height})",
+      "beforeStep(state,{dt,platforms,blockers,width,height,events})",
+      "afterStep(state,{players,platforms,width,height,events})"
+    ],
+    "timerRepresentation": "m_Timer, m_AppearTime and m_DisappearTime are kept as raw Quantum FP(16.16) integers. The stage payload stores the authored float, and both truncation and rounding give 3 -> 196608 and 0.9 -> 58982, so every source instance is exact. The per-tick delta is Math.trunc(dt * 65536), which is 1092 at 60 Hz. This reproduces the native integer behaviour instead of letting binary floats drift: an appeared phase lasts 181 updates (remainder 48 after 180) and a disappeared phase 55 updates (remainder 14 after 54), a 236 update period.",
+    "notes": [
+      "nativeTickRate is accepted but unused: the blink durations are seconds, so only dt matters (unlike the Thunder velocities in source-bridge-devices.js, which are per-update displacements).",
+      "beforeStep performs blinkProc and the one-time beam measurement; afterStep performs the collision test and returns deadPlayerIds, following source-bridge-devices.js.",
+      "The beam measurement uses the terrain tile platforms only, matching getLengthToMap's MapComponent sweep. Non-map blockers are accepted through the optional `blockers` option and are applied only when Through is clear."
+    ]
+  },
+  "rejectedInputs": [
+    "appear or disappear duration <= 0 (keeps the zeroed native default and toggles every update; no source instance does this)",
+    "negative slot0 direction (ParseParameter zero-extends the low 32 bits of the raw FP, so the sign is lost; not verified)",
+    "createThreshold != 0 (deferred spawn timing not verified; all 20 instances are 0)",
+    "dt below FP(16.16) resolution, which would silently freeze the timer"
+  ],
+  "unresolved": [
+    "Frame.DeltaTime's exact FP raw value is not verified from the binary. The module derives it from the caller's dt (1092 raw at 60 Hz, which is what Quantum's truncating FP division of 1/60 gives), but the simulation rate itself lives in a Unity config asset, not in GameAssembly.dll. It is already tracked as 'Native tick frequency (60 Hz explicit prototype calibration)' in the stage runtime's missingMechanics. If the real rate differs, the phase lengths in updates change (the wall-clock durations do not).",
+    "FP.FromFloat truncation vs rounding is not verified. It makes no difference for the only two authored durations in the game (3 and 0.9), both of which give the same raw value either way.",
+    "BlinkThunderComponent.m_Flags (struct offset 0x00) has no reader in any BlinkThunderComponent method. It is serialized and hashed only, and no behaviour could be attributed to it.",
+    "MapComponent.Move's behaviour when the probe sweeps outside the map is not disassembled. The module falls back to the map boundary distance capped at LASER_LEN, the same convention source-bridge-devices.js already uses for Thunder.",
+    "The browser AABB overlap test is not the native fixed-point contact solver, and ThunderBase's two-collider ordering inside a native frame is simplified (one measurement pass in beforeStep, one overlap pass in afterStep).",
+    "ShootBlock (slot2 > 0) would make the 32x32 emitter probe a solid body. No source BlinkThunder sets it, so solids() emits it for completeness with a warning rather than silently dropping it; the behaviour is untested against the native solver.",
+    "Pretend pause (event 0x35) is transcribed from ThunderBaseComponent.OnRecvEvent but no world stage sends it to a BlinkThunder, so it is unexercised in the original game.",
+    "Only device-level behaviour is verified. A full natural-spawn route clear of st_w_04_04 and the network path have not been run."
+  ],
+  "thunderTimingFindings": {
+    "summary": "The blocker in source-bridge-devices.js ('Thunder repetition/disappearance timing not verified', slots 7 and 8) is now resolved from the binary. Slot7 is the move repeat flag and slot8 is the time until the Thunder disappears for good.",
+    "slot7": {
+      "field": "ThunderComponent.m_Flags bit0 (offset 0x04)",
+      "native": "written at 0x18172c812-0x18172c821; ParseParameter forces it to zero when the thunder does not move (0x18172c675-0x18172c6ea: slot4 and slot5 both FP zero, or slot6 <= 0)",
+      "meaning": "In updatePhase phase 2 (0x18172ced3) the flag decides what happens after m_MoveDistance is reached: clear -> m_Phase = 0, the thunder stops where it is forever (0x18172cf3b); set -> m_Timer = ThunderComponent.WAIT_TIME and m_Phase = 3. Phase 3 (0x18172cc1e) counts m_Timer down, then multiplies m_Velo by QFP.Minus_1, recomputes m_Speed, resets m_Distance and decrements back to phase 2, i.e. an endless round trip.",
+      "constants": "ThunderComponent..cctor 0x18172d260 copies SPEED = QFP._4 = 4 and WAIT_TIME = QFP._1 = 1 from the QFP static block (QFP._1 at static offset 0xf0, QFP._4 at 0x138). So the turnaround pause is exactly 1 second.",
+      "sourceUsage": "No Thunder in any of the 60 world stages sets slot7, so it can simply stay rejected without blocking anything - or be implemented as described."
+    },
+    "slot8": {
+      "field": "ThunderComponent.m_DisappearTime (FP, offset 0x10)",
+      "native": "written at 0x18172c826-0x18172c84e when the value is greater than QFP._0",
+      "meaning": "ThunderComponent.OnUpdate 0x18172c9c2 (and updateDisappear 0x18172ca80, same code) runs while m_Phase < 4 and abs(m_DisappearTime) >= 4 raw (the FP non-zero epsilon, 4/65536): m_DisappearTimer += Frame.DeltaTime, and once it reaches m_DisappearTime m_Phase becomes 4. It is gated by IsPretendPause (0x18172c9a3), so a paused thunder does not age.",
+      "phase4": "updatePhase handler 0x18172cd0c: ActorComponent.SetCollisionActive(false) - the beam stops being lethal immediately - then m_Timer = QFP._1 = 1 and phase becomes 5.",
+      "phase5": "handler 0x18172cf41: m_Timer -= Frame.DeltaTime * SPEED (4) and m_Alpha = m_Timer, so the sprite fades out over 0.25 s. When m_Timer drops to QFP._0, ActorComponent.m_Flags bit 13 is set (0x18172cfe0) and the phase becomes 6, past the end of the jump table, so the thunder is finished.",
+      "sourceUsage": "Exactly two actors in the game use it, and both are the st_w_11_04 blocker: Thunder2 (variant 0, pos 96,554) and Thunder1 (variant 1, pos 288,554), each slots[0..8] = [3,1,0,0,0,0,0,0,20]. Both are stationary right-facing beams that stop being lethal 20 seconds after the round starts and fade out over the following 0.25 s."
+    },
+    "phaseTable": "updatePhase 0x18172cb00 dispatches through the jump table at 0x18172d018 (entries relative to 0x180000000): 0 -> 0x18172cf0a idle, 1 -> 0x18172cbbe start move (m_Velo = m_MoveVelo, m_Speed = |m_Velo|, m_Distance = 0, phase++ and re-dispatch), 2 -> 0x18172cd82 move (ActorComponent.m_Pos += m_Velo per update, final partial step clamped to the remaining m_MoveDistance), 3 -> 0x18172cc1e wait then reverse, 4 -> 0x18172cd0c begin vanish, 5 -> 0x18172cf41 fade. ThunderComponent.InitPost 0x18172c890 sets the initial phase to 1 when m_SwitchType bit0 is clear and the move velocity is non-zero, which matches the existing module.",
+    "impact": "st_w_11_04 can be unblocked by replacing the slot7/slot8 guard in source-bridge-devices.js with the above: keep a per-thunder disappear timer, stop reporting the beam as a hazard when it expires, and keep rejecting slot7 (unused by the game) or implement the 1 second reversal. This report does not modify source-bridge-devices.js - that file belongs to another task."
+  },
+  "tests": {
+    "command": "node --test reference-analysis/source-migration/source-blinkthunder-devices.test.cjs",
+    "passed": 10,
+    "failed": 0,
+    "fullSuite": "node --test reference-analysis/source-migration/*.test.cjs -> 76 passed, 0 failed",
+    "patchedRuntimeSuite": "scratch copy with the registration below applied: source-stage-runtime / blinkthunder / bridge / gate / devices / motion tests -> 45 passed, 0 failed",
+    "stageCompile": "R.compile({source,geometry,count,stageId:'st_w_04_04'}) succeeds for counts 2..8 with unsupportedActorTypes [] (10 emitters for 2..4, 9 for 5..8). A stepped round measures beam lengths 432 down / 888 right on the four-player variant, the idle party survives a full blink cycle, walking into a lit column loses the round with reason '전기에 닿았어요', and the same walk inside the 55 update gap survives.",
+    "audio": "muted/no-audio"
+  },
+  "registration": {
+    "file": "source-stage-runtime.js",
+    "note": "Verified in a scratch copy; the module itself is additive, so these edits are independent of the concurrent source-blink-devices.js (BlinkBlock) registration. Each anchor occurs exactly once in the current file.",
+    "edits": [
+      {
+        "anchor": "  common?require('./source-bridge-devices.js'):root.SourceBridgeDevices);",
+        "replacement": "  common?require('./source-bridge-devices.js'):root.SourceBridgeDevices,\n  common?require('./source-blinkthunder-devices.js'):root.SourceBlinkThunderDevices);"
+      },
+      {
+        "anchor": "function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges){",
+        "replacement": "function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges,BlinkThunders){"
+      },
+      {
+        "anchor": "'st_w_01_04','st_w_04_01'].includes(stageId)",
+        "replacement": "'st_w_01_04','st_w_04_01','st_w_04_04'].includes(stageId)"
+      },
+      {
+        "anchor": "  const bridges=Bridges.compile(t.actors,count);",
+        "replacement": "  const bridges=Bridges.compile(t.actors,count);\n  const blinkThunders=BlinkThunders.compile(t.actors,count);"
+      },
+      {
+        "anchor": "...Gates.supportedTypes,...Bridges.supportedTypes]);",
+        "replacement": "...Gates.supportedTypes,...Bridges.supportedTypes,...BlinkThunders.supportedTypes]);"
+      },
+      {
+        "anchor": "  missingMechanics.push(...devices.warnings);",
+        "replacement": "  missingMechanics.push(...devices.warnings,...blinkThunders.warnings);"
+      },
+      {
+        "anchor": "  return {schemaVersion:1,count,map,relays,devices,motion,gates,bridges,status:",
+        "replacement": "  return {schemaVersion:1,count,map,relays,devices,motion,gates,bridges,blinkThunders,status:"
+      },
+      {
+        "anchor": "bridgeState:Bridges.create(compiled.bridges||{count,bridges:[],thunders:[],keyTargets:[],keyTaken:false}),",
+        "replacement": "bridgeState:Bridges.create(compiled.bridges||{count,bridges:[],thunders:[],keyTargets:[],keyTaken:false}),blinkThunderState:BlinkThunders.create(compiled.blinkThunders||{schemaVersion:1,count,thunders:[],warnings:[]}),"
+      },
+      {
+        "anchor": "...Gates.solids(s.gateState),...Bridges.solids(s.bridgeState)];}",
+        "replacement": "...Gates.solids(s.gateState),...Bridges.solids(s.bridgeState),...BlinkThunders.solids(s.blinkThunderState)];}"
+      },
+      {
+        "anchor": "  Gates.beforeStep(s.gateState,{players,platforms:s.map.platforms,dt:h,nativeTickRate:hz});",
+        "replacement": "  Gates.beforeStep(s.gateState,{players,platforms:s.map.platforms,dt:h,nativeTickRate:hz});\n  BlinkThunders.beforeStep(s.blinkThunderState,{players,platforms:s.map.platforms,dt:h,nativeTickRate:hz,width:s.map.width,height:s.map.height});"
+      },
+      {
+        "anchor": "  s.map.hazards=bridgeResult.hazards;",
+        "replacement": "  const blinkResult=BlinkThunders.afterStep(s.blinkThunderState,{players,platforms:s.map.platforms,width:s.map.width,height:s.map.height,events:[...relay.events,...deviceResult.events]});\n  s.map.hazards=[...bridgeResult.hazards,...blinkResult.hazards];\n  if(blinkResult.deadPlayerIds.length){s.status='dead';s.deaths++;s.failure={playerId:blinkResult.deadPlayerIds[0],reason:'전기에 닿았어요'};return;}"
+      }
+    ]
+  },
+  "completePhysicsFidelity": false
+}

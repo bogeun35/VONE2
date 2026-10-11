@@ -1,0 +1,119 @@
+{
+  "tested": [
+    {
+      "stage": "st_w_01_01",
+      "count": 2
+    },
+    {
+      "stage": "st_w_01_01",
+      "count": 3
+    },
+    {
+      "stage": "st_w_01_01",
+      "count": 4
+    },
+    {
+      "stage": "st_w_01_01",
+      "count": 5
+    },
+    {
+      "stage": "st_w_01_01",
+      "count": 6
+    },
+    {
+      "stage": "st_w_01_01",
+      "count": 7
+    },
+    {
+      "stage": "st_w_01_01",
+      "count": 8
+    },
+    {
+      "stage": "st_w_01_02",
+      "count": 2
+    },
+    {
+      "stage": "st_w_01_02",
+      "count": 3
+    },
+    {
+      "stage": "st_w_01_02",
+      "count": 4
+    },
+    {
+      "stage": "st_w_01_02",
+      "count": 5
+    },
+    {
+      "stage": "st_w_01_02",
+      "count": 6
+    },
+    {
+      "stage": "st_w_01_02",
+      "count": 7
+    },
+    {
+      "stage": "st_w_01_02",
+      "count": 8
+    },
+    {
+      "stage": "st_w_01_03",
+      "count": 2
+    },
+    {
+      "stage": "st_w_01_03",
+      "count": 3
+    },
+    {
+      "stage": "st_w_01_03",
+      "count": 4
+    },
+    {
+      "stage": "st_w_01_03",
+      "count": 5
+    },
+    {
+      "stage": "st_w_01_03",
+      "count": 6
+    },
+    {
+      "stage": "st_w_01_03",
+      "count": 7
+    },
+    {
+      "stage": "st_w_01_03",
+      "count": 8
+    },
+    {
+      "stage": "st_w_01_04",
+      "count": 2
+    },
+    {
+      "stage": "st_w_01_04",
+      "count": 3
+    },
+    {
+      "stage": "st_w_01_04",
+      "count": 4
+    },
+    {
+      "stage": "st_w_01_04",
+      "count": 5
+    },
+    {
+      "stage": "st_w_01_04",
+      "count": 6
+    },
+    {
+      "stage": "st_w_01_04",
+      "count": 7
+    },
+    {
+      "stage": "st_w_01_04",
+      "count": 8
+    }
+  ],
+  "pageErrors": [],
+  "audio": "muted",
+  "passed": true
+}

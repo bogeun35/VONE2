@@ -1,0 +1,1652 @@
+{
+  "schemaVersion": 1,
+  "stage": "st_w_01_02",
+  "testsMuted": true,
+  "originalFidelityVerified": false,
+  "humanFunVerified": false,
+  "dangerTrial": {
+    "count": 8,
+    "inputOnly": true,
+    "policy": "Seven players rush immediately after pushing box off ledge",
+    "status": "dead",
+    "deaths": 1,
+    "failure": {
+      "playerId": "p2",
+      "reason": "가시에 닿았어요"
+    },
+    "meaning": "Close-following crowd is hit by scout-triggered falling thorn; staggered successful route is meaningfully different"
+  },
+  "trials": [
+    {
+      "count": 2,
+      "inputOnly": true,
+      "manualPositionChanges": false,
+      "boxPushed": true,
+      "corridorCrossed": true,
+      "thornsConsumed": 25,
+      "keyTaken": true,
+      "clear": true,
+      "status": "clear",
+      "failure": null,
+      "deaths": 0,
+      "activeOverlapTicks": 0,
+      "deterministicReplay": true,
+      "ticks": 1907,
+      "milestones": [
+        {
+          "name": "source spring launches push team onto ledge",
+          "tick": 257,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 424,
+            "y": 104,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 392,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 154,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "required population pushes box off ledge",
+          "tick": 371,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 538,
+            "y": 146.89959716796875,
+            "pushCount": 1
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 508,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 154,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "scout triggers falling thorns, followers cross after disappearance",
+          "tick": 1525,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2002,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 1969,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "two-player tower reaches original elevated key",
+          "tick": 1744,
+          "status": "play",
+          "keyTaken": true,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2101,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 2102,
+              "y": 388,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "individual goal entry",
+          "tick": 1907,
+          "status": "clear",
+          "keyTaken": true,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2347,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p2",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "count": 3,
+      "inputOnly": true,
+      "manualPositionChanges": false,
+      "boxPushed": true,
+      "corridorCrossed": true,
+      "thornsConsumed": 25,
+      "keyTaken": true,
+      "clear": true,
+      "status": "clear",
+      "failure": null,
+      "deaths": 0,
+      "activeOverlapTicks": 0,
+      "deterministicReplay": true,
+      "ticks": 2802,
+      "milestones": [
+        {
+          "name": "source spring launches push team onto ledge",
+          "tick": 531,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 424,
+            "y": 104,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 392,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 360,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 204,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "required population pushes box off ledge",
+          "tick": 645,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 538,
+            "y": 146.89959716796875,
+            "pushCount": 2
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 508,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 476,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 204,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "scout triggers falling thorns, followers cross after disappearance",
+          "tick": 2284,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2002,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 1969,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 1937,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "two-player tower reaches original elevated key",
+          "tick": 2503,
+          "status": "play",
+          "keyTaken": true,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2101,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 2102,
+              "y": 388,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 1937,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "individual goal entry",
+          "tick": 2802,
+          "status": "clear",
+          "keyTaken": true,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2347,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p2",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p3",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "count": 4,
+      "inputOnly": true,
+      "manualPositionChanges": false,
+      "boxPushed": true,
+      "corridorCrossed": true,
+      "thornsConsumed": 25,
+      "keyTaken": true,
+      "clear": true,
+      "status": "clear",
+      "failure": null,
+      "deaths": 0,
+      "activeOverlapTicks": 0,
+      "deterministicReplay": true,
+      "ticks": 3708,
+      "milestones": [
+        {
+          "name": "source spring launches push team onto ledge",
+          "tick": 822,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 424,
+            "y": 104,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 392,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 360,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 328,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 254,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "required population pushes box off ledge",
+          "tick": 936,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 538,
+            "y": 146.89959716796875,
+            "pushCount": 3
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 508,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 476,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 444,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 254,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "scout triggers falling thorns, followers cross after disappearance",
+          "tick": 3043,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2002,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 1969,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 1937,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 1905,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "two-player tower reaches original elevated key",
+          "tick": 3262,
+          "status": "play",
+          "keyTaken": true,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2101,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 2102,
+              "y": 388,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 1937,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 1905,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "individual goal entry",
+          "tick": 3708,
+          "status": "clear",
+          "keyTaken": true,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2347,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p2",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p3",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p4",
+              "x": 2346,
+              "y": 434,
+              "exit": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "count": 5,
+      "inputOnly": true,
+      "manualPositionChanges": false,
+      "boxPushed": true,
+      "corridorCrossed": true,
+      "thornsConsumed": 25,
+      "keyTaken": true,
+      "clear": true,
+      "status": "clear",
+      "failure": null,
+      "deaths": 0,
+      "activeOverlapTicks": 0,
+      "deterministicReplay": true,
+      "ticks": 4669,
+      "milestones": [
+        {
+          "name": "source spring launches push team onto ledge",
+          "tick": 1129,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 424,
+            "y": 104,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 392,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 360,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 328,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 296,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 304,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "required population pushes box off ledge",
+          "tick": 1243,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 538,
+            "y": 146.89959716796875,
+            "pushCount": 4
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 508,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 476,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 444,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 412,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 304,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "scout triggers falling thorns, followers cross after disappearance",
+          "tick": 3846,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2002,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 1969,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 1937,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 1905,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 1873,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "two-player tower reaches original elevated key",
+          "tick": 4065,
+          "status": "play",
+          "keyTaken": true,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2101,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 2102,
+              "y": 388,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 1937,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 1905,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 1873,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "individual goal entry",
+          "tick": 4669,
+          "status": "clear",
+          "keyTaken": true,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2347,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p2",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p3",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p4",
+              "x": 2346,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p5",
+              "x": 2347,
+              "y": 434,
+              "exit": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "count": 6,
+      "inputOnly": true,
+      "manualPositionChanges": false,
+      "boxPushed": true,
+      "corridorCrossed": true,
+      "thornsConsumed": 25,
+      "keyTaken": true,
+      "clear": true,
+      "status": "clear",
+      "failure": null,
+      "deaths": 0,
+      "activeOverlapTicks": 0,
+      "deterministicReplay": true,
+      "ticks": 5639,
+      "milestones": [
+        {
+          "name": "source spring launches push team onto ledge",
+          "tick": 1453,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 424,
+            "y": 104,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 392,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 360,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 328,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 296,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 264,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p6",
+              "x": 354,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "required population pushes box off ledge",
+          "tick": 1567,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 538,
+            "y": 146.89959716796875,
+            "pushCount": 5
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 508,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 476,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 444,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 412,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 380,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p6",
+              "x": 354,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "scout triggers falling thorns, followers cross after disappearance",
+          "tick": 4647,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2002,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 1969,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 1937,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 1905,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 1873,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p6",
+              "x": 1840,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "two-player tower reaches original elevated key",
+          "tick": 4866,
+          "status": "play",
+          "keyTaken": true,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2101,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 2102,
+              "y": 388,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 1937,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 1905,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 1873,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p6",
+              "x": 1840,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "individual goal entry",
+          "tick": 5639,
+          "status": "clear",
+          "keyTaken": true,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2347,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p2",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p3",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p4",
+              "x": 2346,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p5",
+              "x": 2347,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p6",
+              "x": 2347,
+              "y": 434,
+              "exit": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "count": 7,
+      "inputOnly": true,
+      "manualPositionChanges": false,
+      "boxPushed": true,
+      "corridorCrossed": true,
+      "thornsConsumed": 25,
+      "keyTaken": true,
+      "clear": true,
+      "status": "clear",
+      "failure": null,
+      "deaths": 0,
+      "activeOverlapTicks": 0,
+      "deterministicReplay": true,
+      "ticks": 6633,
+      "milestones": [
+        {
+          "name": "source spring launches push team onto ledge",
+          "tick": 1794,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 424,
+            "y": 104,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 392,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 360,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 328,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 296,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 264,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p6",
+              "x": 232,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p7",
+              "x": 404,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "required population pushes box off ledge",
+          "tick": 1908,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 538,
+            "y": 146.89959716796875,
+            "pushCount": 6
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 508,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 476,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 444,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 412,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 380,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p6",
+              "x": 348,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p7",
+              "x": 404,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "scout triggers falling thorns, followers cross after disappearance",
+          "tick": 5463,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2002,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 1969,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 1937,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 1905,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 1873,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p6",
+              "x": 1841,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p7",
+              "x": 1808,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "two-player tower reaches original elevated key",
+          "tick": 5682,
+          "status": "play",
+          "keyTaken": true,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2101,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 2102,
+              "y": 388,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 1937,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 1905,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 1873,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p6",
+              "x": 1841,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p7",
+              "x": 1808,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "individual goal entry",
+          "tick": 6633,
+          "status": "clear",
+          "keyTaken": true,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2347,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p2",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p3",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p4",
+              "x": 2346,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p5",
+              "x": 2347,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p6",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p7",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "count": 8,
+      "inputOnly": true,
+      "manualPositionChanges": false,
+      "boxPushed": true,
+      "corridorCrossed": true,
+      "thornsConsumed": 25,
+      "keyTaken": true,
+      "clear": true,
+      "status": "clear",
+      "failure": null,
+      "deaths": 0,
+      "activeOverlapTicks": 0,
+      "deterministicReplay": true,
+      "ticks": 7669,
+      "milestones": [
+        {
+          "name": "source spring launches push team onto ledge",
+          "tick": 2151,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 424,
+            "y": 104,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 392,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 360,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 328,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 296,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 264,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p6",
+              "x": 232,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p7",
+              "x": 200,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p8",
+              "x": 454,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "required population pushes box off ledge",
+          "tick": 2265,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 538,
+            "y": 146.89959716796875,
+            "pushCount": 7
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 508,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 476,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 444,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 412,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 380,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p6",
+              "x": 348,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p7",
+              "x": 316,
+              "y": 98,
+              "exit": false
+            },
+            {
+              "id": "p8",
+              "x": 454,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "scout triggers falling thorns, followers cross after disappearance",
+          "tick": 6309,
+          "status": "play",
+          "keyTaken": false,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2002,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 1969,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 1937,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 1905,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 1873,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p6",
+              "x": 1841,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p7",
+              "x": 1809,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p8",
+              "x": 1777,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "two-player tower reaches original elevated key",
+          "tick": 6528,
+          "status": "play",
+          "keyTaken": true,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2101,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p2",
+              "x": 2102,
+              "y": 388,
+              "exit": false
+            },
+            {
+              "id": "p3",
+              "x": 1937,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p4",
+              "x": 1905,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p5",
+              "x": 1873,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p6",
+              "x": 1841,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p7",
+              "x": 1809,
+              "y": 434,
+              "exit": false
+            },
+            {
+              "id": "p8",
+              "x": 1777,
+              "y": 434,
+              "exit": false
+            }
+          ]
+        },
+        {
+          "name": "individual goal entry",
+          "tick": 7669,
+          "status": "clear",
+          "keyTaken": true,
+          "box": {
+            "x": 538,
+            "y": 440,
+            "pushCount": 0
+          },
+          "players": [
+            {
+              "id": "p1",
+              "x": 2347,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p2",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p3",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p4",
+              "x": 2346,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p5",
+              "x": 2347,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p6",
+              "x": 2345,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p7",
+              "x": 2346,
+              "y": 434,
+              "exit": true
+            },
+            {
+              "id": "p8",
+              "x": 2347,
+              "y": 434,
+              "exit": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

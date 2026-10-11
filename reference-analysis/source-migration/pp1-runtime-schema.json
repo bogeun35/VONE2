@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "source": "Installed PICO PARK ONLINE pico_park.exe, read-only x64 PE disassembly",
+  "nativeCodeExecuted": false,
+  "runtimeConnected": false,
+  "completeFidelityVerified": false,
+  "player": {
+    "collision": [-16,-47,32,46],
+    "collisionEvidence": "initializer0x140015f20 copies constant0x14022dfa0 to0x140b9d1a8; player0x1400da3ed builds collider",
+    "walkPerTick": 3,
+    "walkEvidence": "constructor0x1400d6efa sets player+0x41c to float3",
+    "gravityPerTick": 0.6499999761581421,
+    "terminalPerTick": 19.5,
+    "gravityEvidence": "0x1400d7df0 and0x1400d7df8",
+    "baseJump": -5.099999904632568,
+    "jumpEvidence": "0x1400d878c; scale adjustment at0x1400d87a2..0x1400d87c7",
+    "jumpHoldAndUpdateOrderingVerified": false
+  },
+  "key": {"collision":[-16,-28,32,56],"evidence":"0x1400d5065..0x1400d5080","attachmentStateVerified":false},
+  "warp": {"collision":"source top-left x,y with width=p0,height=p1","factory":"0x1400e6b1e","constructor":"0x1400d2ec0","destination":"p2,p3","ordinalOffset":"p4,p5","stateResetVerified":false},
+  "goal": {"visualRect":[-32,-64,64,64],"visualEvidence":"0x1400c2c20","collisionRectFound":false,"entryConditionVerified":false,"note":"Constructor creates graphics only; use player-side entry logic, never assume visual rect equals contact area."},
+  "tile": {
+    "columnMajorVerified": true,
+    "loadAddress": "0x140198070..0x1401980e1",
+    "index": "x * map.height + y",
+    "surplusTableCells": "Native loader reads only declared width * height cells.",
+    "collisionProfilesVerified": true,
+    "nativeFlagTables": {"0..25": "0x140238a30 = [0,0,1,...,1]", "26..34": "0x140238c40 = [3,3,3,3,1,1,1,1,1]"},
+    "flagLookupAddress": "0x1401985c0",
+    "flagBitOneCollisionAddress": "0x140198270..0x140198381",
+    "flagBitTwoRendering": "CrActionMap render branches 0x1401a0810 and 0x1401a09c0 separate front/back draw groups.",
+    "solidCodes": "2 through 34 inclusive; codes0/1 empty",
+    "remaining": "Native edge clamping and full player pushback order require runtime integration parity checks."
+  },
+  "rect": {
+    "factoryAddress": "0x1400e6872..0x1400e6995",
+    "width": "p0 + (count-2)*p2",
+    "height": "p1 + (count-2)*p3",
+    "offset": "(p4,p5)*(count-2)",
+    "anchor": "left-bottom; negative width moves origin left then uses abs(width)",
+    "implemented": true
+  },
+  "weightedLift": {
+    "factoryAddress": "0x1400e4108..0x1400e4223",
+    "constructorAddress": "0x1400d3cf0",
+    "requiredPlayersSetter": "0x1400d4100",
+    "tickAddress": "0x1400d4310..0x1400d4596",
+    "nativeCeilImportConfirmed": "0x1401bcd1e -> api-ms-win-crt-math-l1-1-0.dll ceil",
+    "parameters": ["travel distance", "required population percentage", "travel adjustment per player", "minimum required players (zero means 2)", "positive disables return", "return-speed adjustment per extra player beyond two"],
+    "raisePixelsPerNativeTick": 1,
+    "returnPixelsPerNativeTick": "1 + max(0,count-2)*p5",
+    "blockingContactPauseSeconds": 0.06,
+    "requiredPlayers": "max(p3||2, ceil(float32(float32(p1/100)*count)))",
+    "distance": "p0 + count*p2 (native integer guards applied)",
+    "implemented": "Parameter compilation and per-tick displacement; caller supplies native-equivalent rider count, blocked contact, movement acceptance.",
+    "collisionRect": [-92,67,194,18],
+    "collisionEvidence": "initializer0x140015db0 copies constant0x14022d7d0 to0x140b9d108; constructor0x1400d3ede chooses it for default variant0",
+    "pending": ["Native hierarchical rider counting and pushback/carry equivalence", "Native tick-frequency calibration"]
+  },
+  "bridge": {
+    "factoryAddress": "0x1400e6c59..0x1400e6d98",
+    "constructorAddress": "0x1400bf630",
+    "spawnAddress": "0x1400bf9d0",
+    "signalAddress": "0x1400bfea0",
+    "segmentTickAddress": "0x1400bf230",
+    "segmentMovementAddress": "0x1400bf3e0",
+    "parameters": ["segment count", "direction X", "direction Y", "easier-population preextension", "segment pixel size (zero means32)", "first-segment collision behavior flag"],
+    "preextensionSegments": "trunc(float32(float32((8-count)*trunc(p3))*float32(0.1)))",
+    "states": {"0": "collapsed", "1": "extending", "2": "retracting", "3": "extended"},
+    "events": {"9": "extend", "10": "retract"},
+    "extendPixelsPerNativeTick": 2,
+    "retractPixelsPerNativeTick": 1,
+    "nonLeadingStartDelayTicks": 4,
+    "implemented": "Segments, parameter scaling, start delay, signal reversal, per-tick movement.",
+    "pending": ["Startup preextension updates transform directly; collider synchronization requires native parity verification", "Player pushing/crushing contact behavior for p5 flag", "Switch event routing and same-frame update ordering"]
+  },
+  "tests": {
+    "command": "node --test reference-analysis/source-migration/source-pp1-devices.test.cjs",
+    "passed": 7,
+    "meaning": "Arithmetic and lifecycle regressions for interpreted devices; not a full original-game gameplay or fidelity pass."
+  }
+}

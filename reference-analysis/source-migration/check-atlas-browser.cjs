@@ -1,0 +1,20 @@
+'use strict';
+const {chromium}=require('C:/Users/user/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const assert=require('node:assert/strict'),path=require('node:path'),fs=require('node:fs');
+const http=require('node:http');let browser,server;
+(async()=>{
+ server=http.createServer(require('./atlas-preview.cjs').handler);await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+ browser=await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',args:['--mute-audio']});
+ const page=await browser.newPage({viewport:{width:1440,height:900}}),errors=[];
+ page.on('pageerror',e=>errors.push(e.message));await page.goto(`http://127.0.0.1:${server.address().port}/`);
+ await page.waitForFunction(()=>document.querySelector('#stage').options.length===60);
+ assert.match(await page.locator('#status').innerText(),/60/);
+ await page.locator('canvas').click({position:{x:30,y:30}});
+ await page.keyboard.press('ArrowRight');assert.equal(await page.locator('#stage').inputValue(),'1');
+ await page.locator('#stage').selectOption('59');assert.match(await page.locator('#title').innerText(),/15.*4/);
+ await page.locator('canvas').click({position:{x:30,y:30}});await page.keyboard.press('ArrowRight');assert.equal(await page.locator('#stage').inputValue(),'0');
+ assert.equal(await page.locator('audio,video').count(),0);assert.deepEqual(errors,[]);
+ await page.screenshot({path:path.join(__dirname,'atlas/verified-source-01-01.png'),fullPage:true});
+ const report={date:new Date().toISOString(),passed:true,rounds:60,keyboardNavigation:true,wrapNavigation:true,audio:'muted / no audio elements',pageErrors:errors};
+ fs.writeFileSync(path.join(__dirname,'atlas/browser-check.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
+})().catch(e=>{console.error(e);process.exitCode=1;}).finally(async()=>{if(browser)await browser.close();if(server)await new Promise(resolve=>server.close(resolve));});

@@ -1,0 +1,4739 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-09",
+  "scope": "PICO PARK 2 World 60 only; no Battle/Endless/Dark or PICO PARK 1",
+  "notice": "현재 게임은 임의 지형의 규칙 데모이며 원작 60단계 이관이 아니다. 런타임 클래스 이름은 존재 증거일 뿐 동작/단계 배치 증거가 아니다. 이 목록은 수정·검수 전 이관 누락을 드러내는 체크리스트다.",
+  "statusLegend": {
+    "observed": "출처에서 규칙을 관찰했으나 구현하지 않음",
+    "spec_missing": "정확한 지형·장치 연결·규칙 수치 등 이관 명세 누락",
+    "implemented_partial": "규칙 일부만 실행 가능하며 원작 지형/전체 규칙은 미이관",
+    "imported_not_reviewed": "원작 단계 데이터/규칙 이관 후 게임성 검수 전; 현재 이 상태인 단계 없음"
+  },
+  "counts": {
+    "total": 60,
+    "implementedPartial": 34,
+    "notImplemented": 26,
+    "sourceDataImported": 60,
+    "sourceVariants": 75,
+    "sourceActors": 2210,
+    "exactMapImported": 0,
+    "completeRouteReviewed": 0
+  },
+  "migrationOrder": [
+    "원작 단계별 데이터와 장치 연결 회수",
+    "엔진별 누락 동작 구현",
+    "원작 지형과 단계 진행 조건 연결",
+    "각 단계 기본 실행 확인",
+    "이관 완료 후 2~8인 경로/실패/복구/재미 검수"
+  ],
+  "originalDataExtraction": {
+    "status": "source_data_recovered",
+    "streamingAssets": {
+      "binaryFiles": 94,
+      "worldStageIdsRecovered": 60,
+      "stageIdMappingRecovered": true,
+      "rawGeometrySchemaRecovered": true,
+      "evidence": "installed-world-decode-report.json"
+    },
+    "counts": {
+      "worldStages": 60,
+      "variants": 75,
+      "actors": 2210,
+      "actorTypes": 126
+    },
+    "roundTripLossless": true,
+    "remaining": "126종 장치의 파라미터 의미와 동작 및 인원 선택 규칙 연결; 원본 데이터 확보는 완료, 플레이 이관은 미완료"
+  },
+  "evidenceFiles": [
+    "../pico2-stages.json",
+    "../rebuild/demo-stages.template.js",
+    "../rebuild/mini-games.js",
+    "../local-data/gameplay-script-catalog.json",
+    "../local-data/findings.json",
+    "streaming-inventory.json"
+  ],
+  "engineFamilies": [
+    {
+      "family": "cooperative_platform",
+      "rounds": [
+        "1-1",
+        "1-4"
+      ],
+      "currentPartialDemos": 2,
+      "requiredRules": [
+        "동료 쌓기",
+        "버튼과 스프링 연결",
+        "버튼 담당의 합류 동선",
+        "숨은 버튼의 실제 발견 조건과 열쇠 장치 연결"
+      ],
+      "candidateRuntimeClasses": [
+        "BridgeComponent",
+        "JumpSwitchComponent"
+      ]
+    },
+    {
+      "family": "shield_crates",
+      "rounds": [
+        "1-2",
+        "4-2"
+      ],
+      "currentPartialDemos": 0,
+      "requiredRules": [
+        "상자를 머리 위에 운반",
+        "가시와 캐릭터 사이 차폐 판정",
+        "상자로 톱 궤도 반사",
+        "동료 보호와 열쇠 회수"
+      ],
+      "candidateRuntimeClasses": [
+        "PushBoxComponent"
+      ]
+    },
+    {
+      "family": "restoring_objects",
+      "rounds": [
+        "1-3"
+      ],
+      "currentPartialDemos": 1,
+      "requiredRules": [
+        "미는 기둥의 복원",
+        "복원 전 통과",
+        "끼임 처리"
+      ],
+      "candidateRuntimeClasses": [
+        "PushBoxComponent"
+      ]
+    },
+    {
+      "family": "rope",
+      "rounds": [
+        "2-1",
+        "9-4",
+        "11-2"
+      ],
+      "currentPartialDemos": 3,
+      "requiredRules": [
+        "밧줄 길이 제약과 지형 충돌",
+        "매달림",
+        "전원 이동",
+        "밧줄 간격과 수평 정렬",
+        "절벽 경로",
+        "밧줄 등반과 위아래 이동",
+        "가시 경로"
+      ],
+      "candidateRuntimeClasses": [
+        "EntityComponentPhysicsJoints2D"
+      ]
+    },
+    {
+      "family": "contact_ice_wind",
+      "rounds": [
+        "2-2",
+        "2-4",
+        "15-4"
+      ],
+      "currentPartialDemos": 3,
+      "requiredRules": [
+        "빙판 가감속과 동료 접촉 실패 조건",
+        "바람 방향과 강도",
+        "접촉 실패",
+        "간격 유지",
+        "빙판",
+        "왼쪽 벽 대기",
+        "오른쪽 발판 출현 조건"
+      ],
+      "candidateRuntimeClasses": [
+        "SwitchIceRectComponent"
+      ]
+    },
+    {
+      "family": "alignment",
+      "rounds": [
+        "2-3"
+      ],
+      "currentPartialDemos": 1,
+      "requiredRules": [
+        "수직 정렬 유지 조건",
+        "위험 버튼 배치와 열쇠 접근"
+      ],
+      "candidateRuntimeClasses": [
+        "PlayerComponent"
+      ]
+    },
+    {
+      "family": "phased_hazards",
+      "rounds": [
+        "3-1",
+        "4-3",
+        "4-4",
+        "11-1",
+        "11-3",
+        "11-4"
+      ],
+      "currentPartialDemos": 5,
+      "requiredRules": [
+        "작은 빛/큰 빛의 형상",
+        "중심 안전 구역",
+        "시간 주기",
+        "좌우 교대 낙하 가시의 예고/낙하/복귀 주기",
+        "레이저 발사",
+        "지속",
+        "소멸",
+        "실제 광선 충돌 범위",
+        "탄환 궤도/주기와 지정 생존 시간",
+        "대형 공 회전 경로",
+        "시계 방향 회피",
+        "파도별 낙하 틈 축소",
+        "마지막 파도 쌓기"
+      ],
+      "candidateRuntimeClasses": [
+        "LaserKeyBoxComponent",
+        "WaveKeyBoxComponent"
+      ]
+    },
+    {
+      "family": "path_platforms",
+      "rounds": [
+        "3-2",
+        "15-1"
+      ],
+      "currentPartialDemos": 2,
+      "requiredRules": [
+        "기구 경로와 위험 영역",
+        "플랫폼 위 안전 위치 변화",
+        "원형 경로 바퀴",
+        "쌓기",
+        "열쇠 후 역방향 복귀"
+      ],
+      "candidateRuntimeClasses": [
+        "LinePathLiftComponent",
+        "RouletteLiftComponent"
+      ]
+    },
+    {
+      "family": "magnet",
+      "rounds": [
+        "3-3",
+        "5-3"
+      ],
+      "currentPartialDemos": 0,
+      "requiredRules": [
+        "동료 흡착/분리",
+        "흡착 후 이동 및 중력 처리",
+        "자석 결합 이동과 모든 동전/시간 조건 결합"
+      ],
+      "candidateRuntimeClasses": [
+        "PlayerMagnetComponent"
+      ]
+    },
+    {
+      "family": "memory",
+      "rounds": [
+        "3-4"
+      ],
+      "currentPartialDemos": 1,
+      "requiredRules": [
+        "원본 배치 제시",
+        "숨김",
+        "인원별 자리 재현과 판정"
+      ],
+      "candidateRuntimeClasses": []
+    },
+    {
+      "family": "body_door",
+      "rounds": [
+        "4-1"
+      ],
+      "currentPartialDemos": 1,
+      "requiredRules": [
+        "머리로 문 받치기",
+        "하중/충돌",
+        "담당자 후속 탈출"
+      ],
+      "candidateRuntimeClasses": [
+        "WeightedLiftComponent"
+      ]
+    },
+    {
+      "family": "timer_collect",
+      "rounds": [
+        "5-1",
+        "5-2"
+      ],
+      "currentPartialDemos": 2,
+      "requiredRules": [
+        "공동 시간 제한",
+        "모든 동전 확인",
+        "전원 출구",
+        "시간 연장 버튼",
+        "왼쪽 복귀 열쇠 동선",
+        "연장 재사용 조건"
+      ],
+      "candidateRuntimeClasses": [
+        "CoinObserverComponent",
+        "SwitchTimerActorComponent"
+      ]
+    },
+    {
+      "family": "player_launch",
+      "rounds": [
+        "5-4",
+        "10-2"
+      ],
+      "currentPartialDemos": 0,
+      "requiredRules": [
+        "동료 장전",
+        "조준",
+        "발사",
+        "착지와 재합류",
+        "사람/상자를 반대 방향으로 발사",
+        "아래 발판 착지"
+      ],
+      "candidateRuntimeClasses": [
+        "PlayerCannonComponent",
+        "PlayerWarpGunComponent"
+      ]
+    },
+    {
+      "family": "plane_combat",
+      "rounds": [
+        "6-1",
+        "6-2",
+        "6-3",
+        "6-4",
+        "15-3"
+      ],
+      "currentPartialDemos": 0,
+      "requiredRules": [
+        "비행 이동/사격",
+        "자기 색상 벽돌만 파괴",
+        "비행기 위 동료 탑승",
+        "탄환/레이저 회피",
+        "탑승자 충돌",
+        "비행 사격과 아군 피격 실패",
+        "총잡이와 방패 역할",
+        "방향 차폐",
+        "미사일",
+        "추적탄 비행기 우선 공격",
+        "방향 방패와 미사일 방어"
+      ],
+      "candidateRuntimeClasses": [
+        "PlayerGunComponent",
+        "PlayerGuardComponent"
+      ]
+    },
+    {
+      "family": "turn_ghost",
+      "rounds": [
+        "7-1",
+        "7-2",
+        "7-3",
+        "7-4"
+      ],
+      "currentPartialDemos": 2,
+      "requiredRules": [
+        "조작 권한 한 명 제한",
+        "안전 지점에서 역할 교대",
+        "둘 이상 이동 감지 후 유령 추적",
+        "정지/회피 조건",
+        "밝음/암전 주기",
+        "밝을 때 이동 금지와 기억 경로",
+        "시선으로 유령 정지",
+        "유령 접촉/발판과 열쇠 접근"
+      ],
+      "candidateRuntimeClasses": [
+        "PlayerMoveObserverComponent",
+        "GhostPlayerComponent"
+      ]
+    },
+    {
+      "family": "ball_delivery",
+      "rounds": [
+        "8-1",
+        "8-2",
+        "8-3",
+        "8-4",
+        "10-3",
+        "13-3"
+      ],
+      "currentPartialDemos": 3,
+      "requiredRules": [
+        "발사 담당과 받는 담당",
+        "투사체 전달 성공 조건",
+        "공 줍기",
+        "운반/투척",
+        "골대 진입 판정",
+        "발사/받기",
+        "공과 폭탄 구별",
+        "폭탄 접촉 실패",
+        "공 줍기와 농구",
+        "섞인 폭탄 회피",
+        "늘어나는 귀",
+        "공 반사/운반",
+        "왼쪽 용기 도착",
+        "공 연속 열두 번 반사",
+        "실패/리셋 조건"
+      ],
+      "candidateRuntimeClasses": [
+        "PlayerBasketComponent",
+        "PlayerHeaddressComponent"
+      ]
+    },
+    {
+      "family": "capture_stealth",
+      "rounds": [
+        "9-1",
+        "9-2",
+        "9-3"
+      ],
+      "currentPartialDemos": 0,
+      "requiredRules": [
+        "시야 제한",
+        "절벽",
+        "박쥐 움직임과 우리 포획",
+        "동료 사이 밧줄과 나비 교차 포획",
+        "여섯 마리 목표",
+        "상자 은폐 상태",
+        "적 시야/발각 판정"
+      ],
+      "candidateRuntimeClasses": [
+        "PlayerComponent"
+      ]
+    },
+    {
+      "family": "reaction",
+      "rounds": [
+        "10-1"
+      ],
+      "currentPartialDemos": 1,
+      "requiredRules": [
+        "신호 대기",
+        "조기 입력 실패",
+        "반응 버튼 목표"
+      ],
+      "candidateRuntimeClasses": []
+    },
+    {
+      "family": "gravity",
+      "rounds": [
+        "10-4"
+      ],
+      "currentPartialDemos": 0,
+      "requiredRules": [
+        "점프 입력 중력 반전",
+        "천장/바닥 접지",
+        "동료 충돌"
+      ],
+      "candidateRuntimeClasses": [
+        "PlayerComponent"
+      ]
+    },
+    {
+      "family": "shared_jump",
+      "rounds": [
+        "12-1"
+      ],
+      "currentPartialDemos": 0,
+      "requiredRules": [
+        "공중에서 각 인원이 한 번씩 점프 이어 주기",
+        "착지 시 재충전"
+      ],
+      "candidateRuntimeClasses": [
+        "PlayerComponent"
+      ]
+    },
+    {
+      "family": "autoscroll",
+      "rounds": [
+        "12-2"
+      ],
+      "currentPartialDemos": 0,
+      "requiredRules": [
+        "자동 스크롤 경계 실패",
+        "상자로 상승 플랫폼을 막아 시간 확보"
+      ],
+      "candidateRuntimeClasses": [
+        "StageComponent"
+      ]
+    },
+    {
+      "family": "speed_change",
+      "rounds": [
+        "12-3",
+        "12-4"
+      ],
+      "currentPartialDemos": 2,
+      "requiredRules": [
+        "열쇠 전후 속도와 슈퍼 점프 변경",
+        "긴 점프 물리와 연속 가시 착지 구간"
+      ],
+      "candidateRuntimeClasses": [
+        "SpeedSwitchComponent"
+      ]
+    },
+    {
+      "family": "danger_buttons",
+      "rounds": [
+        "13-1"
+      ],
+      "currentPartialDemos": 1,
+      "requiredRules": [
+        "안전/실패 버튼과 실제 선택 순서/열쇠 조건"
+      ],
+      "candidateRuntimeClasses": [
+        "DeadSwitchComponent"
+      ]
+    },
+    {
+      "family": "graph",
+      "rounds": [
+        "13-2"
+      ],
+      "currentPartialDemos": 1,
+      "requiredRules": [
+        "방향별 입력 인원과 목표 색 그래프 비교"
+      ],
+      "candidateRuntimeClasses": []
+    },
+    {
+      "family": "identity",
+      "rounds": [
+        "13-4"
+      ],
+      "currentPartialDemos": 0,
+      "requiredRules": [
+        "복제 캐릭터 속 실제 조작 대상 식별과 통과 조건"
+      ],
+      "candidateRuntimeClasses": [
+        "FakePlayerComponent"
+      ]
+    },
+    {
+      "family": "player_transform",
+      "rounds": [
+        "14-1",
+        "14-3"
+      ],
+      "currentPartialDemos": 0,
+      "requiredRules": [
+        "상자화 상태 전환",
+        "가시 차폐",
+        "붕괴 바닥 차단",
+        "낙하물 차폐",
+        "공중 동료 상자화와 고정 발판"
+      ],
+      "candidateRuntimeClasses": [
+        "PlayerBlockComponent",
+        "PlayerBlockGunComponent"
+      ]
+    },
+    {
+      "family": "punch",
+      "rounds": [
+        "14-2",
+        "14-4"
+      ],
+      "currentPartialDemos": 2,
+      "requiredRules": [
+        "두더지 위치/등장",
+        "실제 캐릭터 타격 판정과 목표",
+        "구름 상대 이동과 타격 거리",
+        "여섯 번 명중"
+      ],
+      "candidateRuntimeClasses": [
+        "PlayerPunchComponent"
+      ]
+    },
+    {
+      "family": "crate_stack",
+      "rounds": [
+        "15-2"
+      ],
+      "currentPartialDemos": 1,
+      "requiredRules": [
+        "암전",
+        "상자 회전/기울임 쌓기",
+        "벽 장치 회피"
+      ],
+      "candidateRuntimeClasses": [
+        "PushBoxComponent"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "pico2/world/01-01",
+      "round": "1-1",
+      "chapter": 1,
+      "position": 1,
+      "title": "쌓기·스프링",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "쌓기·스프링",
+        "solutionAction": "동료를 올려 버튼으로 후속 인원의 스프링 활성화",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_2.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "cooperative_platform",
+      "requiredRules": [
+        "동료 쌓기",
+        "버튼과 스프링 연결",
+        "버튼 담당의 합류 동선"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "springrelay",
+        "route": "platform",
+        "implementedRules": [
+          "몸 쌓기",
+          "버튼으로 점프대 작동"
+        ],
+        "knownGaps": []
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/01-01",
+          "sourceStageId": "st_w_01_01",
+          "sourceJsonSha256": "1bb023be3330c9821fb21d52c4a876bf04b29a43ba2263fccc13ebc8addd6028",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 36
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "BridgeComponent",
+        "JumpSwitchComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/01-02",
+      "round": "1-2",
+      "chapter": 1,
+      "position": 2,
+      "title": "상자 방패",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "상자 방패",
+        "solutionAction": "상층 상자를 동료 머리에 내려 가시 통로 통과",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_2.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "shield_crates",
+      "requiredRules": [
+        "상자를 머리 위에 운반",
+        "가시와 캐릭터 사이 차폐 판정"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/01-02",
+          "sourceStageId": "st_w_01_02",
+          "sourceJsonSha256": "01643503cf2221ea284759f1f1b7b81631ba7f661bcb30af9ccc0ce26e52e79d",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 62
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PushBoxComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/01-03",
+      "round": "1-3",
+      "chapter": 1,
+      "position": 3,
+      "title": "복원 기둥",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "복원 기둥",
+        "solutionAction": "기둥이 돌아오기 전에 빠르게 밀어 통과",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_2.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "restoring_objects",
+      "requiredRules": [
+        "미는 기둥의 복원",
+        "복원 전 통과",
+        "끼임 처리"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "crates",
+        "route": "platform",
+        "implementedRules": [
+          "기둥 밀어 통과"
+        ],
+        "knownGaps": [
+          "기둥 자동 복원"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/01-03",
+          "sourceStageId": "st_w_01_03",
+          "sourceJsonSha256": "8d94845127e877c5c4b9ac672229631e645f32889cccbba41033b2b887616cdd",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 17
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PushBoxComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/01-04",
+      "round": "1-4",
+      "chapter": 1,
+      "position": 4,
+      "title": "숨은 버튼",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "숨은 버튼",
+        "solutionAction": "숨은 버튼을 찾아 작동시키고 열쇠 획득",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_2.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "cooperative_platform",
+      "requiredRules": [
+        "숨은 버튼의 실제 발견 조건과 열쇠 장치 연결"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "hiddenbutton",
+        "route": "platform",
+        "implementedRules": [
+          "숨은 버튼",
+          "문 열기",
+          "열쇠 회수"
+        ],
+        "knownGaps": []
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/01-04",
+          "sourceStageId": "st_w_01_04",
+          "sourceJsonSha256": "4d18b20a65ba76cde733ea4d20789cdf418106166ba70c60e08ba83fcf2c9c35",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 42
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "BridgeComponent",
+        "JumpSwitchComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/02-01",
+      "round": "2-1",
+      "chapter": 2,
+      "position": 1,
+      "title": "밧줄",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "밧줄",
+        "solutionAction": "연결 거리를 이용해 동료와 이동",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_3.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "rope",
+      "requiredRules": [
+        "밧줄 길이 제약과 지형 충돌",
+        "매달림",
+        "전원 이동"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "rope",
+        "route": "platform",
+        "implementedRules": [
+          "동료 연결",
+          "간격 유지",
+          "절벽 통과"
+        ],
+        "knownGaps": []
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/02-01",
+          "sourceStageId": "st_w_02_01",
+          "sourceJsonSha256": "376a979aed908900d0a7953be5b36143e8c169f007d9dfa5c88799aad1edadd2",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 22
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "EntityComponentPhysicsJoints2D"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/02-02",
+      "round": "2-2",
+      "chapter": 2,
+      "position": 2,
+      "title": "접촉 금지·빙판",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "접촉 금지·빙판",
+        "solutionAction": "서로 닿지 않도록 일찍 제동",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_3.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "contact_ice_wind",
+      "requiredRules": [
+        "빙판 가감속과 동료 접촉 실패 조건"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "icecontact",
+        "route": "platform",
+        "implementedRules": [
+          "빙판 관성",
+          "동료 접촉 금지"
+        ],
+        "knownGaps": []
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/02-02",
+          "sourceStageId": "st_w_02_02",
+          "sourceJsonSha256": "f56a2efc3a8ae7761d856ca005ffecc4ba702398f026167557504a4e99e6a966",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 1,
+              "needPlayerCount": 5,
+              "isOnlineOnly": false,
+              "actors": 24
+            },
+            {
+              "sourceIndex": 1,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 24
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "SwitchIceRectComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/02-03",
+      "round": "2-3",
+      "chapter": 2,
+      "position": 3,
+      "title": "수직 정렬",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "partial_text_evidence",
+        "mechanic": "수직 정렬",
+        "solutionAction": "위아래 동료를 수직 정렬해 버튼을 피해 열쇠 접근",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_3.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "alignment",
+      "requiredRules": [
+        "수직 정렬 유지 조건",
+        "위험 버튼 배치와 열쇠 접근"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "alignment",
+        "route": "platform",
+        "implementedRules": [
+          "수직 쌓기",
+          "위험 버튼 회피"
+        ],
+        "knownGaps": [
+          "정렬 강제 실패 조건",
+          "정렬 강제 조건을 생략한 일반 쌓기 데모"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/02-03",
+          "sourceStageId": "st_w_02_03",
+          "sourceJsonSha256": "7010a7c74808d84f8a9df4f58e8a0ca290f297492fc7a381558055434b6a37f5",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 31
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/02-04",
+      "round": "2-4",
+      "chapter": 2,
+      "position": 4,
+      "title": "바람·접촉 금지",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "바람·접촉 금지",
+        "solutionAction": "왼쪽 보정으로 밀림을 상쇄하며 간격 유지",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_3.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "contact_ice_wind",
+      "requiredRules": [
+        "바람 방향과 강도",
+        "접촉 실패",
+        "간격 유지"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "windcontact",
+        "route": "platform",
+        "implementedRules": [
+          "바람",
+          "동료 접촉 금지"
+        ],
+        "knownGaps": []
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/02-04",
+          "sourceStageId": "st_w_02_04",
+          "sourceJsonSha256": "7a1513b66944d6b1f7b8c3162c4fe462a40e23240a8f5611553cb10ecc2ebde3",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 20
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "SwitchIceRectComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/03-01",
+      "round": "3-1",
+      "chapter": 3,
+      "position": 1,
+      "title": "안전 틈",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "partial_text_evidence",
+        "mechanic": "안전 틈",
+        "solutionAction": "작은 빛의 중앙에서 큰 빛 사이 안전지대 확보",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_4.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "phased_hazards",
+      "requiredRules": [
+        "작은 빛/큰 빛의 형상",
+        "중심 안전 구역",
+        "시간 주기"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "safegap",
+        "route": "platform",
+        "implementedRules": [
+          "움직이는 위험 구역",
+          "안전 틈"
+        ],
+        "knownGaps": [
+          "원작 빛 장치의 정확한 주기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/03-01",
+          "sourceStageId": "st_w_03_01",
+          "sourceJsonSha256": "a361f0d83254a6ff218b598d14797c007b1f2386a8e2009fcc0d93964417a87c",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 24
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "LaserKeyBoxComponent",
+        "WaveKeyBoxComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/03-02",
+      "round": "3-2",
+      "chapter": 3,
+      "position": 2,
+      "title": "이동 플랫폼 안전지대",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "partial_text_evidence",
+        "mechanic": "이동 플랫폼 안전지대",
+        "solutionAction": "기구에 닿지 않게 위치를 계속 조정",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_4.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "path_platforms",
+      "requiredRules": [
+        "기구 경로와 위험 영역",
+        "플랫폼 위 안전 위치 변화"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "movinghazard",
+        "route": "platform",
+        "implementedRules": [
+          "이동 발판",
+          "위험 구역 회피"
+        ],
+        "knownGaps": []
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/03-02",
+          "sourceStageId": "st_w_03_02",
+          "sourceJsonSha256": "c851687d08e34e58ed050ac05d324d285939ad278b443199ec814892c07644b6",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 23
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "LinePathLiftComponent",
+        "RouletteLiftComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/03-03",
+      "round": "3-3",
+      "chapter": 3,
+      "position": 3,
+      "title": "자석",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "자석",
+        "solutionAction": "동료를 흡착해 중력 제약 없이 장애물 우회",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_4.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "magnet",
+      "requiredRules": [
+        "동료 흡착/분리",
+        "흡착 후 이동 및 중력 처리"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/03-03",
+          "sourceStageId": "st_w_03_03",
+          "sourceJsonSha256": "7c766449be5cb3c2727dab7ddf9c41eee5c2f7146c85761c09abf27a4f73f029",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 26
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerMagnetComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/03-04",
+      "round": "3-4",
+      "chapter": 3,
+      "position": 4,
+      "title": "기억 배치",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "partial_text_evidence",
+        "mechanic": "기억 배치",
+        "solutionAction": "처음 제시된 배치대로 위치 재현",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_4.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "memory",
+      "requiredRules": [
+        "원본 배치 제시",
+        "숨김",
+        "인원별 자리 재현과 판정"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "memory",
+        "route": "mini",
+        "implementedRules": [],
+        "knownGaps": [
+          "원작 수치·배치 미보정",
+          "공략의 실제 공간 배치를 5칸 선택 문제로 대체"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/03-04",
+          "sourceStageId": "st_w_03_04",
+          "sourceJsonSha256": "15d5802f54f1870c8107bd8f68cf5b253840f4b6812c35f939bc861ddbd0dd62",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 59
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/04-01",
+      "round": "4-1",
+      "chapter": 4,
+      "position": 1,
+      "title": "문 받치기",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "문 받치기",
+        "solutionAction": "한 명이 문을 머리로 받치는 동안 동료가 열쇠 회수",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_5.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "body_door",
+      "requiredRules": [
+        "머리로 문 받치기",
+        "하중/충돌",
+        "담당자 후속 탈출"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "relay",
+        "route": "platform",
+        "implementedRules": [
+          "동료가 문을 유지",
+          "열쇠 회수"
+        ],
+        "knownGaps": [
+          "머리로 문을 받치는 물리"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/04-01",
+          "sourceStageId": "st_w_04_01",
+          "sourceJsonSha256": "f2bbd4d485939468870c8aa91267eb0f78edbfa63314abcf6acb2e2a07e6f16d",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 25
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "WeightedLiftComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/04-02",
+      "round": "4-2",
+      "chapter": 4,
+      "position": 2,
+      "title": "상자·톱",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "상자·톱",
+        "solutionAction": "상층 상자로 톱을 반사시켜 열쇠 회수 보호",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_5.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "shield_crates",
+      "requiredRules": [
+        "상자로 톱 궤도 반사",
+        "동료 보호와 열쇠 회수"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/04-02",
+          "sourceStageId": "st_w_04_02",
+          "sourceJsonSha256": "d0ba43ae9c686e7d330a68e31d1cccbd27fb6bd820690e84c03a7f9b5bc2d69d",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 16
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PushBoxComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/04-03",
+      "round": "4-3",
+      "chapter": 4,
+      "position": 3,
+      "title": "교대 낙하 가시",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "교대 낙하 가시",
+        "solutionAction": "좌우 순서에 맞춰 이동",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_5.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "phased_hazards",
+      "requiredRules": [
+        "좌우 교대 낙하 가시의 예고/낙하/복귀 주기"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "fallinghazard",
+        "route": "platform",
+        "implementedRules": [
+          "번갈아 내려오는 위험물"
+        ],
+        "knownGaps": []
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/04-03",
+          "sourceStageId": "st_w_04_03",
+          "sourceJsonSha256": "4a1ea75b2be613bb76589b6423bdf81b519cc264bae6f3bd66d1afaf4b7b9e9b",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 32
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "LaserKeyBoxComponent",
+        "WaveKeyBoxComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/04-04",
+      "round": "4-4",
+      "chapter": 4,
+      "position": 4,
+      "title": "레이저",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "레이저",
+        "solutionAction": "발사 간격에 맞춰 통과",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_5.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "phased_hazards",
+      "requiredRules": [
+        "레이저 발사",
+        "지속",
+        "소멸",
+        "실제 광선 충돌 범위"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "laser",
+        "route": "platform",
+        "implementedRules": [
+          "주기적 위험 구역",
+          "타이밍 통과"
+        ],
+        "knownGaps": [
+          "레이저 발사·소멸은 이동 위험물로 시각화"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/04-04",
+          "sourceStageId": "st_w_04_04",
+          "sourceJsonSha256": "c4b046f3a9898ba183b76a0e581d672363c32b328625b829161fee888b44ff05",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 2,
+              "needPlayerCount": 4,
+              "isOnlineOnly": false,
+              "actors": 34
+            },
+            {
+              "sourceIndex": 1,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 33
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "LaserKeyBoxComponent",
+        "WaveKeyBoxComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/05-01",
+      "round": "5-1",
+      "chapter": 5,
+      "position": 1,
+      "title": "제한시간 동전",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "제한시간 동전",
+        "solutionAction": "시간 안에 모든 동전 수집",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_6.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "timer_collect",
+      "requiredRules": [
+        "공동 시간 제한",
+        "모든 동전 확인",
+        "전원 출구"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "coins",
+        "route": "platform",
+        "implementedRules": [
+          "제한 시간",
+          "모든 동전 회수",
+          "전원 출구"
+        ],
+        "knownGaps": []
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/05-01",
+          "sourceStageId": "st_w_05_01",
+          "sourceJsonSha256": "9b0582f0ebf58727ea35c450f98830a0113c77506088a85a4a08c6b006f6dfc8",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 76
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "CoinObserverComponent",
+        "SwitchTimerActorComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/05-02",
+      "round": "5-2",
+      "chapter": 5,
+      "position": 2,
+      "title": "시간 연장 버튼",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "시간 연장 버튼",
+        "solutionAction": "왼쪽으로 돌아가 열쇠와 시간 연장 확보",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_6.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "timer_collect",
+      "requiredRules": [
+        "시간 연장 버튼",
+        "왼쪽 복귀 열쇠 동선",
+        "연장 재사용 조건"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "timer",
+        "route": "platform",
+        "implementedRules": [
+          "시간 연장 버튼",
+          "계단 오르기",
+          "열쇠 회수"
+        ],
+        "knownGaps": [
+          "왼쪽 복귀 동선을 오른쪽 계단으로 대체"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/05-02",
+          "sourceStageId": "st_w_05_02",
+          "sourceJsonSha256": "fe44d0e72de17472279b67752a0c74dfe1d94e64bb2eab9f034f14f8647806a8",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 48
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "CoinObserverComponent",
+        "SwitchTimerActorComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/05-03",
+      "round": "5-3",
+      "chapter": 5,
+      "position": 3,
+      "title": "자석·동전",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "자석·동전",
+        "solutionAction": "자석으로 수집 경로 단축",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_6.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "magnet",
+      "requiredRules": [
+        "자석 결합 이동과 모든 동전/시간 조건 결합"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/05-03",
+          "sourceStageId": "st_w_05_03",
+          "sourceJsonSha256": "9e0e4cea4101c06e7cd5dcc9ffa3a8c64262b71e5890ab63332fe7c490ac6e09",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 1,
+              "needPlayerCount": 5,
+              "isOnlineOnly": false,
+              "actors": 98
+            },
+            {
+              "sourceIndex": 1,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 98
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerMagnetComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/05-04",
+      "round": "5-4",
+      "chapter": 5,
+      "position": 4,
+      "title": "동료 발사",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "동료 발사",
+        "solutionAction": "동료를 총에 담아 예상 착지점으로 발사",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_6.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "player_launch",
+      "requiredRules": [
+        "동료 장전",
+        "조준",
+        "발사",
+        "착지와 재합류"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/05-04",
+          "sourceStageId": "st_w_05_04",
+          "sourceJsonSha256": "5d7edf8a9f349cf0035e9de5ba7ca28d83c159803f07b31ff8187d24c63fecc1",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 29
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerCannonComponent",
+        "PlayerWarpGunComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/06-01",
+      "round": "6-1",
+      "chapter": 6,
+      "position": 1,
+      "title": "색 비행기",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "색 비행기",
+        "solutionAction": "자기 색 벽돌 사격",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_7.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "plane_combat",
+      "requiredRules": [
+        "비행 이동/사격",
+        "자기 색상 벽돌만 파괴"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/06-01",
+          "sourceStageId": "st_w_06_01",
+          "sourceJsonSha256": "76449426fe04daaf2e5b5d2eb0fe640cb00215024a49471ffcc63de504026778",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 25
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerGunComponent",
+        "PlayerGuardComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/06-02",
+      "round": "6-2",
+      "chapter": 6,
+      "position": 2,
+      "title": "비행기 위 승객",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "비행기 위 승객",
+        "solutionAction": "위에 탄 동료가 탄환과 레이저를 피하도록 이동",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_7.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "plane_combat",
+      "requiredRules": [
+        "비행기 위 동료 탑승",
+        "탄환/레이저 회피",
+        "탑승자 충돌"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/06-02",
+          "sourceStageId": "st_w_06_02",
+          "sourceJsonSha256": "92fa00fed0699564a7cce4ecec9a6a7b97bb0aa9b78540b1142f701987d40875",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 27
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerGunComponent",
+        "PlayerGuardComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/06-03",
+      "round": "6-3",
+      "chapter": 6,
+      "position": 3,
+      "title": "아군 사격 위험",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "아군 사격 위험",
+        "solutionAction": "동료를 맞히지 않으며 비행",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_7.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "plane_combat",
+      "requiredRules": [
+        "비행 사격과 아군 피격 실패"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/06-03",
+          "sourceStageId": "st_w_06_03",
+          "sourceJsonSha256": "52466ddba4dabcf2faeb9209c35b552250d807cb5d0d231d45be9c3e997e6469",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 26
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerGunComponent",
+        "PlayerGuardComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/06-04",
+      "round": "6-4",
+      "chapter": 6,
+      "position": 4,
+      "title": "총잡이·방패",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "총잡이·방패",
+        "solutionAction": "미사일 때 방패 담당이 앞을 방어",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_7.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "plane_combat",
+      "requiredRules": [
+        "총잡이와 방패 역할",
+        "방향 차폐",
+        "미사일"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/06-04",
+          "sourceStageId": "st_w_06_04",
+          "sourceJsonSha256": "f9e8f856a54d8de17cdd3a8083c793c876fbfa8112615dae6459c4dd2e5c5d3a",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 34
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerGunComponent",
+        "PlayerGuardComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/07-01",
+      "round": "7-1",
+      "chapter": 7,
+      "position": 1,
+      "title": "한 명씩 조작",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "한 명씩 조작",
+        "solutionAction": "안전한 자리에서 이동 순서 교대",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_8.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "turn_ghost",
+      "requiredRules": [
+        "조작 권한 한 명 제한",
+        "안전 지점에서 역할 교대"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/07-01",
+          "sourceStageId": "st_w_07_01",
+          "sourceJsonSha256": "8f01f9796b7867703254135a4745b2b21613b246c8039c2a1d56885ab74470dd",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 17
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerMoveObserverComponent",
+        "GhostPlayerComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/07-02",
+      "round": "7-2",
+      "chapter": 7,
+      "position": 2,
+      "title": "동시 이동 추적",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "동시 이동 추적",
+        "solutionAction": "둘 이상 움직여 유령을 부르지 않기",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_8.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "turn_ghost",
+      "requiredRules": [
+        "둘 이상 이동 감지 후 유령 추적",
+        "정지/회피 조건"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "oneatatime",
+        "route": "platform",
+        "implementedRules": [
+          "동시 이동 제한"
+        ],
+        "knownGaps": [
+          "유령 추격 시각화",
+          "추적 유령 대신 동시 이동 즉시 실패"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/07-02",
+          "sourceStageId": "st_w_07_02",
+          "sourceJsonSha256": "2857cd3980d056c4ba06284f886cb635016f5dda53a9aaf736887ce6011dbbd7",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 11
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerMoveObserverComponent",
+        "GhostPlayerComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/07-03",
+      "round": "7-3",
+      "chapter": 7,
+      "position": 3,
+      "title": "암전 이동",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "암전 이동",
+        "solutionAction": "어두울 때만 기억한 경로 이동",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_8.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "turn_ghost",
+      "requiredRules": [
+        "밝음/암전 주기",
+        "밝을 때 이동 금지와 기억 경로"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "blackout",
+        "route": "platform",
+        "implementedRules": [
+          "암전 경로"
+        ],
+        "knownGaps": [
+          "밝을 때 이동 금지 조건"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/07-03",
+          "sourceStageId": "st_w_07_03",
+          "sourceJsonSha256": "24e9f98824eecf71437da77915695cde783fbe3980aea859f9651d237fba15b9",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 21
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerMoveObserverComponent",
+        "GhostPlayerComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/07-04",
+      "round": "7-4",
+      "chapter": 7,
+      "position": 4,
+      "title": "응시 유령",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "응시 유령",
+        "solutionAction": "동료가 바라봐 멈추게 하고 유령을 이용해 열쇠 접근",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_8.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "turn_ghost",
+      "requiredRules": [
+        "시선으로 유령 정지",
+        "유령 접촉/발판과 열쇠 접근"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/07-04",
+          "sourceStageId": "st_w_07_04",
+          "sourceJsonSha256": "430ec2ea50d3720f5560d677c8ed2f3789d7ef910f270bbfa4b3e7b5829af92e",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 23
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerMoveObserverComponent",
+        "GhostPlayerComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/08-01",
+      "round": "8-1",
+      "chapter": 8,
+      "position": 1,
+      "title": "사격·받기",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "partial_text_evidence",
+        "mechanic": "사격·받기",
+        "solutionAction": "쏘는 역할과 받는 역할 협력",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_9.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "ball_delivery",
+      "requiredRules": [
+        "발사 담당과 받는 담당",
+        "투사체 전달 성공 조건"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/08-01",
+          "sourceStageId": "st_w_08_01",
+          "sourceJsonSha256": "0f4747b4122fba51ffb76726712dea590a41286b035c742498091ec40b5f71d6",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 24
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerBasketComponent",
+        "PlayerHeaddressComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/08-02",
+      "round": "8-2",
+      "chapter": 8,
+      "position": 2,
+      "title": "농구",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "농구",
+        "solutionAction": "공을 주워 골대에 투입",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_9.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "ball_delivery",
+      "requiredRules": [
+        "공 줍기",
+        "운반/투척",
+        "골대 진입 판정"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "basketball",
+        "route": "mini",
+        "implementedRules": [],
+        "knownGaps": [
+          "원작 수치·배치 미보정",
+          "공 줍기/운반 없이 제자리 각도 조절 발사로 대체"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/08-02",
+          "sourceStageId": "st_w_08_02",
+          "sourceJsonSha256": "306d0fa1c30faad57e5ce411b401267aa54ac7acd5f74330f11fc1e839ea603b",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 15
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerBasketComponent",
+        "PlayerHeaddressComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/08-03",
+      "round": "8-3",
+      "chapter": 8,
+      "position": 3,
+      "title": "폭탄 섞인 사격·받기",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "partial_text_evidence",
+        "mechanic": "폭탄 섞인 사격·받기",
+        "solutionAction": "폭탄을 건드리지 않으며 전달",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_9.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "ball_delivery",
+      "requiredRules": [
+        "발사/받기",
+        "공과 폭탄 구별",
+        "폭탄 접촉 실패"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/08-03",
+          "sourceStageId": "st_w_08_03",
+          "sourceJsonSha256": "48aec2f716388766bde4c9916cf6d47aebe3968f0754045e9b79aee24c41f0c3",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 24
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerBasketComponent",
+        "PlayerHeaddressComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/08-04",
+      "round": "8-4",
+      "chapter": 8,
+      "position": 4,
+      "title": "폭탄 섞인 농구",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "폭탄 섞인 농구",
+        "solutionAction": "폭탄을 피하며 득점",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_9.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "ball_delivery",
+      "requiredRules": [
+        "공 줍기와 농구",
+        "섞인 폭탄 회피"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "basketball",
+        "route": "mini",
+        "implementedRules": [],
+        "knownGaps": [
+          "원작 수치·배치 미보정",
+          "공 줍기/운반 없이 제자리 발사, 폭탄 상호작용도 원작 미확인"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/08-04",
+          "sourceStageId": "st_w_08_04",
+          "sourceJsonSha256": "8e4c9aa72459545060af63131615b2a805c981c8b99f9125ad990f39ff6582ea",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 15
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerBasketComponent",
+        "PlayerHeaddressComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/09-01",
+      "round": "9-1",
+      "chapter": 9,
+      "position": 1,
+      "title": "시야·우리",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "시야·우리",
+        "solutionAction": "절벽을 피하고 박쥐를 우리에 가두기",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_10.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "capture_stealth",
+      "requiredRules": [
+        "시야 제한",
+        "절벽",
+        "박쥐 움직임과 우리 포획"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/09-01",
+          "sourceStageId": "st_w_09_01",
+          "sourceJsonSha256": "5e2a2b8d255acc0eec0bf5a1c9afabf37460e262ccd945c76942d4b2268bda81",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 31
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/09-02",
+      "round": "9-2",
+      "chapter": 9,
+      "position": 2,
+      "title": "밧줄 포획",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "밧줄 포획",
+        "solutionAction": "동료 사이 밧줄에 나비 여섯 마리 포획",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_10.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "capture_stealth",
+      "requiredRules": [
+        "동료 사이 밧줄과 나비 교차 포획",
+        "여섯 마리 목표"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/09-02",
+          "sourceStageId": "st_w_09_02",
+          "sourceJsonSha256": "350116b137749825ac9327b55a1fff30fafe3a366856db5475c8d5acde865f86",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 18
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/09-03",
+      "round": "9-3",
+      "chapter": 9,
+      "position": 3,
+      "title": "상자 잠입",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "상자 잠입",
+        "solutionAction": "상자로 몸을 가려 발각 방지",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_10.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "capture_stealth",
+      "requiredRules": [
+        "상자 은폐 상태",
+        "적 시야/발각 판정"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/09-03",
+          "sourceStageId": "st_w_09_03",
+          "sourceJsonSha256": "22f91ce315bd85d3ad7c61ad49b3fae6c0646b6e469793e854938390827fd206",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 18
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/09-04",
+      "round": "9-4",
+      "chapter": 9,
+      "position": 4,
+      "title": "밧줄·절벽",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "밧줄·절벽",
+        "solutionAction": "연결 간격과 수평 정렬 유지",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_10.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "rope",
+      "requiredRules": [
+        "밧줄 간격과 수평 정렬",
+        "절벽 경로"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "rope",
+        "route": "platform",
+        "implementedRules": [
+          "동료 연결",
+          "간격 유지",
+          "절벽 통과"
+        ],
+        "knownGaps": []
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/09-04",
+          "sourceStageId": "st_w_09_04",
+          "sourceJsonSha256": "b528fb0c7d865938d307c8e7c7144e46ce5d905d6e8bf7f1f4261add4b7ef5be",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 29
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "EntityComponentPhysicsJoints2D"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/10-01",
+      "round": "10-1",
+      "chapter": 10,
+      "position": 1,
+      "title": "반응 버튼",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "반응 버튼",
+        "solutionAction": "시작 신호 직후 버튼 밟기",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_11.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "reaction",
+      "requiredRules": [
+        "신호 대기",
+        "조기 입력 실패",
+        "반응 버튼 목표"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "reaction",
+        "route": "mini",
+        "implementedRules": [],
+        "knownGaps": [
+          "원작 수치·배치 미보정",
+          "5회 반응 라운드는 임의 설정; 원작 횟수/시간 미확인"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/10-01",
+          "sourceStageId": "st_w_10_01",
+          "sourceJsonSha256": "430980a55e0fdd85e0fce718a5af3b1a6261892892f93507c18ebd6e38af69c3",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 1,
+              "needPlayerCount": 5,
+              "isOnlineOnly": false,
+              "actors": 28
+            },
+            {
+              "sourceIndex": 1,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 15
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/10-02",
+      "round": "10-2",
+      "chapter": 10,
+      "position": 2,
+      "title": "반대 방향 발사",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "반대 방향 발사",
+        "solutionAction": "상자와 사람을 반대 방향으로 보내 아래 플랫폼 착지",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_11.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "player_launch",
+      "requiredRules": [
+        "사람/상자를 반대 방향으로 발사",
+        "아래 발판 착지"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/10-02",
+          "sourceStageId": "st_w_10_02",
+          "sourceJsonSha256": "efa0000d0d6324bfc5833d5942ac72aa09275439bcf6af78eff049774cc29ff0",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 15
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerCannonComponent",
+        "PlayerWarpGunComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/10-03",
+      "round": "10-3",
+      "chapter": 10,
+      "position": 3,
+      "title": "늘어나는 귀·공 운반",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "늘어나는 귀·공 운반",
+        "solutionAction": "귀로 공을 계속 튕겨 왼쪽 용기에 전달",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_11.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "ball_delivery",
+      "requiredRules": [
+        "늘어나는 귀",
+        "공 반사/운반",
+        "왼쪽 용기 도착"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/10-03",
+          "sourceStageId": "st_w_10_03",
+          "sourceJsonSha256": "02f96c67082dabd4cb39554af495c42512d9558d0c5f5b364b6aebbf185f1ad7",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 1,
+              "needPlayerCount": 5,
+              "isOnlineOnly": false,
+              "actors": 12
+            },
+            {
+              "sourceIndex": 1,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 12
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerBasketComponent",
+        "PlayerHeaddressComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/10-04",
+      "round": "10-4",
+      "chapter": 10,
+      "position": 4,
+      "title": "중력 전환",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "중력 전환",
+        "solutionAction": "점프 입력으로 중력 방향 변경",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_11.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "gravity",
+      "requiredRules": [
+        "점프 입력 중력 반전",
+        "천장/바닥 접지",
+        "동료 충돌"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/10-04",
+          "sourceStageId": "st_w_10_04",
+          "sourceJsonSha256": "b01beeaa02c5900ff2a9d7fbfd0aba55b9196571e3364a6c94e2c7569bf3bf3d",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 26
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/11-01",
+      "round": "11-1",
+      "chapter": 11,
+      "position": 1,
+      "title": "탄환 생존",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "탄환 생존",
+        "solutionAction": "지정 시간 피격 없이 생존",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_12.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "phased_hazards",
+      "requiredRules": [
+        "탄환 궤도/주기와 지정 생존 시간"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "dodge",
+        "route": "mini",
+        "implementedRules": [],
+        "knownGaps": [
+          "원작 수치·배치 미보정",
+          "20초 생존과 탄환 생성 규칙은 임의 설정"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/11-01",
+          "sourceStageId": "st_w_11_01",
+          "sourceJsonSha256": "f5a9d7a9365568e32b599ec215080c06322709c2e9588d399388679cce82b988",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 24
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "LaserKeyBoxComponent",
+        "WaveKeyBoxComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/11-02",
+      "round": "11-2",
+      "chapter": 11,
+      "position": 2,
+      "title": "밧줄 등반",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "밧줄 등반",
+        "solutionAction": "위아래로 움직여 가시 회피",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_12.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "rope",
+      "requiredRules": [
+        "밧줄 등반과 위아래 이동",
+        "가시 경로"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "ropespring",
+        "route": "platform",
+        "implementedRules": [
+          "동료 연결",
+          "상승",
+          "가시 회피"
+        ],
+        "knownGaps": [
+          "밧줄 등반을 점프대+상승 발판 경로로 대체"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/11-02",
+          "sourceStageId": "st_w_11_02",
+          "sourceJsonSha256": "0554ee9369fa46adb4363c0cf2d9139728b66f098af0a5d1839e3a1837c69718",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 1,
+              "needPlayerCount": 8,
+              "isOnlineOnly": false,
+              "actors": 23
+            },
+            {
+              "sourceIndex": 1,
+              "createIndex": 3,
+              "needPlayerCount": 7,
+              "isOnlineOnly": false,
+              "actors": 47
+            },
+            {
+              "sourceIndex": 2,
+              "createIndex": 2,
+              "needPlayerCount": 6,
+              "isOnlineOnly": false,
+              "actors": 29
+            },
+            {
+              "sourceIndex": 3,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 47
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "EntityComponentPhysicsJoints2D"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/11-03",
+      "round": "11-3",
+      "chapter": 11,
+      "position": 3,
+      "title": "회전 대형 공",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "회전 대형 공",
+        "solutionAction": "시계 방향으로 이동하며 회피",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_12.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "phased_hazards",
+      "requiredRules": [
+        "대형 공 회전 경로",
+        "시계 방향 회피"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/11-03",
+          "sourceStageId": "st_w_11_03",
+          "sourceJsonSha256": "932bba75091c6edf7aad5e624cd1211988cc2d9ca29cb8c467d4373562c52f0d",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 26
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "LaserKeyBoxComponent",
+        "WaveKeyBoxComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/11-04",
+      "round": "11-4",
+      "chapter": 11,
+      "position": 4,
+      "title": "좁아지는 낙하 틈",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "좁아지는 낙하 틈",
+        "solutionAction": "마지막 파도에서 쌓여 점유 폭 축소",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_12.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "phased_hazards",
+      "requiredRules": [
+        "파도별 낙하 틈 축소",
+        "마지막 파도 쌓기"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "narrow",
+        "route": "platform",
+        "implementedRules": [
+          "좁은 안전 통로",
+          "몸 쌓기"
+        ],
+        "knownGaps": [
+          "연속 파도에 따른 틈 축소"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/11-04",
+          "sourceStageId": "st_w_11_04",
+          "sourceJsonSha256": "34e0909341d6e2f24d44597da751c07cae688c6af782b81600f4a60f4bcb900b",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 1,
+              "needPlayerCount": 5,
+              "isOnlineOnly": false,
+              "actors": 13
+            },
+            {
+              "sourceIndex": 1,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 13
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "LaserKeyBoxComponent",
+        "WaveKeyBoxComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/12-01",
+      "round": "12-1",
+      "chapter": 12,
+      "position": 1,
+      "title": "공동 다단 점프",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "공동 다단 점프",
+        "solutionAction": "각 인원이 한 번씩 점프를 이어 장애물 통과",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_13.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "shared_jump",
+      "requiredRules": [
+        "공중에서 각 인원이 한 번씩 점프 이어 주기",
+        "착지 시 재충전"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/12-01",
+          "sourceStageId": "st_w_12_01",
+          "sourceJsonSha256": "39b9db43433f768038a1607f954975c0584aa40373f0f279f8f8832ef3415649",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 38
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/12-02",
+      "round": "12-2",
+      "chapter": 12,
+      "position": 2,
+      "title": "자동 스크롤",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "자동 스크롤",
+        "solutionAction": "빠르게 이동하고 상자로 플랫폼 상승을 막아 시간 확보",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_13.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "autoscroll",
+      "requiredRules": [
+        "자동 스크롤 경계 실패",
+        "상자로 상승 플랫폼을 막아 시간 확보"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/12-02",
+          "sourceStageId": "st_w_12_02",
+          "sourceJsonSha256": "5ba5aa0a9e6af4f9a8e7861e76d1f05ae60a213e0301f419e767319940acdcdf",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 27
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "StageComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/12-03",
+      "round": "12-3",
+      "chapter": 12,
+      "position": 3,
+      "title": "열쇠 후 가속",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "열쇠 후 가속",
+        "solutionAction": "변한 속도와 슈퍼 점프에 맞춰 착지",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_13.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "speed_change",
+      "requiredRules": [
+        "열쇠 전후 속도와 슈퍼 점프 변경"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "speedkey",
+        "route": "platform",
+        "implementedRules": [
+          "열쇠 후 속도 상승",
+          "강한 점프"
+        ],
+        "knownGaps": [
+          "열쇠 후 수평 속도 배율만 구현, 슈퍼 점프 전환 누락"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/12-03",
+          "sourceStageId": "st_w_12_03",
+          "sourceJsonSha256": "6aecad2739fb7dfa3a97b3080332b4c538e68d4c3fc2f0ca3028a5cdb70c19ba",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 27
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "SpeedSwitchComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/12-04",
+      "round": "12-4",
+      "chapter": 12,
+      "position": 4,
+      "title": "긴 점프 연속",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "긴 점프 연속",
+        "solutionAction": "최대 도약 거리를 유지해 가시 통과",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_13.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "speed_change",
+      "requiredRules": [
+        "긴 점프 물리와 연속 가시 착지 구간"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "longjump",
+        "route": "platform",
+        "implementedRules": [
+          "긴 도약",
+          "가시 구간"
+        ],
+        "knownGaps": []
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/12-04",
+          "sourceStageId": "st_w_12_04",
+          "sourceJsonSha256": "0955dee36ef56edcb3eadedbe9e59a9abeefce2f3729d90c661d08d8e36174c5",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 28
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "SpeedSwitchComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/13-01",
+      "round": "13-1",
+      "chapter": 13,
+      "position": 1,
+      "title": "위험 버튼",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "partial_text_evidence",
+        "mechanic": "위험 버튼",
+        "solutionAction": "실패 버튼을 피하여 선택",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_14.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "danger_buttons",
+      "requiredRules": [
+        "안전/실패 버튼과 실제 선택 순서/열쇠 조건"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "avoidbuttons",
+        "route": "platform",
+        "implementedRules": [
+          "위험 버튼 회피",
+          "높은 열쇠"
+        ],
+        "knownGaps": [
+          "무한 반복 진행",
+          "실패 버튼만 반복 배치, 원작 선택 장치 미확인"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/13-01",
+          "sourceStageId": "st_w_13_01",
+          "sourceJsonSha256": "b9ddc42a2242d75d0c7dc6b87e9773eff9ac99d75f8b0509e3ff847eeee46fd9",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 24
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "DeadSwitchComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/13-02",
+      "round": "13-2",
+      "chapter": 13,
+      "position": 2,
+      "title": "색 그래프",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "색 그래프",
+        "solutionAction": "방향키를 누를 인원수를 조절해 제시 그래프 재현",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_14.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "graph",
+      "requiredRules": [
+        "방향별 입력 인원과 목표 색 그래프 비교"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "graph",
+        "route": "mini",
+        "implementedRules": [],
+        "knownGaps": [
+          "원작 수치·배치 미보정",
+          "두 방향 인원 수 비교로 단순화, 원작 그래프 구성 미확인"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/13-02",
+          "sourceStageId": "st_w_13_02",
+          "sourceJsonSha256": "5dd656771b49bcc6edcaceda9efd01d5039a49f9bc9ff693edf5f6b6e87fe47b",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 18
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/13-03",
+      "round": "13-3",
+      "chapter": 13,
+      "position": 3,
+      "title": "공 랠리",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "공 랠리",
+        "solutionAction": "공을 연속 열두 번 반사",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_14.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "ball_delivery",
+      "requiredRules": [
+        "공 연속 열두 번 반사",
+        "실패/리셋 조건"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "rally",
+        "route": "mini",
+        "implementedRules": [],
+        "knownGaps": [
+          "원작 수치·배치 미보정",
+          "일반 패들 반사 게임, 원작 캐릭터/공 상호작용 미확인"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/13-03",
+          "sourceStageId": "st_w_13_03",
+          "sourceJsonSha256": "ea1ddf3eeaa6a4f6f90854568019a031b830f111aa72cb679b868308bd5d4b7c",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 5,
+              "needPlayerCount": 8,
+              "isOnlineOnly": false,
+              "actors": 23
+            },
+            {
+              "sourceIndex": 1,
+              "createIndex": 6,
+              "needPlayerCount": 7,
+              "isOnlineOnly": false,
+              "actors": 22
+            },
+            {
+              "sourceIndex": 2,
+              "createIndex": 1,
+              "needPlayerCount": 6,
+              "isOnlineOnly": false,
+              "actors": 21
+            },
+            {
+              "sourceIndex": 3,
+              "createIndex": 2,
+              "needPlayerCount": 5,
+              "isOnlineOnly": false,
+              "actors": 20
+            },
+            {
+              "sourceIndex": 4,
+              "createIndex": 3,
+              "needPlayerCount": 4,
+              "isOnlineOnly": false,
+              "actors": 19
+            },
+            {
+              "sourceIndex": 5,
+              "createIndex": 4,
+              "needPlayerCount": 3,
+              "isOnlineOnly": false,
+              "actors": 17
+            },
+            {
+              "sourceIndex": 6,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 15
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerBasketComponent",
+        "PlayerHeaddressComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/13-04",
+      "round": "13-4",
+      "chapter": 13,
+      "position": 4,
+      "title": "내 캐릭터 찾기",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "내 캐릭터 찾기",
+        "solutionAction": "입력 반응으로 진짜 자기 캐릭터 구분",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_14.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "identity",
+      "requiredRules": [
+        "복제 캐릭터 속 실제 조작 대상 식별과 통과 조건"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/13-04",
+          "sourceStageId": "st_w_13_04",
+          "sourceJsonSha256": "67654e7e10fe97b920b5c00a3c5c69bf91f596d364ac254f1b05242c93dd7514",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 27
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "FakePlayerComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/14-01",
+      "round": "14-1",
+      "chapter": 14,
+      "position": 1,
+      "title": "동료 상자화·가시",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "동료 상자화·가시",
+        "solutionAction": "버튼 후 서로 상자로 바꿔 가시와 바닥 붕괴 차단",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_15.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "player_transform",
+      "requiredRules": [
+        "상자화 상태 전환",
+        "가시 차폐",
+        "붕괴 바닥 차단"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/14-01",
+          "sourceStageId": "st_w_14_01",
+          "sourceJsonSha256": "a44aa50e3035cd0cf48511ca075bcd68b6b2b71a697d3532afe1e70d5269d7a4",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 52
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerBlockComponent",
+        "PlayerBlockGunComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/14-02",
+      "round": "14-2",
+      "chapter": 14,
+      "position": 2,
+      "title": "두더지",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "두더지",
+        "solutionAction": "협력해 빠르게 타격",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_15.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "punch",
+      "requiredRules": [
+        "두더지 위치/등장",
+        "실제 캐릭터 타격 판정과 목표"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "whack",
+        "route": "mini",
+        "implementedRules": [],
+        "knownGaps": [
+          "원작 수치·배치 미보정",
+          "이동/타격 대신 지정 인원 action 입력으로 대체"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/14-02",
+          "sourceStageId": "st_w_14_02",
+          "sourceJsonSha256": "e18423d5473317f2d4981ca5a15e2ba647acc3e4ea07b284cd9a2696bfecd758",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 57
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerPunchComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/14-03",
+      "round": "14-3",
+      "chapter": 14,
+      "position": 3,
+      "title": "상자화·공중 발판",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "상자화·공중 발판",
+        "solutionAction": "낙하물 방어 후 공중 동료를 상자로 바꿔 발판 확보",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_15.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "player_transform",
+      "requiredRules": [
+        "낙하물 차폐",
+        "공중 동료 상자화와 고정 발판"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/14-03",
+          "sourceStageId": "st_w_14_03",
+          "sourceJsonSha256": "b32b9fbe890d77569b7ea2a2c29ad54040250537d547c8e3426931cad2ff4187",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 27
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerBlockComponent",
+        "PlayerBlockGunComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/14-04",
+      "round": "14-4",
+      "chapter": 14,
+      "position": 4,
+      "title": "구름 상대",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "partial_text_evidence",
+        "mechanic": "구름 상대",
+        "solutionAction": "간격을 조절해 여섯 번 타격",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_15.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "punch",
+      "requiredRules": [
+        "구름 상대 이동과 타격 거리",
+        "여섯 번 명중"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "whack",
+        "route": "mini",
+        "implementedRules": [],
+        "knownGaps": [
+          "원작 수치·배치 미보정",
+          "구름 상대와 거리 조절 대신 지정 인원 action 입력으로 대체"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/14-04",
+          "sourceStageId": "st_w_14_04",
+          "sourceJsonSha256": "0e0533dcb44b2700645605ffd5f2eb10a7f8755c7a04c8e3151534a8fb29ffe6",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 20
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerPunchComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/15-01",
+      "round": "15-1",
+      "chapter": 15,
+      "position": 1,
+      "title": "경로 따라 움직이는 바퀴",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "경로 따라 움직이는 바퀴",
+        "solutionAction": "쌓여 이동 발판을 넘고 열쇠 후 차례로 복귀",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_16.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "path_platforms",
+      "requiredRules": [
+        "원형 경로 바퀴",
+        "쌓기",
+        "열쇠 후 역방향 복귀"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "moving",
+        "route": "platform",
+        "implementedRules": [
+          "이동 발판",
+          "쌓기"
+        ],
+        "knownGaps": [
+          "원형 경로 바퀴·열쇠 후 복귀"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/15-01",
+          "sourceStageId": "st_w_15_01",
+          "sourceJsonSha256": "9d02eeb9e9c291b0ff3ac6f761d4bbd15f3b8ca1e40fc280bd20cc6bb179c03d",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 22
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "LinePathLiftComponent",
+        "RouletteLiftComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/15-02",
+      "round": "15-2",
+      "chapter": 15,
+      "position": 2,
+      "title": "암전 블록 쌓기",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "partial_text_evidence",
+        "mechanic": "암전 블록 쌓기",
+        "solutionAction": "아래부터 조금씩 옮겨 벽 장치를 피해 기울여 쌓기",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_16.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "crate_stack",
+      "requiredRules": [
+        "암전",
+        "상자 회전/기울임 쌓기",
+        "벽 장치 회피"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "darkcrates",
+        "route": "platform",
+        "implementedRules": [
+          "암전",
+          "상자 이동",
+          "계단 만들기"
+        ],
+        "knownGaps": [
+          "원작 숨은 장치 배치",
+          "상자의 기울임/회전 물리 미지원"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/15-02",
+          "sourceStageId": "st_w_15_02",
+          "sourceJsonSha256": "c107d9692f4be07be4f1680e4567d9a45a4e7aa7c059205d18e87095101ac040",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 48
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PushBoxComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/15-03",
+      "round": "15-3",
+      "chapter": 15,
+      "position": 3,
+      "title": "적 비행기·방패",
+      "status": "spec_missing",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "적 비행기·방패",
+        "solutionAction": "추적탄 비행기를 먼저 공격하고 미사일 방어",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_16.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "plane_combat",
+      "requiredRules": [
+        "추적탄 비행기 우선 공격",
+        "방향 방패와 미사일 방어"
+      ],
+      "currentDemo": {
+        "playable": false,
+        "family": "pending",
+        "route": null,
+        "implementedRules": [],
+        "knownGaps": [
+          "단계 고유 규칙 구현 대기"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/15-03",
+          "sourceStageId": "st_w_15_03",
+          "sourceJsonSha256": "36906b224416555fd27c914cbeabcee8edeaf167dff959217a70db6339338de8",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 35
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "PlayerGunComponent",
+        "PlayerGuardComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    },
+    {
+      "id": "pico2/world/15-04",
+      "round": "15-4",
+      "chapter": 15,
+      "position": 4,
+      "title": "빙판·출현 플랫폼",
+      "status": "implemented_partial",
+      "sourceEvidence": {
+        "kind": "secondary_text",
+        "status": "text_evidence",
+        "mechanic": "빙판·출현 플랫폼",
+        "solutionAction": "왼쪽 벽에서 기다렸다 오른쪽 발판 출현 후 점프",
+        "urls": [
+          "https://gl.ali213.net/html/2024-9/1505633_16.html"
+        ],
+        "limitations": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+      },
+      "engineFamily": "contact_ice_wind",
+      "requiredRules": [
+        "빙판",
+        "왼쪽 벽 대기",
+        "오른쪽 발판 출현 조건"
+      ],
+      "currentDemo": {
+        "playable": true,
+        "family": "icemoving",
+        "route": "platform",
+        "implementedRules": [
+          "빙판",
+          "이동 발판"
+        ],
+        "knownGaps": [
+          "발판 출현 조건"
+        ]
+      },
+      "sourceTransfer": {
+        "status": "source_data_imported_runtime_pending",
+        "geometry": "raw_coordinates_recovered",
+        "objectPlacement": "all_source_actors_preserved",
+        "triggerLinks": "serialized_parameters_preserved_interpretation_pending",
+        "physicsCalibration": "unknown",
+        "populationVariants": "all_variants_recovered_selection_pending",
+        "sourceDataImported": true,
+        "exactMapImported": false,
+        "source": {
+          "id": "pico2/world/15-04",
+          "sourceStageId": "st_w_15_04",
+          "sourceJsonSha256": "0139c0dece2bd7f82e08f31660645e98826e098de4334b9cc455a44ba35e477c",
+          "status": "source_data_imported_runtime_pending",
+          "variants": [
+            {
+              "sourceIndex": 0,
+              "createIndex": 0,
+              "needPlayerCount": 0,
+              "isOnlineOnly": false,
+              "actors": 36
+            }
+          ]
+        }
+      },
+      "candidateRuntimeClasses": [
+        "SwitchIceRectComponent"
+      ],
+      "review": {
+        "completeRoute": false,
+        "allPopulations2Through8": false,
+        "realOnline": false,
+        "originalFidelity": false
+      }
+    }
+  ]
+}

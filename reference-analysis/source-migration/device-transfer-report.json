@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "scope": "PP2 world01-02 source devices",
+  "runtimeFile": "source-devices-runtime.js",
+  "tests": {
+    "command": "node --test reference-analysis/source-migration/source-devices-runtime.test.cjs",
+    "passed": 7,
+    "failed": 0
+  },
+  "completePhysicsFidelity": false,
+  "stages": [
+    {
+      "stageId": "st_w_01_02",
+      "variants": [
+        {
+          "actorTypes": {
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "Thorn": 25,
+            "PushBox": 1,
+            "JumpStand": 1,
+            "CollisionSwitch": 25
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_01_03",
+      "variants": [
+        {
+          "actorTypes": {
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "FallingWall": 2,
+            "DashBoard": 1,
+            "Rect": 4
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_01_04",
+      "variants": [
+        {
+          "actorTypes": {
+            "SwitchObserver": 1,
+            "Player": 8,
+            "JumpStand": 14,
+            "Key": 1,
+            "Goal": 1,
+            "Thorn": 1,
+            "Switch": 13,
+            "Gate": 3
+          }
+        }
+      ]
+    }
+  ],
+  "verifiedFacts": [
+    {
+      "type": "CollisionSwitch",
+      "evidence": [
+        "ParseParameter 0x181801f30",
+        "OnCollided 0x1818028a0",
+        "OnUpdate 0x181802500"
+      ],
+      "facts": [
+        "slots0,1 width,height; slot2,3 target and subtarget; slot4 delay seconds",
+        "slot8 repeat; slot9 notify value; slot10 grounded-player filtering",
+        "player overlap phase0->1; next update phase1->2 initializes delay; phase2 expires and sends event61 to both nonempty target names",
+        "nonrepeating trigger then deactivates; repeating waits for no player contact"
+      ]
+    },
+    {
+      "type": "Thorn",
+      "evidence": [
+        "ParseParameter 0x1817206b0",
+        "InitCollision 0x181720c10",
+        ".cctor 0x181722670",
+        "OnRecvEvent 0x181721a40",
+        "updatePhase 0x1817212a0",
+        "OnContacted 0x181721b20"
+      ],
+      "facts": [
+        "slot0 direction:0 up,1 down,2 left,3 right; slot1 absolute speed, slot2 wait time",
+        "slots3..6 belt endpoints, slot7 belt speed; slot8 enables slot9 move-direction override",
+        "event61 starts idle thorn when speed >= 4/65536",
+        "down-direction collision is union of8x8 offset(-4,10) and24x6 offset(-12,2), both collision type7",
+        "movement adds direction*speed each native update; world01-02 speed is6",
+        "contact can request disappear; fade alpha decreases4 per second",
+        "calcMoveDistance uses distance to map boundary plus200"
+      ]
+    },
+    {
+      "type": "PushBox",
+      "evidence": [
+        "ParseParameter 0x1816db310",
+        ".cctor 0x1816dc9a0",
+        "getPushCountBorder 0x1816dc550",
+        "OnUpdate 0x1816db790"
+      ],
+      "facts": [
+        "type29 uses slot1 width,slot2 height with center-bottom anchor",
+        "slot0 absolute integer percent; slot3 signed border offset",
+        "required push count is ceil(playerActorCount*percent/100)+offset",
+        "firststage02 source percent100 offset-1 therefore count-1 pushers",
+        "native horizontal push speed1 per update",
+        "falling adds Frame.GetGravity while unsupported"
+      ]
+    }
+  ],
+  "runtimeInterpretations": [
+    "AABB player and box contact solver approximates native MoveContactActor ordering",
+    "Push chain follows touching horizontal neighbors with matching input; full native getPushCount recursion semantics not yet equivalent",
+    "Box gravity defaults to current source player gravity calibration; caller may supply Frame gravity equivalent",
+    "Thorn terrain collision sweeps both rectangles and fades on first contact; native collision class/contact notification ordering not yet proven",
+    "Actors supplied to compile must already be population-filtered and position-offset adjusted by terrain importer"
+  ],
+  "pending": [
+    "Belt movement for nonzero endpoints",
+    "Exact source event/update ordering including grounded-only CollisionSwitch player fields",
+    "Thorn extra population-offset arrays in slots10,11 are handled by caller; firststage02 arrays are zero",
+    "World01-03 FallingWall/DashBoard/Rect",
+    "World01-04 SwitchObserver/Gate",
+    "Human complete-route review and original side-by-side comparison"
+  ]
+}

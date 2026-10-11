@@ -1,0 +1,1545 @@
+{
+  "schemaVersion": 1,
+  "researchDate": "2026-10-04",
+  "game": "PICO PARK (2021 Steam release, app 1509960; not Classic Edition or PICO PARK 2)",
+  "scope": "World Mode: 12 worlds x 4 stages = 48, plus Battle/Endless inventory",
+  "versionSource": "https://picoparkgame.com/pp1/",
+  "method": "Existing first20 written research plus numbered 2021 walkthroughs and original-game video metadata. No video frames or image geometry inspected in this pass. Text-confirmed is not implementation-ready or playtested.",
+  "worlds": [
+    {
+      "number": 1,
+      "name": "Hello Pico Park",
+      "stageCount": 4,
+      "video": {
+        "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=1",
+        "scope": "entire world",
+        "verification": "2021-08-11 playlist labels confirm chapter; frames not inspected"
+      }
+    },
+    {
+      "number": 2,
+      "name": "Go together",
+      "stageCount": 4,
+      "video": {
+        "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=2",
+        "scope": "entire world",
+        "verification": "2021-08-11 playlist labels confirm chapter; frames not inspected"
+      }
+    },
+    {
+      "number": 3,
+      "name": "Time limit",
+      "stageCount": 4,
+      "video": {
+        "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=3",
+        "scope": "entire world",
+        "verification": "2021-08-11 playlist labels confirm chapter; frames not inspected"
+      }
+    },
+    {
+      "number": 4,
+      "name": "Gimmick gimmick",
+      "stageCount": 4,
+      "video": {
+        "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=4",
+        "scope": "entire world",
+        "verification": "2021-08-11 playlist labels confirm chapter; frames not inspected"
+      }
+    },
+    {
+      "number": 5,
+      "name": "All for one",
+      "stageCount": 4,
+      "video": {
+        "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=5",
+        "scope": "entire world",
+        "verification": "2021-08-11 playlist labels confirm chapter; frames not inspected"
+      },
+      "note": "All for one is reported offline-only, alternating control of one character; individual stages remain unverified.",
+      "sources": [
+        "https://pico-park.fandom.com/wiki/All_for_one",
+        "https://en.wikipedia.org/wiki/Pico_Park"
+      ]
+    },
+    {
+      "number": 6,
+      "name": "Push or jump",
+      "stageCount": 4,
+      "video": {
+        "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=6",
+        "scope": "entire world",
+        "verification": "2021-08-11 playlist labels confirm chapter; frames not inspected"
+      }
+    },
+    {
+      "number": 7,
+      "name": "Move and stop",
+      "stageCount": 4,
+      "video": {
+        "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=7",
+        "scope": "entire world",
+        "verification": "2021-08-11 playlist labels confirm chapter; frames not inspected"
+      }
+    },
+    {
+      "number": 8,
+      "name": "Retro game",
+      "stageCount": 4,
+      "video": {
+        "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=8",
+        "scope": "entire world",
+        "verification": "2021-08-11 playlist labels confirm chapter; frames not inspected"
+      }
+    },
+    {
+      "number": 9,
+      "name": "Ball park",
+      "stageCount": 4,
+      "video": {
+        "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=9",
+        "scope": "entire world",
+        "verification": "2021-08-11 playlist labels confirm chapter; frames not inspected"
+      }
+    },
+    {
+      "number": 10,
+      "name": "Two players",
+      "stageCount": 4,
+      "video": {
+        "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=10",
+        "scope": "entire world",
+        "verification": "2021-08-11 playlist labels confirm chapter; frames not inspected"
+      }
+    },
+    {
+      "number": 11,
+      "name": "Hand gimmick",
+      "stageCount": 4,
+      "video": {
+        "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=11",
+        "scope": "entire world",
+        "verification": "2021-08-11 playlist labels confirm chapter; frames not inspected"
+      }
+    },
+    {
+      "number": 12,
+      "name": "Last park",
+      "stageCount": 4,
+      "video": {
+        "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=12",
+        "scope": "entire world",
+        "verification": "2021-08-11 playlist labels confirm chapter; frames not inspected"
+      }
+    }
+  ],
+  "stages": [
+    {
+      "id": "1-1",
+      "worldNumber": 1,
+      "stageNumber": 1,
+      "world": "Hello Pico Park",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Body stacking, bridge switch and lift.",
+      "solutionActions": [
+        "Stack to send a scout over the gap; scout presses button extending bridge for others, then group uses lift to exit."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-1-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "1-1"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=QI0BvgCULM0",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=y5DD1OI9eTw&t=5s",
+          "scope": "chapter-with-stage-timestamp",
+          "verification": "timestamp from video description"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "1-2",
+      "worldNumber": 1,
+      "stageNumber": 2,
+      "world": "Hello Pico Park",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Movable wall, falling pillar and returnable step.",
+      "solutionActions": [
+        "Push wall left for key, then right so pillar falls into gap; move next block across and return it toward left-behind players as a climbing aid."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-1-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "1-2"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=l1I25A9_mMI",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=y5DD1OI9eTw&t=47s",
+          "scope": "chapter-with-stage-timestamp",
+          "verification": "timestamp from video description"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "1-3",
+      "worldNumber": 1,
+      "stageNumber": 3,
+      "world": "Hello Pico Park",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Upper/lower route switch dependency.",
+      "solutionActions": [
+        "Split upper/lower routes: upper player presses button for lower player; lower player places boxes on buttons to remove upper route barriers, then reunite."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-1-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "1-3"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=MjHtSoqCgnc",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=y5DD1OI9eTw&t=88s",
+          "scope": "chapter-with-stage-timestamp",
+          "verification": "timestamp from video description"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "1-4",
+      "worldNumber": 1,
+      "stageNumber": 4,
+      "world": "Hello Pico Park",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Moving platforms and occupancy platform.",
+      "solutionActions": [
+        "Ride moving platforms; enough players lower central platform to shelter from moving pillar, recover low key, exit via lift in turns."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-1-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "1-4"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=qKFCEFZkH88",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=y5DD1OI9eTw&t=139s",
+          "scope": "chapter-with-stage-timestamp",
+          "verification": "timestamp from video description"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "2-1",
+      "worldNumber": 2,
+      "stageNumber": 1,
+      "world": "Go together",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Rope-linked traversal.",
+      "solutionActions": [
+        "Rope-linked traversal: keep teammates on safe upper ground while one hangs below for key, then traverse gaps together."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-2-go-together.html",
+          "type": "written-walkthrough",
+          "scope": "2-1"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1T64y1s7Gx/?p=3",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "2-2",
+      "worldNumber": 2,
+      "stageNumber": 2,
+      "world": "Go together",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Rope suspension and assisted landing.",
+      "solutionActions": [
+        "Suspend key collector by rope; descend right-side opening while lower players move left to pull falling allies inward; stack and pull last players up to door."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-2-go-together.html",
+          "type": "written-walkthrough",
+          "scope": "2-2"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1T64y1s7Gx/?p=4",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "2-3",
+      "worldNumber": 2,
+      "stageNumber": 3,
+      "world": "Go together",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Rope-linked body-stack transport.",
+      "solutionActions": [
+        "Carry team as a stack on one running player; upper player temporarily jumps for key and returns to stack; take lift and exit in turns."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-2-go-together.html",
+          "type": "written-walkthrough",
+          "scope": "2-3"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1T64y1s7Gx/?p=5",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "2-4",
+      "worldNumber": 2,
+      "stageNumber": 4,
+      "world": "Go together",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Stack height management and linked crossing.",
+      "solutionActions": [
+        "Stack onto carrier, using spring/block where player count supplies them; control stack height under hanging obstacle. Secondary guide identifies single-pass collapsing bridge."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-2-go-together.html",
+          "type": "written-walkthrough",
+          "scope": "2-4"
+        },
+        {
+          "url": "https://www.dancihu.com/article/2704.html",
+          "type": "written-walkthrough",
+          "scope": "2-4"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1T64y1s7Gx/?p=6",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "3-1",
+      "worldNumber": 3,
+      "stageNumber": 1,
+      "world": "Time limit",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Timed coin collection.",
+      "solutionActions": [
+        "Collect all upper/lower coins within limit, use teammate as step for high coins; key appears after collection, exit before timer ends."
+      ],
+      "sources": [
+        {
+          "url": "https://gl.ali213.net/html/2021-7/656491.html",
+          "type": "written-walkthrough",
+          "scope": "3-1"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1T64y1s7Gx/?p=7",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "3-2",
+      "worldNumber": 3,
+      "stageNumber": 2,
+      "world": "Time limit",
+      "evidenceStatus": "unverified",
+      "mechanic": null,
+      "solutionActions": [],
+      "sources": [],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=4SQBHpJ5okg",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Stage exists, but its mechanic is not verified."
+      ]
+    },
+    {
+      "id": "3-3",
+      "worldNumber": 3,
+      "stageNumber": 3,
+      "world": "Time limit",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Timed coin collection and key release.",
+      "solutionActions": [
+        "Collect all coins under timer, help teammate reach high coin positions; center key appears only after all coins, timer continues until escape."
+      ],
+      "sources": [
+        {
+          "url": "https://gl.ali213.net/html/2021-8/673971.html",
+          "type": "written-walkthrough",
+          "scope": "3-3"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1T64y1s7Gx/?p=9",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "3-4",
+      "worldNumber": 3,
+      "stageNumber": 4,
+      "world": "Time limit",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Time-extension switches.",
+      "solutionActions": [
+        "Press route buttons to add one second each; distribute players across staircase tiers, collect highest-tier key and exit within extended time."
+      ],
+      "sources": [
+        {
+          "url": "https://gl.ali213.net/html/2021-8/676425.html",
+          "type": "written-walkthrough",
+          "scope": "3-4"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1T64y1s7Gx/?p=10",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "4-1",
+      "worldNumber": 4,
+      "stageNumber": 1,
+      "world": "Gimmick gimmick",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Shielded hazard passage.",
+      "solutionActions": [
+        "Shield carrier blocks electric hazard while others pass; arrange a stack with shield at top for later overhead hazards."
+      ],
+      "sources": [
+        {
+          "url": "https://gl.ali213.net/html/2021-8/671189.html",
+          "type": "written-walkthrough",
+          "scope": "4-1"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=6_f8P1vooU8",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "4-2",
+      "worldNumber": 4,
+      "stageNumber": 2,
+      "world": "Gimmick gimmick",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Flight and cooperative pushing.",
+      "solutionActions": [
+        "Fly through course, all players push obstructing block, take adjacent key, navigate upward/downward stepped tunnel to exit."
+      ],
+      "sources": [
+        {
+          "url": "https://gl.ali213.net/html/2021-8/673223.html",
+          "type": "written-walkthrough",
+          "scope": "4-2"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=ubxodYMuzK4&t=45s",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "4-3",
+      "worldNumber": 4,
+      "stageNumber": 3,
+      "world": "Gimmick gimmick",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Combined countdown precision.",
+      "solutionActions": [
+        "Each player stops a personal countdown. Sum of remaining times must be under target, but no player may reach zero; failure resets puzzle, success reveals key."
+      ],
+      "sources": [
+        {
+          "url": "https://gl.ali213.net/html/2021-8/673253.html",
+          "type": "written-walkthrough",
+          "scope": "4-3"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=ubxodYMuzK4&t=85s",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "4-4",
+      "worldNumber": 4,
+      "stageNumber": 4,
+      "world": "Gimmick gimmick",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Size-changing switches and team lift.",
+      "solutionActions": [
+        "Shrink on minus switch for narrow passage; stack small players on carrier then enlarge carrier on plus switch to lift team; upper players get key and push pillar to open route for carrier."
+      ],
+      "sources": [
+        {
+          "url": "https://3g.ali213.net/gl/html/663263.html",
+          "type": "written-walkthrough",
+          "scope": "4-4"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=ubxodYMuzK4&t=108s",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "5-1",
+      "worldNumber": 5,
+      "stageNumber": 1,
+      "world": "All for one",
+      "evidenceStatus": "unverified",
+      "mechanic": null,
+      "solutionActions": [],
+      "sources": [],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=5K-4O8C0fDQ",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Stage-specific obstacles and solution not verified; shared-character control is only a world-level fact."
+      ]
+    },
+    {
+      "id": "5-2",
+      "worldNumber": 5,
+      "stageNumber": 2,
+      "world": "All for one",
+      "evidenceStatus": "unverified",
+      "mechanic": null,
+      "solutionActions": [],
+      "sources": [],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=l2C-K8W1uu8",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Stage-specific obstacles and solution not verified; shared-character control is only a world-level fact."
+      ]
+    },
+    {
+      "id": "5-3",
+      "worldNumber": 5,
+      "stageNumber": 3,
+      "world": "All for one",
+      "evidenceStatus": "unverified",
+      "mechanic": null,
+      "solutionActions": [],
+      "sources": [],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=MvQjuDLEtNI",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Stage-specific obstacles and solution not verified; shared-character control is only a world-level fact."
+      ]
+    },
+    {
+      "id": "5-4",
+      "worldNumber": 5,
+      "stageNumber": 4,
+      "world": "All for one",
+      "evidenceStatus": "unverified",
+      "mechanic": null,
+      "solutionActions": [],
+      "sources": [],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=UNgXFdLWb-E",
+          "scope": "stage",
+          "verification": "metadata-only; not watched in this research pass"
+        }
+      ],
+      "unresolved": [
+        "Stage-specific obstacles and solution not verified; shared-character control is only a world-level fact."
+      ]
+    },
+    {
+      "id": "6-1",
+      "worldNumber": 6,
+      "stageNumber": 1,
+      "world": "Push or jump",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Color-restricted pushing; mobile block staircase.",
+      "solutionActions": [
+        "Push matching-color blocks; upper players drop blocks onto the lower carrier block, forming steps for everyone."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-6-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "6-1"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=6",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "6-2",
+      "worldNumber": 6,
+      "stageNumber": 2,
+      "world": "Push or jump",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Forced scrolling; transportable staircase.",
+      "solutionActions": [
+        "Ride lift, push the staircase forward, then climb without displacing its blocks."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-6-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "6-2"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=6",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "6-3",
+      "worldNumber": 6,
+      "stageNumber": 3,
+      "world": "Push or jump",
+      "evidenceStatus": "partial",
+      "mechanic": "Vertical platform traversal.",
+      "solutionActions": [
+        "Use platforms to move up and down."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-6-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "6-3"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=6",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Guide gives no platform activation, occupancy, timing or route details.",
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "6-4",
+      "worldNumber": 6,
+      "stageNumber": 4,
+      "world": "Push or jump",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Hazard buttons marked do not push.",
+      "solutionActions": [
+        "Jump past buttons without contact; stack to collect the elevated key."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-6-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "6-4"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=6",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "7-1",
+      "worldNumber": 7,
+      "stageNumber": 1,
+      "world": "Move and stop",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Movement-sensitive pursuing ghost.",
+      "solutionActions": [
+        "Advance cautiously, stop when the ghost becomes red, collect key and escape."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-7-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "7-1"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=7",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "7-2",
+      "worldNumber": 7,
+      "stageNumber": 2,
+      "world": "Move and stop",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Traffic-light movement restriction.",
+      "solutionActions": [
+        "Move during blue; stop before red. Time trampoline travel, then rearrange blocks for the remaining players."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-7-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "7-2"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=7",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "7-3",
+      "worldNumber": 7,
+      "stageNumber": 3,
+      "world": "Move and stop",
+      "evidenceStatus": "partial",
+      "mechanic": "Gaze-controlled ghost carrying the key.",
+      "solutionActions": [
+        "Control pursuit with player facing; recover the ghost-held key and leave a watcher until teammates exit."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-7-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "7-3"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=7",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Guide first says all facing right moves the ghost, then says looking left lets it move. Direction polarity requires video verification.",
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "7-4",
+      "worldNumber": 7,
+      "stageNumber": 4,
+      "world": "Move and stop",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Shared stamina depleted by movement.",
+      "solutionActions": [
+        "Take turns moving and using trampolines so the shared gauge never empties."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-7-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "7-4"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=7",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "8-1",
+      "worldNumber": 8,
+      "stageNumber": 1,
+      "world": "Retro game",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Cooperative falling-block line puzzle.",
+      "solutionActions": [
+        "Control and rotate colored pieces to complete the required lines."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-8-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "8-1"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=8",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "8-2",
+      "worldNumber": 8,
+      "stageNumber": 2,
+      "world": "Retro game",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Ball-and-brick clearing.",
+      "solutionActions": [
+        "Keep at least one ball alive, clear overhead bricks, collect the revealed key and exit."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-8-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "8-2"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=8",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "8-3",
+      "worldNumber": 8,
+      "stageNumber": 3,
+      "world": "Retro game",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Accelerating falling-block puzzle.",
+      "solutionActions": [
+        "Clear lines cooperatively; prepare for the faster final five lines."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-8-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "8-3"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=8",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "8-4",
+      "worldNumber": 8,
+      "stageNumber": 4,
+      "world": "Retro game",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Harder brick clearing with obstructions and acceleration brick.",
+      "solutionActions": [
+        "Keep balls alive; breaking the marked brick accelerates them. Clear remaining bricks, collect key and exit."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-8-puzzles-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "8-4"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=8",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "9-1",
+      "worldNumber": 9,
+      "stageNumber": 1,
+      "world": "Ball park",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Escalating-speed ball dodging.",
+      "solutionActions": [
+        "Avoid successive balls as they break the key enclosure; being hit resets progress."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-9-ball-park-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "9-1"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=9",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "9-2",
+      "worldNumber": 9,
+      "stageNumber": 2,
+      "world": "Ball park",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Weight-controlled tilting platforms.",
+      "solutionActions": [
+        "Alternate player weight to roll the ball back and forth, then deliver it to the button with sufficient speed."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-9-ball-park-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "9-2"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=9",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "9-3",
+      "worldNumber": 9,
+      "stageNumber": 3,
+      "world": "Ball park",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Bouncing balls break a route through blocks.",
+      "solutionActions": [
+        "Keep a ball airborne while destroying blocks toward the key and door."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-9-ball-park-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "9-3"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=9",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "9-4",
+      "worldNumber": 9,
+      "stageNumber": 4,
+      "world": "Ball park",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Player-directed ball bouncing.",
+      "solutionActions": [
+        "Jump into the ball to send it onto the glass; another player recovers a missed trajectory."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-9-ball-park-walkthrough.html",
+          "type": "written-walkthrough",
+          "scope": "9-4"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=9",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "10-1",
+      "worldNumber": 10,
+      "stageNumber": 1,
+      "world": "Two players",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Pairs relay through switches, falling blocks and a size-changing section.",
+      "solutionActions": [
+        "Alternate bridge switches, time staircase buttons, split collapsing footholds; open stairs and wall for the enlarged partner."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-10-two-players-puzzle.html",
+          "type": "written-walkthrough",
+          "scope": "10-1"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=10",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "10-2",
+      "worldNumber": 10,
+      "stageNumber": 2,
+      "world": "Two players",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Partner-assisted midair jumps and synchronized platforms.",
+      "solutionActions": [
+        "Use the jumping teammate as a step, operate rescue switches, then jump on upward-arrow cues to reach the key."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-10-two-players-puzzle.html",
+          "type": "written-walkthrough",
+          "scope": "10-2"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=10",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "10-3",
+      "worldNumber": 10,
+      "stageNumber": 3,
+      "world": "Two players",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Blackout traversal.",
+      "solutionActions": [
+        "Travel right, board the lift together, jump to the upper path, fetch the key leftward, then trampoline to the door."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-10-two-players-puzzle.html",
+          "type": "written-walkthrough",
+          "scope": "10-3"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=10",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "10-4",
+      "worldNumber": 10,
+      "stageNumber": 4,
+      "world": "Two players",
+      "evidenceStatus": "partial",
+      "mechanic": "Blackout route with invisible blocks.",
+      "solutionActions": [
+        "Push the starting block left and use the trampoline to ascend."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-10-two-players-puzzle.html",
+          "type": "written-walkthrough",
+          "scope": "10-4"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=10",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Remaining route depends on the guide image; image geometry has not been inspected.",
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "11-1",
+      "worldNumber": 11,
+      "stageNumber": 1,
+      "world": "Hand gimmick",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Gun stores and launches teammates.",
+      "solutionActions": [
+        "Shoot a teammate through the opening; the receiver absorbs and releases the stranded partner. Repeat across gaps."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-11-hand-gimmick-puzzles.html",
+          "type": "written-walkthrough",
+          "scope": "11-1"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=11",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "11-2",
+      "worldNumber": 11,
+      "stageNumber": 2,
+      "world": "Hand gimmick",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Suction pulls teammates across gaps.",
+      "solutionActions": [
+        "Jump toward a partner using suction; relay the last players through the narrow intermediate landing."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-11-hand-gimmick-puzzles.html",
+          "type": "written-walkthrough",
+          "scope": "11-2"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=11",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "11-3",
+      "worldNumber": 11,
+      "stageNumber": 3,
+      "world": "Hand gimmick",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Store, launch and catch teammate while traversing temporary blocks.",
+      "solutionActions": [
+        "Carry the partner over collapsing footholds, launch toward the key, then catch the falling partner with timed suction."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-11-hand-gimmick-puzzles.html",
+          "type": "written-walkthrough",
+          "scope": "11-3"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=11",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "11-4",
+      "worldNumber": 11,
+      "stageNumber": 4,
+      "world": "Hand gimmick",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Suction carries a cube onto timed switches and moving platforms.",
+      "solutionActions": [
+        "Stage cube above, activate the ten-second switch, pull partner up, then drop cube onto the button during platform travel."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-11-hand-gimmick-puzzles.html",
+          "type": "written-walkthrough",
+          "scope": "11-4"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=11",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "12-1",
+      "worldNumber": 12,
+      "stageNumber": 1,
+      "world": "Last park",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Shield, movable block and teammate stacking.",
+      "solutionActions": [
+        "Shield carrier moves the block while protecting the partner; use the block and body stack to reach key and exit."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-12-last-park-puzzle.html",
+          "type": "written-walkthrough",
+          "scope": "12-1"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=12",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "12-2",
+      "worldNumber": 12,
+      "stageNumber": 2,
+      "world": "Last park",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Wind, trampolines and occupancy lift.",
+      "solutionActions": [
+        "Reach the numbered lift together, counter the wind during ascent, collect the high key, descend and exit left."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-12-last-park-puzzle.html",
+          "type": "written-walkthrough",
+          "scope": "12-2"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=12",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "12-3",
+      "worldNumber": 12,
+      "stageNumber": 3,
+      "world": "Last park",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Flying obstacle course.",
+      "solutionActions": [
+        "Guide each flying character through obstacles, collect the key and reach the exit."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-12-last-park-puzzle.html",
+          "type": "written-walkthrough",
+          "scope": "12-3"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=12",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    },
+    {
+      "id": "12-4",
+      "worldNumber": 12,
+      "stageNumber": 4,
+      "world": "Last park",
+      "evidenceStatus": "text-confirmed",
+      "mechanic": "Scrolling finale combining earlier mechanics.",
+      "solutionActions": [
+        "Stack across gaps, open the bridge for the partner, use trampolines, avoid slimes and jump past the final button."
+      ],
+      "sources": [
+        {
+          "url": "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-12-last-park-puzzle.html",
+          "type": "written-walkthrough",
+          "scope": "12-4"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.bilibili.com/video/BV1h44y1y7ic/?p=12",
+          "scope": "entire-world; stage timestamp unverified",
+          "verification": "2021 playlist metadata only; not watched"
+        }
+      ],
+      "unresolved": [
+        "Geometry, timings and player-count variants require direct gameplay observation."
+      ]
+    }
+  ],
+  "additionalModes": {
+    "battle": {
+      "status": "secondary-text-confirmed; gameplay not watched",
+      "source": "https://pico-park.fandom.com/wiki/Battle_Mode",
+      "variants": [
+        {
+          "name": "Height Battle",
+          "rule": "Highest player at time expiry wins."
+        },
+        {
+          "name": "Region Battle",
+          "rule": "Redirect the ball to claim territory; greatest territory wins."
+        },
+        {
+          "name": "Jump Battle",
+          "rule": "Dodge cannonballs; last survivor wins."
+        },
+        {
+          "name": "Stop watch Battle",
+          "rule": "Stop the countdown as close to 0.01 seconds as possible."
+        }
+      ]
+    },
+    "endless": {
+      "status": "secondary-text inventory; detailed rules need gameplay verification",
+      "sources": [
+        "https://ja.wikipedia.org/wiki/PICO_PARK",
+        "https://en.wikipedia.org/wiki/Pico_Park"
+      ],
+      "variants": [
+        {
+          "name": "Endless Jump",
+          "rule": "Cooperatively keep avoiding cannonballs; a hit ends the run."
+        },
+        {
+          "name": "Endless Puzzle",
+          "rule": "Cooperative falling-block line clearing.",
+          "unresolved": "English and Japanese summaries differ about individual piece control; precise top-out rule requires video."
+        },
+        {
+          "name": "Endless Scroll",
+          "rule": "Repeated jumping through a scrolling obstacle course.",
+          "unresolved": "Sources differ on shared-character control versus separate characters. Do not implement either from this inventory alone."
+        },
+        {
+          "name": "Endless Plane",
+          "rule": "Rope-connected flying characters avoid terrain; collision ends the run."
+        }
+      ],
+      "versionCaution": "Japanese source explicitly describes the 2019 Switch mode set; verify these finer rules against the 2021 Steam game before implementation."
+    }
+  },
+  "cautions": [
+    "Official page distinguishes 2016 Classic Edition (up to ten, no online) from current PICO PARK (2-8, 48 stages); PICO PARK 2 is separate.",
+    "No individual stage subtitle was established: titles below are world titles plus stage number.",
+    "All for one is reported offline-only and rotates control of a single character. It is not equivalent to a normal 2-8-person simultaneous online stage.",
+    "World 5 individual layouts and 3-2 remain unverified; do not fill them with guessed mechanics.",
+    "Player-count geometry varies; 2-player guide does not establish 3-8 player dimensions.",
+    "Blog branding says mobile, but entries describe Steam original numbered worlds. Treat it as secondary walkthrough text, not an official mobile release source.",
+    "World 7-3 guide contains contradictory facing-direction instructions; keep polarity unresolved.",
+    "No pixel coordinates, exact speeds, physics constants, button occupancy values or player-count scaling have been established.",
+    "World 6-3 and 10-4 have only partial route descriptions; do not fill remaining details by invention."
+  ],
+  "counts": {
+    "total": 48,
+    "textConfirmed": 40,
+    "partial": 3,
+    "unverified": 5,
+    "frameVerified": 0
+  },
+  "provenance": {
+    "priorFile": "pico-park-2021-first20-research.json",
+    "chapterVideoListing": "https://www.bilibili.com/video/BV1h44y1y7ic/",
+    "chapterVideoDate": "2021-08-11",
+    "summaryBudget": "New world 6-12 mechanic and solution summaries each total less than 200 English words per source; no source prose copied verbatim."
+  }
+}

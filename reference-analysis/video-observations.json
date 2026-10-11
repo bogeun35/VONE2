@@ -1,0 +1,10 @@
+{
+  "schemaVersion":1,
+  "observedAt":"2026-10-04",
+  "method":"Muted browser playback, manual screenshots at visible timestamps. No direct original-game play.",
+  "observations":[
+    {"sourceId":"pico1/world/01-01","url":"https://www.youtube.com/watch?v=QI0BvgCULM0","players":2,"observedSeconds":[4,7,9.6,12,14,15,18,21,26],"status":"partial_video_observation","confirmed":["Horizontal camera scroll; world extends beyond one viewport","Short initial gap, followed by two rising steps and a larger drop/gap","Leading character crosses to lower right area with red floor button; leftward bridge is visible","Lift carries a number 2 sign; key is above the lower floor; exit is on raised right plateau","Both characters appear on lift during route"],"inferences":["Bridge extension depends on button: supported by written guide and adjacent frames, release timing not isolated","Lift responds to required population: number and vertical motion seen, exact threshold/return behavior not experimentally measured"],"unknown":["Exact collision geometry, movement speed, jump height and lift speed","4/8-player terrain and rule adjustments","Whether final player can bypass the intended bridge in every version"]},
+    {"sourceId":"pico1/world/05-01","url":"https://www.youtube.com/watch?v=5K-4O8C0fDQ","players":2,"observedSeconds":[10.2],"status":"partial_video_observation","confirmed":["One mint-colored on-screen avatar","Large controller icon above scene","Raised left ground with small obstacle, gap and lower right exit"],"unknown":["Full control handoff sequence","Key acquisition sequence","Exact terrain and population behavior"]}
+  ],
+  "reconstructionPolicy":"Observed route order may guide a provisional reconstruction. Unmeasured coordinates, constants and population scaling remain pending; no claim of exact original reproduction."
+}

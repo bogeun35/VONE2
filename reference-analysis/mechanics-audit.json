@@ -1,0 +1,1255 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-04",
+  "inputs": [
+    "pico1-stages.json",
+    "pico2-stages.json"
+  ],
+  "purpose": "두 카탈로그의 기믹 계열을 비교해 구현 의존성과 검수 계획을 정리. 단계 삭제/완주/재미 합격 판정 아님.",
+  "preservation_policy": [
+    "같은 기믹 계열도 단계별 동선·역할·위험·반복 순서가 다르므로 모두 유지한다.",
+    "두 작품의 같은 단계 번호는 별개 ID로 관리한다.",
+    "기믹 분류는 구현 공통부 후보이며 원작 지형이나 인원별 변화의 대체 자료가 아니다."
+  ],
+  "common_rules": [
+    {
+      "rule": "standing_on_head_blocks_lower_jump",
+      "sources": [
+        "https://gamemakers.jp/article/2023_09_15_49949/",
+        "https://www.4gamer.net/games/462/G046262/20230823069/"
+      ],
+      "evidence": "CEDEC 원작1 발표 보도에서 확인. 원작2 모든 스테이지 적용 여부 unknown.",
+      "mapping": "stack 계열의 검수 기준; 개별단계 예외 미확인"
+    },
+    {
+      "rule": "held_switch_is_not_latch",
+      "sources": [
+        "https://gamemakers.jp/article/2023_09_15_49949/"
+      ],
+      "evidence": "누르는 동안 다리가 유지되는 사례와 안전 구덩이 확인. 모든 버튼을 유지형으로 바꾸는 근거 아님."
+    },
+    {
+      "rule": "short_failure_and_reflection",
+      "sources": [
+        "https://www.4gamer.net/games/462/G046262/20230823069/"
+      ],
+      "evidence": "안전한 작은 실패, 사망 후 짧은 자유 시간, 완료 뒤 단계 선택 복귀가 개발자 의도."
+    }
+  ],
+  "mechanic_groups": [
+    {
+      "id": "stack",
+      "priority": "P0",
+      "name": "쌓기·탑 운반",
+      "mapping_status": "analyst classification from catalog; not identity or duplicate claim",
+      "stages": [
+        {
+          "id": "pico1:world:1-1",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-1-puzzles-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico1:world:2-2",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-2-go-together.html"
+          ]
+        },
+        {
+          "id": "pico1:world:2-3",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-2-go-together.html"
+          ]
+        },
+        {
+          "id": "pico1:world:2-4",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-2-go-together.html",
+            "https://www.dancihu.com/article/2704.html"
+          ]
+        },
+        {
+          "id": "pico1:world:4-1",
+          "status": "text-confirmed",
+          "sources": [
+            "https://gl.ali213.net/html/2021-8/671189.html"
+          ]
+        },
+        {
+          "id": "pico1:world:4-4",
+          "status": "text-confirmed",
+          "sources": [
+            "https://3g.ali213.net/gl/html/663263.html"
+          ]
+        },
+        {
+          "id": "pico1:world:10-2",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-10-two-players-puzzle.html"
+          ]
+        },
+        {
+          "id": "pico1:world:12-1",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-12-last-park-puzzle.html"
+          ]
+        },
+        {
+          "id": "pico1:world:12-4",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-12-last-park-puzzle.html"
+          ]
+        },
+        {
+          "id": "pico2:world:1-1",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_2.html"
+          ]
+        },
+        {
+          "id": "pico2:world:11-4",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_12.html"
+          ]
+        },
+        {
+          "id": "pico2:world:15-1",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_16.html"
+          ]
+        }
+      ],
+      "acceptance": {
+        "fun": "받치는 사람과 올라가는 사람이 바뀌며 마지막 인원도 합류 가능",
+        "deadlock": "머리 위 점유 시 아래 점프를 막고 해제 후 다시 가능; 관통·무한 상승 없음",
+        "status": "not_run"
+      },
+      "exact_geometry": "unknown",
+      "original_population_rules": "unknown"
+    },
+    {
+      "id": "held_switch",
+      "priority": "P0",
+      "name": "유지 버튼·왕복 구조",
+      "mapping_status": "analyst classification from catalog; not identity or duplicate claim",
+      "stages": [
+        {
+          "id": "pico1:world:1-1",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-1-puzzles-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico1:world:1-3",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-1-puzzles-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico1:world:10-1",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-10-two-players-puzzle.html"
+          ]
+        },
+        {
+          "id": "pico1:world:12-4",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-12-last-park-puzzle.html"
+          ]
+        }
+      ],
+      "acceptance": {
+        "fun": "버튼을 놓는 행동이 동료의 통로에 즉시 영향을 주고 역할 교대 가능",
+        "deadlock": "유지형과 영구 개방형을 구분; 마지막 버튼 담당이 출구로 갈 경로 존재",
+        "status": "not_run"
+      },
+      "exact_geometry": "unknown",
+      "original_population_rules": "unknown"
+    },
+    {
+      "id": "moving_cargo",
+      "priority": "P0",
+      "name": "상자·기둥·공동 운반",
+      "mapping_status": "analyst classification from catalog; not identity or duplicate claim",
+      "stages": [
+        {
+          "id": "pico1:world:1-2",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-1-puzzles-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico1:world:6-1",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-6-puzzles-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico1:world:6-2",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-6-puzzles-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico1:world:12-1",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-12-last-park-puzzle.html"
+          ]
+        },
+        {
+          "id": "pico2:world:1-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_2.html"
+          ]
+        },
+        {
+          "id": "pico2:world:1-3",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_2.html"
+          ]
+        },
+        {
+          "id": "pico2:world:4-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_5.html"
+          ]
+        },
+        {
+          "id": "pico2:world:10-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_11.html"
+          ]
+        },
+        {
+          "id": "pico2:world:15-2",
+          "status": "partial_text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_16.html"
+          ]
+        }
+      ],
+      "acceptance": {
+        "fun": "운반·받기·보호 중 두 역할의 기여가 보임",
+        "deadlock": "상자를 놓쳐도 복구 또는 명시적 재시도; 벽 끼임·출구 봉쇄 없음",
+        "status": "not_run"
+      },
+      "exact_geometry": "unknown",
+      "original_population_rules": "unknown"
+    },
+    {
+      "id": "occupancy_platform",
+      "priority": "P0",
+      "name": "인원 반응 플랫폼",
+      "mapping_status": "analyst classification from catalog; not identity or duplicate claim",
+      "stages": [
+        {
+          "id": "pico1:world:1-4",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-1-puzzles-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico1:world:12-2",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-12-last-park-puzzle.html"
+          ]
+        },
+        {
+          "id": "pico2:world:3-2",
+          "status": "partial_text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_4.html"
+          ]
+        }
+      ],
+      "acceptance": {
+        "fun": "먼저 떠난 사람이 동료의 발판에 영향을 줌",
+        "deadlock": "한 명 이탈·재탑승·접속 종료 뒤 플랫폼 상태가 수렴; 출구 선입장 교착 없음",
+        "status": "not_run"
+      },
+      "exact_geometry": "unknown",
+      "original_population_rules": "unknown"
+    },
+    {
+      "id": "rope",
+      "priority": "P1",
+      "name": "로프 연결",
+      "mapping_status": "analyst classification from catalog; not identity or duplicate claim",
+      "stages": [
+        {
+          "id": "pico1:world:2-1",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-2-go-together.html"
+          ]
+        },
+        {
+          "id": "pico1:world:2-2",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-2-go-together.html"
+          ]
+        },
+        {
+          "id": "pico1:world:2-3",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-2-go-together.html"
+          ]
+        },
+        {
+          "id": "pico1:world:2-4",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-2-go-together.html",
+            "https://www.dancihu.com/article/2704.html"
+          ]
+        },
+        {
+          "id": "pico2:world:2-1",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_3.html"
+          ]
+        },
+        {
+          "id": "pico2:world:9-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_10.html"
+          ]
+        },
+        {
+          "id": "pico2:world:9-4",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_10.html"
+          ]
+        },
+        {
+          "id": "pico2:world:11-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_12.html"
+          ]
+        }
+      ],
+      "acceptance": {
+        "fun": "지지자·매달린 사람·이끄는 사람이 서로 반응",
+        "deadlock": "양쪽 낙하·모서리·줄 최대 길이·재접속에서 진동/튕김/영구 구속 없음",
+        "status": "not_run"
+      },
+      "exact_geometry": "unknown",
+      "original_population_rules": "unknown"
+    },
+    {
+      "id": "no_touch",
+      "priority": "P1",
+      "name": "접촉 금지",
+      "mapping_status": "analyst classification from catalog; not identity or duplicate claim",
+      "stages": [
+        {
+          "id": "pico2:world:2-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_3.html"
+          ]
+        },
+        {
+          "id": "pico2:world:2-4",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_3.html"
+          ]
+        }
+      ],
+      "acceptance": {
+        "fun": "간격 합의와 순서가 필요하고 대기 위치가 안전",
+        "deadlock": "출현 위치 겹침으로 즉사하지 않음; 빙판·바람에서 정지 여유 확보",
+        "status": "not_run"
+      },
+      "exact_geometry": "unknown",
+      "original_population_rules": "unknown"
+    },
+    {
+      "id": "stop_move",
+      "priority": "P1",
+      "name": "정지·이동 제약",
+      "mapping_status": "analyst classification from catalog; not identity or duplicate claim",
+      "stages": [
+        {
+          "id": "pico1:world:7-1",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-7-puzzles-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico1:world:7-2",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-7-puzzles-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico1:world:7-4",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-7-puzzles-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico2:world:7-1",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_8.html"
+          ]
+        },
+        {
+          "id": "pico2:world:7-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_8.html"
+          ]
+        },
+        {
+          "id": "pico2:world:7-3",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_8.html"
+          ]
+        }
+      ],
+      "acceptance": {
+        "fun": "한 명 이동과 전원 정지의 구분을 이해하고 순서를 교대",
+        "deadlock": "입력 지연·키 해제·창 비활성화 때문에 부당한 지속 이동 판정 없음",
+        "status": "not_run"
+      },
+      "exact_geometry": "unknown",
+      "original_population_rules": "unknown"
+    },
+    {
+      "id": "gaze",
+      "priority": "P1",
+      "name": "응시 대상 제어",
+      "mapping_status": "analyst classification from catalog; not identity or duplicate claim",
+      "stages": [
+        {
+          "id": "pico1:world:7-3",
+          "status": "partial",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-7-puzzles-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico2:world:7-4",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_8.html"
+          ]
+        }
+      ],
+      "acceptance": {
+        "fun": "주시 담당이 동료 이동을 돕고 교대 가능",
+        "deadlock": "시선 극성은 불확실 항목 확인 후 고정; 마지막 담당 탈출 가능",
+        "status": "not_run"
+      },
+      "exact_geometry": "unknown",
+      "original_population_rules": "unknown"
+    },
+    {
+      "id": "timed_collect",
+      "priority": "P1",
+      "name": "시간·수집·연장",
+      "mapping_status": "analyst classification from catalog; not identity or duplicate claim",
+      "stages": [
+        {
+          "id": "pico1:world:3-1",
+          "status": "text-confirmed",
+          "sources": [
+            "https://gl.ali213.net/html/2021-7/656491.html"
+          ]
+        },
+        {
+          "id": "pico1:world:3-3",
+          "status": "text-confirmed",
+          "sources": [
+            "https://gl.ali213.net/html/2021-8/673971.html"
+          ]
+        },
+        {
+          "id": "pico1:world:3-4",
+          "status": "text-confirmed",
+          "sources": [
+            "https://gl.ali213.net/html/2021-8/676425.html"
+          ]
+        },
+        {
+          "id": "pico2:world:5-1",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_6.html"
+          ]
+        },
+        {
+          "id": "pico2:world:5-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_6.html"
+          ]
+        },
+        {
+          "id": "pico2:world:5-3",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_6.html"
+          ]
+        }
+      ],
+      "acceptance": {
+        "fun": "수집 경로를 나누거나 시간을 벌어 동료 도움",
+        "deadlock": "수집/시간 연장 중복 처리 없음; 열쇠 뒤 남은 시간과 재도전 초기화 일치",
+        "status": "not_run"
+      },
+      "exact_geometry": "unknown",
+      "original_population_rules": "unknown"
+    },
+    {
+      "id": "protect",
+      "priority": "P1",
+      "name": "보호·방패",
+      "mapping_status": "analyst classification from catalog; not identity or duplicate claim",
+      "stages": [
+        {
+          "id": "pico1:world:4-1",
+          "status": "text-confirmed",
+          "sources": [
+            "https://gl.ali213.net/html/2021-8/671189.html"
+          ]
+        },
+        {
+          "id": "pico1:world:12-1",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-12-last-park-puzzle.html"
+          ]
+        },
+        {
+          "id": "pico2:world:1-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_2.html"
+          ]
+        },
+        {
+          "id": "pico2:world:4-1",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_5.html"
+          ]
+        },
+        {
+          "id": "pico2:world:4-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_5.html"
+          ]
+        },
+        {
+          "id": "pico2:world:6-4",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_7.html"
+          ]
+        },
+        {
+          "id": "pico2:world:15-3",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_16.html"
+          ]
+        }
+      ],
+      "acceptance": {
+        "fun": "보호자 없을 때와 있을 때 결과가 명확히 달라짐",
+        "deadlock": "피격·방패·문 받치기 순서 일관; 보호자 마지막 탈출 검증",
+        "status": "not_run"
+      },
+      "exact_geometry": "unknown",
+      "original_population_rules": "unknown"
+    },
+    {
+      "id": "launch_magnet",
+      "priority": "P2",
+      "name": "동료 흡착·발사",
+      "mapping_status": "analyst classification from catalog; not identity or duplicate claim",
+      "stages": [
+        {
+          "id": "pico1:world:11-1",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-11-hand-gimmick-puzzles.html"
+          ]
+        },
+        {
+          "id": "pico1:world:11-2",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-11-hand-gimmick-puzzles.html"
+          ]
+        },
+        {
+          "id": "pico1:world:11-3",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-11-hand-gimmick-puzzles.html"
+          ]
+        },
+        {
+          "id": "pico1:world:11-4",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-11-hand-gimmick-puzzles.html"
+          ]
+        },
+        {
+          "id": "pico2:world:3-3",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_4.html"
+          ]
+        },
+        {
+          "id": "pico2:world:5-3",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_6.html"
+          ]
+        },
+        {
+          "id": "pico2:world:5-4",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_6.html"
+          ]
+        },
+        {
+          "id": "pico2:world:10-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_11.html"
+          ]
+        }
+      ],
+      "acceptance": {
+        "fun": "발사자·받는 사람·운반자의 순서 교대",
+        "deadlock": "동료가 사라지거나 영구 수납되지 않음; 빗나간 발사 회복 가능",
+        "status": "not_run"
+      },
+      "exact_geometry": "unknown",
+      "original_population_rules": "unknown"
+    },
+    {
+      "id": "transform",
+      "priority": "P2",
+      "name": "크기·상자화·중력",
+      "mapping_status": "analyst classification from catalog; not identity or duplicate claim",
+      "stages": [
+        {
+          "id": "pico1:world:4-4",
+          "status": "text-confirmed",
+          "sources": [
+            "https://3g.ali213.net/gl/html/663263.html"
+          ]
+        },
+        {
+          "id": "pico2:world:10-4",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_11.html"
+          ]
+        },
+        {
+          "id": "pico2:world:14-1",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_15.html"
+          ]
+        },
+        {
+          "id": "pico2:world:14-3",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_15.html"
+          ]
+        }
+      ],
+      "acceptance": {
+        "fun": "동료가 자신의 형상/발판을 바꾸어 진행 도움",
+        "deadlock": "변환 중 천장·바닥 관통 없음; 잘못 바꿨을 때 복구 가능",
+        "status": "not_run"
+      },
+      "exact_geometry": "unknown",
+      "original_population_rules": "unknown"
+    },
+    {
+      "id": "ball",
+      "priority": "P2",
+      "name": "공 전달·구기",
+      "mapping_status": "analyst classification from catalog; not identity or duplicate claim",
+      "stages": [
+        {
+          "id": "pico1:world:8-2",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-8-puzzles-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico1:world:8-4",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-8-puzzles-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico1:world:9-2",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-9-ball-park-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico1:world:9-3",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-9-ball-park-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico1:world:9-4",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-9-ball-park-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico2:world:8-1",
+          "status": "partial_text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_9.html"
+          ]
+        },
+        {
+          "id": "pico2:world:8-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_9.html"
+          ]
+        },
+        {
+          "id": "pico2:world:8-3",
+          "status": "partial_text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_9.html"
+          ]
+        },
+        {
+          "id": "pico2:world:8-4",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_9.html"
+          ]
+        },
+        {
+          "id": "pico2:world:10-3",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_11.html"
+          ]
+        },
+        {
+          "id": "pico2:world:13-3",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_14.html"
+          ]
+        }
+      ],
+      "acceptance": {
+        "fun": "던지기·받기·실수 회수 역할이 순환",
+        "deadlock": "공 소실/다중 충돌/득점 중복 없음; 실패한 공을 다시 받을 수 있음",
+        "status": "not_run"
+      },
+      "exact_geometry": "unknown",
+      "original_population_rules": "unknown"
+    },
+    {
+      "id": "special",
+      "priority": "P2",
+      "name": "단발 규칙·공동 입력",
+      "mapping_status": "analyst classification from catalog; not identity or duplicate claim",
+      "stages": [
+        {
+          "id": "pico1:world:8-1",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-8-puzzles-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico1:world:8-3",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-8-puzzles-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico2:world:3-4",
+          "status": "partial_text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_4.html"
+          ]
+        },
+        {
+          "id": "pico2:world:10-1",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_11.html"
+          ]
+        },
+        {
+          "id": "pico2:world:13-1",
+          "status": "partial_text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_14.html"
+          ]
+        },
+        {
+          "id": "pico2:world:13-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_14.html"
+          ]
+        },
+        {
+          "id": "pico2:world:13-4",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_14.html"
+          ]
+        },
+        {
+          "id": "pico2:world:14-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_15.html"
+          ]
+        },
+        {
+          "id": "pico2:world:14-4",
+          "status": "partial_text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_15.html"
+          ]
+        }
+      ],
+      "acceptance": {
+        "fun": "새 규칙을 보고 팀이 해결 방식을 논의",
+        "deadlock": "숨은 규칙/색 식별/입력 버튼이 불명확해 무작정 반복하지 않음",
+        "status": "not_run"
+      },
+      "exact_geometry": "unknown",
+      "original_population_rules": "unknown"
+    },
+    {
+      "id": "precision_hazard",
+      "priority": "P2",
+      "name": "회피·비행·자동 진행",
+      "mapping_status": "analyst classification from catalog; not identity or duplicate claim",
+      "stages": [
+        {
+          "id": "pico1:world:4-2",
+          "status": "text-confirmed",
+          "sources": [
+            "https://gl.ali213.net/html/2021-8/673223.html"
+          ]
+        },
+        {
+          "id": "pico1:world:9-1",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-9-ball-park-walkthrough.html"
+          ]
+        },
+        {
+          "id": "pico1:world:12-3",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-12-last-park-puzzle.html"
+          ]
+        },
+        {
+          "id": "pico1:world:12-4",
+          "status": "text-confirmed",
+          "sources": [
+            "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-12-last-park-puzzle.html"
+          ]
+        },
+        {
+          "id": "pico2:world:4-3",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_5.html"
+          ]
+        },
+        {
+          "id": "pico2:world:4-4",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_5.html"
+          ]
+        },
+        {
+          "id": "pico2:world:6-1",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_7.html"
+          ]
+        },
+        {
+          "id": "pico2:world:6-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_7.html"
+          ]
+        },
+        {
+          "id": "pico2:world:6-3",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_7.html"
+          ]
+        },
+        {
+          "id": "pico2:world:11-1",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_12.html"
+          ]
+        },
+        {
+          "id": "pico2:world:11-3",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_12.html"
+          ]
+        },
+        {
+          "id": "pico2:world:12-1",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_13.html"
+          ]
+        },
+        {
+          "id": "pico2:world:12-2",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_13.html"
+          ]
+        },
+        {
+          "id": "pico2:world:12-3",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_13.html"
+          ]
+        },
+        {
+          "id": "pico2:world:12-4",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_13.html"
+          ]
+        },
+        {
+          "id": "pico2:world:15-4",
+          "status": "text_evidence",
+          "sources": [
+            "https://gl.ali213.net/html/2024-9/1505633_16.html"
+          ]
+        }
+      ],
+      "acceptance": {
+        "fun": "개별 성공만 반복하지 않고 도움 구간과 호흡 변화 존재",
+        "deadlock": "충돌과 화면 위치 일치; 실패 원인 식별; 마지막 인원 뒤 스크롤 강제사망 없음",
+        "status": "not_run"
+      },
+      "exact_geometry": "unknown",
+      "original_population_rules": "unknown"
+    }
+  ],
+  "population_acceptance": [
+    {
+      "players": 2,
+      "fun": [
+        "서로의 행동이 상대에게 실제 영향을 주는 순간 기록",
+        "같은 사람이 항상 해결하지 않아도 역할 교환 가능"
+      ],
+      "deadlock": [
+        "지원자·열쇠 담당 모두 마지막 출구까지 도달",
+        "한 명이 잘못된 편에 남았을 때 복구 또는 재시도 가능"
+      ]
+    },
+    {
+      "players": 4,
+      "fun": [
+        "2인 해법을 두 명만 수행하고 나머지는 계속 구경하는지 기록",
+        "두 소그룹 병행 행동이 서로의 진행에 영향을 주는지 확인"
+      ],
+      "deadlock": [
+        "두 사람이 동시에 버튼·상자 조작해도 상태 일관",
+        "탑에서 중간 사람 이탈 뒤 안전한 재구성 가능"
+      ]
+    },
+    {
+      "players": 8,
+      "fun": [
+        "필수 입력 횟수 대신 도움 요청/응답/역할 교대/장기 방관 기록",
+        "실수 누적으로 한 명만 비난하거나 여섯 명이 기다리는 구간 식별"
+      ],
+      "deadlock": [
+        "전원 안전한 출현·대기 공간 존재",
+        "7명 먼저 탈출했을 때 마지막 인원의 모든 의존 장치 작동 확인",
+        "한 명 연결 중단 후 방장 정책에 따라 복구 또는 명시적 재시작"
+      ]
+    }
+  ],
+  "global_acceptance": [
+    "각2/4/8인 최소 정상경로·역할교환·중간실패·마지막사람복귀 경로를 입력으로 검증",
+    "입력프레임>0/발판방문>0/자동완주는 재미나 필요기여의 대리 지표로 합격 처리하지 않는다.",
+    "실패 후 새로 바꿔볼 행동이 있는지 실제 사람에게 관찰한다.",
+    "재시도 음악은 테스트에서 끈다.",
+    "기술불안정·교착은P0; 역할편중·일방대기는P1; 반복성·순서·연출은P2로 기록한다."
+  ],
+  "campaign_candidates": [
+    {
+      "candidate": "본편",
+      "selection": "양 작품 World의 확인된 기믹을 도입→상호지원→변주로 배치하는 후보. 모든 원작 stage ID 보존.",
+      "decision": "provisional"
+    },
+    {
+      "candidate": "후일담",
+      "selection": "PICO PARK2 Dark16 및 높은 정밀/함정 요구 후보. 부분확인이라 세부 배치 보류.",
+      "decision": "unknown"
+    },
+    {
+      "candidate": "2회차",
+      "selection": "같은 원작 단계의 인원·역할 교환·기록 도전 후보. 새로운 원작 인원규칙을 임의 발명하지 않는다.",
+      "decision": "provisional"
+    }
+  ],
+  "unmapped_stages": [
+    {
+      "id": "pico1:world:3-2",
+      "status": "unverified",
+      "sources": [],
+      "reason": "카탈로그에서 세부 기믹 미확인 또는 별도검토 필요; 삭제 아님"
+    },
+    {
+      "id": "pico1:world:4-3",
+      "status": "text-confirmed",
+      "sources": [
+        "https://gl.ali213.net/html/2021-8/673253.html"
+      ],
+      "reason": "카탈로그에서 세부 기믹 미확인 또는 별도검토 필요; 삭제 아님"
+    },
+    {
+      "id": "pico1:world:5-1",
+      "status": "unverified",
+      "sources": [],
+      "reason": "카탈로그에서 세부 기믹 미확인 또는 별도검토 필요; 삭제 아님"
+    },
+    {
+      "id": "pico1:world:5-2",
+      "status": "unverified",
+      "sources": [],
+      "reason": "카탈로그에서 세부 기믹 미확인 또는 별도검토 필요; 삭제 아님"
+    },
+    {
+      "id": "pico1:world:5-3",
+      "status": "unverified",
+      "sources": [],
+      "reason": "카탈로그에서 세부 기믹 미확인 또는 별도검토 필요; 삭제 아님"
+    },
+    {
+      "id": "pico1:world:5-4",
+      "status": "unverified",
+      "sources": [],
+      "reason": "카탈로그에서 세부 기믹 미확인 또는 별도검토 필요; 삭제 아님"
+    },
+    {
+      "id": "pico1:world:6-3",
+      "status": "partial",
+      "sources": [
+        "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-6-puzzles-walkthrough.html"
+      ],
+      "reason": "카탈로그에서 세부 기믹 미확인 또는 별도검토 필요; 삭제 아님"
+    },
+    {
+      "id": "pico1:world:6-4",
+      "status": "text-confirmed",
+      "sources": [
+        "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-6-puzzles-walkthrough.html"
+      ],
+      "reason": "카탈로그에서 세부 기믹 미확인 또는 별도검토 필요; 삭제 아님"
+    },
+    {
+      "id": "pico1:world:10-3",
+      "status": "text-confirmed",
+      "sources": [
+        "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-10-two-players-puzzle.html"
+      ],
+      "reason": "카탈로그에서 세부 기믹 미확인 또는 별도검토 필요; 삭제 아님"
+    },
+    {
+      "id": "pico1:world:10-4",
+      "status": "partial",
+      "sources": [
+        "https://picoparkmobilewalkthrough.blogspot.com/2021/09/pico-park-level-10-two-players-puzzle.html"
+      ],
+      "reason": "카탈로그에서 세부 기믹 미확인 또는 별도검토 필요; 삭제 아님"
+    },
+    {
+      "id": "pico2:world:1-4",
+      "status": "text_evidence",
+      "sources": [
+        "https://gl.ali213.net/html/2024-9/1505633_2.html"
+      ],
+      "reason": "카탈로그에서 세부 기믹 미확인 또는 별도검토 필요; 삭제 아님"
+    },
+    {
+      "id": "pico2:world:2-3",
+      "status": "partial_text_evidence",
+      "sources": [
+        "https://gl.ali213.net/html/2024-9/1505633_3.html"
+      ],
+      "reason": "카탈로그에서 세부 기믹 미확인 또는 별도검토 필요; 삭제 아님"
+    },
+    {
+      "id": "pico2:world:3-1",
+      "status": "partial_text_evidence",
+      "sources": [
+        "https://gl.ali213.net/html/2024-9/1505633_4.html"
+      ],
+      "reason": "카탈로그에서 세부 기믹 미확인 또는 별도검토 필요; 삭제 아님"
+    },
+    {
+      "id": "pico2:world:9-1",
+      "status": "text_evidence",
+      "sources": [
+        "https://gl.ali213.net/html/2024-9/1505633_10.html"
+      ],
+      "reason": "카탈로그에서 세부 기믹 미확인 또는 별도검토 필요; 삭제 아님"
+    },
+    {
+      "id": "pico2:world:9-3",
+      "status": "text_evidence",
+      "sources": [
+        "https://gl.ali213.net/html/2024-9/1505633_10.html"
+      ],
+      "reason": "카탈로그에서 세부 기믹 미확인 또는 별도검토 필요; 삭제 아님"
+    }
+  ],
+  "additional_modes": {
+    "pico1": {
+      "battle": {
+        "status": "secondary-text-confirmed; gameplay not watched",
+        "source": "https://pico-park.fandom.com/wiki/Battle_Mode",
+        "variants": [
+          {
+            "name": "Height Battle",
+            "rule": "Highest player at time expiry wins."
+          },
+          {
+            "name": "Region Battle",
+            "rule": "Redirect the ball to claim territory; greatest territory wins."
+          },
+          {
+            "name": "Jump Battle",
+            "rule": "Dodge cannonballs; last survivor wins."
+          },
+          {
+            "name": "Stop watch Battle",
+            "rule": "Stop the countdown as close to 0.01 seconds as possible."
+          }
+        ]
+      },
+      "endless": {
+        "status": "secondary-text inventory; detailed rules need gameplay verification",
+        "sources": [
+          "https://ja.wikipedia.org/wiki/PICO_PARK",
+          "https://en.wikipedia.org/wiki/Pico_Park"
+        ],
+        "variants": [
+          {
+            "name": "Endless Jump",
+            "rule": "Cooperatively keep avoiding cannonballs; a hit ends the run."
+          },
+          {
+            "name": "Endless Puzzle",
+            "rule": "Cooperative falling-block line clearing.",
+            "unresolved": "English and Japanese summaries differ about individual piece control; precise top-out rule requires video."
+          },
+          {
+            "name": "Endless Scroll",
+            "rule": "Repeated jumping through a scrolling obstacle course.",
+            "unresolved": "Sources differ on shared-character control versus separate characters. Do not implement either from this inventory alone."
+          },
+          {
+            "name": "Endless Plane",
+            "rule": "Rope-connected flying characters avoid terrain; collision ends the run."
+          }
+        ],
+        "versionCaution": "Japanese source explicitly describes the 2019 Switch mode set; verify these finer rules against the 2021 Steam game before implementation."
+      }
+    },
+    "pico2": {
+      "battle_count": 8,
+      "endless_count": 7,
+      "dark_count": 16,
+      "status": "별도모드카탈로그유지;World와중복통합하지않음"
+    }
+  },
+  "validation": {
+    "testsRun": false,
+    "funVerified": false,
+    "originalGeometryVerified": false,
+    "populationScaling": "unknown"
+  }
+}

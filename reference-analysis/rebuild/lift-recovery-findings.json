@@ -1,0 +1,12 @@
+{
+  "finding": "stage1-1 lift permanently stranded a late player after another entered exit",
+  "scope": "implementation recovery rule; original behavior unknown",
+  "fix": "Only 1-1 team-lift uses remaining non-exited player count. Initial quota still equals full player population. Permanent exit remains unchanged.",
+  "verification": {
+    "inputOnly": "Two players traverse full route, collect key; a enters exit while b leaves lift toward lower bank, b boards again, rises alone and exits. No state editing in route.",
+    "fixture": "2 through 8 initial quotas and quota reductions after each permanent exit; direct fixture exit flags explicitly not playthrough proof.",
+    "engineChecksPassed": 17
+  },
+  "originalPhysicsCalibration": "unknown",
+  "originalPopulationAdaptation": "unknown"
+}

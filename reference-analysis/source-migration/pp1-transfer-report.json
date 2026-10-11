@@ -1,0 +1,3411 @@
+{
+  "schemaVersion": 1,
+  "worldStages": 48,
+  "sourceResources": 52,
+  "sourceActorRows": 1214,
+  "tileVariants": 70,
+  "dimensionMismatches": [
+    {
+      "sourceStageId": "stage_auto_scroll02",
+      "variantIndex": 0,
+      "declaredCellCount": 940,
+      "actualCellCount": 950
+    },
+    {
+      "sourceStageId": "stage_majo02",
+      "variantIndex": 0,
+      "declaredCellCount": 560,
+      "actualCellCount": 590
+    },
+    {
+      "sourceStageId": "stage_breakout03",
+      "variantIndex": 0,
+      "declaredCellCount": 360,
+      "actualCellCount": 370
+    },
+    {
+      "sourceStageId": "stage_constraint02",
+      "variantIndex": 0,
+      "declaredCellCount": 270,
+      "actualCellCount": 280
+    },
+    {
+      "sourceStageId": "stage_coin01",
+      "variantIndex": 0,
+      "declaredCellCount": 360,
+      "actualCellCount": 370
+    }
+  ],
+  "losslessActorAndTileRoundtrip": true,
+  "luaInterpreterRequired": false,
+  "runtimeConnected": 0,
+  "originalFidelityReviewed": 0,
+  "rules": {
+    "actorConditions": "Native 0x14019a1a0: row0 creation time; row1 0=all, 1..9=count>=n, negative=count<=abs(n), 10..99=decimal min/max range, >=100=count>=floor(n/10).",
+    "variantSelection": "Catalog slots and threshold rows preserved; native selection semantics pending.",
+    "tileCollision": "Tile IDs preserved; collision profile must come from native map loader.",
+    "luaInterpreterRequired": false
+  },
+  "nativeEvidence": {
+    "actorParser": "0x140199c73..0x14019a163",
+    "actorCreationAndPopulation": "0x14019a1a0..0x14019a2a4",
+    "actorFactory": {
+      "WeightedLift": "0x1400e409b..0x1400e4228; constructor 0x1400d3cf0",
+      "Bridge": "String dispatch 0x1400e51f6; shared factory branch 0x1400e6c59",
+      "Rect": "String dispatch 0x1400e6297; shared factory branch 0x1400e6872"
+    },
+    "tileIndex": "0x140198070: index=x*height+y; only declared width*height read, surplus source table cells ignored",
+    "variableTile": "0x140197f76..0x140197f89: selection field at map+0x30 minus 1; caller count mapping remains unverified"
+  },
+  "nativeBlockers": [
+    "Resource variant catalog selection; variable-map selector caller mapping",
+    "Tile collision profiles/anchors for MC_* values",
+    "PP1 actor constructor parameters and per-tick behavior"
+  ],
+  "firstStageRequiredHandlers": [
+    "Player",
+    "Warp",
+    "Rect",
+    "Bridge",
+    "Switch",
+    "WeightedLift",
+    "Key",
+    "Goal"
+  ],
+  "actorTypes": [
+    {
+      "type": "Balance",
+      "actors": 1,
+      "resources": [
+        "stage_seesaw01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "BallBox",
+      "actors": 3,
+      "resources": [
+        "stage_bound01_many",
+        "stage_bound01_net_many",
+        "stage_bound01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "BlinkBlock",
+      "actors": 2,
+      "resources": [
+        "stage_coin02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "BoundBallPitcher",
+      "actors": 3,
+      "resources": [
+        "stage_bound01_many",
+        "stage_bound01_net_many",
+        "stage_bound01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "BowwowEnemy",
+      "actors": 1,
+      "resources": [
+        "stage_bowwow01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "BreakoutKey",
+      "actors": 2,
+      "resources": [
+        "stage_breakout02",
+        "stage_breakout01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "BreakoutPlayer",
+      "actors": 24,
+      "resources": [
+        "stage_breakout03",
+        "stage_breakout02",
+        "stage_breakout01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "BreakoutSyncArea",
+      "actors": 3,
+      "resources": [
+        "stage_breakout03",
+        "stage_breakout02",
+        "stage_breakout01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Bridge",
+      "actors": 6,
+      "resources": [
+        "stage_auto_scroll02",
+        "stage_jump04",
+        "stage_jump01",
+        "stage_jump02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "CheckPoint",
+      "actors": 3,
+      "resources": [
+        "stage_multijump02",
+        "stage_majo01",
+        "stage_majo02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Coin",
+      "actors": 122,
+      "resources": [
+        "stage_coin02",
+        "stage_coin01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "CoinObserver",
+      "actors": 2,
+      "resources": [
+        "stage_coin02",
+        "stage_coin01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "CollisionActorCreator",
+      "actors": 5,
+      "resources": [
+        "stage_darkness02",
+        "stage_darkness01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "CollisionActorCreatorSilent",
+      "actors": 7,
+      "resources": [
+        "stage_jump05",
+        "stage_darkness02",
+        "stage_darkness01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "CollisionChangePlayer",
+      "actors": 11,
+      "resources": [
+        "stage_jump07",
+        "stage_jump04",
+        "stage_darkness02",
+        "stage_darkness01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "CollisionConstraintMove",
+      "actors": 1,
+      "resources": [
+        "stage_constraint01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "ColorBox",
+      "actors": 16,
+      "resources": [
+        "stage_auto_scroll01",
+        "stage_push01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "CoopStopWatch",
+      "actors": 2,
+      "resources": [
+        "stage_stopwatch01_many",
+        "stage_stopwatch01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "DarknessRect",
+      "actors": 2,
+      "resources": [
+        "stage_darkness02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "DarknessWeightedLift",
+      "actors": 4,
+      "resources": [
+        "stage_darkness02",
+        "stage_darkness01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "DeadSwitch",
+      "actors": 8,
+      "resources": [
+        "stage_auto_scroll02",
+        "stage_jump06"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "DeadTimer",
+      "actors": 7,
+      "resources": [
+        "stage_time_limit02",
+        "stage_time_limit01",
+        "stage_coin02",
+        "stage_coin01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "DelaySwitch",
+      "actors": 1,
+      "resources": [
+        "stage_magnet02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "DistanceConstraint",
+      "actors": 2,
+      "resources": [
+        "stage_constraint02",
+        "stage_constraint01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "FallBox",
+      "actors": 83,
+      "resources": [
+        "stage_jump07",
+        "stage_fall01",
+        "stage_fall02",
+        "stage_gun02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "ForceColorBox",
+      "actors": 1,
+      "resources": [
+        "stage_gun02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Gate",
+      "actors": 12,
+      "resources": [
+        "stage_big_and_small",
+        "stage_jump07",
+        "stage_jump04",
+        "stage_magnet02",
+        "stage_jump02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Ghost",
+      "actors": 1,
+      "resources": [
+        "stage_ghost01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Goal",
+      "actors": 50,
+      "resources": [
+        "stage_bound01_many",
+        "stage_big_and_small",
+        "stage_auto_scroll02",
+        "stage_jump06",
+        "stage_thunder02",
+        "stage_time_limit02",
+        "stage_multijump02",
+        "stage_majo01",
+        "stage_jump07",
+        "stage_fall01",
+        "stage_thunder01",
+        "stage_jump05",
+        "stage_auto_scroll01",
+        "stage_jump04",
+        "stage_majo02",
+        "stage_move01",
+        "stage_laser_ball01_many",
+        "stage_multijump01",
+        "stage_time_limit01",
+        "stage_fall02",
+        "stage_bowwow01",
+        "stage_seesaw01",
+        "stage_gun02",
+        "stage_magnet02",
+        "stage_breakout03",
+        "stage_switch_puzzle01",
+        "stage_coin02",
+        "stage_plane01",
+        "stage_constraint02",
+        "stage_push01",
+        "stage_laser_ball01",
+        "stage_jump01",
+        "stage_stopwatch01_many",
+        "stage_breakout02",
+        "stage_weight01",
+        "stage_stopwatch01",
+        "stage_bound01_net_many",
+        "stage_gun01",
+        "stage_magnet01",
+        "stage_switch_puzzle02",
+        "stage_bound01",
+        "stage_plane02",
+        "stage_coin01",
+        "stage_push02",
+        "stage_traffic_light01",
+        "stage_constraint01",
+        "stage_breakout01",
+        "stage_jump02",
+        "stage_weight02",
+        "stage_ghost01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "GuardPlayer",
+      "actors": 4,
+      "resources": [
+        "stage_thunder02",
+        "stage_thunder01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "JumpArea",
+      "actors": 5,
+      "resources": [
+        "stage_multijump01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "JumpStand",
+      "actors": 55,
+      "resources": [
+        "stage_auto_scroll02",
+        "stage_time_limit02",
+        "stage_jump04",
+        "stage_move01",
+        "stage_coin02",
+        "stage_stopwatch01_many",
+        "stage_traffic_light01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "JumpStandEx",
+      "actors": 2,
+      "resources": [
+        "stage_jump05",
+        "stage_fall02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "JumpSwitch",
+      "actors": 1,
+      "resources": [
+        "stage_thunder02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Key",
+      "actors": 47,
+      "resources": [
+        "stage_big_and_small",
+        "stage_auto_scroll02",
+        "stage_jump06",
+        "stage_thunder02",
+        "stage_time_limit02",
+        "stage_multijump02",
+        "stage_majo01",
+        "stage_jump07",
+        "stage_fall01",
+        "stage_thunder01",
+        "stage_jump05",
+        "stage_auto_scroll01",
+        "stage_jump04",
+        "stage_majo02",
+        "stage_move01",
+        "stage_multijump01",
+        "stage_time_limit01",
+        "stage_fall02",
+        "stage_bowwow01",
+        "stage_seesaw01",
+        "stage_gun02",
+        "stage_magnet02",
+        "stage_breakout03",
+        "stage_switch_puzzle01",
+        "stage_coin02",
+        "stage_plane01",
+        "stage_constraint02",
+        "stage_push01",
+        "stage_jump01",
+        "stage_stopwatch01_many",
+        "stage_weight01",
+        "stage_stopwatch01",
+        "stage_gun01",
+        "stage_magnet01",
+        "stage_switch_puzzle02",
+        "stage_plane02",
+        "stage_coin01",
+        "stage_push02",
+        "stage_traffic_light01",
+        "stage_constraint01",
+        "stage_jump02",
+        "stage_weight02",
+        "stage_ghost01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "KeyBridge",
+      "actors": 2,
+      "resources": [
+        "stage_jump05"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "LaserBallPitcher",
+      "actors": 3,
+      "resources": [
+        "stage_laser_ball01_many",
+        "stage_laser_ball01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "LaserKeyBox",
+      "actors": 2,
+      "resources": [
+        "stage_laser_ball01_many",
+        "stage_laser_ball01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Lift",
+      "actors": 1,
+      "resources": [
+        "stage_magnet02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "MagnetPlayer",
+      "actors": 16,
+      "resources": [
+        "stage_magnet02",
+        "stage_magnet01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "MajorityController",
+      "actors": 2,
+      "resources": [
+        "stage_majo01",
+        "stage_majo02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "MajorityPlayer",
+      "actors": 2,
+      "resources": [
+        "stage_majo01",
+        "stage_majo02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "MapRect",
+      "actors": 1,
+      "resources": [
+        "stage_constraint01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "MoveEnergy",
+      "actors": 1,
+      "resources": [
+        "stage_move01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "MoveWall",
+      "actors": 1,
+      "resources": [
+        "stage_weight01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "MultiPlayer",
+      "actors": 2,
+      "resources": [
+        "stage_multijump02",
+        "stage_multijump01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "NormalBox",
+      "actors": 1,
+      "resources": [
+        "stage_traffic_light01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "PhysicsArea",
+      "actors": 1,
+      "resources": [
+        "stage_seesaw01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "PhysicsBallPitcher",
+      "actors": 1,
+      "resources": [
+        "stage_seesaw01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "PhysicsSwitch",
+      "actors": 1,
+      "resources": [
+        "stage_seesaw01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "PlaneObstacle",
+      "actors": 13,
+      "resources": [
+        "stage_plane01",
+        "stage_plane02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "PlanePlayer",
+      "actors": 16,
+      "resources": [
+        "stage_plane01",
+        "stage_plane02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Player",
+      "actors": 282,
+      "resources": [
+        "stage_bound01_many",
+        "stage_big_and_small",
+        "stage_auto_scroll02",
+        "stage_jump06",
+        "stage_thunder02",
+        "stage_time_limit02",
+        "stage_jump07",
+        "stage_fall01",
+        "stage_thunder01",
+        "stage_jump05",
+        "stage_auto_scroll01",
+        "stage_jump04",
+        "stage_move01",
+        "stage_laser_ball01_many",
+        "stage_time_limit01",
+        "stage_fall02",
+        "stage_bowwow01",
+        "stage_seesaw01",
+        "stage_switch_puzzle01",
+        "stage_coin02",
+        "stage_constraint02",
+        "stage_push01",
+        "stage_laser_ball01",
+        "stage_jump01",
+        "stage_stopwatch01_many",
+        "stage_darkness02",
+        "stage_weight01",
+        "stage_stopwatch01",
+        "stage_bound01_net_many",
+        "stage_switch_puzzle02",
+        "stage_bound01",
+        "stage_coin01",
+        "stage_push02",
+        "stage_traffic_light01",
+        "stage_constraint01",
+        "stage_jump02",
+        "stage_weight02",
+        "stage_darkness01",
+        "stage_ghost01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "PushBox",
+      "actors": 19,
+      "resources": [
+        "stage_big_and_small",
+        "stage_thunder02",
+        "stage_move01",
+        "stage_time_limit01",
+        "stage_fall02",
+        "stage_darkness02",
+        "stage_push02",
+        "stage_jump02",
+        "stage_darkness01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Puzzle",
+      "actors": 2,
+      "resources": [
+        "stage_switch_puzzle01",
+        "stage_switch_puzzle02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "PuzzlePredictProxy",
+      "actors": 16,
+      "resources": [
+        "stage_switch_puzzle01",
+        "stage_switch_puzzle02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Rect",
+      "actors": 57,
+      "resources": [
+        "stage_big_and_small",
+        "stage_auto_scroll02",
+        "stage_thunder02",
+        "stage_time_limit02",
+        "stage_majo01",
+        "stage_fall01",
+        "stage_auto_scroll01",
+        "stage_move01",
+        "stage_time_limit01",
+        "stage_fall02",
+        "stage_magnet02",
+        "stage_push01",
+        "stage_laser_ball01",
+        "stage_jump01",
+        "stage_gun01",
+        "stage_magnet01",
+        "stage_traffic_light01",
+        "stage_constraint01",
+        "stage_jump02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "RouletteLift",
+      "actors": 2,
+      "resources": [
+        "stage_jump04"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "ScaleSwitch",
+      "actors": 7,
+      "resources": [
+        "stage_big_and_small",
+        "stage_jump07"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "ScrollLimitRange",
+      "actors": 1,
+      "resources": [
+        "stage_jump05"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Seesaw",
+      "actors": 2,
+      "resources": [
+        "stage_seesaw01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "SeesawParent",
+      "actors": 1,
+      "resources": [
+        "stage_seesaw01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "SmallBox",
+      "actors": 2,
+      "resources": [
+        "stage_magnet02",
+        "stage_traffic_light01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "StepEnemy",
+      "actors": 9,
+      "resources": [
+        "stage_auto_scroll02",
+        "stage_majo01",
+        "stage_majo02",
+        "stage_move01",
+        "stage_traffic_light01",
+        "stage_ghost01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "StopWatch",
+      "actors": 12,
+      "resources": [
+        "stage_stopwatch01_many",
+        "stage_stopwatch01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Switch",
+      "actors": 108,
+      "resources": [
+        "stage_big_and_small",
+        "stage_auto_scroll02",
+        "stage_time_limit02",
+        "stage_jump07",
+        "stage_jump04",
+        "stage_multijump01",
+        "stage_time_limit01",
+        "stage_magnet02",
+        "stage_jump01",
+        "stage_stopwatch01_many",
+        "stage_stopwatch01",
+        "stage_jump02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "SwitchMediator",
+      "actors": 1,
+      "resources": [
+        "stage_jump02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "SwitchRect",
+      "actors": 7,
+      "resources": [
+        "stage_jump07"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Text",
+      "actors": 3,
+      "resources": [
+        "stage_auto_scroll02",
+        "stage_gun01",
+        "stage_switch_puzzle02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Thunder",
+      "actors": 45,
+      "resources": [
+        "stage_auto_scroll02",
+        "stage_thunder02",
+        "stage_multijump02",
+        "stage_majo01",
+        "stage_jump07",
+        "stage_fall01",
+        "stage_thunder01",
+        "stage_jump05",
+        "stage_auto_scroll01",
+        "stage_majo02",
+        "stage_move01",
+        "stage_fall02",
+        "stage_gun02",
+        "stage_magnet02",
+        "stage_constraint02",
+        "stage_magnet01",
+        "stage_traffic_light01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "TrafficLight",
+      "actors": 1,
+      "resources": [
+        "stage_traffic_light01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "UpDownEnemy",
+      "actors": 3,
+      "resources": [
+        "stage_majo01",
+        "stage_majo02",
+        "stage_ghost01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "UpDownLift",
+      "actors": 5,
+      "resources": [
+        "stage_majo01",
+        "stage_jump05",
+        "stage_majo02",
+        "stage_weight01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Warp",
+      "actors": 18,
+      "resources": [
+        "stage_majo01",
+        "stage_jump07",
+        "stage_jump05",
+        "stage_jump04",
+        "stage_majo02",
+        "stage_gun02",
+        "stage_magnet02",
+        "stage_jump01",
+        "stage_gun01",
+        "stage_traffic_light01",
+        "stage_jump02",
+        "stage_weight02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "WarpAll",
+      "actors": 3,
+      "resources": [
+        "stage_constraint02",
+        "stage_constraint01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "WarpGunPlayer",
+      "actors": 16,
+      "resources": [
+        "stage_gun02",
+        "stage_gun01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Watch",
+      "actors": 12,
+      "resources": [
+        "stage_bound01_many",
+        "stage_laser_ball01_many",
+        "stage_seesaw01",
+        "stage_switch_puzzle01",
+        "stage_coin02",
+        "stage_laser_ball01",
+        "stage_stopwatch01_many",
+        "stage_breakout02",
+        "stage_bound01_net_many",
+        "stage_switch_puzzle02",
+        "stage_bound01",
+        "stage_breakout01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "WeightedLift",
+      "actors": 8,
+      "resources": [
+        "stage_auto_scroll01",
+        "stage_fall02",
+        "stage_jump01",
+        "stage_weight01",
+        "stage_ghost01"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "WeightedLiftEx",
+      "actors": 4,
+      "resources": [
+        "stage_weight02"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "WeightedLiftEx2",
+      "actors": 1,
+      "resources": [
+        "stage_jump05"
+      ],
+      "runtimeVerified": false
+    },
+    {
+      "type": "Wind",
+      "actors": 2,
+      "resources": [
+        "stage_jump05"
+      ],
+      "runtimeVerified": false
+    }
+  ],
+  "stages": [
+    {
+      "id": "pico1/world/01-01",
+      "world": 1,
+      "round": 1,
+      "worldName": "HELLO PICO PARK",
+      "catalogIndex": 0,
+      "catalogRow": [
+        "stage_jump01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_jump01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 15
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/01-02",
+      "world": 1,
+      "round": 2,
+      "worldName": "HELLO PICO PARK",
+      "catalogIndex": 1,
+      "catalogRow": [
+        "stage_push02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_push02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 13
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/01-03",
+      "world": 1,
+      "round": 3,
+      "worldName": "HELLO PICO PARK",
+      "catalogIndex": 2,
+      "catalogRow": [
+        "stage_jump02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_jump02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 32
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 32
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 31
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 29
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 30
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 32
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 34
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/01-04",
+      "world": 1,
+      "round": 4,
+      "worldName": "HELLO PICO PARK",
+      "catalogIndex": 44,
+      "catalogRow": [
+        "stage_weight01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_weight01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 14
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/02-01",
+      "world": 2,
+      "round": 1,
+      "worldName": "GO TOGETHER",
+      "catalogIndex": 5,
+      "catalogRow": [
+        "stage_constraint01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_constraint01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 15
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/02-02",
+      "world": 2,
+      "round": 2,
+      "worldName": "GO TOGETHER",
+      "catalogIndex": 4,
+      "catalogRow": [
+        "stage_fall01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_fall01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 43
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 43
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 40
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 40
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 40
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 41
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 41
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/02-03",
+      "world": 2,
+      "round": 3,
+      "worldName": "GO TOGETHER",
+      "catalogIndex": 7,
+      "catalogRow": [
+        "stage_constraint02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_constraint02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 13
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/02-04",
+      "world": 2,
+      "round": 4,
+      "worldName": "GO TOGETHER",
+      "catalogIndex": 6,
+      "catalogRow": [
+        "stage_fall02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_fall02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 40
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 40
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 39
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 38
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 38
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 37
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 37
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/03-01",
+      "world": 3,
+      "round": 1,
+      "worldName": "TIME LIMIT",
+      "catalogIndex": 24,
+      "catalogRow": [
+        "stage_coin01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_coin01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 81
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 81
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 81
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 81
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 81
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 81
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 81
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/03-02",
+      "world": 3,
+      "round": 2,
+      "worldName": "TIME LIMIT",
+      "catalogIndex": 25,
+      "catalogRow": [
+        "stage_time_limit02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_time_limit02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 38
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 37
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 37
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 35
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 36
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 37
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 38
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/03-03",
+      "world": 3,
+      "round": 3,
+      "worldName": "TIME LIMIT",
+      "catalogIndex": 26,
+      "catalogRow": [
+        "stage_coin02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_coin02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 88
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 88
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 88
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 88
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 88
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 88
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 88
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/03-04",
+      "world": 3,
+      "round": 4,
+      "worldName": "TIME LIMIT",
+      "catalogIndex": 27,
+      "catalogRow": [
+        "stage_time_limit01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_time_limit01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 37
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 36
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 42
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 41
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 42
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 46
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 47
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/04-01",
+      "world": 4,
+      "round": 1,
+      "worldName": "GIMMICK GIMMICK",
+      "catalogIndex": 16,
+      "catalogRow": [
+        "stage_thunder01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_thunder01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 28
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 28
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 28
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 28
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 28
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 28
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 28
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/04-02",
+      "world": 4,
+      "round": 2,
+      "worldName": "GIMMICK GIMMICK",
+      "catalogIndex": 41,
+      "catalogRow": [
+        "stage_plane01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_plane01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 14
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/04-03",
+      "world": 4,
+      "round": 3,
+      "worldName": "GIMMICK GIMMICK",
+      "catalogIndex": 18,
+      "catalogRow": [
+        "stage_stopwatch01",
+        0,
+        "",
+        [
+          5,
+          "stage_stopwatch01_many"
+        ]
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_stopwatch01",
+          "catalogSlot": 0,
+          "rule": null
+        },
+        {
+          "sourceStageId": "stage_stopwatch01_many",
+          "catalogSlot": 3,
+          "rule": [
+            5,
+            "stage_stopwatch01_many"
+          ]
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 11
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 15
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/04-04",
+      "world": 4,
+      "round": 4,
+      "worldName": "GIMMICK GIMMICK",
+      "catalogIndex": 17,
+      "catalogRow": [
+        "stage_big_and_small",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_big_and_small",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 20
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 20
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 20
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 20
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 20
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 20
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 20
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/05-01",
+      "world": 5,
+      "round": 1,
+      "worldName": "ALL FOR ONE",
+      "catalogIndex": 8,
+      "catalogRow": [
+        "stage_majo01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_majo01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 14
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/05-02",
+      "world": 5,
+      "round": 2,
+      "worldName": "ALL FOR ONE",
+      "catalogIndex": 9,
+      "catalogRow": [
+        "stage_multijump01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_multijump01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 10
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/05-03",
+      "world": 5,
+      "round": 3,
+      "worldName": "ALL FOR ONE",
+      "catalogIndex": 10,
+      "catalogRow": [
+        "stage_majo02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_majo02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 13
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/05-04",
+      "world": 5,
+      "round": 4,
+      "worldName": "ALL FOR ONE",
+      "catalogIndex": 11,
+      "catalogRow": [
+        "stage_multijump02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_multijump02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 7
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 7
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 7
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 7
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 7
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 7
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 7
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/06-01",
+      "world": 6,
+      "round": 1,
+      "worldName": "PUSH OR JUMP",
+      "catalogIndex": 3,
+      "catalogRow": [
+        "stage_push01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_push01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 23
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 23
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 23
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 23
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 23
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 23
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 23
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/06-02",
+      "world": 6,
+      "round": 2,
+      "worldName": "PUSH OR JUMP",
+      "catalogIndex": 40,
+      "catalogRow": [
+        "stage_auto_scroll01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_auto_scroll01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 21
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 21
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 21
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 21
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 21
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 21
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 21
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/06-03",
+      "world": 6,
+      "round": 3,
+      "worldName": "PUSH OR JUMP",
+      "catalogIndex": 46,
+      "catalogRow": [
+        "stage_weight02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_weight02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 16
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/06-04",
+      "world": 6,
+      "round": 4,
+      "worldName": "PUSH OR JUMP",
+      "catalogIndex": 45,
+      "catalogRow": [
+        "stage_jump06",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_jump06",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 17
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/07-01",
+      "world": 7,
+      "round": 1,
+      "worldName": "MOVE AND STOP",
+      "catalogIndex": 32,
+      "catalogRow": [
+        "stage_bowwow01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_bowwow01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 11
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 11
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 11
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 11
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 11
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 11
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 11
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/07-02",
+      "world": 7,
+      "round": 2,
+      "worldName": "MOVE AND STOP",
+      "catalogIndex": 33,
+      "catalogRow": [
+        "stage_traffic_light01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_traffic_light01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 46
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 46
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 46
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 46
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 46
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 46
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 46
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/07-03",
+      "world": 7,
+      "round": 3,
+      "worldName": "MOVE AND STOP",
+      "catalogIndex": 34,
+      "catalogRow": [
+        "stage_ghost01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_ghost01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 13
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 13
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/07-04",
+      "world": 7,
+      "round": 4,
+      "worldName": "MOVE AND STOP",
+      "catalogIndex": 35,
+      "catalogRow": [
+        "stage_move01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_move01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 18
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 18
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 18
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 18
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/08-01",
+      "world": 8,
+      "round": 1,
+      "worldName": "RETRO GAME",
+      "catalogIndex": 29,
+      "catalogRow": [
+        "stage_switch_puzzle01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_switch_puzzle01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 20
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 20
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 20
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 20
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 20
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 20
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 20
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/08-02",
+      "world": 8,
+      "round": 2,
+      "worldName": "RETRO GAME",
+      "catalogIndex": 28,
+      "catalogRow": [
+        "stage_breakout01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_breakout01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 8
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 8
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 8
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 12
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 12
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/08-03",
+      "world": 8,
+      "round": 3,
+      "worldName": "RETRO GAME",
+      "catalogIndex": 31,
+      "catalogRow": [
+        "stage_switch_puzzle02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_switch_puzzle02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 21
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 21
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 21
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 21
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 21
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 21
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 21
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/08-04",
+      "world": 8,
+      "round": 4,
+      "worldName": "RETRO GAME",
+      "catalogIndex": 30,
+      "catalogRow": [
+        "stage_breakout02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_breakout02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 8
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 8
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 8
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 12
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 12
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/09-01",
+      "world": 9,
+      "round": 1,
+      "worldName": "BALL PARK",
+      "catalogIndex": 38,
+      "catalogRow": [
+        "stage_laser_ball01",
+        0,
+        "",
+        [
+          5,
+          "stage_laser_ball01_many"
+        ]
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_laser_ball01",
+          "catalogSlot": 0,
+          "rule": null
+        },
+        {
+          "sourceStageId": "stage_laser_ball01_many",
+          "catalogSlot": 3,
+          "rule": [
+            5,
+            "stage_laser_ball01_many"
+          ]
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 10
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 10
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/09-02",
+      "world": 9,
+      "round": 2,
+      "worldName": "BALL PARK",
+      "catalogIndex": 36,
+      "catalogRow": [
+        "stage_seesaw01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_seesaw01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 18
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 18
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 18
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 18
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 18
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 18
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 18
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/09-03",
+      "world": 9,
+      "round": 3,
+      "worldName": "BALL PARK",
+      "catalogIndex": 37,
+      "catalogRow": [
+        "stage_breakout03",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_breakout03",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 11
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 11
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 11
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 11
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 11
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 11
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 11
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/09-04",
+      "world": 9,
+      "round": 4,
+      "worldName": "BALL PARK",
+      "catalogIndex": 39,
+      "catalogRow": [
+        "stage_bound01",
+        0,
+        "",
+        [
+          5,
+          "stage_bound01_many"
+        ],
+        [],
+        [
+          5,
+          "stage_bound01_net_many"
+        ]
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_bound01",
+          "catalogSlot": 0,
+          "rule": null
+        },
+        {
+          "sourceStageId": "stage_bound01_many",
+          "catalogSlot": 3,
+          "rule": [
+            5,
+            "stage_bound01_many"
+          ]
+        },
+        {
+          "sourceStageId": "stage_bound01_net_many",
+          "catalogSlot": 5,
+          "rule": [
+            5,
+            "stage_bound01_net_many"
+          ]
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 14
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 14
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/10-01",
+      "world": 10,
+      "round": 1,
+      "worldName": "TWO PLAYERS",
+      "catalogIndex": 21,
+      "catalogRow": [
+        "stage_jump07",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_jump07",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 34
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 34
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 34
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 34
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 34
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 34
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 34
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/10-02",
+      "world": 10,
+      "round": 2,
+      "worldName": "TWO PLAYERS",
+      "catalogIndex": 23,
+      "catalogRow": [
+        "stage_jump04",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_jump04",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 17
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/10-03",
+      "world": 10,
+      "round": 3,
+      "worldName": "TWO PLAYERS",
+      "catalogIndex": 20,
+      "catalogRow": [
+        "stage_darkness01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_darkness01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 12
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 12
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 12
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 12
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 12
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 12
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 12
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/10-04",
+      "world": 10,
+      "round": 4,
+      "worldName": "TWO PLAYERS",
+      "catalogIndex": 22,
+      "catalogRow": [
+        "stage_darkness02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_darkness02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 16
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/11-01",
+      "world": 11,
+      "round": 1,
+      "worldName": "HAND GIMMICK",
+      "catalogIndex": 12,
+      "catalogRow": [
+        "stage_gun01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_gun01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 15
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 15
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/11-02",
+      "world": 11,
+      "round": 2,
+      "worldName": "HAND GIMMICK",
+      "catalogIndex": 13,
+      "catalogRow": [
+        "stage_magnet01",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_magnet01",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 16
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/11-03",
+      "world": 11,
+      "round": 3,
+      "worldName": "HAND GIMMICK",
+      "catalogIndex": 14,
+      "catalogRow": [
+        "stage_gun02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_gun02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 16
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/11-04",
+      "world": 11,
+      "round": 4,
+      "worldName": "HAND GIMMICK",
+      "catalogIndex": 15,
+      "catalogRow": [
+        "stage_magnet02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_magnet02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 19
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 19
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 19
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 19
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 19
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 19
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 19
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/12-01",
+      "world": 12,
+      "round": 1,
+      "worldName": "LAST PARK",
+      "catalogIndex": 19,
+      "catalogRow": [
+        "stage_thunder02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_thunder02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 16
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 16
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/12-02",
+      "world": 12,
+      "round": 2,
+      "worldName": "LAST PARK",
+      "catalogIndex": 47,
+      "catalogRow": [
+        "stage_jump05",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_jump05",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 21
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 21
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 21
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 20
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 20
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 20
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 20
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/12-03",
+      "world": 12,
+      "round": 3,
+      "worldName": "LAST PARK",
+      "catalogIndex": 43,
+      "catalogRow": [
+        "stage_plane02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_plane02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 17
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 17
+        }
+      ]
+    },
+    {
+      "id": "pico1/world/12-04",
+      "world": 12,
+      "round": 4,
+      "worldName": "LAST PARK",
+      "catalogIndex": 42,
+      "catalogRow": [
+        "stage_auto_scroll02",
+        0
+      ],
+      "variants": [
+        {
+          "sourceStageId": "stage_auto_scroll02",
+          "catalogSlot": 0,
+          "rule": null
+        }
+      ],
+      "runtimeReady": false,
+      "populations": [
+        {
+          "count": 2,
+          "baseResourcePopulationMatchedActors": 22
+        },
+        {
+          "count": 3,
+          "baseResourcePopulationMatchedActors": 22
+        },
+        {
+          "count": 4,
+          "baseResourcePopulationMatchedActors": 22
+        },
+        {
+          "count": 5,
+          "baseResourcePopulationMatchedActors": 22
+        },
+        {
+          "count": 6,
+          "baseResourcePopulationMatchedActors": 22
+        },
+        {
+          "count": 7,
+          "baseResourcePopulationMatchedActors": 22
+        },
+        {
+          "count": 8,
+          "baseResourcePopulationMatchedActors": 22
+        }
+      ]
+    }
+  ]
+}

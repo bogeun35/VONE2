@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-10-10T23:19:09.406Z",
+  "clients": 2,
+  "backend": "Actual Firebase RTDB",
+  "checks": {
+    "roundStarted": true,
+    "wholePartyLost": true,
+    "sameStageRestarted": true,
+    "noLobbyBounce": true,
+    "respawnedAtSourceSpawns": true
+  },
+  "browserErrors": [],
+  "errors": [],
+  "passed": true,
+  "lastStage": "spawn positions are restored",
+  "stages": [
+    "load client 0",
+    "load client 1",
+    "roster",
+    "start round",
+    "force one player out of bounds on the host",
+    "every client loses the round",
+    "same stage restarts for everyone without a lobby",
+    "spawn positions are restored"
+  ],
+  "code": "CPONQS",
+  "runIdBefore": "mv30ndih-6ym69",
+  "stage": "st_w_01_01",
+  "runIdAfter": "mv30neg6-51d07",
+  "observedStatuses": [
+    "dead",
+    "game",
+    "dead",
+    "game"
+  ]
+}

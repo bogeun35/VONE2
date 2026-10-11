@@ -1,0 +1,13 @@
+{
+  "stageId": "st_w_01_04",
+  "generatedAt": "2026-10-09T23:44:32.729Z",
+  "musicPlayed": false,
+  "originalFidelityVerified": false,
+  "results": [],
+  "failures": [
+    {
+      "count": 8,
+      "error": "far right spring timed out: {\"x\":2232,\"y\":962,\"vy\":0,\"support\":\"terrain:65\",\"ticks\":2840}"
+    }
+  ]
+}

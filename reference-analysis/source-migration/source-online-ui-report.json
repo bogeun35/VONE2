@@ -1,0 +1,225 @@
+{
+  "timestamp": "2026-10-09T23:37:26.698Z",
+  "backend": "Actual Firebase RTDB; integrated UI; eight isolated Chrome contexts",
+  "checks": {
+    "eightUiRosters": true,
+    "eightUiGamesStarted": true,
+    "guestOwnMovementAndDigitIsolation": true,
+    "guestRightMovement": true,
+    "hostPausePropagated": true,
+    "snapshotMirroredToAll": true,
+    "guestCannotResumeHostPause": true,
+    "hostResumePropagated": true,
+    "hostDepartureElectsNewHostAndLobby": true,
+    "sevenUiClientsRestartAfterReadiness": true,
+    "multipleStageSelectionAndDeviceStateSync": true,
+    "allClientsExitThroughUi": true,
+    "emptyTestRoomDeleted": true
+  },
+  "browserErrors": [],
+  "errors": [],
+  "passed": true,
+  "code": "MR5IJS",
+  "networkDiagnostics": [
+    {
+      "id": "p864d64a804a44e99ac0399f60f47248e",
+      "errors": [],
+      "transactions": [
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "id": "p57db27220c154eb3a8aae40ab3c47b39",
+      "errors": [],
+      "transactions": [
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": false
+        }
+      ]
+    },
+    {
+      "id": "pb6fb475b74af4a6a95fd471b8737b9b6",
+      "errors": [],
+      "transactions": [
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "id": "p80f858fcbf1845f6b895d4805bc5a895",
+      "errors": [],
+      "transactions": [
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "id": "pc46961ed9faa4539909ade138eaba113",
+      "errors": [],
+      "transactions": [
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "id": "p35560a3264d24036b16415d1f9b3a1d7",
+      "errors": [],
+      "transactions": [
+        {
+          "committed": false,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "id": "p37320555e2dc4da9a236e660fe26b9b0",
+      "errors": [],
+      "transactions": [
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "id": "p935e4992a1394cdd8785ab4781b428b5",
+      "errors": [],
+      "transactions": [
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        },
+        {
+          "committed": true,
+          "exists": true
+        }
+      ]
+    }
+  ]
+}

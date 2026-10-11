@@ -1,0 +1,142 @@
+{
+  "date": "2026-10-09",
+  "objective": "PICO PARK 1·2 전체 모드 이관 후 2~8인 검수. 본편은 48+60=108, 전체 표시 항목147. 임의 맵을 원본 이관으로 계산하지 않는다.",
+  "sourceData": {
+    "worldStages": 60,
+    "variants": 75,
+    "actors": 2210,
+    "actorTypes": 126,
+    "tileCells": 60461,
+    "losslessRoundTripVerified": true
+  },
+  "currentStatus": "all_world_source_data_recovered_first_pp2_stage_connected_fidelity_pending",
+  "publishedGame": {
+    "url": "https://bogeun35.github.io/chamchicode/park/source-play/",
+    "version": "20261009-07",
+    "originalSourcePlayableRounds": 1,
+    "notice": "원본2편1-1 온라인2~8인 연결 검수판. 실제8인UI12항목 및 2~8인입력전체경로 통과. 전체이관·원본일치·사람게임성 검수 미완료."
+  },
+  "localReview": {
+    "url": "http://127.0.0.1:8797/play/",
+    "restart": "node reference-analysis/source-migration/atlas-preview.cjs 8797",
+    "audio": "original BGM; all automated tests muted",
+    "keyboard": "Enter 시작, 방향키 이동·점프·문 입장, 숫자1~8 캐릭터, Backspace 일시정지, R 재시작, F 전체화면",
+    "chromeRenderAndNavigationPassed": true
+  },
+  "verified": [
+    "94개 설치 파일 정적 해석, 원본 코드 실행/브루트포스 없이 60 본편 ID 확인",
+    "모든 32개 오브젝트 파라미터 슬롯과 좌표/이름/설정 무손실 보존",
+    "인원별 actor/variant 선택 규칙을 원본 네이티브 분기에서 확인",
+    "타일은 패딩을 포함한 열 우선 base64; 웹용 행 우선 배열로 변환",
+    "원본·네이티브·웹 좌표 Y하향, 원점(0,0), 타일48px, 80개 타일 충돌/빙판/파괴/낙하 속성 확인",
+    "MapRect와 Rect의 기하학 파라미터 확인"
+  ],
+  "remaining": [
+    "본편108 및 전체 모드147 항목의 나머지 원본 장치·규칙·런타임 이관",
+    "원본 물리·열쇠 전달·문 상태 전이 비교",
+    "2~8인 실제 온라인 전체 협동 경로·실패복구·게임성 검수"
+  ],
+  "evidence": [
+    "source-world-import-report.json",
+    "population-selection-report.json",
+    "parameter-schema.json",
+    "quantum-field-offsets.json",
+    "quantum-parameter-disassembly.txt",
+    "atlas/browser-check.json"
+  ],
+  "localInputs": [
+    "installed-stage-decoded.local.json",
+    "source-world.local.json",
+    "source-geometry.local.json"
+  ],
+  "testCommand": "node --test reference-analysis/source-migration/source-world.test.cjs reference-analysis/source-migration/source-geometry.test.cjs reference-analysis/source-migration/atlas/model.test.cjs",
+  "testResult": {
+    "passed": 7,
+    "failed": 0,
+    "populationViews": 840
+  },
+  "publicationRule": "원본 음원/그림/네이티브 코드/복호화 raw파일은 배포 경로에 넣지 않는다. 이관 코드와 자체 표현만 배포 준비한다.",
+  "coordinateCorrection": {
+    "sourceAndNativeY": "downward",
+    "evidence": "ActorFactory assigns raw posY unchanged; Map.GetMapChipType uses direct y*width+x",
+    "supersedes": "earlier upward assumption"
+  },
+  "latestGitCommit": "75e9db7",
+  "fullScopeEvidence": "full-scope-status.json",
+  "firstStageTests": {
+    "runtimePassed": 10,
+    "chromePopulations": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "fullRouteVerified": true,
+    "audio": "muted"
+  },
+  "populationAudit": {
+    "passed": 63,
+    "fixed": "equal-height carrier selection depended on actor array order",
+    "source": "population-review-report.json",
+    "humanFunVerified": false,
+    "fullRouteVerified": false,
+    "failed": 0
+  },
+  "music": {
+    "durationSeconds": 40,
+    "file": "play/audio/park-together.wav",
+    "original": true,
+    "muteKey": "M",
+    "testsMuted": true
+  },
+  "actualInputPrefix": {
+    "evidence": "whole-route-review-report.json",
+    "counts": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "firstStairTopReached": true,
+    "replayKey": "T",
+    "fullRouteVerified": false,
+    "allEightFirstStairReached": true
+  },
+  "deploymentEntry": {
+    "latestEntryVerified": true,
+    "legacy": "removed; coop.html redirects to source-play",
+    "gameDeck": "https://bogeun35.github.io/chamchicode/?game=coop"
+  },
+  "completeInputRoute": {
+    "counts": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "humanFunVerified": false,
+    "nativeFidelityVerified": false,
+    "activeBodyOverlap": 0,
+    "evidence": "whole-route-completion-report.json",
+    "inputOnlyClear": true
+  },
+  "actualOnlineUi": {
+    "testsMuted": true,
+    "passed": true,
+    "publicFilesVerified": true,
+    "players": 8,
+    "errors": 0,
+    "emptyRoomServerDeleted": true,
+    "evidence": "source-online-ui-report.json",
+    "checks": 12
+  }
+}

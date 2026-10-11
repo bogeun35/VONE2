@@ -1,0 +1,7 @@
+# Unity asset dumps pulled from the installed game. Large, game-derived and
+# regenerable by local-data/inspect_unity.py; not needed to continue the port.
+local-data/
+
+# The generated play build mirrors what deploy-chamchicode already publishes.
+# Its hand-written sources are tracked; the packaged audio is not.
+source-migration/play/audio/

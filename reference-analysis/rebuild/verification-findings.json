@@ -1,0 +1,51 @@
+{
+  "scope": "standalone reconstruction device and engine regressions",
+  "implementationIsOriginalVerified": false,
+  "findings": [
+    {
+      "id": "device-quorum-counted-crate",
+      "reportedBy": "independent review",
+      "reproduction": "A grounded kind:crate body on a requiredPlayers:1 lift incorrectly satisfied its player quorum.",
+      "resolution": "Lift occupancy accepts kind:player or legacy untyped player bodies; a crate cannot satisfy the quorum.",
+      "test": "crate is physical obstruction but cannot count as lift rider",
+      "status": "fixed-and-regression-tested"
+    },
+    {
+      "id": "bridge-materialized-inside-body",
+      "reportedBy": "independent review",
+      "reproduction": "A bridge signal could activate while a falling body intersected its rectangle.",
+      "resolution": "Bridge activation waits until intersecting bodies clear the solid volume.",
+      "test": "bridge creation waits until falling body clears its volume",
+      "status": "fixed-and-regression-tested"
+    },
+    {
+      "id": "gate-closed-through-lift",
+      "reportedBy": "independent review",
+      "reproduction": "Gate closure checked bodies but ignored overlapping solid devices such as lifts.",
+      "resolution": "Gate closure and bridge activation include other currently solid devices in the overlap check.",
+      "test": "closing gate and appearing bridge wait for solid lift to clear",
+      "status": "fixed-and-regression-tested"
+    },
+    {
+      "id": "exit-required-simultaneous-overlap",
+      "reportedBy": "integration review",
+      "reproduction": "Transient exit overlap combined with solid players made larger groups unable to share the narrow door.",
+      "resolution": "With the shared key, entering players retain exit admission and leave the active collision and occupancy simulation. Clear requires every player admitted.",
+      "test": "2, 4 and 8 players enter a narrow exit sequentially and stay entered",
+      "status": "fixed-and-regression-tested"
+    },
+    {
+      "id": "initial-gap-fall-policy",
+      "reportedBy": "independent review",
+      "status": "source-verification-pending",
+      "observedImplementation": "Walking into the initial gap without jumping causes a fall failure.",
+      "sourceLimit": "The observed original video does not show a fall into this gap. The developer talk about safe failure examples does not prove this particular gap is safe.",
+      "resolution": "Keep unresolved; compare original failure behavior before changing the stage."
+    }
+  ],
+  "limits": [
+    "1-1 two-player route completed with simulated input frames; not a claim of human fun evaluation.",
+    "Coordinates, speeds, collision tolerances and 3-8 player adaptations are not measured original-game constants.",
+    "No complete 4-8 player route run has been verified."
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "scope": "PP2 world01-04 Gate/SwitchObserver",
+  "tests": {
+    "passed": 4,
+    "failed": 0,
+    "command": "node --test reference-analysis/source-migration/source-gate-devices.test.cjs"
+  },
+  "completePhysicsFidelity": false,
+  "verifiedFacts": [
+    {
+      "type": "Gate",
+      "evidence": [
+        "ParseParameter 0x1818512f0",
+        "OnRecvEvent 0x1818520d0",
+        "OnUpdate 0x181851930",
+        "move 0x181851ba0",
+        "scaling 0x181851e70",
+        "OnPushedBack 0x181728e90"
+      ],
+      "facts": [
+        "slot0 number of units; slots1,2 normalized axis direction; slot3 unit size default32",
+        "negative axis extends initial rectangle backward by (unitCount-1)*unitSize",
+        "event61 begins contraction to unit square; event60 expands to initial rectangle",
+        "native opening moves and scales2 pixels/update; closing1 pixel/update",
+        "OnPushedBack sets rollback bit and next OnUpdate restores previous position/size",
+        "world01-04 gates are32x160 and contract to32x32 over64 native updates"
+      ]
+    },
+    {
+      "type": "SwitchObserver",
+      "evidence": [
+        "ParseParameter 0x181717680",
+        "AddSwitch 0x181718280",
+        "OnUpdate 0x181717c80",
+        "NotifySwitchOnOffEvent 0x181718110"
+      ],
+      "facts": [
+        "slot0 target name,slot1 name filter,slots2,3 UI offset,slot4 scale,slot5 completion sound",
+        "counts selected named switch m_IsOn values",
+        "only when all-on state changes, emits target event61 for all-on /60 for incomplete",
+        "world01-04 all population variants have seven selected switches"
+      ]
+    },
+    {
+      "type": "Switch",
+      "evidence": [
+        "SetEnableRepeat 0x181690220",
+        "OnUpdate 0x1817149f0",
+        "OnCollided 0x181714f80"
+      ],
+      "facts": [
+        "repeat flag7 clears on flag2 each update; normal switch preserves on flag2",
+        "world01-04 selected repeat switches count equals population-1; others latch permanently after press"
+      ]
+    },
+    {
+      "type": "Key",
+      "evidence": [
+        "ParseParameter 0x18186b780",
+        "OnRecvEvent 0x18186cf90"
+      ],
+      "facts": [
+        "slot2>0 sets initial inactive",
+        "event61 activates; event60 deactivates uncollected key",
+        "collected key requires separate attachment state handling; browser global pickup approximation remains"
+      ]
+    }
+  ],
+  "runtimeInterpretations": [
+    "Gate pushback checks newly overlapping AABBs and rolls back within same browser step; native ordering may rollback next step",
+    "Observer name-filter match uses startsWith; all chapter04 selected switch names satisfy this and substring; generic string-method semantics still need metadata resolution",
+    "Only axis-aligned Gate supported; diagonal requests rejected"
+  ],
+  "pending": [
+    "Original side-by-side fidelity comparison",
+    "Full stage04 input-only route verification for2..8",
+    "Native key attach/transfer/reappearance behavior"
+  ]
+}

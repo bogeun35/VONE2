@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "device": "SwitchTimer",
+  "stage": "st_w_04_03",
+  "module": "source-switchtimer-devices.js",
+  "status": "device-restored-from-native-evidence; st_w_04_03 compiles for 2-8 players once registered",
+  "binary": {
+    "file": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll",
+    "imageBase": "0x180000000",
+    "note": "Read-only static disassembly via tools/capstone. No native code executed, no original asset shipped."
+  },
+  "keyFinding": {
+    "noDedicatedComponent": "There is NO SwitchTimerComponent and NO SwitchTimerObserver anywhere in the binary. quantum-method-index.json only holds SwitchTimerActorComponent (a different actor type, used by st_w_14_04), and assembly-csharp-method-index.json only holds SwitchTimerActorView / EditableSwitchTimer*. The SwitchTimer actor is served by the shared Quantum TimerComponent.",
+    "proof": "TimerComponent.ParseParameter 0x18172dd1b..0x18172dd47 switches on QActorCreateParam.type: 0x0a -> word[component+0]=0x102, 0x1f -> 0x101, 0x25 -> 0x103. installed-stage-decoded.local.json maps type 0x0a (10) to DeadTimer and type 0x25 (37) to SwitchTimer; type 0x1f (31) appears in no shipped stage. The low byte is m_TimeUpType, the high byte m_Type (il2cpp offsets 16 and 17), so a SwitchTimer is permanently TimerTimeUpType.Switch(3) + TimerType.TimeDown(1).",
+    "enumValues": "quantum-field-offsets.json: TimerTimeUpType = None 0, Retry 1, Dead 2, Switch 3; TimerType = TimeUp 0, TimeDown 1."
+  },
+  "nativeEvidence": {
+    "quantumComponent": {
+      "type": "Quantum.TimerComponent",
+      "Creator": "0x18172d630",
+      "ParseParameter": "0x18172d730",
+      "OnUpdate": "0x18172dec0",
+      "onTimeUp": "0x18172e070",
+      "OnRecvEvent": "0x18172e250",
+      "SetSec": "0x18172e3c0",
+      "IsVisible": "0x1816b9070",
+      "cctor": "0x18172e3e0",
+      "Initialize": "0x180476130 (empty ret 0)",
+      "InitPost": "0x180476130 (empty ret 0)",
+      "OnStart": "0x180476130 (empty ret 0)",
+      "OnPost": "0x180476130 (empty ret 0)",
+      "InitCollision": "absent - TimerComponent has no collision and no OnCollided at all"
+    },
+    "view": {
+      "type": "TimerView",
+      "OnInitialize": "0x1805d1740 (hide test at 0x1805d189c: `test byte[component+2],1; ja` skips the whole UI build)",
+      "OnUpdate": "0x1805d1a70",
+      "updateTimer": "0x1805d1aa0 (mm:ss from floor(m_Sec) at 0x1805d1c04..0x1805d1c39)",
+      "onBeatAnimation": "0x1805d1d00"
+    },
+    "componentFieldOffsets": {
+      "note": "il2cpp offsets from quantum-field-offsets.json minus the 16 byte header; the module header quotes the same table.",
+      "m_TimeUpType": "+0x00 (il2cpp 16)",
+      "m_Type": "+0x01 (il2cpp 17)",
+      "m_Flags": "+0x02 (il2cpp 18, ushort)",
+      "m_EntityRef": "+0x08 (il2cpp 24)",
+      "m_Scale": "+0x10 (il2cpp 32)",
+      "m_Sec": "+0x18 (il2cpp 40)",
+      "m_Pos": "+0x20 (il2cpp 48, FPVector2)",
+      "m_TargetName": "+0x30 (il2cpp 64, QStringUtf8_32)"
+    },
+    "flagBits": {
+      "source": "The bitfield uses the shared 16 bit QFlags instantiation (typeIndex 28513, also used by ThunderComponent, CountUpTimerComponent and others), so the bit NAMES are not in global-metadata.dat. The names below are derived from behaviour, the addresses are exact.",
+      "bit0_hidden": "ParseParameter 0x18172de41..0x18172de53 sets it from datas[13]. TimerComponent.IsVisible 0x1816b9070 returns !bit0, and TimerView.OnInitialize 0x1805d189c refuses to build the readout when it is set.",
+      "bit1_muteTick": "ParseParameter 0x18172de58..0x18172de6d sets it from datas[14]. OnUpdate 0x18172dfde skips Frame.PlaySe when it is set.",
+      "bit2_stopped": "OnUpdate 0x18172df48 (TimeDown) and 0x18172df0b (TimeUp) skip the ageing. Set by OnRecvEvent 0x18172e35e, cleared by OnRecvEvent 0x18172e327.",
+      "bit3_firedTimeUp": "Set after onTimeUp at 0x18172e03a, tested at 0x18172e00e and 0x18172e34f, cleared by ParseParameter 0x18172dd08 and SetSec 0x18172e3c9."
+    },
+    "constants": {
+      "UI_BASE_SCALE": "0x000a0000 = 10, written at .cctor 0x18172e4cf (statics+0x08)",
+      "UI_POSX": "0, written at .cctor 0x18172e4e5 (statics+0x10)",
+      "UI_POSY": "0x01a00000 = 416, written at .cctor 0x18172e4fb (statics+0x18). Independently cross-checks the +416 readout anchor source-gate-devices.js already uses for SwitchObserver.",
+      "WARNING_SECOND": "0x000a0000 = 10, written at .cctor 0x18172e511 (statics+0x20), compared at OnUpdate 0x18172dfb6",
+      "timeUpEpsilon": "OnUpdate 0x18172e008 `cmp rcx,4` on abs(m_Sec raw) - the same 4/65536 FP non-zero epsilon the Thunder and BlinkBlock ports already quote",
+      "secondBias": "OnUpdate 0x18172dfc5/0x18172dfcc `add rbx,-0x28f` then `sar ..,0x10` - 0x28f = 655 raw = ~0.009994 s, applied to the old AND the new value before the floor",
+      "tickSeId": "0x13, OnUpdate 0x18172dfec `mov dl,0x13` -> Frame.PlaySe 0x18174a3b0",
+      "RESOURCE_PATH": "QResourcePath.GetTimerPath at .cctor 0x18172e446 (statics+0x00)"
+    },
+    "supportingCalls": {
+      "playerCount": "Frame.GetPlayerActorCount 0x1817494b0 -> ActorSceneComponent.GetPlayerActorCount 0x1816a8100, called at ParseParameter 0x18172da0e",
+      "nameLookup": "Frame.NotifyEvent 0x181749fa0 -> ActorSceneComponent.FindActor 0x1816a7b80: an EXACT-name dictionary hit that returns a single actor, and returns null for an empty name (0x1816a7c47 `cmp word[name],0`). Not prefix matching - unlike the SwitchObserver name filter in source-gate-devices.js.",
+      "eventDelivery": "NotifyEvents.Invoke_OnRecvEvent 0x18174a0a5 is called synchronously from inside onTimeUp, so the target reacts in the same frame",
+      "eventParam": "ActorComponent.GetEventParam 0x18169dbd0 -> QEventParamManager.Get 0x181780b80, which zeroes the entire param object (including +0x60 at 0x181780c29) before stamping the event id at +0x10 and the sender at +0x18",
+      "eventPayloadMeaning": "The +0x60 field a Timer reads for event 61 is filled by SwitchComponent.NotifyTarget 0x181714e06 from SwitchComponent.m_TimerAddSecond (il2cpp field offset 48 = struct +0x20, setter SetTimerAddSecond 0x18169cdf0), so the payload literally means 'seconds to add to a timer'. WHICH authored Switch parameter writes m_TimerAddSecond was not traced - SwitchComponent has no ParseParameter of its own.",
+      "deltaTime": "Frame.get_DeltaTime 0x18173a090 only forwards a runtime session field, so the FP raw of a native tick delta is NOT in the binary"
+    }
+  },
+  "dataSlotMap": {
+    "0": "m_Sec base, seconds (FP). Read at ParseParameter 0x18172d859..0x18172d866 and used as the running total `rbx`.",
+    "1": "Per-player seconds. ParseParameter 0x18172da42..0x18172da4e: when datas[1] != FP._0 the base becomes `playerCount * datas[1] + datas[0]` (int * FP product on the raw). Zero in every shipped SwitchTimer.",
+    "2": "m_Pos.x offset: m_Pos.x = UI_POSX(0) + datas[2]. Written at 0x18172dd6d..0x18172dd8a. UI only.",
+    "3": "m_Pos.y offset: m_Pos.y = UI_POSY(416) + datas[3]. Same instruction block. UI only.",
+    "4": "m_Scale factor: m_Scale = datas[4] * UI_BASE_SCALE(10), but ONLY when datas[4] > FP._0 (0x18172ddb5 `cmp rdi,[rax]; jle`), otherwise m_Scale stays 0. UI only.",
+    "5": "m_TargetName, a QStringUtf8_32 built at 0x18172de29. This is the EVENT TARGET actor name, not a switch name filter: onTimeUp hands it to Frame.NotifyEvent, which does an exact-name single-actor lookup. In st_w_04_03 it names the Bridge actors.",
+    "6..12": "Per-player-count override of m_Sec. ParseParameter 0x18172da58..0x18172dc5b: index = 6 + clamp(playerCount-2, 0, 7); a non-zero float there REPLACES everything computed from datas[0]/datas[1] (`test rax,rax; cmovne rbx,rax` at 0x18172da90). Counts 2..8 reach datas[6..12]. No shipped SwitchTimer populates any of them.",
+    "13": "DUAL USE. (a) m_Flags bit0 = hide the timer UI, read as floor(raw) != 0 at 0x18172d9ab..0x18172d9c0 and applied at 0x18172de41. (b) It is also index 13 of the override table above, which the clamp only selects at 9 or more players - unreachable in PICO PARK 2, so in practice it is the hide flag only. This collision is in the original, not in the port.",
+    "14": "m_Flags bit1 = mute the per-second Se. floor(raw) != 0, read at 0x18172d9cf..0x18172d9f4, applied at 0x18172de58.",
+    "15..18": "Read ONLY when QActorCreateParam.type == 0x0a (DeadTimer): the guard at ParseParameter 0x18172da97 `cmp dword[createParam+0x30],0xa; jne 0x18172dcef` skips the whole QPlayerCountParamUtility.Find 0x181786950 block for a SwitchTimer. The module reports a warning if a SwitchTimer populates them.",
+    "19..31": "Never read by ParseParameter for any Timer actor type."
+  },
+  "behaviour": {
+    "direction": "Always TimerType.TimeDown for a SwitchTimer. OnUpdate 0x18172df57..0x18172df79: m_Sec -= Frame.DeltaTime, clamped to exactly 0 when the subtraction goes negative. (The TimeUp branch at 0x18172deff adds instead and returns immediately, so a count-up timer never reaches the time-up test - documented for completeness, unreachable here.)",
+    "pause": "m_Flags bit2 skips only the decrement. The per-second Se block and the time-up test still run every update, because 0x18172df4c jumps past the subtraction to 0x18172df81.",
+    "tickSound": "Only for m_TimeUpType Dead(2) or Switch(3) (0x18172df81 `movzx eax,byte[rsi]; sub al,2; cmp al,1; ja`). Fires when the new m_Sec < WARNING_SECOND(10), floor(sec - 655/65536) differs between the old and the new value, and bit1 is clear. The 0x28f bias puts each beep ~0.01 s past the round number and makes the `< 10` gate swallow the first crossing, so a 10 second warning beeps ten times at ~9.01, 8.01 .. 0.01 s remaining.",
+    "timeUp": "OnUpdate 0x18172dff6..0x18172e047: when abs(m_Sec) < 4/65536 and bit3 is clear, onTimeUp runs and bit3 is set, making it a one-shot for the rest of the stage.",
+    "timeUpAction": "onTimeUp 0x18172e0cb..0x18172e11d for TimerTimeUpType.Switch: GetEventParam(event 0x3d = 61), then Frame.NotifyEvent with m_TargetName. That is exactly the 'switch on' event source-gate-devices.js and source-bridge-devices.js already consume (61 on / 60 off). The payload field +0x60 is left at the 0 that QEventParamManager.Get wrote, so the event carries timerAddSecond 0. An empty m_TargetName silently reaches nobody.",
+    "otherTimeUpActions": "Retry(1) sets stage flag bit 10 at 0x18172e232; Dead(2) broadcasts event 0x13, plays an Se, clears stage flag bit 9 and starts StageNoticeComponent 0x18170e850. Neither is reachable from actor type 37, and neither is ported - the module throws if it ever sees them.",
+    "incomingEvents": "OnRecvEvent 0x18172e250 dispatches three ids and forwards everything else to ActorComponent.OnRecvEvent 0x18169e840. 61 while bit3 is clear: payload 0 -> set bit2 (stop); payload != 0 -> m_Sec = ceil-to-whole-second(m_Sec + payload) (0x18172e374 `test ax,ax` then `and rax,~0xffff; add rax,0x10000`) and fire FrameEvents.Timer_BeatAnimation. 60: clear bit2 unconditionally, even after time-up. 47 (0x2f): consumed by a log call, no state change.",
+    "collision": "None at all. No InitCollision, no OnCollided, no solid, no hazard, nothing to stand on. solids() is always empty.",
+    "worldPosition": "The authored posX/posY are irrelevant to the logic: ParseParameter never reads the actor transform, and the readout position comes from the UI statics plus datas[2]/datas[3]. st_w_04_03 places both timers at (0,0)."
+  },
+  "installedParameterSets": [
+    {
+      "stages": ["st_w_04_03"],
+      "names": ["SwitchTimer1", "SwitchTimer2"],
+      "playerCountGate": 7,
+      "slots": "0=3.5 1=0 2=0 3=1200 4=1 5=\"Bridge1\"/\"Bridge2\" 13=1 14=1",
+      "meaning": "At 7 or 8 players only, two hidden and silent 3.5 second countdowns that each send event 61 to one of the two Bridge actors, which then extend from 1 to 7 segments. Below 7 players the timers do not exist, so those bridges never extend - Bridge1/Bridge2 have playerCount 0 and datas[6]=0 (no key trigger), and nothing else in the stage names them."
+    },
+    {
+      "stages": ["st_b_01_09"],
+      "names": ["SwitchTimer1"],
+      "slots": "0=30 1=0 2=0 3=32 4=0.6 5=\"RallyJudge1\" 13=0 14=0",
+      "meaning": "Visible, audible 30 second round timer at UI (0, 448) and scale 6; present in all seven variants of the stage."
+    },
+    {
+      "stages": ["st_b_01_08"],
+      "names": ["SwitchTimer1"],
+      "slots": "0=30 1=0 2=0 3=32 4=0.75 5=\"KeyGetJudge1\" 13=0 14=0",
+      "meaning": "Visible 30 second timer at scale 7.5."
+    },
+    {
+      "stages": ["st_b_01_03", "st_b_01_02"],
+      "names": [""],
+      "slots": "0=14 or 10, 1=0 2=0 3=0 4=1 5=\"HeightJudge1\" 13=0 14=0",
+      "meaning": "Unnamed visible timers at the default UI anchor (0, 416) and scale 10. Because the actor name is empty they can never be addressed by an event themselves."
+    }
+  ],
+  "unresolved": [
+    "Frame.DeltaTime's FP raw is not in the binary (Frame.get_DeltaTime 0x18173a090 forwards a runtime session field), so the exact tick a countdown expires on could not be verified. With FP delta raw 1092 (65536/60) a 3.5 s timer would expire on tick 211, while this port - ageing a float by the caller's seconds delta and using the native 4/65536 epsilon - expires on tick 210. One native tick of uncertainty, the same gap source-blink-devices.js already records.",
+    "The Quantum system update ORDER between TimerComponent.OnUpdate and BridgeComponent.OnUpdate was not recovered. The port emits the time-up event from beforeStep so the bridge starts extending on the same tick; the original could begin one tick earlier or later.",
+    "m_Flags bit NAMES are not recoverable: the field uses the shared 16 bit QFlags instantiation, so global-metadata.dat holds no per-bit identifiers. Bits 0-3 are named from behaviour only; bits 4-15 are never touched by TimerComponent.",
+    "datas[1] (per-player seconds) and datas[6..12] (per-count override) are implemented from ParseParameter alone - no shipped SwitchTimer populates either, so only the synthetic probes in the test file exercise them.",
+    "The whole OnRecvEvent path (stop / resume / add-time) is implemented from the disassembly alone. No shipped actor sends an event to a SwitchTimer. The only shipped Timer that is addressed by name is DeadTimer1 in st_w_05_02, named by the datas[0] of 23 Switch actors, and that is actor type 10 - outside this module. Which Switch parameter supplies the m_TimerAddSecond payload was not traced, so the stop-versus-add branch is untested against shipped data.",
+    "Frame.GetPlayerActorCount 0x1817494b0 counts player actors in the scene, which is not provably identical to the Frame.GetPlayerIndexCount that drives actor population selection (population-rules.cjs). The port feeds it `count`. Since every shipped SwitchTimer has datas[1]=0 and an empty override table, the value has no observable effect on shipped data.",
+    "The ~0.01 s second bias (0x28f) is reproduced exactly, but it only affects when the tick Se plays; no gameplay value depends on it.",
+    "The ceil-to-whole-second on add-time is computed by quantising the port's float seconds back to FP raw (round(v*65536)) before the native `and ~0xffff; add 0x10000`. That quantisation is the port's, not the original's.",
+    "SwitchTimerActor (st_w_14_04, SwitchTimerActorComponent, ParseParameter 0x18171a5a0) is a DIFFERENT actor type with a packed-table slot 0 and a target name in slot 1. It is not needed by st_w_04_03 and is NOT implemented here.",
+    "DeadTimer (type 10) would reuse this component but needs the Dead time-up branch, the QPlayerCountParamUtility.Find block for datas[15..18] and a stage-wide death request. Not implemented; the module throws rather than guessing."
+  ],
+  "api": {
+    "compile(actors, count)": "{schemaVersion:1, count, timers, warnings, completePhysicsFidelity:false}",
+    "create(compiled)": "{count, ticks, timers:[{sec, stopped, firedTimeUp, tickSound, timeUp, beat, ...}]}",
+    "solids(state)": "always [] - TimerComponent has no collision",
+    "beforeStep(state, {dt})": "ages every timer and returns {events, sounds, solids:[]}; events are the time-up event 61 notifications",
+    "afterStep(state, {events})": "drains incoming events through signal() and returns {events:[], deadPlayerIds:[], hazards:[], solids:[]}",
+    "signal(state, event)": "applies one incoming event (61 stop/add-time, 60 resume, 47 ignored); returns whether any timer matched",
+    "displays(state)": "readout rows for the non-hidden timers (mm:ss, UI position, scale, warning flag)",
+    "supportedTypes": ["SwitchTimer"],
+    "nativeConstants": "uiBaseScale, uiPosX, uiPosY, warningSecond, tickSeId, fpEpsilon, seSecondBias, eventOn, eventOff, actorType, timeUpType, timerType"
+  },
+  "tests": {
+    "command": "node reference-analysis/source-migration/source-switchtimer-devices.test.cjs",
+    "passed": 16,
+    "failed": 0,
+    "data": "Real extracted actors from installed-stage-decoded.local.json (st_w_04_03, st_b_01_09, st_b_01_03, plus a sweep over every variant of all five stages that contain a SwitchTimer). The datas[1] / datas[6..12] / fractional-flag cases are synthetic copies of the real st_w_04_03 actor and are labelled as such in the test file.",
+    "regression": "All 13 *.test.cjs in reference-analysis/source-migration pass unchanged: source-blink-devices, source-blinkthunder-devices, source-bridge-devices, source-devices-runtime, source-gate-devices, source-geometry, source-motion-devices, source-pp1-devices, source-stage-runtime, source-switchtimer-devices, source-warpinit-devices, source-world, terrain-runtime."
+  },
+  "verification": {
+    "scratchRegistration": "The nine edits below were applied to a copy of source-stage-runtime.js under the session scratchpad (scratch-stage-runtime.js), never to the repository file.",
+    "compileMatrix": "st_w_04_03 compiles for 2,3,4,5,6,7,8 players: 0 timers at 2-6, 2 timers at 7 and 8. The seven other stages the runtime whitelists (st_w_01_01..st_w_01_04, st_w_04_01, st_w_04_04, st_w_10_02) still compile for 2-8 with 0 timers.",
+    "pipelineProbe": "With the scratch registration, a 7 player st_w_04_03 session leaves both bridges at phase 0 for 209 ticks and starts both extending on tick 210, the tick both timers reach zero; at 6 players they never move. (The shipped stage kills an idle party in ~1.4 s, so the probe forces the death state back to play - it is a plumbing check, not a playthrough.)",
+    "notModified": "source-stage-runtime.js, package-source-play.cjs, deploy-source-play.cjs, play/, every existing source-*-devices.js and deploy-chamchicode/ are untouched."
+  },
+  "registration": {
+    "note": "source-stage-runtime.js was NOT modified. Apply these nine edits; every quoted find string is unique in the file as of commit e8488b4ad117f2386fc0fa84fe92ea555280ac03.",
+    "edits": [
+      {
+        "file": "source-stage-runtime.js",
+        "line": 13,
+        "find": "  common?require('./source-warpinit-devices.js'):root.SourceWarpInitDevices);",
+        "replace": "  common?require('./source-warpinit-devices.js'):root.SourceWarpInitDevices,\n  common?require('./source-switchtimer-devices.js'):root.SourceSwitchTimerDevices);"
+      },
+      {
+        "file": "source-stage-runtime.js",
+        "line": 15,
+        "find": "function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges,Blink,BlinkThunders,WarpInit){",
+        "replace": "function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges,Blink,BlinkThunders,WarpInit,SwitchTimers){"
+      },
+      {
+        "file": "source-stage-runtime.js",
+        "line": 33,
+        "find": "  const warpInit=WarpInit.compile(t.actors,count);",
+        "replace": "  const warpInit=WarpInit.compile(t.actors,count);\n  const switchTimers=SwitchTimers.compile(t.actors,count);"
+      },
+      {
+        "file": "source-stage-runtime.js",
+        "line": 47,
+        "find": "...WarpInit.supportedTypes]);",
+        "replace": "...WarpInit.supportedTypes,...SwitchTimers.supportedTypes]);"
+      },
+      {
+        "file": "source-stage-runtime.js",
+        "line": 53,
+        "find": "...(warpInit.warnings||[]));",
+        "replace": "...(warpInit.warnings||[]),...(switchTimers.warnings||[]));"
+      },
+      {
+        "file": "source-stage-runtime.js",
+        "line": 73,
+        "find": "  return {schemaVersion:1,count,map,relays,devices,motion,gates,bridges,blink,blinkThunders,warpInit,status:",
+        "replace": "  return {schemaVersion:1,count,map,relays,devices,motion,gates,bridges,blink,blinkThunders,warpInit,switchTimers,status:"
+      },
+      {
+        "file": "source-stage-runtime.js",
+        "line": 83,
+        "find": "warpInitState:WarpInit.create(compiled.warpInit||WarpInit.compile([],count)),",
+        "replace": "warpInitState:WarpInit.create(compiled.warpInit||WarpInit.compile([],count)),switchTimerState:SwitchTimers.create(compiled.switchTimers||SwitchTimers.compile([],count)),"
+      },
+      {
+        "file": "source-stage-runtime.js",
+        "line": 127,
+        "comment": "Age the timers at the very top of tick() and hand the time-up events to every module that owns a possible target, so a Bridge starts extending on the same tick the timer expires. Gates.signal and Devices.signal are the per-event entry points those modules already expose.",
+        "find": "  Bridges.beforeStep(s.bridgeState,{players,platforms:s.map.platforms,keyTaken:s.keyTaken,dt:h,nativeTickRate:hz});",
+        "replace": "  const timerResult=SwitchTimers.beforeStep(s.switchTimerState,{dt:h});\n  Bridges.beforeStep(s.bridgeState,{players,platforms:s.map.platforms,keyTaken:s.keyTaken,dt:h,nativeTickRate:hz,events:timerResult.events});\n  for(const e of timerResult.events){Gates.signal(s.gateState,e);Devices.signal(s.deviceState,e);}"
+      },
+      {
+        "file": "source-stage-runtime.js",
+        "line": 188,
+        "comment": "Let the timers receive the relay and device events of the tick (stop / resume / add-time), next to where Bridges already consumes them.",
+        "find": "  const bridgeResult=Bridges.afterStep(s.bridgeState,{players,platforms:s.map.platforms,width:s.map.width,height:s.map.height,events:[...relay.events,...deviceResult.events]});",
+        "replace": "  SwitchTimers.afterStep(s.switchTimerState,{events:[...relay.events,...deviceResult.events]});\n  const bridgeResult=Bridges.afterStep(s.bridgeState,{players,platforms:s.map.platforms,width:s.map.width,height:s.map.height,events:[...relay.events,...deviceResult.events]});"
+      }
+    ],
+    "alreadyWhitelisted": "st_w_04_03 is already in the stage whitelist on line 20, so no edit is needed there.",
+    "optional": "SwitchTimers.displays(s.switchTimerState) can feed a timer readout. st_w_04_03 needs none: both of its timers set the hide flag."
+  },
+  "completePhysicsFidelity": false,
+  "originalFidelityVerifiedInGame": false
+}

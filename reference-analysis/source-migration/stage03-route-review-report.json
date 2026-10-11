@@ -1,0 +1,254 @@
+{
+  "stageId": "st_w_01_03",
+  "generatedAt": "2026-10-09T23:38:10.455Z",
+  "nativeCodeExecuted": false,
+  "musicPlayed": false,
+  "firstDashAndImpact": [
+    {
+      "count": 2,
+      "passed": true,
+      "originalSpawnInputOnly": true,
+      "ticks": 230,
+      "launched": true,
+      "airForcedFrames": 7,
+      "wallHits": 1,
+      "reflectedVx": -119.970703125
+    },
+    {
+      "count": 3,
+      "passed": true,
+      "originalSpawnInputOnly": true,
+      "ticks": 214,
+      "launched": true,
+      "airForcedFrames": 7,
+      "wallHits": 1,
+      "reflectedVx": -119.970703125
+    },
+    {
+      "count": 4,
+      "passed": true,
+      "originalSpawnInputOnly": true,
+      "ticks": 200,
+      "launched": true,
+      "airForcedFrames": 10,
+      "wallHits": 1,
+      "reflectedVx": -119.970703125
+    },
+    {
+      "count": 5,
+      "passed": true,
+      "originalSpawnInputOnly": true,
+      "ticks": 183,
+      "launched": true,
+      "airForcedFrames": 10,
+      "wallHits": 1,
+      "reflectedVx": -119.970703125
+    },
+    {
+      "count": 6,
+      "passed": true,
+      "originalSpawnInputOnly": true,
+      "ticks": 167,
+      "launched": true,
+      "airForcedFrames": 10,
+      "wallHits": 1,
+      "reflectedVx": -119.970703125
+    },
+    {
+      "count": 7,
+      "passed": true,
+      "originalSpawnInputOnly": true,
+      "ticks": 150,
+      "launched": true,
+      "airForcedFrames": 10,
+      "wallHits": 1,
+      "reflectedVx": -119.970703125
+    },
+    {
+      "count": 8,
+      "passed": true,
+      "originalSpawnInputOnly": true,
+      "ticks": 133,
+      "launched": true,
+      "airForcedFrames": 10,
+      "wallHits": 1,
+      "reflectedVx": -119.970703125
+    }
+  ],
+  "collisionFixtures": [
+    {
+      "count": 2,
+      "passed": true,
+      "fixturePlacements": true,
+      "originalSpawnInputOnly": false,
+      "wallHits": 8,
+      "fallen": true,
+      "solidBlocks": 10
+    },
+    {
+      "count": 3,
+      "passed": true,
+      "fixturePlacements": true,
+      "originalSpawnInputOnly": false,
+      "wallHits": 9,
+      "fallen": true,
+      "solidBlocks": 10
+    },
+    {
+      "count": 4,
+      "passed": true,
+      "fixturePlacements": true,
+      "originalSpawnInputOnly": false,
+      "wallHits": 10,
+      "fallen": true,
+      "solidBlocks": 10
+    },
+    {
+      "count": 5,
+      "passed": true,
+      "fixturePlacements": true,
+      "originalSpawnInputOnly": false,
+      "wallHits": 10,
+      "fallen": true,
+      "solidBlocks": 10
+    },
+    {
+      "count": 6,
+      "passed": true,
+      "fixturePlacements": true,
+      "originalSpawnInputOnly": false,
+      "wallHits": 10,
+      "fallen": true,
+      "solidBlocks": 10
+    },
+    {
+      "count": 7,
+      "passed": true,
+      "fixturePlacements": true,
+      "originalSpawnInputOnly": false,
+      "wallHits": 10,
+      "fallen": true,
+      "solidBlocks": 10
+    },
+    {
+      "count": 8,
+      "passed": true,
+      "fixturePlacements": true,
+      "originalSpawnInputOnly": false,
+      "wallHits": 10,
+      "fallen": true,
+      "solidBlocks": 10
+    }
+  ],
+  "inputOnlyFullRoutes": [
+    {
+      "count": 2,
+      "passed": true,
+      "originalSpawnInputOnly": true,
+      "fixturePlacements": false,
+      "ticks": 2286,
+      "seconds": 38.09999999999912,
+      "fallenTick": 1683,
+      "keyTaken": true,
+      "exited": 2,
+      "deaths": 0,
+      "activePlayerOverlapTicks": 0,
+      "freshStateReplayIdentical": true
+    },
+    {
+      "count": 3,
+      "passed": true,
+      "originalSpawnInputOnly": true,
+      "fixturePlacements": false,
+      "ticks": 1658,
+      "seconds": 27.633333333333045,
+      "fallenTick": 1055,
+      "keyTaken": true,
+      "exited": 3,
+      "deaths": 0,
+      "activePlayerOverlapTicks": 0,
+      "freshStateReplayIdentical": true,
+      "attackingPlayers": 2
+    },
+    {
+      "count": 4,
+      "passed": true,
+      "originalSpawnInputOnly": true,
+      "fixturePlacements": false,
+      "ticks": 1917,
+      "seconds": 31.949999999999466,
+      "fallenTick": 1314,
+      "keyTaken": true,
+      "exited": 4,
+      "deaths": 0,
+      "activePlayerOverlapTicks": 0,
+      "freshStateReplayIdentical": true,
+      "attackingPlayers": 2
+    },
+    {
+      "count": 5,
+      "passed": true,
+      "originalSpawnInputOnly": true,
+      "fixturePlacements": false,
+      "ticks": 1900,
+      "seconds": 31.66666666666615,
+      "fallenTick": 1297,
+      "keyTaken": true,
+      "exited": 5,
+      "deaths": 0,
+      "activePlayerOverlapTicks": 0,
+      "freshStateReplayIdentical": true,
+      "attackingPlayers": 2
+    },
+    {
+      "count": 6,
+      "passed": true,
+      "originalSpawnInputOnly": true,
+      "fixturePlacements": false,
+      "ticks": 1883,
+      "seconds": 31.383333333332832,
+      "fallenTick": 1280,
+      "keyTaken": true,
+      "exited": 6,
+      "deaths": 0,
+      "activePlayerOverlapTicks": 0,
+      "freshStateReplayIdentical": true,
+      "attackingPlayers": 2
+    },
+    {
+      "count": 7,
+      "passed": true,
+      "originalSpawnInputOnly": true,
+      "fixturePlacements": false,
+      "ticks": 1867,
+      "seconds": 31.11666666666618,
+      "fallenTick": 1264,
+      "keyTaken": true,
+      "exited": 7,
+      "deaths": 0,
+      "activePlayerOverlapTicks": 0,
+      "freshStateReplayIdentical": true,
+      "attackingPlayers": 2
+    },
+    {
+      "count": 8,
+      "passed": true,
+      "originalSpawnInputOnly": true,
+      "fixturePlacements": false,
+      "ticks": 1850,
+      "seconds": 30.833333333332863,
+      "fallenTick": 1247,
+      "keyTaken": true,
+      "exited": 8,
+      "deaths": 0,
+      "activePlayerOverlapTicks": 0,
+      "freshStateReplayIdentical": true,
+      "attackingPlayers": 2
+    }
+  ],
+  "failures": [],
+  "originalFidelityVerified": false,
+  "humanFunVerified": false,
+  "scope": "Actual web runtime tested. All 2..8 player counts have original-spawn input-only full route proof and separately labelled collision fixtures. This does not prove actual online full-route play or human fun.",
+  "passed": true
+}

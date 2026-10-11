@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "stage": "st_w_04_01",
+  "status": "device-tests-passed-not-full-route",
+  "module": "source-bridge-devices.js",
+  "tests": {
+    "command": "node --test reference-analysis/source-migration/source-bridge-devices.test.cjs",
+    "passed": 6,
+    "failed": 0,
+    "audio": "muted/no-audio"
+  },
+  "nativeEvidence": {
+    "bridge": {
+      "parse": "0x1817dd4b0",
+      "update": "0x1817ddc80",
+      "recv": "0x1817de5e0",
+      "facts": [
+        "Unit32 initial square; slot0 segment count5 produces target height160",
+        "slot1/2 normalized axis, direction (0,1)",
+        "slot6 key linkage polls Key state1 once",
+        "event61 extends at1 px/native update; event60 retracts at0.5",
+        "OnPushedBack rollback prevents geometry overlap"
+      ]
+    },
+    "thunder": {
+      "parse": "0x18172c410",
+      "phase": "0x18172cb00",
+      "recv": "0x18172d120",
+      "beamConstants": "0x18172b4b0",
+      "beamCollider": "0x18172aa50",
+      "beamLength": "0x18172b1c0",
+      "facts": [
+        "slot0 direction3 right",
+        "beam thickness4, max length2400; emitter probe32x32",
+        "slot3 switchType1 starts on event61; initial phase0",
+        "slot4/5 velocity(0,0.3); slot6 travel distance280",
+        "slot7 repetition0; slot8 timed disappearance0",
+        "Key slot3 Thunder1; CollisionSwitch targets Thunder2..4"
+      ]
+    }
+  },
+  "population": {
+    "6": 2,
+    "7": 3,
+    "8": 4,
+    "2-5": 1
+  },
+  "api": [
+    "compile(actors,count)",
+    "create(compiled)",
+    "beforeStep(state,{players,platforms,keyTaken,events,dt,nativeTickRate})",
+    "afterStep(state,{players,platforms,width,height,events})",
+    "signal(state,event)",
+    "solids(state)",
+    "hazards(state,{platforms,width,height})"
+  ],
+  "limitations": [
+    "Full natural-spawn route and network checks not yet run",
+    "Browser AABB collision approximation is not the native fixed-point contact solver",
+    "Thunder repeat/disappearance parameters rejected pending numeric timing verification",
+    "Bridge count scaling and push option rejected pending solver integration",
+    "Diagonal Bridge rejected; player/geometry contact ordering simplified"
+  ],
+  "completePhysicsFidelity": false
+}

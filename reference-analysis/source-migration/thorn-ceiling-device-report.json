@@ -1,0 +1,300 @@
+{
+  "schemaVersion": 1,
+  "scope": "PICO PARK 2 ThornCeiling and DummyRect, the last two unsupported actor types in st_w_11_04",
+  "readOnlyStatic": true,
+  "nativeCodeExecuted": false,
+  "completePhysicsFidelity": false,
+  "module": "source-thorn-ceiling-devices.js",
+  "test": "source-thorn-ceiling-devices.test.cjs",
+  "binaries": {
+    "image": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll",
+    "imageBase": "0x180000000",
+    "metadata": "D:/SteamLibrary/steamapps/common/PICO PARK 2/pico_park_2_Data/il2cpp_data/Metadata/global-metadata.dat",
+    "offsetConvention": "Quoted il2cpp field offsets include the 16 byte box header; the raw struct offsets the native code dereferences are those values minus 16."
+  },
+
+  "ThornCeiling": {
+    "summary": "A spiked ceiling that drops a full row of falling thorns at a time, leaving a shrinking number of safe gaps. The player count sets the starting gap count and the ceiling's hit points. Surviving m_AvoidTime sends QEventType.SwitchOn to the actor named in datas[9], which is what unlocks Key1. Each thorn that touches a player costs the ceiling one hit point: the player survives with a 0.33 s flash while points remain, and dies by QEventType.QuakeDead on the hit that empties the bar.",
+    "component": "ThornCeilingComponent",
+    "methods": {
+      "Creator": "0x18171cd70",
+      "ParseParameter": "0x18171ce90",
+      "InitPost": "0x18171d620",
+      "OnStart": "0x18171e750",
+      "OnExit": "0x18171e5c0",
+      "OnUpdate": "0x18171e7c0",
+      "createThornSet": "0x18171eb50",
+      "createThorn": "0x18171f610",
+      "isAnyThornActive": "0x18171f8f0",
+      "playTimerSe": "0x18171f870",
+      "notifyTarget": "0x18171fa60",
+      "SubHitPoint": "0x18171fb40",
+      "GetHitPoint": "0x18171fbf0",
+      "IsGameFinished": "0x18171fc00",
+      "checkGameOver": "0x18171fc10",
+      "killPlayer": "0x18171fda0",
+      "cctor": "0x18171fe30",
+      "Initialize": "0x180476130 (empty)",
+      "InitCollision": "0x180476130 (empty, so the ceiling has no collider of its own)",
+      "OnPost": "0x180476130 (empty)"
+    },
+    "supportingComponents": {
+      "ReusableThornComponent": {
+        "Creator": "0x1816ec1d0",
+        "Resume": "0x1816eca20 and the 5 argument overload 0x1816ecb40",
+        "OnUpdate": "0x1816ec510 (forwards to ThornComponent.OnUpdate with the reusable flag set)",
+        "OnPushedBack": "0x1816ec690 (a ceiling owned thorn skips ThornComponent.OnPushedBack entirely at 0x1816ec6d1, so terrain never repositions it)",
+        "OnCollided": "0x1816ec780 (a ceiling owned thorn calls trySubHitPoint instead at 0x1816ec84e)",
+        "OnContacted": "0x1816ec870 (contact kind 0 -> RequestDisappear + PlayDisappearSe at 0x1816ec9c8/0x1816ec9d6; kind 1 -> trySubHitPoint at 0x1816ec9fb)",
+        "trySubHitPoint": "0x1816ecbd0",
+        "fields": "m_EntityRef il2cpp 16, m_ThornCeilingRef il2cpp 24"
+      },
+      "ThornComponent": {
+        "cctor": "0x181722670",
+        "Reset": "0x181720e60",
+        "OnUpdate": "0x181720fb0",
+        "updatePhase": "0x1817212a0 (jump table 0x181721704: phase 0 0x18172132e, 1 0x1817213a7, 2 0x181721561, 3 0x181721537 inert, 4 0x1817214db, 5 0x1817215ec)",
+        "calcMoveDistance": "0x181721910",
+        "requestDisappear": "0x1817221d0 (phases 1..3 -> 4 at 0x1817222c5)",
+        "RequestDisappear": "0x1817222e0"
+      },
+      "QGameDefine": {
+        "cctor": "0x181780720",
+        "MAP_CHIP_SIZE_FP": "0x181780766 writes 0x300000 = 48",
+        "note": "FAIL_UP_Y 0x18178077b = -2400 and FAIL_DOWN_Y 0x181780791 = 0x9600000 = 2400 are in the same cctor; they are the already-settled death line constants and were not touched."
+      },
+      "QPlayerCountParamUtility.Find": "0x181786950 (int overload). Index playerCount-2, then walk DOWN to lower player counts while the entry is zero; zero when nothing is set.",
+      "packedTableDecoders": {
+        "fourByteValues": "0x180970770 -> QActorCreateParam.AsString, byte loop 0x18097085b takes the LOW byte of every UTF-16 unit and subtracts 0x21; 0x180970977 asserts the length is exactly 7 * sizeof(T), one entry per player count 2..8.",
+        "eightByteValues": "0x18096f720, the same encoding with 8 byte FP values"
+      }
+    },
+
+    "datas": [
+      { "slot": 0, "field": "m_CeilingWidth", "il2cppOffset": 16, "type": "byte", "decode": "max(floor(datas[0]), 1)", "address": "0x18171d047..0x18171d06c", "stageValues": { "variant1_2to4players": 13, "variant0_5to8players": 21 }, "meaning": "number of 48 pixel columns, laid out from the actor anchor to the right" },
+      { "slot": 1, "field": "m_AvoidTime", "il2cppOffset": 56, "type": "FP seconds", "decode": "max(datas[1], 0)", "address": "0x18171d092..0x18171d0a4", "stageValues": { "both": 30 }, "meaning": "length of the avoid phase; also the denominator of the difficulty ramp at 0x18171edca" },
+      { "slot": 2, "field": "m_ThornSpeed", "il2cppOffset": 104, "type": "FP", "decode": "max(datas[2], 1.0)", "address": "0x18171d0cc..0x18171d0de", "stageValues": { "both": 3 }, "meaning": "written into every spawned thorn's ThornComponent.m_Speed at 0x18171f84a" },
+      { "slot": 3, "field": "m_ThornWaitTime", "il2cppOffset": 112, "type": "FP seconds", "decode": "max(datas[3], 0)", "address": "0x18171d106..0x18171d118", "stageValues": { "variant1_2to4players": 3, "variant0_5to8players": 5 }, "meaning": "how long a row hangs under the ceiling before it falls, and the width of the final full-difficulty window at 0x18171ee03" },
+      { "slot": 4, "field": "m_FirstSafeZoneCount", "il2cppOffset": 19, "type": "packed int table, 28 chars", "decode": "max(table[count-2], 1)", "address": "decoded 0x18171cf5d, applied 0x18171d17c..0x18171d1c9", "stageValues": { "variant1_2to4players": [3, 4, 5, 6, 7, 8, 9], "variant0_5to8players": [3, 4, 5, 7, 8, 9, 10] }, "meaning": "gap count at the start of the avoid phase" },
+      { "slot": 5, "field": "m_FinalSafeZoneCount", "il2cppOffset": 17, "type": "packed int table, 28 chars", "decode": "max(table[count-2], 1)", "address": "decoded 0x18171cf77, applied 0x18171d1d5..0x18171d222", "stageValues": { "variant1_2to4players": [1, 1, 2, 2, 2, 3, 3], "variant0_5to8players": [1, 1, 2, 3, 3, 4, 4] }, "meaning": "gap count at the end of the ramp" },
+      { "slot": 6, "field": "m_FirstSafeZoneTrapRate", "il2cppOffset": 20, "type": "packed int table, 28 chars", "decode": "clamp(table[count-2], 0, 100)", "address": "decoded 0x18171cfc3, applied 0x18171d22e..0x18171d276", "stageValues": { "both": [60, 60, 60, 60, 60, 60, 60] }, "meaning": "per-gap trap chance in whole percent at the start of the ramp" },
+      { "slot": 7, "field": "m_FirstSafeZoneTrapWaitTime", "il2cppOffset": 72, "type": "packed FP table, 56 chars", "decode": "max(table[count-2], 0x3333)", "address": "decoded 0x18171cf90, applied 0x18171d323..0x18171d36e", "stageValues": { "both": "0.399993896484375 (FP raw 26214) for all seven counts" }, "meaning": "extra wait a trap thorn gets at the start of the ramp; the 0x3333 floor is 0.2 native seconds" },
+      { "slot": 8, "field": "m_FinalSafeZoneTrapWaitTime", "il2cppOffset": 64, "type": "packed FP table, 56 chars", "decode": "max(table[count-2], 0x3333)", "address": "decoded 0x18171cfa9, applied 0x18171d377..0x18171d3c5", "stageValues": { "both": "0.399993896484375 (FP raw 26214) for all seven counts" }, "meaning": "extra wait a trap thorn gets at the end of the ramp" },
+      { "slot": 9, "field": "m_TargetName", "il2cppOffset": 144, "type": "QStringUtf8_32", "decode": "verbatim", "address": "0x18171d402..0x18171d491", "stageValues": { "both": "Key1" }, "meaning": "notifyTarget 0x18171fac2 sends QEventType.SwitchOn (61) to this actor once the avoid phase is survived" },
+      { "slot": 10, "field": "m_MaxDistanceFromPrevSafeZone", "il2cppOffset": 23, "type": "byte", "decode": "max(floor(datas[10]), 1)", "address": "0x18171d140..0x18171d169", "stageValues": { "both": 3 }, "meaning": "reachability limit: a column can only become a gap when some gap of the previous row is within this many columns (0x18171ef95)" },
+      { "slot": 11, "field": "m_SafeZoneTrapMaxCount", "il2cppOffset": 25, "type": "packed int table, 28 chars", "decode": "max(table[count-2], 0)", "address": "decoded 0x18171cff5, applied 0x18171d2d2..0x18171d317", "stageValues": { "variant1_2to4players": [2, 3, 4, 5, 6, 6, 6], "variant0_5to8players": [2, 3, 4, 5, 5, 6, 6] }, "meaning": "upper bound on traps per row (0x18171f250)" },
+      { "slot": 12, "field": "m_FinalSafeZoneTrapRate", "il2cppOffset": 18, "type": "packed int table, 28 chars", "decode": "clamp(table[count-2], 0, 100)", "address": "decoded 0x18171cfdc, applied 0x18171d282..0x18171d2c6", "stageValues": { "both": [100, 100, 100, 100, 100, 100, 100] }, "meaning": "per-gap trap chance at the end of the ramp" },
+      { "slot": 13, "field": "m_HitPoint and m_HitPointMax", "il2cppOffset": "21 and 22", "type": "packed int table, 28 chars passed by value to QPlayerCountParamUtility.Find", "decode": "Find(count, table); 3 when the result is not positive", "address": "decoded 0x18171d00e, applied 0x18171d3eb..0x18171d3ff", "stageValues": { "variant1_2to4players": [1, 1, 2, 2, 3, 3, 3], "variant0_5to8players": [1, 1, 2, 2, 2, 3, 3] }, "meaning": "how many thorn hits the party may absorb; this is the bar UIThornCeilingFrame draws" },
+      { "slot": "14..31", "field": null, "decode": "never read", "meaning": "ParseParameter touches datas[0..13] only, so any later populated slot is reported as a compile warning rather than guessed at" }
+    ],
+
+    "nativeConstants": {
+      "START_WAIT_TIME": { "value": 5, "address": "0x18171ff31 writes 0x50000 into statics+8" },
+      "UI_BASE_SCALE": { "value": 7, "address": "0x18171ff65 writes 0x70000 into statics+0x18" },
+      "UI_POS_X": { "value": 0, "address": "0x18171ff7b" },
+      "UI_POS_Y_2": { "value": 440, "address": "0x18171ff91 writes 0x1b80000" },
+      "UI_POS_Y": { "value": 460, "address": "0x18171ffa7 writes 0x1cc0000" },
+      "MAP_CHIP_SIZE_FP": { "value": 48, "address": "QGameDefine..cctor 0x181780766" },
+      "FADEOUT_SPEED": { "value": 4, "address": "ThornComponent..cctor 0x1817227b1, so the m_Timer = 1.0 fade lasts 0.25 s" },
+      "calcMoveDistance margin": { "value": 200, "address": "0x181721a28 adds 0xc80000" },
+      "m_FlashTimer on a survived hit": { "value": "0x5555 FP = 0.33333 s", "address": "0x1816ecde7" },
+      "speed epsilon": { "value": "FP raw 4", "address": "0x181721394" }
+    },
+
+    "phases": {
+      "field": "m_Phase, il2cpp 24 / struct +8",
+      "0": "start. createThornSet (0x18171eaa1) with the full gap count and a START_WAIT_TIME row wait, then m_Phase = 1 and m_Timer = START_WAIT_TIME (0x18171eab8/0x18171eabc).",
+      "1": "countdown. m_Timer -= DeltaTime (0x18171e9ee); a tick SE fires whenever the whole second changes while 0 < m_Timer < 5 (0x18171e962..0x18171e9b0). At zero: SE 0x17, m_Timer = m_AvoidTime, m_Phase = 2 (0x18171ea77/0x18171ea7b).",
+      "2": "avoid. While m_Timer > 0 it ages the timer and calls createThornSet every single update (0x18171e9c1) - the isAnyThornActive gate inside createThornSet is what turns that into one row at a time. Once m_Timer <= 0 it waits for the last thorn to vanish (0x18171e8f0), then m_Timer = 0 and m_Phase = 4 (0x18171e913/0x18171e917).",
+      "3": "inert. Never entered by any code path in this component.",
+      "4": "clearing. m_Timer -= DeltaTime, and at zero notifyTarget fires and m_Phase = 5 (0x18171e8b9/0x18171e8be). Because phase 2 leaves m_Timer at 0, this takes a single tick.",
+      "5": "cleared. Nothing further; IsGameFinished 0x18171fc00 is m_Phase >= 4."
+    },
+
+    "createThornSet": {
+      "gate": "isAnyThornActive 0x18171f8f0 - walks the first m_CeilingWidth pool entries and bails out when any has ActorComponent.m_Flags bit 2 clear (0x18171fa2f). A new row therefore only starts once every thorn of the previous row has faded out.",
+      "progressRamp": "0x18171edb1..0x18171ee10. Phase 0 is flat zero. Otherwise q = m_Timer / m_AvoidTime in FP (idiv 0x18171edca), r = 1 - q, e = floor(10 * r) via `lea rax,[rcx+rcx*4]; shl 17; sar 32`, and the result is FP(e / 9) through the /18 magic 0x0E38E38E38E38E39 plus `sar 0xf` at 0x18171ede1. The last m_ThornWaitTime + 1 seconds are pinned to 1.0 (0x18171ee03 cmovg), and the value is clamped to [0,1] at 0x18171ee2e/0x18171ee38. The ramp is therefore a ten step staircase in ninths, not a smooth lerp.",
+      "lerps": "m_FirstSafeZoneCount -> m_FinalSafeZoneCount and m_FirstSafeZoneTrapRate -> m_FinalSafeZoneTrapRate are FP lerps turned back into integers with `cmp dx,0x8000` (0x18171ee51/0x18171ee9e), i.e. round half UP. The trap wait time lerp stays in FP unrounded (0x18171eeb2).",
+      "ignoreTable": "0x18171ef11..0x18171efe6. For each column, the minimum distance to any column that was a gap in the previous row is computed (starting from m_CeilingWidth), and the column is marked ignored when that minimum exceeds m_MaxDistanceFromPrevSafeZone. InitPost seeds PrevSafeZoneTable with 1 everywhere, so the first row can use any column.",
+      "lottery": "0x18171f004..0x18171f11d. Fisher-Yates over LottelyTable from the top: for i = n-1 down to 1, swap entry i with entry rand(0, i). The helper's upper bound is EXCLUSIVE (0x18166212e `lea eax,[r11+rdx]` after `div`), so the partner index never equals i. That is the original's own slight bias and the port reproduces it.",
+      "rowWait": "0x18171f123..0x18171f155. START_WAIT_TIME while the ceiling is still in phase 0, m_ThornWaitTime afterwards.",
+      "quota": "0x18171f1ab..0x18171f1fa. Walking the shuffled lottery, column i is a gap while safeZoneCount > i - skipped. An ignored column cannot be a gap and increments `skipped`, which hands its slot to a later column. The decision is written straight back into PrevSafeZoneTable (0x18171f236), which becomes the next row's reachability source.",
+      "traps": "0x18171f246..0x18171f43b. A gap may become a trap only while trapCount < m_SafeZoneTrapMaxCount, only when neither neighbour in SafeZoneTrapTable is already a trap (column 0 looks at column 1, the last column at its left neighbour, everything else left then right), and only when `trapRate > rand(0..99)` strictly. A trap column still spawns a thorn, one chip HIGHER (0x18171f52c subtracts MAP_CHIP_SIZE_FP) and with rowWait + the lerped trap wait (0x18171f528) - it looks like a gap and then spikes late.",
+      "spawn": "0x18171f455..0x18171f4f3. pos = actorPos + (1,0) * MAP_CHIP_SIZE_FP * column. Every non-gap column and every trap column gets a thorn; a plain gap gets nothing.",
+      "seTimer": "0x18171f5f1 sets m_SeTimer to the row wait; it only schedules the impact sound effect."
+    },
+
+    "thornLifecycle": {
+      "pool": "InitPost 0x18171d620 creates exactly m_CeilingWidth ReusableThorn entities at the ceiling's own position (ReusableThornComponent.Creator 0x18171d9ce) with QActorCreateParam datas[0] = 1.0 (direction 1, down), datas[1] = m_ThornSpeed and datas[2] = 0, then sends each one QEventType.SetActive(false) (event 49 at 0x18171daf3). OnExit 0x18171e5c0 frees the five QLists.",
+      "reuse": "createThorn 0x18171f610 takes the first entry whose m_Flags bit 2 is set (0x18171f794), Resumes it at the row position (0x18171f808 -> ThornComponent.Reset 0x181720e60 clears phase/timer/distance/velocity and restores m_Alpha = 1.0), then writes m_Speed = m_ThornSpeed (0x18171f84a) and m_WaitTime = the row's wait (0x18171f846).",
+      "phase0": "m_Timer counts UP by DeltaTime until it reaches m_WaitTime (0x18172135b/0x181721363). A zero m_WaitTime never starts, and a speed below the FP epsilon never starts.",
+      "phase1": "m_Velo = DirectionVectorTable[m_MoveDirection] * m_Speed (0x1817214c1) and m_MoveDistance = calcMoveDistance (0x1817214cd).",
+      "phase2": "position += m_Velo * m_Speed per tick (0x181721587/0x18172159d) and m_Distance += m_Speed (0x1817215cd). At m_Distance >= m_MoveDistance it jumps straight to phase 4.",
+      "phase4": "SetCollisionActive(false) (0x18172151a), m_Timer = 1.0, m_Phase = 5.",
+      "phase5": "m_Timer -= DeltaTime * FADEOUT_SPEED with m_Alpha = m_Timer (0x181721639/0x1817216ee). The pooled variant then deactivates the actor, zeroes its position and returns to phase 0 (0x181721697..0x1817216e9) instead of ending the entity the way an authored Thorn does (0x18172166e sets ActorComponent.m_Flags bit 13).",
+      "disappearTriggers": "Terrain contact (ReusableThornComponent.OnContacted kind 0, 0x1816ec9c8) and any player contact (trySubHitPoint's unconditional RequestDisappear at 0x1816ece97). ThornComponent.OnPushedBack is explicitly skipped for a ceiling thorn (0x1816ec6d1), so the terrain it lands on never repositions it.",
+      "collisionBoxes": "ThornComponent..cctor 0x1817227c5..0x1817228c6 fills CollisionTable[4][2] with RectFP values (member order Height,Width,X,Y; X/Y are offsets from the actor anchor). Direction 1 (down), the only one a ceiling uses, is {H 8, W 8, X -4, Y 10} and {H 6, W 24, X -12, Y 2} - so the spike occupies anchor+2..anchor+18 vertically and anchor-12..anchor+12 horizontally. The full table matches the one source-devices-runtime.js already carries for authored Thorns.",
+      "directionVectors": "ThornComponent..cctor 0x181722aef..0x181722b57: FP unit vectors (0,-1) up, (0,1) down, (-1,0) left, (1,0) right."
+    },
+
+    "hitPointsAndDeath": {
+      "trySubHitPoint": "ReusableThornComponent.trySubHitPoint 0x1816ecbd0. A thorn already in phase >= 4 does nothing at all (0x1816eccd1) - the only path that skips the RequestDisappear. Otherwise the contacted actor must be ActorComponent.m_ActorType 27 (QActorType.Player, 0x1816eccf0) and PlayerComponent.m_PlayerState 1 (QPlayerState.Default, 0x1816ecd2b). The ceiling's m_HitPoint then drops by one while its m_Phase < 4 (0x1816ecd91..0x1816ecdbd). With points left, the player gets m_IsFlashing = 1 and m_FlashTimer = 0x5555 plus SE 11 (0x1816ecdde..0x1816ecdf2); with the bar empty the player is sent QEventType.QuakeDead (43) at 0x1816ece42.",
+      "flashing": "PlayerComponent.SetFlashing 0x1816bf900, GetFlashing 0x1816bf930, checkFlashing 0x1816bf940 - m_FlashTimer ages by DeltaTime and clears m_IsFlashing at zero, so the blink is transient.",
+      "checkGameOver": "0x18171fc10, called from OnUpdate whenever m_Phase <= 2 (0x18171e7ff/0x18171e82e). If any player reports PlayerComponent.IsDead (m_Flags bit 9, 0x1816bfff0) it forces m_HitPoint to 0 and returns (0x18171fcbe/0x18171fd88). Otherwise, if m_HitPoint is already 0, every player with GetFlashing set is sent QEventType.Dead (19) through killPlayer 0x18171fda0 (0x18171fd21/0x18171fd5f).",
+      "SubHitPoint": "0x18171fb40 is a public `m_HitPoint = max(0, m_HitPoint - amount)` that also refuses to run when m_Phase >= 4 unless the force flag is set. No direct call site to it was found in .text (only one il2cpp invoker thunk at 0x180209ef4), so the in-game damage path is the trySubHitPoint one above.",
+      "notifyTarget": "0x18171fa60. Converts m_TargetName and, when it is non-empty, sends QEventType.SwitchOn (61) through Frame.NotifyEvent (0x18171fb17). QEventType ordinals came from the metadata enum (value__ excluded): Dead 19, QuakeDead 43, SetActive 49, SwitchOff 60, SwitchOn 61.",
+      "stageFlag": "OnStart 0x18171e750 clears StageComponent.m_Flags bit 8 (0x18171e7a4 `btr ecx,8`). StageComponent.IsEnableRetryByPlayerDead 0x181709c60 reads that bit inverted and SetEnableRetryByPlayerDead 0x181709c70 clears it for true, so a stage carrying a ThornCeiling enables retry-on-player-death."
+    },
+
+    "random": {
+      "generator": "PCG32 XSH-RR. The multiplier 0x5851f42d4c957f2d is a literal both in the copy inlined into createThornSet (0x18171f376) and in the shared range helper (0x1816620bc). State lives at rngSession+0xb8 and the increment at rngSession+0xc0, where rngSession is frame->[0xc8].",
+      "output": "state' = state * MULT + (inc | 1); x = rotr32((state >> 45) ^ (state >> 27), state >> 59).",
+      "range": "Shared helper 0x181662090: equal bounds return immediately, otherwise lo = min, hi = max, range = hi - lo, draws below 2^32 % range are rejected (0x181662119) and the result is lo + x % range, so the upper bound is exclusive. The inline copy for the trap roll uses the same scheme with the constant threshold 0x60 = 2^32 % 100 (0x18171f3d2).",
+      "consumers": "In order, per row: the Fisher-Yates swaps, then one 0..99 draw per candidate trap column in lottery order."
+    },
+
+    "uiAndPresentation": {
+      "note": "Everything in this section is presentation and the port does not simulate it.",
+      "component": "ThornCeilingView 0x1805cb4d0 (OnEntityInstantiated), 0x1805cb7a0 (OnInitialize), 0x1805cbc50 (OnUpdate), 0x1805cbfe0 (showTime), cctor 0x1805cc170",
+      "frame": "UIThornCeilingFrame 0x1804a2a60 Awake, UpdateAnnounceText 0x1804aca90, EnableAnnounceTimer 0x1804acb90, SetAnnounceTime 0x1804acbe0, EnableHitPoint 0x1804acd10, SetHitPoint 0x1804acd60, SetHitPointMax 0x1804acdc0",
+      "placement": "ParseParameter 0x18171d491..0x18171d542 copies m_Scale = UI_BASE_SCALE and m_Pos = (UI_POS_X, m_HitPointMax == 1 ? UI_POS_Y_2 : UI_POS_Y)."
+    }
+  },
+
+  "DummyRect": {
+    "summary": "No runtime behaviour at all. It is an editor-only marker: no entity, no collider, no event, no visual.",
+    "evidence": [
+      "The only types in the shipped binaries whose names contain DummyRect are EditableDummyRect (metadata type 2215) and EditableDummyRectParam (2341), both in the Game namespace of Assembly-CSharp, and both stripped by the build down to a single inherited `.ctor` (0x18048f1c0 / 0x180476130) with zero fields.",
+      "There is no DummyRectComponent, no DummyRectComponent_Prototype, no DummyRectView, no ParseParameter and no Creator anywhere in PhotonQuantumCode or Assembly-CSharp. The project's own parameter-schema.json already recorded componentCandidate DummyRectComponent with nativeParseParameter null.",
+      "QActorType holds a DummyRect member at enum ordinal 115 (ThornCeiling is 116), so the type exists purely as an authoring tag.",
+      "ActorFactoryComponent.CreateActor 0x1816a31d0 handles the player actor types specially and sends everything else down the generic path at 0x1816a3524, which looks the QActorType up in the creator dictionary (0x1816a35c7) and returns without creating anything when the lookup index comes back negative (0x1816a35cc `test eax,eax ; js 0x1816a362b`)."
+    ],
+    "stageInstances": [
+      { "stage": "st_w_11_04", "variant": 1, "playerCounts": "2..4", "name": "DummyRect1", "pos": { "x": 192, "y": 120 }, "datas": [800, 126, 0, 0, 0, 0] },
+      { "stage": "st_w_11_04", "variant": 0, "playerCounts": "5..8", "name": "DummyRect1", "pos": { "x": 48, "y": 120 }, "datas": [1088, 126, 0, 0, 0, 0] }
+    ],
+    "instancesInWholeGame": 2,
+    "datasMeaning": "UNRESOLVED and unresolvable from the shipped build. No shipped code reads these slots, and every Editable*Param type in the build is field-stripped (checked against EditableBridgeParam, EditableGoalParam, EditableKeyParam, EditableThunderParam and EditableThornCeilingParam - all have zero fields), so the authoring names behind 800/1088 and 126 are not in the binary. The port keeps the numbers verbatim and interprets nothing.",
+    "implementation": "compile() emits the actor as { behaviour: 'none', datas: [...] }. It contributes nothing to solids(), hazards(), events or deadPlayerIds."
+  },
+
+  "unresolved": [
+    "The Quantum session RNG seed and stream. createThornSet reads them out of frame->[0xc8]+0xb8/+0xc0, which is runtime session state and not a constant in the binary, so the exact column lottery and trap rolls of a real match cannot be reproduced. The port implements the exact PCG32 algorithm and the exact draw order, and takes rngState/rngIncrement in create() (defaulting to Photon's documented stream) so a run is at least reproducible. A bit-exact replay of the original would need a captured seed.",
+    "The FP raw of Frame.DeltaTime. Frame.get_DeltaTime 0x18173a090 only forwards a runtime session field ([frame+0xc8]+0x80), exactly as the BlinkBlock port already recorded, so every duration in this module can be off by one native tick. The port derives its FP delta as round(dt * 65536).",
+    "CLEAR_WAIT_TIME (ThornCeilingComponent statics+0x10). The cctor at 0x18171ff40 fills it from a helper call (0x18163fcb0, an FP-from-string style helper) rather than a literal, so its value was not recovered. No read of statics+0x10 was found in the simulation component - OnUpdate's phase 4 uses the m_Timer = 0 left by phase 2 instead - so it is presumably ThornCeilingView material and does not affect the port.",
+    "The design intent of checkGameOver's two gates. The decoded logic is unambiguous (`any player IsDead -> force m_HitPoint to 0 and return`, otherwise `m_HitPoint == 0 -> QEventType.Dead to every flashing player`) and the port implements it literally, but why the mass kill is keyed on GetFlashing rather than on every live player was not established.",
+    "Whether the native QuakeDead handler flips PlayerComponent.m_PlayerState inside the same frame or only queues m_RequestedPlayerState. The port treats a player it killed this tick as having left QPlayerState.Default so a row of thorns cannot report the same death several times; if the original really does re-enter trySubHitPoint for that player, it would emit extra QuakeDead events that change nothing observable.",
+    "Component update order between a ThornCeiling and its own thorn pool. The port runs the ceiling first and the pool afterwards, because InitPost creates the pool entities after the ceiling itself, but Quantum's actual system iteration order was not read out of the binary.",
+    "Per-contact resolution order. The native contacts come out of the collision system; the port approximates them with a swept AABB over the tick, exactly as source-devices-runtime.js does for authored Thorns.",
+    "The two numbers authored on each DummyRect (see DummyRect.datasMeaning).",
+    "ActorComponent.m_Flags bit 2 was read only through its observable use (set by SetActive(false), tested by createThorn 0x18171f794 and isAnyThornActive 0x18171fa2f). The flag enum itself was not located, so the port models the pool with a plain active boolean."
+  ],
+
+  "crossModuleFindings": [
+    {
+      "severity": "worth a second pair of eyes, NOT fixed here",
+      "subject": "source-devices-runtime.js Thorn travel speed",
+      "finding": "ThornComponent.updatePhase phase 2 integrates the position as `position += m_Velo * m_Speed` (0x181721587 and 0x18172159d, both `imul r, qword ptr [rsi+0x40]` where +0x40 is m_Speed), and phase 1 has already set m_Velo = unitDirection * m_Speed (0x1817214c1). The per tick displacement is therefore m_Speed SQUARED pixels, while m_Distance accumulates only m_Speed per tick (0x1817215cd). The existing module moves an authored Thorn by `speed` per native tick instead. Raw bytes at 0x181721576 were dumped to rule out a disassembly artefact, and DirectionVectorTable was confirmed to hold FP unit vectors (ThornComponent..cctor 0x181722aef..0x181722b57), so the squaring is what the shipped code does. This module reproduces it; source-devices-runtime.js was deliberately left untouched because it belongs to another work stream.",
+      "authoredSpeedsInWorldStages": { "3": 139, "3.3": 19, "3.5": 16, "4": 7, "5": 8, "6": 38, "8": 17, "10": 2 }
+    },
+    {
+      "severity": "informational",
+      "subject": "ThornComponent CollisionTable and FADEOUT_SPEED",
+      "finding": "Independently re-read from ThornComponent..cctor 0x1817227c5..0x1817228c6 and 0x1817227b1 and they match source-devices-runtime.js exactly, including the direction vector table."
+    }
+  ],
+
+  "verification": {
+    "ownTests": { "file": "source-thorn-ceiling-devices.test.cjs", "tests": 20, "pass": 20, "fail": 0 },
+    "wholeFolder": { "command": "node --test (source-migration)", "tests": 136, "pass": 136, "fail": 0 },
+    "scratchIntegration": {
+      "location": "C:/Users/user/AppData/Local/Temp/claude/C--Users-user-projects-VONE2/c44c2621-458a-4688-9506-3aacf50714fc/scratchpad/thornceiling/",
+      "files": ["scratch-stage-runtime.js (patched copy of source-stage-runtime.js)", "verify-integration.cjs", "verify-key.cjs", "inspect-thorn-ceiling.py", "dis.py", "callers.py", "riprefs.py", "meta.py"],
+      "note": "Nothing in the project tree was modified for this check; the patched runtime copy lives only in the scratchpad.",
+      "compiles": { "2": true, "3": true, "4": true, "5": true, "6": true, "7": true, "8": true },
+      "unsupportedActorTypesAfterRegistration": [],
+      "compileWarnings": [],
+      "selectedVariant": { "2to4": "variant 1, 13 columns at x 312, m_ThornWaitTime 3", "5to8": "variant 0, 21 columns at x 120, m_ThornWaitTime 5" },
+      "hitPointMaxByCount": { "2": 1, "3": 1, "4": 2, "5": 2, "6": 2, "7": 2, "8": 3 },
+      "spawnSafety": {
+        "spawnTouchingAThornOnTickOne": false,
+        "detail": "Players spawn with their collision box at y 576.5..622.5 while the parked thorn boxes sit at y 122..138 (or 74..90 for a trap), so no hazard box overlaps any spawn box on the first tick, for every player count 2..8.",
+        "firstDeathWithZeroInput": "tick 350 (5.833 s) for every count, which is exactly START_WAIT_TIME (5 s = 300 ticks) plus the 49 ticks the first row needs to fall 439 px at 9 px per tick. That is the mechanic - the floor spawn sits inside the column run and the gaps have to be walked into - not a spawn kill.",
+        "shelteredRun": "With the party parked in the side alcove outside the column run, all of 2 / 5 / 8 players survive the whole avoid phase, the ceiling reaches phase 5 and the Key1 SwitchOn lands at 38.87 s (2p) / 39.35 s (4p) / 40.02 s (5p and 8p) with the hit point bar still full. Feeding that event into Gates.signal flips the stage's Key1 from active:false to active:true for every count checked."
+      },
+      "pacingSample": {
+        "note": "Seeded rngState 99, no players, rows counted until the ceiling cleared.",
+        "2players": { "ceilingWidth": 13, "rows": 8, "gapsPerRow": [3, 3, 3, 2, 2, 2, 1, 1], "trapsPerRow": [2, 2, 2, 1, 1, 2, 1, 1] },
+        "8players": { "ceilingWidth": 21, "rows": 6, "gapsPerRow": [10, 10, 9, 7, 5, 4], "trapsPerRow": [4, 5, 5, 4, 5, 3] }
+      }
+    }
+  },
+
+  "registration": {
+    "note": "Not applied to the project tree - source-stage-runtime.js belongs to another work stream. These are the exact anchors the patched scratch copy used, in file order.",
+    "file": "source-stage-runtime.js",
+    "steps": [
+      {
+        "anchor": "  common?require('./source-switchtimer-devices.js'):root.SourceSwitchTimerDevices);",
+        "action": "append one more factory argument",
+        "replacement": "  common?require('./source-switchtimer-devices.js'):root.SourceSwitchTimerDevices,\n  common?require('./source-thorn-ceiling-devices.js'):root.SourceThornCeilingDevices);"
+      },
+      {
+        "anchor": "function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges,Blink,BlinkThunders,WarpInit,SwitchTimers){",
+        "action": "add the parameter",
+        "replacement": "function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges,Blink,BlinkThunders,WarpInit,SwitchTimers,ThornCeilings){"
+      },
+      {
+        "anchor": "'st_w_10_02'].includes(stageId)",
+        "action": "whitelist the stage",
+        "replacement": "'st_w_10_02','st_w_11_04'].includes(stageId)"
+      },
+      {
+        "anchor": "  const switchTimers=SwitchTimers.compile(t.actors,count);",
+        "action": "compile the devices",
+        "replacement": "  const switchTimers=SwitchTimers.compile(t.actors,count);\n  const thornCeilings=ThornCeilings.compile(t.actors,count);"
+      },
+      {
+        "anchor": "...SwitchTimers.supportedTypes]);",
+        "action": "declare the supported actor types",
+        "replacement": "...SwitchTimers.supportedTypes,...ThornCeilings.supportedTypes]);"
+      },
+      {
+        "anchor": "...(switchTimers.warnings||[]));",
+        "action": "surface the compile warnings",
+        "replacement": "...(switchTimers.warnings||[]),...(thornCeilings.warnings||[]));"
+      },
+      {
+        "anchor": "warpInit,switchTimers,status:{state:",
+        "action": "carry the compiled set",
+        "replacement": "warpInit,switchTimers,thornCeilings,status:{state:"
+      },
+      {
+        "anchor": "switchTimerState:SwitchTimers.create(compiled.switchTimers||SwitchTimers.compile([],count)),",
+        "action": "create the state",
+        "replacement": "switchTimerState:SwitchTimers.create(compiled.switchTimers||SwitchTimers.compile([],count)),thornCeilingState:ThornCeilings.create(compiled.thornCeilings||ThornCeilings.compile([],count)),"
+      },
+      {
+        "anchor": "  Blink.beforeStep(s.blinkState,{players,dt:h});",
+        "action": "beforeStep is a no-op but keeps the interface symmetrical",
+        "replacement": "  Blink.beforeStep(s.blinkState,{players,dt:h});\n  ThornCeilings.beforeStep(s.thornCeilingState,{dt:h});"
+      },
+      {
+        "anchor": "  s.map.hazards=[...bridgeResult.hazards,...blinkThunderResult.hazards];",
+        "action": "afterStep: step the ceiling, route its SwitchOn into the relay/gate/device signal handlers, publish its hazards and apply its deaths",
+        "replacement": "  const thornCeilingResult=ThornCeilings.afterStep(s.thornCeilingState,{players,platforms:baseSolids(s),dt:h,nativeTickRate:hz,width:s.map.width,height:s.map.height});\n  for(const e of thornCeilingResult.events)if(e.event===61){Gates.signal(s.gateState,e);Devices.signal(s.deviceState,e);BlinkThunders.signal(s.blinkThunderState,e);Bridges.signal(s.bridgeState,e);}\n  s.map.hazards=[...bridgeResult.hazards,...blinkThunderResult.hazards,...thornCeilingResult.hazards];\n  if(thornCeilingResult.deadPlayerIds.length){s.status='dead';s.deaths++;s.failure={playerId:thornCeilingResult.deadPlayerIds[0],reason:'가시에 닿았어요'};return;}"
+      }
+    ],
+    "contract": {
+      "compile": "compile(actors, count) -> { schemaVersion, count, ceilings[], dummyRects[], warnings[], stageFlags, completePhysicsFidelity:false }",
+      "create": "create(compiled, { rngState, rngIncrement }) -> state. Pass a seed to make a run reproducible.",
+      "solids": "solids(state) -> [] always. Never add this module to the solid list; the ceiling tiles are ordinary map chips.",
+      "beforeStep": "beforeStep(state, { dt }) -> { solids: [] }. A no-op kept for interface symmetry.",
+      "afterStep": "afterStep(state, { dt, nativeTickRate, players, platforms, width, height }) -> { events, deadPlayerIds, hazards, solids }. platforms is what a landing thorn disappears against, and width/height feed calcMoveDistance.",
+      "events": "The only native event emitted is { event: 61, target: m_TargetName } when the avoid phase is survived; it must reach the gate/key signal handlers. A survivable hit also pushes an informational { event: null, native: false, reason: 'thornCeilingHit', hitPoint } record so a consumer can drive SE 11 and the blink - the original emits nothing there.",
+      "status": "status(state) -> per ceiling phase, phaseName, timer, hitPoint, hitPointMax, cleared, activeThorns and the last generated row, for UI and debugging.",
+      "stageFlags": "compile().stageFlags.enableRetryByPlayerDead is true whenever a ThornCeiling exists (OnStart 0x18171e7a4). The stage runtime owns how it acts on that; this module only reports it.",
+      "players": "afterStep reads id, x, y, w, h, dead, exit and the optional state (QPlayerState) / faint. Death is reported through deadPlayerIds; the module never mutates the player objects."
+    }
+  }
+}

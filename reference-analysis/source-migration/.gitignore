@@ -1,0 +1,21 @@
+# Recovered installed payloads are local analysis inputs, not deployable assets.
+*.local.json
+*.local.txt
+tools/
+
+# Binary-derived indexes and raw disassembly dumps. Large, and regenerable from
+# the installed game by the inspect-*.py scripts in this folder.
+*-method-index.json
+quantum-parameter-disassembly.txt
+metadata-structure.json
+native-loader-structure.json
+
+# Working backups
+*.bak
+*.pre-*
+
+# Further binary-derived indexes: large and regenerable from the installed game.
+quantum-field-offsets.json
+population-type-index.json
+population-method-index.json
+stage-transfer-audit-report.json

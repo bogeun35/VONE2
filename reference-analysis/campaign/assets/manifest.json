@@ -1,0 +1,174 @@
+{
+  "source": "Actual ParkRebuild engine input replay; not original-game screenshots",
+  "scope": "Only the implemented 1-1 route. Geometry/physics remain reconstruction/calibration pending.",
+  "replay": "../generate-previews.cjs",
+  "routeCompleted": true,
+  "audio": "none",
+  "engineHashes": {
+    "engine.js": "9f23315a25f5f7669ce3b86e3d41efe0e7057646f19eec16c799b62015a9b88e",
+    "stage1-1.js": "620fc976ee3de9dc3d5741bc0bf7569f3969d7d9baf794f6e36c631e5895a6bf",
+    "devices.js": "6c8e6e4089c0596846a3758f5d41175d202198881c901f5ba6a90623419cd6f6"
+  },
+  "images": [
+    {
+      "id": "start",
+      "name": "함께 출발",
+      "file": "stage-01-01-start.png",
+      "width": 960,
+      "height": 540,
+      "stageId": "pico1/world/01-01",
+      "ticks": 4,
+      "elapsed": 0.03333333333333333,
+      "camera": 0,
+      "players": [
+        {
+          "id": "a",
+          "x": 65,
+          "y": 562,
+          "supportId": "start"
+        },
+        {
+          "id": "b",
+          "x": 105,
+          "y": 562,
+          "supportId": "start"
+        }
+      ],
+      "devices": [
+        {
+          "id": "gap-bridge",
+          "active": false,
+          "x": 1200,
+          "y": 600
+        },
+        {
+          "id": "team-lift",
+          "active": true,
+          "x": 1800,
+          "y": 600,
+          "occupancy": 0
+        }
+      ]
+    },
+    {
+      "id": "boost",
+      "name": "어깨를 빌려줘",
+      "file": "stage-01-01-boost.png",
+      "width": 960,
+      "height": 540,
+      "stageId": "pico1/world/01-01",
+      "ticks": 1206,
+      "elapsed": 10.05000000000007,
+      "camera": 704.5833333333339,
+      "players": [
+        {
+          "id": "a",
+          "x": 1166.6666666666672,
+          "y": 448,
+          "supportId": "b"
+        },
+        {
+          "id": "b",
+          "x": 1170.5000000000007,
+          "y": 486,
+          "supportId": "step-two"
+        }
+      ],
+      "devices": [
+        {
+          "id": "gap-bridge",
+          "active": false,
+          "x": 1200,
+          "y": 600
+        },
+        {
+          "id": "team-lift",
+          "active": true,
+          "x": 1800,
+          "y": 600,
+          "occupancy": 0
+        }
+      ]
+    },
+    {
+      "id": "bridge",
+      "name": "다리를 지켜줘",
+      "file": "stage-01-01-bridge.png",
+      "width": 960,
+      "height": 540,
+      "stageId": "pico1/world/01-01",
+      "ticks": 1468,
+      "elapsed": 12.23333333333328,
+      "camera": 948.0000000000102,
+      "players": [
+        {
+          "id": "a",
+          "x": 1511.6666666666808,
+          "y": 562,
+          "supportId": "button-bank"
+        },
+        {
+          "id": "b",
+          "x": 1312.3333333333396,
+          "y": 562,
+          "supportId": "gap-bridge"
+        }
+      ],
+      "devices": [
+        {
+          "id": "gap-bridge",
+          "active": true,
+          "x": 1200,
+          "y": 600
+        },
+        {
+          "id": "team-lift",
+          "active": true,
+          "x": 1800,
+          "y": 600,
+          "occupancy": 0
+        }
+      ]
+    },
+    {
+      "id": "lift",
+      "name": "같이 올라가자",
+      "file": "stage-01-01-lift.png",
+      "width": 960,
+      "height": 540,
+      "stageId": "pico1/world/01-01",
+      "ticks": 2166,
+      "elapsed": 18.049999999999617,
+      "camera": 1240,
+      "players": [
+        {
+          "id": "a",
+          "x": 1860.500000000028,
+          "y": 403.9166666666633,
+          "supportId": "team-lift"
+        },
+        {
+          "id": "b",
+          "x": 1818.3333333333596,
+          "y": 403.9166666666633,
+          "supportId": "team-lift"
+        }
+      ],
+      "devices": [
+        {
+          "id": "gap-bridge",
+          "active": false,
+          "x": 1200,
+          "y": 600
+        },
+        {
+          "id": "team-lift",
+          "active": true,
+          "x": 1800,
+          "y": 441.9166666666633,
+          "occupancy": 2
+        }
+      ]
+    }
+  ]
+}

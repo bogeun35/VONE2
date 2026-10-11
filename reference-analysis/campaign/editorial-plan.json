@@ -1,0 +1,1855 @@
+{
+  "schemaVersion": 1,
+  "status": "draft",
+  "sections": [
+    {
+      "id": "reference",
+      "role": "unassigned",
+      "chapters": [
+        {
+          "id": "pico1/battle",
+          "label": "battle",
+          "items": [
+            {
+              "instanceId": "reference:pico1/battle/01",
+              "sourceIds": [
+                "pico1/battle/01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/battle/02",
+              "sourceIds": [
+                "pico1/battle/02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/battle/03",
+              "sourceIds": [
+                "pico1/battle/03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/battle/04",
+              "sourceIds": [
+                "pico1/battle/04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico1/endless",
+          "label": "endless",
+          "items": [
+            {
+              "instanceId": "reference:pico1/endless/01",
+              "sourceIds": [
+                "pico1/endless/01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/endless/02",
+              "sourceIds": [
+                "pico1/endless/02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/endless/03",
+              "sourceIds": [
+                "pico1/endless/03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/endless/04",
+              "sourceIds": [
+                "pico1/endless/04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico1/world/chapter-01",
+          "label": "1. Hello Pico Park",
+          "items": [
+            {
+              "instanceId": "reference:pico1/world/01-01",
+              "sourceIds": [
+                "pico1/world/01-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/01-02",
+              "sourceIds": [
+                "pico1/world/01-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/01-03",
+              "sourceIds": [
+                "pico1/world/01-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/01-04",
+              "sourceIds": [
+                "pico1/world/01-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico1/world/chapter-02",
+          "label": "2. Go together",
+          "items": [
+            {
+              "instanceId": "reference:pico1/world/02-01",
+              "sourceIds": [
+                "pico1/world/02-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/02-02",
+              "sourceIds": [
+                "pico1/world/02-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/02-03",
+              "sourceIds": [
+                "pico1/world/02-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/02-04",
+              "sourceIds": [
+                "pico1/world/02-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico1/world/chapter-03",
+          "label": "3. Time limit",
+          "items": [
+            {
+              "instanceId": "reference:pico1/world/03-01",
+              "sourceIds": [
+                "pico1/world/03-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/03-02",
+              "sourceIds": [
+                "pico1/world/03-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/03-03",
+              "sourceIds": [
+                "pico1/world/03-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/03-04",
+              "sourceIds": [
+                "pico1/world/03-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico1/world/chapter-04",
+          "label": "4. Gimmick gimmick",
+          "items": [
+            {
+              "instanceId": "reference:pico1/world/04-01",
+              "sourceIds": [
+                "pico1/world/04-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/04-02",
+              "sourceIds": [
+                "pico1/world/04-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/04-03",
+              "sourceIds": [
+                "pico1/world/04-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/04-04",
+              "sourceIds": [
+                "pico1/world/04-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico1/world/chapter-05",
+          "label": "5. All for one",
+          "items": [
+            {
+              "instanceId": "reference:pico1/world/05-01",
+              "sourceIds": [
+                "pico1/world/05-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/05-02",
+              "sourceIds": [
+                "pico1/world/05-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/05-03",
+              "sourceIds": [
+                "pico1/world/05-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/05-04",
+              "sourceIds": [
+                "pico1/world/05-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico1/world/chapter-06",
+          "label": "6. Push or jump",
+          "items": [
+            {
+              "instanceId": "reference:pico1/world/06-01",
+              "sourceIds": [
+                "pico1/world/06-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/06-02",
+              "sourceIds": [
+                "pico1/world/06-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/06-03",
+              "sourceIds": [
+                "pico1/world/06-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/06-04",
+              "sourceIds": [
+                "pico1/world/06-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico1/world/chapter-07",
+          "label": "7. Move and stop",
+          "items": [
+            {
+              "instanceId": "reference:pico1/world/07-01",
+              "sourceIds": [
+                "pico1/world/07-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/07-02",
+              "sourceIds": [
+                "pico1/world/07-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/07-03",
+              "sourceIds": [
+                "pico1/world/07-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/07-04",
+              "sourceIds": [
+                "pico1/world/07-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico1/world/chapter-08",
+          "label": "8. Retro game",
+          "items": [
+            {
+              "instanceId": "reference:pico1/world/08-01",
+              "sourceIds": [
+                "pico1/world/08-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/08-02",
+              "sourceIds": [
+                "pico1/world/08-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/08-03",
+              "sourceIds": [
+                "pico1/world/08-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/08-04",
+              "sourceIds": [
+                "pico1/world/08-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico1/world/chapter-09",
+          "label": "9. Ball park",
+          "items": [
+            {
+              "instanceId": "reference:pico1/world/09-01",
+              "sourceIds": [
+                "pico1/world/09-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/09-02",
+              "sourceIds": [
+                "pico1/world/09-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/09-03",
+              "sourceIds": [
+                "pico1/world/09-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/09-04",
+              "sourceIds": [
+                "pico1/world/09-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico1/world/chapter-10",
+          "label": "10. Two players",
+          "items": [
+            {
+              "instanceId": "reference:pico1/world/10-01",
+              "sourceIds": [
+                "pico1/world/10-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/10-02",
+              "sourceIds": [
+                "pico1/world/10-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/10-03",
+              "sourceIds": [
+                "pico1/world/10-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/10-04",
+              "sourceIds": [
+                "pico1/world/10-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico1/world/chapter-11",
+          "label": "11. Hand gimmick",
+          "items": [
+            {
+              "instanceId": "reference:pico1/world/11-01",
+              "sourceIds": [
+                "pico1/world/11-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/11-02",
+              "sourceIds": [
+                "pico1/world/11-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/11-03",
+              "sourceIds": [
+                "pico1/world/11-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/11-04",
+              "sourceIds": [
+                "pico1/world/11-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico1/world/chapter-12",
+          "label": "12. Last park",
+          "items": [
+            {
+              "instanceId": "reference:pico1/world/12-01",
+              "sourceIds": [
+                "pico1/world/12-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/12-02",
+              "sourceIds": [
+                "pico1/world/12-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/12-03",
+              "sourceIds": [
+                "pico1/world/12-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico1/world/12-04",
+              "sourceIds": [
+                "pico1/world/12-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/battle",
+          "label": "battle",
+          "items": [
+            {
+              "instanceId": "reference:pico2/battle/01",
+              "sourceIds": [
+                "pico2/battle/01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/battle/02",
+              "sourceIds": [
+                "pico2/battle/02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/battle/03",
+              "sourceIds": [
+                "pico2/battle/03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/battle/04",
+              "sourceIds": [
+                "pico2/battle/04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/battle/05",
+              "sourceIds": [
+                "pico2/battle/05"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/battle/06",
+              "sourceIds": [
+                "pico2/battle/06"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/battle/07",
+              "sourceIds": [
+                "pico2/battle/07"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/battle/08",
+              "sourceIds": [
+                "pico2/battle/08"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/dark/chapter-01",
+          "label": "1. dark",
+          "items": [
+            {
+              "instanceId": "reference:pico2/dark/01-01",
+              "sourceIds": [
+                "pico2/dark/01-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/dark/01-02",
+              "sourceIds": [
+                "pico2/dark/01-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/dark/01-03",
+              "sourceIds": [
+                "pico2/dark/01-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/dark/01-04",
+              "sourceIds": [
+                "pico2/dark/01-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/dark/chapter-02",
+          "label": "2. dark",
+          "items": [
+            {
+              "instanceId": "reference:pico2/dark/02-01",
+              "sourceIds": [
+                "pico2/dark/02-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/dark/02-02",
+              "sourceIds": [
+                "pico2/dark/02-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/dark/02-03",
+              "sourceIds": [
+                "pico2/dark/02-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/dark/02-04",
+              "sourceIds": [
+                "pico2/dark/02-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/dark/chapter-03",
+          "label": "3. dark",
+          "items": [
+            {
+              "instanceId": "reference:pico2/dark/03-01",
+              "sourceIds": [
+                "pico2/dark/03-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/dark/03-02",
+              "sourceIds": [
+                "pico2/dark/03-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/dark/03-03",
+              "sourceIds": [
+                "pico2/dark/03-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/dark/03-04",
+              "sourceIds": [
+                "pico2/dark/03-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/dark/chapter-04",
+          "label": "4. dark",
+          "items": [
+            {
+              "instanceId": "reference:pico2/dark/04-01",
+              "sourceIds": [
+                "pico2/dark/04-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/dark/04-02",
+              "sourceIds": [
+                "pico2/dark/04-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/dark/04-03",
+              "sourceIds": [
+                "pico2/dark/04-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/dark/04-04",
+              "sourceIds": [
+                "pico2/dark/04-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/endless",
+          "label": "endless",
+          "items": [
+            {
+              "instanceId": "reference:pico2/endless/01",
+              "sourceIds": [
+                "pico2/endless/01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/endless/02",
+              "sourceIds": [
+                "pico2/endless/02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/endless/03",
+              "sourceIds": [
+                "pico2/endless/03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/endless/04",
+              "sourceIds": [
+                "pico2/endless/04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/endless/05",
+              "sourceIds": [
+                "pico2/endless/05"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/endless/06",
+              "sourceIds": [
+                "pico2/endless/06"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/endless/07",
+              "sourceIds": [
+                "pico2/endless/07"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/world/chapter-01",
+          "label": "1. Hello PICO PARK 2",
+          "items": [
+            {
+              "instanceId": "reference:pico2/world/01-01",
+              "sourceIds": [
+                "pico2/world/01-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/01-02",
+              "sourceIds": [
+                "pico2/world/01-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/01-03",
+              "sourceIds": [
+                "pico2/world/01-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/01-04",
+              "sourceIds": [
+                "pico2/world/01-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/world/chapter-02",
+          "label": "2. Distance",
+          "items": [
+            {
+              "instanceId": "reference:pico2/world/02-01",
+              "sourceIds": [
+                "pico2/world/02-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/02-02",
+              "sourceIds": [
+                "pico2/world/02-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/02-03",
+              "sourceIds": [
+                "pico2/world/02-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/02-04",
+              "sourceIds": [
+                "pico2/world/02-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/world/chapter-03",
+          "label": "3. Shape",
+          "items": [
+            {
+              "instanceId": "reference:pico2/world/03-01",
+              "sourceIds": [
+                "pico2/world/03-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/03-02",
+              "sourceIds": [
+                "pico2/world/03-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/03-03",
+              "sourceIds": [
+                "pico2/world/03-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/03-04",
+              "sourceIds": [
+                "pico2/world/03-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/world/chapter-04",
+          "label": "4. Danger Park",
+          "items": [
+            {
+              "instanceId": "reference:pico2/world/04-01",
+              "sourceIds": [
+                "pico2/world/04-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/04-02",
+              "sourceIds": [
+                "pico2/world/04-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/04-03",
+              "sourceIds": [
+                "pico2/world/04-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/04-04",
+              "sourceIds": [
+                "pico2/world/04-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/world/chapter-05",
+          "label": "5. Time Limit",
+          "items": [
+            {
+              "instanceId": "reference:pico2/world/05-01",
+              "sourceIds": [
+                "pico2/world/05-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/05-02",
+              "sourceIds": [
+                "pico2/world/05-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/05-03",
+              "sourceIds": [
+                "pico2/world/05-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/05-04",
+              "sourceIds": [
+                "pico2/world/05-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/world/chapter-06",
+          "label": "6. Take Them Down",
+          "items": [
+            {
+              "instanceId": "reference:pico2/world/06-01",
+              "sourceIds": [
+                "pico2/world/06-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/06-02",
+              "sourceIds": [
+                "pico2/world/06-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/06-03",
+              "sourceIds": [
+                "pico2/world/06-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/06-04",
+              "sourceIds": [
+                "pico2/world/06-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/world/chapter-07",
+          "label": "7. Stop and Go",
+          "items": [
+            {
+              "instanceId": "reference:pico2/world/07-01",
+              "sourceIds": [
+                "pico2/world/07-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/07-02",
+              "sourceIds": [
+                "pico2/world/07-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/07-03",
+              "sourceIds": [
+                "pico2/world/07-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/07-04",
+              "sourceIds": [
+                "pico2/world/07-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/world/chapter-08",
+          "label": "8. Minigames",
+          "items": [
+            {
+              "instanceId": "reference:pico2/world/08-01",
+              "sourceIds": [
+                "pico2/world/08-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/08-02",
+              "sourceIds": [
+                "pico2/world/08-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/08-03",
+              "sourceIds": [
+                "pico2/world/08-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/08-04",
+              "sourceIds": [
+                "pico2/world/08-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/world/chapter-09",
+          "label": "9. Top Down View",
+          "items": [
+            {
+              "instanceId": "reference:pico2/world/09-01",
+              "sourceIds": [
+                "pico2/world/09-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/09-02",
+              "sourceIds": [
+                "pico2/world/09-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/09-03",
+              "sourceIds": [
+                "pico2/world/09-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/09-04",
+              "sourceIds": [
+                "pico2/world/09-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/world/chapter-10",
+          "label": "10. Skill or Equipment",
+          "items": [
+            {
+              "instanceId": "reference:pico2/world/10-01",
+              "sourceIds": [
+                "pico2/world/10-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/10-02",
+              "sourceIds": [
+                "pico2/world/10-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/10-03",
+              "sourceIds": [
+                "pico2/world/10-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/10-04",
+              "sourceIds": [
+                "pico2/world/10-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/world/chapter-11",
+          "label": "11. Dodge Master",
+          "items": [
+            {
+              "instanceId": "reference:pico2/world/11-01",
+              "sourceIds": [
+                "pico2/world/11-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/11-02",
+              "sourceIds": [
+                "pico2/world/11-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/11-03",
+              "sourceIds": [
+                "pico2/world/11-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/11-04",
+              "sourceIds": [
+                "pico2/world/11-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/world/chapter-12",
+          "label": "12. Go Go Go",
+          "items": [
+            {
+              "instanceId": "reference:pico2/world/12-01",
+              "sourceIds": [
+                "pico2/world/12-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/12-02",
+              "sourceIds": [
+                "pico2/world/12-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/12-03",
+              "sourceIds": [
+                "pico2/world/12-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/12-04",
+              "sourceIds": [
+                "pico2/world/12-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/world/chapter-13",
+          "label": "13. Special Park",
+          "items": [
+            {
+              "instanceId": "reference:pico2/world/13-01",
+              "sourceIds": [
+                "pico2/world/13-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/13-02",
+              "sourceIds": [
+                "pico2/world/13-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/13-03",
+              "sourceIds": [
+                "pico2/world/13-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/13-04",
+              "sourceIds": [
+                "pico2/world/13-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/world/chapter-14",
+          "label": "14. Useful Tools",
+          "items": [
+            {
+              "instanceId": "reference:pico2/world/14-01",
+              "sourceIds": [
+                "pico2/world/14-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/14-02",
+              "sourceIds": [
+                "pico2/world/14-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/14-03",
+              "sourceIds": [
+                "pico2/world/14-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/14-04",
+              "sourceIds": [
+                "pico2/world/14-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pico2/world/chapter-15",
+          "label": "15. Final Park",
+          "items": [
+            {
+              "instanceId": "reference:pico2/world/15-01",
+              "sourceIds": [
+                "pico2/world/15-01"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/15-02",
+              "sourceIds": [
+                "pico2/world/15-02"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/15-03",
+              "sourceIds": [
+                "pico2/world/15-03"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            },
+            {
+              "instanceId": "reference:pico2/world/15-04",
+              "sourceIds": [
+                "pico2/world/15-04"
+              ],
+              "edit": {
+                "kind": "unchanged",
+                "rationale": null,
+                "review": "not_reviewed"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "main",
+      "role": "main",
+      "chapters": []
+    },
+    {
+      "id": "epilogue",
+      "role": "epilogue",
+      "chapters": []
+    },
+    {
+      "id": "second-run",
+      "role": "second_run",
+      "chapters": []
+    }
+  ],
+  "excludedReferences": []
+}

@@ -1,0 +1,2069 @@
+{
+  "source": "Installed PICO PARK 2 static metadata and stage payloads",
+  "nativeCodeExecuted": false,
+  "bruteForceUsed": false,
+  "verifiedWorldIds": 60,
+  "actorParametersInterpreted": false,
+  "webPlayableStages": 0,
+  "stageSchema": {
+    "root": "stageInitParamList",
+    "variant": "createIndex / needPlayerCount / isOnlineOnly",
+    "actors": "actorCreateParamList",
+    "position": "posX / posY",
+    "parameters": "datas[32]: t type marker, f float, s string; exact per-actor parameter meaning pending static initializer inspection"
+  },
+  "stages": [
+    {
+      "stageId": "st_w_01_01",
+      "file": "345580002efa5c6377ddb40e8c372853",
+      "sourceSha256": "782425a869189603334bcc73dc691a87fb146220955cbebfd59bea69594f4d98",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 36,
+          "actorTypes": {
+            "JumpStandMediator": 2,
+            "Player": 8,
+            "Warp": 1,
+            "JumpStand": 15,
+            "Switch": 1,
+            "Key": 1,
+            "Goal": 1,
+            "MapRect": 6,
+            "DelaySwitch": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 2890.0,
+            "minY": 0.0,
+            "maxY": 1056.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_01_02",
+      "file": "e846cac67adc45751b1a6385e05ea3f5",
+      "sourceSha256": "dcaaf97be9d532a394f96c324888ae2f57d137144073e0a5235ed615c87e0fa0",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 62,
+          "actorTypes": {
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "Thorn": 25,
+            "PushBox": 1,
+            "JumpStand": 1,
+            "CollisionSwitch": 25
+          },
+          "boundsOfActorCenters": {
+            "minX": 70.0,
+            "maxX": 2400.0,
+            "minY": 142.0,
+            "maxY": 480.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_01_03",
+      "file": "43644795cd52f6fe52094bff3ac34933",
+      "sourceSha256": "bc62ba1c6df47991c837919ce383ed149751148f9b03a9f6c898c634af38813b",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 17,
+          "actorTypes": {
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "FallingWall": 2,
+            "DashBoard": 1,
+            "Rect": 4
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1968.0,
+            "minY": 240.0,
+            "maxY": 480.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_01_04",
+      "file": "1b00c1da26c405cc763862c2a687b340",
+      "sourceSha256": "78396b818d7e90ab6164d6bea15d4fb77c399b83d6478e585cf33f8ca0618b21",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 42,
+          "actorTypes": {
+            "SwitchObserver": 1,
+            "Player": 8,
+            "JumpStand": 14,
+            "Key": 1,
+            "Goal": 1,
+            "Thorn": 1,
+            "Switch": 13,
+            "Gate": 3
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 2328.0,
+            "minY": 0.0,
+            "maxY": 1392.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_02_01",
+      "file": "75b015ce92b516bd0233fbfcbe0082d1",
+      "sourceSha256": "9916fca17e6aea39299f5ad90e54403667fc7acd619a4dfd378505f558fc1151",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 22,
+          "actorTypes": {
+            "StepEnemy": 1,
+            "Player": 8,
+            "DistanceConstraint": 1,
+            "WarpAll": 2,
+            "Key": 1,
+            "Goal": 1,
+            "WeightedLiftEx": 2,
+            "MapRect": 1,
+            "Rect": 5
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 3408.0,
+            "minY": 0.0,
+            "maxY": 1673.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_02_02",
+      "file": "aafd2369c406bf8a7f2eeaa172428285",
+      "sourceSha256": "3e26275582370258c7da12ca6a97706a3b661d2ba21c2565b2295ba1c860c8a0",
+      "variants": [
+        {
+          "createIndex": 1,
+          "needPlayerCount": 5,
+          "isOnlineOnly": false,
+          "actorCount": 24,
+          "actorTypes": {
+            "SwitchObserver": 1,
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "Text": 1,
+            "WeightedLiftSingle": 1,
+            "Warp": 2,
+            "Switch": 8,
+            "TouchEnergy": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 2253.0,
+            "minY": 0.0,
+            "maxY": 652.0
+          }
+        },
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 24,
+          "actorTypes": {
+            "SwitchObserver": 1,
+            "TouchEnergy": 1,
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "Text": 1,
+            "WeightedLiftSingle": 1,
+            "Warp": 2,
+            "Switch": 8
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 2253.0,
+            "minY": 0.0,
+            "maxY": 652.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_02_03",
+      "file": "79b7024f965f0d737ff6d5bfcd135bd3",
+      "sourceSha256": "c385c2ff01560935d7f869d7358398674cfbde0cc2bff81556e6bf37eecacba4",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 31,
+          "actorTypes": {
+            "JumpStand": 4,
+            "Player": 8,
+            "DistanceConstraint": 1,
+            "WarpAll": 3,
+            "CollisionConstraintMove": 2,
+            "Key": 1,
+            "Goal": 1,
+            "SwitchRect": 6,
+            "FrontSwitch": 4,
+            "SwitchTargetGroup": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 2976.0,
+            "minY": 0.0,
+            "maxY": 1998.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_02_04",
+      "file": "1255c6019c44b613213d0519cd741086",
+      "sourceSha256": "a3a309821084967762718c08b015861e2e08091fc68995c8410ea906ac74ddcd",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 20,
+          "actorTypes": {
+            "Player": 8,
+            "ColorBox": 1,
+            "Key": 1,
+            "Goal": 1,
+            "Text": 1,
+            "MoveWall": 1,
+            "LinePathLift": 1,
+            "Thunder": 1,
+            "Wind": 1,
+            "MapRect": 3,
+            "TouchEnergy": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 3261.0,
+            "minY": 0.0,
+            "maxY": 461.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_01",
+      "file": "2a2b196653a973baec00796746a98347",
+      "sourceSha256": "b30b5df8062c225998702f09ef41cd806386a5ef2c8f726668e4f4e7e81b4c49",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 24,
+          "actorTypes": {
+            "Blackout": 1,
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "SearchLight": 12,
+            "CheckPoint": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 3072.0,
+            "minY": 0.0,
+            "maxY": 432.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_02",
+      "file": "7d6b92da3a8e0d78700caae443117093",
+      "sourceSha256": "f4a3bf3a90e79fa81eb0c197f5447ca8cfef43dd69b4862442ec2c216b6d9fc3",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 23,
+          "actorTypes": {
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "LinePathLift": 2,
+            "Thorn": 1,
+            "DamageRect": 8,
+            "Thunder": 1,
+            "Rect": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 100.0,
+            "maxX": 2880.0,
+            "minY": 48.0,
+            "maxY": 528.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_03",
+      "file": "4d12868366a30ddc821f9ec23a8d5011",
+      "sourceSha256": "8a9d41275f5eb81b53c57795d14f8e99dcf166d417fbe9a0bcb277bd33ed1fef",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 26,
+          "actorTypes": {
+            "Player": 8,
+            "PlayerMagnet": 8,
+            "Key": 1,
+            "Goal": 1,
+            "LinePathLift": 1,
+            "DamageRect": 2,
+            "Thunder": 2,
+            "DelaySwitch": 1,
+            "Text": 2
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 3504.0,
+            "minY": 0.0,
+            "maxY": 460.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_04",
+      "file": "c745fac28d0eebfb8f1ef4f481fdefa7",
+      "sourceSha256": "c6a2ebf4e1dbab94ad511242e89eab4258297ba5a1635c2095a6f7fec7271465",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 59,
+          "actorTypes": {
+            "Player": 8,
+            "JumpStand": 6,
+            "Rect": 12,
+            "PlayerMagnet": 8,
+            "ColorBox": 2,
+            "Arrangement": 1,
+            "DummyPlayer": 11,
+            "DummyColorBox": 7,
+            "Key": 1,
+            "Goal": 1,
+            "Text": 1,
+            "DummyGoal": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1896.0,
+            "minY": 0.0,
+            "maxY": 1104.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_04_01",
+      "file": "e3e9d8f4831d38e4be77cb68c787bf7d",
+      "sourceSha256": "57d9612148746786a640a5f1d86296d6bdfa6de67b4109a143ccda60469745b8",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 25,
+          "actorTypes": {
+            "Player": 8,
+            "Key": 2,
+            "Goal": 1,
+            "Thunder": 4,
+            "Bridge": 4,
+            "MapRect": 3,
+            "CollisionSwitch": 3
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1648.0,
+            "minY": 0.0,
+            "maxY": 432.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_04_02",
+      "file": "4e6c239450046dc4d8f58b7c12ea88a9",
+      "sourceSha256": "b320ee087e2f9416820821bd3a47a589299148bc4f7969d27f76a843b8478b7f",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 16,
+          "actorTypes": {
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "Gear": 2,
+            "PushBox": 2,
+            "MapRect": 1,
+            "SwitchTargetGroup": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1984.0,
+            "minY": 0.0,
+            "maxY": 432.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_04_03",
+      "file": "2de8177c55efe1aef2a3ae0db0638ffa",
+      "sourceSha256": "f15a9d5a3227b28eb7068903cd8f2edd891bcb93af161343b9f3d0258165866b",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 32,
+          "actorTypes": {
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "BlinkBlock": 8,
+            "Thunder": 4,
+            "Thorn": 6,
+            "Bridge": 2,
+            "SwitchTimer": 2
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 744.0,
+            "minY": 0.0,
+            "maxY": 480.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_04_04",
+      "file": "021e852f9eb5a4aa0f57abe709a37456",
+      "sourceSha256": "cd1df65ba3709e477cf7aa9bf6a8d0706184bf740d0b357765f8e25061dd90e1",
+      "variants": [
+        {
+          "createIndex": 2,
+          "needPlayerCount": 4,
+          "isOnlineOnly": false,
+          "actorCount": 34,
+          "actorTypes": {
+            "BlinkThunder": 10,
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "Rect": 14
+          },
+          "boundsOfActorCenters": {
+            "minX": -24.0,
+            "maxX": 771.0,
+            "minY": 48.0,
+            "maxY": 528.0
+          }
+        },
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 33,
+          "actorTypes": {
+            "BlinkThunder": 10,
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "Rect": 13
+          },
+          "boundsOfActorCenters": {
+            "minX": 48.0,
+            "maxX": 771.0,
+            "minY": 48.0,
+            "maxY": 432.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_05_01",
+      "file": "81784afe7776d68f7859c2331ca6f82a",
+      "sourceSha256": "518456a578f645e5ecd94a00c807b878cc9b51aee856421a28c84bc2318070bd",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 76,
+          "actorTypes": {
+            "CoinObserver": 1,
+            "Player": 8,
+            "JumpStand": 4,
+            "WeightedLift": 2,
+            "Key": 1,
+            "Goal": 1,
+            "DeadTimer": 1,
+            "Coin": 58
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1656.0,
+            "minY": 0.0,
+            "maxY": 912.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_05_02",
+      "file": "43206d513663514d772527cfda173b01",
+      "sourceSha256": "d44a5b2717a7bb5fc1a853e00bb34e15af7d4bd1358a9319cc56c581c655f236",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 48,
+          "actorTypes": {
+            "SwitchObserver": 1,
+            "Player": 8,
+            "Goal": 1,
+            "Key": 1,
+            "DeadTimer": 1,
+            "PushBox": 9,
+            "Switch": 27
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 2280.0,
+            "minY": 0.0,
+            "maxY": 432.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_05_03",
+      "file": "aa51a7d89adb009ae943e04574dd7633",
+      "sourceSha256": "66f22b61f7de233da1bbdcca7971ad7954feadd5548cf69f95e2aca92835b9e8",
+      "variants": [
+        {
+          "createIndex": 1,
+          "needPlayerCount": 5,
+          "isOnlineOnly": false,
+          "actorCount": 98,
+          "actorTypes": {
+            "CoinObserver": 1,
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "PlayerMagnet": 8,
+            "Rect": 3,
+            "Coin": 75,
+            "DeadTimer": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1828.0,
+            "minY": 0.0,
+            "maxY": 554.0
+          }
+        },
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 98,
+          "actorTypes": {
+            "CoinObserver": 1,
+            "Rect": 3,
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "PlayerMagnet": 8,
+            "Coin": 75,
+            "DeadTimer": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1828.0,
+            "minY": 0.0,
+            "maxY": 554.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_05_04",
+      "file": "eddd5584de0a099e77081e47d1a658ce",
+      "sourceSha256": "80b50e3f148cd7dab0d7c6d3c13b8bd627946834d46e355ea61344ec0c5c727f",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 29,
+          "actorTypes": {
+            "Player": 8,
+            "PlayerWarpGun": 8,
+            "Rect": 6,
+            "Key": 1,
+            "Goal": 1,
+            "UpDownLift": 1,
+            "DeadTimer": 1,
+            "Warp": 2,
+            "Text": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 2664.0,
+            "minY": 0.0,
+            "maxY": 720.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_06_01",
+      "file": "59c2571eba8d8464e1ce27e5876d8ce2",
+      "sourceSha256": "cfc296358b477ecd18dd70cab9963569bd0bf042515f34e58acb4f5c0e76c6ae",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 25,
+          "actorTypes": {
+            "BattlePlanePlayer": 8,
+            "Text": 1,
+            "MapBlockReplacer": 1,
+            "PlayerGun": 8,
+            "ShootingEnemySpawner": 2,
+            "Key": 1,
+            "MapBreakBlockRect": 2,
+            "Goal": 1,
+            "OptimizedBulletObserver": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 3408.0,
+            "minY": 0.0,
+            "maxY": 576.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_06_02",
+      "file": "7f5b9c9936d3f094653f8903a95cb65f",
+      "sourceSha256": "bf584dbc8a2a44360245cfc640915a10532dc2a5fbcb248cf00d749aacb10cec",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 27,
+          "actorTypes": {
+            "BattlePlanePlayer": 4,
+            "Player": 4,
+            "MapBlockReplacer": 1,
+            "PlayerGun": 4,
+            "ShootingEnemySpawner": 2,
+            "Key": 1,
+            "Goal": 1,
+            "Thunder": 4,
+            "DamageRect": 4,
+            "Rect": 1,
+            "OptimizedBulletObserver": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 4368.0,
+            "minY": 0.0,
+            "maxY": 1100.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_06_03",
+      "file": "624f9b6a9997656239376ad08d975980",
+      "sourceSha256": "9aa223657bdf65b728e7fe57ce3fb87c0585df6930088ecf28854a289931cf61",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 26,
+          "actorTypes": {
+            "PlaneObstacle": 8,
+            "Key": 1,
+            "Goal": 1,
+            "PlayerGun": 8,
+            "BattlePlanePlayer": 8
+          },
+          "boundsOfActorCenters": {
+            "minX": 96.0,
+            "maxX": 5640.0,
+            "minY": 72.0,
+            "maxY": 408.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_06_04",
+      "file": "92fa46fd5eae190942bb7b96f6f4cd56",
+      "sourceSha256": "4c6c19960aa54d30728bbe57fa006c4eb365bdd45e562dda2067d11b990868be",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 34,
+          "actorTypes": {
+            "BattlePlanePlayer": 8,
+            "MapBlockReplacer": 1,
+            "PlayerGun": 6,
+            "PlayerGuard": 2,
+            "ShootingEnemySpawner": 2,
+            "Key": 1,
+            "Goal": 1,
+            "ShootingEnemyBoss": 1,
+            "OptimizedBulletObserver": 1,
+            "BgmChanger": 2,
+            "SwitchTargetGroup": 1,
+            "ShootingSuperApple": 8
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 2644.0,
+            "minY": 0.0,
+            "maxY": 576.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_07_01",
+      "file": "95e18ad29c6a137e701d877a03b40b94",
+      "sourceSha256": "55ddab969e14434071ecb18a65db8829c2c9d5302e01e836ff170928172ec088",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 17,
+          "actorTypes": {
+            "Player": 8,
+            "HalfOperator": 1,
+            "Thunder": 1,
+            "Key": 1,
+            "Goal": 1,
+            "StepEnemy": 1,
+            "Wind": 2,
+            "PushBox": 1,
+            "ArrowSign": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 3024.0,
+            "minY": 0.0,
+            "maxY": 456.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_07_02",
+      "file": "2e1364993e02b2bcf35ec57254533056",
+      "sourceSha256": "851e350d30ecdc7be40eb82b9b4b7c849fe620a34c8252ed03213f52d49b273a",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 11,
+          "actorTypes": {
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "Bowwow2Enemy": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 100.0,
+            "maxX": 1104.0,
+            "minY": 280.0,
+            "maxY": 432.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_07_03",
+      "file": "25c62e710056817704071d3d7e6d70d6",
+      "sourceSha256": "daf791197521d7c8841b1f40a998613303128e1ecaa132658a433303c6387e3a",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 21,
+          "actorTypes": {
+            "Blackout": 1,
+            "BlackoutController": 1,
+            "Player": 8,
+            "Warp": 2,
+            "Rect": 3,
+            "Bridge": 1,
+            "Switch": 1,
+            "WeightedLift": 2,
+            "Key": 1,
+            "Goal": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 2880.0,
+            "minY": 0.0,
+            "maxY": 576.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_07_04",
+      "file": "a47f5547209f02b7dc6b597fa641179b",
+      "sourceSha256": "b882b7053f5185d83c74b9950336f6c2ea6f57f808939d206bc34b2e113fbe17",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 23,
+          "actorTypes": {
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "Ghost": 1,
+            "FloatingThorn": 8,
+            "Lift": 1,
+            "DelaySwitch": 1,
+            "Thunder": 1,
+            "CheckPoint": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 93.0,
+            "maxX": 4384.0,
+            "minY": 90.0,
+            "maxY": 456.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_08_01",
+      "file": "94b972a0e4d6bdc20e6e672714b1bc08",
+      "sourceSha256": "c43b35681e429876b6eb7b42b2af309cc2bf1b633629cae8c8ee71d029b69905",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 24,
+          "actorTypes": {
+            "Key": 1,
+            "Goal": 1,
+            "TargetPlayer": 4,
+            "BasketPlayer": 4,
+            "AppleController": 1,
+            "Apple": 12,
+            "DeadTimer": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1872.0,
+            "minY": 0.0,
+            "maxY": 1008.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_08_02",
+      "file": "3da06c75567ee90e15b65a2b225c05aa",
+      "sourceSha256": "6099657a18ae28811c978f261a33d4267b536bd7abaf6ab80857b4a78110e94d",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 15,
+          "actorTypes": {
+            "CannonPlayer": 8,
+            "ThrowBallBasket": 3,
+            "Goal": 1,
+            "Key": 1,
+            "DeadTimer": 1,
+            "ThrowBallController": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 864.0,
+            "minY": 0.0,
+            "maxY": 480.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_08_03",
+      "file": "5338dab47936818e110c429decdb0748",
+      "sourceSha256": "2da863d403a51ffb8e2dece1cd3aecb1c598b657bf0c2cdba67907a9b7b39137",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 24,
+          "actorTypes": {
+            "Key": 1,
+            "Goal": 1,
+            "TargetPlayer": 4,
+            "BasketPlayer": 4,
+            "AppleController": 1,
+            "Apple": 12,
+            "DeadTimer": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1872.0,
+            "minY": 0.0,
+            "maxY": 1008.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_08_04",
+      "file": "6364763d967d79e0bebeb67422e82a6e",
+      "sourceSha256": "6bbd6bbbbcfd4ef6b0aa3bdda5ab7ca213133790fe061e665fc91e2b5e5458a7",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 15,
+          "actorTypes": {
+            "CannonPlayer": 8,
+            "ThrowBallBasket": 3,
+            "Goal": 1,
+            "Key": 1,
+            "DeadTimer": 1,
+            "ThrowBallController": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 864.0,
+            "minY": 0.0,
+            "maxY": 480.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_09_01",
+      "file": "047cc4880795c70fb2ba3eea9bcc7f60",
+      "sourceSha256": "c07c0263bf81b7dacf104c7f80671ea16088122632e84c1df37e7c08a7ab2925",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 31,
+          "actorTypes": {
+            "Blackout": 1,
+            "Key": 1,
+            "Goal": 1,
+            "TopViewPlayer": 8,
+            "BatEnemy": 2,
+            "FallingCage": 2,
+            "Switch": 15,
+            "TopViewMapRect": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1640.0,
+            "minY": 0.0,
+            "maxY": 408.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_09_02",
+      "file": "4444a34813fa5e84fdaa78b1f6f01dff",
+      "sourceSha256": "334b92fb3276ddcd566e5fb67543e4fbcb38e15b70869ae5f6ab29792c61a837",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 18,
+          "actorTypes": {
+            "TopViewPlayer": 8,
+            "Key": 1,
+            "Goal": 1,
+            "CapturingTarget": 6,
+            "CapturingConstraint": 1,
+            "DeadTimer": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 888.0,
+            "minY": 0.0,
+            "maxY": 864.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_09_03",
+      "file": "4a45e700aba1f2e23228d0cee556c4af",
+      "sourceSha256": "a1ea702d60826feed52289c8b0bfc65d5cc0959ef1e7e7de055b829e67598ace",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 18,
+          "actorTypes": {
+            "Blackout": 1,
+            "Key": 1,
+            "Goal": 1,
+            "TopViewPlayer": 8,
+            "BatEnemy": 6,
+            "Text": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1658.0,
+            "minY": 0.0,
+            "maxY": 396.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_09_04",
+      "file": "3d427669ebbe3a15b1f9147b3dc1eb14",
+      "sourceSha256": "35eddc22c461ed942d08db8123c79375ea4f8dda876ffb4b9b9b9b55adcb5240",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 29,
+          "actorTypes": {
+            "SwitchObserver": 1,
+            "Goal": 1,
+            "Key": 1,
+            "TopViewPlayer": 8,
+            "DistanceConstraint": 1,
+            "Wind": 1,
+            "TopViewMapRect": 8,
+            "Switch": 8
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 2160.0,
+            "minY": 0.0,
+            "maxY": 2184.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_10_01",
+      "file": "bbde273b32ce989515dc190588d8a96f",
+      "sourceSha256": "83a70a18c1b1a5ff45a89fa6f3108e15bd2ddd86e61a5205de4a45ad7ce401ba",
+      "variants": [
+        {
+          "createIndex": 1,
+          "needPlayerCount": 5,
+          "isOnlineOnly": false,
+          "actorCount": 28,
+          "actorTypes": {
+            "Player": 8,
+            "JumpStand": 1,
+            "Key": 1,
+            "Goal": 1,
+            "Switch": 8,
+            "CoopCountUpTimer": 1,
+            "CountUpTimer": 8
+          },
+          "boundsOfActorCenters": {
+            "minX": 144.0,
+            "maxX": 1776.0,
+            "minY": 96.0,
+            "maxY": 1008.0
+          }
+        },
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 15,
+          "actorTypes": {
+            "Player": 4,
+            "Key": 1,
+            "Goal": 1,
+            "Switch": 4,
+            "CoopCountUpTimer": 1,
+            "CountUpTimer": 4
+          },
+          "boundsOfActorCenters": {
+            "minX": 120.0,
+            "maxX": 768.0,
+            "minY": 96.0,
+            "maxY": 432.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_10_02",
+      "file": "fa7a6a457ce0632b72bc4ef2e41cec77",
+      "sourceSha256": "7e57f5f8ec22ee558ab10bfdf19773ec082d76a1e1f8df4bc587f059dc202bcb",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 15,
+          "actorTypes": {
+            "Player": 8,
+            "Key": 1,
+            "DashBoard": 2,
+            "PushBox": 1,
+            "WarpInitPos": 1,
+            "Goal": 1,
+            "Rect": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": -100.0,
+            "maxX": 1824.0,
+            "minY": 430.0,
+            "maxY": 1387.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_10_03",
+      "file": "1a8573ee54160fc6e68b5bf858d50427",
+      "sourceSha256": "f2e42f29abc8708ec2c461aa4c415a53ba9075869ab32885b90c1dbc3ec54b4b",
+      "variants": [
+        {
+          "createIndex": 1,
+          "needPlayerCount": 5,
+          "isOnlineOnly": false,
+          "actorCount": 12,
+          "actorTypes": {
+            "Text": 1,
+            "Player": 8,
+            "BoundBallPitcher": 1,
+            "BallKeyBox": 1,
+            "Goal": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 144.0,
+            "maxX": 1826.0,
+            "minY": 336.0,
+            "maxY": 1008.0
+          }
+        },
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 12,
+          "actorTypes": {
+            "Text": 1,
+            "Player": 8,
+            "BoundBallPitcher": 1,
+            "BallKeyBox": 1,
+            "Goal": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 144.0,
+            "maxX": 1826.0,
+            "minY": 336.0,
+            "maxY": 1008.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_10_04",
+      "file": "07c1b1e2b9fdd827381565680669eb56",
+      "sourceSha256": "b769f4c95c095837a92ceb03dbdf48ab93926debd2bdf05b239ca33a2dbf4a28",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 26,
+          "actorTypes": {
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "Thunder": 7,
+            "Rect": 1,
+            "WeightedLiftEx": 1,
+            "Bridge": 2,
+            "Switch": 2,
+            "Thorn": 3
+          },
+          "boundsOfActorCenters": {
+            "minX": 48.0,
+            "maxX": 3144.0,
+            "minY": 24.0,
+            "maxY": 456.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_11_01",
+      "file": "04c8a17209aea99b4fdd297da75e2063",
+      "sourceSha256": "b479b45e4aeb00ba177ef00251d1f37290a7ef1b469b4fe6091b87f471f717ac",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 24,
+          "actorTypes": {
+            "TopViewPlayer": 8,
+            "Key": 1,
+            "Goal": 1,
+            "DanmakuThunder": 4,
+            "DanmakuObserver": 1,
+            "DanmakuEmitter": 3,
+            "DanmakuModifier": 3,
+            "DanmakuLocator": 2,
+            "OptimizedBulletObserver": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1416.0,
+            "minY": 0.0,
+            "maxY": 1032.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_11_02",
+      "file": "511119c9a4d9c87070892dea09b070c6",
+      "sourceSha256": "79983263f4a0933aa0cdd79feaf39986b595ad2abfddce82b31232f9a0537b1c",
+      "variants": [
+        {
+          "createIndex": 1,
+          "needPlayerCount": 8,
+          "isOnlineOnly": false,
+          "actorCount": 23,
+          "actorTypes": {
+            "Player": 8,
+            "Goal": 1,
+            "Key": 1,
+            "PoleLadder": 1,
+            "FloatingThorn": 12
+          },
+          "boundsOfActorCenters": {
+            "minX": 168.0,
+            "maxX": 4949.0,
+            "minY": 48.0,
+            "maxY": 530.0
+          }
+        },
+        {
+          "createIndex": 3,
+          "needPlayerCount": 7,
+          "isOnlineOnly": false,
+          "actorCount": 47,
+          "actorTypes": {
+            "Player": 8,
+            "Goal": 1,
+            "Key": 1,
+            "PoleLadder": 1,
+            "FloatingThorn": 36
+          },
+          "boundsOfActorCenters": {
+            "minX": 168.0,
+            "maxX": 4949.0,
+            "minY": 48.0,
+            "maxY": 504.0
+          }
+        },
+        {
+          "createIndex": 2,
+          "needPlayerCount": 6,
+          "isOnlineOnly": false,
+          "actorCount": 29,
+          "actorTypes": {
+            "Player": 8,
+            "Goal": 1,
+            "Key": 1,
+            "PoleLadder": 1,
+            "FloatingThorn": 18
+          },
+          "boundsOfActorCenters": {
+            "minX": 168.0,
+            "maxX": 4949.0,
+            "minY": 48.0,
+            "maxY": 560.0
+          }
+        },
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 47,
+          "actorTypes": {
+            "Player": 8,
+            "Goal": 1,
+            "Key": 1,
+            "PoleLadder": 1,
+            "FloatingThorn": 36
+          },
+          "boundsOfActorCenters": {
+            "minX": 168.0,
+            "maxX": 4949.0,
+            "minY": 48.0,
+            "maxY": 504.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_11_03",
+      "file": "4ec40661f27802af39ea1de52e2c1e4c",
+      "sourceSha256": "47695d188d92d6fe11a5e8ac2181c3d0cd30006c31755ef914e0fd536893e7d5",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 26,
+          "actorTypes": {
+            "TopViewPlayer": 8,
+            "Key": 1,
+            "Goal": 1,
+            "DanmakuObserver": 1,
+            "DanmakuEmitter": 4,
+            "DanmakuModifier": 4,
+            "DanmakuLocator": 2,
+            "OptimizedBulletObserver": 1,
+            "DanmakuThunder": 4
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1416.0,
+            "minY": 0.0,
+            "maxY": 1032.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_11_04",
+      "file": "c15070bc7ac0287cd1aadb3aa170c4d0",
+      "sourceSha256": "0879cd75d1584a97bdb194402f24515bd24183a3bd71200f39e7517364af5a08",
+      "variants": [
+        {
+          "createIndex": 1,
+          "needPlayerCount": 5,
+          "isOnlineOnly": false,
+          "actorCount": 13,
+          "actorTypes": {
+            "DummyRect": 1,
+            "Player": 8,
+            "ThornCeiling": 1,
+            "Goal": 1,
+            "Key": 1,
+            "Thunder": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 48.0,
+            "maxX": 1032.0,
+            "minY": 120.0,
+            "maxY": 624.0
+          }
+        },
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 13,
+          "actorTypes": {
+            "Player": 8,
+            "ThornCeiling": 1,
+            "Goal": 1,
+            "Key": 1,
+            "DummyRect": 1,
+            "Thunder": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 192.0,
+            "maxX": 840.0,
+            "minY": 120.0,
+            "maxY": 624.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_12_01",
+      "file": "2359a94f4e4b632971691630d8bdb76a",
+      "sourceSha256": "fc44af06062aa994d4bb8dce5958200ca837315321db46ab669f626544064cef",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 38,
+          "actorTypes": {
+            "Player": 8,
+            "GoKart": 1,
+            "Goal": 1,
+            "Key": 1,
+            "Thorn": 9,
+            "Thunder": 4,
+            "CollisionSwitch": 6,
+            "Stick": 5,
+            "MapRect": 2,
+            "Rect": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 7200.0,
+            "minY": 0.0,
+            "maxY": 456.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_12_02",
+      "file": "e9ed74bcd88a360017d169fed9fe949a",
+      "sourceSha256": "d8cac31d71ce108e0f92cd46ff7be08581712c7a0dac7cebb8b41c26c280eb58",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 27,
+          "actorTypes": {
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "DeadSwitch": 1,
+            "WeightedLift": 1,
+            "WeightedLiftEx": 1,
+            "PushBox": 1,
+            "Warp": 1,
+            "ColorBox": 8,
+            "Thunder": 1,
+            "Thorn": 1,
+            "Rect": 2
+          },
+          "boundsOfActorCenters": {
+            "minX": 100.0,
+            "maxX": 4416.0,
+            "minY": 90.0,
+            "maxY": 596.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_12_03",
+      "file": "45980755d41b327a7b93f7414a0933dd",
+      "sourceSha256": "1f78c900f39a07a8b3c95d547c1bb88db0f87c95b3bf952fbc0dccb0b84f623d",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 27,
+          "actorTypes": {
+            "Player": 8,
+            "Warp": 2,
+            "Key": 1,
+            "Goal": 1,
+            "SpeedSwitch": 1,
+            "Switch": 1,
+            "Wind": 1,
+            "WeightedLiftEx": 1,
+            "Thorn": 3,
+            "Thunder": 3,
+            "Gate": 1,
+            "Rect": 4
+          },
+          "boundsOfActorCenters": {
+            "minX": 48.0,
+            "maxX": 3168.0,
+            "minY": 228.0,
+            "maxY": 671.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_12_04",
+      "file": "2650719b4b04079339a99773b2381a43",
+      "sourceSha256": "b1ddbcff768f8bd8c79b87e1d55a1e20ce300d7e3ae721baa128f32f3969279f",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 28,
+          "actorTypes": {
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "Thunder": 3,
+            "Thorn": 12,
+            "MoveWall": 2,
+            "SpeedSwitch": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 100.0,
+            "maxX": 6240.0,
+            "minY": 288.0,
+            "maxY": 455.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_13_01",
+      "file": "5cd0153425ebb4c9e4acac4a86e951e9",
+      "sourceSha256": "b92e076d52ee8e71d84ddc30af7dea7c02357e45a3459e75a00e51408d1e5e11",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 24,
+          "actorTypes": {
+            "Player": 8,
+            "LandmineSwitch": 12,
+            "LandmineSwitchObserver": 1,
+            "Key": 1,
+            "Goal": 1,
+            "JumpStand": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1200.0,
+            "minY": 0.0,
+            "maxY": 672.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_13_02",
+      "file": "0c0077088e3a47659481bcef88e86ab0",
+      "sourceSha256": "44f766dd102edc401ef64c5e67cec9d8624cfff2c18bb863db2239e7a019a065",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 18,
+          "actorTypes": {
+            "Goal": 1,
+            "Key": 1,
+            "Player": 8,
+            "CircleGraph": 2,
+            "CircleGraphController": 1,
+            "BarGraph": 2,
+            "BarGraphController": 1,
+            "GraphController": 1,
+            "DeadTimer": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1224.0,
+            "minY": 0.0,
+            "maxY": 720.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_13_03",
+      "file": "9c9f88066410887e6e5f65c84445bd83",
+      "sourceSha256": "04310b98a9cc41d315c97538da4a037dd29a0e1214a4fe70d1a8ee33672a04cd",
+      "variants": [
+        {
+          "createIndex": 5,
+          "needPlayerCount": 8,
+          "isOnlineOnly": false,
+          "actorCount": 23,
+          "actorTypes": {
+            "Player": 8,
+            "Goal": 1,
+            "Key": 1,
+            "RallyController": 1,
+            "RallyMallet": 8,
+            "Thunder": 4
+          },
+          "boundsOfActorCenters": {
+            "minX": 336.0,
+            "maxX": 1416.0,
+            "minY": 48.0,
+            "maxY": 912.0
+          }
+        },
+        {
+          "createIndex": 6,
+          "needPlayerCount": 7,
+          "isOnlineOnly": false,
+          "actorCount": 22,
+          "actorTypes": {
+            "Player": 8,
+            "Goal": 1,
+            "Key": 1,
+            "RallyController": 1,
+            "RallyMallet": 7,
+            "Thunder": 4
+          },
+          "boundsOfActorCenters": {
+            "minX": 336.0,
+            "maxX": 1368.0,
+            "minY": 48.0,
+            "maxY": 912.0
+          }
+        },
+        {
+          "createIndex": 1,
+          "needPlayerCount": 6,
+          "isOnlineOnly": false,
+          "actorCount": 21,
+          "actorTypes": {
+            "Player": 8,
+            "Goal": 1,
+            "Key": 1,
+            "RallyController": 1,
+            "RallyMallet": 6,
+            "Thunder": 4
+          },
+          "boundsOfActorCenters": {
+            "minX": 336.0,
+            "maxX": 1416.0,
+            "minY": 48.0,
+            "maxY": 912.0
+          }
+        },
+        {
+          "createIndex": 2,
+          "needPlayerCount": 5,
+          "isOnlineOnly": false,
+          "actorCount": 20,
+          "actorTypes": {
+            "Player": 8,
+            "Goal": 1,
+            "Key": 1,
+            "RallyController": 1,
+            "RallyMallet": 5,
+            "Thunder": 4
+          },
+          "boundsOfActorCenters": {
+            "minX": 336.0,
+            "maxX": 1368.0,
+            "minY": 48.0,
+            "maxY": 912.0
+          }
+        },
+        {
+          "createIndex": 3,
+          "needPlayerCount": 4,
+          "isOnlineOnly": false,
+          "actorCount": 19,
+          "actorTypes": {
+            "Player": 8,
+            "Goal": 1,
+            "Key": 1,
+            "RallyController": 1,
+            "RallyMallet": 4,
+            "Thunder": 4
+          },
+          "boundsOfActorCenters": {
+            "minX": 144.0,
+            "maxX": 1176.0,
+            "minY": 48.0,
+            "maxY": 720.0
+          }
+        },
+        {
+          "createIndex": 4,
+          "needPlayerCount": 3,
+          "isOnlineOnly": false,
+          "actorCount": 17,
+          "actorTypes": {
+            "Player": 8,
+            "Goal": 1,
+            "Key": 1,
+            "RallyController": 1,
+            "RallyMallet": 3,
+            "Thunder": 3
+          },
+          "boundsOfActorCenters": {
+            "minX": 144.0,
+            "maxX": 1176.0,
+            "minY": 48.0,
+            "maxY": 720.0
+          }
+        },
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 15,
+          "actorTypes": {
+            "Player": 8,
+            "Goal": 1,
+            "Key": 1,
+            "RallyController": 1,
+            "RallyMallet": 2,
+            "Thunder": 2
+          },
+          "boundsOfActorCenters": {
+            "minX": 216.0,
+            "maxX": 1176.0,
+            "minY": 48.0,
+            "maxY": 720.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_13_04",
+      "file": "d923b31239884368c93f77be85b02b3c",
+      "sourceSha256": "e9e8c9d0e8c5474f033fed097408e2857c7b2a83ed39b206a9116074e59f6c73",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 27,
+          "actorTypes": {
+            "Key": 1,
+            "Goal": 1,
+            "FakeTimer": 1,
+            "FakePlayer": 24
+          },
+          "boundsOfActorCenters": {
+            "minX": 96.0,
+            "maxX": 960.0,
+            "minY": 72.0,
+            "maxY": 528.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_14_01",
+      "file": "c27a3eca1425aef624b85231beb6a9cd",
+      "sourceSha256": "dad867b66fe17b51835b9d1b18c592ccd4027583bb1e29fda25e3f8c75de70d4",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 52,
+          "actorTypes": {
+            "Player": 8,
+            "Goal": 1,
+            "Key": 1,
+            "PlayerBlockGun": 8,
+            "Thorn": 11,
+            "Switch": 2,
+            "Gate": 1,
+            "Thunder": 2,
+            "BreakableRect": 1,
+            "DelaySwitch": 1,
+            "CollisionSwitch": 15,
+            "Text": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 1944.0,
+            "minY": 0.0,
+            "maxY": 456.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_14_02",
+      "file": "ab95cd93d392ca8df47b78cb041c1586",
+      "sourceSha256": "c87daab8f43d40ca117435243718bcb9046c4f9f7201ec8ee0e5c6070917a61c",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 57,
+          "actorTypes": {
+            "Player": 8,
+            "PlayerPunch": 8,
+            "Key": 1,
+            "Goal": 1,
+            "MoleNest": 13,
+            "MoleGroup": 3,
+            "Mole": 17,
+            "JumpStand": 6
+          },
+          "boundsOfActorCenters": {
+            "minX": 96.0,
+            "maxX": 3408.0,
+            "minY": 144.0,
+            "maxY": 1056.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_14_03",
+      "file": "2aaeeb44c51e4679f5ff8fab9ff19087",
+      "sourceSha256": "2a66335bb0ce061946d05f3f1e59b46967e315a22907ada6b5db5888c4171a27",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 27,
+          "actorTypes": {
+            "Dossun": 1,
+            "Player": 8,
+            "Goal": 1,
+            "Key": 1,
+            "PlayerBlockGun": 8,
+            "Warp": 1,
+            "Rect": 1,
+            "Bridge": 1,
+            "MapRect": 5
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 2544.0,
+            "minY": 0.0,
+            "maxY": 594.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_14_04",
+      "file": "4cb097ee492c66a9ae812fa4018b162b",
+      "sourceSha256": "3c4526f48d83159bef1af41aa646ad30c68b4aa9d4fc31b8fa36441294c9739c",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 20,
+          "actorTypes": {
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "GiantEnemy": 1,
+            "PlayerPunch": 7,
+            "SwitchTimerActor": 1,
+            "Warp": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 3648.0,
+            "minY": 0.0,
+            "maxY": 644.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_15_01",
+      "file": "f7d670e5e99502e1e0d3a2eee3747c98",
+      "sourceSha256": "5e1623da70124cfb99967bd61fa9b44e96fc658454dc2ee6d2f95c9312623cdc",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 22,
+          "actorTypes": {
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "LinePathGear": 3,
+            "WeightedLiftEx": 2,
+            "Rect": 2,
+            "MapRect": 3,
+            "CollisionSwitch": 1,
+            "CheckPoint": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 2832.0,
+            "minY": 0.0,
+            "maxY": 507.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_15_02",
+      "file": "73faf46f2b7db486532e24b777ca0a2f",
+      "sourceSha256": "e759d9f0d36104a0cea931e4aa5d0b1d97bf17984bf24a274526a1c737e5157e",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 48,
+          "actorTypes": {
+            "Blackout": 1,
+            "BlackoutController": 1,
+            "Player": 8,
+            "Key": 1,
+            "Goal": 1,
+            "ColorBox": 8,
+            "DeadSwitch": 1,
+            "WeightedLiftEx": 1,
+            "Thorn": 17,
+            "MapRect": 6,
+            "CheckPoint": 1,
+            "Thunder": 1,
+            "Rect": 1
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 3360.0,
+            "minY": 0.0,
+            "maxY": 442.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_15_03",
+      "file": "f935962dfb2ca9f086d7d89178eefc81",
+      "sourceSha256": "f3f926a6b2e4c87d9df99bbc3ee03ce0a0445249e49ffc52b105a47987303f30",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 35,
+          "actorTypes": {
+            "BattlePlanePlayer": 8,
+            "PlayerGun": 5,
+            "PlayerGuard": 3,
+            "ShootingEnemySpawner": 2,
+            "Key": 1,
+            "Goal": 1,
+            "ShootingEnemyBoss": 1,
+            "ShootingEnemyBossEx": 1,
+            "ShootingEnemyBossExParamSetter": 1,
+            "OptimizedBulletObserver": 1,
+            "BgmChanger": 2,
+            "SwitchTargetGroup": 1,
+            "ShootingSuperApple": 8
+          },
+          "boundsOfActorCenters": {
+            "minX": -264.0,
+            "maxX": 2164.0,
+            "minY": 0.0,
+            "maxY": 576.0
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_15_04",
+      "file": "39c799b0d2fb2d7105b7e1549e1a0442",
+      "sourceSha256": "dd9abe208a74113b4a8a2f9fba9914cf81aa3eaf7e28bafd2f7443be8d329456",
+      "variants": [
+        {
+          "createIndex": 0,
+          "needPlayerCount": 0,
+          "isOnlineOnly": false,
+          "actorCount": 36,
+          "actorTypes": {
+            "SwitchObserver": 1,
+            "Player": 8,
+            "Goal": 1,
+            "Thunder": 7,
+            "Switch": 8,
+            "FrontSwitch": 1,
+            "Thorn": 1,
+            "SwitchIceRect": 3,
+            "JumpStand": 2,
+            "Key": 1,
+            "Text": 1,
+            "IceRect": 2
+          },
+          "boundsOfActorCenters": {
+            "minX": 0.0,
+            "maxX": 5472.0,
+            "minY": 0.0,
+            "maxY": 624.0
+          }
+        }
+      ]
+    }
+  ]
+}

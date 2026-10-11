@@ -1,0 +1,823 @@
+[
+  {
+    "id": "start",
+    "name": "함께 출발",
+    "state": {
+      "map": {
+        "id": "pico1/world/01-01",
+        "name": "1-1 동선 재구성",
+        "width": 2440,
+        "height": 720,
+        "reconstruction": {
+          "status": "reconstruction_pending",
+          "source": "https://www.youtube.com/watch?v=QI0BvgCULM0",
+          "observed": "Two-player route: flat start, narrow gap, two steps, large gap, lower-right bridge button, all-player lift, airborne key, elevated exit.",
+          "observedPlayerCount": 2,
+          "geometry": "reconstruction_pending",
+          "physics": "calibration_pending",
+          "populationScaling": "two-player route observed; numerical calibration pending"
+        },
+        "platforms": [
+          {
+            "id": "start",
+            "x": 0,
+            "y": 600,
+            "w": 400,
+            "h": 120
+          },
+          {
+            "id": "after-small-gap",
+            "x": 440,
+            "y": 600,
+            "w": 360,
+            "h": 120
+          },
+          {
+            "id": "step-one",
+            "x": 800,
+            "y": 562,
+            "w": 80,
+            "h": 158
+          },
+          {
+            "id": "step-two",
+            "x": 880,
+            "y": 524,
+            "w": 320,
+            "h": 196
+          },
+          {
+            "id": "button-bank",
+            "x": 1426,
+            "y": 600,
+            "w": 374,
+            "h": 120
+          },
+          {
+            "id": "far-bank",
+            "x": 1920,
+            "y": 600,
+            "w": 520,
+            "h": 120
+          },
+          {
+            "id": "exit-ledge",
+            "x": 1920,
+            "y": 360,
+            "w": 520,
+            "h": 24
+          }
+        ],
+        "switches": [
+          {
+            "id": "bridge-button",
+            "x": 1500,
+            "y": 600,
+            "w": 80,
+            "h": 6,
+            "signal": "gap-bridge",
+            "occupantIds": [],
+            "pressed": false
+          }
+        ],
+        "devices": [
+          {
+            "id": "gap-bridge",
+            "x": 1200,
+            "y": 600,
+            "w": 226,
+            "h": 10,
+            "kind": "bridge",
+            "signal": "gap-bridge",
+            "mode": "while",
+            "active": false,
+            "latched": false,
+            "requestedActive": false,
+            "blocked": false
+          },
+          {
+            "id": "team-lift",
+            "x": 1800,
+            "y": 600,
+            "w": 120,
+            "h": 12,
+            "kind": "lift",
+            "fromY": 600,
+            "toY": 360,
+            "speed": 70,
+            "requiredPlayers": 2,
+            "active": true,
+            "occupantIds": [],
+            "occupancy": 0,
+            "qualified": false,
+            "targetY": 600,
+            "blocked": false,
+            "deltaY": 0,
+            "direction": "stopped"
+          }
+        ],
+        "timers": [],
+        "key": {
+          "id": "key",
+          "x": 1848,
+          "y": 307,
+          "w": 24,
+          "h": 24,
+          "taken": false
+        },
+        "exit": {
+          "id": "exit",
+          "x": 2230,
+          "y": 282,
+          "w": 58,
+          "h": 78
+        },
+        "spawns": [
+          {
+            "x": 65,
+            "y": 562
+          },
+          {
+            "x": 105,
+            "y": 562
+          }
+        ],
+        "hazards": [],
+        "killY": 770
+      },
+      "physics": {
+        "status": "calibration_pending",
+        "playerWidth": 32,
+        "playerHeight": 38,
+        "speed": 230,
+        "jumpSpeed": 530,
+        "gravity": 1500,
+        "maxFallSpeed": 950,
+        "maxSubstep": 0.008333333333333333,
+        "contactTolerance": 0.5
+      },
+      "players": [
+        {
+          "id": "a",
+          "kind": "player",
+          "x": 65,
+          "y": 562,
+          "w": 32,
+          "h": 38,
+          "vx": 0,
+          "vy": 0,
+          "grounded": true,
+          "ground": true,
+          "supportId": "start",
+          "jump": false,
+          "exit": false,
+          "jumpBlocked": false,
+          "airborne": false
+        },
+        {
+          "id": "b",
+          "kind": "player",
+          "x": 105,
+          "y": 562,
+          "w": 32,
+          "h": 38,
+          "vx": 0,
+          "vy": 0,
+          "grounded": true,
+          "ground": true,
+          "supportId": "start",
+          "jump": false,
+          "exit": false,
+          "jumpBlocked": false,
+          "airborne": false
+        }
+      ],
+      "status": "play",
+      "keyTaken": false,
+      "ticks": 4,
+      "elapsed": 0.03333333333333333,
+      "deaths": 0,
+      "failure": null,
+      "signals": {
+        "gap-bridge": false
+      }
+    }
+  },
+  {
+    "id": "boost",
+    "name": "어깨를 빌려줘",
+    "state": {
+      "map": {
+        "id": "pico1/world/01-01",
+        "name": "1-1 동선 재구성",
+        "width": 2440,
+        "height": 720,
+        "reconstruction": {
+          "status": "reconstruction_pending",
+          "source": "https://www.youtube.com/watch?v=QI0BvgCULM0",
+          "observed": "Two-player route: flat start, narrow gap, two steps, large gap, lower-right bridge button, all-player lift, airborne key, elevated exit.",
+          "observedPlayerCount": 2,
+          "geometry": "reconstruction_pending",
+          "physics": "calibration_pending",
+          "populationScaling": "two-player route observed; numerical calibration pending"
+        },
+        "platforms": [
+          {
+            "id": "start",
+            "x": 0,
+            "y": 600,
+            "w": 400,
+            "h": 120
+          },
+          {
+            "id": "after-small-gap",
+            "x": 440,
+            "y": 600,
+            "w": 360,
+            "h": 120
+          },
+          {
+            "id": "step-one",
+            "x": 800,
+            "y": 562,
+            "w": 80,
+            "h": 158
+          },
+          {
+            "id": "step-two",
+            "x": 880,
+            "y": 524,
+            "w": 320,
+            "h": 196
+          },
+          {
+            "id": "button-bank",
+            "x": 1426,
+            "y": 600,
+            "w": 374,
+            "h": 120
+          },
+          {
+            "id": "far-bank",
+            "x": 1920,
+            "y": 600,
+            "w": 520,
+            "h": 120
+          },
+          {
+            "id": "exit-ledge",
+            "x": 1920,
+            "y": 360,
+            "w": 520,
+            "h": 24
+          }
+        ],
+        "switches": [
+          {
+            "id": "bridge-button",
+            "x": 1500,
+            "y": 600,
+            "w": 80,
+            "h": 6,
+            "signal": "gap-bridge",
+            "occupantIds": [],
+            "pressed": false
+          }
+        ],
+        "devices": [
+          {
+            "id": "gap-bridge",
+            "x": 1200,
+            "y": 600,
+            "w": 226,
+            "h": 10,
+            "kind": "bridge",
+            "signal": "gap-bridge",
+            "mode": "while",
+            "active": false,
+            "latched": false,
+            "requestedActive": false,
+            "blocked": false
+          },
+          {
+            "id": "team-lift",
+            "x": 1800,
+            "y": 600,
+            "w": 120,
+            "h": 12,
+            "kind": "lift",
+            "fromY": 600,
+            "toY": 360,
+            "speed": 70,
+            "requiredPlayers": 2,
+            "active": true,
+            "occupantIds": [],
+            "occupancy": 0,
+            "qualified": false,
+            "targetY": 600,
+            "blocked": false,
+            "deltaY": 0,
+            "direction": "stopped"
+          }
+        ],
+        "timers": [],
+        "key": {
+          "id": "key",
+          "x": 1848,
+          "y": 307,
+          "w": 24,
+          "h": 24,
+          "taken": false
+        },
+        "exit": {
+          "id": "exit",
+          "x": 2230,
+          "y": 282,
+          "w": 58,
+          "h": 78
+        },
+        "spawns": [
+          {
+            "x": 65,
+            "y": 562
+          },
+          {
+            "x": 105,
+            "y": 562
+          }
+        ],
+        "hazards": [],
+        "killY": 770
+      },
+      "physics": {
+        "status": "calibration_pending",
+        "playerWidth": 32,
+        "playerHeight": 38,
+        "speed": 230,
+        "jumpSpeed": 530,
+        "gravity": 1500,
+        "maxFallSpeed": 950,
+        "maxSubstep": 0.008333333333333333,
+        "contactTolerance": 0.5
+      },
+      "players": [
+        {
+          "id": "a",
+          "kind": "player",
+          "x": 1166.6666666666672,
+          "y": 448,
+          "w": 32,
+          "h": 38,
+          "vx": 0,
+          "vy": 0,
+          "grounded": true,
+          "ground": true,
+          "supportId": "b",
+          "jump": false,
+          "exit": false,
+          "jumpBlocked": false,
+          "airborne": false
+        },
+        {
+          "id": "b",
+          "kind": "player",
+          "x": 1170.5000000000007,
+          "y": 486,
+          "w": 32,
+          "h": 38,
+          "vx": 0,
+          "vy": 0,
+          "grounded": true,
+          "ground": true,
+          "supportId": "step-two",
+          "jump": false,
+          "exit": false,
+          "jumpBlocked": false,
+          "airborne": false
+        }
+      ],
+      "status": "play",
+      "keyTaken": false,
+      "ticks": 1206,
+      "elapsed": 10.05000000000007,
+      "deaths": 0,
+      "failure": null,
+      "signals": {
+        "gap-bridge": false
+      }
+    }
+  },
+  {
+    "id": "bridge",
+    "name": "다리를 지켜줘",
+    "state": {
+      "map": {
+        "id": "pico1/world/01-01",
+        "name": "1-1 동선 재구성",
+        "width": 2440,
+        "height": 720,
+        "reconstruction": {
+          "status": "reconstruction_pending",
+          "source": "https://www.youtube.com/watch?v=QI0BvgCULM0",
+          "observed": "Two-player route: flat start, narrow gap, two steps, large gap, lower-right bridge button, all-player lift, airborne key, elevated exit.",
+          "observedPlayerCount": 2,
+          "geometry": "reconstruction_pending",
+          "physics": "calibration_pending",
+          "populationScaling": "two-player route observed; numerical calibration pending"
+        },
+        "platforms": [
+          {
+            "id": "start",
+            "x": 0,
+            "y": 600,
+            "w": 400,
+            "h": 120
+          },
+          {
+            "id": "after-small-gap",
+            "x": 440,
+            "y": 600,
+            "w": 360,
+            "h": 120
+          },
+          {
+            "id": "step-one",
+            "x": 800,
+            "y": 562,
+            "w": 80,
+            "h": 158
+          },
+          {
+            "id": "step-two",
+            "x": 880,
+            "y": 524,
+            "w": 320,
+            "h": 196
+          },
+          {
+            "id": "button-bank",
+            "x": 1426,
+            "y": 600,
+            "w": 374,
+            "h": 120
+          },
+          {
+            "id": "far-bank",
+            "x": 1920,
+            "y": 600,
+            "w": 520,
+            "h": 120
+          },
+          {
+            "id": "exit-ledge",
+            "x": 1920,
+            "y": 360,
+            "w": 520,
+            "h": 24
+          }
+        ],
+        "switches": [
+          {
+            "id": "bridge-button",
+            "x": 1500,
+            "y": 600,
+            "w": 80,
+            "h": 6,
+            "signal": "gap-bridge",
+            "occupantIds": [
+              "a"
+            ],
+            "pressed": true
+          }
+        ],
+        "devices": [
+          {
+            "id": "gap-bridge",
+            "x": 1200,
+            "y": 600,
+            "w": 226,
+            "h": 10,
+            "kind": "bridge",
+            "signal": "gap-bridge",
+            "mode": "while",
+            "active": true,
+            "latched": false,
+            "requestedActive": true,
+            "blocked": false
+          },
+          {
+            "id": "team-lift",
+            "x": 1800,
+            "y": 600,
+            "w": 120,
+            "h": 12,
+            "kind": "lift",
+            "fromY": 600,
+            "toY": 360,
+            "speed": 70,
+            "requiredPlayers": 2,
+            "active": true,
+            "occupantIds": [],
+            "occupancy": 0,
+            "qualified": false,
+            "targetY": 600,
+            "blocked": false,
+            "deltaY": 0,
+            "direction": "stopped"
+          }
+        ],
+        "timers": [],
+        "key": {
+          "id": "key",
+          "x": 1848,
+          "y": 307,
+          "w": 24,
+          "h": 24,
+          "taken": false
+        },
+        "exit": {
+          "id": "exit",
+          "x": 2230,
+          "y": 282,
+          "w": 58,
+          "h": 78
+        },
+        "spawns": [
+          {
+            "x": 65,
+            "y": 562
+          },
+          {
+            "x": 105,
+            "y": 562
+          }
+        ],
+        "hazards": [],
+        "killY": 770
+      },
+      "physics": {
+        "status": "calibration_pending",
+        "playerWidth": 32,
+        "playerHeight": 38,
+        "speed": 230,
+        "jumpSpeed": 530,
+        "gravity": 1500,
+        "maxFallSpeed": 950,
+        "maxSubstep": 0.008333333333333333,
+        "contactTolerance": 0.5
+      },
+      "players": [
+        {
+          "id": "a",
+          "kind": "player",
+          "x": 1511.6666666666808,
+          "y": 562,
+          "w": 32,
+          "h": 38,
+          "vx": 0,
+          "vy": 0,
+          "grounded": true,
+          "ground": true,
+          "supportId": "button-bank",
+          "jump": false,
+          "exit": false,
+          "jumpBlocked": false,
+          "airborne": false
+        },
+        {
+          "id": "b",
+          "kind": "player",
+          "x": 1312.3333333333396,
+          "y": 562,
+          "w": 32,
+          "h": 38,
+          "vx": 230,
+          "vy": 0,
+          "grounded": true,
+          "ground": true,
+          "supportId": "gap-bridge",
+          "jump": false,
+          "exit": false,
+          "jumpBlocked": false,
+          "airborne": false
+        }
+      ],
+      "status": "play",
+      "keyTaken": false,
+      "ticks": 1468,
+      "elapsed": 12.23333333333328,
+      "deaths": 0,
+      "failure": null,
+      "signals": {
+        "gap-bridge": true
+      }
+    }
+  },
+  {
+    "id": "lift",
+    "name": "같이 올라가자",
+    "state": {
+      "map": {
+        "id": "pico1/world/01-01",
+        "name": "1-1 동선 재구성",
+        "width": 2440,
+        "height": 720,
+        "reconstruction": {
+          "status": "reconstruction_pending",
+          "source": "https://www.youtube.com/watch?v=QI0BvgCULM0",
+          "observed": "Two-player route: flat start, narrow gap, two steps, large gap, lower-right bridge button, all-player lift, airborne key, elevated exit.",
+          "observedPlayerCount": 2,
+          "geometry": "reconstruction_pending",
+          "physics": "calibration_pending",
+          "populationScaling": "two-player route observed; numerical calibration pending"
+        },
+        "platforms": [
+          {
+            "id": "start",
+            "x": 0,
+            "y": 600,
+            "w": 400,
+            "h": 120
+          },
+          {
+            "id": "after-small-gap",
+            "x": 440,
+            "y": 600,
+            "w": 360,
+            "h": 120
+          },
+          {
+            "id": "step-one",
+            "x": 800,
+            "y": 562,
+            "w": 80,
+            "h": 158
+          },
+          {
+            "id": "step-two",
+            "x": 880,
+            "y": 524,
+            "w": 320,
+            "h": 196
+          },
+          {
+            "id": "button-bank",
+            "x": 1426,
+            "y": 600,
+            "w": 374,
+            "h": 120
+          },
+          {
+            "id": "far-bank",
+            "x": 1920,
+            "y": 600,
+            "w": 520,
+            "h": 120
+          },
+          {
+            "id": "exit-ledge",
+            "x": 1920,
+            "y": 360,
+            "w": 520,
+            "h": 24
+          }
+        ],
+        "switches": [
+          {
+            "id": "bridge-button",
+            "x": 1500,
+            "y": 600,
+            "w": 80,
+            "h": 6,
+            "signal": "gap-bridge",
+            "occupantIds": [],
+            "pressed": false
+          }
+        ],
+        "devices": [
+          {
+            "id": "gap-bridge",
+            "x": 1200,
+            "y": 600,
+            "w": 226,
+            "h": 10,
+            "kind": "bridge",
+            "signal": "gap-bridge",
+            "mode": "while",
+            "active": false,
+            "latched": false,
+            "requestedActive": false,
+            "blocked": false
+          },
+          {
+            "id": "team-lift",
+            "x": 1800,
+            "y": 441.9166666666633,
+            "w": 120,
+            "h": 12,
+            "kind": "lift",
+            "fromY": 600,
+            "toY": 360,
+            "speed": 70,
+            "requiredPlayers": 2,
+            "active": true,
+            "occupantIds": [
+              "a",
+              "b"
+            ],
+            "occupancy": 2,
+            "qualified": true,
+            "targetY": 360,
+            "blocked": false,
+            "deltaY": -0.5833333333333334,
+            "direction": "up"
+          }
+        ],
+        "timers": [],
+        "key": {
+          "id": "key",
+          "x": 1848,
+          "y": 307,
+          "w": 24,
+          "h": 24,
+          "taken": false
+        },
+        "exit": {
+          "id": "exit",
+          "x": 2230,
+          "y": 282,
+          "w": 58,
+          "h": 78
+        },
+        "spawns": [
+          {
+            "x": 65,
+            "y": 562
+          },
+          {
+            "x": 105,
+            "y": 562
+          }
+        ],
+        "hazards": [],
+        "killY": 770
+      },
+      "physics": {
+        "status": "calibration_pending",
+        "playerWidth": 32,
+        "playerHeight": 38,
+        "speed": 230,
+        "jumpSpeed": 530,
+        "gravity": 1500,
+        "maxFallSpeed": 950,
+        "maxSubstep": 0.008333333333333333,
+        "contactTolerance": 0.5
+      },
+      "players": [
+        {
+          "id": "a",
+          "kind": "player",
+          "x": 1860.500000000028,
+          "y": 403.9166666666633,
+          "w": 32,
+          "h": 38,
+          "vx": 0,
+          "vy": 0,
+          "grounded": true,
+          "ground": true,
+          "supportId": "team-lift",
+          "jump": false,
+          "exit": false,
+          "jumpBlocked": false,
+          "airborne": false
+        },
+        {
+          "id": "b",
+          "kind": "player",
+          "x": 1818.3333333333596,
+          "y": 403.9166666666633,
+          "w": 32,
+          "h": 38,
+          "vx": 0,
+          "vy": 0,
+          "grounded": true,
+          "ground": true,
+          "supportId": "team-lift",
+          "jump": false,
+          "exit": false,
+          "jumpBlocked": false,
+          "airborne": false
+        }
+      ],
+      "status": "play",
+      "keyTaken": false,
+      "ticks": 2166,
+      "elapsed": 18.049999999999617,
+      "deaths": 0,
+      "failure": null,
+      "signals": {
+        "gap-bridge": false
+      }
+    }
+  }
+]

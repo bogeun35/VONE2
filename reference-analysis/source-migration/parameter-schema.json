@@ -1,0 +1,4572 @@
+{
+  "source": "Installed PP2 static native method and metadata analysis",
+  "completeActorParameterSemantics": false,
+  "verifiedMeaningsOnly": true,
+  "geometryFile": "source-geometry.local.json",
+  "types": [
+    {
+      "actorType": "Apple",
+      "componentCandidate": "AppleComponent",
+      "instanceCount": 24,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816a9730",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816a975c"
+          },
+          {
+            "index": 1,
+            "address": "0x1816a9789"
+          },
+          {
+            "index": 2,
+            "address": "0x1816a97b3"
+          },
+          {
+            "index": 3,
+            "address": "0x1816a97dc"
+          },
+          {
+            "index": 4,
+            "address": "0x1816a9805"
+          },
+          {
+            "index": 5,
+            "address": "0x1816a982b"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "AppleController",
+      "componentCandidate": "AppleControllerComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816abc00",
+        "boundCheckCandidates": [
+          {
+            "index": 1,
+            "address": "0x1816abc7d"
+          },
+          {
+            "index": 2,
+            "address": "0x1816abcaa"
+          },
+          {
+            "index": 3,
+            "address": "0x1816abcd4"
+          },
+          {
+            "index": 4,
+            "address": "0x1816abcfd"
+          },
+          {
+            "index": 5,
+            "address": "0x1816abd26"
+          },
+          {
+            "index": 6,
+            "address": "0x1816abd4f"
+          },
+          {
+            "index": 7,
+            "address": "0x1816abd75"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Arrangement",
+      "componentCandidate": "ArrangementComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816ad620",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816ad69d"
+          },
+          {
+            "index": 1,
+            "address": "0x1816ad6c7"
+          },
+          {
+            "index": 2,
+            "address": "0x1816ad6f2"
+          },
+          {
+            "index": 3,
+            "address": "0x1816ad71b"
+          },
+          {
+            "index": 4,
+            "address": "0x1816ad745"
+          },
+          {
+            "index": 5,
+            "address": "0x1816ad76f"
+          },
+          {
+            "index": 6,
+            "address": "0x1816ad790"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "ArrowSign",
+      "componentCandidate": "ArrowSignComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816b0960",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816b097b"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "BallKeyBox",
+      "componentCandidate": "BallKeyBoxComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816b0e70",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816b0e9c"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "BarGraph",
+      "componentCandidate": "BarGraphComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816b5b50",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816b5b98"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "BarGraphController",
+      "componentCandidate": "BarGraphControllerComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816b6b40",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816b6b7a"
+          },
+          {
+            "index": 1,
+            "address": "0x1816b6bdf"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "BasketPlayer",
+      "componentCandidate": "PlayerBasketComponent",
+      "instanceCount": 8,
+      "populatedDatasIndices": [
+        0
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "BatEnemy",
+      "componentCandidate": "BatEnemyComponent",
+      "instanceCount": 8,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        11,
+        12,
+        13
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816b9370",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816b9447"
+          },
+          {
+            "index": 1,
+            "address": "0x1816b947f"
+          },
+          {
+            "index": 2,
+            "address": "0x1816b94b9"
+          },
+          {
+            "index": 3,
+            "address": "0x1816b94f0"
+          },
+          {
+            "index": 4,
+            "address": "0x1816b9527"
+          },
+          {
+            "index": 5,
+            "address": "0x1816b955e"
+          },
+          {
+            "index": 11,
+            "address": "0x1816b95ed"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "BattlePlanePlayer",
+      "componentCandidate": "BattlePlanePlayerComponent",
+      "instanceCount": 36,
+      "populatedDatasIndices": [
+        6,
+        7
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "BgmChanger",
+      "componentCandidate": "BgmChangerComponent",
+      "instanceCount": 4,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817cdf70",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1817cdf9a"
+          },
+          {
+            "index": 1,
+            "address": "0x1817cdfd1"
+          },
+          {
+            "index": 2,
+            "address": "0x1817ce005"
+          },
+          {
+            "index": 3,
+            "address": "0x1817ce035"
+          },
+          {
+            "index": 4,
+            "address": "0x1817ce060"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Blackout",
+      "componentCandidate": "BlackoutComponent",
+      "instanceCount": 5,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817ceb20",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1817ceb8b"
+          },
+          {
+            "index": 1,
+            "address": "0x1817cebb3"
+          },
+          {
+            "index": 2,
+            "address": "0x1817cebdb"
+          },
+          {
+            "index": 3,
+            "address": "0x1817cec03"
+          },
+          {
+            "index": 4,
+            "address": "0x1817cec30"
+          },
+          {
+            "index": 5,
+            "address": "0x1817cec58"
+          },
+          {
+            "index": 6,
+            "address": "0x1817cec82"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "BlackoutController",
+      "componentCandidate": "BlackoutControllerComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817d0300",
+        "boundCheckCandidates": [],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "BlinkBlock",
+      "componentCandidate": "BlinkBlockComponent",
+      "instanceCount": 8,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817d13c0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1817d145a"
+          },
+          {
+            "index": 1,
+            "address": "0x1817d1483"
+          },
+          {
+            "index": 2,
+            "address": "0x1817d14af"
+          },
+          {
+            "index": 3,
+            "address": "0x1817d14d8"
+          },
+          {
+            "index": 4,
+            "address": "0x1817d1502"
+          },
+          {
+            "index": 7,
+            "address": "0x1817d156d"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "BlinkThunder",
+      "componentCandidate": "BlinkThunderComponent",
+      "instanceCount": 20,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817d2660",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1817d26cf"
+          },
+          {
+            "index": 1,
+            "address": "0x1817d26f9"
+          },
+          {
+            "index": 2,
+            "address": "0x1817d2728"
+          },
+          {
+            "index": 3,
+            "address": "0x1817d2755"
+          },
+          {
+            "index": 4,
+            "address": "0x1817d277e"
+          },
+          {
+            "index": 5,
+            "address": "0x1817d27a4"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "BoundBallPitcher",
+      "componentCandidate": "BoundBallPitcherComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Bowwow2Enemy",
+      "componentCandidate": "Bowwow2EnemyComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        2
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817d48e0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1817d490a"
+          },
+          {
+            "index": 1,
+            "address": "0x1817d492e"
+          },
+          {
+            "index": 2,
+            "address": "0x1817d494b"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "BreakableRect",
+      "componentCandidate": "BreakableRectComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817d6a80",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1817d6af9"
+          },
+          {
+            "index": 1,
+            "address": "0x1817d6b1e"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Bridge",
+      "componentCandidate": "BridgeComponent",
+      "instanceCount": 10,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817dd4b0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1817dd4f7"
+          },
+          {
+            "index": 1,
+            "address": "0x1817dd522"
+          },
+          {
+            "index": 2,
+            "address": "0x1817dd54b"
+          },
+          {
+            "index": 3,
+            "address": "0x1817dd574"
+          },
+          {
+            "index": 4,
+            "address": "0x1817dd5b1"
+          },
+          {
+            "index": 5,
+            "address": "0x1817dd5df"
+          },
+          {
+            "index": 6,
+            "address": "0x1817dd60a"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "CannonPlayer",
+      "componentCandidate": "PlayerCannonComponent",
+      "instanceCount": 16,
+      "populatedDatasIndices": [
+        0,
+        14,
+        15
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "CapturingConstraint",
+      "componentCandidate": "CapturingConstraintComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817e14e0",
+        "boundCheckCandidates": [
+          {
+            "index": 3,
+            "address": "0x1817e15b6"
+          },
+          {
+            "index": 4,
+            "address": "0x1817e15e2"
+          },
+          {
+            "index": 5,
+            "address": "0x1817e1608"
+          },
+          {
+            "index": 2,
+            "address": "0x1817e1766"
+          },
+          {
+            "index": 6,
+            "address": "0x1817e187b"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "CapturingTarget",
+      "componentCandidate": "CapturingTargetComponent",
+      "instanceCount": 6,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817eaaf0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1817eab17"
+          },
+          {
+            "index": 1,
+            "address": "0x1817eab4d"
+          },
+          {
+            "index": 2,
+            "address": "0x1817eab83"
+          },
+          {
+            "index": 3,
+            "address": "0x1817eabb1"
+          },
+          {
+            "index": 4,
+            "address": "0x1817eabdb"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "CheckPoint",
+      "componentCandidate": "CheckPointComponent",
+      "instanceCount": 4,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817eda50",
+        "boundCheckCandidates": [],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "CircleGraph",
+      "componentCandidate": "CircleGraphComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817ee550",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1817ee598"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "CircleGraphController",
+      "componentCandidate": "CircleGraphControllerComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816b6b40",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816b6b7a"
+          },
+          {
+            "index": 1,
+            "address": "0x1816b6bdf"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Coin",
+      "componentCandidate": "CoinComponent",
+      "instanceCount": 208,
+      "populatedDatasIndices": [],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "CoinObserver",
+      "componentCandidate": "CoinObserverComponent",
+      "instanceCount": 3,
+      "populatedDatasIndices": [],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "CollisionConstraintMove",
+      "componentCandidate": "CollisionConstraintMoveComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817f4e60",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1817f4e9a"
+          },
+          {
+            "index": 1,
+            "address": "0x1817f4ec2"
+          },
+          {
+            "index": 2,
+            "address": "0x1817f4ee7"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "CollisionSwitch",
+      "componentCandidate": "CollisionSwitchComponent",
+      "instanceCount": 50,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181801f30",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181801fbc"
+          },
+          {
+            "index": 1,
+            "address": "0x181801fe9"
+          },
+          {
+            "index": 2,
+            "address": "0x18180200f"
+          },
+          {
+            "index": 3,
+            "address": "0x181802079"
+          },
+          {
+            "index": 4,
+            "address": "0x1818020db"
+          },
+          {
+            "index": 7,
+            "address": "0x181802140"
+          },
+          {
+            "index": 8,
+            "address": "0x181802169"
+          },
+          {
+            "index": 9,
+            "address": "0x18180219d"
+          },
+          {
+            "index": 10,
+            "address": "0x1818021c7"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "ColorBox",
+      "componentCandidate": "ColorBoxComponent",
+      "instanceCount": 19,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181802e80",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181802f41"
+          },
+          {
+            "index": 1,
+            "address": "0x181802f6d"
+          },
+          {
+            "index": 5,
+            "address": "0x181802f96"
+          },
+          {
+            "index": 6,
+            "address": "0x181802fc0"
+          },
+          {
+            "index": 7,
+            "address": "0x181802fe6"
+          },
+          {
+            "index": 2,
+            "address": "0x18180310d"
+          },
+          {
+            "index": 3,
+            "address": "0x18180313a"
+          },
+          {
+            "index": 4,
+            "address": "0x181803164"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "CoopCountUpTimer",
+      "componentCandidate": "CoopCountUpTimerComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181807c20",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181807cc5"
+          },
+          {
+            "index": 2,
+            "address": "0x181807d17"
+          },
+          {
+            "index": 3,
+            "address": "0x181807d41"
+          },
+          {
+            "index": 4,
+            "address": "0x181807d6b"
+          },
+          {
+            "index": 5,
+            "address": "0x181807d94"
+          },
+          {
+            "index": 6,
+            "address": "0x181807dba"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "CountUpTimer",
+      "componentCandidate": "CountUpTimerComponent",
+      "instanceCount": 12,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18180c9d0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18180ca40"
+          },
+          {
+            "index": 1,
+            "address": "0x18180ca69"
+          },
+          {
+            "index": 2,
+            "address": "0x18180cacb"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "DamageRect",
+      "componentCandidate": "DamageRectComponent",
+      "instanceCount": 14,
+      "populatedDatasIndices": [
+        0,
+        1
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18180ded0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18180defd"
+          },
+          {
+            "index": 1,
+            "address": "0x18180df27"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "DanmakuEmitter",
+      "componentCandidate": "DanmakuEmitterComponent",
+      "instanceCount": 7,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18180f380",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18180f3b0"
+          },
+          {
+            "index": 1,
+            "address": "0x18180f3ec"
+          },
+          {
+            "index": 2,
+            "address": "0x18180f423"
+          },
+          {
+            "index": 3,
+            "address": "0x18180f45d"
+          },
+          {
+            "index": 4,
+            "address": "0x18180f495"
+          },
+          {
+            "index": 5,
+            "address": "0x18180f4cd"
+          },
+          {
+            "index": 6,
+            "address": "0x18180f505"
+          },
+          {
+            "index": 7,
+            "address": "0x18180f53c"
+          },
+          {
+            "index": 8,
+            "address": "0x18180f573"
+          },
+          {
+            "index": 9,
+            "address": "0x18180f5aa"
+          },
+          {
+            "index": 10,
+            "address": "0x18180f5e2"
+          },
+          {
+            "index": 11,
+            "address": "0x18180f619"
+          },
+          {
+            "index": 12,
+            "address": "0x18180f650"
+          },
+          {
+            "index": 13,
+            "address": "0x18180f697"
+          },
+          {
+            "index": 14,
+            "address": "0x18180f6d3"
+          },
+          {
+            "index": 15,
+            "address": "0x18180f70b"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "DanmakuLocator",
+      "componentCandidate": "DanmakuLocatorComponent",
+      "instanceCount": 4,
+      "populatedDatasIndices": [],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816f93b0",
+        "boundCheckCandidates": [],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "DanmakuModifier",
+      "componentCandidate": "DanmakuModifierComponent",
+      "instanceCount": 7,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1818123d0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181812521"
+          },
+          {
+            "index": 6,
+            "address": "0x1818129d0"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "DanmakuObserver",
+      "componentCandidate": "DanmakuObserverComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        6,
+        7,
+        8,
+        11,
+        12,
+        13,
+        16,
+        17,
+        18,
+        28,
+        29,
+        30,
+        31
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181813e50",
+        "boundCheckCandidates": [
+          {
+            "index": 28,
+            "address": "0x181813f82"
+          },
+          {
+            "index": 29,
+            "address": "0x181813fae"
+          },
+          {
+            "index": 30,
+            "address": "0x181813fff"
+          },
+          {
+            "index": 31,
+            "address": "0x181814050"
+          },
+          {
+            "index": 1,
+            "address": "0x181814118"
+          },
+          {
+            "index": 2,
+            "address": "0x18181416d"
+          },
+          {
+            "index": 3,
+            "address": "0x18181421e"
+          },
+          {
+            "index": 4,
+            "address": "0x1818142cd"
+          },
+          {
+            "index": 5,
+            "address": "0x18181437f"
+          },
+          {
+            "index": 6,
+            "address": "0x181814435"
+          },
+          {
+            "index": 7,
+            "address": "0x18181448d"
+          },
+          {
+            "index": 8,
+            "address": "0x18181453f"
+          },
+          {
+            "index": 9,
+            "address": "0x1818145f1"
+          },
+          {
+            "index": 10,
+            "address": "0x1818146a3"
+          },
+          {
+            "index": 11,
+            "address": "0x181814759"
+          },
+          {
+            "index": 12,
+            "address": "0x1818147b1"
+          },
+          {
+            "index": 13,
+            "address": "0x181814866"
+          },
+          {
+            "index": 14,
+            "address": "0x181814921"
+          },
+          {
+            "index": 15,
+            "address": "0x1818149e5"
+          },
+          {
+            "index": 16,
+            "address": "0x181814aad"
+          },
+          {
+            "index": 17,
+            "address": "0x181814b04"
+          },
+          {
+            "index": 18,
+            "address": "0x181814bcb"
+          },
+          {
+            "index": 19,
+            "address": "0x181814c92"
+          },
+          {
+            "index": 20,
+            "address": "0x181814d56"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "DanmakuThunder",
+      "componentCandidate": "DanmakuThunderComponent",
+      "instanceCount": 8,
+      "populatedDatasIndices": [
+        0,
+        1
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1818167c0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181816814"
+          },
+          {
+            "index": 1,
+            "address": "0x18181683c"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "DashBoard",
+      "componentCandidate": "DashBoardComponent",
+      "instanceCount": 3,
+      "populatedDatasIndices": [
+        0,
+        1
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1818170c0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1818170de"
+          },
+          {
+            "index": 1,
+            "address": "0x1818170fe"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "DeadSwitch",
+      "componentCandidate": "DeadSwitchComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181817b60",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181817bf9"
+          },
+          {
+            "index": 3,
+            "address": "0x181817c63"
+          },
+          {
+            "index": 8,
+            "address": "0x181817cfd"
+          },
+          {
+            "index": 9,
+            "address": "0x181817d25"
+          },
+          {
+            "index": 10,
+            "address": "0x181817d4a"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "DeadTimer",
+      "componentCandidate": "DeadTimerComponent",
+      "instanceCount": 11,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16,
+        17,
+        18
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "DelaySwitch",
+      "componentCandidate": "DelaySwitchComponent",
+      "instanceCount": 4,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1818191a0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181819232"
+          },
+          {
+            "index": 1,
+            "address": "0x181819257"
+          },
+          {
+            "index": 2,
+            "address": "0x1818192b9"
+          },
+          {
+            "index": 5,
+            "address": "0x181819321"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "DistanceConstraint",
+      "componentCandidate": "DistanceConstraintComponent",
+      "instanceCount": 3,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181819fd0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18181a06e"
+          },
+          {
+            "index": 1,
+            "address": "0x18181a0e9"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Dossun",
+      "componentCandidate": "DossunComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18181ccc0",
+        "boundCheckCandidates": [
+          {
+            "index": 1,
+            "address": "0x18181cd21"
+          },
+          {
+            "index": 2,
+            "address": "0x18181cd4d"
+          },
+          {
+            "index": 3,
+            "address": "0x18181cd76"
+          },
+          {
+            "index": 4,
+            "address": "0x18181cd9c"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "DummyColorBox",
+      "componentCandidate": "DummyColorBoxComponent",
+      "instanceCount": 7,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        5,
+        6,
+        7
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18181de30",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18181deb4"
+          },
+          {
+            "index": 1,
+            "address": "0x18181dee0"
+          },
+          {
+            "index": 2,
+            "address": "0x18181df09"
+          },
+          {
+            "index": 5,
+            "address": "0x18181df36"
+          },
+          {
+            "index": 6,
+            "address": "0x18181df5f"
+          },
+          {
+            "index": 7,
+            "address": "0x18181df85"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "DummyGoal",
+      "componentCandidate": "DummyGoalComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816f93b0",
+        "boundCheckCandidates": [],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "DummyPlayer",
+      "componentCandidate": "DummyPlayerComponent",
+      "instanceCount": 11,
+      "populatedDatasIndices": [
+        0,
+        1
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18181f1b0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18181f1d7"
+          },
+          {
+            "index": 1,
+            "address": "0x18181f1f8"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "DummyRect",
+      "componentCandidate": "DummyRectComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "FakePlayer",
+      "componentCandidate": "FakePlayerComponent",
+      "instanceCount": 24,
+      "populatedDatasIndices": [],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816f93b0",
+        "boundCheckCandidates": [],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "FakeTimer",
+      "componentCandidate": "FakeTimerComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181841d80",
+        "boundCheckCandidates": [
+          {
+            "index": 1,
+            "address": "0x181841e44"
+          },
+          {
+            "index": 2,
+            "address": "0x181841e70"
+          },
+          {
+            "index": 3,
+            "address": "0x181841e96"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "FallingCage",
+      "componentCandidate": "FallingCageComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1818464a0",
+        "boundCheckCandidates": [],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "FallingWall",
+      "componentCandidate": "FallingWallComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181848620",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1818486e9"
+          },
+          {
+            "index": 1,
+            "address": "0x181848713"
+          },
+          {
+            "index": 16,
+            "address": "0x1818487d1"
+          },
+          {
+            "index": 17,
+            "address": "0x181848892"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "FloatingThorn",
+      "componentCandidate": "FloatingThornComponent",
+      "instanceCount": 110,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181849cc0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181849d1c"
+          },
+          {
+            "index": 1,
+            "address": "0x181849d47"
+          },
+          {
+            "index": 2,
+            "address": "0x181849d69"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "FrontSwitch",
+      "componentCandidate": "FrontSwitchComponent",
+      "instanceCount": 5,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18184acc0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18184ad40"
+          },
+          {
+            "index": 1,
+            "address": "0x18184ada5"
+          },
+          {
+            "index": 2,
+            "address": "0x18184ae02"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Gate",
+      "componentCandidate": "GateComponent",
+      "instanceCount": 5,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1818512f0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181851330"
+          },
+          {
+            "index": 1,
+            "address": "0x181851360"
+          },
+          {
+            "index": 2,
+            "address": "0x181851389"
+          },
+          {
+            "index": 3,
+            "address": "0x1818513af"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Gear",
+      "componentCandidate": "GearComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1818528f0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18185291a"
+          },
+          {
+            "index": 1,
+            "address": "0x18185294a"
+          },
+          {
+            "index": 2,
+            "address": "0x18185296c"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Ghost",
+      "componentCandidate": "GhostComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181853f10",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181853f40"
+          },
+          {
+            "index": 1,
+            "address": "0x181853f6c"
+          },
+          {
+            "index": 2,
+            "address": "0x181853f95"
+          },
+          {
+            "index": 3,
+            "address": "0x181853fbe"
+          },
+          {
+            "index": 4,
+            "address": "0x181853fe9"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "GiantEnemy",
+      "componentCandidate": "GiantEnemyComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181856d70",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181856e15"
+          },
+          {
+            "index": 7,
+            "address": "0x181856ee6"
+          },
+          {
+            "index": 8,
+            "address": "0x181856f1a"
+          },
+          {
+            "index": 9,
+            "address": "0x181856f47"
+          },
+          {
+            "index": 10,
+            "address": "0x181856f6d"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "GoKart",
+      "componentCandidate": "GoKartComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18185c6e0",
+        "boundCheckCandidates": [],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Goal",
+      "componentCandidate": "GoalComponent",
+      "instanceCount": 75,
+      "populatedDatasIndices": [
+        0
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817d5a20",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1817d5a3b"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "GraphController",
+      "componentCandidate": "GraphControllerComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181860360",
+        "boundCheckCandidates": [
+          {
+            "index": 18,
+            "address": "0x181860457"
+          },
+          {
+            "index": 19,
+            "address": "0x181860486"
+          },
+          {
+            "index": 20,
+            "address": "0x1818604b3"
+          },
+          {
+            "index": 21,
+            "address": "0x1818604df"
+          },
+          {
+            "index": 22,
+            "address": "0x181860508"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "HalfOperator",
+      "componentCandidate": "HalfOperatorComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1818629a0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1818629fe"
+          },
+          {
+            "index": 1,
+            "address": "0x181862a29"
+          },
+          {
+            "index": 2,
+            "address": "0x181862a4f"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "IceRect",
+      "componentCandidate": "IceRectComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1818647d0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181864865"
+          },
+          {
+            "index": 1,
+            "address": "0x18186488f"
+          },
+          {
+            "index": 2,
+            "address": "0x1818648b9"
+          },
+          {
+            "index": 3,
+            "address": "0x1818648e1"
+          },
+          {
+            "index": 4,
+            "address": "0x18186490d"
+          },
+          {
+            "index": 5,
+            "address": "0x181864932"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "JumpStand",
+      "componentCandidate": "JumpStandComponent",
+      "instanceCount": 54,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181868400",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181868473"
+          },
+          {
+            "index": 1,
+            "address": "0x1818684a0"
+          },
+          {
+            "index": 2,
+            "address": "0x1818684c9"
+          },
+          {
+            "index": 3,
+            "address": "0x181868500"
+          },
+          {
+            "index": 4,
+            "address": "0x181868562"
+          },
+          {
+            "index": 5,
+            "address": "0x18186858c"
+          },
+          {
+            "index": 6,
+            "address": "0x1818685b5"
+          },
+          {
+            "index": 7,
+            "address": "0x1818685de"
+          },
+          {
+            "index": 8,
+            "address": "0x181868604"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "JumpStandMediator",
+      "componentCandidate": "JumpStandMediatorComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Key",
+      "componentCandidate": "KeyComponent",
+      "instanceCount": 74,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18186b780",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18186b840"
+          },
+          {
+            "index": 1,
+            "address": "0x18186b868"
+          },
+          {
+            "index": 2,
+            "address": "0x18186b890"
+          },
+          {
+            "index": 3,
+            "address": "0x18186b8c4"
+          },
+          {
+            "index": 4,
+            "address": "0x18186b92b"
+          },
+          {
+            "index": 5,
+            "address": "0x18186b952"
+          },
+          {
+            "index": 8,
+            "address": "0x18186b9b6"
+          },
+          {
+            "index": 9,
+            "address": "0x18186ba23"
+          },
+          {
+            "index": 10,
+            "address": "0x18186ba57"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "LandmineSwitch",
+      "componentCandidate": "LandmineSwitchComponent",
+      "instanceCount": 12,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18186fde0",
+        "boundCheckCandidates": [
+          {
+            "index": 2,
+            "address": "0x18186fe92"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "LandmineSwitchObserver",
+      "componentCandidate": "LandmineSwitchObserverComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1818713e0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181871448"
+          },
+          {
+            "index": 1,
+            "address": "0x181871474"
+          },
+          {
+            "index": 2,
+            "address": "0x1818714a1"
+          },
+          {
+            "index": 3,
+            "address": "0x181871501"
+          },
+          {
+            "index": 4,
+            "address": "0x18187152a"
+          },
+          {
+            "index": 5,
+            "address": "0x181871550"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Lift",
+      "componentCandidate": "LiftComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181875900",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181875945"
+          },
+          {
+            "index": 1,
+            "address": "0x181875978"
+          },
+          {
+            "index": 2,
+            "address": "0x1818759aa"
+          },
+          {
+            "index": 3,
+            "address": "0x1818759d4"
+          },
+          {
+            "index": 4,
+            "address": "0x1818759fd"
+          },
+          {
+            "index": 5,
+            "address": "0x181875a26"
+          },
+          {
+            "index": 6,
+            "address": "0x181875a60"
+          },
+          {
+            "index": 7,
+            "address": "0x181875a94"
+          },
+          {
+            "index": 8,
+            "address": "0x181875ac5"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "LinePathGear",
+      "componentCandidate": "LinePathGearComponent",
+      "instanceCount": 3,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        27
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181876e50",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181876f4c"
+          },
+          {
+            "index": 1,
+            "address": "0x181876f78"
+          },
+          {
+            "index": 2,
+            "address": "0x181876fa1"
+          },
+          {
+            "index": 5,
+            "address": "0x181876fce"
+          },
+          {
+            "index": 6,
+            "address": "0x181876ffb"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "LinePathLift",
+      "componentCandidate": "LinePathLiftComponent",
+      "instanceCount": 4,
+      "populatedDatasIndices": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        30,
+        31
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1818785b0",
+        "boundCheckCandidates": [
+          {
+            "index": 30,
+            "address": "0x18187867c"
+          },
+          {
+            "index": 31,
+            "address": "0x1818786ff"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "MapBlockReplacer",
+      "componentCandidate": "MapBlockReplacerComponent",
+      "instanceCount": 3,
+      "populatedDatasIndices": [],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x180476130",
+        "boundCheckCandidates": [],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "MapBreakBlockRect",
+      "componentCandidate": "MapBreakBlockRectComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18187ccc0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18187ccec"
+          },
+          {
+            "index": 1,
+            "address": "0x18187cd16"
+          },
+          {
+            "index": 2,
+            "address": "0x18187cd43"
+          },
+          {
+            "index": 3,
+            "address": "0x18187cd6d"
+          },
+          {
+            "index": 4,
+            "address": "0x18187cde1"
+          },
+          {
+            "index": 5,
+            "address": "0x18187ce23"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "MapRect",
+      "componentCandidate": "MapRectComponent",
+      "instanceCount": 30,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "verifiedSchema": {
+        "parameters": {
+          "0": "gridX",
+          "1": "gridY",
+          "2": "widthInTiles",
+          "3": "heightInTiles",
+          "4": "mode"
+        },
+        "geometry": "For0<=i<width and0<=j<height, modifiesgrid(x+i,y-j). Nativeworldtile48pixels. Datas coordinates ratherthanactorpos determine rectangle.",
+        "nativeEvidence": [
+          "ParseParameter0x18172e800",
+          "modifyMap0x18187f210"
+        ]
+      },
+      "nativeParseParameter": {
+        "va": "0x18172e800",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18172e82a"
+          },
+          {
+            "index": 1,
+            "address": "0x18172e854"
+          },
+          {
+            "index": 2,
+            "address": "0x18172e881"
+          },
+          {
+            "index": 3,
+            "address": "0x18172e8aa"
+          },
+          {
+            "index": 4,
+            "address": "0x18172e8cb"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "geometry-verified"
+    },
+    {
+      "actorType": "Mole",
+      "componentCandidate": "MoleComponent",
+      "instanceCount": 17,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181880090",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181880109"
+          },
+          {
+            "index": 1,
+            "address": "0x181880135"
+          },
+          {
+            "index": 2,
+            "address": "0x18188015f"
+          },
+          {
+            "index": 5,
+            "address": "0x1818801b0"
+          },
+          {
+            "index": 6,
+            "address": "0x1818801d6"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "MoleGroup",
+      "componentCandidate": "MoleGroupComponent",
+      "instanceCount": 3,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181882170",
+        "boundCheckCandidates": [
+          {
+            "index": 16,
+            "address": "0x18188220b"
+          },
+          {
+            "index": 17,
+            "address": "0x181882248"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "MoleNest",
+      "componentCandidate": "MoleNestComponent",
+      "instanceCount": 13,
+      "populatedDatasIndices": [
+        0
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181733d70",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181733d8b"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "MoveWall",
+      "componentCandidate": "MoveWallComponent",
+      "instanceCount": 3,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1818859c0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181885a14"
+          },
+          {
+            "index": 1,
+            "address": "0x181885a40"
+          },
+          {
+            "index": 2,
+            "address": "0x181885a66"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "OptimizedBulletObserver",
+      "componentCandidate": "OptimizedBulletObserverComponent",
+      "instanceCount": 6,
+      "populatedDatasIndices": [
+        0
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181733d70",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181733d8b"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "PlaneObstacle",
+      "componentCandidate": "PlaneObstacleComponent",
+      "instanceCount": 8,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Player",
+      "componentCandidate": "PlayerComponent",
+      "instanceCount": 472,
+      "populatedDatasIndices": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        10,
+        11
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "PlayerBlockGun",
+      "componentCandidate": "PlayerBlockGunComponent",
+      "instanceCount": 16,
+      "populatedDatasIndices": [
+        0,
+        1
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1818932f0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18189336e"
+          },
+          {
+            "index": 1,
+            "address": "0x181893399"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "PlayerGuard",
+      "componentCandidate": "PlayerGuardComponent",
+      "instanceCount": 5,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816cc490",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816cc507"
+          },
+          {
+            "index": 1,
+            "address": "0x1816cc533"
+          },
+          {
+            "index": 2,
+            "address": "0x1816cc560"
+          },
+          {
+            "index": 3,
+            "address": "0x1816cc58a"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "PlayerGun",
+      "componentCandidate": "PlayerGunComponent",
+      "instanceCount": 31,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816cd810",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816cd893"
+          },
+          {
+            "index": 1,
+            "address": "0x1816cd8bf"
+          },
+          {
+            "index": 2,
+            "address": "0x1816cd8e8"
+          },
+          {
+            "index": 3,
+            "address": "0x1816cd911"
+          },
+          {
+            "index": 4,
+            "address": "0x1816cd941"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "PlayerMagnet",
+      "componentCandidate": "PlayerMagnetComponent",
+      "instanceCount": 32,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816cfd90",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816cfdfd"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "PlayerPunch",
+      "componentCandidate": "PlayerPunchComponent",
+      "instanceCount": 15,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816d45c0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816d4663"
+          },
+          {
+            "index": 1,
+            "address": "0x1816d468e"
+          },
+          {
+            "index": 2,
+            "address": "0x1816d46b8"
+          },
+          {
+            "index": 3,
+            "address": "0x1816d46e2"
+          },
+          {
+            "index": 4,
+            "address": "0x1816d470e"
+          },
+          {
+            "index": 5,
+            "address": "0x1816d4738"
+          },
+          {
+            "index": 6,
+            "address": "0x1816d4761"
+          },
+          {
+            "index": 7,
+            "address": "0x1816d478a"
+          },
+          {
+            "index": 8,
+            "address": "0x1816d47b0"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "PlayerWarpGun",
+      "componentCandidate": "PlayerWarpGunComponent",
+      "instanceCount": 8,
+      "populatedDatasIndices": [
+        0
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816d92c0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816d932d"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "PoleLadder",
+      "componentCandidate": "PoleLadderComponent",
+      "instanceCount": 4,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816da590",
+        "boundCheckCandidates": [
+          {
+            "index": 1,
+            "address": "0x1816da623"
+          },
+          {
+            "index": 2,
+            "address": "0x1816da64b"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "PushBox",
+      "componentCandidate": "PushBoxComponent",
+      "instanceCount": 15,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816db310",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816db3a6"
+          },
+          {
+            "index": 3,
+            "address": "0x1816db3d3"
+          },
+          {
+            "index": 1,
+            "address": "0x1816db44b"
+          },
+          {
+            "index": 2,
+            "address": "0x1816db471"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "RallyController",
+      "componentCandidate": "RallyControllerComponent",
+      "instanceCount": 7,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816dfe40",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816dfebc"
+          },
+          {
+            "index": 1,
+            "address": "0x1816dfeeb"
+          },
+          {
+            "index": 2,
+            "address": "0x1816dff1b"
+          },
+          {
+            "index": 3,
+            "address": "0x1816dff4b"
+          },
+          {
+            "index": 4,
+            "address": "0x1816dff75"
+          },
+          {
+            "index": 5,
+            "address": "0x1816dff9f"
+          },
+          {
+            "index": 6,
+            "address": "0x1816dffcb"
+          },
+          {
+            "index": 7,
+            "address": "0x1816e0004"
+          },
+          {
+            "index": 8,
+            "address": "0x1816e002e"
+          },
+          {
+            "index": 9,
+            "address": "0x1816e0057"
+          },
+          {
+            "index": 10,
+            "address": "0x1816e0080"
+          },
+          {
+            "index": 11,
+            "address": "0x1816e00a6"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "RallyMallet",
+      "componentCandidate": "RallyMalletComponent",
+      "instanceCount": 35,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816e4e80",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816e4ef8"
+          },
+          {
+            "index": 1,
+            "address": "0x1816e4f23"
+          },
+          {
+            "index": 2,
+            "address": "0x1816e4f52"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Rect",
+      "componentCandidate": "RectComponent",
+      "instanceCount": 78,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "verifiedSchema": {
+        "parameters": {
+          "0": "widthPixels",
+          "1": "heightPixels",
+          "2": "widthIncrementPerPlayerAbove2",
+          "3": "heightIncrementPerPlayerAbove2",
+          "4": "posXIncrementPerPlayerAbove2",
+          "5": "posYIncrementPerPlayerAbove2",
+          "6": "playerCountPosXOffsets",
+          "7": "playerCountPosYOffsets"
+        },
+        "geometry": "Width=d0+d2*(n-2); Height=d1+d3*(n-2). Actorposition addsd4/d5*(n-2) and d6/d7 populationoffset selection. Native localRect=(0,-Height,Width,Height):actorpos upper-left,worldYup. NegativeWidth shiftsactorXbyWidth andusesabsWidth. Exactoffsetstring grammar pending.",
+        "nativeEvidence": [
+          "ParseParameter0x1816e69a0",
+          "RectFPfields Height/Width/X/Y",
+          "RectComponent.InitCollision0x1816e6d90"
+        ]
+      },
+      "nativeParseParameter": {
+        "va": "0x1816e69a0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816e6a3a"
+          },
+          {
+            "index": 1,
+            "address": "0x1816e6a66"
+          },
+          {
+            "index": 2,
+            "address": "0x1816e6a90"
+          },
+          {
+            "index": 3,
+            "address": "0x1816e6ab8"
+          },
+          {
+            "index": 4,
+            "address": "0x1816e6ae2"
+          },
+          {
+            "index": 5,
+            "address": "0x1816e6b07"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "geometry-verified"
+    },
+    {
+      "actorType": "SearchLight",
+      "componentCandidate": "SearchLightComponent",
+      "instanceCount": 12,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816f0b40",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816f0c7f"
+          },
+          {
+            "index": 8,
+            "address": "0x1816f0d37"
+          },
+          {
+            "index": 9,
+            "address": "0x1816f0d5e"
+          },
+          {
+            "index": 17,
+            "address": "0x1816f0e1d"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "ShootingEnemyBoss",
+      "componentCandidate": "ShootingEnemyBossComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816f93b0",
+        "boundCheckCandidates": [],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "ShootingEnemyBossEx",
+      "componentCandidate": "ShootingEnemyBossExComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816f93b0",
+        "boundCheckCandidates": [],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "ShootingEnemyBossExParamSetter",
+      "componentCandidate": "ShootingEnemyBossExParamSetterComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816fef70",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1816fef9a"
+          },
+          {
+            "index": 1,
+            "address": "0x1816fefd3"
+          },
+          {
+            "index": 2,
+            "address": "0x1816ff023"
+          },
+          {
+            "index": 3,
+            "address": "0x1816ff06a"
+          },
+          {
+            "index": 4,
+            "address": "0x1816ff0ad"
+          },
+          {
+            "index": 5,
+            "address": "0x1816ff0f0"
+          },
+          {
+            "index": 6,
+            "address": "0x1816ff137"
+          },
+          {
+            "index": 7,
+            "address": "0x1816ff17e"
+          },
+          {
+            "index": 8,
+            "address": "0x1816ff1c5"
+          },
+          {
+            "index": 9,
+            "address": "0x1816ff20c"
+          },
+          {
+            "index": 10,
+            "address": "0x1816ff253"
+          },
+          {
+            "index": 11,
+            "address": "0x1816ff293"
+          },
+          {
+            "index": 12,
+            "address": "0x1816ff2ca"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "ShootingEnemySpawner",
+      "componentCandidate": "ShootingEnemySpawnerComponent",
+      "instanceCount": 8,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181706e00",
+        "boundCheckCandidates": [
+          {
+            "index": 8,
+            "address": "0x181706e72"
+          },
+          {
+            "index": 9,
+            "address": "0x181706ebc"
+          },
+          {
+            "index": 10,
+            "address": "0x181706f85"
+          },
+          {
+            "index": 11,
+            "address": "0x181706fbe"
+          },
+          {
+            "index": 12,
+            "address": "0x181706ff7"
+          },
+          {
+            "index": 13,
+            "address": "0x181707033"
+          },
+          {
+            "index": 14,
+            "address": "0x18170706d"
+          },
+          {
+            "index": 16,
+            "address": "0x1817070a3"
+          },
+          {
+            "index": 15,
+            "address": "0x1817070d1"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "ShootingSuperApple",
+      "componentCandidate": "ShootingSuperAppleComponent",
+      "instanceCount": 16,
+      "populatedDatasIndices": [
+        0,
+        1
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181708250",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18170826e"
+          },
+          {
+            "index": 1,
+            "address": "0x1817082a1"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "SpeedSwitch",
+      "componentCandidate": "SpeedSwitchComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181708cc0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181708d50"
+          },
+          {
+            "index": 1,
+            "address": "0x181708d78"
+          },
+          {
+            "index": 2,
+            "address": "0x181708da1"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "StepEnemy",
+      "componentCandidate": "StepEnemyComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18170eb10",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18170eb2e"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Stick",
+      "componentCandidate": "StickComponent",
+      "instanceCount": 5,
+      "populatedDatasIndices": [],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1816f93b0",
+        "boundCheckCandidates": [],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Switch",
+      "componentCandidate": "NormalSwitchComponent",
+      "instanceCount": 106,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181888840",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1818888dd"
+          },
+          {
+            "index": 1,
+            "address": "0x181888947"
+          },
+          {
+            "index": 2,
+            "address": "0x18188897b"
+          },
+          {
+            "index": 3,
+            "address": "0x1818889a9"
+          },
+          {
+            "index": 4,
+            "address": "0x181888a0b"
+          },
+          {
+            "index": 5,
+            "address": "0x181888a30"
+          },
+          {
+            "index": 8,
+            "address": "0x181888a99"
+          },
+          {
+            "index": 9,
+            "address": "0x181888ac3"
+          },
+          {
+            "index": 10,
+            "address": "0x181888aeb"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "SwitchIceRect",
+      "componentCandidate": "SwitchIceRectComponent",
+      "instanceCount": 3,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181715a80",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181715ad9"
+          },
+          {
+            "index": 1,
+            "address": "0x181715b07"
+          },
+          {
+            "index": 2,
+            "address": "0x181715b2f"
+          },
+          {
+            "index": 3,
+            "address": "0x181715b5b"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "SwitchObserver",
+      "componentCandidate": "SwitchObserverComponent",
+      "instanceCount": 6,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181717680",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1817176ff"
+          },
+          {
+            "index": 1,
+            "address": "0x181717764"
+          },
+          {
+            "index": 2,
+            "address": "0x1817177c1"
+          },
+          {
+            "index": 3,
+            "address": "0x1817177ec"
+          },
+          {
+            "index": 4,
+            "address": "0x181717815"
+          },
+          {
+            "index": 5,
+            "address": "0x18171783b"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "SwitchRect",
+      "componentCandidate": "SwitchRectComponent",
+      "instanceCount": 6,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817189c0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181718a19"
+          },
+          {
+            "index": 1,
+            "address": "0x181718a47"
+          },
+          {
+            "index": 2,
+            "address": "0x181718a6f"
+          },
+          {
+            "index": 3,
+            "address": "0x181718a9b"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "SwitchTargetGroup",
+      "componentCandidate": "SwitchTargetGroupComponent",
+      "instanceCount": 4,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181719cf0",
+        "boundCheckCandidates": [],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "SwitchTimer",
+      "componentCandidate": "SwitchTimerComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        13,
+        14
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "SwitchTimerActor",
+      "componentCandidate": "SwitchTimerActorComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18171a5a0",
+        "boundCheckCandidates": [
+          {
+            "index": 1,
+            "address": "0x18171a649"
+          },
+          {
+            "index": 2,
+            "address": "0x18171a6ab"
+          },
+          {
+            "index": 3,
+            "address": "0x18171a6d8"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "TargetPlayer",
+      "componentCandidate": "PlayerTargetComponent",
+      "instanceCount": 8,
+      "populatedDatasIndices": [
+        0,
+        12,
+        13
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Text",
+      "componentCandidate": "TextComponent",
+      "instanceCount": 13,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18171b4e0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18171b571"
+          },
+          {
+            "index": 1,
+            "address": "0x18171b5de"
+          },
+          {
+            "index": 2,
+            "address": "0x18171b64b"
+          },
+          {
+            "index": 3,
+            "address": "0x18171b676"
+          },
+          {
+            "index": 4,
+            "address": "0x18171b6a3"
+          },
+          {
+            "index": 5,
+            "address": "0x18171b6d0"
+          },
+          {
+            "index": 6,
+            "address": "0x18171b6fd"
+          },
+          {
+            "index": 7,
+            "address": "0x18171b726"
+          },
+          {
+            "index": 8,
+            "address": "0x18171b74c"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Thorn",
+      "componentCandidate": "ThornComponent",
+      "instanceCount": 90,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817206b0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18172075c"
+          },
+          {
+            "index": 1,
+            "address": "0x18172078c"
+          },
+          {
+            "index": 2,
+            "address": "0x1817207bb"
+          },
+          {
+            "index": 3,
+            "address": "0x1817207e5"
+          },
+          {
+            "index": 4,
+            "address": "0x18172080f"
+          },
+          {
+            "index": 5,
+            "address": "0x181720838"
+          },
+          {
+            "index": 6,
+            "address": "0x181720861"
+          },
+          {
+            "index": 7,
+            "address": "0x18172088a"
+          },
+          {
+            "index": 8,
+            "address": "0x1817208b3"
+          },
+          {
+            "index": 9,
+            "address": "0x1817208e4"
+          },
+          {
+            "index": 12,
+            "address": "0x18172095a"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "ThornCeiling",
+      "componentCandidate": "ThornCeilingComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18171ce90",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18171d02e"
+          },
+          {
+            "index": 1,
+            "address": "0x18171d07b"
+          },
+          {
+            "index": 2,
+            "address": "0x18171d0b5"
+          },
+          {
+            "index": 3,
+            "address": "0x18171d0ef"
+          },
+          {
+            "index": 10,
+            "address": "0x18171d129"
+          },
+          {
+            "index": 9,
+            "address": "0x18171d40f"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "ThrowBallBasket",
+      "componentCandidate": "ThrowBallBasketComponent",
+      "instanceCount": 6,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181726e00",
+        "boundCheckCandidates": [
+          {
+            "index": 1,
+            "address": "0x181726e89"
+          },
+          {
+            "index": 2,
+            "address": "0x181726eb1"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "ThrowBallController",
+      "componentCandidate": "ThrowBallControllerComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817291b0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1817291da"
+          },
+          {
+            "index": 1,
+            "address": "0x181729203"
+          },
+          {
+            "index": 2,
+            "address": "0x181729227"
+          },
+          {
+            "index": 3,
+            "address": "0x181729244"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Thunder",
+      "componentCandidate": "ThunderComponent",
+      "instanceCount": 73,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18172c410",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18172c498"
+          },
+          {
+            "index": 1,
+            "address": "0x18172c4c8"
+          },
+          {
+            "index": 2,
+            "address": "0x18172c4ff"
+          },
+          {
+            "index": 3,
+            "address": "0x18172c533"
+          },
+          {
+            "index": 4,
+            "address": "0x18172c56d"
+          },
+          {
+            "index": 5,
+            "address": "0x18172c59c"
+          },
+          {
+            "index": 6,
+            "address": "0x18172c5cb"
+          },
+          {
+            "index": 7,
+            "address": "0x18172c5fb"
+          },
+          {
+            "index": 8,
+            "address": "0x18172c62c"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "TopViewMapRect",
+      "componentCandidate": "TopViewMapRectComponent",
+      "instanceCount": 9,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18172e800",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18172e82a"
+          },
+          {
+            "index": 1,
+            "address": "0x18172e854"
+          },
+          {
+            "index": 2,
+            "address": "0x18172e881"
+          },
+          {
+            "index": 3,
+            "address": "0x18172e8aa"
+          },
+          {
+            "index": 4,
+            "address": "0x18172e8cb"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "TopViewPlayer",
+      "componentCandidate": "TopViewPlayerComponent",
+      "instanceCount": 48,
+      "populatedDatasIndices": [
+        0,
+        8
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "TouchEnergy",
+      "componentCandidate": "TouchEnergyComponent",
+      "instanceCount": 3,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18172f350",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18172f404"
+          },
+          {
+            "index": 1,
+            "address": "0x18172f430"
+          },
+          {
+            "index": 2,
+            "address": "0x18172f456"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "UpDownLift",
+      "componentCandidate": "UpDownLiftComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x1817324d0",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x18173250d"
+          },
+          {
+            "index": 1,
+            "address": "0x181732538"
+          },
+          {
+            "index": 2,
+            "address": "0x18173255e"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Warp",
+      "componentCandidate": "WarpComponent",
+      "instanceCount": 14,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181734390",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x1817343bc"
+          },
+          {
+            "index": 1,
+            "address": "0x1817343e6"
+          },
+          {
+            "index": 2,
+            "address": "0x181734410"
+          },
+          {
+            "index": 3,
+            "address": "0x18173443a"
+          },
+          {
+            "index": 4,
+            "address": "0x181734462"
+          },
+          {
+            "index": 5,
+            "address": "0x181734487"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "WarpAll",
+      "componentCandidate": "WarpAllComponent",
+      "instanceCount": 5,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "WarpInitPos",
+      "componentCandidate": "WarpInitPosComponent",
+      "instanceCount": 1,
+      "populatedDatasIndices": [
+        0,
+        1,
+        4,
+        5
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "WeightedLift",
+      "componentCandidate": "NormalWeightedLiftComponent",
+      "instanceCount": 5,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181889b40",
+        "boundCheckCandidates": [
+          {
+            "index": 6,
+            "address": "0x181889bf3"
+          },
+          {
+            "index": 7,
+            "address": "0x181889cd5"
+          },
+          {
+            "index": 8,
+            "address": "0x181889d2e"
+          },
+          {
+            "index": 9,
+            "address": "0x181889d61"
+          },
+          {
+            "index": 10,
+            "address": "0x181889d91"
+          },
+          {
+            "index": 12,
+            "address": "0x181889dea"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "WeightedLiftEx",
+      "componentCandidate": "ExtraWeightedLiftComponent",
+      "instanceCount": 8,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x18183b160",
+        "boundCheckCandidates": [
+          {
+            "index": 12,
+            "address": "0x18183b21c"
+          },
+          {
+            "index": 13,
+            "address": "0x18183b337"
+          },
+          {
+            "index": 14,
+            "address": "0x18183b36a"
+          },
+          {
+            "index": 15,
+            "address": "0x18183b39d"
+          },
+          {
+            "index": 17,
+            "address": "0x18183b3fb"
+          },
+          {
+            "index": 18,
+            "address": "0x18183b42e"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "WeightedLiftSingle",
+      "componentCandidate": "WeightedLiftSingleComponent",
+      "instanceCount": 2,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": null,
+      "status": "meaning-pending"
+    },
+    {
+      "actorType": "Wind",
+      "componentCandidate": "WindComponent",
+      "instanceCount": 5,
+      "populatedDatasIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "verifiedSchema": null,
+      "nativeParseParameter": {
+        "va": "0x181738a70",
+        "boundCheckCandidates": [
+          {
+            "index": 0,
+            "address": "0x181738aec"
+          },
+          {
+            "index": 1,
+            "address": "0x181738b18"
+          },
+          {
+            "index": 9,
+            "address": "0x181738b41"
+          },
+          {
+            "index": 10,
+            "address": "0x181738bae"
+          },
+          {
+            "index": 11,
+            "address": "0x181738bd8"
+          }
+        ],
+        "caution": "Bounds checks may include other arrays. Parameter meaning needs register dataflow and componentfield matching."
+      },
+      "status": "meaning-pending"
+    }
+  ]
+}

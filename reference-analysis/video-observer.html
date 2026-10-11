@@ -1,0 +1,12 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>원작 영상 관찰 · 무음</title>
+<style>body{margin:0;background:#111;color:white;font:14px system-ui}header{padding:12px;display:flex;gap:12px;align-items:center}button,input,select{font:inherit;padding:8px}iframe{display:block;width:100vw;height:calc(100vh - 65px);border:0}input{width:65px}</style>
+<header><select id="video" aria-label="원작 단계"><option value="QI0BvgCULM0">1-1</option><option value="l1I25A9_mMI">1-2</option><option value="MjHtSoqCgnc">1-3</option><option value="qKFCEFZkH88">1-4</option><option value="4SQBHpJ5okg">3-2</option><option value="5K-4O8C0fDQ">5-1</option><option value="l2C-K8W1uu8">5-2</option><option value="MvQjuDLEtNI">5-3</option><option value="UNgXFdLWb-E">5-4</option></select><label>시점 <input id="time" type="number" value="1" min="0" step="1"></label><button id="seek" disabled>해당 장면</button><button id="next" disabled>3초 뒤</button><button id="play" disabled>무음 재생</button><button id="pause" disabled>정지</button><output id="status">영상 로딩 중</output></header><div id="player"></div>
+<script>
+let player, pauseAt=null;
+const el=id=>document.getElementById(id);
+function onYouTubeIframeAPIReady(){player=new YT.Player('player',{videoId:el('video').value,playerVars:{autoplay:0,playsinline:1,origin:location.origin},events:{onReady(){player.mute();document.querySelectorAll('button').forEach(b=>b.disabled=false);el('status').textContent='무음 · 준비';}}});}
+function show(){player.mute();const t=Math.max(0,Number(el('time').value)||0);pauseAt=t+.2;player.loadVideoById({videoId:el('video').value,startSeconds:t});}
+el('seek').onclick=show;el('next').onclick=()=>{el('time').value=Number(el('time').value)+3;show();};
+el('play').onclick=()=>{pauseAt=null;player.mute();player.playVideo();};el('pause').onclick=()=>{pauseAt=null;player.pauseVideo();};
+setInterval(()=>{if(!player?.getCurrentTime)return;const t=player.getCurrentTime();if(pauseAt!==null&&t>=pauseAt&&player.getPlayerState()===1){player.pauseVideo();pauseAt=null;}el('status').textContent=(player.isMuted()?'무음':'소리 켜짐')+' · '+t.toFixed(1)+'초';},60);
+</script><script src="https://www.youtube.com/iframe_api"></script></html>

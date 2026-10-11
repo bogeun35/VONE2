@@ -1,0 +1,55 @@
+{
+  "objective": "원본 60라운드 실행 이관 후 2~8인 게임성 검수",
+  "manager": "root",
+  "rules": [
+    "담당별 파일 소유권 분리",
+    "보고는 완료·문제·다음 작업만",
+    "확정되지 않은 원본 동작을 임의 대체하지 않음",
+    "테스트 무음",
+    "이관과 재미 검수를 별도 완료 조건으로 추적"
+  ],
+  "tasks": [
+    {
+      "owner": "terrain_import",
+      "task": "원본 지형 충돌·인원별 MapRect 변경",
+      "files": [
+        "terrain-runtime.js",
+        "terrain-runtime.test.cjs"
+      ],
+      "status": "module_ready_integration_pending",
+      "acceptance": "60라운드×2~8인 지형 변환, 원본 타일 타입/위치 보존"
+    },
+    {
+      "owner": "spring_switch",
+      "task": "원본 스프링·스위치·지연 신호 연결",
+      "files": [
+        "spring-switch-schema.json",
+        "spring-switch-runtime.js"
+      ],
+      "status": "module_ready_integration_pending",
+      "acceptance": "1-1 원본 장치 연결과 on/off·지연·점프 변화 근거"
+    },
+    {
+      "owner": "player_runtime",
+      "task": "캐릭터 생성·충돌·이동·열쇠·출구",
+      "files": [
+        "player-runtime-schema.json",
+        "actor-runtime.js"
+      ],
+      "status": "module_ready_integration_pending",
+      "acceptance": "2~8인 spawn 선택과 원본 경계/물리값 근거"
+    },
+    {
+      "owner": "root",
+      "task": "결과 교차검수·웹 엔진 통합",
+      "status": "in_progress",
+      "acceptance": "원본 1-1을 키보드로 직접 조작, 누락 장치/진행 막힘을 명시"
+    }
+  ],
+  "gate": "전체 이관 완료 전 인원 밸런스나 재미 검수 완료로 표시하지 않는다.",
+  "latestDeployment": {
+    "commit": "3b0b2a94d70668817b6e428503169cef462b3ff3",
+    "change": "개인별 출구 통과 유지 및 캐릭터 숨김",
+    "sourceRuntime": "modules_only_integration_pending"
+  }
+}

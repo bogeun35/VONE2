@@ -1,0 +1,1275 @@
+{
+  "game": "PICO PARK 2",
+  "checked_at": "2026-10-04",
+  "scope": "reference research only",
+  "status_legend": {
+    "text_evidence": "단계 번호와 간단 기믹을 공략 원문에서 읽음; 구현 완료 아님",
+    "partial_text_evidence": "짧거나 모호한 설명으로 상세 규칙 부족",
+    "community_list": "위키 목록; 원작 UI 미대조"
+  },
+  "counts": {
+    "world": {
+      "value": 60,
+      "source": "https://picoparkgame.com/en/pp2/",
+      "status": "official"
+    },
+    "battle": {
+      "value": 8,
+      "source": "https://picoparkgame.com/en/pp2/",
+      "status": "official"
+    },
+    "endless": {
+      "value": 7,
+      "source": "https://picoparkgame.com/en/pp2/",
+      "status": "official"
+    },
+    "dark": {
+      "value": 16,
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html",
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "secondary_sources"
+    }
+  },
+  "limitations": [
+    "World 60개 모두 공략 문장만 대조했다. 기믹의 누락·오역 가능성이 있고 정확한 지형 및 모든 인원별 해법은 미확인.",
+    "각 세계 theme은 설명용 영문 표기이며 원작 UI의 정확한 제목 검증이 아니다.",
+    "Dark 공략은 설명이 지나치게 짧다. 모든 항목을 partial로 유지한다.",
+    "Battle/Endless 상세 이름과 규칙은 커뮤니티 위키 기반이며 공식 사이트는 개수만 확인한다."
+  ],
+  "world": [
+    {
+      "id": "1-1",
+      "world": 1,
+      "stage": 1,
+      "theme": "Hello PICO PARK 2",
+      "mechanic": "쌓기·스프링",
+      "solution_action": "동료를 올려 버튼으로 후속 인원의 스프링 활성화",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_2.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "1-2",
+      "world": 1,
+      "stage": 2,
+      "theme": "Hello PICO PARK 2",
+      "mechanic": "상자 방패",
+      "solution_action": "상층 상자를 동료 머리에 내려 가시 통로 통과",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_2.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "1-3",
+      "world": 1,
+      "stage": 3,
+      "theme": "Hello PICO PARK 2",
+      "mechanic": "복원 기둥",
+      "solution_action": "기둥이 돌아오기 전에 빠르게 밀어 통과",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_2.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "1-4",
+      "world": 1,
+      "stage": 4,
+      "theme": "Hello PICO PARK 2",
+      "mechanic": "숨은 버튼",
+      "solution_action": "숨은 버튼을 찾아 작동시키고 열쇠 획득",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_2.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "2-1",
+      "world": 2,
+      "stage": 1,
+      "theme": "Distance",
+      "mechanic": "밧줄",
+      "solution_action": "연결 거리를 이용해 동료와 이동",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_3.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "2-2",
+      "world": 2,
+      "stage": 2,
+      "theme": "Distance",
+      "mechanic": "접촉 금지·빙판",
+      "solution_action": "서로 닿지 않도록 일찍 제동",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_3.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "2-3",
+      "world": 2,
+      "stage": 3,
+      "theme": "Distance",
+      "mechanic": "수직 정렬",
+      "solution_action": "위아래 동료를 수직 정렬해 버튼을 피해 열쇠 접근",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_3.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "2-4",
+      "world": 2,
+      "stage": 4,
+      "theme": "Distance",
+      "mechanic": "바람·접촉 금지",
+      "solution_action": "왼쪽 보정으로 밀림을 상쇄하며 간격 유지",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_3.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "3-1",
+      "world": 3,
+      "stage": 1,
+      "theme": "Shape",
+      "mechanic": "안전 틈",
+      "solution_action": "작은 빛의 중앙에서 큰 빛 사이 안전지대 확보",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_4.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "3-2",
+      "world": 3,
+      "stage": 2,
+      "theme": "Shape",
+      "mechanic": "이동 플랫폼 안전지대",
+      "solution_action": "기구에 닿지 않게 위치를 계속 조정",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_4.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "3-3",
+      "world": 3,
+      "stage": 3,
+      "theme": "Shape",
+      "mechanic": "자석",
+      "solution_action": "동료를 흡착해 중력 제약 없이 장애물 우회",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_4.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "3-4",
+      "world": 3,
+      "stage": 4,
+      "theme": "Shape",
+      "mechanic": "기억 배치",
+      "solution_action": "처음 제시된 배치대로 위치 재현",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_4.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "4-1",
+      "world": 4,
+      "stage": 1,
+      "theme": "Danger Park",
+      "mechanic": "문 받치기",
+      "solution_action": "한 명이 문을 머리로 받치는 동안 동료가 열쇠 회수",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_5.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "4-2",
+      "world": 4,
+      "stage": 2,
+      "theme": "Danger Park",
+      "mechanic": "상자·톱",
+      "solution_action": "상층 상자로 톱을 반사시켜 열쇠 회수 보호",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_5.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "4-3",
+      "world": 4,
+      "stage": 3,
+      "theme": "Danger Park",
+      "mechanic": "교대 낙하 가시",
+      "solution_action": "좌우 순서에 맞춰 이동",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_5.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "4-4",
+      "world": 4,
+      "stage": 4,
+      "theme": "Danger Park",
+      "mechanic": "레이저",
+      "solution_action": "발사 간격에 맞춰 통과",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_5.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "5-1",
+      "world": 5,
+      "stage": 1,
+      "theme": "Time Limit",
+      "mechanic": "제한시간 동전",
+      "solution_action": "시간 안에 모든 동전 수집",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_6.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "5-2",
+      "world": 5,
+      "stage": 2,
+      "theme": "Time Limit",
+      "mechanic": "시간 연장 버튼",
+      "solution_action": "왼쪽으로 돌아가 열쇠와 시간 연장 확보",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_6.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "5-3",
+      "world": 5,
+      "stage": 3,
+      "theme": "Time Limit",
+      "mechanic": "자석·동전",
+      "solution_action": "자석으로 수집 경로 단축",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_6.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "5-4",
+      "world": 5,
+      "stage": 4,
+      "theme": "Time Limit",
+      "mechanic": "동료 발사",
+      "solution_action": "동료를 총에 담아 예상 착지점으로 발사",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_6.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "6-1",
+      "world": 6,
+      "stage": 1,
+      "theme": "Take Them Down",
+      "mechanic": "색 비행기",
+      "solution_action": "자기 색 벽돌 사격",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_7.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "6-2",
+      "world": 6,
+      "stage": 2,
+      "theme": "Take Them Down",
+      "mechanic": "비행기 위 승객",
+      "solution_action": "위에 탄 동료가 탄환과 레이저를 피하도록 이동",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_7.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "6-3",
+      "world": 6,
+      "stage": 3,
+      "theme": "Take Them Down",
+      "mechanic": "아군 사격 위험",
+      "solution_action": "동료를 맞히지 않으며 비행",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_7.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "6-4",
+      "world": 6,
+      "stage": 4,
+      "theme": "Take Them Down",
+      "mechanic": "총잡이·방패",
+      "solution_action": "미사일 때 방패 담당이 앞을 방어",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_7.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "7-1",
+      "world": 7,
+      "stage": 1,
+      "theme": "Stop and Go",
+      "mechanic": "한 명씩 조작",
+      "solution_action": "안전한 자리에서 이동 순서 교대",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_8.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "7-2",
+      "world": 7,
+      "stage": 2,
+      "theme": "Stop and Go",
+      "mechanic": "동시 이동 추적",
+      "solution_action": "둘 이상 움직여 유령을 부르지 않기",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_8.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "7-3",
+      "world": 7,
+      "stage": 3,
+      "theme": "Stop and Go",
+      "mechanic": "암전 이동",
+      "solution_action": "어두울 때만 기억한 경로 이동",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_8.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "7-4",
+      "world": 7,
+      "stage": 4,
+      "theme": "Stop and Go",
+      "mechanic": "응시 유령",
+      "solution_action": "동료가 바라봐 멈추게 하고 유령을 이용해 열쇠 접근",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_8.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "8-1",
+      "world": 8,
+      "stage": 1,
+      "theme": "Minigames",
+      "mechanic": "사격·받기",
+      "solution_action": "쏘는 역할과 받는 역할 협력",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_9.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "8-2",
+      "world": 8,
+      "stage": 2,
+      "theme": "Minigames",
+      "mechanic": "농구",
+      "solution_action": "공을 주워 골대에 투입",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_9.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "8-3",
+      "world": 8,
+      "stage": 3,
+      "theme": "Minigames",
+      "mechanic": "폭탄 섞인 사격·받기",
+      "solution_action": "폭탄을 건드리지 않으며 전달",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_9.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "8-4",
+      "world": 8,
+      "stage": 4,
+      "theme": "Minigames",
+      "mechanic": "폭탄 섞인 농구",
+      "solution_action": "폭탄을 피하며 득점",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_9.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "9-1",
+      "world": 9,
+      "stage": 1,
+      "theme": "Top Down View",
+      "mechanic": "시야·우리",
+      "solution_action": "절벽을 피하고 박쥐를 우리에 가두기",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_10.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "9-2",
+      "world": 9,
+      "stage": 2,
+      "theme": "Top Down View",
+      "mechanic": "밧줄 포획",
+      "solution_action": "동료 사이 밧줄에 나비 여섯 마리 포획",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_10.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "9-3",
+      "world": 9,
+      "stage": 3,
+      "theme": "Top Down View",
+      "mechanic": "상자 잠입",
+      "solution_action": "상자로 몸을 가려 발각 방지",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_10.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "9-4",
+      "world": 9,
+      "stage": 4,
+      "theme": "Top Down View",
+      "mechanic": "밧줄·절벽",
+      "solution_action": "연결 간격과 수평 정렬 유지",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_10.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "10-1",
+      "world": 10,
+      "stage": 1,
+      "theme": "Skill or Equipment",
+      "mechanic": "반응 버튼",
+      "solution_action": "시작 신호 직후 버튼 밟기",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_11.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "10-2",
+      "world": 10,
+      "stage": 2,
+      "theme": "Skill or Equipment",
+      "mechanic": "반대 방향 발사",
+      "solution_action": "상자와 사람을 반대 방향으로 보내 아래 플랫폼 착지",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_11.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "10-3",
+      "world": 10,
+      "stage": 3,
+      "theme": "Skill or Equipment",
+      "mechanic": "늘어나는 귀·공 운반",
+      "solution_action": "귀로 공을 계속 튕겨 왼쪽 용기에 전달",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_11.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "10-4",
+      "world": 10,
+      "stage": 4,
+      "theme": "Skill or Equipment",
+      "mechanic": "중력 전환",
+      "solution_action": "점프 입력으로 중력 방향 변경",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_11.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "11-1",
+      "world": 11,
+      "stage": 1,
+      "theme": "Dodge Master",
+      "mechanic": "탄환 생존",
+      "solution_action": "지정 시간 피격 없이 생존",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_12.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "11-2",
+      "world": 11,
+      "stage": 2,
+      "theme": "Dodge Master",
+      "mechanic": "밧줄 등반",
+      "solution_action": "위아래로 움직여 가시 회피",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_12.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "11-3",
+      "world": 11,
+      "stage": 3,
+      "theme": "Dodge Master",
+      "mechanic": "회전 대형 공",
+      "solution_action": "시계 방향으로 이동하며 회피",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_12.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "11-4",
+      "world": 11,
+      "stage": 4,
+      "theme": "Dodge Master",
+      "mechanic": "좁아지는 낙하 틈",
+      "solution_action": "마지막 파도에서 쌓여 점유 폭 축소",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_12.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "12-1",
+      "world": 12,
+      "stage": 1,
+      "theme": "Go Go Go",
+      "mechanic": "공동 다단 점프",
+      "solution_action": "각 인원이 한 번씩 점프를 이어 장애물 통과",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_13.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "12-2",
+      "world": 12,
+      "stage": 2,
+      "theme": "Go Go Go",
+      "mechanic": "자동 스크롤",
+      "solution_action": "빠르게 이동하고 상자로 플랫폼 상승을 막아 시간 확보",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_13.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "12-3",
+      "world": 12,
+      "stage": 3,
+      "theme": "Go Go Go",
+      "mechanic": "열쇠 후 가속",
+      "solution_action": "변한 속도와 슈퍼 점프에 맞춰 착지",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_13.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "12-4",
+      "world": 12,
+      "stage": 4,
+      "theme": "Go Go Go",
+      "mechanic": "긴 점프 연속",
+      "solution_action": "최대 도약 거리를 유지해 가시 통과",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_13.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "13-1",
+      "world": 13,
+      "stage": 1,
+      "theme": "Special Park",
+      "mechanic": "위험 버튼",
+      "solution_action": "실패 버튼을 피하여 선택",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_14.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "13-2",
+      "world": 13,
+      "stage": 2,
+      "theme": "Special Park",
+      "mechanic": "색 그래프",
+      "solution_action": "방향키를 누를 인원수를 조절해 제시 그래프 재현",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_14.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "13-3",
+      "world": 13,
+      "stage": 3,
+      "theme": "Special Park",
+      "mechanic": "공 랠리",
+      "solution_action": "공을 연속 열두 번 반사",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_14.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "13-4",
+      "world": 13,
+      "stage": 4,
+      "theme": "Special Park",
+      "mechanic": "내 캐릭터 찾기",
+      "solution_action": "입력 반응으로 진짜 자기 캐릭터 구분",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_14.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "14-1",
+      "world": 14,
+      "stage": 1,
+      "theme": "Useful Tools",
+      "mechanic": "동료 상자화·가시",
+      "solution_action": "버튼 후 서로 상자로 바꿔 가시와 바닥 붕괴 차단",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_15.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "14-2",
+      "world": 14,
+      "stage": 2,
+      "theme": "Useful Tools",
+      "mechanic": "두더지",
+      "solution_action": "협력해 빠르게 타격",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_15.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "14-3",
+      "world": 14,
+      "stage": 3,
+      "theme": "Useful Tools",
+      "mechanic": "상자화·공중 발판",
+      "solution_action": "낙하물 방어 후 공중 동료를 상자로 바꿔 발판 확보",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_15.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "14-4",
+      "world": 14,
+      "stage": 4,
+      "theme": "Useful Tools",
+      "mechanic": "구름 상대",
+      "solution_action": "간격을 조절해 여섯 번 타격",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_15.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "15-1",
+      "world": 15,
+      "stage": 1,
+      "theme": "Final Park",
+      "mechanic": "경로 따라 움직이는 바퀴",
+      "solution_action": "쌓여 이동 발판을 넘고 열쇠 후 차례로 복귀",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_16.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "15-2",
+      "world": 15,
+      "stage": 2,
+      "theme": "Final Park",
+      "mechanic": "암전 블록 쌓기",
+      "solution_action": "아래부터 조금씩 옮겨 벽 장치를 피해 기울여 쌓기",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_16.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "15-3",
+      "world": 15,
+      "stage": 3,
+      "theme": "Final Park",
+      "mechanic": "적 비행기·방패",
+      "solution_action": "추적탄 비행기를 먼저 공격하고 미사일 방어",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_16.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    },
+    {
+      "id": "15-4",
+      "world": 15,
+      "stage": 4,
+      "theme": "Final Park",
+      "mechanic": "빙판·출현 플랫폼",
+      "solution_action": "왼쪽 벽에서 기다렸다 오른쪽 발판 출현 후 점프",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1505633_16.html"
+      ],
+      "status": "text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown",
+      "notes": "공략 문장 확인. 직접 플레이·영상 프레임·정확 수치 검증 아님."
+    }
+  ],
+  "dark": [
+    {
+      "id": "1-1",
+      "mechanic": "오른쪽 유지·버튼",
+      "solution_action": "오른쪽 유지·버튼",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    },
+    {
+      "id": "1-2",
+      "mechanic": "쌓아 버튼 통과",
+      "solution_action": "쌓아 버튼 통과",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    },
+    {
+      "id": "1-3",
+      "mechanic": "상승 발판 점프",
+      "solution_action": "상승 발판 점프",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    },
+    {
+      "id": "1-4",
+      "mechanic": "쌓아 블록 밀기",
+      "solution_action": "쌓아 블록 밀기",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    },
+    {
+      "id": "2-1",
+      "mechanic": "점선 경로 이동",
+      "solution_action": "점선 경로 이동",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    },
+    {
+      "id": "2-2",
+      "mechanic": "공으로 상단 블록 제거",
+      "solution_action": "공으로 상단 블록 제거",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    },
+    {
+      "id": "2-3",
+      "mechanic": "녹색 공 회피",
+      "solution_action": "녹색 공 회피",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    },
+    {
+      "id": "2-4",
+      "mechanic": "쌓기·버튼 담당 유지",
+      "solution_action": "쌓기·버튼 담당 유지",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    },
+    {
+      "id": "3-1",
+      "mechanic": "이동·상승 발판",
+      "solution_action": "이동·상승 발판",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    },
+    {
+      "id": "3-2",
+      "mechanic": "크기 전환·쌓기",
+      "solution_action": "크기 전환·쌓기",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    },
+    {
+      "id": "3-3",
+      "mechanic": "분홍 장애물 회피",
+      "solution_action": "분홍 장애물 회피",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    },
+    {
+      "id": "3-4",
+      "mechanic": "플랫폼·다리 점프",
+      "solution_action": "플랫폼·다리 점프",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    },
+    {
+      "id": "4-1",
+      "mechanic": "분홍 장애물 회피",
+      "solution_action": "분홍 장애물 회피",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    },
+    {
+      "id": "4-2",
+      "mechanic": "굴러오는 기어·벌레 회피",
+      "solution_action": "굴러오는 기어·벌레 회피",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    },
+    {
+      "id": "4-3",
+      "mechanic": "바람·장애물 점프",
+      "solution_action": "바람·장애물 점프",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    },
+    {
+      "id": "4-4",
+      "mechanic": "벌레 회피·플랫폼",
+      "solution_action": "벌레 회피·플랫폼",
+      "source": [
+        "https://gl.ali213.net/html/2024-9/1512111.html"
+      ],
+      "status": "partial_text_evidence",
+      "geometry": "unknown",
+      "population_scaling": "unknown"
+    }
+  ],
+  "battle": [
+    {
+      "index": 1,
+      "name": "Jumping Battle",
+      "mechanic": "종료 때 최고 높이",
+      "solution_action": "종료 때 최고 높이",
+      "source": [
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "community_list"
+    },
+    {
+      "index": 2,
+      "name": "Bright Jumping Battle / Dark Jumping Battle",
+      "mechanic": "가려진 화면에서 높이 경쟁",
+      "solution_action": "가려진 화면에서 높이 경쟁",
+      "source": [
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "community_list"
+    },
+    {
+      "index": 3,
+      "name": "Punching Battle",
+      "mechanic": "주먹으로 밀어 마지막 생존",
+      "solution_action": "주먹으로 밀어 마지막 생존",
+      "source": [
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "community_list"
+    },
+    {
+      "index": 4,
+      "name": "Quick Battle",
+      "mechanic": "신호 직후 버튼",
+      "solution_action": "신호 직후 버튼",
+      "source": [
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "community_list"
+    },
+    {
+      "index": 5,
+      "name": "Plane Battle",
+      "mechanic": "비행 장애물 생존",
+      "solution_action": "비행 장애물 생존",
+      "source": [
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "community_list"
+    },
+    {
+      "index": 6,
+      "name": "Air Jump Battle",
+      "mechanic": "공중 점프 생존",
+      "solution_action": "공중 점프 생존",
+      "source": [
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "community_list"
+    },
+    {
+      "index": 7,
+      "name": "Key Battle",
+      "mechanic": "종료 때 열쇠 소유",
+      "solution_action": "종료 때 열쇠 소유",
+      "source": [
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "community_list"
+    },
+    {
+      "index": 8,
+      "name": "Rally Battle",
+      "mechanic": "공을 반사해 실점 최소화",
+      "solution_action": "공을 반사해 실점 최소화",
+      "source": [
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "community_list"
+    }
+  ],
+  "endless": [
+    {
+      "index": 1,
+      "name": "Endless Scroller",
+      "mechanic": "버튼 회피 이동",
+      "solution_action": "버튼 회피 이동",
+      "source": [
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "community_list"
+    },
+    {
+      "index": 2,
+      "name": "Endless Reaction",
+      "mechanic": "점점 짧아지는 반응 시간",
+      "solution_action": "점점 짧아지는 반응 시간",
+      "source": [
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "community_list"
+    },
+    {
+      "index": 3,
+      "name": "Endless Graph",
+      "mechanic": "제시 그래프 재현",
+      "solution_action": "제시 그래프 재현",
+      "source": [
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "community_list"
+    },
+    {
+      "index": 4,
+      "name": "Endless Bullets",
+      "mechanic": "탄막 회피",
+      "solution_action": "탄막 회피",
+      "source": [
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "community_list"
+    },
+    {
+      "index": 5,
+      "name": "Endless Dodger",
+      "mechanic": "밧줄 장애물 회피",
+      "solution_action": "밧줄 장애물 회피",
+      "source": [
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "community_list"
+    },
+    {
+      "index": 6,
+      "name": "Endless Luck",
+      "mechanic": "위험 버튼 피하기",
+      "solution_action": "위험 버튼 피하기",
+      "source": [
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "community_list"
+    },
+    {
+      "index": 7,
+      "name": "Endless Rally",
+      "mechanic": "공 랠리",
+      "solution_action": "공 랠리",
+      "source": [
+        "https://www.namu.moe/w/PICO%20PARK%202?from=%ED%94%BC%EC%BD%94+%ED%8C%8C%ED%81%AC+2"
+      ],
+      "status": "community_list"
+    }
+  ]
+}

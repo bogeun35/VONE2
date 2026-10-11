@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 1,
+  "scope": "PP2 WarpInitPos (source actor type 44) and WarpAllInitPos (type 43), restored for st_w_10_02",
+  "readOnlyStatic": true,
+  "nativeCodeExecuted": false,
+  "binary": "D:\\SteamLibrary\\steamapps\\common\\PICO PARK 2\\GameAssembly.dll (read and disassembled only)",
+  "coordinates": "Source and native coordinates are Y-down. Warp volume position is its top-left corner. Player anchor is feet-centre; its collision box is 32x46 at anchor+(-16,-47).",
+
+  "summary": "WarpInitPos is the same WarpComponent as the ordinary Warp, selected by the source actor type id. Types 43/44 take the 'init pos' branch of OnCollided, which sends event 64 (not 63) to the contacted actor with the slot4/slot5 offset pair as the event payload. The receiving ActorComponent sets m_WarpPos to ITS OWN m_InitPos plus that offset, so every actor returns to its own spawn anchor. The Warp destination slots 2/3 are never read on this path, no ordinal counter is used, and the camera-left correction is explicitly disabled.",
+
+  "sourceActorData": {
+    "stage": "st_w_10_02",
+    "variantCount": 1,
+    "actor": {
+      "type": 44,
+      "typeName": "WarpInitPos",
+      "name": "WarpInitPos1",
+      "posX": -100,
+      "posY": 1387,
+      "playerCount": 0,
+      "createThreshold": 0,
+      "slots": { "0": 1500, "1": 400, "2": "absent", "3": "absent", "4": 0, "5": -600 }
+    },
+    "derivedVolume": { "left": -100, "top": 1387, "right": 1400, "bottom": 1787 },
+    "map": { "widthInTiles": 42, "heightInTiles": 23, "chipSize": 48, "pixelWidth": 2016, "pixelHeight": 1104 },
+    "playerSpawnAnchors": [
+      { "name": "1", "x": 481, "y": 576 }, { "name": "2", "x": 1536, "y": 576 },
+      { "name": "3", "x": 384, "y": 576 }, { "name": "4", "x": 1632, "y": 576 },
+      { "name": "5", "x": 288, "y": 576 }, { "name": "6", "x": 1728, "y": 576 },
+      { "name": "7", "x": 192, "y": 576 }, { "name": "8", "x": 1824, "y": 576 }
+    ],
+    "destinationPerPlayer": "spawn anchor + (0,-600), e.g. player 1 -> (481,-24), player 8 -> (1824,-24). The actor lands above the map ceiling and falls back onto its own starting platform.",
+    "coverage": "The whole shipped game owns exactly one WarpInitPos (this one) and exactly one WarpAllInitPos (st_select, pos 1140,300, 200x200, every offset slot empty so the destination is the exact spawn)."
+  },
+
+  "slotMapping": {
+    "evidence": "WarpComponent.ParseParameter 0x181734390. Each slot is read as FP only when its type tag is 1 (0x1817343d3); every other tag yields literal zero (0x1817343e3), so an absent slot is a legitimate 0 and never an error.",
+    "0": "collision width  -> component+0x40 (0x1817344c5 stores {slot1,slot0})",
+    "1": "collision height -> component+0x38",
+    "2": "Warp destination X -> component+0x18 (0x1817344e7). UNUSED by types 43/44.",
+    "3": "Warp destination Y -> component+0x20. UNUSED by types 43/44.",
+    "4": "init-pos offset X -> component+0x28 (0x1817344ff). Sent as QEventParam.Position.",
+    "5": "init-pos offset Y -> component+0x30.",
+    "collisionLocalOffset": "component+0x48/+0x50 are zeroed at 0x181734504, so the actor position is the volume's top-left corner (cross-checked against st_w_01_01, whose 240x96 Warp band at x768..1008 is exactly centred under the single floor hole at x864..912).",
+    "notUsedAtAll": "slots 6..31 are never read by ParseParameter."
+  },
+
+  "actorTypeDispatch": {
+    "evidence": "WarpComponent.ParseParameter 0x181734509..0x181734567 switches on the source actor type at actorCreateParam+0x30.",
+    "41": { "warpType": 0, "targetAll": false, "initPos": false, "name": "Warp", "branch": "0x18173452c" },
+    "42": { "warpType": 1, "targetAll": true, "initPos": false, "name": "WarpAll", "branch": "0x18173454b" },
+    "43": { "warpType": 3, "targetAll": true, "initPos": true, "name": "WarpAllInitPos", "branch": "0x18173451b" },
+    "44": { "warpType": 2, "targetAll": false, "initPos": true, "name": "WarpInitPos", "branch": "0x18173453b" },
+    "fields": "component+1 = warpType (byte), component+4 = initPos (0x181734567: warpType==2||warpType==3), component+8 = targetAll (0x181734551: warpType==1||warpType==3), component+0 = the shared ordinal counter used only by the ordinary layer1 path."
+  },
+
+  "restoredBehaviour": [
+    "The volume is a notification sensor, never a solid: InitCollision 0x181734580 passes the rect to ActorComponent.CreateCollision 0x181734610 and then sets Collision.m_Layer = 14 at 0x18173461a; WarpComponent has no pushback handler.",
+    "OnCollided 0x181734630 reads the CONTACTING collision's layer at 0x181734699 and accepts layer 1 (player, 0x1817346a8), layer 2 and layer 8 (0x181734a08). Any other layer is ignored. There is no button, direction, grounded or name condition.",
+    "The init-pos branch is taken at 0x1817346b0/0x1817346b4 when component+4 != 0, and for layers 2/8 at 0x181734a14. It is entered before any of the ordinary path's near-zero destination sentinel work, so types 43/44 never substitute the player's current position.",
+    "targetAll is tested at 0x181734985. WarpInitPos (false) sends event 64 through the TARGETED Frame.NotifyEvent at 0x181734a61 with the contacted collision's EntityRef (0x181734a54), so only the actor that touched the volume moves. WarpAllInitPos (true) uses the untargeted overload at 0x1817349fe, broadcasting event 64 to every actor.",
+    "The event id is 0x40 = 64 (0x18173499f and 0x1817349d2), not the ordinary Warp's 0x3f = 63.",
+    "QEventParam.Position (+0x30) carries the OFFSET pair, i.e. component+0x28 (0x1817349a8 then 0x181734a4b, and 0x1817349db/0x1817349e8 for type 43). QEventParam+0x7c is always set to 1 (0x1817349b5 / 0x1817349ec).",
+    "ActorComponent.OnRecvEvent 0x18169e840 dispatches event 64 at 0x18169e8ce to 0x18169e963, which computes m_WarpPos(+0x100) = m_InitPos(+0x80) + QEventParam.Position (adds at 0x18169e992 and 0x18169e9a6, stores at 0x18169e9b0). This is the entire difference from event 63, which copies Position verbatim at 0x18169e9d2.",
+    "The shared tail 0x18169e9d9 turns QEventParam+0x7c into flag bit 20 (0x18169e9e8 bts / 0x18169e9e2 btr), which IsDisableCorrectWarpPos 0x18169d060 reads as 0x100000. Because the init-pos path always sets it, warpProc 0x18169e545 skips the camera-view-left clamp that an ordinary Warp on a scrolling stage would apply.",
+    "The same tail zeroes m_WarpVelo at 0x18169e9f7 and calls ResetVeloAll 0x18169e9fe, which zeroes m_Velo(+0xf0) at 0x18169da35, m_Accel(+0x60) at 0x18169da3c and m_JumpVelo(+0x90) at 0x18169da40. No dash or forced horizontal velocity survives a warp.",
+    "ActorComponent.warpProc 0x18169e460 applies the pending warp: ClearCollisionContactInfo 0x18169e617 (drops every contact, so riders lose their support), SetPosForce 0x18169e630 with the ANCHOR, then m_Velo = m_WarpVelo and both pending fields cleared at 0x18169e63f..0x18169e654. It also sets the WarpDetected flag bit 25 at 0x18169e524 and, only when RequestVisibleWhenWarp (bit 17) was set, calls SetVisible at 0x18169e688 - which no warp sets by itself.",
+    "A warp is considered pending only while |m_WarpPos.x| or |m_WarpPos.y| is at least 4 RAW FP units (0x18169e4cc and 0x18169e4ea, mirrored by IsWarp 0x1816a2560), i.e. 4/65536 world units. A destination that lands exactly on the world origin therefore does nothing.",
+    "m_InitPos is written exactly once, by ActorSceneComponent.AddActor 0x1816a73ee calling SetInitPos 0x18169d230, which stores the creation position into both m_InitPos (0x18169d2cf) and m_Pos (0x18169d2d6). The only other callers are FloatingThornComponent.Resume 0x18184a422 and MoleComponent.startAppear 0x181880a52, neither of which exists in st_w_10_02, so a player's init pos is permanently its source spawn anchor - there is no checkpoint mechanic.",
+    "No ordinal counter: the signed byte at component+0 is read and advanced only in the ordinary layer1 single-target path (0x1817347b1 read, 0x18173482e..0x181734831 modulo by Frame.GetPlayerActorCount). The init-pos branch never touches it, so there is no per-player stagger offset."
+  ],
+
+  "outOfBoundsRule": {
+    "question": "How does WarpInitPos interact with the project's 'falling out of bounds loses the round for everyone, evaluated before every device' rule?",
+    "verdict": "Natively a pending warp outranks the out-of-map check, but in practice the two never compete, because the native fail line sits 2400px below the map floor while every warp volume in the game sits between the floor and that line. The project's ordering was fine; the project's killY constant was not.",
+    "evidence": [
+      "ActorComponent.CheckOutMap 0x1816a1cb0 loads m_WarpPos at 0x1816a1d07 and returns false (0x1816a1e2b) whenever |x| or |y| is at least 4 raw FP units (0x1816a1d2b and 0x1816a1d51) - i.e. an actor with a warp queued is never out of the map, independent of any call ordering.",
+      "ActorComponent.OnPost1 0x18169e260 calls warpProc at 0x18169e2af and only then CheckOutMap at 0x18169e339 (gated by flags&0x40000, the inverse of IsEnableDeadOutMap 0x18169d000), setting the out-of-map flag bit 13 at 0x18169e35a. The warp is applied first, and the bounds test then runs against the warped position.",
+      "PlayerComponent.OnPost 0x1816c0dd0 runs its own CheckOutMap at 0x1816c0ecb and, on true, notifies event 0x2b with param+0x6c = 1 (0x1816c0ef3..0x1816c0f0d). That player-specific death notification is guarded by the same pending-warp early-out.",
+      "The fail line itself: StageComponent.prepare3 0x18170aad0 writes FailFallY (field +0x18, read by GetFailFallY 0x180491c10) at 0x18170ac06 as mapHeightInTiles ([mapInitParam+0x1c], multiplied by the chip size at 0x18170abff) PLUS stageInitParam.failDownY ([+0x68]) or, when that parameter is zero, the QGameDefine default.",
+      "QGameDefine..cctor 0x181780720: statics+0x00 = 0x300000 = 48.0 (chip size, 0x181780766); statics+0x08 = 0xfffffffff6a00000 = -2400.0 (default FailUpY, 0x18178077b); statics+0x10 = 0x9600000 = 2400.0 (default FailFallY margin, 0x181780791). prepare3 also writes FailLeftX = -480.0 as the literal 0xfffffffffe200000 at 0x18170ac0a and FailRightX = (mapWidthInTiles+10)*48 at 0x18170ac2f..0x18170ac3e, or 0 (no limit) when stageInitParam+0x50 is set.",
+      "Cross-check against the shipped data: failDownY is 0 for all 123 world/level variants except st_b_01_04 (480) and st_e_01_02 / st_b_01_06 / st_b_01_07 (500), so for every one of the 60 World stages FailFallY = mapPixelHeight + 2400. All 13 Warp / WarpAll / WarpInitPos volumes in the game lie inside (mapPixelHeight, mapPixelHeight + 2400]: st_w_10_02 band 1387..1787 vs line 3504; st_w_02_03 band 1998..2718 vs line 2880; st_w_02_01 band 1673..2673 vs 2880; st_w_01_01 band 1056..1152 vs 3360. Were the fail line anywhere near the map floor, every one of these devices would be unreachable - which is exactly the state of the current port."
+    ],
+    "measuredImpact": "With the shipped killY = map.height, st_w_10_02's WarpInitPos never fires (a player dies at y 1104 and the band starts at 1387) and the ALREADY IMPLEMENTED plain Warp in st_w_01_01 never fires either (measured: killY 960 -> status dead, reason fall, warp counter 0; killY 3313 -> status play, warp counter 1).",
+    "notInvented": "2400 is the native default, not a derived guess. It applies only because failDownY is 0 on this stage; the general form needs the stage parameter. The earlier 'map height + 144' constant has no counterpart anywhere in prepare3 or QGameDefine..cctor."
+  },
+
+  "undetermined": [
+    "PushBox (layer 2) warping is implemented but one link is unproven. Proven: PushBoxComponent.InitCollision 0x1816db651 writes 0x0202, i.e. collision type 2 / layer 2, which WarpComponent.OnCollided accepts at 0x181734a08; PushBoxComponent.OnRecvEvent 0x1816dbca0 explicitly matches event ids 0x3f and 0x40 at 0x1816dbd13, zeroes its own vector field at 0x1816dbd32, clears a flag bit at 0x1816dbd3a and then delegates to ActorComponent.OnRecvEvent at 0x1816dbd6f, which sets m_WarpPos. Unproven: PushBoxComponent.OnPost is the shared empty stub 0x180476130, so the warp can only be applied by the generic ActorComponent.OnPost1 0x18169e260, and I could not statically confirm that the dispatcher runs it for non-player actors - ActorSceneComponent.Post 0x1816a6870 calls ActorUpdater.InvokePost 0x18177a3e0, whose per-actor invocation is an indirect 'call rax' at 0x18177a5e0 through delegates registered in ActorUpdater.initUpdater 0x1817782a0. The only reason PushBox would handle events 63/64 at all is that it does get warped, which is why I implemented it, but it is an inference, not a decoded fact.",
+    "Native collision notification ORDER when several accepted colliders overlap the volume in the same frame is not established. The module warps every overlapping actor in the order the caller supplies.",
+    "WarpAllInitPos broadcasts event 64 to EVERY actor, not only to players and boxes. The module warps players and the supplied PushBoxes; any other actor type that would also return to its spawn is not modelled. This only affects st_select, which this port does not run (its spawns are MainMenuPlayer actors, so compile() refuses it by design).",
+    "The camera-left clamp inside warpProc (0x18169e552..0x18169e5f4, actor type 27 gate at 0x18169e56c, stage flag [stage+0x91] at 0x18169e5a5, CameraComponent.CalcCameraViewStageArea 0x18169e5cb) is never reached by an init-pos warp because bit 20 is always set. Its exact behaviour therefore remains unverified, and st_w_10_02 is scrollType 0 anyway.",
+    "WarpDetected (flag bit 25, SetWarpDetected 0x1816a25b0 / IsWarpDetected 0x1816a25a0) is set by warpProc and cleared on the next warp-free frame. I did not trace its consumers, so the module does not expose it; it is most likely a view-side teleport cut with no gameplay effect.",
+    "The authored band leaves part of the map uncovered: the volume spans x -100..1400 while the map is 2016 wide, so a fall from the right-hand platforms (player spawns at x 1536..1824) is outside it. This is reported exactly as the source data reads; partial coverage is normal for this device family (st_w_02_01 and st_w_02_03 also leave gaps), and nothing was widened or centred to make the stage friendlier.",
+    "FailUpY / FailLeftX / FailRightX were decoded while establishing FailFallY but are NOT part of this registration. The port still has no left/right/top out-of-bounds handling, and killY below only covers the fall direction."
+  ],
+
+  "nativeMethods": {
+    "WarpComponent.Creator": "0x1817340f0",
+    "WarpComponent.ParseParameter": "0x181734390",
+    "WarpComponent.InitCollision": "0x181734580",
+    "WarpComponent.OnCollided": "0x181734630",
+    "ActorComponent.OnRecvEvent": "0x18169e840 (event 63 at 0x18169e9b9, event 64 at 0x18169e963)",
+    "ActorComponent.warpProc": "0x18169e460",
+    "ActorComponent.OnPost1": "0x18169e260",
+    "ActorComponent.CheckOutMap": "0x1816a1cb0",
+    "ActorComponent.ResetVeloAll": "0x18169d9f0",
+    "ActorComponent.SetInitPos": "0x18169d230",
+    "ActorComponent.GetInitPos": "0x18169d220",
+    "ActorComponent.SetPosForce": "0x18169d4e0",
+    "ActorComponent.ClearCollisionContactInfo": "0x1816a0670",
+    "ActorComponent.IsDisableCorrectWarpPos": "0x18169d060",
+    "ActorComponent.IsEnableDeadOutMap": "0x18169d000",
+    "ActorComponent.IsWarp": "0x1816a2560",
+    "ActorSceneComponent.AddActor": "0x1816a71d0",
+    "ActorSceneComponent.Post": "0x1816a6870",
+    "ActorUpdater.InvokePost": "0x18177a3e0",
+    "PlayerComponent.OnPost": "0x1816c0dd0",
+    "PushBoxComponent.InitCollision": "0x1816db580",
+    "PushBoxComponent.OnRecvEvent": "0x1816dbca0",
+    "PushBoxComponent.OnPost": "0x180476130 (shared empty stub)",
+    "StageComponent.prepare3": "0x18170aad0",
+    "StageComponent.GetFailFallY": "0x180491c10",
+    "StageComponent.GetFailUpY": "0x180493ab0",
+    "StageComponent.GetFailLeftX": "0x180493ea0",
+    "StageComponent.GetFailRightX": "0x180493eb0",
+    "QGameDefine..cctor": "0x181780720"
+  },
+
+  "componentLayout": {
+    "WarpComponent": { "+0x00": "ordinal counter (signed byte, ordinary path only)", "+0x01": "warpType", "+0x04": "initPos", "+0x08": "targetAll", "+0x18": "destination FPVector2 (unused by 43/44)", "+0x28": "offset FPVector2", "+0x38": "collision rect height, then width at +0x40", "+0x48": "collision local x/y, zeroed" },
+    "ActorComponent": { "+0x0c": "flag bits (17 RequestVisibleWhenWarp, 18 disable dead-out-map, 20 DisableCorrectWarpPos, 25 WarpDetected, 13 out-of-map)", "+0x60": "m_Accel", "+0x80": "m_InitPos", "+0xb0": "m_Pos", "+0x90": "m_JumpVelo", "+0xf0": "m_Velo", "+0x100": "m_WarpPos", "+0x110": "m_WarpVelo" },
+    "StageComponent": { "+0x18": "FailFallY", "+0x20": "FailLeftX", "+0x28": "FailRightX", "+0x30": "FailUpY" },
+    "QEventParam": { "+0x10": "event id", "+0x30": "Position", "+0x7c": "disable warp-position correction" },
+    "Collision": { "+0x00": "type", "+0x01": "layer", "+0x18": "owner EntityRef" },
+    "layers": { "1": "Player", "2": "PushBox (0x1816db651 writes 0x0202)", "5": "DashBoard (0x181817209)", "7": "Thorn (0x181720e1d)", "8": "accepted by Warp, owner not identified", "10": "Key (0x18186be79)", "12": "Goal (0x18185f842)", "14": "Warp volume (0x18173461a)" }
+  },
+
+  "registration": {
+    "targetFile": "source-stage-runtime.js",
+    "note": "Verified in a scratch copy at %TEMP%\\claude\\C--Users-user-projects-VONE2\\c44c2621-458a-4688-9506-3aacf50714fc\\scratchpad\\warpinit\\scratch. The project copy was not modified. The factory argument lines will conflict with other device modules landing at the same time; apply them semantically.",
+    "steps": [
+      {
+        "id": 1,
+        "what": "Add the module as a factory dependency",
+        "from": "  common?require('./source-bridge-devices.js'):root.SourceBridgeDevices);",
+        "to": "  common?require('./source-bridge-devices.js'):root.SourceBridgeDevices,\n  common?require('./source-warpinit-devices.js'):root.SourceWarpInitDevices);"
+      },
+      {
+        "id": 2,
+        "what": "Bind the factory parameter",
+        "from": "function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges){",
+        "to": "function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges,WarpInit){"
+      },
+      {
+        "id": 3,
+        "what": "Allow the stage",
+        "from": "'st_w_01_04','st_w_04_01']",
+        "to": "'st_w_01_04','st_w_04_01','st_w_10_02']"
+      },
+      {
+        "id": 4,
+        "what": "Declare the native fall margin next to the other NATIVE constants",
+        "insertBefore": " const NATIVE=Object.freeze({walk:3,",
+        "insert": " // StageComponent.prepare3 0x18170ac06: FailFallY = mapHeightInTiles*48 plus\n // the stage failDownY, or QGameDefine..cctor 0x181780791 default 0x9600000 FP\n // = 2400 when that parameter is zero. The box top is the anchor minus 47.\n const NATIVE_FAIL_FALL_MARGIN=0x9600000/65536;"
+      },
+      {
+        "id": 5,
+        "what": "Compile the device",
+        "from": "  const bridges=Bridges.compile(t.actors,count);",
+        "to": "  const bridges=Bridges.compile(t.actors,count);\n  const warpInit=WarpInit.compile(t.actors,count);"
+      },
+      {
+        "id": 6,
+        "what": "Mark both actor types supported",
+        "from": "...Bridges.supportedTypes]",
+        "to": "...Bridges.supportedTypes,...WarpInit.supportedTypes]"
+      },
+      {
+        "id": 7,
+        "what": "Surface the module's warnings",
+        "from": "  missingMechanics.push(...devices.warnings);",
+        "to": "  missingMechanics.push(...devices.warnings,...warpInit.warnings);"
+      },
+      {
+        "id": 8,
+        "what": "Use the native fall line instead of the map height. REQUIRED: without it the band at y1387 is unreachable and the device is dead code (it also revives the existing plain Warp in st_w_01_01, st_w_02_01/02/03, st_w_05_04, st_w_07_03, st_w_12_02/03, st_w_14_03/04). The general native form is t.height + (stageInitParam.failDownY || 2400) - 47; failDownY is 0 for all 60 World stages, so the default is exact here, and a stage with a non-zero failDownY must read the parameter.",
+        "from": "exit:{...box(Actor.collisionRect(goal)),id:'goal'},killY:t.height,",
+        "to": "exit:{...box(Actor.collisionRect(goal)),id:'goal'},killY:t.height+NATIVE_FAIL_FALL_MARGIN-47,"
+      },
+      {
+        "id": 9,
+        "what": "Export the compiled data",
+        "from": "return {schemaVersion:1,count,map,relays,devices,motion,gates,bridges,status:",
+        "to": "return {schemaVersion:1,count,map,relays,devices,motion,gates,bridges,warpInit,status:"
+      },
+      {
+        "id": 10,
+        "what": "Create the runtime state",
+        "from": "bridgeState:Bridges.create(compiled.bridges||{count,bridges:[],thunders:[],keyTargets:[],keyTaken:false}),",
+        "to": "bridgeState:Bridges.create(compiled.bridges||{count,bridges:[],thunders:[],keyTargets:[],keyTaken:false}),warpInitState:WarpInit.create(compiled.warpInit||{schemaVersion:1,count,warps:[],boxes:[],initPositions:[],warnings:[]}),"
+      },
+      {
+        "id": 11,
+        "what": "Give every player its native m_InitPos (ActorSceneComponent.AddActor 0x1816a73ee). The fallback inverts the spawn's (-16,-47.5) box offset for stages that own no init-pos warp, where compile() returns no initPositions.",
+        "from": "  return {map,players:ids.map((id,i)=>({id,...map.spawns[i],w:32,h:46,vx:0,vy:0,grounded:false,ground:false,",
+        "to": "  const initPositions=(compiled.warpInit&&compiled.warpInit.initPositions)||[];\n  return {map,players:ids.map((id,i)=>({id,...map.spawns[i],initPos:initPositions[i]||{x:map.spawns[i].x+16,y:map.spawns[i].y+47.5},w:32,h:46,vx:0,vy:0,grounded:false,ground:false,"
+      },
+      {
+        "id": 12,
+        "what": "Resolve warps before the out-of-bounds death, matching CheckOutMap's pending-warp early-out and OnPost1's internal order",
+        "from": "  for(const p of players){\n   // Out of bounds is resolved before any device. The round is lost for",
+        "to": "  // ActorComponent.CheckOutMap 0x1816a1d07..0x1816a1d51 returns false while a\n  // warp is pending, and warpProc 0x18169e2af runs before the out-map test\n  // 0x18169e339 in OnPost1, so an init-pos warp outranks the fall.\n  WarpInit.afterStep(s.warpInitState,{players,boxes:Devices.solids(s.deviceState),dt:h,nativeTickRate:hz});\n  for(const p of players){\n   // Out of bounds is resolved before any device. The round is lost for"
+      }
+    ],
+    "notRequired": "solids() returns [] (layer 14 sensor) and beforeStep() is a no-op, so neither has to be wired into baseSolids/solids or the pre-step chain."
+  },
+
+  "verification": {
+    "compile": "R.compile({source,geometry,count,stageId:'st_w_10_02'}) succeeds for counts 2, 4 and 8 in the scratch copy; 'Unsupported source devices: WarpInitPos' is gone. The five previously whitelisted stages still compile and create.",
+    "killYValues": { "st_w_01_01": 3313, "st_w_01_02": 2881, "st_w_01_03": 2833, "st_w_01_04": 3793, "st_w_04_01": 2833, "st_w_10_02": 3457 },
+    "playthrough": "In st_w_10_02 with 2 players, holding right walks player 1 off the left platform at x~528; it falls to y~1340, enters the band, and reappears at box (465,-71) = anchor (481,-24) with zero velocity (warp triggers = 1). It then falls back in, is launched by DashBoard1 and lands on the right-hand steps. No death, nobody else moved.",
+    "regressionChecks": [
+      "Fall at x=1800 (outside the band) still loses the round for everyone: status dead, reason fall, at y 3461.",
+      "Same fall at x=800 (inside the band) is rescued and play continues.",
+      "With killY forced back to map.height the band is never reached: status dead, warp triggers 0.",
+      "A PushBox dropped into the band returns to its spawn rect (342,382) offset by (0,-600) -> (342,-218) with zero velocity.",
+      "st_w_01_01's plain Warp: killY 960 -> dead/fall with warp counter 0; killY 3313 -> play with warp counter 1."
+    ],
+    "unitTests": "source-warpinit-devices.test.cjs, 13 tests, all passing, driven by the real decoded actors of st_w_10_02 and st_select.",
+    "fullSuite": "node --test *.test.cjs in reference-analysis/source-migration: 89 tests, 89 passing, 0 failing."
+  },
+
+  "limits": [
+    "The original DLL was only read and disassembled; it was never loaded or executed.",
+    "Collision notification order, the native fixed-step integration and the exact frame in which a collision event is delivered are not established, so completePhysicsFidelity stays false.",
+    "The module needs player.initPos supplied by the caller and throws if it is missing rather than guessing a spawn."
+  ]
+}

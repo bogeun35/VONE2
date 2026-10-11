@@ -1,0 +1,44 @@
+{
+  "stageId": "st_w_01_03",
+  "source": "Installed PP2 static native method inspection; no original executable loaded",
+  "implementedTypes": ["Rect", "DashBoard", "FallingWall", "FallingWallBlock"],
+  "countsCompiledAndUnitTested": [2, 3, 4, 5, 6, 7, 8],
+  "testsPassed": 6,
+  "fullRouteVerified": false,
+  "originalFidelityVerified": false,
+  "humanFunVerified": false,
+  "evidence": {
+    "Rect": {
+      "parse": "0x1816e69a0",
+      "collision": "0x1816e6d90 creates collision type2, flags0x602, masks2/4 unless DummyRect",
+      "geometry": "width=d0+d2*(count-2), height=d1+d3*(count-2), x+=d4*(count-2), y+=d5*(count-2), local x=0,y=-height. Negative width shifts x by width then uses abs(width).",
+      "offsets": "Generic FP7 decoder0x18096f80c subtracts ASCII0x21 per byte. Current stage's56 exclamation marks decode to seven zero FP64 values. Nonzero encodings are intentionally rejected until verified.",
+      "events": "0x1816e6e70: events60/61 ignored, event18 darkness display, event4 camera cull. Current plain Rect actors are solid collision, not deadly rectangles."
+    },
+    "DashBoard": {
+      "parse": "0x1818170c0 d0/d1 copied to velocity vector",
+      "bounds": "0x1818175c2 cctor RectFP(height,width,x,y)=(8,64,-32,-8)",
+      "trigger": "0x181817220 fresh contact sends event27 with velocity, clears acceleration and current velocity",
+      "playerEvent": "0x1816c6b63 stores forced velocity and bits4/5; default update0x1816c3d25 consumes Y once,0x1816c3d78 preserves nonzero forcedX over walking input; grounded path0x1816c37df clears forced vector when no pending jump",
+      "sourceVelocity": [40, -10],
+      "units": "pixels per native tick, not per second"
+    },
+    "FallingWall": {
+      "parse": "0x181848620: d0 block size,d1 block count,d2..8 hit counts by population,d9..15 resilience seconds,d16 bounciness,d17 fall angle degrees*0x477/65536",
+      "parameters": {"blockSize": 50, "blockCount": 10, "hitsByCount2to8": [8,9,10,10,10,10,10], "resilienceByCount2to8": [4,3.4,3.2,3,3,3,3], "bounciness": 0.05, "fallAngleDegrees": 30},
+      "create": "0x181848a10 spawns10 FallingWallBlock actors linked to parent",
+      "collision": "0x181847470 each block is axis-aligned size50 square centered at its actor position",
+      "blockPositions": "0x181849130: clamp angle±0x1921f/65536, first center=(anchorX,anchorY-size/2), subsequent centers += (sin(angle),-cos(angle))*size",
+      "contact": "0x1818476c0 checks top and side contact faces. Side hit requires signed incoming pre-velocityX>=6; reflects about face normal and applies bounciness. Calls parent HitWall with reflected vector.",
+      "hit": "0x181849540 cooldown timer>=0x3333/65536, hits<required, hit increments and resets timer; target angle adds fallAngle/required with sign opposite reflectedX",
+      "update": "0x181848ef0: insufficient hits recover at resilience timeout. Angular velocity=2*(target-current)/fallAngle until threshold, then sin(angle)^2*gravity*0.5 accumulation. Angle increment uses constant0x51e/65536 per update. Fallen at abs(angle)>=0x1921f/65536.",
+      "movingContact": "0x18184948e calls Actor.MoveContactActor after each block displacement; integration must push/carry contacted players"
+    }
+  },
+  "remainingFidelityGaps": [
+    "Native FP trigonometric lookup vs JavaScript sin/cos",
+    "Native contact-scene iteration and moving-block push ordering",
+    "Native simulation tick frequency calibration",
+    "Full route via player inputs, including dash-to-wall repetition, has not been tested by this module audit"
+  ]
+}
