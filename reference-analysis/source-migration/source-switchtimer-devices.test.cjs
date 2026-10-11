@@ -271,3 +271,90 @@ test('slots the original never reads for actor type 37 are reported',()=>{
  assert.equal(compiled.warnings.length,1);
  assert.match(compiled.warnings[0],/slot 16 is unread/);
 });
+
+// ---------------------------------------------------------------------------
+// DeadTimer. Ten world stages author one. st_w_05_02's reads 10 s from datas[0]
+// but the per-population override table (datas[6..12]) raises it to 15 s for
+// every count, and the shipped bonus table is A=5 ('&'), C=2 ('#'), B=10 ('+').
+// ---------------------------------------------------------------------------
+const deadActors=()=>stage('st_w_05_02').filter(a=>a.typeName==='DeadTimer');
+
+test('DeadTimer parses as TimerTimeUpType.Dead and never becomes a solid',()=>{
+ const actors=deadActors();
+ assert.equal(actors.length,1);
+ const compiled=SwitchTimer.compile(actors,4);
+ const t=named(compiled,'DeadTimer1');
+ // ParseParameter 0x18172dd1b writes word 0x102 for actor type 0x0a: low byte
+ // m_TimeUpType = Dead(2), high byte m_Type = TimeDown(1).
+ assert.equal(t.actorType,10);
+ assert.equal(t.timeUpType,2);
+ assert.equal(t.timeUpTypeName,'Dead');
+ assert.equal(t.timerTypeName,'TimeDown');
+ // datas[0] is 10 but the population override wins for every count.
+ for(let count=2;count<=8;count++)assert.equal(named(SwitchTimer.compile(actors,count),'DeadTimer1').sec,15);
+ // TimerComponent has no InitCollision and no OnCollided.
+ assert.deepEqual(SwitchTimer.solids(SwitchTimer.create(compiled)),[]);
+});
+
+test('DeadTimer time-up broadcasts Dead to every player, ignoring m_TargetName',()=>{
+ const compiled=SwitchTimer.compile(deadActors(),4);
+ assert.equal(named(compiled,'DeadTimer1').targetName,'','a Dead time-up needs no target');
+ const state=SwitchTimer.create(compiled);
+ const players=[{id:'p1'},{id:'p2'},{id:'p3'},{id:'p4'}];
+ const step=()=>SwitchTimer.beforeStep(state,{dt:1/60,players});
+ let fired=null,ticks=0;
+ for(;ticks<60*20&&!fired;ticks++){const r=step();if(r.deadPlayerIds.length)fired=r;}
+ assert.equal(ticks,900,'fifteen seconds at sixty ticks');
+ // onTimeUp 0x18172e132 uses the param-only Frame.NotifyEvent 0x181749790,
+ // which walks the whole actor list; m_TargetName is never consulted.
+ assert.deepEqual(fired.deadPlayerIds,['p1','p2','p3','p4']);
+ const dead=fired.events.find(e=>e.event===SwitchTimer.nativeConstants.eventDead);
+ assert.ok(dead&&dead.broadcast===true,'a broadcast Dead event must be emitted');
+ assert.equal(dead.causeDead,0,'QEventParamManager.Get zeroes the param, so CauseDead is Contact');
+ // 0x18172e1cf clears StageComponent m_Flags bit9 and 0x18172e1ee starts the
+ // TimeUp notice with the Move animation.
+ assert.deepEqual(fired.stageFlags.map(f=>f.enableOpenWindow),[false]);
+ assert.deepEqual(fired.notices.map(n=>[n.typeName,n.animName,n.isWait]),[['TimeUp','Move',false]]);
+ // 0x18172e03a sets m_Flags bit3 so the time-up happens once per stage.
+ let again=0;
+ for(let i=0;i<120;i++)again+=step().deadPlayerIds.length;
+ assert.equal(again,0,'the time-up must not repeat');
+});
+
+test('an immortal player survives the DeadTimer broadcast',()=>{
+ const state=SwitchTimer.create(SwitchTimer.compile(deadActors(),4));
+ // PlayerComponent.OnRecvEvent 0x1816c1758 returns early when CauseDead is not
+ // Fall and IsImmortal 0x1816bcd20 is set. The param is zeroed, so CauseDead is
+ // Contact and the immortal test applies.
+ const players=[{id:'p1'},{id:'p2',immortal:true},{id:'p3'},{id:'p4'}];
+ let fired=null;
+ for(let i=0;i<60*20&&!fired;i++){const r=SwitchTimer.beforeStep(state,{dt:1/60,players});if(r.deadPlayerIds.length)fired=r;}
+ assert.deepEqual(fired.deadPlayerIds,['p1','p3','p4']);
+});
+
+test('the game over bonus starts at A failures, adds C each and caps at B',()=>{
+ // datas[16]='&'->A=5, datas[17]='#'->C=2, datas[18]='+'->B=10, each decoded as
+ // (low byte - 0x21) per UTF-16 unit. 0x18172dbee..0x18172dc13 adds
+ // min((n - A + 1) * C, B) after the population override, so the base is 15.
+ const secFor=n=>named(SwitchTimer.compile(deadActors(),4,{gameOverCount:n}),'DeadTimer1').sec;
+ for(const n of [0,1,2,3,4])assert.equal(secFor(n),15,'no bonus below five failures, n='+n);
+ assert.equal(secFor(5),17);
+ assert.equal(secFor(6),19);
+ assert.equal(secFor(9),25);
+ assert.equal(secFor(20),25,'the bonus is capped at B=10');
+ const bonus=named(SwitchTimer.compile(deadActors(),4,{gameOverCount:6}),'DeadTimer1').bonus;
+ assert.equal(bonus.fromGameOverCount,5);
+ assert.equal(bonus.perGameOver,2);
+ assert.equal(bonus.maxBonus,10);
+ assert.equal(bonus.added,4);
+});
+
+test('the bonus block only runs when the mode selector is exactly 1',()=>{
+ // 0x18172dadb compares floor(datas[15]) with 1; any other value skips the block.
+ const off=JSON.parse(JSON.stringify(deadActors()));
+ off[0].datas[15]={t:1,f:2};
+ const skipped=named(SwitchTimer.compile(off,4,{gameOverCount:20}),'DeadTimer1');
+ assert.equal(skipped.sec,15);
+ assert.equal(skipped.bonus,null);
+ assert.equal(named(SwitchTimer.compile(deadActors(),4,{gameOverCount:20}),'DeadTimer1').sec,25);
+});

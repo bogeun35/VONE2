@@ -14,7 +14,7 @@
 |---|---|---|
 | 원작 데이터 추출 | PP2 94스테이지 / PP1 별도 | 무손실 왕복 검증됨 |
 | **런타임 연결 라운드** | **9** | 2편 1-1~1-4, 4-1, 4-3, 4-4, 10-2, 11-4 |
-| 구현된 액터 타입 | 28 | PP2 월드에 등장하는 건 126종. 28 중 `DeadTimer`는 근거 리포트가 없다(§6) |
+| 구현된 액터 타입 | 28 | PP2 월드에 등장하는 건 126종 |
 | 테스트 | 17파일 163건 통과 | `*.test.cjs` |
 | 원본 일치 검수 | **0건** | 사람이 원작과 나란히 돌려본 라운드 없음 |
 
@@ -143,7 +143,7 @@ cat remaining-work.json
 | 남긴 것 | 파일 | 상태 | 조치 |
 |---|---|---|---|
 | ~~Thorn 이동 = 틱당 `속도²`~~ | `source-devices-runtime.js` | ✅ **해결(2026-10-11)** — 속도²가 맞음 | `thorn-speed-report.json` |
-| **`DeadTimer` 지원** | `source-switchtimer-devices.js:181` | `supportedTypes`에 추가, **리포트 없음** | 검증 후 유지/되돌림 |
+| ~~`DeadTimer` 지원~~ | `source-switchtimer-devices.js` | ✅ **해결(2026-10-11)** — 테스트 5건 추가 | `deadtimer-device-report.json` |
 | **`Text` 모듈** | `source-text-devices.js` + 테스트 | 작성됨, **런타임 미등록** | 리포트 없이 등록하지 말 것 |
 | **`WeightedLiftEx`** | — | 시작만 함 | 처음부터 |
 

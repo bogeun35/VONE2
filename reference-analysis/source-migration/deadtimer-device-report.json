@@ -1,0 +1,81 @@
+{
+ "schemaVersion": 1,
+ "device": "DeadTimer",
+ "module": "source-switchtimer-devices.js",
+ "status": "implemented_and_tested",
+ "settledOn": "2026-10-11",
+ "nativeCodeExecuted": false,
+ "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base 0x180000000",
+ "note": "DeadTimer has no component of its own. The shared Quantum TimerComponent serves both SwitchTimer and DeadTimer; the actor type picks the behaviour. The full address-by-address derivation lives in the module header comment; this file records the conclusions, the verification and what it unlocks.",
+
+ "summary": "A DeadTimer counts down and, at zero, broadcasts QEventType.Dead(19) to every actor in the scene. It does not read m_TargetName, it never collides, and it kills nobody directly: each receiver decides. Players die unless they are immortal. Slots 15..18 encode a mercy rule that lengthens the timer once the party has failed the stage repeatedly.",
+
+ "typeDispatch": {
+  "evidence": "TimerComponent.ParseParameter 0x18172dd1b..0x18172dd47 writes a word for the actor type: 0x0a (DeadTimer) -> 0x102, 0x1f -> 0x101, 0x25 (SwitchTimer) -> 0x103.",
+  "meaning": "Low byte is m_TimeUpType, high byte m_Type. A DeadTimer is therefore always TimerTimeUpType.Dead(2) + TimerType.TimeDown(1).",
+  "dispatch": "onTimeUp 0x18172e070 branches on m_TimeUpType at 0x18172e0ba..0x18172e0ce: Retry(1) 0x18172e203, Dead(2) 0x18172e132, Switch(3) 0x18172e0d0."
+ },
+
+ "timeUpSequence": [
+  "0x18172e132: GetEventParam(QEventType.Dead = 19) then Frame.NotifyEvent 0x181749790, the param-only overload, which walks the whole ActorScene list (0x181749a10..0x181749af2) and invokes OnRecvEvent on every actor. m_TargetName is never consulted: this is a stage-wide broadcast.",
+  "0x18172e1a4: FrameEvents.PlaySe 0x18174bd50 with SeId 2 (Blip), volume and pitch raw 0x10000.",
+  "0x18172e1cf: btr [stage+4],9 clears StageComponent m_Flags bit9, i.e. SetEnableOpenWindow(false) (owner 0x181709ca0).",
+  "0x18172e1ee: StageNoticeComponent.Start 0x18170e850 with (QUIStageNotice_Type.TimeUp = 1, QUIStageNotice_Anim.Move = 2, isWait = false).",
+  "0x18172e03a sets m_Flags bit3 afterwards, so a time-up fires at most once per attempt."
+ ],
+
+ "whoDies": {
+  "evidence": "PlayerComponent.OnRecvEvent 0x1816c1187 -> 0x1816c174e handles event 19: return if m_Life <= 0 (0x1816c174e jle); return if param.CauseDead != Fall and IsImmortal (0x1816c1758 cmp [param+0x6c],1 then 0x1816c1773 test [p+0x20],0x100); otherwise m_Life = 0 (0x1816c1789) and m_RequestedPlayerState = QPlayerState.Dead(3) (0x1816c17a2).",
+  "consequence": "QEventParamManager.Get zeroes the param, so CauseDead is Contact(0) and the immortal test does apply. An immortal player survives a DeadTimer."
+ },
+
+ "mercyRule": {
+  "where": "DeadTimer-only block in ParseParameter 0x18172da97..0x18172dcea, guarded by cmp dword[createParam+0x30],0xa so a SwitchTimer never enters it.",
+  "selector": "datas[15] is floor()ed and compared with 1 at 0x18172dadb. Only the exact value 1 enables the block; it also supplies the first table index via lea r8d,[rax+0xf] = 16 at 0x18172daeb.",
+  "tables": "datas[16], datas[18], datas[17] are read in that order as QPlayerCountParam<int> (DeserializeInt 0x180970770) and resolved for the live population by QPlayerCountParamUtility.Find 0x181786950.",
+  "arithmetic": "0x18172dbee..0x18172dc13: A = Find(datas[16]); skip if A <= 0; n = Frame.GetGameOverCount 0x1817475d0; skip if A > n; B = Find(datas[18]); C = Find(datas[17]); skip with a log at 0x18172dc60 if B <= 0 or C <= 0; else m_Sec += min((n - A + 1) * C, B).",
+  "order": "The bonus is applied AFTER the datas[6..12] population override, so an override does not erase it.",
+  "shippedValues": "Every world DeadTimer authors A=5 ('&'), C=2 ('#'), B=10 ('+') except st_w_13_02 which authors A=9 ('*'). Nothing happens until the party has failed five times, then +2s per further failure, capped at +10s.",
+  "counterSource": "StageComponent.CountGameOver 0x18170dd60 increments it, guarded by m_Flags bit15 (IsCountedGameOver 0x181709cc0) so it rises at most once per attempt."
+ },
+
+ "notASolid": "TimerComponent has no InitCollision and no OnCollided, so solids() is always empty for both timer types. A DeadTimer kills by broadcast, never by contact.",
+
+ "verification": {
+  "unitTests": "source-switchtimer-devices.test.cjs, 21 passing (16 SwitchTimer + 5 DeadTimer).",
+  "measuredOnStage": "st_w_05_02 DeadTimer1",
+  "observations": [
+   "datas[0] reads 10 but the population override table raises m_Sec to 15 for every count 2..8.",
+   "Time-up lands at exactly tick 900 (15.00s at 60Hz).",
+   "deadPlayerIds covers every player; an immortal player is excluded.",
+   "The emitted event is {broadcast:true, event:19, causeDead:0}; notices carry (TimeUp, Move, isWait false) and stageFlags carry enableOpenWindow false.",
+   "Bonus: 15s at gameOverCount 0..4, 17s at 5, 19s at 6, 25s at 9 and above (capped).",
+   "Setting datas[15] to 2 skips the block entirely and leaves 15s even at gameOverCount 20."
+  ]
+ },
+
+ "unlocks": {
+  "stagesUsingDeadTimer": ["st_w_05_01","st_w_05_02","st_w_05_03","st_w_05_04","st_w_08_01","st_w_08_02","st_w_08_03","st_w_08_04","st_w_09_02","st_w_13_02"],
+  "fullyOpenedByThisAlone": 0,
+  "remainingPerStage": {
+   "st_w_05_01": ["CoinObserver","WeightedLift","Coin"],
+   "st_w_05_02": ["(guard) Runtime scope supports first-stage upward switches only"],
+   "st_w_05_03": ["CoinObserver","PlayerMagnet","Coin"],
+   "st_w_05_04": ["PlayerWarpGun","UpDownLift","Text"],
+   "st_w_08_01": ["TargetPlayer","BasketPlayer","AppleController","Apple"],
+   "st_w_08_02": ["CannonPlayer","ThrowBallBasket","ThrowBallController"],
+   "st_w_08_03": ["TargetPlayer","BasketPlayer","AppleController","Apple"],
+   "st_w_08_04": ["CannonPlayer","ThrowBallBasket","ThrowBallController"],
+   "st_w_09_02": ["TopViewPlayer","CapturingTarget","CapturingConstraint"],
+   "st_w_13_02": ["CircleGraph","CircleGraphController","BarGraph","BarGraphController","GraphController"]
+  },
+  "closest": "st_w_05_02 now needs no further device, only a widening of the spring/switch direction guard in spring-switch-runtime.js."
+ },
+
+ "unresolved": [
+  "TimerTimeUpType.Retry(1) at 0x18172e203 sets StageComponent m_Flags bit10 (RequestRetry 0x181709cf0). No shipped actor type reaches it, so the module throws rather than guessing.",
+  "Frame.DeltaTime's FP raw value is still unread (get_DeltaTime 0x18173a090 forwards a session field), so a tick count may differ by one from the original. Same gap the other ports record.",
+  "The m_Flags bit NAMES are not in the metadata: the bitfield is the shared 16 bit QFlags instantiation. bits 0..3 are named from behaviour, with the reading and writing addresses given in the module header.",
+  "Receivers other than PlayerComponent also answer event 19 (nine component types). Only the player path is modelled, which is what matters for the stages in scope."
+ ]
+}
