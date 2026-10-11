@@ -183,34 +183,16 @@ cat remaining-work.json
 
 ---
 
-## 8. 다음 작업 (실측 기반)
+## 8. 다음 작업
 
-`remaining-work.json`에 스테이지별 정확한 차단 사유가 있다. 요약:
+**→ [`NEXT-TASKS.md`](NEXT-TASKS.md) 를 보라.** 우선순위, 각 작업의 출발점 주소, 검증 규약이 들어 있다.
 
-- PP2 월드 60개 중 **9개 연결, 51개 차단**. 남은 고유 액터 타입 **98종**.
-- **2~8인 중 일부만 컴파일되는 스테이지는 0개** — 차단은 전부 전부-아니면-전무다.
+핵심만: **"최다 차단 액터 = 최우선"이 아니다.** `Text` 는 10개 스테이지를 막지만 등록해도
+새로 열리는 라운드가 **0개**다(실측). 라운드를 열려면 `remaining-work.json` 의
+`stages[].blockers` 에서 **남은 종류 수가 적은 스테이지**를 골라야 한다.
 
-### 장치가 아닌 가드(설계 범위 제한)로 막힌 스테이지
-| 가드 메시지 | 스테이지 |
-|---|---|
-| `Runtime scope supports original world01-01 switchType 0 only` | 02_03 |
-| `Runtime scope supports first-stage upward switches only` | 05_02, 10_04 |
-| `Rect population offset encoding requires further verification: slot 6` | 07_03 |
-| `Unverified Bridge geometry/count scaling/push mode` | 07_03 |
-
-이것들은 **새 장치가 아니라 기존 모듈의 범위를 넓히는 일**이라 비용이 낮을 수 있다.
-특히 `spring-switch-runtime.js`의 "upward switches only" 제한을 풀면 05_02·10_04가 한 번에 가까워진다.
-
-### 최다 차단 액터 (하나 만들면 N개 스테이지에서 사라짐)
-`Text`(10), `DeadTimer`(10), `WeightedLiftEx`(6), `OptimizedBulletObserver`(6), `TopViewPlayer`(6),
-`Blackout`(5), `BattlePlanePlayer`(5), `PlayerGun`(5)
-
-⚠️ `Text`와 `DeadTimer`는 §6의 미완성 작업과 겹친다. **그 리포트를 먼저 끝내고 등록할 것.**
-
-### 추정
-오늘 한 세션에 장치 6종 → 라운드 4개 추가. 남은 98종 기준으로 PP2 월드 60개까지 **대략 15~25세션**.
-PP1(48) + dark(16)·battle(12)·endless(11)까지 147개 전부는 **몇 달 단위**. 다만 한 액터가 여러
-스테이지를 동시에 푸는 경우가 있어 초반 체감 속도는 더 빠르다.
+지금 가장 가까운 것: `st_w_07_02`(Bowwow2Enemy 1종), `st_w_10_04`(WeightedLiftEx 1종,
+출발점 주소 확보됨), `st_w_07_03`(새 장치 없이 가드 2개만 — 가장 싼 유형).
 
 ### 품질 쪽 남은 것
 - 원본 일치 검수 0건 — 4-3, 4-4, 10-2, 11-4는 **사람이 클리어해본 적이 없다**.
