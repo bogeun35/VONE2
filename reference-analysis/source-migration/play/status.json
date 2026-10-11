@@ -9,7 +9,7 @@
     "maxPlayers": 8,
     "backend": "existing Firebase RTDB",
     "hostAuthoritative": true,
-    "protocol": "source-park-v2"
+    "protocol": "source-park-v3"
   },
   "functionalRoute": {
     "stage": "st_w_01_01",

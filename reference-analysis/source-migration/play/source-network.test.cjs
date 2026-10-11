@@ -42,8 +42,9 @@ class Ref {
     const value = transform(structuredClone(this.db.value(this.path)));
     if (value === undefined) return { committed: false };
     this.db.set(this.path, value);
-    return { committed: true };
+    return { committed: true, snapshot: { val: () => structuredClone(this.db.value(this.path)) } };
   }
+  async remove() { this.db.set(this.path, null); }
   onDisconnect() {
     return {
       remove: async () => this.db.disconnects.set(this.path, true),
@@ -83,7 +84,7 @@ test('2–8 player room lifecycle, readiness, inputs, authority and empty-room c
   await assert.rejects(host.enter('BAD!'), /방 코드/);
   await host.enter('test', true);
   assert.equal(host.code, 'TEST');
-  assert.equal(host.room.protocol, 'source-park-v2');
+  assert.equal(host.room.protocol, 'source-park-v3');
   assert.equal(host.room.players[host.id].ready, true);
   await assert.rejects(host.start({ status: 'play' }), /2~8/);
   const peers = Array.from({ length: 7 }, () => peer(db));
@@ -252,7 +253,7 @@ test('acknowledged member removal survives metadata transaction contention and d
   const gate = new Promise(resolve => { release = resolve; });
   let acknowledged = false;
   ref.update = async values => {
-    assert.deepEqual(values, { ['players/' + guest.id]: null, ['inputs/' + guest.id]: null, ['connections/' + guest.connectionId]: null });
+    assert.deepEqual(values, { ['players/' + guest.id]: null, ['connections/' + guest.connectionId]: null });
     await gate;
     await update(values);
     acknowledged = true;
@@ -270,8 +271,48 @@ test('acknowledged member removal survives metadata transaction contention and d
   release();
   await leaving;
   assert.deepEqual(Object.keys(db.value(ref.path).players), [host.id]);
-  assert.equal(db.value(ref.path).inputs[guest.id], undefined);
+  assert.equal(db.value('games/park_source_inputs_BUSY/' + guest.id), null);
   assert.ok(guest.errors.includes('maxretry'));
   await host.leave();
   assert.equal(db.value(ref.path), null);
+});
+
+test('inputs travel outside the room node and carry restart requests', async () => {
+  const db = new Backend();
+  const host = peer(db), guest = peer(db);
+  await host.enter('KEYS', true); await guest.enter('KEYS'); await guest.ready(true);
+  await host.start({ status: 'play' });
+  // Writes under the room would contend with the host's room transactions
+  // (Firebase aborts a pending transaction on any set below it).
+  const roomWrites = [];
+  const set = Ref.prototype.set;
+  Ref.prototype.set = async function (value) { if (this.path.startsWith('games/park_source_KEYS/')) roomWrites.push(this.path); return set.call(this, value); };
+  try {
+    await guest.input({ right: true });
+    await guest.input({ right: true, jump: true });
+    await guest.requestRestart();
+  } finally { Ref.prototype.set = set; }
+  assert.deepEqual(roomWrites, []);
+  assert.equal(db.value('games/park_source_KEYS').inputs, undefined);
+  const stored = db.value('games/park_source_inputs_KEYS/' + guest.id);
+  assert.equal(stored.right, true);
+  assert.equal(stored.jump, true);
+  assert.equal(stored.restartSeq, 1);
+  assert.equal(host.inputs[guest.id].restartSeq, 1);
+  assert.equal(host.inputs[guest.id].seq, 3);
+  assert.ok(host.inputArrival[guest.id].at > 0);
+  // A returning member continues its counters instead of starting over.
+  await guest.leave();
+  assert.equal(db.value('games/park_source_inputs_KEYS/' + guest.id), null);
+  await guest.input({ right: true });
+  db.set('games/park_source_inputs_KEYS/' + guest.id, { seq: 9, jumpSeq: 4, restartSeq: 2 });
+  await guest.enter('KEYS');
+  assert.equal(guest.seq, 9); assert.equal(guest.jumpSeq, 4); assert.equal(guest.restartSeq, 2);
+  // The host's kick removes the member's input; the last one out clears the node.
+  await host.kick(guest.id);
+  await Promise.all([...(host.pending.get(host.ref) || [])]);
+  assert.equal(db.value('games/park_source_inputs_KEYS/' + guest.id), null);
+  await host.leave();
+  assert.equal(db.value('games/park_source_KEYS'), null);
+  assert.equal(db.value('games/park_source_inputs_KEYS'), null);
 });

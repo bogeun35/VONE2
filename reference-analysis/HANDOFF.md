@@ -69,6 +69,11 @@ node deploy-source-play.cjs 20261011-07
 # 온라인 사망→즉시 재시작 검증 (실제 Chrome 2대 + 실제 Firebase RTDB)
 node check-source-death-restart.cjs   # 결과: play/source-death-restart-report.json
 
+# 온라인 동시 입력·다시시작 검증 (브라우저 컨텍스트 N개 = PC N대 + 실제 Firebase RTDB, 무음)
+# 두 번째 인자로 라이브 URL 을 주면 배포본을 검사한다
+PUPPETEER_CORE=<puppeteer-core 경로> BROWSER_URL=http://localhost:9224 node check-source-online-input.cjs 2   # 3, 8 도
+# 결과: play/source-online-input-report-<N>p.json
+
 # 남은 작업 현황 (이 문서의 수치 출처)
 cat remaining-work.json
 
@@ -139,6 +144,19 @@ node whole-route-record.cjs st_w_04_01   # 어긋난 라운드만 재녹화(인�
    검사를 넣어뒀다. 실제로 두 번 잡혔다.
 7. **이전 작업자가 지어낸 상수를 "원작"이라 주장하는 테스트를 넣어둔 전력이 있다.** 상수에 근거
    주석이 없으면 의심할 것.
+8. **방 노드에 트랜잭션이 걸린 동안 그 아래에 `set()`을 하면 Firebase가 트랜잭션을 `'set'`으로 취소한다.**
+   v2는 방장이 스냅샷을 초당 12번 방 루트 트랜잭션으로 올리면서, 자기 입력을 초당 8번 같은 방
+   `inputs/`에 `set` 했다. 그래서 발행이 거의 다 취소되다가 몇 초 뒤 완전히 멈췄다(라이브 실측: 참가자 화면
+   스냅샷 0건, 참가자 입력 0틱 적용, 방장이 R을 눌러도 참가자 화면은 이전 판). 사용자 증상
+   "한 사람이 키보드가 되면 다른 사람 키보드가 안 됨", "다시시작도 안 눌림"이 이것이다.
+   **v3(2026-10-11)**: 입력은 방 밖 `games/park_source_inputs_<코드>/<id>`, 방장은 자기 입력을 DB에 쓰지 않고
+   바로 적용, 다시시작은 입력 패킷의 `restartSeq` 카운터로 누구나 요청하고 방장이 적용.
+   같이 고친 것: 재시작이 인원 순서를 바꾸면(시작=입장순, 재시작=id순) 참가자 화면이 직전 판 스냅샷을
+   계속 덮어써 깜빡이던 것, 재시작 직후 예전 점프가 다시 눌리던 것, 클리어 후 `대기실` 버튼이
+   대기실 대신 같은 판을 다시 시작하던 것. 검증은 `check-source-online-input.cjs`
+   (각자 보낸 입력과 방장이 틱마다 적용한 입력으로 판정, 2·3·8인).
+   **한 PC의 창/탭 두 개로는 둘이 같이 못 한다**: 키 입력은 앞의 창 하나에만 가고, 뒤로 간 탭은 프레임이
+   멈춰 1초 뒤 그 사람 입력이 0으로 처리된다(방장 탭이면 게임 전체가 멈춘다). 구조적 한계다.
 
 ---
 

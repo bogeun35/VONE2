@@ -1,0 +1,979 @@
+{
+ "timestamp": "2026-10-11T14:06:46.818Z",
+ "players": 3,
+ "page": "local play/",
+ "backend": "Actual Firebase RTDB",
+ "scenarios": {
+  "host only": {
+   "plan": [
+    {
+     "client": 0,
+     "code": "ArrowRight",
+     "ms": 1200,
+     "delay": 0
+    }
+   ],
+   "perClient": [
+    {
+     "client": 0,
+     "host": true,
+     "pressed": "ArrowRight 1200ms",
+     "sentPresses": 0,
+     "expectedTicks": 72,
+     "hostAppliedTicks": 73,
+     "latencyMs": 0,
+     "moved": {
+      "screen0": 18,
+      "screen1": 18,
+      "screen2": 18
+     }
+    },
+    {
+     "client": 1,
+     "host": false,
+     "pressed": "-",
+     "sentPresses": 0,
+     "expectedTicks": 0,
+     "hostAppliedTicks": 0,
+     "latencyMs": null,
+     "moved": {
+      "screen0": 0,
+      "screen1": 0,
+      "screen2": 0
+     }
+    },
+    {
+     "client": 2,
+     "host": false,
+     "pressed": "-",
+     "sentPresses": 0,
+     "expectedTicks": 0,
+     "hostAppliedTicks": 0,
+     "latencyMs": null,
+     "moved": {
+      "screen0": 0,
+      "screen1": 0,
+      "screen2": 0
+     }
+    }
+   ],
+   "screens": [
+    {
+     "host": true,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    }
+   ],
+   "hostTickRate": 60,
+   "snapshotCadence": [
+    null,
+    {
+     "updates": 24,
+     "medianGapMs": 90,
+     "maxGapMs": 110
+    },
+    {
+     "updates": 24,
+     "medianGapMs": 91,
+     "maxGapMs": 110
+    }
+   ],
+   "host": {
+    "publishCalls": 24,
+    "errors": 0,
+    "errorKinds": []
+   }
+  },
+  "peer only": {
+   "plan": [
+    {
+     "client": 2,
+     "code": "ArrowRight",
+     "ms": 1200,
+     "delay": 0
+    }
+   ],
+   "perClient": [
+    {
+     "client": 0,
+     "host": true,
+     "pressed": "-",
+     "sentPresses": 0,
+     "expectedTicks": 0,
+     "hostAppliedTicks": 0,
+     "latencyMs": 0,
+     "moved": {
+      "screen0": 0,
+      "screen1": 0,
+      "screen2": 0
+     }
+    },
+    {
+     "client": 1,
+     "host": false,
+     "pressed": "-",
+     "sentPresses": 0,
+     "expectedTicks": 0,
+     "hostAppliedTicks": 0,
+     "latencyMs": null,
+     "moved": {
+      "screen0": 0,
+      "screen1": 0,
+      "screen2": 0
+     }
+    },
+    {
+     "client": 2,
+     "host": false,
+     "pressed": "ArrowRight 1200ms",
+     "sentPresses": 10,
+     "expectedTicks": 72,
+     "hostAppliedTicks": 73,
+     "latencyMs": 83,
+     "moved": {
+      "screen0": 219,
+      "screen1": 219,
+      "screen2": 219
+     }
+    }
+   ],
+   "screens": [
+    {
+     "host": true,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    }
+   ],
+   "hostTickRate": 60,
+   "snapshotCadence": [
+    null,
+    {
+     "updates": 23,
+     "medianGapMs": 91,
+     "maxGapMs": 159
+    },
+    {
+     "updates": 22,
+     "medianGapMs": 90,
+     "maxGapMs": 152
+    }
+   ],
+   "host": {
+    "publishCalls": 23,
+    "errors": 0,
+    "errorKinds": []
+   }
+  },
+  "together": {
+   "plan": [
+    {
+     "client": 0,
+     "code": "ArrowLeft",
+     "ms": 1500,
+     "delay": 0
+    },
+    {
+     "client": 2,
+     "code": "ArrowLeft",
+     "ms": 1500,
+     "delay": 0
+    }
+   ],
+   "perClient": [
+    {
+     "client": 0,
+     "host": true,
+     "pressed": "ArrowLeft 1500ms",
+     "sentPresses": 0,
+     "expectedTicks": 90,
+     "hostAppliedTicks": 90,
+     "latencyMs": 0,
+     "moved": {
+      "screen0": -54,
+      "screen1": -54,
+      "screen2": -54
+     }
+    },
+    {
+     "client": 1,
+     "host": false,
+     "pressed": "-",
+     "sentPresses": 0,
+     "expectedTicks": 0,
+     "hostAppliedTicks": 0,
+     "latencyMs": null,
+     "moved": {
+      "screen0": 0,
+      "screen1": 0,
+      "screen2": 0
+     }
+    },
+    {
+     "client": 2,
+     "host": false,
+     "pressed": "ArrowLeft 1500ms",
+     "sentPresses": 12,
+     "expectedTicks": 90,
+     "hostAppliedTicks": 90,
+     "latencyMs": 84,
+     "moved": {
+      "screen0": -237,
+      "screen1": -237,
+      "screen2": -237
+     }
+    }
+   ],
+   "screens": [
+    {
+     "host": true,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    }
+   ],
+   "hostTickRate": 60,
+   "snapshotCadence": [
+    null,
+    {
+     "updates": 22,
+     "medianGapMs": 90,
+     "maxGapMs": 403
+    },
+    {
+     "updates": 22,
+     "medianGapMs": 93,
+     "maxGapMs": 397
+    }
+   ],
+   "host": {
+    "publishCalls": 26,
+    "errors": 0,
+    "errorKinds": []
+   }
+  },
+  "everyone together": {
+   "plan": [
+    {
+     "client": 0,
+     "code": "ArrowRight",
+     "ms": 1500,
+     "delay": 0
+    },
+    {
+     "client": 1,
+     "code": "KeyD",
+     "ms": 1500,
+     "delay": 0
+    },
+    {
+     "client": 2,
+     "code": "ArrowRight",
+     "ms": 1500,
+     "delay": 0
+    }
+   ],
+   "perClient": [
+    {
+     "client": 0,
+     "host": true,
+     "pressed": "ArrowRight 1500ms",
+     "sentPresses": 0,
+     "expectedTicks": 90,
+     "hostAppliedTicks": 90,
+     "latencyMs": 0,
+     "moved": {
+      "screen0": 270,
+      "screen1": 270,
+      "screen2": 270
+     }
+    },
+    {
+     "client": 1,
+     "host": false,
+     "pressed": "KeyD 1500ms",
+     "sentPresses": 12,
+     "expectedTicks": 90,
+     "hostAppliedTicks": 90,
+     "latencyMs": 83,
+     "moved": {
+      "screen0": 267,
+      "screen1": 267,
+      "screen2": 267
+     }
+    },
+    {
+     "client": 2,
+     "host": false,
+     "pressed": "ArrowRight 1500ms",
+     "sentPresses": 12,
+     "expectedTicks": 90,
+     "hostAppliedTicks": 90,
+     "latencyMs": 83,
+     "moved": {
+      "screen0": 270,
+      "screen1": 270,
+      "screen2": 270
+     }
+    }
+   ],
+   "screens": [
+    {
+     "host": true,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    }
+   ],
+   "hostTickRate": 60,
+   "snapshotCadence": [
+    null,
+    {
+     "updates": 25,
+     "medianGapMs": 92,
+     "maxGapMs": 174
+    },
+    {
+     "updates": 24,
+     "medianGapMs": 94,
+     "maxGapMs": 170
+    }
+   ],
+   "host": {
+    "publishCalls": 27,
+    "errors": 0,
+    "errorKinds": []
+   }
+  },
+  "peer holds, host joins in": {
+   "plan": [
+    {
+     "client": 2,
+     "code": "ArrowRight",
+     "ms": 2000,
+     "delay": 0
+    },
+    {
+     "client": 0,
+     "code": "ArrowRight",
+     "ms": 800,
+     "delay": 600
+    }
+   ],
+   "perClient": [
+    {
+     "client": 0,
+     "host": true,
+     "pressed": "ArrowRight 800ms",
+     "sentPresses": 0,
+     "expectedTicks": 48,
+     "hostAppliedTicks": 48,
+     "latencyMs": 0,
+     "moved": {
+      "screen0": 51,
+      "screen1": 51,
+      "screen2": 51
+     }
+    },
+    {
+     "client": 1,
+     "host": false,
+     "pressed": "-",
+     "sentPresses": 0,
+     "expectedTicks": 0,
+     "hostAppliedTicks": 0,
+     "latencyMs": null,
+     "moved": {
+      "screen0": 0,
+      "screen1": 0,
+      "screen2": 0
+     }
+    },
+    {
+     "client": 2,
+     "host": false,
+     "pressed": "ArrowRight 2000ms",
+     "sentPresses": 15,
+     "expectedTicks": 120,
+     "hostAppliedTicks": 120,
+     "latencyMs": 92,
+     "moved": {
+      "screen0": 360,
+      "screen1": 360,
+      "screen2": 360
+     }
+    }
+   ],
+   "screens": [
+    {
+     "host": true,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    }
+   ],
+   "hostTickRate": 60,
+   "snapshotCadence": [
+    null,
+    {
+     "updates": 31,
+     "medianGapMs": 90,
+     "maxGapMs": 181
+    },
+    {
+     "updates": 31,
+     "medianGapMs": 88,
+     "maxGapMs": 186
+    }
+   ],
+   "host": {
+    "publishCalls": 32,
+    "errors": 0,
+    "errorKinds": []
+   }
+  },
+  "host holds, peer joins in": {
+   "plan": [
+    {
+     "client": 0,
+     "code": "ArrowLeft",
+     "ms": 2000,
+     "delay": 0
+    },
+    {
+     "client": 2,
+     "code": "KeyA",
+     "ms": 800,
+     "delay": 600
+    }
+   ],
+   "perClient": [
+    {
+     "client": 0,
+     "host": true,
+     "pressed": "ArrowLeft 2000ms",
+     "sentPresses": 0,
+     "expectedTicks": 120,
+     "hostAppliedTicks": 120,
+     "latencyMs": 0,
+     "moved": {
+      "screen0": -321,
+      "screen1": -321,
+      "screen2": -321
+     }
+    },
+    {
+     "client": 1,
+     "host": false,
+     "pressed": "-",
+     "sentPresses": 0,
+     "expectedTicks": 0,
+     "hostAppliedTicks": 0,
+     "latencyMs": null,
+     "moved": {
+      "screen0": 0,
+      "screen1": 0,
+      "screen2": 0
+     }
+    },
+    {
+     "client": 2,
+     "host": false,
+     "pressed": "KeyA 800ms",
+     "sentPresses": 7,
+     "expectedTicks": 48,
+     "hostAppliedTicks": 49,
+     "latencyMs": 83,
+     "moved": {
+      "screen0": -147,
+      "screen1": -147,
+      "screen2": -147
+     }
+    }
+   ],
+   "screens": [
+    {
+     "host": true,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    }
+   ],
+   "hostTickRate": 60,
+   "snapshotCadence": [
+    null,
+    {
+     "updates": 31,
+     "medianGapMs": 94,
+     "maxGapMs": 146
+    },
+    {
+     "updates": 31,
+     "medianGapMs": 93,
+     "maxGapMs": 150
+    }
+   ],
+   "host": {
+    "publishCalls": 31,
+    "errors": 0,
+    "errorKinds": []
+   }
+  },
+  "alternate fast": {
+   "plan": [
+    {
+     "client": 0,
+     "code": "ArrowRight",
+     "ms": 180,
+     "delay": 0
+    },
+    {
+     "client": 2,
+     "code": "ArrowLeft",
+     "ms": 180,
+     "delay": 200
+    },
+    {
+     "client": 0,
+     "code": "ArrowRight",
+     "ms": 180,
+     "delay": 400
+    },
+    {
+     "client": 2,
+     "code": "ArrowLeft",
+     "ms": 180,
+     "delay": 600
+    },
+    {
+     "client": 0,
+     "code": "ArrowRight",
+     "ms": 180,
+     "delay": 800
+    },
+    {
+     "client": 2,
+     "code": "ArrowLeft",
+     "ms": 180,
+     "delay": 1000
+    }
+   ],
+   "perClient": [
+    {
+     "client": 0,
+     "host": true,
+     "pressed": "ArrowRight 180ms, ArrowRight 180ms, ArrowRight 180ms",
+     "sentPresses": 0,
+     "expectedTicks": 33,
+     "hostAppliedTicks": 33,
+     "latencyMs": 0,
+     "moved": {
+      "screen0": 99,
+      "screen1": 99,
+      "screen2": 99
+     }
+    },
+    {
+     "client": 1,
+     "host": false,
+     "pressed": "-",
+     "sentPresses": 0,
+     "expectedTicks": 0,
+     "hostAppliedTicks": 0,
+     "latencyMs": null,
+     "moved": {
+      "screen0": 0,
+      "screen1": 0,
+      "screen2": 0
+     }
+    },
+    {
+     "client": 2,
+     "host": false,
+     "pressed": "ArrowLeft 180ms, ArrowLeft 180ms, ArrowLeft 180ms",
+     "sentPresses": 6,
+     "expectedTicks": 33,
+     "hostAppliedTicks": 40,
+     "latencyMs": 83,
+     "moved": {
+      "screen0": -120,
+      "screen1": -120,
+      "screen2": -120
+     }
+    }
+   ],
+   "screens": [
+    {
+     "host": true,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wcxxb-f0qhz",
+     "runAfter": "mv3wcxxb-f0qhz",
+     "status": "play"
+    }
+   ],
+   "hostTickRate": 60,
+   "snapshotCadence": [
+    null,
+    {
+     "updates": 22,
+     "medianGapMs": 92,
+     "maxGapMs": 171
+    },
+    {
+     "updates": 22,
+     "medianGapMs": 93,
+     "maxGapMs": 168
+    }
+   ],
+   "host": {
+    "publishCalls": 22,
+    "errors": 0,
+    "errorKinds": []
+   }
+  },
+  "peer jump tap": {
+   "jumpTicks": 5
+  },
+  "restart: host R": {
+   "client": 0,
+   "how": "key",
+   "ms": 226,
+   "runs": [
+    "mv3wdeoz-m0dsk"
+   ],
+   "restarted": true,
+   "phantomJumpTicks": {}
+  },
+  "restart: peer R": {
+   "client": 2,
+   "how": "key",
+   "ms": 268,
+   "runs": [
+    "mv3wdfpr-1jwub"
+   ],
+   "restarted": true,
+   "phantomJumpTicks": {}
+  },
+  "restart: peer [다시] button": {
+   "client": 2,
+   "how": "#retry",
+   "ms": 344,
+   "runs": [
+    "mv3wdgqb-z4kwp"
+   ],
+   "restarted": true,
+   "phantomJumpTicks": {}
+  },
+  "together after restarts": {
+   "plan": [
+    {
+     "client": 0,
+     "code": "ArrowRight",
+     "ms": 1200,
+     "delay": 0
+    },
+    {
+     "client": 2,
+     "code": "ArrowRight",
+     "ms": 1200,
+     "delay": 0
+    }
+   ],
+   "perClient": [
+    {
+     "client": 0,
+     "host": true,
+     "pressed": "ArrowRight 1200ms",
+     "sentPresses": 0,
+     "expectedTicks": 72,
+     "hostAppliedTicks": 73,
+     "latencyMs": 0,
+     "moved": {
+      "screen0": 18,
+      "screen1": 18,
+      "screen2": 18
+     }
+    },
+    {
+     "client": 1,
+     "host": false,
+     "pressed": "-",
+     "sentPresses": 0,
+     "expectedTicks": 0,
+     "hostAppliedTicks": 0,
+     "latencyMs": null,
+     "moved": {
+      "screen0": 0,
+      "screen1": 0,
+      "screen2": 0
+     }
+    },
+    {
+     "client": 2,
+     "host": false,
+     "pressed": "ArrowRight 1200ms",
+     "sentPresses": 10,
+     "expectedTicks": 72,
+     "hostAppliedTicks": 73,
+     "latencyMs": 84,
+     "moved": {
+      "screen0": 219,
+      "screen1": 219,
+      "screen2": 219
+     }
+    }
+   ],
+   "screens": [
+    {
+     "host": true,
+     "runBefore": "mv3wdgqb-z4kwp",
+     "runAfter": "mv3wdgqb-z4kwp",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wdgqb-z4kwp",
+     "runAfter": "mv3wdgqb-z4kwp",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wdgqb-z4kwp",
+     "runAfter": "mv3wdgqb-z4kwp",
+     "status": "play"
+    }
+   ],
+   "hostTickRate": 60,
+   "snapshotCadence": [
+    null,
+    {
+     "updates": 23,
+     "medianGapMs": 95,
+     "maxGapMs": 142
+    },
+    {
+     "updates": 23,
+     "medianGapMs": 95,
+     "maxGapMs": 137
+    }
+   ],
+   "host": {
+    "publishCalls": 23,
+    "errors": 0,
+    "errorKinds": []
+   }
+  },
+  "loss: peer cover button": {
+   "coverEnabled": true,
+   "restartMs": 357
+  },
+  "next round: key held through the start": {
+   "stage": "st_w_01_02",
+   "heldTicks": 62,
+   "firstEffectMs": 219
+  },
+  "together in the next round": {
+   "plan": [
+    {
+     "client": 0,
+     "code": "ArrowLeft",
+     "ms": 700,
+     "delay": 0
+    },
+    {
+     "client": 2,
+     "code": "ArrowLeft",
+     "ms": 700,
+     "delay": 0
+    }
+   ],
+   "perClient": [
+    {
+     "client": 0,
+     "host": true,
+     "pressed": "ArrowLeft 700ms",
+     "sentPresses": 0,
+     "expectedTicks": 42,
+     "hostAppliedTicks": 43,
+     "latencyMs": 0,
+     "moved": {
+      "screen0": -18,
+      "screen1": -18,
+      "screen2": -18
+     }
+    },
+    {
+     "client": 1,
+     "host": false,
+     "pressed": "-",
+     "sentPresses": 0,
+     "expectedTicks": 0,
+     "hostAppliedTicks": 0,
+     "latencyMs": null,
+     "moved": {
+      "screen0": 0,
+      "screen1": 0,
+      "screen2": 0
+     }
+    },
+    {
+     "client": 2,
+     "host": false,
+     "pressed": "ArrowLeft 700ms",
+     "sentPresses": 6,
+     "expectedTicks": 42,
+     "hostAppliedTicks": 42,
+     "latencyMs": 93,
+     "moved": {
+      "screen0": -126,
+      "screen1": -125.4,
+      "screen2": -125.2
+     }
+    }
+   ],
+   "screens": [
+    {
+     "host": true,
+     "runBefore": "mv3wdkpk-ykxwp",
+     "runAfter": "mv3wdkpk-ykxwp",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wdkpk-ykxwp",
+     "runAfter": "mv3wdkpk-ykxwp",
+     "status": "play"
+    },
+    {
+     "host": false,
+     "runBefore": "mv3wdkpk-ykxwp",
+     "runAfter": "mv3wdkpk-ykxwp",
+     "status": "play"
+    }
+   ],
+   "hostTickRate": 60,
+   "snapshotCadence": [
+    null,
+    {
+     "updates": 12,
+     "medianGapMs": 119,
+     "maxGapMs": 261
+    },
+    {
+     "updates": 12,
+     "medianGapMs": 118,
+     "maxGapMs": 260
+    }
+   ],
+   "host": {
+    "publishCalls": 18,
+    "errors": 0,
+    "errorKinds": []
+   }
+  }
+ },
+ "failures": [],
+ "errors": [],
+ "browserErrors": [],
+ "passed": true,
+ "code": "1NH9GP",
+ "visibility": [
+  {
+   "visible": "visible",
+   "focus": true
+  },
+  {
+   "visible": "visible",
+   "focus": true
+  },
+  {
+   "visible": "visible",
+   "focus": true
+  }
+ ],
+ "protocol": "source-park-v3"
+}
