@@ -1,7 +1,7 @@
 {
- "timestamp": "2026-10-11T14:06:46.818Z",
+ "timestamp": "2026-10-11T14:13:09.404Z",
  "players": 3,
- "page": "local play/",
+ "page": "https://bogeun35.github.io/chamchicode/park/source-play/index.html?v=20261011-10",
  "backend": "Actual Firebase RTDB",
  "scenarios": {
   "host only": {
@@ -60,20 +60,20 @@
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     }
    ],
@@ -81,14 +81,14 @@
    "snapshotCadence": [
     null,
     {
-     "updates": 24,
-     "medianGapMs": 90,
-     "maxGapMs": 110
+     "updates": 21,
+     "medianGapMs": 96,
+     "maxGapMs": 173
     },
     {
-     "updates": 24,
-     "medianGapMs": 91,
-     "maxGapMs": 110
+     "updates": 21,
+     "medianGapMs": 94,
+     "maxGapMs": 170
     }
    ],
    "host": {
@@ -139,34 +139,34 @@
      "client": 2,
      "host": false,
      "pressed": "ArrowRight 1200ms",
-     "sentPresses": 10,
+     "sentPresses": 9,
      "expectedTicks": 72,
-     "hostAppliedTicks": 73,
-     "latencyMs": 83,
+     "hostAppliedTicks": 71,
+     "latencyMs": 99,
      "moved": {
-      "screen0": 219,
-      "screen1": 219,
-      "screen2": 219
+      "screen0": 213,
+      "screen1": 213,
+      "screen2": 213
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     }
    ],
@@ -174,18 +174,18 @@
    "snapshotCadence": [
     null,
     {
-     "updates": 23,
-     "medianGapMs": 91,
-     "maxGapMs": 159
+     "updates": 22,
+     "medianGapMs": 96,
+     "maxGapMs": 136
     },
     {
      "updates": 22,
-     "medianGapMs": 90,
-     "maxGapMs": 152
+     "medianGapMs": 95,
+     "maxGapMs": 132
     }
    ],
    "host": {
-    "publishCalls": 23,
+    "publishCalls": 24,
     "errors": 0,
     "errorKinds": []
    }
@@ -212,7 +212,7 @@
      "pressed": "ArrowLeft 1500ms",
      "sentPresses": 0,
      "expectedTicks": 90,
-     "hostAppliedTicks": 90,
+     "hostAppliedTicks": 91,
      "latencyMs": 0,
      "moved": {
       "screen0": -54,
@@ -241,31 +241,31 @@
      "sentPresses": 12,
      "expectedTicks": 90,
      "hostAppliedTicks": 90,
-     "latencyMs": 84,
+     "latencyMs": 100,
      "moved": {
-      "screen0": -237,
-      "screen1": -237,
-      "screen2": -237
+      "screen0": -231,
+      "screen1": -231,
+      "screen2": -231
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     }
    ],
@@ -273,18 +273,18 @@
    "snapshotCadence": [
     null,
     {
-     "updates": 22,
-     "medianGapMs": 90,
-     "maxGapMs": 403
+     "updates": 26,
+     "medianGapMs": 95,
+     "maxGapMs": 150
     },
     {
-     "updates": 22,
-     "medianGapMs": 93,
-     "maxGapMs": 397
+     "updates": 26,
+     "medianGapMs": 95,
+     "maxGapMs": 137
     }
    ],
    "host": {
-    "publishCalls": 26,
+    "publishCalls": 27,
     "errors": 0,
     "errorKinds": []
    }
@@ -317,12 +317,12 @@
      "pressed": "ArrowRight 1500ms",
      "sentPresses": 0,
      "expectedTicks": 90,
-     "hostAppliedTicks": 90,
+     "hostAppliedTicks": 91,
      "latencyMs": 0,
      "moved": {
-      "screen0": 270,
-      "screen1": 270,
-      "screen2": 270
+      "screen0": 273,
+      "screen1": 273,
+      "screen2": 273
      }
     },
     {
@@ -332,11 +332,11 @@
      "sentPresses": 12,
      "expectedTicks": 90,
      "hostAppliedTicks": 90,
-     "latencyMs": 83,
+     "latencyMs": 101,
      "moved": {
-      "screen0": 267,
-      "screen1": 267,
-      "screen2": 267
+      "screen0": 270,
+      "screen1": 270,
+      "screen2": 270
      }
     },
     {
@@ -345,32 +345,32 @@
      "pressed": "ArrowRight 1500ms",
      "sentPresses": 12,
      "expectedTicks": 90,
-     "hostAppliedTicks": 90,
+     "hostAppliedTicks": 91,
      "latencyMs": 83,
      "moved": {
-      "screen0": 270,
-      "screen1": 270,
-      "screen2": 270
+      "screen0": 273,
+      "screen1": 273,
+      "screen2": 273
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     }
    ],
@@ -378,18 +378,18 @@
    "snapshotCadence": [
     null,
     {
-     "updates": 25,
-     "medianGapMs": 92,
-     "maxGapMs": 174
+     "updates": 24,
+     "medianGapMs": 97,
+     "maxGapMs": 167
     },
     {
      "updates": 24,
-     "medianGapMs": 94,
+     "medianGapMs": 95,
      "maxGapMs": 170
     }
    ],
    "host": {
-    "publishCalls": 27,
+    "publishCalls": 26,
     "errors": 0,
     "errorKinds": []
    }
@@ -416,7 +416,7 @@
      "pressed": "ArrowRight 800ms",
      "sentPresses": 0,
      "expectedTicks": 48,
-     "hostAppliedTicks": 48,
+     "hostAppliedTicks": 49,
      "latencyMs": 0,
      "moved": {
       "screen0": 51,
@@ -444,32 +444,32 @@
      "pressed": "ArrowRight 2000ms",
      "sentPresses": 15,
      "expectedTicks": 120,
-     "hostAppliedTicks": 120,
-     "latencyMs": 92,
+     "hostAppliedTicks": 117,
+     "latencyMs": 151,
      "moved": {
-      "screen0": 360,
-      "screen1": 360,
-      "screen2": 360
+      "screen0": 351,
+      "screen1": 351,
+      "screen2": 351
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     }
    ],
@@ -477,18 +477,18 @@
    "snapshotCadence": [
     null,
     {
-     "updates": 31,
-     "medianGapMs": 90,
-     "maxGapMs": 181
+     "updates": 29,
+     "medianGapMs": 95,
+     "maxGapMs": 172
     },
     {
-     "updates": 31,
-     "medianGapMs": 88,
-     "maxGapMs": 186
+     "updates": 29,
+     "medianGapMs": 95,
+     "maxGapMs": 170
     }
    ],
    "host": {
-    "publishCalls": 32,
+    "publishCalls": 31,
     "errors": 0,
     "errorKinds": []
    }
@@ -515,12 +515,12 @@
      "pressed": "ArrowLeft 2000ms",
      "sentPresses": 0,
      "expectedTicks": 120,
-     "hostAppliedTicks": 120,
+     "hostAppliedTicks": 121,
      "latencyMs": 0,
      "moved": {
-      "screen0": -321,
-      "screen1": -321,
-      "screen2": -321
+      "screen0": -324,
+      "screen1": -324,
+      "screen2": -324
      }
     },
     {
@@ -543,32 +543,32 @@
      "pressed": "KeyA 800ms",
      "sentPresses": 7,
      "expectedTicks": 48,
-     "hostAppliedTicks": 49,
-     "latencyMs": 83,
+     "hostAppliedTicks": 53,
+     "latencyMs": 85,
      "moved": {
-      "screen0": -147,
-      "screen1": -147,
-      "screen2": -147
+      "screen0": -159,
+      "screen1": -159,
+      "screen2": -159
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     }
    ],
@@ -576,18 +576,18 @@
    "snapshotCadence": [
     null,
     {
-     "updates": 31,
-     "medianGapMs": 94,
-     "maxGapMs": 146
+     "updates": 30,
+     "medianGapMs": 97,
+     "maxGapMs": 151
     },
     {
-     "updates": 31,
-     "medianGapMs": 93,
+     "updates": 30,
+     "medianGapMs": 98,
      "maxGapMs": 150
     }
    ],
    "host": {
-    "publishCalls": 31,
+    "publishCalls": 33,
     "errors": 0,
     "errorKinds": []
    }
@@ -638,12 +638,12 @@
      "pressed": "ArrowRight 180ms, ArrowRight 180ms, ArrowRight 180ms",
      "sentPresses": 0,
      "expectedTicks": 33,
-     "hostAppliedTicks": 33,
+     "hostAppliedTicks": 35,
      "latencyMs": 0,
      "moved": {
-      "screen0": 99,
-      "screen1": 99,
-      "screen2": 99
+      "screen0": 105,
+      "screen1": 105,
+      "screen2": 105
      }
     },
     {
@@ -666,32 +666,32 @@
      "pressed": "ArrowLeft 180ms, ArrowLeft 180ms, ArrowLeft 180ms",
      "sentPresses": 6,
      "expectedTicks": 33,
-     "hostAppliedTicks": 40,
+     "hostAppliedTicks": 37,
      "latencyMs": 83,
      "moved": {
-      "screen0": -120,
-      "screen1": -120,
-      "screen2": -120
+      "screen0": -111,
+      "screen1": -111,
+      "screen2": -111
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wcxxb-f0qhz",
-     "runAfter": "mv3wcxxb-f0qhz",
+     "runBefore": "mv3wl5wi-wuztg",
+     "runAfter": "mv3wl5wi-wuztg",
      "status": "play"
     }
    ],
@@ -699,31 +699,31 @@
    "snapshotCadence": [
     null,
     {
-     "updates": 22,
-     "medianGapMs": 92,
-     "maxGapMs": 171
+     "updates": 19,
+     "medianGapMs": 96,
+     "maxGapMs": 175
     },
     {
-     "updates": 22,
-     "medianGapMs": 93,
-     "maxGapMs": 168
+     "updates": 19,
+     "medianGapMs": 95,
+     "maxGapMs": 164
     }
    ],
    "host": {
-    "publishCalls": 22,
+    "publishCalls": 24,
     "errors": 0,
     "errorKinds": []
    }
   },
   "peer jump tap": {
-   "jumpTicks": 5
+   "jumpTicks": 9
   },
   "restart: host R": {
    "client": 0,
    "how": "key",
-   "ms": 226,
+   "ms": 167,
    "runs": [
-    "mv3wdeoz-m0dsk"
+    "mv3wlmni-so46e"
    ],
    "restarted": true,
    "phantomJumpTicks": {}
@@ -731,9 +731,9 @@
   "restart: peer R": {
    "client": 2,
    "how": "key",
-   "ms": 268,
+   "ms": 318,
    "runs": [
-    "mv3wdfpr-1jwub"
+    "mv3wlnnh-ax8fp"
    ],
    "restarted": true,
    "phantomJumpTicks": {}
@@ -741,9 +741,9 @@
   "restart: peer [다시] button": {
    "client": 2,
    "how": "#retry",
-   "ms": 344,
+   "ms": 386,
    "runs": [
-    "mv3wdgqb-z4kwp"
+    "mv3wloqe-l8ipg"
    ],
    "restarted": true,
    "phantomJumpTicks": {}
@@ -770,7 +770,7 @@
      "pressed": "ArrowRight 1200ms",
      "sentPresses": 0,
      "expectedTicks": 72,
-     "hostAppliedTicks": 73,
+     "hostAppliedTicks": 72,
      "latencyMs": 0,
      "moved": {
       "screen0": 18,
@@ -796,10 +796,10 @@
      "client": 2,
      "host": false,
      "pressed": "ArrowRight 1200ms",
-     "sentPresses": 10,
+     "sentPresses": 9,
      "expectedTicks": 72,
      "hostAppliedTicks": 73,
-     "latencyMs": 84,
+     "latencyMs": 81,
      "moved": {
       "screen0": 219,
       "screen1": 219,
@@ -810,20 +810,20 @@
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3wdgqb-z4kwp",
-     "runAfter": "mv3wdgqb-z4kwp",
+     "runBefore": "mv3wloqe-l8ipg",
+     "runAfter": "mv3wloqe-l8ipg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wdgqb-z4kwp",
-     "runAfter": "mv3wdgqb-z4kwp",
+     "runBefore": "mv3wloqe-l8ipg",
+     "runAfter": "mv3wloqe-l8ipg",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wdgqb-z4kwp",
-     "runAfter": "mv3wdgqb-z4kwp",
+     "runBefore": "mv3wloqe-l8ipg",
+     "runAfter": "mv3wloqe-l8ipg",
      "status": "play"
     }
    ],
@@ -831,30 +831,30 @@
    "snapshotCadence": [
     null,
     {
-     "updates": 23,
+     "updates": 20,
      "medianGapMs": 95,
-     "maxGapMs": 142
+     "maxGapMs": 161
     },
     {
-     "updates": 23,
-     "medianGapMs": 95,
-     "maxGapMs": 137
+     "updates": 20,
+     "medianGapMs": 98,
+     "maxGapMs": 163
     }
    ],
    "host": {
-    "publishCalls": 23,
+    "publishCalls": 22,
     "errors": 0,
     "errorKinds": []
    }
   },
   "loss: peer cover button": {
    "coverEnabled": true,
-   "restartMs": 357
+   "restartMs": 419
   },
   "next round: key held through the start": {
    "stage": "st_w_01_02",
-   "heldTicks": 62,
-   "firstEffectMs": 219
+   "heldTicks": 65,
+   "firstEffectMs": 180
   },
   "together in the next round": {
    "plan": [
@@ -906,32 +906,32 @@
      "pressed": "ArrowLeft 700ms",
      "sentPresses": 6,
      "expectedTicks": 42,
-     "hostAppliedTicks": 42,
-     "latencyMs": 93,
+     "hostAppliedTicks": 43,
+     "latencyMs": 89,
      "moved": {
-      "screen0": -126,
-      "screen1": -125.4,
-      "screen2": -125.2
+      "screen0": -129,
+      "screen1": -128.3,
+      "screen2": -128.5
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3wdkpk-ykxwp",
-     "runAfter": "mv3wdkpk-ykxwp",
+     "runBefore": "mv3wlsyx-z4vex",
+     "runAfter": "mv3wlsyx-z4vex",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wdkpk-ykxwp",
-     "runAfter": "mv3wdkpk-ykxwp",
+     "runBefore": "mv3wlsyx-z4vex",
+     "runAfter": "mv3wlsyx-z4vex",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wdkpk-ykxwp",
-     "runAfter": "mv3wdkpk-ykxwp",
+     "runBefore": "mv3wlsyx-z4vex",
+     "runAfter": "mv3wlsyx-z4vex",
      "status": "play"
     }
    ],
@@ -939,14 +939,14 @@
    "snapshotCadence": [
     null,
     {
-     "updates": 12,
-     "medianGapMs": 119,
-     "maxGapMs": 261
+     "updates": 13,
+     "medianGapMs": 124,
+     "maxGapMs": 182
     },
     {
-     "updates": 12,
-     "medianGapMs": 118,
-     "maxGapMs": 260
+     "updates": 13,
+     "medianGapMs": 124,
+     "maxGapMs": 185
     }
    ],
    "host": {
@@ -960,7 +960,7 @@
  "errors": [],
  "browserErrors": [],
  "passed": true,
- "code": "1NH9GP",
+ "code": "UY38N8",
  "visibility": [
   {
    "visible": "visible",

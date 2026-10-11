@@ -1,7 +1,7 @@
 {
- "timestamp": "2026-10-11T14:04:10.346Z",
+ "timestamp": "2026-10-11T14:12:31.769Z",
  "players": 2,
- "page": "local play/",
+ "page": "https://bogeun35.github.io/chamchicode/park/source-play/index.html?v=20261011-10",
  "backend": "Actual Firebase RTDB",
  "scenarios": {
   "host only": {
@@ -44,14 +44,14 @@
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3w9jrn-hjngx",
-     "runAfter": "mv3w9jrn-hjngx",
+     "runBefore": "mv3wkc4d-fhlrv",
+     "runAfter": "mv3wkc4d-fhlrv",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3w9jrn-hjngx",
-     "runAfter": "mv3w9jrn-hjngx",
+     "runBefore": "mv3wkc4d-fhlrv",
+     "runAfter": "mv3wkc4d-fhlrv",
      "status": "play"
     }
    ],
@@ -60,8 +60,8 @@
     null,
     {
      "updates": 22,
-     "medianGapMs": 94,
-     "maxGapMs": 112
+     "medianGapMs": 88,
+     "maxGapMs": 305
     }
    ],
    "host": {
@@ -99,25 +99,25 @@
      "pressed": "ArrowRight 1200ms",
      "sentPresses": 10,
      "expectedTicks": 72,
-     "hostAppliedTicks": 77,
+     "hostAppliedTicks": 73,
      "latencyMs": 84,
      "moved": {
-      "screen0": 231,
-      "screen1": 231
+      "screen0": 219,
+      "screen1": 219
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3w9jrn-hjngx",
-     "runAfter": "mv3w9jrn-hjngx",
+     "runBefore": "mv3wkc4d-fhlrv",
+     "runAfter": "mv3wkc4d-fhlrv",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3w9jrn-hjngx",
-     "runAfter": "mv3w9jrn-hjngx",
+     "runBefore": "mv3wkc4d-fhlrv",
+     "runAfter": "mv3wkc4d-fhlrv",
      "status": "play"
     }
    ],
@@ -125,9 +125,9 @@
    "snapshotCadence": [
     null,
     {
-     "updates": 21,
-     "medianGapMs": 95,
-     "maxGapMs": 183
+     "updates": 22,
+     "medianGapMs": 91,
+     "maxGapMs": 230
     }
    ],
    "host": {
@@ -158,7 +158,7 @@
      "pressed": "ArrowLeft 1500ms",
      "sentPresses": 0,
      "expectedTicks": 90,
-     "hostAppliedTicks": 90,
+     "hostAppliedTicks": 91,
      "latencyMs": 0,
      "moved": {
       "screen0": -54,
@@ -171,25 +171,25 @@
      "pressed": "ArrowLeft 1500ms",
      "sentPresses": 12,
      "expectedTicks": 90,
-     "hostAppliedTicks": 90,
-     "latencyMs": 83,
+     "hostAppliedTicks": 91,
+     "latencyMs": 84,
      "moved": {
-      "screen0": -270,
-      "screen1": -270
+      "screen0": -273,
+      "screen1": -273
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3w9jrn-hjngx",
-     "runAfter": "mv3w9jrn-hjngx",
+     "runBefore": "mv3wkc4d-fhlrv",
+     "runAfter": "mv3wkc4d-fhlrv",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3w9jrn-hjngx",
-     "runAfter": "mv3w9jrn-hjngx",
+     "runBefore": "mv3wkc4d-fhlrv",
+     "runAfter": "mv3wkc4d-fhlrv",
      "status": "play"
     }
    ],
@@ -197,13 +197,13 @@
    "snapshotCadence": [
     null,
     {
-     "updates": 25,
-     "medianGapMs": 91,
-     "maxGapMs": 150
+     "updates": 26,
+     "medianGapMs": 87,
+     "maxGapMs": 179
     }
    ],
    "host": {
-    "publishCalls": 27,
+    "publishCalls": 26,
     "errors": 0,
     "errorKinds": []
    }
@@ -230,38 +230,38 @@
      "pressed": "ArrowRight 800ms",
      "sentPresses": 0,
      "expectedTicks": 48,
-     "hostAppliedTicks": 49,
+     "hostAppliedTicks": 50,
      "latencyMs": 0,
      "moved": {
-      "screen0": 147,
-      "screen1": 147
+      "screen0": 150,
+      "screen1": 150
      }
     },
     {
      "client": 1,
      "host": false,
      "pressed": "ArrowRight 2000ms",
-     "sentPresses": 15,
+     "sentPresses": 16,
      "expectedTicks": 120,
-     "hostAppliedTicks": 120,
+     "hostAppliedTicks": 126,
      "latencyMs": 83,
      "moved": {
-      "screen0": 360,
-      "screen1": 360
+      "screen0": 378,
+      "screen1": 378
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3w9jrn-hjngx",
-     "runAfter": "mv3w9jrn-hjngx",
+     "runBefore": "mv3wkc4d-fhlrv",
+     "runAfter": "mv3wkc4d-fhlrv",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3w9jrn-hjngx",
-     "runAfter": "mv3w9jrn-hjngx",
+     "runBefore": "mv3wkc4d-fhlrv",
+     "runAfter": "mv3wkc4d-fhlrv",
      "status": "play"
     }
    ],
@@ -269,13 +269,13 @@
    "snapshotCadence": [
     null,
     {
-     "updates": 30,
-     "medianGapMs": 93,
-     "maxGapMs": 142
+     "updates": 32,
+     "medianGapMs": 91,
+     "maxGapMs": 146
     }
    ],
    "host": {
-    "publishCalls": 33,
+    "publishCalls": 32,
     "errors": 0,
     "errorKinds": []
    }
@@ -302,11 +302,11 @@
      "pressed": "ArrowLeft 2000ms",
      "sentPresses": 0,
      "expectedTicks": 120,
-     "hostAppliedTicks": 121,
+     "hostAppliedTicks": 120,
      "latencyMs": 0,
      "moved": {
-      "screen0": -147,
-      "screen1": -147
+      "screen0": -150,
+      "screen1": -150
      }
     },
     {
@@ -316,7 +316,7 @@
      "sentPresses": 7,
      "expectedTicks": 48,
      "hostAppliedTicks": 49,
-     "latencyMs": 98,
+     "latencyMs": 83,
      "moved": {
       "screen0": -147,
       "screen1": -147
@@ -326,14 +326,14 @@
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3w9jrn-hjngx",
-     "runAfter": "mv3w9jrn-hjngx",
+     "runBefore": "mv3wkc4d-fhlrv",
+     "runAfter": "mv3wkc4d-fhlrv",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3w9jrn-hjngx",
-     "runAfter": "mv3w9jrn-hjngx",
+     "runBefore": "mv3wkc4d-fhlrv",
+     "runAfter": "mv3wkc4d-fhlrv",
      "status": "play"
     }
    ],
@@ -341,9 +341,9 @@
    "snapshotCadence": [
     null,
     {
-     "updates": 30,
-     "medianGapMs": 91,
-     "maxGapMs": 186
+     "updates": 32,
+     "medianGapMs": 85,
+     "maxGapMs": 163
     }
    ],
    "host": {
@@ -398,11 +398,11 @@
      "pressed": "ArrowRight 180ms, ArrowRight 180ms, ArrowRight 180ms",
      "sentPresses": 0,
      "expectedTicks": 33,
-     "hostAppliedTicks": 35,
+     "hostAppliedTicks": 36,
      "latencyMs": 0,
      "moved": {
-      "screen0": 105,
-      "screen1": 105
+      "screen0": 108,
+      "screen1": 108
      }
     },
     {
@@ -411,25 +411,25 @@
      "pressed": "ArrowLeft 180ms, ArrowLeft 180ms, ArrowLeft 180ms",
      "sentPresses": 6,
      "expectedTicks": 33,
-     "hostAppliedTicks": 33,
-     "latencyMs": 83,
+     "hostAppliedTicks": 35,
+     "latencyMs": 118,
      "moved": {
-      "screen0": -99,
-      "screen1": -99
+      "screen0": -105,
+      "screen1": -105
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3w9jrn-hjngx",
-     "runAfter": "mv3w9jrn-hjngx",
+     "runBefore": "mv3wkc4d-fhlrv",
+     "runAfter": "mv3wkc4d-fhlrv",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3w9jrn-hjngx",
-     "runAfter": "mv3w9jrn-hjngx",
+     "runBefore": "mv3wkc4d-fhlrv",
+     "runAfter": "mv3wkc4d-fhlrv",
      "status": "play"
     }
    ],
@@ -437,9 +437,9 @@
    "snapshotCadence": [
     null,
     {
-     "updates": 22,
-     "medianGapMs": 94,
-     "maxGapMs": 137
+     "updates": 23,
+     "medianGapMs": 87,
+     "maxGapMs": 177
     }
    ],
    "host": {
@@ -449,14 +449,14 @@
    }
   },
   "peer jump tap": {
-   "jumpTicks": 8
+   "jumpTicks": 12
   },
   "restart: host R": {
    "client": 0,
    "how": "key",
-   "ms": 174,
+   "ms": 170,
    "runs": [
-    "mv3w9y97-5n6qv"
+    "mv3wkqm4-98dih"
    ],
    "restarted": true,
    "phantomJumpTicks": {}
@@ -464,9 +464,9 @@
   "restart: peer R": {
    "client": 1,
    "how": "key",
-   "ms": 276,
+   "ms": 268,
    "runs": [
-    "mv3w9z96-0tfza"
+    "mv3wkrlf-nj2j8"
    ],
    "restarted": true,
    "phantomJumpTicks": {}
@@ -474,9 +474,9 @@
   "restart: peer [다시] button": {
    "client": 1,
    "how": "#retry",
-   "ms": 258,
+   "ms": 293,
    "runs": [
-    "mv3wa0a8-ivshu"
+    "mv3wksmg-5il3l"
    ],
    "restarted": true,
    "phantomJumpTicks": {}
@@ -527,14 +527,14 @@
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3wa0a8-ivshu",
-     "runAfter": "mv3wa0a8-ivshu",
+     "runBefore": "mv3wksmg-5il3l",
+     "runAfter": "mv3wksmg-5il3l",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wa0a8-ivshu",
-     "runAfter": "mv3wa0a8-ivshu",
+     "runBefore": "mv3wksmg-5il3l",
+     "runAfter": "mv3wksmg-5il3l",
      "status": "play"
     }
    ],
@@ -542,25 +542,25 @@
    "snapshotCadence": [
     null,
     {
-     "updates": 22,
-     "medianGapMs": 90,
-     "maxGapMs": 331
+     "updates": 24,
+     "medianGapMs": 85,
+     "maxGapMs": 144
     }
    ],
    "host": {
-    "publishCalls": 23,
+    "publishCalls": 24,
     "errors": 0,
     "errorKinds": []
    }
   },
   "loss: peer cover button": {
    "coverEnabled": true,
-   "restartMs": 295
+   "restartMs": 290
   },
   "next round: key held through the start": {
    "stage": "st_w_01_02",
    "heldTicks": 63,
-   "firstEffectMs": 232
+   "firstEffectMs": 212
   },
   "together in the next round": {
    "plan": [
@@ -584,7 +584,7 @@
      "pressed": "ArrowLeft 700ms",
      "sentPresses": 0,
      "expectedTicks": 42,
-     "hostAppliedTicks": 43,
+     "hostAppliedTicks": 42,
      "latencyMs": 0,
      "moved": {
       "screen0": -18,
@@ -597,25 +597,25 @@
      "pressed": "ArrowLeft 700ms",
      "sentPresses": 6,
      "expectedTicks": 42,
-     "hostAppliedTicks": 37,
-     "latencyMs": 184,
+     "hostAppliedTicks": 40,
+     "latencyMs": 140,
      "moved": {
-      "screen0": -111,
-      "screen1": -110.6
+      "screen0": -120,
+      "screen1": -119.7
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3wa423-fj6gu",
-     "runAfter": "mv3wa423-fj6gu",
+     "runBefore": "mv3wkwjf-uuur0",
+     "runAfter": "mv3wkwjf-uuur0",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3wa423-fj6gu",
-     "runAfter": "mv3wa423-fj6gu",
+     "runBefore": "mv3wkwjf-uuur0",
+     "runAfter": "mv3wkwjf-uuur0",
      "status": "play"
     }
    ],
@@ -624,12 +624,12 @@
     null,
     {
      "updates": 13,
-     "medianGapMs": 119,
-     "maxGapMs": 200
+     "medianGapMs": 125,
+     "maxGapMs": 185
     }
    ],
    "host": {
-    "publishCalls": 18,
+    "publishCalls": 17,
     "errors": 0,
     "errorKinds": []
    }
@@ -639,7 +639,7 @@
  "errors": [],
  "browserErrors": [],
  "passed": true,
- "code": "QYZRIZ",
+ "code": "8ZOHMC",
  "visibility": [
   {
    "visible": "visible",

@@ -1,7 +1,7 @@
 {
- "timestamp": "2026-10-11T14:07:28.048Z",
+ "timestamp": "2026-10-11T14:14:00.498Z",
  "players": 8,
- "page": "local play/",
+ "page": "https://bogeun35.github.io/chamchicode/park/source-play/index.html?v=20261011-10",
  "backend": "Actual Firebase RTDB",
  "scenarios": {
   "host only": {
@@ -20,7 +20,7 @@
      "pressed": "ArrowRight 1200ms",
      "sentPresses": 0,
      "expectedTicks": 65,
-     "hostAppliedTicks": 66,
+     "hostAppliedTicks": 65,
      "latencyMs": 0,
      "moved": {
       "screen0": 18,
@@ -170,90 +170,90 @@
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     }
    ],
-   "hostTickRate": 54.2,
+   "hostTickRate": 54.4,
    "snapshotCadence": [
     null,
     {
+     "updates": 18,
+     "medianGapMs": 109,
+     "maxGapMs": 147
+    },
+    {
      "updates": 19,
-     "medianGapMs": 113,
-     "maxGapMs": 133
+     "medianGapMs": 110,
+     "maxGapMs": 143
+    },
+    {
+     "updates": 19,
+     "medianGapMs": 108,
+     "maxGapMs": 339
     },
     {
      "updates": 19,
      "medianGapMs": 112,
-     "maxGapMs": 136
+     "maxGapMs": 146
+    },
+    {
+     "updates": 19,
+     "medianGapMs": 111,
+     "maxGapMs": 129
     },
     {
      "updates": 19,
      "medianGapMs": 114,
+     "maxGapMs": 151
+    },
+    {
+     "updates": 18,
+     "medianGapMs": 112,
      "maxGapMs": 140
-    },
-    {
-     "updates": 19,
-     "medianGapMs": 113,
-     "maxGapMs": 142
-    },
-    {
-     "updates": 19,
-     "medianGapMs": 113,
-     "maxGapMs": 140
-    },
-    {
-     "updates": 19,
-     "medianGapMs": 115,
-     "maxGapMs": 136
-    },
-    {
-     "updates": 19,
-     "medianGapMs": 115,
-     "maxGapMs": 136
     }
    ],
    "host": {
@@ -410,108 +410,108 @@
      "host": false,
      "pressed": "ArrowRight 1200ms",
      "sentPresses": 8,
-     "expectedTicks": 65,
-     "hostAppliedTicks": 63,
-     "latencyMs": 138,
+     "expectedTicks": 64,
+     "hostAppliedTicks": 60,
+     "latencyMs": 132,
      "moved": {
-      "screen0": 189,
-      "screen1": 189,
-      "screen2": 189,
-      "screen3": 189,
-      "screen4": 189,
-      "screen5": 189,
-      "screen6": 189,
-      "screen7": 189
+      "screen0": 180,
+      "screen1": 180,
+      "screen2": 180,
+      "screen3": 180,
+      "screen4": 180,
+      "screen5": 180,
+      "screen6": 180,
+      "screen7": 180
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     }
    ],
-   "hostTickRate": 54,
+   "hostTickRate": 53,
    "snapshotCadence": [
     null,
     {
-     "updates": 19,
-     "medianGapMs": 108,
-     "maxGapMs": 192
-    },
-    {
-     "updates": 19,
-     "medianGapMs": 108,
-     "maxGapMs": 191
-    },
-    {
-     "updates": 19,
-     "medianGapMs": 109,
-     "maxGapMs": 196
-    },
-    {
      "updates": 18,
      "medianGapMs": 111,
-     "maxGapMs": 201
+     "maxGapMs": 136
     },
     {
      "updates": 19,
-     "medianGapMs": 111,
-     "maxGapMs": 200
+     "medianGapMs": 116,
+     "maxGapMs": 142
     },
     {
      "updates": 19,
-     "medianGapMs": 109,
-     "maxGapMs": 196
+     "medianGapMs": 113,
+     "maxGapMs": 142
+    },
+    {
+     "updates": 19,
+     "medianGapMs": 115,
+     "maxGapMs": 140
+    },
+    {
+     "updates": 19,
+     "medianGapMs": 115,
+     "maxGapMs": 145
+    },
+    {
+     "updates": 19,
+     "medianGapMs": 113,
+     "maxGapMs": 142
     },
     {
      "updates": 19,
      "medianGapMs": 112,
-     "maxGapMs": 186
+     "maxGapMs": 177
     }
    ],
    "host": {
@@ -541,7 +541,7 @@
      "host": true,
      "pressed": "ArrowLeft 1500ms",
      "sentPresses": 0,
-     "expectedTicks": 82,
+     "expectedTicks": 80,
      "hostAppliedTicks": 81,
      "latencyMs": 0,
      "moved": {
@@ -673,113 +673,113 @@
      "client": 7,
      "host": false,
      "pressed": "ArrowLeft 1500ms",
-     "sentPresses": 10,
-     "expectedTicks": 82,
-     "hostAppliedTicks": 81,
-     "latencyMs": 133,
+     "sentPresses": 9,
+     "expectedTicks": 80,
+     "hostAppliedTicks": 78,
+     "latencyMs": 179,
      "moved": {
-      "screen0": -207,
-      "screen1": -207,
-      "screen2": -207,
-      "screen3": -207,
-      "screen4": -207,
-      "screen5": -207,
-      "screen6": -207,
-      "screen7": -207
+      "screen0": -198,
+      "screen1": -198,
+      "screen2": -198,
+      "screen3": -198,
+      "screen4": -198,
+      "screen5": -198,
+      "screen6": -198,
+      "screen7": -198
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     }
    ],
-   "hostTickRate": 54.5,
+   "hostTickRate": 53.3,
    "snapshotCadence": [
     null,
     {
-     "updates": 21,
-     "medianGapMs": 109,
-     "maxGapMs": 167
+     "updates": 20,
+     "medianGapMs": 115,
+     "maxGapMs": 207
     },
     {
-     "updates": 21,
-     "medianGapMs": 106,
-     "maxGapMs": 170
+     "updates": 20,
+     "medianGapMs": 113,
+     "maxGapMs": 162
     },
     {
-     "updates": 21,
-     "medianGapMs": 110,
-     "maxGapMs": 171
+     "updates": 20,
+     "medianGapMs": 113,
+     "maxGapMs": 194
     },
     {
-     "updates": 21,
-     "medianGapMs": 111,
-     "maxGapMs": 170
+     "updates": 20,
+     "medianGapMs": 115,
+     "maxGapMs": 208
     },
     {
-     "updates": 21,
-     "medianGapMs": 110,
-     "maxGapMs": 165
+     "updates": 20,
+     "medianGapMs": 114,
+     "maxGapMs": 210
     },
     {
-     "updates": 21,
-     "medianGapMs": 106,
-     "maxGapMs": 171
+     "updates": 20,
+     "medianGapMs": 116,
+     "maxGapMs": 210
     },
     {
-     "updates": 21,
-     "medianGapMs": 110,
-     "maxGapMs": 172
+     "updates": 20,
+     "medianGapMs": 114,
+     "maxGapMs": 174
     }
    ],
    "host": {
-    "publishCalls": 22,
+    "publishCalls": 21,
     "errors": 0,
     "errorKinds": []
    }
@@ -841,18 +841,18 @@
      "host": true,
      "pressed": "ArrowRight 1500ms",
      "sentPresses": 0,
-     "expectedTicks": 81,
-     "hostAppliedTicks": 81,
+     "expectedTicks": 82,
+     "hostAppliedTicks": 84,
      "latencyMs": 0,
      "moved": {
-      "screen0": 243,
-      "screen1": 243,
-      "screen2": 243,
-      "screen3": 243,
-      "screen4": 243,
-      "screen5": 243,
-      "screen6": 243,
-      "screen7": 243
+      "screen0": 252,
+      "screen1": 252,
+      "screen2": 252,
+      "screen3": 252,
+      "screen4": 252,
+      "screen5": 252,
+      "screen6": 252,
+      "screen7": 252
      }
     },
     {
@@ -860,9 +860,9 @@
      "host": false,
      "pressed": "KeyD 1500ms",
      "sentPresses": 10,
-     "expectedTicks": 81,
+     "expectedTicks": 82,
      "hostAppliedTicks": 81,
-     "latencyMs": 137,
+     "latencyMs": 114,
      "moved": {
       "screen0": 243,
       "screen1": 243,
@@ -878,19 +878,19 @@
      "client": 2,
      "host": false,
      "pressed": "ArrowRight 1500ms",
-     "sentPresses": 9,
-     "expectedTicks": 81,
-     "hostAppliedTicks": 81,
-     "latencyMs": 129,
+     "sentPresses": 10,
+     "expectedTicks": 82,
+     "hostAppliedTicks": 84,
+     "latencyMs": 101,
      "moved": {
-      "screen0": 243,
-      "screen1": 243,
-      "screen2": 243,
-      "screen3": 243,
-      "screen4": 243,
-      "screen5": 243,
-      "screen6": 243,
-      "screen7": 243
+      "screen0": 252,
+      "screen1": 252,
+      "screen2": 252,
+      "screen3": 252,
+      "screen4": 252,
+      "screen5": 252,
+      "screen6": 252,
+      "screen7": 252
      }
     },
     {
@@ -898,85 +898,47 @@
      "host": false,
      "pressed": "KeyD 1500ms",
      "sentPresses": 9,
-     "expectedTicks": 81,
-     "hostAppliedTicks": 75,
-     "latencyMs": 170,
+     "expectedTicks": 82,
+     "hostAppliedTicks": 78,
+     "latencyMs": 123,
      "moved": {
-      "screen0": 225,
-      "screen1": 225,
-      "screen2": 225,
-      "screen3": 225,
-      "screen4": 225,
-      "screen5": 225,
-      "screen6": 225,
-      "screen7": 225
+      "screen0": 234,
+      "screen1": 234,
+      "screen2": 234,
+      "screen3": 234,
+      "screen4": 234,
+      "screen5": 234,
+      "screen6": 234,
+      "screen7": 234
      }
     },
     {
      "client": 4,
      "host": false,
      "pressed": "ArrowRight 1500ms",
-     "sentPresses": 9,
-     "expectedTicks": 81,
-     "hostAppliedTicks": 75,
-     "latencyMs": 161,
+     "sentPresses": 10,
+     "expectedTicks": 82,
+     "hostAppliedTicks": 84,
+     "latencyMs": 95,
      "moved": {
-      "screen0": 225,
-      "screen1": 225,
-      "screen2": 225,
-      "screen3": 225,
-      "screen4": 225,
-      "screen5": 225,
-      "screen6": 225,
-      "screen7": 225
+      "screen0": 252,
+      "screen1": 252,
+      "screen2": 252,
+      "screen3": 252,
+      "screen4": 252,
+      "screen5": 252,
+      "screen6": 252,
+      "screen7": 252
      }
     },
     {
      "client": 5,
      "host": false,
      "pressed": "KeyD 1500ms",
-     "sentPresses": 9,
-     "expectedTicks": 81,
-     "hostAppliedTicks": 75,
-     "latencyMs": 152,
-     "moved": {
-      "screen0": 225,
-      "screen1": 225,
-      "screen2": 225,
-      "screen3": 225,
-      "screen4": 225,
-      "screen5": 225,
-      "screen6": 225,
-      "screen7": 225
-     }
-    },
-    {
-     "client": 6,
-     "host": false,
-     "pressed": "ArrowRight 1500ms",
-     "sentPresses": 9,
-     "expectedTicks": 81,
+     "sentPresses": 10,
+     "expectedTicks": 82,
      "hostAppliedTicks": 81,
-     "latencyMs": 152,
-     "moved": {
-      "screen0": 240,
-      "screen1": 240,
-      "screen2": 240,
-      "screen3": 240,
-      "screen4": 240,
-      "screen5": 240,
-      "screen6": 240,
-      "screen7": 240
-     }
-    },
-    {
-     "client": 7,
-     "host": false,
-     "pressed": "KeyD 1500ms",
-     "sentPresses": 9,
-     "expectedTicks": 81,
-     "hostAppliedTicks": 81,
-     "latencyMs": 145,
+     "latencyMs": 89,
      "moved": {
       "screen0": 243,
       "screen1": 243,
@@ -987,95 +949,133 @@
       "screen6": 243,
       "screen7": 243
      }
+    },
+    {
+     "client": 6,
+     "host": false,
+     "pressed": "ArrowRight 1500ms",
+     "sentPresses": 9,
+     "expectedTicks": 82,
+     "hostAppliedTicks": 78,
+     "latencyMs": 137,
+     "moved": {
+      "screen0": 231,
+      "screen1": 231,
+      "screen2": 231,
+      "screen3": 231,
+      "screen4": 231,
+      "screen5": 231,
+      "screen6": 231,
+      "screen7": 231
+     }
+    },
+    {
+     "client": 7,
+     "host": false,
+     "pressed": "KeyD 1500ms",
+     "sentPresses": 9,
+     "expectedTicks": 82,
+     "hostAppliedTicks": 78,
+     "latencyMs": 130,
+     "moved": {
+      "screen0": 234,
+      "screen1": 234,
+      "screen2": 234,
+      "screen3": 234,
+      "screen4": 234,
+      "screen5": 234,
+      "screen6": 234,
+      "screen7": 234
+     }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     }
    ],
-   "hostTickRate": 54,
+   "hostTickRate": 54.8,
    "snapshotCadence": [
     null,
     {
-     "updates": 20,
-     "medianGapMs": 111,
-     "maxGapMs": 216
-    },
-    {
-     "updates": 20,
-     "medianGapMs": 106,
-     "maxGapMs": 288
-    },
-    {
-     "updates": 20,
+     "updates": 19,
      "medianGapMs": 110,
-     "maxGapMs": 239
+     "maxGapMs": 221
     },
     {
-     "updates": 21,
+     "updates": 19,
+     "medianGapMs": 106,
+     "maxGapMs": 273
+    },
+    {
+     "updates": 19,
+     "medianGapMs": 110,
+     "maxGapMs": 221
+    },
+    {
+     "updates": 19,
+     "medianGapMs": 111,
+     "maxGapMs": 253
+    },
+    {
+     "updates": 19,
+     "medianGapMs": 110,
+     "maxGapMs": 403
+    },
+    {
+     "updates": 19,
      "medianGapMs": 115,
-     "maxGapMs": 288
+     "maxGapMs": 222
     },
     {
-     "updates": 20,
-     "medianGapMs": 105,
-     "maxGapMs": 323
-    },
-    {
-     "updates": 20,
-     "medianGapMs": 112,
-     "maxGapMs": 230
-    },
-    {
-     "updates": 20,
-     "medianGapMs": 113,
-     "maxGapMs": 215
+     "updates": 19,
+     "medianGapMs": 111,
+     "maxGapMs": 219
     }
    ],
    "host": {
@@ -1106,17 +1106,17 @@
      "pressed": "ArrowRight 800ms",
      "sentPresses": 0,
      "expectedTicks": 43,
-     "hostAppliedTicks": 45,
+     "hostAppliedTicks": 42,
      "latencyMs": 0,
      "moved": {
-      "screen0": 54,
-      "screen1": 54,
-      "screen2": 54,
-      "screen3": 54,
-      "screen4": 54,
-      "screen5": 54,
-      "screen6": 54,
-      "screen7": 54
+      "screen0": 45,
+      "screen1": 45,
+      "screen2": 45,
+      "screen3": 45,
+      "screen4": 45,
+      "screen5": 45,
+      "screen6": 45,
+      "screen7": 45
      }
     },
     {
@@ -1238,112 +1238,112 @@
      "host": false,
      "pressed": "ArrowRight 2000ms",
      "sentPresses": 12,
-     "expectedTicks": 107,
-     "hostAppliedTicks": 108,
-     "latencyMs": 82,
+     "expectedTicks": 108,
+     "hostAppliedTicks": 105,
+     "latencyMs": 124,
      "moved": {
-      "screen0": 102,
-      "screen1": 102,
-      "screen2": 102,
-      "screen3": 102,
-      "screen4": 102,
-      "screen5": 102,
-      "screen6": 102,
-      "screen7": 102
+      "screen0": 93,
+      "screen1": 93,
+      "screen2": 93,
+      "screen3": 93,
+      "screen4": 93,
+      "screen5": 93,
+      "screen6": 93,
+      "screen7": 93
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     }
    ],
-   "hostTickRate": 53.5,
+   "hostTickRate": 53.9,
    "snapshotCadence": [
     null,
     {
      "updates": 25,
+     "medianGapMs": 113,
+     "maxGapMs": 155
+    },
+    {
+     "updates": 26,
+     "medianGapMs": 111,
+     "maxGapMs": 162
+    },
+    {
+     "updates": 26,
+     "medianGapMs": 111,
+     "maxGapMs": 161
+    },
+    {
+     "updates": 26,
+     "medianGapMs": 111,
+     "maxGapMs": 157
+    },
+    {
+     "updates": 26,
      "medianGapMs": 109,
-     "maxGapMs": 186
+     "maxGapMs": 161
     },
     {
-     "updates": 24,
-     "medianGapMs": 108,
-     "maxGapMs": 307
-    },
-    {
-     "updates": 25,
+     "updates": 26,
      "medianGapMs": 111,
-     "maxGapMs": 186
+     "maxGapMs": 163
     },
     {
-     "updates": 25,
-     "medianGapMs": 110,
-     "maxGapMs": 185
-    },
-    {
-     "updates": 25,
+     "updates": 26,
      "medianGapMs": 111,
-     "maxGapMs": 188
-    },
-    {
-     "updates": 25,
-     "medianGapMs": 112,
-     "maxGapMs": 185
-    },
-    {
-     "updates": 25,
-     "medianGapMs": 116,
-     "maxGapMs": 186
+     "maxGapMs": 179
     }
    ],
    "host": {
-    "publishCalls": 25,
+    "publishCalls": 26,
     "errors": 0,
     "errorKinds": []
    }
@@ -1369,8 +1369,8 @@
      "host": true,
      "pressed": "ArrowLeft 2000ms",
      "sentPresses": 0,
-     "expectedTicks": 106,
-     "hostAppliedTicks": 105,
+     "expectedTicks": 104,
+     "hostAppliedTicks": 99,
      "latencyMs": 0,
      "moved": {
       "screen0": -297,
@@ -1501,113 +1501,113 @@
      "client": 7,
      "host": false,
      "pressed": "KeyA 800ms",
-     "sentPresses": 5,
-     "expectedTicks": 43,
+     "sentPresses": 6,
+     "expectedTicks": 41,
      "hostAppliedTicks": 42,
-     "latencyMs": 142,
+     "latencyMs": 148,
      "moved": {
-      "screen0": -105,
-      "screen1": -105,
-      "screen2": -105,
-      "screen3": -105,
-      "screen4": -105,
-      "screen5": -105,
-      "screen6": -105,
-      "screen7": -105
+      "screen0": -96,
+      "screen1": -96,
+      "screen2": -96,
+      "screen3": -96,
+      "screen4": -96,
+      "screen5": -96,
+      "screen6": -96,
+      "screen7": -96
      }
     }
    ],
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     }
    ],
-   "hostTickRate": 53.2,
+   "hostTickRate": 51.8,
    "snapshotCadence": [
     null,
     {
-     "updates": 22,
-     "medianGapMs": 113,
-     "maxGapMs": 329
+     "updates": 25,
+     "medianGapMs": 115,
+     "maxGapMs": 197
     },
     {
-     "updates": 22,
-     "medianGapMs": 112,
-     "maxGapMs": 337
-    },
-    {
-     "updates": 22,
-     "medianGapMs": 111,
-     "maxGapMs": 340
-    },
-    {
-     "updates": 22,
-     "medianGapMs": 114,
-     "maxGapMs": 335
-    },
-    {
-     "updates": 22,
-     "medianGapMs": 114,
-     "maxGapMs": 341
-    },
-    {
-     "updates": 22,
-     "medianGapMs": 114,
-     "maxGapMs": 330
-    },
-    {
-     "updates": 22,
+     "updates": 25,
      "medianGapMs": 116,
-     "maxGapMs": 285
+     "maxGapMs": 186
+    },
+    {
+     "updates": 25,
+     "medianGapMs": 115,
+     "maxGapMs": 180
+    },
+    {
+     "updates": 25,
+     "medianGapMs": 115,
+     "maxGapMs": 179
+    },
+    {
+     "updates": 25,
+     "medianGapMs": 114,
+     "maxGapMs": 183
+    },
+    {
+     "updates": 25,
+     "medianGapMs": 116,
+     "maxGapMs": 171
+    },
+    {
+     "updates": 25,
+     "medianGapMs": 116,
+     "maxGapMs": 209
     }
    ],
    "host": {
-    "publishCalls": 25,
+    "publishCalls": 26,
     "errors": 0,
     "errorKinds": []
    }
@@ -1658,17 +1658,17 @@
      "pressed": "ArrowRight 180ms, ArrowRight 180ms, ArrowRight 180ms",
      "sentPresses": 0,
      "expectedTicks": 30,
-     "hostAppliedTicks": 33,
+     "hostAppliedTicks": 30,
      "latencyMs": 0,
      "moved": {
-      "screen0": 99,
-      "screen1": 99,
-      "screen2": 99,
-      "screen3": 99,
-      "screen4": 99,
-      "screen5": 99,
-      "screen6": 99,
-      "screen7": 99
+      "screen0": 90,
+      "screen1": 90,
+      "screen2": 90,
+      "screen3": 90,
+      "screen4": 90,
+      "screen5": 90,
+      "screen6": 90,
+      "screen7": 90
      }
     },
     {
@@ -1789,10 +1789,10 @@
      "client": 7,
      "host": false,
      "pressed": "ArrowLeft 180ms, ArrowLeft 180ms, ArrowLeft 180ms",
-     "sentPresses": 4,
+     "sentPresses": 3,
      "expectedTicks": 30,
-     "hostAppliedTicks": 36,
-     "latencyMs": 130,
+     "hostAppliedTicks": 30,
+     "latencyMs": 139,
      "moved": {
       "screen0": 0,
       "screen1": 0,
@@ -1808,90 +1808,90 @@
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3we2ci-28y3e",
-     "runAfter": "mv3we2ci-28y3e",
+     "runBefore": "mv3wmhz7-8z6vz",
+     "runAfter": "mv3wmhz7-8z6vz",
      "status": "play"
     }
    ],
-   "hostTickRate": 52.9,
+   "hostTickRate": 54.3,
    "snapshotCadence": [
     null,
     {
      "updates": 18,
-     "medianGapMs": 117,
-     "maxGapMs": 144
+     "medianGapMs": 113,
+     "maxGapMs": 168
     },
     {
      "updates": 18,
-     "medianGapMs": 116,
-     "maxGapMs": 142
+     "medianGapMs": 114,
+     "maxGapMs": 166
     },
     {
      "updates": 18,
-     "medianGapMs": 120,
-     "maxGapMs": 157
+     "medianGapMs": 112,
+     "maxGapMs": 165
     },
     {
      "updates": 18,
-     "medianGapMs": 110,
-     "maxGapMs": 157
+     "medianGapMs": 111,
+     "maxGapMs": 164
+    },
+    {
+     "updates": 18,
+     "medianGapMs": 114,
+     "maxGapMs": 161
     },
     {
      "updates": 18,
      "medianGapMs": 115,
-     "maxGapMs": 157
+     "maxGapMs": 168
     },
     {
      "updates": 18,
-     "medianGapMs": 115,
-     "maxGapMs": 145
-    },
-    {
-     "updates": 18,
-     "medianGapMs": 120,
-     "maxGapMs": 174
+     "medianGapMs": 112,
+     "maxGapMs": 166
     }
    ],
    "host": {
@@ -1901,14 +1901,14 @@
    }
   },
   "peer jump tap": {
-   "jumpTicks": 9
+   "jumpTicks": 8
   },
   "restart: host R": {
    "client": 0,
    "how": "key",
-   "ms": 232,
+   "ms": 198,
    "runs": [
-    "mv3wej9l-45hk2"
+    "mv3wmyyl-3ukik"
    ],
    "restarted": true,
    "phantomJumpTicks": {}
@@ -1916,9 +1916,9 @@
   "restart: peer R": {
    "client": 7,
    "how": "key",
-   "ms": 384,
+   "ms": 329,
    "runs": [
-    "mv3wekcp-ufs6u"
+    "mv3wmzzg-w43vp"
    ],
    "restarted": true,
    "phantomJumpTicks": {}
@@ -1926,9 +1926,9 @@
   "restart: peer [다시] button": {
    "client": 7,
    "how": "#retry",
-   "ms": 401,
+   "ms": 368,
    "runs": [
-    "mv3welh6-xqjf3"
+    "mv3wn13s-xedf8"
    ],
    "restarted": true,
    "phantomJumpTicks": {}
@@ -1954,8 +1954,8 @@
      "host": true,
      "pressed": "ArrowRight 1200ms",
      "sentPresses": 0,
-     "expectedTicks": 65,
-     "hostAppliedTicks": 69,
+     "expectedTicks": 64,
+     "hostAppliedTicks": 63,
      "latencyMs": 0,
      "moved": {
       "screen0": 18,
@@ -2087,9 +2087,9 @@
      "host": false,
      "pressed": "ArrowRight 1200ms",
      "sentPresses": 8,
-     "expectedTicks": 65,
+     "expectedTicks": 64,
      "hostAppliedTicks": 66,
-     "latencyMs": 127,
+     "latencyMs": 144,
      "moved": {
       "screen0": 198,
       "screen1": 198,
@@ -2105,90 +2105,90 @@
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3welh6-xqjf3",
-     "runAfter": "mv3welh6-xqjf3",
+     "runBefore": "mv3wn13s-xedf8",
+     "runAfter": "mv3wn13s-xedf8",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3welh6-xqjf3",
-     "runAfter": "mv3welh6-xqjf3",
+     "runBefore": "mv3wn13s-xedf8",
+     "runAfter": "mv3wn13s-xedf8",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3welh6-xqjf3",
-     "runAfter": "mv3welh6-xqjf3",
+     "runBefore": "mv3wn13s-xedf8",
+     "runAfter": "mv3wn13s-xedf8",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3welh6-xqjf3",
-     "runAfter": "mv3welh6-xqjf3",
+     "runBefore": "mv3wn13s-xedf8",
+     "runAfter": "mv3wn13s-xedf8",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3welh6-xqjf3",
-     "runAfter": "mv3welh6-xqjf3",
+     "runBefore": "mv3wn13s-xedf8",
+     "runAfter": "mv3wn13s-xedf8",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3welh6-xqjf3",
-     "runAfter": "mv3welh6-xqjf3",
+     "runBefore": "mv3wn13s-xedf8",
+     "runAfter": "mv3wn13s-xedf8",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3welh6-xqjf3",
-     "runAfter": "mv3welh6-xqjf3",
+     "runBefore": "mv3wn13s-xedf8",
+     "runAfter": "mv3wn13s-xedf8",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3welh6-xqjf3",
-     "runAfter": "mv3welh6-xqjf3",
+     "runBefore": "mv3wn13s-xedf8",
+     "runAfter": "mv3wn13s-xedf8",
      "status": "play"
     }
    ],
-   "hostTickRate": 54.1,
+   "hostTickRate": 53.3,
    "snapshotCadence": [
     null,
     {
-     "updates": 19,
-     "medianGapMs": 113,
-     "maxGapMs": 164
-    },
-    {
-     "updates": 19,
-     "medianGapMs": 112,
-     "maxGapMs": 166
-    },
-    {
-     "updates": 19,
-     "medianGapMs": 112,
-     "maxGapMs": 164
-    },
-    {
-     "updates": 19,
+     "updates": 18,
      "medianGapMs": 115,
-     "maxGapMs": 152
+     "maxGapMs": 170
     },
     {
-     "updates": 19,
-     "medianGapMs": 115,
-     "maxGapMs": 152
+     "updates": 18,
+     "medianGapMs": 108,
+     "maxGapMs": 161
     },
     {
-     "updates": 19,
-     "medianGapMs": 115,
-     "maxGapMs": 163
+     "updates": 18,
+     "medianGapMs": 110,
+     "maxGapMs": 168
     },
     {
-     "updates": 19,
-     "medianGapMs": 115,
-     "maxGapMs": 157
+     "updates": 18,
+     "medianGapMs": 114,
+     "maxGapMs": 171
+    },
+    {
+     "updates": 18,
+     "medianGapMs": 111,
+     "maxGapMs": 165
+    },
+    {
+     "updates": 18,
+     "medianGapMs": 110,
+     "maxGapMs": 160
+    },
+    {
+     "updates": 18,
+     "medianGapMs": 120,
+     "maxGapMs": 211
     }
    ],
    "host": {
@@ -2199,12 +2199,12 @@
   },
   "loss: peer cover button": {
    "coverEnabled": true,
-   "restartMs": 336
+   "restartMs": 309
   },
   "next round: key held through the start": {
    "stage": "st_w_01_02",
-   "heldTicks": 45,
-   "firstEffectMs": 403
+   "heldTicks": 36,
+   "firstEffectMs": 461
   },
   "together in the next round": {
    "plan": [
@@ -2227,8 +2227,8 @@
      "host": true,
      "pressed": "ArrowLeft 700ms",
      "sentPresses": 0,
-     "expectedTicks": 31,
-     "hostAppliedTicks": 30,
+     "expectedTicks": 33,
+     "hostAppliedTicks": 33,
      "latencyMs": 0,
      "moved": {
       "screen0": -18,
@@ -2359,10 +2359,10 @@
      "client": 7,
      "host": false,
      "pressed": "ArrowLeft 700ms",
-     "sentPresses": 6,
-     "expectedTicks": 31,
+     "sentPresses": 5,
+     "expectedTicks": 33,
      "hostAppliedTicks": 33,
-     "latencyMs": 157,
+     "latencyMs": 148,
      "moved": {
       "screen0": -99,
       "screen1": -99,
@@ -2378,90 +2378,90 @@
    "screens": [
     {
      "host": true,
-     "runBefore": "mv3weqr5-urjyw",
-     "runAfter": "mv3weqr5-urjyw",
+     "runBefore": "mv3wn6n2-iw6qz",
+     "runAfter": "mv3wn6n2-iw6qz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3weqr5-urjyw",
-     "runAfter": "mv3weqr5-urjyw",
+     "runBefore": "mv3wn6n2-iw6qz",
+     "runAfter": "mv3wn6n2-iw6qz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3weqr5-urjyw",
-     "runAfter": "mv3weqr5-urjyw",
+     "runBefore": "mv3wn6n2-iw6qz",
+     "runAfter": "mv3wn6n2-iw6qz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3weqr5-urjyw",
-     "runAfter": "mv3weqr5-urjyw",
+     "runBefore": "mv3wn6n2-iw6qz",
+     "runAfter": "mv3wn6n2-iw6qz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3weqr5-urjyw",
-     "runAfter": "mv3weqr5-urjyw",
+     "runBefore": "mv3wn6n2-iw6qz",
+     "runAfter": "mv3wn6n2-iw6qz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3weqr5-urjyw",
-     "runAfter": "mv3weqr5-urjyw",
+     "runBefore": "mv3wn6n2-iw6qz",
+     "runAfter": "mv3wn6n2-iw6qz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3weqr5-urjyw",
-     "runAfter": "mv3weqr5-urjyw",
+     "runBefore": "mv3wn6n2-iw6qz",
+     "runAfter": "mv3wn6n2-iw6qz",
      "status": "play"
     },
     {
      "host": false,
-     "runBefore": "mv3weqr5-urjyw",
-     "runAfter": "mv3weqr5-urjyw",
+     "runBefore": "mv3wn6n2-iw6qz",
+     "runAfter": "mv3wn6n2-iw6qz",
      "status": "play"
     }
    ],
-   "hostTickRate": 44.9,
+   "hostTickRate": 47.3,
    "snapshotCadence": [
     null,
     {
      "updates": 12,
-     "medianGapMs": 133,
-     "maxGapMs": 186
-    },
-    {
-     "updates": 12,
-     "medianGapMs": 136,
-     "maxGapMs": 177
-    },
-    {
-     "updates": 12,
-     "medianGapMs": 133,
-     "maxGapMs": 187
-    },
-    {
-     "updates": 12,
-     "medianGapMs": 133,
-     "maxGapMs": 191
-    },
-    {
-     "updates": 12,
-     "medianGapMs": 139,
+     "medianGapMs": 132,
      "maxGapMs": 180
     },
     {
      "updates": 12,
      "medianGapMs": 138,
-     "maxGapMs": 190
+     "maxGapMs": 185
     },
     {
-     "updates": 7,
+     "updates": 12,
      "medianGapMs": 135,
      "maxGapMs": 139
+    },
+    {
+     "updates": 12,
+     "medianGapMs": 134,
+     "maxGapMs": 180
+    },
+    {
+     "updates": 12,
+     "medianGapMs": 130,
+     "maxGapMs": 166
+    },
+    {
+     "updates": 12,
+     "medianGapMs": 134,
+     "maxGapMs": 172
+    },
+    {
+     "updates": 12,
+     "medianGapMs": 134,
+     "maxGapMs": 243
     }
    ],
    "host": {
@@ -2475,7 +2475,7 @@
  "errors": [],
  "browserErrors": [],
  "passed": true,
- "code": "GJY88B",
+ "code": "1BHNBF",
  "visibility": [
   {
    "visible": "visible",
