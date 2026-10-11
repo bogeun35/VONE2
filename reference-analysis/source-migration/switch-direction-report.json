@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "generated": "2026-10-11",
+  "scope": "SwitchComponent direction support (Switch slot5, DelaySwitch slot2) widened from direction 0 only to the full native table. Read-only static analysis of GameAssembly.dll; no original code was executed and no assets were copied.",
+  "nativeExecuted": false,
+  "binary": {
+    "file": "D:\\SteamLibrary\\steamapps\\common\\PICO PARK 2\\pico_park_2_Data\\Plugins\\x86_64\\GameAssembly.dll",
+    "imageBase": "0x180000000",
+    "metadata": "pico_park_2_Data/il2cpp_data/Metadata/global-metadata.dat",
+    "indexUsed": "quantum-method-index.json + quantum-field-offsets.json (assembly-csharp-method-index.json does NOT contain the simulation components)"
+  },
+
+  "slot5Meaning": {
+    "answer": "Slot 5 of a Switch actor (slot 2 of a DelaySwitch) is SwitchComponent.m_Direction: which face of the switch anchor carries the trigger rectangle. 0 = UP, 1 = DOWN, 2 = LEFT, 3 = RIGHT. It is stored as a single byte and selects one entry of a five-entry static RectFP table; it changes nothing else about the switch except two direction-0-only side effects listed below.",
+    "evidence": [
+      "NormalSwitchComponent.ParseParameter 0x181888840: datas[5] is read at 0x181888a3a..0x181888a57 (`mov r12d,[rcx+0x18]; sar r12,0x10`, zero when the slot is not numeric) and stored with `mov byte ptr [r15], r12b` at 0x181888b89 - r15 is the SwitchComponent and raw offset 0 is m_Direction (quantum-field-offsets.json: SwitchComponent.m_Direction boxed 16).",
+      "DelaySwitchComponent.ParseParameter 0x1818191a0: datas[2] is read at 0x1818192b9..0x1818192d9 and stored with `mov byte ptr [r15], sil` at 0x1818193b0 - the same field of the embedded switch.",
+      "SwitchComponent.SetDirection 0x180b25410 is literally `mov byte ptr [rcx], dl; ret`.",
+      "SwitchComponent.InitCollision 0x181714790 reads it back unsigned (`movzx edi, byte ptr [rbx]` at 0x1817147e9) and passes it as the direction argument of GetCollisionByDirection (0x181714809).",
+      "quantum-field-offsets.json SwitchComponent statics are named COLLISION_RECT (0x20), COLLISION_RECT_DOWN (0x40), COLLISION_RECT_LEFT (0x60), COLLISION_RECT_RIGHT (0x80), COLLISION_RECT_TOPVIEW (0xa0) - exactly the offsets the four direction branches read, which fixes the UP/DOWN/LEFT/RIGHT naming independently of geometry."
+    ],
+    "byteCast": "The value is truncated to a byte on store and read back unsigned, so a direction outside 0..255 wraps and any byte that is not 1, 2 or 3 takes the direction-0 path (GetCollisionByDirection 0x1817145a0: `sub r8d,1; je` / `sub r8d,1; je` / `cmp r8d,1; je`, else fall through to 0x1817145fe). switchDirection()/switchRect() in spring-switch-runtime.js reproduce that."
+  },
+
+  "worldDistribution": {
+    "measuredOn": "all 60 st_w_* stages of installed-stage-decoded.local.json, every stageInitParamList variant",
+    "Switch": {"0": 101, "1": 1, "2": 0, "3": 4},
+    "DelaySwitch": {"0": 4},
+    "direction3Actors": [
+      {"stage": "st_w_05_02", "name": "TriggerSwitch1", "pos": [48, 408], "playerCount": 0},
+      {"stage": "st_w_05_02", "name": "TriggerSwitch2", "pos": [48, 312], "playerCount": 3},
+      {"stage": "st_w_05_02", "name": "TriggerSwitch3", "pos": [48, 216], "playerCount": 4},
+      {"stage": "st_w_05_02", "name": "TriggerSwitch4", "pos": [48, 120], "playerCount": 5}
+    ],
+    "direction1Actors": [
+      {"stage": "st_w_10_04", "name": "Switch2", "pos": [1904, 46], "playerCount": 0, "subTarget": "Bridge2"}
+    ]
+  },
+
+  "rectangleTable": {
+    "source": "SwitchComponent..cctor 0x181715330 fills the class statics at [typeInfo+0xb8]; SwitchComponent.GetCollisionByDirection 0x1817145a0 selects one entry and returns it as a 32-byte RectFP.",
+    "memberOrder": "RectFP is Height, Width, X, Y at value-type offsets 0/8/16/24 (quantum-field-offsets.json RectFP: Height boxed 16, Width 24, X 32, Y 40 - boxed minus 16). GetCollisionByDirection loads the first 16 bytes into xmm0 (Height, Width) and the second into xmm1 (X, Y). Cross-checked against PlayerComponent..cctor 0x1816cba29 COLLISION_W=32 / H=46 / X=-16 / Y=-47, which actor-runtime.js already turns into box = actorPos + (X,Y) sized (Width, Height).",
+    "encoding": "Q16.16 fixed point; the .cctor stores raw int64 literals.",
+    "entries": [
+      {
+        "direction": 0, "name": "UP", "staticField": "COLLISION_RECT",
+        "staticOffsets": ["+0x20", "+0x30"],
+        "branch": "default path 0x1817145fe (any byte that is not 1,2,3)",
+        "raw": {"Height": "0x90000", "Width": "0x120000", "X": "0xfffffffffff70000", "Y": "0xfffffffffff70000"},
+        "rect": {"height": 9, "width": 18, "x": -9, "y": -9},
+        "box": "actorPos + (-9,-9), 18 x 9 - sits directly above the anchor",
+        "cctorSites": ["0x181715455", "0x18171544d", "0x181715468", "0x1817154dd", "0x18171546c", "0x181715474", "0x181715483", "0x1817154f5"]
+      },
+      {
+        "direction": 1, "name": "DOWN", "staticField": "COLLISION_RECT_DOWN",
+        "staticOffsets": ["+0x40", "+0x50"],
+        "branch": "0x1817145dd `sub r8d,1; je 0x1817146cf`",
+        "raw": {"Height": "0x90000", "Width": "0x120000", "X": "0xfffffffffff70000", "Y": "0x20000"},
+        "rect": {"height": 9, "width": 18, "x": -9, "y": 2},
+        "box": "actorPos + (-9,+2), 18 x 9 - sits directly below the anchor",
+        "cctorSites": ["0x18171548f", "0x181715487", "0x1817154e9", "0x181715533", "0x1817154a6", "0x1817154ae", "0x181715500", "0x181715543"]
+      },
+      {
+        "direction": 2, "name": "LEFT", "staticField": "COLLISION_RECT_LEFT",
+        "staticOffsets": ["+0x60", "+0x70"],
+        "branch": "0x1817145ee `sub r8d,1; je 0x1817146a6`",
+        "raw": {"Height": "0x120000", "Width": "0x90000", "X": "0xfffffffffff70000", "Y": "0xfffffffffff90000"},
+        "rect": {"height": 18, "width": 9, "x": -9, "y": -7},
+        "box": "actorPos + (-9,-7), 9 x 18 - sits on the -X side of the anchor",
+        "cctorSites": ["0x1817154c5", "0x1817154b6", "0x18171553f", "0x181715559", "0x1817154cd", "0x1817154d5", "0x18171554e", "0x181715561"],
+        "note": "No World actor uses direction 2, so this entry is decoded from the binary only and has no shipped-data cross-check."
+      },
+      {
+        "direction": 3, "name": "RIGHT", "staticField": "COLLISION_RECT_RIGHT",
+        "staticOffsets": ["+0x80", "+0x90"],
+        "branch": "0x1817145f8 `cmp r8d,1; je 0x181714677`",
+        "raw": {"Height": "0x120000", "Width": "0x90000", "X": "0x0", "Y": "0xfffffffffff90000"},
+        "rect": {"height": 18, "width": 9, "x": 0, "y": -7},
+        "box": "actorPos + (0,-7), 9 x 18 - sits on the +X side of the anchor",
+        "cctorSites": ["0x1817154ed", "0x1817154e1", "0x18171555d", "0x181715577", "0x181715504", "0x18171550c", "0x18171556c", "0x181715582"]
+      },
+      {
+        "direction": 0, "name": "UP while ForTopView", "staticField": "COLLISION_RECT_TOPVIEW",
+        "staticOffsets": ["+0xa0", "+0xb0"],
+        "branch": "0x181714616 `test byte ptr [param+6],1` -> 0x181714648",
+        "raw": {"Height": "0xe0000", "Width": "0x120000", "X": "0xfffffffffff70000", "Y": "0xfffffffffff20000"},
+        "rect": {"height": 14, "width": 18, "x": -9, "y": -14},
+        "box": "actorPos + (-9,-14), 18 x 14",
+        "implemented": false,
+        "note": "Decoded but not applied; see unresolved.forTopView."
+      }
+    ],
+    "otherStaticsSeenInTheSameCctor": [
+      {"offset": "+0x00", "field": "RESOURCE_PATH", "value": "QResourcePath.GetSwitchPath result (0x1817153a2)"},
+      {"offset": "+0x08", "field": "JUMP_VELO", "value": [-3, -7], "used": "SwitchComponent.OnCollided 0x181715175 multiplies it by the presser's ActorComponent.m_BaseScale (raw +0x50) and sends event 36. Only reachable when m_Flags bit5 or bit6 is set, which no shipped Switch/DelaySwitch does."},
+      {"offset": "+0x18", "field": "ACTOR_DRAW_OFFSET_Y", "value": -3, "used": "OnCollided 0x181715244 writes it into the presser's ActorComponent.m_OffsetDrawPos.y (raw +0xa8) for a direction-0, non-top-view switch. Purely a draw offset; not ported."}
+    ]
+  },
+
+  "contactCondition": {
+    "answer": "A switch fires on PLAIN RECTANGLE OVERLAP with the direction's sensor rectangle. There is no contact-normal, velocity or grounded test anywhere in the handler. The only filter is on the other collision's fields: m_PushBackTarget bit1 must be set and m_Layer must be 1, 2, 3 or 8. A switch with m_Type == 1 (physics switch) skips even that filter. No shipped Switch/DelaySwitch sets m_Type, so the filter always applies.",
+    "evidence": [
+      "SwitchComponent.OnCollided 0x181714f80. 0x18171501b `cmp byte ptr [this+4],1; je 0x181715048` is the m_Type bypass. 0x18171502a `test byte ptr [collision+3],2; je end` is the m_PushBackTarget bit1 test. 0x181715034..0x181715042 `movzx ecx,byte[collision+1]; lea eax,[rcx-1]; cmp al,2; jbe accept; cmp cl,8; jne end` is the layer set {1,2,3,8}.",
+      "Collision field names from quantum-field-offsets.json: m_Attribute raw +0, m_Layer raw +1, m_CollisionType raw +2, m_PushBackTarget raw +3, m_Id raw +0x14. The runtime's existing facts key `attributeFlags` therefore names m_PushBackTarget, not m_Attribute - the key was left alone to avoid churning the other device modules, but the report records the real field.",
+      "Collision.initialize 0x181690b08 `mov byte ptr [rsi+3], bl` writes m_PushBackTarget from the 4th argument of ActorComponent.CreateCollision 0x18169f4d0 (forwarded at 0x18169f571).",
+      "Who can press: Player passes 3 (0x1816bdf4b) and sets m_Layer 1 (0x1816bdf87). PushBox passes 3 (0x1816db625) and sets m_Attribute/m_Layer with `mov word ptr [rax],0x202` (0x1816db651), i.e. m_Layer 2. Both pass the filter. The switch's own sensor is m_Layer 5 (`mov byte ptr [rax+1],5` at 0x18171486e) and is created as a non-solid sensor by InitCollision 0x181714790, so switches never press each other and never block anybody."
+    ],
+    "stateMachine": {
+      "note": "Unchanged by this work; recorded because it was re-read to confirm the direction change does not touch it. m_Flags is raw +6 (16 bit).",
+      "bits": {
+        "0": "ForTopView (getter 0x181714560)",
+        "1": "notified-on latch, set after the ON transition (OnUpdate 0x181714b5c, cleared 0x181714b18)",
+        "2": "m_IsOn - set by OnCollided 0x1817150bc, read by IsOn 0x181714590",
+        "3": "RequestOff (setter 0x181690160), consumed by OnUpdate 0x181714b93",
+        "4": "off-requested-this-frame; OnCollided 0x18171506d..0x181715075 uses bit4 && bit1 to clear bit1 and re-run the state-change delegate",
+        "5": "jump-impulse sent this frame (OnCollided 0x1817151d5)",
+        "6": "one-frame-delayed copy of bit5 (OnUpdate 0x181714a44)",
+        "7": "EnableRepeat (slot1; ParseParameter 0x181888ba7/0x181888bad, setter 0x181690220). OnUpdate 0x181714b7a clears m_IsOn every update so a release is detected",
+        "8": "notify the presser with event 56 (OnCollided 0x1817150cd..0x18171510c)",
+        "9": "ManualNotifyTarget (setter 0x181714570), used by DelaySwitch to suppress the immediate NotifyTarget"
+      },
+      "transitions": "OnUpdate 0x1817149f0: m_IsOn set and bit1 clear -> changeSwitchState 0x181714bd0 (PlaySe 9, NotifyTarget on unless bit9, invoke delegate, m_IsOn field +8 = 1), set bit1. m_IsOn clear and bit1 set -> NotifyTarget off unless bit9, invoke delegate, dword[+8] = 0, clear bit1. NotifyTarget 0x181714cd0 sends event 0x3c+on (60 off / 61 on) to m_TargetName (raw +0x58) and m_SubTargetName (raw +0x38), with m_Id in event +0x28 and m_TimerAddSecond in event +0x60."
+    },
+    "implementedCondition": {
+      "directions1to3": "plain overlap of the body box with the direction rectangle (the native rule)",
+      "direction0": "UNCHANGED from before this task: player must be grounded, horizontally overlapping, with its feet inside the rectangle's vertical band. See deviations.direction0ContactNarrowing.",
+      "pressers": "players (m_Layer 1) and PushBox solids (m_Layer 2). PushBox contacts are new in this change and are what actually makes st_w_05_02 solvable."
+    }
+  },
+
+  "shippedDataCrossCheck": {
+    "method": "Same argument that fixed the 2400 fail line: shipped level data does not contain unreachable devices. For each authored non-zero direction, the mirrored rectangle (the one the opposite direction would produce) is tested against the imported tile grid.",
+    "st_w_05_02": {
+      "actor": "TriggerSwitch1 at (48,408), direction 3",
+      "terrain": "tile column 0 is solid for every row (left wall, x 0..48); column 1 is open at row 8 (y 384..432)",
+      "direction3Rect": {"x": 48, "y": 401, "w": 9, "h": 18, "tiles": "column 1 row 8 - open"},
+      "direction2Rect": {"x": 39, "y": 401, "w": 9, "h": 18, "tiles": "column 0 row 8 - solid"},
+      "conclusion": "A LEFT rectangle here would be sealed inside the wall the switch is mounted on; the authored RIGHT rectangle is reachable. Confirms direction 3 = RIGHT.",
+      "design": "PushBox3..PushBox6 are authored at (120,432),(120,336),(120,240),(120,144) - one box per TriggerSwitch level - and SwitchObserver1 watches every actor whose name starts with \"TriggerSwitch\" and unlocks Key1. The stage is 'push the boxes into the wall buttons', which only works because a PushBox passes the switch contact filter."
+    },
+    "st_w_10_04": {
+      "actor": "Switch2 at (1904,46), direction 1, subTarget Bridge2",
+      "terrain": "tile column 39 row 0 (y 0..48) is solid ceiling; column 39 row 1 is open",
+      "direction1Rect": {"x": 1895, "y": 48, "w": 18, "h": 9, "tiles": "column 39 row 1 - open"},
+      "direction0Rect": {"x": 1895, "y": 37, "w": 18, "h": 9, "tiles": "column 39 row 0 - solid"},
+      "conclusion": "An UP rectangle here would be sealed inside the ceiling tile the switch is mounted in; the authored DOWN rectangle is reachable from below. Confirms direction 1 = DOWN."
+    }
+  },
+
+  "changes": [
+    {
+      "file": "spring-switch-runtime.js",
+      "edits": [
+        "Added SWITCH_RECTS (directions 0..3), SWITCH_RECT_FOR_TOPVIEW, switchDirection() (byte cast) and switchRect() (native default-path fallback), each with the cctor/branch addresses in comments.",
+        "Removed the guard `if(d(5)!==0) throw 'Runtime scope supports first-stage upward switches only'` from the Switch branch and `if(d(2)!==0) throw ... upward delay switches only` from the DelaySwitch branch; both now record `direction` and `rect` on the relay.",
+        "Extended the step() facts documentation with the real OnCollided filter and the m_PushBackTarget / m_Layer field names and the Player/PushBox values.",
+        "Exported SWITCH_RECTS, SWITCH_RECT_FOR_TOPVIEW, switchRect, switchDirection."
+      ]
+    },
+    {
+      "file": "source-stage-runtime.js",
+      "edits": [
+        "compile(): added 'st_w_05_02' to the supported stage list.",
+        "compile(): the `switches` boxes are now built from the relay's direction rectangle (`x:r.x+r.rect.x, y:r.y+r.rect.y, w:r.rect.w, h:r.rect.h`) instead of the hard-coded -9/-9/18/9. Direction 0 produces the identical box.",
+        "Added switchSensorOverlap() (the native rule) and playerPressesSwitch() (native rule for directions 1..3, the pre-existing narrow top-face rule kept for direction 0).",
+        "tick(): player switch contacts go through playerPressesSwitch and now report attributeFlags 3 instead of 2 (the native m_PushBackTarget value; only bit1 is tested, so this changes nothing).",
+        "tick(): added PushBox -> switch contacts (m_Layer 2, m_PushBackTarget 3) from Devices.solids().",
+        "tick(): SwitchTimers.beforeStep now receives `players` and its `deadPlayerIds` ends the round. Without this the DeadTimer in st_w_05_02 counted down and never killed anybody. Only a DeadTimer can fill deadPlayerIds, so the SwitchTimer in st_w_04_03 is unaffected."
+      ]
+    },
+    {
+      "file": "package-source-play.cjs",
+      "edits": ["Added {id:'st_w_05_02', title:'2편 5–2'} to the stages array. Nothing else was needed: no new module file is introduced, so play/index.html and deploy-source-play.cjs need no entry."]
+    },
+    {
+      "file": "source-stage-runtime.test.cjs",
+      "edits": ["Added 9 tests (see verification.testsAdded). Pre-existing tests untouched."]
+    }
+  ],
+  "filesNotTouched": ["play/", "deploy-chamchicode/", "every other source-*.js device module"],
+
+  "verification": {
+    "testSuite": {
+      "command": "for f in *.test.cjs play/*.test.cjs ../rebuild/camera.test.cjs; do node \"$f\"; done",
+      "before": {"files": 17, "checks": 168, "detail": "158 node:test cases + 10 camera scenarios"},
+      "after": {"files": 17, "checks": 177, "failures": 0, "detail": "167 node:test cases + 10 camera scenarios"}
+    },
+    "testsAdded": [
+      "the decoded direction table is the native one, and any other byte falls back to direction 0",
+      "direction 0 switches keep the original 18x9 sensor above the anchor (63 compiled switches across st_w_01_01 and st_w_01_04, each matched back to its extracted actor)",
+      "original 05-02 compiles for every population with its four authored directions",
+      "the direction 3 sensor sits on the open +X side of the wall it is mounted on, not inside it (tile-grid reachability)",
+      "a direction 3 wall switch answers a body on its +X side and ignores one on the -X side",
+      "the original 05-02 push box holds the direction 3 wall switch down and the observer unlocks the key (full simulation)",
+      "the 05-02 DeadTimer loses the round after its authored countdown when nobody moves",
+      "the extracted st_w_10_04 direction 1 switch takes the sensor below its anchor (tile-grid reachability)",
+      "a direction 1 ceiling switch answers a body below it, not one above it, and signals its target"
+    ],
+    "stageCompile": {
+      "st_w_05_02": {"2": "ok", "3": "ok", "4": "ok", "5": "ok", "6": "ok", "7": "ok", "8": "ok",
+        "switchCounts": {"2": 17, "3": 21, "4": 24, "5": 27, "6": 27, "7": 27, "8": 27},
+        "triggerSwitchCounts": {"2": 1, "3": 2, "4": 3, "5": 4, "6": 4, "7": 4, "8": 4}},
+      "st_w_10_04": {"2": "blocked", "3": "blocked", "4": "blocked", "5": "blocked", "6": "blocked", "7": "blocked", "8": "blocked",
+        "reason": "Unsupported source devices: WeightedLiftEx",
+        "measured": "with the stage temporarily added to the supported list, compile() for 2..8 now fails only on WeightedLiftEx. The switch guard was not its only blocker; remaining-work.json only recorded the first throw."}
+    },
+    "regression": {
+      "compiledPayload": "All 63 variants (9 connected rounds x 2..8 players) produce byte-identical compiled JSON apart from the two new additive fields (`direction`, `rect`) on switch relays. 63 switch relays were compared.",
+      "behaviour": "72 runs (9 rounds x counts 2,3,5,8 x 2 input seeds) of 1200 ticks each, with the identical pseudo-random input stream fed to the pre-change and post-change runtimes, produced identical status/ticks/deaths/keyTaken/keyActive/failure, identical player x,y,vx,vy,grounded,exit, identical switch pressed flags, identical hazard counts and identical timer seconds. 0 differences.",
+      "whyItCannotRegress": [
+        "Every Switch and DelaySwitch in the 9 connected rounds is direction 0, and the direction-0 rectangle and the direction-0 player contact test are both unchanged.",
+        "No connected round contains a PushBox and a Switch at the same time (st_w_01_02 and st_w_10_02 have boxes but no switches; st_w_01_01 and st_w_01_04 have switches but no boxes), so the new box contacts cannot fire there.",
+        "The only connected round with a timer is st_w_04_03, and its actor is a SwitchTimer whose time-up never fills deadPlayerIds."
+      ],
+      "notUsedAsEvidence": "whole-route-input-replay.json - HANDOFF trap 3 says that recording is already desynced from the current runtime and must not be used for regression."
+    },
+    "noInputBehaviour": {
+      "st_w_05_02": "Dies. The stage authors DeadTimer1 (TimerTimeUpType Dead, TimerType TimeDown, 15 s at every population 2..8); with no input the round ends at exactly 15.000 s for all 7 populations and the failure is reported for p1. Before this change the countdown ran but nothing died - that integration gap is fixed here. The Switch1..Switch23 floor buttons on the same stage each carry m_TimerAddSecond 2, so walking over them extends the countdown (measured: walking the party left from spawn reaches the wall with ~10.8 s left on the clock).",
+      "st_w_10_04": "Not measurable - the stage still does not compile (WeightedLiftEx)."
+    },
+    "packager": "package-source-play.cjs now lists 10 stages; a dry run of its per-stage loop builds all 70 population maps (10 x 2..8) without throwing. It was NOT executed, because it writes into play/, which is the owner's."
+  },
+
+  "unresolved": [
+    {
+      "id": "st_w_10_04",
+      "severity": "blocks the requested stage",
+      "detail": "st_w_10_04 needs the WeightedLiftEx actor, which is not implemented (HANDOFF section 6 lists it as 'started only'). After the switch widening its compile fails with exactly 'Unsupported source devices: WeightedLiftEx' for 2..8 players; everything else it uses (Thunder, Rect, Bridge, Switch, Thorn, Player, Key, Goal) is supported. Starting points: NormalWeightedLiftComponent.ParseParameter 0x181889b40 / OnUpdate 0x18188a120, ExtraWeightedLiftComponent.ParseParameter 0x18183b160 / OnUpdate 0x18183b8c0, VariableWeightedLiftComponent 0x181733240 / 0x181733520 / .cctor 0x181733a40, and the shared WeightedLiftComponent InitCollision 0x181737a50 / OnUpdate 0x181737be0 / CalcMoveContactCount 0x181738090 / MoveLift 0x181738170 / .cctor 0x181738470. The single authored actor is WeightedLiftEx1 at (2133,175) with datas 8..13 = 100, 3, 1, -1, 900, 1. Not attempted here: it is a new device and guessing its constants is exactly what this project forbids."
+    },
+    {
+      "id": "direction2",
+      "severity": "unverified but harmless",
+      "detail": "Direction 2 (LEFT, height 18 / width 9 / x -9 / y -7) is decoded from the binary and named by the COLLISION_RECT_LEFT static, but no World actor uses it, so there is no shipped-data reachability cross-check and no test on real data. The runtime will use it if a future stage has one."
+    },
+    {
+      "id": "forTopView",
+      "severity": "latent, affects no supported stage",
+      "detail": "m_Flags bit0 (SwitchComponent.ForTopView 0x181714560) replaces the direction-0 rectangle with COLLISION_RECT_TOPVIEW (18 x 14 at -9,-14). Both Creators set it from the stage: NormalSwitchComponent.Creator 0x1818886d5 `test byte ptr [stage+4],0x40` -> `bts` bit0 at 0x1818886e0, and DelaySwitchComponent.Creator 0x181818f3c does the same. byte[stage+4] bit6 is StageComponent.IsTopViewSort 0x1816a9590. WHAT SETS IsTopViewSort IS UNRESOLVED: StageComponent.SetTopViewSort 0x181709c10 has no direct call site anywhere in GameAssembly.dll (scanned every e8/e9 rel32 in every section) and no inlined writer of bit 6 of the dword at stage+4 was found (scanned `bts dword [reg+4],6`, `or dword/byte [reg+4],0x40`, `bts eax,6`). No stageInitParam field in the decoded stage files looks like a top-view flag either. The port therefore treats ForTopView as false, which matches everything that could be established - but if a top-view stage is connected later, its direction-0 switches may need the 18 x 14 rectangle and this must be re-checked before that stage ships."
+    },
+    {
+      "id": "direction0ContactNarrowing",
+      "severity": "known deviation from the original, deliberately left in place",
+      "detail": "The native condition is plain rectangle overlap (see contactCondition). For direction 0 the runtime still uses the narrower pre-existing test `p.grounded && horizontal(p,button) && p.y < button.y && p.y+p.h >= button.y && p.y+p.h <= button.y+button.h+0.01`, i.e. 'landed with the feet inside the band'. The native rule is strictly wider: in the original a player whose body merely crosses the 9 px band - jumping past an upward button, or standing lower with the torso in the band - also presses it, and being grounded is irrelevant. This was NOT widened here because the task explicitly required the 101 direction-0 switches to be unaffected, and HANDOFF trap 3 records that widening this test once already desynced the recorded 8-player route. Widening it is a separate, evidence-backed change that needs a fresh route recording.",
+      "alsoNarrowed": "Nothing else. PushBox contacts and directions 1..3 use the native rule."
+    },
+    {
+      "id": "nativeUpdateOrder",
+      "severity": "pre-existing",
+      "detail": "The port gathers contacts after player movement and runs the relay state machine once per tick. The native order between the Quantum collision pass that raises OnCollided and SwitchComponent.OnUpdate was not recovered, so an ON/OFF transition may land one native tick early or late. Unchanged by this work."
+    },
+    {
+      "id": "cosmeticSideEffects",
+      "severity": "presentation only, not ported",
+      "detail": "Two direction-0-only effects in OnCollided are not implemented: the ACTOR_DRAW_OFFSET_Y = -3 write into the presser's ActorComponent.m_OffsetDrawPos.y (0x181715244) and the event-56 notification to the presser when m_Flags bit8 is set (0x1817150cd). Neither changes simulation state."
+    },
+    {
+      "id": "playTimerUi",
+      "severity": "blocks shipping st_w_05_02 as a playable round",
+      "detail": "play/play.js draws no timer at all - it never calls SourceSwitchTimerDevices.displays(). st_w_05_02 is the first connected stage with a DeadTimer, so a player would be killed at 15 s by an invisible countdown, and the +2 s floor buttons would give no feedback. play/ is the owner's file and was not touched; this needs a renderer pass before the stage is deployed."
+    },
+    {
+      "id": "originalFidelityReview",
+      "severity": "pre-existing",
+      "detail": "Nobody has played st_w_05_02 side by side with the original. The HANDOFF counter 'originalFidelityReviewedRounds: 0' still applies; compiling and passing tests is not the same as matching the original."
+    }
+  ],
+
+  "reproduce": {
+    "disassembly": "The two scripts used are in the session scratchpad, not the repo; they are the inspect-devices.local.py pattern with a different type filter. To redo it: copy inspect-devices.local.py, change the type filter to ['SwitchComponent','NormalSwitchComponent','DelaySwitchComponent'], and read GetCollisionByDirection 0x1817145a0, InitCollision 0x181714790, OnCollided 0x181714f80, OnUpdate 0x1817149f0, changeSwitchState 0x181714bd0, NotifyTarget 0x181714cd0 and .cctor 0x181715330.",
+    "fieldNames": "node -e \"const f=require('./quantum-field-offsets.json'); console.log(f.find(x=>x.type==='SwitchComponent'))\" - also Collision and RectFP.",
+    "distribution": "Count datas[5] (Switch) / datas[2] (DelaySwitch) over every stageInitParamList variant of the 60 st_w_* stages in installed-stage-decoded.local.json.",
+    "regressionHarness": "Require the HEAD copy of source-stage-runtime.js alongside the working copy, compile both for the 9 rounds and feed both the same pseudo-random input stream; compare the normalised state."
+  }
+}

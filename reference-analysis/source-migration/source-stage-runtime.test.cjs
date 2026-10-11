@@ -1,9 +1,28 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
 const R=require('./source-stage-runtime.js');
+const Relay=require('./spring-switch-runtime.js');
+const Terrain=require('./terrain-runtime.js');
 const source=require('./installed-stage-decoded.local.json'),geometry=require('./source-geometry.local.json');
 const compile=count=>R.compile({source,geometry,count});
 function frames(s,n,input={}){for(let i=0;i<n;i++)R.step(s,input);return s;}
+// Extracted original actors, straight out of the decoded stage file.
+function sourceActors(stageId,variant=0){
+ return source.stages.find(s=>s.stageId===stageId).json.stageInitParamList[variant].actorCreateParamList;
+}
+function sourceActor(stageId,name,variant=0){
+ const a=sourceActors(stageId,variant).find(x=>x.name===name);
+ assert.ok(a,'extracted actor '+name+' must exist in '+stageId);
+ return a;
+}
+// Tiles the rectangle touches, from the imported original tile grid.
+function touchedTiles(rect,t){
+ const tiles=[];
+ for(let gx=Math.floor(rect.x/t.tileSize);gx<=Math.ceil((rect.x+rect.w)/t.tileSize)-1;gx++)
+  for(let gy=Math.floor(rect.y/t.tileSize);gy<=Math.ceil((rect.y+rect.h)/t.tileSize)-1;gy++)
+   tiles.push({gx,gy,solid:!!t.cells.find(c=>c.gridX===gx&&c.gridY===gy)});
+ return tiles;
+}
 test('compile original 01-01 for all 2..8 populations without source mutation or reflected coordinates',()=>{
  const before=JSON.stringify(source),gBefore=JSON.stringify(geometry);
  for(let count=2;count<=8;count++){
@@ -133,4 +152,181 @@ test('Switch sensors can be crossed and held inside the original 48-pixel-high c
  assert.equal(p.x,1528);assert.equal(p.y,1346);assert.equal(p.grounded,true);
  assert.equal(s.relayState.relays.find(r=>r.id===button.id).pressed,true);
  assert.equal(R.solids(s).some(b=>b.id===button.id),false);
+});
+
+// ---------------------------------------------------------------------------
+// Switch direction support. The sensor rectangles come from
+// SwitchComponent..cctor 0x181715330 through GetCollisionByDirection
+// 0x1817145a0; see switch-direction-report.json.
+// ---------------------------------------------------------------------------
+
+test('the decoded direction table is the native one, and any other byte falls back to direction 0', () => {
+ assert.deepEqual(Relay.SWITCH_RECTS[0], {x:-9,y:-9,w:18,h:9});
+ assert.deepEqual(Relay.SWITCH_RECTS[1], {x:-9,y:2,w:18,h:9});
+ assert.deepEqual(Relay.SWITCH_RECTS[2], {x:-9,y:-7,w:9,h:18});
+ assert.deepEqual(Relay.SWITCH_RECTS[3], {x:0,y:-7,w:9,h:18});
+ assert.deepEqual(Relay.SWITCH_RECT_FOR_TOPVIEW, {x:-9,y:-14,w:18,h:14});
+ // Directions 1,2,3 are the only ones GetCollisionByDirection branches on.
+ for (const d of [4,5,255,-1]) assert.deepEqual(Relay.switchRect(Relay.switchDirection(d)), Relay.SWITCH_RECTS[0]);
+ // ParseParameter stores a byte, so 256 wraps to 0 and 259 wraps to 3.
+ assert.equal(Relay.switchDirection(256), 0);
+ assert.equal(Relay.switchDirection(259), 3);
+ assert.equal(Relay.switchDirection(3.9), 3);
+});
+
+test('direction 0 switches keep the original 18x9 sensor above the anchor', () => {
+ // The world01-01 Switch is unnamed, so match the extracted actor by anchor.
+ const c = compile(2), button = c.map.switches.find(b => b.type === 'Switch');
+ const actor = sourceActors('st_w_01_01').find(a => a.typeName === 'Switch');
+ assert.deepEqual({x:actor.posX, y:actor.posY}, {x:1962, y:480});
+ assert.equal(actor.datas[5].f, 0);
+ assert.equal(button.direction, 0);
+ assert.deepEqual({x:button.x, y:button.y, w:button.w, h:button.h},
+  {x:actor.posX-9, y:actor.posY-9, w:18, h:9});
+ // Every switch of every connected round that has one is direction 0 and keeps
+ // the exact box this runtime used before direction support was widened. The
+ // direction slot is 5 on a Switch and 2 on a DelaySwitch
+ // (NormalSwitchComponent.ParseParameter 0x181888b89 /
+ // DelaySwitchComponent.ParseParameter 0x1818193b0).
+ let checked = 0;
+ for (const stageId of ['st_w_01_01', 'st_w_01_04']) for (let count = 2; count <= 8; count++)
+  for (const b of R.compile({source, geometry, count, stageId}).map.switches) {
+   const a = sourceActors(stageId).find(x => x.typeName === b.type &&
+    x.posX === b.x + 9 && x.posY === b.y + 9 && (x.name || '') === b.name);
+   assert.ok(a, 'every compiled switch must come from an extracted actor');
+   assert.equal(a.datas[b.type === 'DelaySwitch' ? 2 : 5].f, 0);
+   assert.equal(b.direction, 0);
+   assert.deepEqual({x:b.x, y:b.y, w:b.w, h:b.h}, {x:a.posX-9, y:a.posY-9, w:18, h:9});
+   checked++;
+  }
+ assert.equal(checked, 7 * (2 + 7));
+});
+
+test('original 05-02 compiles for every population with its four authored directions', () => {
+ const before = JSON.stringify(source);
+ const expected = {2:1, 3:2, 4:3, 5:4, 6:4, 7:4, 8:4};
+ for (let count = 2; count <= 8; count++) {
+  const c = R.compile({source, geometry, count, stageId:'st_w_05_02'});
+  assert.equal(c.map.id, 'st_w_05_02');
+  assert.equal(c.map.width, 2400); assert.equal(c.map.height, 480);
+  assert.equal(c.map.spawns.length, count);
+  const trigger = c.map.switches.filter(b => b.name.startsWith('TriggerSwitch'));
+  assert.equal(trigger.length, expected[count], count + ' players must see ' + expected[count] + ' wall switches');
+  for (const b of trigger) {
+   const actor = sourceActor('st_w_05_02', b.name);
+   assert.equal(actor.datas[5].f, 3);
+   assert.equal(b.direction, 3);
+   // RectFP X=0 W=9 Y=-7 H=18 from statics+0x80/+0x90.
+   assert.deepEqual({x:b.x, y:b.y, w:b.w, h:b.h}, {x:actor.posX, y:actor.posY-7, w:9, h:18});
+  }
+  // The DeadTimer buttons on the same stage are direction 0 and must not move.
+  for (const b of c.map.switches.filter(x => !x.name.startsWith('TriggerSwitch'))) {
+   const actor = sourceActor('st_w_05_02', b.name);
+   assert.equal(actor.datas[5].f, 0);
+   assert.deepEqual({x:b.x, y:b.y, w:b.w, h:b.h}, {x:actor.posX-9, y:actor.posY-9, w:18, h:9});
+  }
+  assert.equal(R.create(c).players.length, count);
+ }
+ assert.equal(JSON.stringify(source), before);
+});
+
+test('the direction 3 sensor sits on the open +X side of the wall it is mounted on, not inside it', () => {
+ const t = Terrain.createTerrain({source, geometry, count:2, stageId:'st_w_05_02'});
+ const actor = sourceActor('st_w_05_02', 'TriggerSwitch1');
+ assert.deepEqual({x:actor.posX, y:actor.posY}, {x:48, y:408});
+ const direction3 = {x:actor.posX + 0, y:actor.posY - 7, w:9, h:18};
+ const direction2 = {x:actor.posX - 9, y:actor.posY - 7, w:9, h:18};
+ // Shipped data cannot contain an unreachable device: the mirror-image
+ // direction 2 rectangle is buried in the solid left wall, while the authored
+ // direction 3 rectangle is in open space.
+ assert.ok(touchedTiles(direction2, t).every(x => x.solid), 'direction 2 would be inside the wall');
+ assert.ok(touchedTiles(direction3, t).every(x => !x.solid), 'direction 3 must be reachable');
+});
+
+test('a direction 3 wall switch answers a body on its +X side and ignores one on the -X side', () => {
+ const c = R.compile({source, geometry, count:2, stageId:'st_w_05_02'});
+ const button = c.map.switches.find(b => b.name === 'TriggerSwitch1');
+ // A 32x46 player flush against the wall face reaches the sensor.
+ assert.equal(R.overlap({x:48, y:386, w:32, h:46}, button), true);
+ // The same body mirrored to the other side of the anchor does not.
+ assert.equal(R.overlap({x:48-32, y:386, w:32, h:46}, button), false);
+ // Nor does one that only shares the anchor column, from above or from below.
+ assert.equal(R.overlap({x:48, y:button.y-46, w:32, h:46}, button), false);
+ assert.equal(R.overlap({x:48, y:button.y+button.h, w:32, h:46}, button), false);
+ // Switch.InitCollision 0x18171484c builds a sensor, never a solid.
+ assert.equal(R.solids(R.create(c)).some(b => b.id === button.id), false);
+});
+
+test('the original 05-02 push box holds the direction 3 wall switch down and the observer unlocks the key', () => {
+ const s = R.create(R.compile({source, geometry, count:2, stageId:'st_w_05_02'}));
+ const button = s.map.switches.find(b => b.name === 'TriggerSwitch1');
+ const relay = () => s.relayState.relays.find(r => r.id === button.id);
+ const box = () => s.deviceState.devices.find(d => d.name === 'PushBox3');
+ // PushBox3 starts clear of the sensor and the key starts locked.
+ assert.equal(box().x, 96); assert.equal(R.overlap(box(), button), false);
+ assert.equal(relay().pressed, false); assert.equal(s.keyActive, false);
+ let pressedAt = -1;
+ for (let i = 0; i < 600 && s.status === 'play'; i++) {
+  R.step(s, {p1:{left:true}, p2:{left:true}});
+  if (relay().pressed && pressedAt < 0) pressedAt = i;
+ }
+ assert.ok(pressedAt > 0, 'pushing the box left must press the wall switch');
+ // It is the box, not a player, inside the sensor: PushBox collisions are
+ // layer2 / attribute3 (0x1816db651 / 0x1816db625), both accepted by
+ // SwitchComponent.OnCollided 0x181714f80.
+ assert.equal(R.overlap(box(), button), true);
+ assert.ok(s.lastContacts.switchContacts.some(c => c.relayId === button.id && c.actorId === box().id && c.layer === 2));
+ assert.ok(!s.players.some(p => R.overlap(p, button)), 'the box blocks the players from the wall');
+ assert.equal(s.keyActive, true, 'the SwitchObserver must unlock Key1');
+});
+
+test('the 05-02 DeadTimer loses the round after its authored countdown when nobody moves', () => {
+ for (let count = 2; count <= 8; count++) {
+  const c = R.compile({source, geometry, count, stageId:'st_w_05_02'});
+  const timer = c.switchTimers.timers.find(t => t.type === 'DeadTimer');
+  assert.equal(timer.timeUpTypeName, 'Dead');
+  assert.equal(timer.sec, 15);
+  const s = R.create(c);
+  for (let i = 0; i < 60 * 20 && s.status === 'play'; i++) R.step(s, {});
+  assert.equal(s.status, 'dead');
+  assert.ok(Math.abs(s.elapsed - timer.sec) <= 1/60, 'the round must end on the authored second');
+ }
+});
+
+test('the extracted st_w_10_04 direction 1 switch takes the sensor below its anchor', () => {
+ const actor = sourceActor('st_w_10_04', 'Switch2');
+ assert.deepEqual({x:actor.posX, y:actor.posY}, {x:1904, y:46});
+ assert.equal(actor.datas[5].f, 1);
+ assert.equal(actor.datas[3].s, 'Bridge2');
+ const relay = Relay.create([actor], 2).relays[0];
+ assert.equal(relay.direction, 1);
+ // RectFP X=-9 W=18 Y=2 H=9 from statics+0x40/+0x50.
+ assert.deepEqual(relay.rect, {x:-9, y:2, w:18, h:9});
+ const t = Terrain.createTerrain({source, geometry, count:2, stageId:'st_w_10_04'});
+ const direction1 = {x:actor.posX - 9, y:actor.posY + 2, w:18, h:9};
+ const direction0 = {x:actor.posX - 9, y:actor.posY - 9, w:18, h:9};
+ assert.deepEqual(direction1, {x:1895, y:48, w:18, h:9});
+ // Same reachability argument: an upward sensor here would be sealed inside the
+ // ceiling tile the switch is mounted in; the authored downward one is not.
+ assert.ok(touchedTiles(direction0, t).every(x => x.solid), 'direction 0 would be inside the ceiling');
+ assert.ok(touchedTiles(direction1, t).every(x => !x.solid), 'direction 1 must be reachable');
+});
+
+test('a direction 1 ceiling switch answers a body below it, not one above it, and signals its target', () => {
+ const actor = sourceActor('st_w_10_04', 'Switch2');
+ const fresh = () => Relay.create([actor], 2);
+ const state = fresh(), relay = state.relays[0];
+ const button = {x:actor.posX + relay.rect.x, y:actor.posY + relay.rect.y, w:relay.rect.w, h:relay.rect.h};
+ // A jumping player whose head enters the strip under the ceiling.
+ assert.equal(R.overlap({x:1888, y:button.y - 40, w:32, h:46}, button), true);
+ // A player standing on top of the ceiling tile, where direction 0 would sense.
+ assert.equal(R.overlap({x:1888, y:actor.posY - 46, w:32, h:46}, button), false);
+ const contact = {relayId:relay.id, actorId:'p1', layer:1, attributeFlags:3};
+ const on = Relay.step(state, 1/60, {switchContacts:[contact]});
+ assert.ok(on.events.some(e => e.targetName === 'Bridge2' && e.eventType === 61));
+ // Attribute bit1 and layers 1,2,3,8 are the whole filter; everything else is
+ // ignored (SwitchComponent.OnCollided 0x18171502a..0x181715042).
+ assert.equal(Relay.step(fresh(), 1/60, {switchContacts:[{...contact, attributeFlags:1}]}).events.length, 0);
+ assert.equal(Relay.step(fresh(), 1/60, {switchContacts:[{...contact, layer:5}]}).events.length, 0);
+ assert.equal(Relay.step(fresh(), 1/60, {switchContacts:[{...contact, layer:8}]}).events.length, 1);
 });
