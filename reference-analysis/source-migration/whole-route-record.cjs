@@ -216,6 +216,123 @@ policies.st_w_01_04=function(run){
  run.mark('all players in goal');
 };
 
+// ------------------------------------------------------------------ 2편 4-4
+// Vertical BlinkThunder beams (x 46,104,162,418,476,534,592,650) are on for
+// 3 s and off for 0.9 s (55 ticks); the horizontal one at y 138..142 sits just
+// above the upper pillar row, so nobody ever jumps. Players only cross beams
+// during the off window and always finish a window inside a beam-free column:
+// C1 [48,70] C2 [106,128] C3 [164,384] C6 [536,558] C8 [652,..] (player x).
+policies.st_w_04_04=function(run){
+ const s=run.s,bt=s.blinkThunderState.thunders[0];
+ const off=()=>!bt.visible;
+ const go=(id,x)=>H.walkTo(run,id,x,{autoJump:false,tol:1.5});
+ // Wait for the next off window (starting fresh), then move.
+ const inWindow=(id,f)=>H.seq(()=>H.waitUntil(run,id,()=>!off()),()=>H.waitUntil(run,id,off),f);
+ const enter=id=>H.enter(run,id);
+ const window=(label,tasks)=>{run.together(tasks,{label});run.mark(label,{beamsVisible:bt.visible});};
+ // Visible phase: C3 pillar players drop to floor slots, one after another.
+ for(const [id,x] of [['p8',382],['p7',346],['p6',310],['p5',274]])run.run(id,go(id,x),{label:'C3 '+id});
+ run.mark('C3 players on the floor');
+ // p2 (lower pillar in C1) drops left of its pillar through the left beam,
+ // falls past the key and steps back into C1 before the beams return.
+ const keyDrop=()=>(function*(){const p=run.p('p2');
+  while(p.x>28)yield {left:true};
+  while(p.y<386)yield {};
+  while(p.x<54)yield {right:true};
+ })();
+ const shift=(...moves)=>{for(const [id,x] of moves)run.run(id,go(id,x),{label:'shift '+id});};
+ const W=(label,tasks)=>window(label,Object.fromEntries(Object.entries(tasks).map(([id,x])=>[id,typeof x==='function'?inWindow(id,x):inWindow(id,()=>go(id,x))])));
+ W('W1 p8 to C6, p2 takes key',{p8:545,p2:keyDrop});
+ if(!s.keyTaken)throw new Error('key not taken in W1');
+ shift(['p7',382],['p6',346],['p5',310]);
+ W('W2',{p8:670,p7:545,p4:274});
+ run.together({p8:enter('p8')});shift(['p6',382],['p5',346],['p4',310]);
+ W('W3',{p7:670,p6:545,p3:274});
+ run.together({p7:enter('p7')});shift(['p5',382],['p4',346],['p3',310]);
+ W('W4',{p6:670,p5:545,p2:202,p1:120});
+ run.together({p6:enter('p6')});shift(['p4',382],['p3',346],['p2',310]);
+ W('W5',{p5:670,p4:545,p1:274});
+ run.together({p5:enter('p5')});shift(['p3',382],['p2',346],['p1',310]);
+ W('W6',{p4:670,p3:545});
+ run.together({p4:enter('p4')});shift(['p2',382],['p1',346]);
+ W('W7',{p3:670,p2:545});
+ run.together({p3:enter('p3')});shift(['p1',382]);
+ W('W8',{p2:670,p1:545});
+ run.together({p2:enter('p2')});
+ W('W9',{p1:670});
+ run.run('p1',enter('p1'));
+ run.mark('all players in goal');
+};
+
+// ------------------------------------------------------------------ 2편 11-4
+// ThornCeiling: every row drops a thorn in each non-safe column, and "trap"
+// thorns in some safe columns 0.4 s later from one chip higher. The row is
+// readable from the state once created (lastSet), and the PCG32 stream uses the
+// fixed default seed, so the row sequence is identical on every replay.
+// Thunder2 (y 552..556) forbids jumping for the first 20 s. Players keep their
+// left-to-right order and walk to slots outside the danger columns; after the
+// normal thorns of a row are gone, anyone under a trap column steps aside.
+policies.st_w_11_04=function(run){
+ const s=run.s,c=s.thornCeilingState.ceilings[0],ids=s.players.map(p=>p.id);
+ const ROOM=[96,1104],W=32,GAP=2;
+ const zone=col=>[c.x+48*col-12,c.x+48*col+12];
+ // Free intervals (player x ranges) avoiding the given danger columns.
+ function slotsAvoiding(cols){
+  const zones=cols.map(zone).sort((a,b)=>a[0]-b[0]);
+  const free=[];let left=ROOM[0];
+  for(const [a,b] of zones){if(a-left>=W)free.push([left,a]);left=Math.max(left,b);}
+  if(ROOM[1]-left>=W)free.push([left,ROOM[1]]);
+  const slots=[];
+  for(const [a,b] of free)for(let x=a+1;x+W<=b-1;x+=W+GAP)slots.push(x);
+  return slots;
+ }
+ // Order-preserving assignment minimising total walking (DP).
+ function assign(players,slots){
+  const n=players.length,m=slots.length;if(m<n)throw new Error('not enough safe slots '+m+' for '+n+' at tick '+s.ticks);
+  const INF=1e18,dp=Array.from({length:n+1},()=>Array(m+1).fill(INF)),pick=Array.from({length:n+1},()=>Array(m+1).fill(false));
+  for(let j=0;j<=m;j++)dp[0][j]=0;
+  for(let i=1;i<=n;i++)for(let j=1;j<=m;j++){
+   const skip=dp[i][j-1],take=dp[i-1][j-1]+Math.abs(players[i-1].x-slots[j-1]);
+   if(take<skip){dp[i][j]=take;pick[i][j]=true;}else dp[i][j]=skip;
+  }
+  const out={};let i=n,j=m;
+  while(i>0){if(pick[i][j]){out[players[i-1].id]=slots[j-1];i--;j--;}else j--;}
+  return out;
+ }
+ let setRef=null,targets={},trapPhase=false,rows=0;
+ const live=()=>s.players.filter(p=>!p.exit).sort((a,b)=>a.x-b.x);
+ for(let guard=0;guard<6000&&c.phase<5;guard++){
+  const set=c.lastSet;
+  if(set&&set!==setRef){
+   setRef=set;trapPhase=false;rows++;
+   const normal=[];for(let col=0;col<c.ceilingWidth;col++)if(!set.safeColumns.includes(col))normal.push(col);
+   // Prefer slots clear of both normal and trap thorns; fall back to normal-only.
+   let slots=slotsAvoiding([...normal,...set.trapColumns]);
+   if(slots.length<live().length)slots=slotsAvoiding(normal);
+   targets=assign(live(),slots);
+   run.mark('thorn row '+rows,{safe:set.safeColumns,trap:set.trapColumns,targets});
+  }
+  if(setRef&&!trapPhase&&setRef.trapColumns.length){
+   const normalAlive=c.thorns.some(t=>t.active&&!t.trap&&t.phase<4);
+   const someoneUnderTrap=live().some(p=>setRef.trapColumns.some(col=>{const [a,b]=zone(col);return p.x+W>a&&p.x<b;}));
+   if(!normalAlive&&someoneUnderTrap){trapPhase=true;targets=assign(live(),slotsAvoiding(setRef.trapColumns));}
+  }
+  const inputs={};
+  for(const p of live()){const tx=targets[p.id];if(tx===undefined)continue;inputs[p.id]={right:p.x<tx-1.5,left:p.x>tx+1.5};}
+  run.step(inputs);
+ }
+ if(c.phase<5)throw new Error('thorn ceiling not survived');
+ run.mark('thorn ceiling survived',{rows,hitPoint:c.hitPoint,keyActive:s.keyActive});
+ // Key above the goal: the beam is gone after 20 s, so a jump reaches it.
+ const k=s.map.key,taker=live().reduce((a,b)=>Math.abs(b.x-k.x)<Math.abs(a.x-k.x)?b:a);
+ run.run(taker.id,H.walkTo(run,taker.id,k.x));
+ run.run(taker.id,H.jumpTo(run,taker.id,k.x));
+ if(!s.keyTaken)throw new Error('key not taken');
+ run.mark('key taken');
+ for(const p of [...live()].sort((a,b)=>Math.abs(a.x-1016)-Math.abs(b.x-1016)))run.run(p.id,H.enter(run,p.id));
+ run.mark('all players in goal');
+};
+
 function recordOne(stage){
  const policy=policies[stage];
  if(!policy)return {stage,count:COUNT,status:'no-policy',commands:[],milestones:[]};
