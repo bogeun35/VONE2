@@ -17,7 +17,7 @@ const app=['index.html','catalogue.json','status.json','music-info.json','browse
  'population-review-report.json','whole-route-completion-report.json','whole-route-input-replay.json',
  'whole-route-review-report.json'];
 const optional=new Set(['source-death-restart-report.json','browser-check.json']);
-for(const name of ['source-death-restart-report.json'])if(fs.existsSync(path.join(play,name)))app.push(name);
+for(const name of ['source-death-restart-report.json','whole-route-replay-report.json'])if(fs.existsSync(path.join(play,name)))app.push(name);
 
 fs.mkdirSync(target,{recursive:true});
 let copied=0;
