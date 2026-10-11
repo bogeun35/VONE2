@@ -358,3 +358,40 @@ test('the bonus block only runs when the mode selector is exactly 1',()=>{
  assert.equal(skipped.bonus,null);
  assert.equal(named(SwitchTimer.compile(deadActors(),4,{gameOverCount:20}),'DeadTimer1').sec,25);
 });
+
+// B2 회귀: 스위치가 보내는 event 61 에 payload 가 실려야 한다. 빠지면 타이머는
+// payload 0 을 "정지"로 읽어(OnRecvEvent 0x18172e35e) st_w_05_02 의 DeadTimer 가
+// 첫 스위치에서 얼어붙는다. 값의 출처는 NormalSwitchComponent.ParseParameter
+// 0x181888a15 가 읽는 datas[4] 로, 0x181888b80 이 m_TimerAddSecond(+0x20)에
+// 그대로(sar 없이) 넣고 NotifyTarget 0x181714e02 가 이벤트에 싣는다.
+test('a switch event without a payload must not be read as a stop',()=>{
+ const actors=deadActors();
+ const state=SwitchTimer.create(SwitchTimer.compile(actors,4));
+ const t=live(state,'DeadTimer1');
+ const run=n=>{for(let i=0;i<n;i++)SwitchTimer.beforeStep(state,{dt:1/60,players:[{id:'p1'}]});};
+ run(60);
+ const afterOneSecond=t.sec;
+ assert.ok(afterOneSecond<15,'the timer must be counting down');
+ // payload 를 실은 61 은 시간을 늘리고 멈추지 않는다.
+ SwitchTimer.signal(state,{targetName:'DeadTimer1',eventType:61,event:61,on:true,timerAddSecond:2});
+ assert.equal(t.stopped,false,'a payload-carrying switch must not stop the timer');
+ assert.ok(t.sec>afterOneSecond,'the payload must extend the timer');
+ const extended=t.sec;
+ run(60);
+ assert.ok(t.sec<extended,'the timer must keep running after the extension');
+});
+
+test('a payloadless event 61 still stops the timer, as the original does',()=>{
+ // 같은 이벤트라도 payload 가 없으면 정지다. 이게 원작 동작이므로 유지한다 —
+ // 버그는 "스위치가 payload 를 안 실었던 것"이지 이 분기가 아니었다.
+ const state=SwitchTimer.create(SwitchTimer.compile(deadActors(),4));
+ const t=live(state,'DeadTimer1');
+ for(let i=0;i<60;i++)SwitchTimer.beforeStep(state,{dt:1/60,players:[{id:'p1'}]});
+ SwitchTimer.signal(state,{targetName:'DeadTimer1',eventType:61,event:61,on:true});
+ assert.equal(t.stopped,true);
+ const frozen=t.sec;
+ for(let i=0;i<60;i++)SwitchTimer.beforeStep(state,{dt:1/60,players:[{id:'p1'}]});
+ assert.equal(t.sec,frozen,'a stopped timer must not advance');
+ SwitchTimer.signal(state,{targetName:'DeadTimer1',eventType:60,event:60,on:false});
+ assert.equal(t.stopped,false,'event 60 resumes it');
+});
