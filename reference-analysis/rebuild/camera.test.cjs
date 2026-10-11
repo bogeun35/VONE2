@@ -6,7 +6,7 @@ function visible(camera,players){
  for(const p of players.filter(p=>!p.exit)){
   const a=C.point(camera,p.x-10,p.y-18),b=C.point(camera,p.x+p.w,p.y+p.h);
   assert(a.x>=53.99&&b.x<=1146.01,`horizontal clipping ${JSON.stringify({p,camera,a,b})}`);
-  assert(a.y>=67.99&&b.y<=617.01,`vertical clipping ${JSON.stringify({p,camera,a,b})}`);
+  assert(a.y>=67.99&&b.y<=647.01,`vertical clipping ${JSON.stringify({p,camera,a,b})}`);
  }
 }
 for(let n=2;n<=8;n++){
@@ -56,6 +56,44 @@ console.log(`${checks} population camera scenarios passed; every frame keeps act
  for(let i=0;i<120;i++)camera=C.update(camera,falling,sourceMap,viewport);
  visible(camera,falling);
  console.log('PASS a player past the map floor is still framed');checks++;
+}
+
+// A declared view without displayTileHeight shows the whole map height, so a
+// 10 tile scroll stage gets the same 480px window world01-01 declares and the
+// floor sits on the bottom edge with nothing under it.
+{
+ const short={width:2400,height:480,view:{displayHeight:0,scrollType:1}};
+ const floor=[{id:'a',x:1194,y:384,w:32,h:46,exit:false},{id:'b',x:1244,y:384,w:32,h:46,exit:false}];
+ for(const vp of [viewport,{width:1818,height:675},{width:311,height:675}]){
+  let camera=C.update(null,floor,short,vp);
+  for(let i=0;i<60;i++)camera=C.update(camera,floor,short,vp);
+  const bottom=(short.height-camera.y)*camera.zoom;
+  assert(Math.abs(bottom-vp.height)<0.5,`map floor must meet the screen bottom, gap=${vp.height-bottom} at ${vp.width}`);
+  const feet=(430-camera.y)*camera.zoom/vp.height;
+  assert(feet>2/3,`friends must stand in the lower third, at ${feet}`);
+ }
+ console.log('PASS undeclared window fits the map height and anchors the floor at the bottom');checks++;
+}
+// scrollType 0 stages are framed whole and centred across a wider screen.
+{
+ const fixed={width:960,height:528,view:{displayHeight:0,scrollType:0}};
+ const two=[{id:'a',x:44,y:98,w:32,h:46,exit:false},{id:'b',x:44,y:242,w:32,h:46,exit:false}];
+ const wide={width:1818,height:675};
+ let camera=C.update(null,two,fixed,wide);
+ assert(Math.abs(camera.zoom-675/528)<1e-9,'a fixed stage fits its height on a wide screen');
+ assert(Math.abs(camera.x-(960-wide.width/camera.zoom)/2)<1e-6,'and sits in the middle');
+ assert(Math.abs(camera.y)<1e-6,'with its whole height shown');
+ camera=C.update(null,two,fixed,viewport);
+ assert(Math.abs(camera.zoom-1200/960)<1e-9,'on 16:9 the width limits the zoom');
+ assert(Math.abs((528-camera.y)*camera.zoom-675)<0.5,'and the spare height goes above the map');
+ console.log('PASS scrollType 0 frames the whole stage');checks++;
+}
+// The first frame of a round does not animate the zoom in from 1:1.
+{
+ const sourceMap={width:2976,height:960,view:{displayHeight:480}};
+ const camera=C.update(null,[{id:'a',x:100,y:864,w:32,h:46,exit:false}],sourceMap,viewport);
+ assert(Math.abs(camera.zoom-675/480)<1e-9,'first frame snaps to the window');
+ console.log('PASS first frame snaps');checks++;
 }
 
 console.log(`${checks} camera scenarios passed.`);
