@@ -467,6 +467,73 @@ policies.st_w_05_02=function(run){
  run.mark('all players in goal');
 };
 
+// ------------------------------------------------------------------ 2편 4-1
+// The key needs a 4-high tower on the ledge in the pocket (x 1296..1440).
+// Touching it starts Thunder2..4 sweeping down every compartment of the ledge
+// (0.3 px/tick, ~900 ticks to head height) and taking it drops the four
+// Bridges (1 px/tick). A bridge stops only on a player directly below it, and
+// a player at ledge level under it is the only way through. So one holder
+// stands under each bridge and the whole crew leaves as one contiguous train:
+// every bridge column stays occupied until the last player has passed.
+// Tower: base 1328, then 1336, 1344, 1352 (8 px steps). With these offsets
+// the dismount lands everyone at ledge level touching the next player.
+policies.st_w_04_01=function(run){
+ const s=run.s,P=id=>run.p(id);
+ const go=(id,x,o={})=>H.walkTo(run,id,x,{autoJump:false,...o});
+ const holdWhile=(input,cond,max=3000)=>(function*(){for(let i=0;i<max&&cond();i++)yield input;if(cond())throw new K.RouteError('hold timed out',run);})();
+ // floor -> step block (864..912, top 384) -> ledge (960.., top 336)
+ const toLedge=id=>{run.run(id,go(id,820),{label:id+' to step'});run.run(id,H.jumpTo(run,id,880),{label:id+' onto step'});run.run(id,H.jumpTo(run,id,990),{label:id+' onto ledge'});};
+ const climbOn=(id,x)=>run.run(id,H.jumpTo(run,id,x),{label:id+' climb '+x});
+ // Tower: p8 base, p7, p6, p5 on top.
+ // Climbers start pressed against the base (x = base-32 >= 1296, clear of
+ // Bridge4's column) and are clamped by the next player at each level.
+ toLedge('p8');run.run('p8',go('p8',1330));const bx=P('p8').x;
+ if(bx<1328||bx>1333)throw new K.RouteError('base off '+bx,run);
+ const approach=id=>{toLedge(id);run.run(id,go(id,bx-32),{label:id+' at base'});};
+ approach('p7');climbOn('p7',bx+8);run.run('p7',go('p7',bx+8,{tol:1.6}));
+ approach('p6');climbOn('p6',bx-24);climbOn('p6',bx+16);run.run('p6',go('p6',bx+16,{tol:1.6}));
+ approach('p5');climbOn('p5',bx-24);climbOn('p5',bx-16);climbOn('p5',bx+24);run.run('p5',go('p5',bx+24,{tol:1.6}));
+ run.mark('four-high tower under the key',{tower:['p8','p7','p6','p5'].map(id=>[id,P(id).x,P(id).y])});
+ // Holders: p1..p3 under Bridge1..3, p4 waits left of Bridge4's column.
+ for(const [id,x] of [['p4',1232],['p3',1168],['p2',1072],['p1',976]]){toLedge(id);run.run(id,go(id,x,{tol:1}),{label:id+' holder'});}
+ run.mark('holders in place');
+ // Key: straight jump from the top of the tower.
+ run.run('p5',H.hold(run,'p5',{jump:true},14));
+ run.run('p5',holdWhile({},()=>!P('p5').grounded));
+ if(!s.keyTaken)throw new Error('key not taken');
+ run.mark('key taken',{bridges:s.bridgeState.bridges.map(b=>b.h)});
+ // p4 steps under Bridge4 before it reaches head height (42 ticks).
+ run.run('p4',go('p4',1264,{tol:0.5}),{label:'p4 under bridge4'});
+ // Dismount: p6 (carrying p5) steps off p7 and drops straight down.
+ run.run('p6',holdWhile({right:true},()=>P('p6').grounded),{label:'p6 off p7'});
+ run.run('p6',holdWhile({},()=>!P('p6').grounded),{label:'p6 drop'});
+ run.run('p5',holdWhile({right:true},()=>P('p5').y<280||!P('p5').grounded),{label:'p5 down'});
+ run.run('p7',holdWhile({left:true},()=>P('p7').grounded&&P('p7').y<280),{label:'p7 off base'});
+ run.run('p7',holdWhile({},()=>!P('p7').grounded),{label:'p7 drop'});
+ const crew=['p5','p6','p8','p7','p4','p3','p2','p1'];
+ run.mark('crew at ledge level',{line:crew.map(id=>[id,Math.round(P(id).x),Math.round(P(id).y)])});
+ // Train: a player starts moving left once it is moving or its right
+ // neighbour touches it; everyone keeps going until off the ledge.
+ const order=[...crew].sort((a,b)=>P(a).x-P(b).x);
+ const moving=new Set(['p5','p6','p8','p7']);
+ for(let t=0;t<2000;t++){
+  const inputs={};
+  for(let i=order.length-1;i>=0;i--){
+   const id=order[i],p=P(id),right=order[i+1]&&P(order[i+1]);
+   if(!moving.has(id)&&right&&moving.has(order[i+1])&&right.x-(p.x+p.w)<4)moving.add(id);
+   // Off the ledge, keep walking left to a free floor slot so nobody lands on heads.
+   const slot=480+34*i;
+   if(moving.has(id)&&p.x>slot+1.5)inputs[id]={left:true};
+  }
+  run.step(inputs);
+  if(order.every((id,i)=>P(id).x<=480+34*i+1.5&&P(id).grounded))break;
+ }
+ run.mark('train cleared the bridges',{bridges:s.bridgeState.bridges.map(b=>Math.round(b.h)),line:order.map(id=>[id,Math.round(P(id).x),Math.round(P(id).y)])});
+ // The corridor under the ledge is 48 px high: nobody can pass, so the rightmost goes first.
+ for(const id of [...order].sort((a,b)=>P(b).x-P(a).x))run.run(id,H.enter(run,id),{label:id+' goal'});
+ run.mark('all players in goal');
+};
+
 function recordOne(stage){
  const policy=policies[stage];
  if(!policy)return {stage,count:COUNT,status:'no-policy',commands:[],milestones:[]};
