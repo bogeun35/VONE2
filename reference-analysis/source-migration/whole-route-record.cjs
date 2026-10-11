@@ -534,12 +534,46 @@ policies.st_w_04_01=function(run){
  run.mark('all players in goal');
 };
 
+// ------------------------------------------------------------------ 2편 4-3
+// Not clearable on the current runtime at any player count: the Key's
+// collision box (anchor 240,480 -> 224..256 x 452..508) lies inside terrain
+// (192..288 x 432..480) and below the map, pickup is plain overlap, and the
+// only way under that terrain crosses the always-on through Thunder beams at
+// y 454..458 that span the whole room. Nothing is recorded; the evidence is
+// computed from the same compiled data and attached to the round.
+policies.st_w_04_03=function(run){
+ const s=run.s,key=s.map.key,W=32,Hh=46;
+ const overlap=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+ const inside=s.map.platforms.filter(p=>overlap(p,key)).map(p=>({id:p.id,x:p.x,y:p.y,w:p.w,h:p.h}));
+ // Every x a player can have while overlapping the key horizontally, and the
+ // lowest standing height there (top of the highest solid under that span).
+ const xs=[];for(let x=Math.ceil(key.x-W+1);x<=Math.floor(key.x+key.w-1);x++)xs.push(x);
+ const standY=x=>Math.min(...s.map.platforms.filter(p=>x<p.x+p.w&&x+W>p.x&&p.y>=key.y-Hh).map(p=>p.y))-Hh;
+ const bestStand=Math.max(...xs.map(standY));
+ // Beams at tick 1 (no input yet).
+ run.step({});
+ const beams=(s.map.hazards||[]).filter(h=>h.type==='Thunder'&&h.lethal!==false).map(h=>({id:h.id,x:h.x,y:h.y,w:h.w,h:h.h}));
+ const thunders=s.bridgeState.thunders.map(t=>({name:t.name,x:t.x,y:t.y,through:t.through,switchType:t.switchType,disappearTime:t.disappearTime}));
+ const room={x:48,w:s.map.width-96};
+ const beamCoversRoom=beams.some(b=>b.x<=room.x&&b.x+b.w>=room.x+room.w);
+ // No-input reference: when and how the round ends without input.
+ const probe=new Run(run.stage,run.count,{throwOnDeath:false});for(let i=0;i<600&&probe.s.status==='play';i++)probe.step({});
+ return {blocked:{reason:'열쇠 충돌 상자가 지형 안(맵 바닥 아래까지)에 있고, 줍기는 단순 겹침이라 플레이어가 닿을 수 없다. 지형 아래로 돌아가는 길은 항상 켜진 관통 전기(y 454~458, 방 전체 폭)를 지나야 한다.',
+  key,keyInsideTerrain:inside,
+  playerMustReachY:key.y-Hh,highestReachableStandingY:bestStand,gapPx:+(key.y-Hh-bestStand).toFixed(3),
+  beams,thunders,beamCoversRoom,room,
+  noInput:{status:probe.s.status,ticks:probe.s.ticks,seconds:+(probe.s.ticks/60).toFixed(3),failure:probe.s.failure},
+  keyByCount:Object.fromEntries([2,3,4,5,6,7,8].map(n=>[n,K.loadCompiled(run.stage,n).map.key])),
+  suspectedCause:'추정: 원작은 열쇠에 충돌 밀어내기/부착 상태기계가 있어 지형 위로 올라오거나 다른 경로로 전달된다. 런타임 status.missingMechanics 에 "Key attach, transfer and goal-opening state machine (overlap pickup used)" 로 미이식 표시돼 있다.'}};
+};
+
 function recordOne(stage){
  const policy=policies[stage];
  if(!policy)return {stage,count:COUNT,status:'no-policy',commands:[],milestones:[]};
  const run=new Run(stage,COUNT);
- let error=null;
- try{policy(run);}catch(e){error=e.message;}
+ let error=null,result=null;
+ try{result=policy(run);}catch(e){error=e.message;}
+ if(result&&result.blocked)return {stage,count:COUNT,status:'blocked',ticks:0,seconds:0,deaths:0,commands:[],milestones:[],blocked:result.blocked,error:null};
  return run.export({error});
 }
 
@@ -565,7 +599,7 @@ if(require.main===module){
   runtimeSha256:crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,'source-stage-runtime.js'))).digest('hex'),
   recorder:'reference-analysis/source-migration/whole-route-record.cjs',
   placementsUsed:false,stateMutationUsed:false,
-  rounds:rounds.map(r=>({stage:r.stage,count:r.count,status:r.status,ticks:r.ticks,seconds:r.seconds,deaths:r.deaths,error:r.error||null,commands:r.commands,milestones:r.milestones}))};
+  rounds:rounds.map(r=>({stage:r.stage,count:r.count,status:r.status,ticks:r.ticks,seconds:r.seconds,deaths:r.deaths,error:r.error||null,...(r.blocked?{blocked:r.blocked}:{}),commands:r.commands,milestones:r.milestones}))};
  fs.writeFileSync(OUT,JSON.stringify(out)+'\n');
  console.log('wrote',path.relative(__dirname,OUT));
 }

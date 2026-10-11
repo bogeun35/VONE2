@@ -71,7 +71,13 @@ node check-source-death-restart.cjs   # 결과: play/source-death-restart-report
 
 # 남은 작업 현황 (이 문서의 수치 출처)
 cat remaining-work.json
+
+# 8인 공략 회귀 판정: 10라운드 녹화 입력만 새 상태에 5회 재생, 틱별 해시 비교
+node whole-route-replay.cjs --check   # 리포트까지: node whole-route-replay.cjs → play/whole-route-replay-report.json
+node whole-route-record.cjs st_w_04_01   # 어긋난 라운드만 재녹화(인자 없으면 전부, ROUTE_CACHE=<json> 은 탐색 구간 캐시)
 ```
+
+`package-source-play.cjs` 는 `status.json` 의 `functionalRoute` 노트를 하드코딩으로 덮어쓴다. 패키징 뒤에는 `node whole-route-replay.cjs --status` 로 다시 쓸 것.
 
 배포는 `deploy-chamchicode/`에서 커밋·푸시하면 GitHub Pages에 1~2분 뒤 반영된다.
 
@@ -120,9 +126,10 @@ cat remaining-work.json
    방식(`thorn-ceiling-device-report.json` 참조)처럼 Component/_Prototype/ParseParameter/Creator/View가
    전부 없고 `ActorFactoryComponent.CreateActor 0x1816a35cc`가 음수 인덱스에서 아무것도 안 만든다는
    것까지 확인해야 한다.
-3. **녹화된 8인 공략(`whole-route-input-replay.json`)은 현재 런타임에서 어긋난다.** 스위치 접촉 판정이
-   넓어진 뒤(원작 버튼 높이 전체 인정) 경로가 desync된다. `status.json`의 `inputOnlyClearVerified`는
-   그래서 false다. 이 재생 기록으로 회귀를 판정하지 말 것.
+3. **8인 공략 녹화는 런타임이 바뀌면 깨진다.** 2026-10-11 현재 런타임 기준으로 10라운드를 재녹화했다
+   (`whole-route-record.cjs` → `play/whole-route-input-replay.json` 의 `rounds[]`). 9라운드가 입력만으로 클리어되고
+   5회 재생이 틱 단위로 같다. **4-3 은 현재 런타임으로 클리어 불가**(열쇠 충돌 상자가 지형 안)라 `inputOnlyClearVerified`
+   는 false 다. 런타임·데이터를 바꾸면 `whole-route-replay.cjs --check` 로 판정하고 어긋난 라운드만 재녹화할 것.
 4. **파이어베이스 방 상태 스트림은 "무엇을 보냈는지"의 증거가 못 된다.** 로컬 낙관적 쓰기와 지연된
    서버 확인이 섞여 `dead→game→dead→game`처럼 보인다. 발행 로그(`net.publish` 후킹)와 상대방이
    관측한 상태로 판정해야 한다. `check-source-death-restart.cjs`가 그렇게 되어 있다.
@@ -197,4 +204,5 @@ cat remaining-work.json
 ### 품질 쪽 남은 것
 - 원본 일치 검수 0건 — 4-3, 4-4, 10-2, 11-4는 **사람이 클리어해본 적이 없다**.
 - 카메라의 원작 구속(플레이어를 화면 안에 가두기) 미이식.
-- 새 8인 공략 녹화(현재 런타임 기준)가 없어 기계적 회귀 판정 수단이 없다.
+- 8인 공략 재녹화 완료(9/10). 버그 후보 2건 — 4-3 열쇠가 지형 안이라 클리어 불가, 5-2 타이머 스위치가
+  +2초 대신 DeadTimer 를 멈춤. 근거는 `play/whole-route-replay-report.json` 의 `bugCandidates`.
