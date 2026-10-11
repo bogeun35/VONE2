@@ -21,7 +21,7 @@ function clean(inputs){
  }
  return out;
 }
-class RouteError extends Error{constructor(message,run){super(message+' @tick '+run.s.ticks+' '+run.brief());this.run=run;}}
+class RouteError extends Error{constructor(message,run){super(message+' @tick '+run.s.ticks+' '+run.brief());Object.defineProperty(this,'run',{value:run,enumerable:false});}}
 
 class Run{
  constructor(stage,count,{throwOnDeath=true}={}){
@@ -65,6 +65,27 @@ class Run{
  }
  // Single task convenience.
  run(id,task,opts){return this.together({[typeof id==='number'?'p'+id:id]:task},opts);}
+ // Authoring speed-up only: when ROUTE_CACHE names a JSON file, the inputs a
+ // segment produced are stored under (stage, label, digest of every earlier
+ // command) and fed back verbatim on the next run. The recorded commands are
+ // identical either way because the runtime is deterministic.
+ segment(label,fn){
+  const file=process.env.ROUTE_CACHE;
+  if(!file)return fn();
+  const crypto=require('node:crypto');
+  const prefix=crypto.createHash('sha256').update(JSON.stringify(this.commands.map(c=>[c.frames,c.key]))).digest('hex').slice(0,16);
+  const key=this.stage+'|'+label+'|'+prefix;
+  let cache={};try{cache=JSON.parse(fs.readFileSync(file,'utf8'));}catch{}
+  if(cache[key]){for(const [frames,inputs] of cache[key])for(let i=0;i<frames;i++)this.step(inputs);return;}
+  const before=this.commands.reduce((n,c)=>n+c.frames,0);
+  const result=fn();
+  // Collect the inputs fed since `before`.
+  const out=[];let seen=0;
+  for(const c of this.commands){const start=seen;seen+=c.frames;if(seen<=before)continue;const n=seen-Math.max(start,before);out.push([n,c.inputs]);}
+  try{cache=JSON.parse(fs.readFileSync(file,'utf8'));}catch{}
+  cache[key]=out;fs.writeFileSync(file,JSON.stringify(cache));
+  return result;
+ }
  export(meta={}){
   return {stage:this.stage,count:this.count,ticks:this.s.ticks,seconds:+(this.s.ticks/60).toFixed(3),status:this.s.status,deaths:this.s.deaths,
    commands:this.commands.map(({frames,inputs})=>({frames,inputs})),milestones:this.milestones,...meta};
@@ -110,6 +131,22 @@ const H={
    }
   })();
  },
+ // Steer horizontally toward x (number or function of p) until until(p,run)
+ // holds; optional jumpIf(p,run) starts a full held jump when grounded.
+ steer(run,id,x,until,{max=3000,jumpIf=null,hold=14,label='steer',tol=1.5,autoJump=false}={}){
+  return (function*(){
+   const p=run.p(id);let holdLeft=0,lastX=null,stuck=0;
+   for(let i=0;i<max;i++){
+    if(until(p,run))return;
+    const tx=typeof x==='function'?x(p,run):x,dir=p.x<tx-tol?1:p.x>tx+tol?-1:0;
+    stuck=(p.grounded&&lastX!==null&&Math.abs(p.x-lastX)<0.01&&dir)?stuck+1:0;lastX=p.x;
+    if(p.grounded&&holdLeft===0&&!p.jump&&((jumpIf&&jumpIf(p,run))||(autoJump&&stuck>=2)))holdLeft=hold;
+    const jump=holdLeft>0;if(holdLeft>0)holdLeft--;
+    yield {right:dir>0,left:dir<0,jump};
+   }
+   throw new RouteError(label+' timed out',run);
+  })();
+ },
  // Hold an input pattern for n ticks.
  hold(run,id,input,n){return (function*(){for(let i=0;i<n;i++)yield typeof input==='function'?input(i):input;})();},
  // Sequence several task factories (functions returning generators).
@@ -135,7 +172,7 @@ const H={
 // Used only while authoring; the recorded result is plain per-tick inputs.
 const DEFAULT_ACTIONS=[];
 for(const dir of [-1,0,1]){DEFAULT_ACTIONS.push({dir,ticks:6,jump:0},{dir,ticks:16,jump:14},{dir,ticks:8,jump:4});}
-function plan(run,id,goal,{others=null,actions=DEFAULT_ACTIONS,maxNodes=4000,heuristic=null,keyOf=null,maxDepth=120}={}){
+function plan(run,id,goal,{others=null,actions=DEFAULT_ACTIONS,maxNodes=4000,heuristic=null,keyOf=null,maxDepth=120,extra=null}={}){
  const pid=typeof id==='number'?'p'+id:id;
  const start={s:structuredClone(run.s),seq:[],depth:0};
  const key=keyOf||((s)=>{const p=s.players.find(q=>q.id===pid);return [Math.round(p.x/3),Math.round(p.y/3),p.grounded?1:0,Math.round(p.vy/60)].join(',');});
@@ -148,7 +185,7 @@ function plan(run,id,goal,{others=null,actions=DEFAULT_ACTIONS,maxNodes=4000,heu
    const s=structuredClone(cur.s),seq=[];let ok=true;
    if(a.jump&&s.players.find(q=>q.id===pid).jump)continue;
    for(let t=0;t<a.ticks;t++){
-    const me={right:a.dir>0,left:a.dir<0,jump:t<a.jump};
+    const me={right:a.dir>0,left:a.dir<0,jump:t<a.jump,...(extra||{})};
     const inputs=others?{...others(s,t+cur.seq.length)}:{};inputs[pid]=me;
     R.step(s,clean(inputs));seq.push(clean(inputs));
     if(s.status==='dead'){ok=false;break;}
@@ -163,5 +200,14 @@ function plan(run,id,goal,{others=null,actions=DEFAULT_ACTIONS,maxNodes=4000,heu
 }
 // Feed a planned (already joint) input list into the run.
 function feed(run,list){for(const inputs of list)run.step(inputs);}
+// Plan toward a target point (heuristic = distance) until goal(s) holds, then
+// feed the result. Throws when no plan is found.
+function nav(run,id,goal,target,opts={}){
+ const pid=typeof id==='number'?'p'+id:id;
+ const heuristic=opts.heuristic||(s=>{const p=s.players.find(q=>q.id===pid);return Math.hypot(p.x-target.x,(p.y-target.y)*(opts.yWeight||1));});
+ const list=plan(run,pid,goal,{...opts,heuristic});
+ if(!list)throw new RouteError('no plan for '+pid+' '+(opts.label||''),run);
+ feed(run,list);return list.length;
+}
 
-module.exports={R,Run,H,plan,feed,clean,loadCompiled,RouteError};
+module.exports={R,Run,H,plan,feed,nav,clean,loadCompiled,RouteError};

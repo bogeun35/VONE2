@@ -7,7 +7,7 @@
 //   node whole-route-record.cjs            # all rounds
 //   node whole-route-record.cjs st_w_01_02 # one round (others kept from file)
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
-const {R,Run,H}=require('./whole-route-kit.cjs');
+const K=require('./whole-route-kit.cjs'),{R,Run,H}=K;
 const OUT=path.join(__dirname,'play','whole-route-input-replay.json');
 const COUNT=8;
 
@@ -115,6 +115,104 @@ policies.st_w_01_02=function(run){
  if(!s.keyTaken)throw new Error('key not taken');
  run.mark('two-player tower takes the key');
  run.together(Object.fromEntries(s.players.map(p=>[p.id,H.enter(run,p.id)])),{label:'goal'});
+ run.mark('all players in goal');
+};
+
+// ------------------------------------------------------------------ 2편 1-3
+// Ported from stage03-route-review.cjs teamRoute: two volunteers alternate the
+// DashBoard launch into the FallingWall until it falls, then everyone crosses,
+// touches the key and enters.
+policies.st_w_01_03=function(run){
+ const s=run.s,count=run.count,bots=s.players.map(()=>({phase:'go',hold:0,launched:false}));
+ let marked=false;
+ for(let guard=0;guard<10000&&s.status==='play';guard++){
+  const inputs={},wall=s.motionState.walls[0];
+  for(let j=0;j<count;j++){
+   const p=s.players[j],b=bots[j];let input={};
+   if(wall.fallen){
+    if(p.grounded&&p.x>1040&&p.x<1800&&!b.hold&&!p.jump)b.hold=14;
+    input={right:true,up:true,jump:b.hold>0};b.hold=Math.max(0,b.hold-1);
+   }else{
+    if(j<count-2||s.ticks<(count-1-j)*100)continue;
+    if(p.forcedVx>1000)b.launched=true;
+    if(b.launched&&p.forcedVx<0){b.phase='return';b.launched=false;}
+    if(b.phase==='return'&&p.x<740&&p.y<255&&p.grounded)b.phase='go';
+    if(b.phase==='go'){input.right=true;input.jump=p.x>751&&p.x<854;}
+    else{input.left=true;if(p.grounded&&p.x<925&&!b.hold&&!p.jump)b.hold=14;input.jump=b.hold>0;b.hold=Math.max(0,b.hold-1);}
+   }
+   inputs[p.id]=input;
+  }
+  run.step(inputs);
+  if(wall.fallen&&!marked){run.mark('falling wall knocked over by dashes',{hits:wall.hits});marked=true;}
+ }
+ run.mark('all players in goal');
+};
+
+// ------------------------------------------------------------------ 2편 1-4
+// Seven switches must be held at once (SwitchObserver -> Key), three of them
+// open the gates in front of the other three. Holders are placed deepest-first
+// (S12 before S9, S6 before S11, S14 before S10), the eighth player takes the
+// key on the tall block, then holders leave in the reverse dependency order
+// and everyone climbs the staircase to the goal.
+policies.st_w_01_04=function(run){
+ const s=run.s,P=id=>run.p(id),sw=n=>s.map.switches.find(b=>b.name===n);
+ const on=(st,n)=>st.map.switches.find(b=>b.name===n).pressed;
+ const me=(st,id)=>st.players.find(q=>q.id===id);
+ const nav=(id,label,goal,target,opts={})=>run.segment(id+' '+label+' '+goal.toString()+JSON.stringify(target),()=>K.nav(run,id,goal,target,{maxNodes:8000,label,...opts}));
+ const task=(id,label,gen)=>run.run(id,gen,{label});
+ const launched=p=>p.vy<-24*60;
+ // floor/anywhere low -> top of the big block (via JumpStand1..6)
+ const toBigBlock=(id,x=1200)=>nav(id,'big block',st=>{const p=me(st,id);return p.grounded&&p.y<=914.5&&p.x>1150&&p.x<1250;},{x,y:914});
+ // big block top -> JumpStand14 -> tall block top
+ const toTall=(id)=>{
+  nav(id,'launch J11-J14',st=>{const p=me(st,id);return p.vy<-24*60&&p.x>1290;},{x:1420,y:880});
+  task(id,'rise onto tall block',H.steer(run,id,1530,(p)=>p.grounded&&p.y<=290.5&&p.x>1488,{label:'tall block'}));
+ };
+ // tall block top -> staircase -> goal
+ const tallToGoal=(id)=>{
+  task(id,'tall block right end',H.walkTo(run,id,1934,{tol:2}));
+  nav(id,'staircase to goal',st=>me(st,id).exit,{x:2240,y:98},{extra:{up:true}});
+ };
+ // right-region floor -> JumpStand15 -> back onto the tall block top
+ const rightToTall=(id)=>task(id,'J15 to tall block',H.steer(run,id,(p)=>p.vy<-24*60||!p.grounded&&p.y<900?1930:2040,(p)=>p.grounded&&p.y<=290.5&&p.x<1968,{label:'J15',autoJump:true}));
+ nav('p8','Switch12',st=>on(st,'Switch12'),{x:1136,y:914});
+ nav('p7','Switch9',st=>on(st,'Switch9'),{x:1520,y:1346});
+ nav('p6','Switch8',st=>on(st,'Switch8'),{x:1088,y:482});
+ nav('p5','S8 block',st=>{const p=me(st,'p5');return p.grounded&&p.y<=482.5&&p.x>=1056&&p.x<1066;},{x:1060,y:482});
+ task('p5','JumpStand7',H.seq(()=>H.hold(run,'p5',{},2),()=>H.steer(run,'p5',978,(p)=>launched(p),{label:'J7',max:600,jumpIf:(p)=>p.y<500})));
+ task('p5','fly to Switch6',H.steer(run,'p5',416,()=>sw('Switch6').pressed,{label:'S6'}));
+ run.mark('Switch12, Switch9, Switch8, Switch6 held');
+ toBigBlock('p4');
+ nav('p4','launch J10-J14',st=>{const p=me(st,'p4');return p.vy<-24*60&&p.x>1250;},{x:1300,y:880});
+ task('p4','fall into Gate1 tunnel',H.steer(run,'p4',(p)=>p.y>600?1530:1440,(p)=>p.grounded&&p.x>1455&&p.y>700&&p.y<800,{label:'gate1'}));
+ task('p4','Switch11',H.walkTo(run,'p4',1856,{tol:4}));
+ if(!sw('Switch11').pressed)throw new Error('Switch11 not pressed');
+ toBigBlock('p3');toTall('p3');
+ task('p3','drop to right region',H.steer(run,'p3',1980,(p)=>p.grounded&&p.y>900&&p.x>1968,{label:'drop right'}));
+ nav('p3','Switch14',st=>on(st,'Switch14'),{x:2320,y:434});
+ run.mark('Switch11 and Switch14 held');
+ toBigBlock('p2');toTall('p2');
+ task('p2','drop to right region',H.steer(run,'p2',1980,(p)=>p.grounded&&p.y>900&&p.x>1968,{label:'drop right'}));
+ nav('p2','Switch10',st=>on(st,'Switch10'),{x:1760,y:1010});
+ run.mark('all seven switches held',{pressed:s.map.switches.filter(b=>b.pressed).length,keyActive:s.keyActive});
+ toBigBlock('p1');toTall('p1');
+ task('p1','key',H.walkTo(run,'p1',s.map.key.x));
+ if(!s.keyTaken)throw new Error('key not taken');
+ run.mark('key taken');
+ tallToGoal('p1');
+ // Holders behind gates leave first while the gate holders stay.
+ nav('p2','out through Gate3',st=>{const p=me(st,'p2');return p.grounded&&p.x>1975&&p.y>900;},{x:2000,y:962});
+ rightToTall('p2');tallToGoal('p2');
+ nav('p7','out through Gate2',st=>{const p=me(st,'p7');return p.grounded&&p.x<1060;},{x:1000,y:1346});
+ toBigBlock('p7');toTall('p7');tallToGoal('p7');
+ nav('p4','out through Gate1',st=>{const p=me(st,'p4');return p.grounded&&p.y>900&&p.x<1460;},{x:1300,y:914});
+ toBigBlock('p4');toTall('p4');tallToGoal('p4');
+ run.mark('holders behind gates are out');
+ task('p3','leave Switch14',H.steer(run,'p3',2180,(p)=>p.grounded&&p.y>900,{label:'drop'}));
+ rightToTall('p3');tallToGoal('p3');
+ toBigBlock('p8');toTall('p8');tallToGoal('p8');
+ toBigBlock('p6');toTall('p6');tallToGoal('p6');
+ toBigBlock('p5');toTall('p5');tallToGoal('p5');
  run.mark('all players in goal');
 };
 
