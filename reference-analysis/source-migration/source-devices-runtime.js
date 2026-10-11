@@ -133,10 +133,15 @@ function afterStep(state,{players=[],platforms=[],dt=1/60,nativeTickRate=60,widt
    // no DeltaTime factor at all. 0x1817215cd/0x1817215d1 accumulate only
    // m_Speed into m_Distance, so the counter and the step disagree by a factor
    // of m_Speed - that mismatch is the original's, not ours: the sibling belt
-   // mover updateBeltPhase 0x1817210ce..0x18172115c keeps a bare unit vector in
-   // m_BeltVelo and multiplies by m_BeltSpeed exactly once, which is what this
-   // phase was evidently copied from. Reproduced as shipped; see
-   // thorn-speed-report.json.
+   // One tick advances m_Speed SQUARED. updatePhase phase 1 loads a unit vector
+   // from the direction table (0x181721482) and scales both components by m_Speed
+   // (0x181721498 and 0x1817214ab, each imul [rsi+0x40] + sar 0x10) before storing
+   // m_Velo at 0x1817214c1; phase 2 then multiplies m_Velo by m_Speed a second
+   // time (0x181721587 and 0x18172159d) before adding it to the position at
+   // 0x1817215b0/0x1817215b9. m_Distance meanwhile accumulates only m_Speed
+   // (0x1817215d1) toward calcMoveDistance's target, which is |edge - pos| plus a
+   // flat 0xc80000 = 200 margin (0x181721a28) and divides by nothing. The counter
+   // is therefore a lifetime, not a travelled length. See thorn-speed-report.json.
    const step=d.speed*d.speed*scale;
    d.x+=direction[0]*step;d.y+=direction[1]*step;d.distance+=d.speed*scale;
    // 0x1817215d5/0x1817215d9/0x1817215dd: m_Distance >= m_MoveDistance moves to

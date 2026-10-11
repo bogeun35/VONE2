@@ -142,28 +142,25 @@ cat remaining-work.json
 
 | 남긴 것 | 파일 | 상태 | 조치 |
 |---|---|---|---|
-| **Thorn 이동 = 틱당 `속도²`** | `source-devices-runtime.js:141` | 코드·테스트 반영, **리포트 없음** | §6.1 |
+| ~~Thorn 이동 = 틱당 `속도²`~~ | `source-devices-runtime.js` | ✅ **해결(2026-10-11)** — 속도²가 맞음 | `thorn-speed-report.json` |
 | **`DeadTimer` 지원** | `source-switchtimer-devices.js:181` | `supportedTypes`에 추가, **리포트 없음** | 검증 후 유지/되돌림 |
 | **`Text` 모듈** | `source-text-devices.js` + 테스트 | 작성됨, **런타임 미등록** | 리포트 없이 등록하지 말 것 |
 | **`WeightedLiftEx`** | — | 시작만 함 | 처음부터 |
 
-### 6.1 Thorn 속도 쟁점 (결론 내야 함)
-제보: 원작은 틱당 `m_Speed²`만큼 움직인다. 내가 1차 확인한 것:
-- `startMove 0x181721720`이 `[rcx+0x40]`의 절댓값을 **4**와 비교 → `+0x40 = m_Speed`, FP(16.16) 엡실론
-- `updatePhase` 페이즈1 `0x1817214ab`: `imul rcx,[rsi+0x40]` + `sar 0x10` → **m_Velo = 단위벡터 × m_Speed**
-- 페이즈2 `0x181721587`/`0x18172159d`: m_Velo에 **또 m_Speed를 곱해** 위치에 더함 → 틱당 `단위 × m_Speed²`
-- 페이즈2 `0x1817215d1`: **m_Distance는 틱당 m_Speed만** 누적
-- 정지 조건 `0x1817215d9`: `m_Distance >= m_MoveDistance`(`calcMoveDistance 0x181721910` 반환값)
+### 6.1 Thorn 속도 쟁점 — ✅ 해결됨
+**판정: 틱당 `m_Speed²`가 맞다.** 근거 전문은 `thorn-speed-report.json`.
 
-**미확인**: `calcMoveDistance`가 거리를 `m_Speed`로 나누는지. 나눠야 위 해석이 정합적이다.
-- 나눈다 → 현재 코드가 맞다(이미 속도²로 바뀌어 있음). 리포트만 쓰면 된다.
-- 안 나눈다 → **되돌려야 한다**: `source-devices-runtime.js:141`을
-  `d.x+=direction[0]*d.speed*scale; d.y+=direction[1]*d.speed*scale;`로, 테스트의 `336+36`을 `342`로.
+- phase1 `0x181721482`가 방향표에서 **FP 단위벡터**를 읽고, `0x181721498`/`0x1817214ab`가 두 성분을
+  각각 m_Speed로 곱해(`imul [rsi+0x40]` + `sar 0x10`) `0x1817214c1`에서 `m_Velo = 단위 × 속도`로 저장
+- phase2 `0x181721587`/`0x18172159d`가 그 m_Velo에 **또 m_Speed를 곱해** 위치에 더함 → 틱당 `속도²`
+- `m_Distance`는 틱당 `m_Speed`만 누적(`0x1817215d1`)
+- `calcMoveDistance 0x181721910`은 `|가장자리 − 위치|`에 **0xc80000(=200) 마진만 더하고**(`0x181721a28`)
+  **m_Speed로 나누지 않는다**. 즉 이 카운터는 이동 거리가 아니라 **수명**이다.
 
-**영향 범위**: 배포된 9라운드에는 **움직이는 Thorn이 하나도 없다**(224개 전부 `distance=0` 고정).
-라이브를 깰 위험 없음. 다만 앞으로 열릴 스테이지에는 영향이 크다.
-
----
+⚠️ **다시 6px/틱으로 "고치지" 말 것.** 작업 중 한 번 되돌렸다가 복원했다. 되돌린 근거는
+"6px/틱이면 가시가 맵 바닥에 정확히 멈춘다"였는데, 역어셈블 **꼬리의 +200 마진을 못 본** 계산이었다.
+실제 목표값은 392라 어느 해석에서도 바닥에 멈추지 않는다.
+**교훈: 숫자가 깔끔하게 맞아떨어지는 것은 증거가 아니라 가설이다. `ret`까지 읽고 판단할 것.**
 
 ## 7. 장치 하나를 추가하는 절차
 

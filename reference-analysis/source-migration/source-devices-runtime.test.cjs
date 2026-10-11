@@ -26,11 +26,11 @@ test('trigger queues event61 once then moves its named thorn at m_Speed squared,
  const p={id:'p',x:642,y:400,w:32,h:46};let events=[];
  for(let i=0;i<3;i++)events.push(...D.step(s,{players:[p],...map01_02}).events);
  assert.equal(events.length,1);assert.equal(events[0].target,'Thorn1');assert.equal(events[0].event,61);
- // ThornComponent.updatePhase phase 1 0x1817214c1 stores m_Velo = unit *
- // m_Speed, then phase 2 0x181721587 and 0x18172159d multiply that by m_Speed a
- // second time before 0x1817215b0/0x1817215b9 add it to m_Pos. One tick is
- // therefore 6*6 = 36 px, not 6 px. The earlier 342 assertion in this slot was
- // the single-multiply reading and did not match the shipped binary.
+ // phase 1 0x1817214c1 stores m_Velo = unit * m_Speed, phase 2 0x181721587 and
+ // 0x18172159d multiply it by m_Speed again before 0x1817215b0/0x1817215b9 add it
+ // to m_Pos, so one tick is 6*6 = 36 px. Do not "fix" this back to 6: the target
+ // from calcMoveDistance is a lifetime (|edge - pos| + 200, no m_Speed division),
+ // not a travelled length, so matching the two does not reproduce the binary.
  assert.equal(thorn.y,336+36);
  // 0x1817215cd/0x1817215d1 accumulate only m_Speed into m_Distance, and
  // calcMoveDistance 0x181721910 returns |mapHeight - y| + 0xc80000/65536 with no

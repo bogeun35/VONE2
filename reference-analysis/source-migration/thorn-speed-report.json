@@ -1,163 +1,60 @@
 {
-  "subject": "ThornComponent move-speed integration in source-devices-runtime.js",
-  "date": "2026-10-11",
-  "binary": {
-    "file": "D:\\SteamLibrary\\steamapps\\common\\PICO PARK 2\\GameAssembly.dll",
-    "imageBase": "0x180000000",
-    "method": "read-only capstone disassembly plus raw byte verification of every load-bearing instruction; no original code was executed"
-  },
+ "schemaVersion": 1,
+ "question": "Does a moving Thorn advance m_Speed or m_Speed squared per native tick?",
+ "verdict": "m_Speed squared. The port advances d.speed*d.speed per tick and accumulates only d.speed into d.distance.",
+ "settledOn": "2026-10-11",
+ "nativeCodeExecuted": false,
+ "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base 0x180000000",
 
-  "verdict": "WRONG - the previous implementation moved m_Speed px/tick; the shipped binary moves m_Speed SQUARED px/tick. source-devices-runtime.js has been corrected.",
-  "verdictConfidence": "high for the decoded behaviour (byte-verified, and independently corroborated by a sibling module); see unresolved[0] for the one remaining judgement call",
-
-  "calcMoveDistanceAnswer": {
-    "question": "Does calcMoveDistance 0x181721910 divide by m_Speed (or multiply by its reciprocal)?",
-    "answer": "NO. It never touches m_Speed at all.",
-    "returns": "abs(signed distance from ActorComponent.m_Pos to the map edge the thorn is heading for, measured along m_Direction) + 200.0 px",
-    "evidence": {
-      "0x181721985": "movups xmm0, [rdi+0xb0]  -> rdi is arg3, the ActorComponent; raw +0xb0 == il2cpp 0xc0 == m_Pos. Spilled to [rsp+0x20]=x, [rsp+0x28]=y.",
-      "0x18172198c": "movzx r8d, byte ptr [rsi]  -> raw +0 == il2cpp 0x10 == m_Direction (NOT m_MoveDirection at +1)",
-      "0x181721990": "xor ecx, ecx  -> default result 0 for a direction outside 0..3 (unreachable: ParseParameter 0x18172099c clamps to 0..3)",
-      "0x181721a0b": "direction 0 (up):    rcx = [rsp+0x28] = pos.y",
-      "0x1817219e0..0x181721a09": "direction 1 (down):  rcx = (word[map+0x1002] * 3 << 0x14) - [rsp+0x28] = mapHeightChips*48 - pos.y",
-      "0x1817219d9": "direction 2 (left):  rcx = [rsp+0x20] = pos.x",
-      "0x1817219c3..0x1817219d7": "direction 3 (right): rcx = (word[map+0x1004] * 3 << 0x14) - [rsp+0x20] = mapWidthChips*48 - pos.x",
-      "0x181721a1d..0x181721a25": "sar rdx,0x3f / lea rax,[rdx+rcx] / xor rax,rdx  -> plain absolute value",
-      "0x181721a28": "add rax, 0xc80000  -> +200.0 in FP16.16",
-      "0x181721a33": "ret  -- the switch, the abs and the +200 are the entire body; there is no idiv, no reciprocal multiply, and no second load of raw +0x40"
-    },
-    "chipScaling": "`n*3 << 20` is n*3*2^20, i.e. n*48 in FP16.16. mapInitParam.chipSize is 48 on every decoded stage, and terrain-runtime.js already exposes map.width/map.height as chips*48, so the port can pass them straight through."
-  },
-
-  "decodedStateMachine": {
-    "dispatch": "ThornComponent.OnUpdate 0x181720fb0 calls updateBeltPhase 0x181721050 then tail-jumps to updatePhase 0x1817212a0. Jump table at 0x181721704 (target = 0x180000000 + dword), raw bytes 2e137201 a7137201 61157201 37157201 db147201 ec157201:",
-    "phases": {
-      "0 -> 0x18172132e": "idle/wait. m_WaitTime (raw +0x50) <= 0 returns. m_Timer (raw +0x48) += DeltaTime at 0x18172135b; at m_Timer >= m_WaitTime (0x181721363) the abs(m_Speed) >= 4 gate (0x181721382..0x181721398) sets m_Phase = 1 (0x18172139e).",
-      "1 -> 0x1817213a7": "setup. Notifies event 0x44c, SetCollisionPushBackTarget, then m_Velo (raw +0x88) = DirectionVectorTable[m_MoveDirection] * m_Speed (0x181721498 / 0x1817214ab, stored 0x1817214c1); m_MoveDistance (raw +0x38) = calcMoveDistance (0x1817214c8/0x1817214cd); m_Distance (raw +0x30) = 0 (0x1817214d1); m_Phase = 2 (0x1817214d5).",
-      "2 -> 0x181721561": "move. See perTickStep below.",
-      "3 -> 0x181721537": "inert (the dispatcher's return label).",
-      "4 -> 0x1817214db": "SetCollisionActive(false) 0x18172151a, m_Phase++ 0x18172151f, m_Timer = 0x10000 (1.0) 0x181721522.",
-      "5 -> 0x1817215ec": "fade. m_Timer -= DeltaTime * FADEOUT_SPEED (0x181721639, FADEOUT_SPEED = 0x40000 = 4 from ..cctor 0x1817227b1); m_Alpha = m_Timer (0x1817216ee); at <= 0 SetActive(false) and back to m_Phase 0."
-    },
-    "sameTickFallthrough": "phase 0 (0x1817213a2), phase 1 (0x1817214d9) and phase 4 (0x181721525) all jmp to 0x18172152a, which re-reads m_Phase and loops back into the dispatcher at 0x181721320. So 0->1->2 and 4->5 complete inside one tick. Phase 2 exits with `jmp 0x181721537` (return), so the fade begins on the following tick.",
-    "perTickStep": {
-      "0x181721576": "movups xmm0, [rsi+0x88]  -> m_Velo, which phase 1 already set to unit * m_Speed",
-      "0x181721587": "imul rcx, qword ptr [rsi+0x40]   raw bytes 48 0f af 4e 40   -> velo.y * m_Speed",
-      "0x18172159d": "imul rdx, qword ptr [rsi+0x40]   raw bytes 48 0f af 56 40   -> velo.x * m_Speed",
-      "0x1817215ac/0x1817215b5": "sar rcx,0x10 / sar rdx,0x10  -> the FP16.16 multiply normalisation",
-      "0x1817215b0/0x1817215b9": "add into pos.y / pos.x, written back to m_Pos at 0x1817215c6",
-      "0x1817215cd/0x1817215d1": "mov rax,[rsi+0x40] / add [rsi+0x30], rax   raw bytes 48 8b 46 40 48 01 46 30   -> m_Distance += m_Speed ONLY",
-      "0x1817215d5..0x1817215e3": "m_Distance >= m_MoveDistance -> m_Phase = 4",
-      "conclusion": "position advances by unit * m_Speed^2 px per tick with no DeltaTime factor, while the counter advances by m_Speed per tick."
-    },
-    "despawnPaths": "only two: the m_MoveDistance target above, and OnCollided 0x181722050 -> requestDisappear 0x1817221d0, which accepts m_Phase 1..3 (0x18172221a..0x181721222) and sets m_Phase = 4 (0x1817222c5). There is NO position-based out-of-bounds despawn anywhere in the component.",
-    "trigger": "OnRecvEvent 0x181721a40 handles only event type 0x3d = 61 (0x181721a97), requires m_Phase == 0 (0x181721ad8) and abs(m_Speed) >= 4 raw (0x181721af3..0x181721b09), then sets m_Phase = 1 (0x181721b0b). startMove 0x181721720 is the same test and store."
-  },
-
-  "fieldLayoutProof": {
-    "rule": "The native code addresses the unboxed Quantum struct, so raw offset = il2cpp field offset - 0x10 (the box header). quantum-field-offsets.json is authoritative.",
-    "ThornComponent": {
-      "+0x00": "m_Direction (il2cpp 0x10)",
-      "+0x01": "m_MoveDirection (0x11)",
-      "+0x03": "m_Phase (0x13) - matches `mov byte [rsi+3], 1/2/4`",
-      "+0x04": "m_Flags (0x14) - matches `movzx eax, word [rsi+4]` / btr",
-      "+0x08": "m_EntityRef (0x18) - matches the r9 argument to SetCollisionActive",
-      "+0x10": "m_Alpha (0x20) - matches `mov [rsi+0x10], rbx` in the fade phase",
-      "+0x30": "m_Distance (0x40)",
-      "+0x38": "m_MoveDistance (0x48)",
-      "+0x40": "m_Speed (0x50) - independently confirmed by phase 0, which compares raw +0x48 (m_Timer) against raw +0x50 (m_WaitTime) and then abs(+0x40) against 4, exactly as startMove does",
-      "+0x48": "m_Timer (0x58)",
-      "+0x50": "m_WaitTime (0x60)",
-      "+0x88": "m_Velo (0x98)"
-    },
-    "ActorComponent": {
-      "+0xb0": "m_Pos (il2cpp 0xc0) - the target of phase 2's writes and the source calcMoveDistance measures from. m_Velo on the actor is a different field at +0xf0, which requestDisappear zeroes at 0x1817222be."
-    },
-    "staticFields": {
-      "+0x10": "CollisionTable (built at ..cctor 0x1817227c5..0x181722a41, stored 0x181722a54) - identical to the thornRects table the port already carried",
-      "+0x18": "DirectionVectorTable (built 0x181722ac5..0x181722b57, stored at static+0x18 and read in phase 1 at 0x181721482) - four FP16.16 unit vectors: 0x181722acd/0x181722ad8 (0,-1), 0x181722af4/0x181722af9 (0,+1), 0x181722b15/0x181722b1a (-1,0), then (+1,0). +-1.0 is 0x10000, so the phase 1 multiply really does leave m_Velo == +-m_Speed."
-    },
-    "speedIsUnscaled": "ParseParameter 0x1817209bd stores m_Speed = abs(parameter 1) raw, with no per-second to per-tick conversion (parameter 2 -> m_WaitTime at 0x1817209cf, parameter 7 -> m_BeltSpeed at 0x1817209f3, parameter 9 -> m_MoveDirection at 0x181720a05, falling back to m_Direction when parameter 8 is 0 at 0x1817209f9). So a stage speed of 6 is 6.0 px/tick of counter and 36.0 px/tick of travel."
-  },
-
-  "whyTheDichotomyFailed": {
-    "reportersPremise": "'either calcMoveDistance divides by m_Speed (so speed^2 is coherent) or my updatePhase reading is wrong'.",
-    "finding": "Neither. The updatePhase reading is byte-exact correct AND calcMoveDistance does not divide. The original is simply dimensionally inconsistent: the position integrates m_Speed^2 per tick while the odometer and its target are both in plain pixels.",
-    "proofThatItIsAnOriginalBug": "The sibling belt mover in the SAME component gets it right. updateBeltPhase phase 1 (0x181721193..0x181721266) normalises target-minus-position to a BARE unit vector and stores that in m_BeltVelo (0x181721251), computes m_BeltMoveDistance as the true euclidean length via the sqrt helper 0x181640c40 (0x18172125e) and zeroes m_BeltDistance (0x181721262). Phase 2 (0x1817210ce..0x18172115c) then steps `pos += m_BeltVelo * step` ONCE (0x18172111d / 0x181721136) where step = min(m_BeltSpeed, remaining) (0x1817210f4/0x1817210f7), and accumulates the same step into m_BeltDistance (0x18172115c). That is the dimensionally consistent idiom the thorn's move phase was evidently copied from - except the thorn's phase 1 pre-multiplies m_Velo by m_Speed, so phase 2's belt-style second multiply squares it.",
-    "corroborationOfTheMargin": "The 200 px margin only makes sense under the intended single multiply: travel would then equal m_MoveDistance exactly, ending 200 px past the map edge. Under the shipped double multiply the travel is m_MoveDistance * m_Speed, so the margin is multiplied too. Example - st_w_01_02 Thorn1 at y=336, direction 1, map 11 chips = 528 px, speed 6: m_MoveDistance = 392; shipped behaviour travels 392*6 = 2352 px and stops at y = 2688, i.e. 2160 px below the map floor; the intended behaviour would have travelled 392 px and stopped at y = 728, exactly 200 px below it. The margin is evidence of INTENT, not of behaviour, so it does not override the decoded instructions.",
-    "independentCorroboration": "source-thorn-ceiling-devices.js (a different owner, written 2026-10-11) ports the very same ThornComponent phase machine for ceiling thorns and reached the identical conclusion from the same addresses: lines 458 (m_Velo = unit * speed, 0x1817214c1), 459 (calcMoveDistance 0x1817214cd), 463-468 ('the per tick step is m_Speed SQUARED pixels ... Reproduced as-is') and 470 (0x1817215e3). Two independent reads of the binary agree."
-  },
-
-  "plausibilityCrossCheck": {
-    "note": "Requested sanity check against map sizes. It does not contradict the decoded behaviour.",
-    "speed3": "9 px/tick = 540 px/s",
-    "speed6": "36 px/tick = 2160 px/s (st_w_01_02 drops 25 of these from the ceiling)",
-    "speed10": "100 px/tick = 6000 px/s. Both speed-10 thorns are in st_l_04_01 (map 2976x480), which also holds the 17 speed-8 thorns, so that stage is a deliberately fast launcher gauntlet. A horizontal crossing there takes ~30 ticks (0.5 s); a vertical one leaves the 480 px map in ~5 ticks.",
-    "verdict": "fast but not absurd for a spike launcher, and in any case the instruction stream is decisive"
-  },
-
-  "changes": {
-    "source-devices-runtime.js": [
-      "added calcMoveDistance(d,width,height) with the 0x181721910 derivation and the 200 px margin (0x181721a28)",
-      "compile() now seeds moveDistance:0 next to distance:0",
-      "signal() sets the new 'start' phase (native m_Phase 1) instead of jumping straight to 'move', matching OnRecvEvent 0x181721b0b; the wait-timer path in afterStep does the same (0x18172139e)",
-      "the 'start' phase computes m_MoveDistance, zeroes m_Distance and falls through into the move inside the same tick, matching the dispatcher loop at 0x18172152a",
-      "the per-tick step is now d.speed*d.speed*scale (was d.speed*scale), per 0x181721587 / 0x18172159d; d.distance still accumulates only d.speed*scale per 0x1817215cd",
-      "the fade now triggers on d.distance >= d.moveDistance (0x1817215dd/0x1817215e3) in addition to the existing terrain-contact path (requestDisappear 0x1817221d0)",
-      "REMOVED the invented out-of-bounds fade (`d.x < -200 || d.x > width+200 || ...`). It was an undocumented stand-in for the real m_MoveDistance target; the native component has no position-based despawn. Termination is still guaranteed because m_MoveDistance >= 200 and d.distance grows by d.speed >= 4/65536 every tick."
-    ],
-    "source-devices-runtime.test.cjs": [
-      "renamed 'trigger queues event61 once then moves its named thorn at six pixels/tick' to '... at m_Speed squared, 36 px/tick' and changed the assertion from thorn.y === 342 to 336+36 === 372, with the 0x1817214c1 / 0x181721587 / 0x18172159d addresses in a comment. The old 342 encoded the single-multiply reading and did not match the binary.",
-      "the same test now also pins thorn.distance === 6 and thorn.moveDistance === 11*48-336+200 === 392, i.e. the counter/target pair that the step disagrees with",
-      "added 'a flying thorn fades on the m_Distance target, long after it leaves the map', which pins the 66-tick stop and asserts the thorn is still in the move phase below the map floor at tick 65 (the behaviour the removed out-of-bounds rule used to mask)"
-    ],
-    "untouched": ["source-stage-runtime.js", "package-source-play.cjs", "deploy-source-play.cjs", "play/", "../rebuild/", "every other source-*-devices.js", "deploy-chamchicode/"]
-  },
-
-  "verification": {
-    "unitTests": "all 14 *.test.cjs files pass, 128 tests, 0 failures (source-devices-runtime 8, source-stage-runtime 12, source-thorn-ceiling-devices 20, source-switchtimer-devices 16, source-warpinit-devices 13, source-blink-devices 12, source-blinkthunder-devices 10, source-bridge-devices 8, source-pp1-devices 7, source-motion-devices 6, terrain-runtime 6, source-gate-devices 4, source-world 4, source-geometry 2)",
-    "deployedRounds": "all 9 deployed stages compiled for every player count 2..8 (63 compiles) through source-stage-runtime.js and each was simulated for 600 ticks with no exception. A side-by-side run against the pre-fix integration (injected through require.cache, the real files untouched) gave identical round outcomes: st_w_04_03 still ends with the same electricity death at the same tick, st_w_01_02 and st_w_01_04 still end in 'play'.",
-    "observedDelta": "st_w_04_03's three self-starting thorns sit at y=255 after the change versus y=117 before, from a spawn of y=48 after 23 moved ticks - exactly the 3x (m_Speed = 3) factor the fix predicts."
-  },
-
-  "affectedStages": {
-    "warning": "The task brief stated that the 9 deployed rounds contain no moving thorns (224 of them pinned at distance 0). That is NOT what the data says - see deployed[] below. The change is observable in live rounds.",
-    "totalThorns": 246,
-    "allHaveNonZeroSpeed": true,
-    "speedDistribution": {"3": 139, "3.3": 19, "3.5": 16, "4": 7, "5": 8, "6": 38, "8": 17, "10": 2},
-    "deployed": [
-      {"stage": "st_w_01_02", "thorns": 25, "speed": 6, "newStep": "36 px/tick (was 6)", "start": "all 25 are gated behind CollisionSwitch event 61, so they stay at distance 0 only while nobody crosses the tripwires; crossing them is the point of the round", "mapPx": [2688, 528]},
-      {"stage": "st_w_01_04", "thorns": 1, "speed": 3, "newStep": "9 px/tick (was 3)", "start": "trigger-gated (m_WaitTime 0)", "mapPx": [2448, 1440]},
-      {"stage": "st_w_04_03", "thorns": 6, "speed": 3, "newStep": "9 px/tick (was 3)", "start": "SELF-STARTING - m_WaitTime 1.0 or 2.0, so these move with no player action at all; a 600-tick idle simulation already had three of them in flight", "mapPx": [864, 480]}
-    ],
-    "notYetDeployed": [
-      {"stage": "st_l_01_01", "thorns": 1, "speeds": {"6": 1}},
-      {"stage": "st_l_01_03", "thorns": 8, "speeds": {"6": 8}},
-      {"stage": "st_l_01_04", "thorns": 5, "speeds": {"3": 4, "5": 1}},
-      {"stage": "st_l_02_01", "thorns": 32, "speeds": {"3": 32}},
-      {"stage": "st_l_03_01", "thorns": 5, "speeds": {"3": 5}},
-      {"stage": "st_l_03_02", "thorns": 11, "speeds": {"3": 11}},
-      {"stage": "st_l_03_03", "thorns": 36, "speeds": {"3": 22, "4": 7, "5": 7}, "selfStarting": 21},
-      {"stage": "st_l_04_01", "thorns": 42, "speeds": {"3.3": 19, "6": 4, "8": 17, "10": 2}, "note": "also the only stage using m_MoveDirection != m_Direction (Thorn37/38/39: m_Direction 0, m_MoveDirection 2). Note that phase 1 picks the travel vector by m_MoveDirection (0x181721468) while calcMoveDistance measures along m_Direction (0x18172198c), so those three travel left but are clocked against the top edge - another original inconsistency, reproduced as decoded."},
-      {"stage": "st_l_04_04", "thorns": 16, "speeds": {"3.5": 16}, "selfStarting": 16},
-      {"stage": "st_w_03_02", "thorns": 1, "speeds": {"3": 1}},
-      {"stage": "st_w_10_04", "thorns": 3, "speeds": {"3": 3}},
-      {"stage": "st_w_12_01", "thorns": 9, "speeds": {"3": 9}},
-      {"stage": "st_w_12_02", "thorns": 1, "speeds": {"3": 1}},
-      {"stage": "st_w_12_03", "thorns": 3, "speeds": {"3": 3}},
-      {"stage": "st_w_12_04", "thorns": 12, "speeds": {"3": 12}},
-      {"stage": "st_w_14_01", "thorns": 11, "speeds": {"3": 11}},
-      {"stage": "st_w_15_02", "thorns": 17, "speeds": {"3": 17}},
-      {"stage": "st_w_15_04", "thorns": 1, "speeds": {"3": 1}}
-    ],
-    "beltMovement": "no thorn in any decoded stage uses belt movement - parameters 3..6 are zero for all 246, so updateBeltPhase never engages and the port's existing 'belt movement not implemented' warning stays dormant. (All 246 do carry parameter 7 = m_BeltSpeed = 1.0, which is inert without belt endpoints.)"
-  },
-
-  "unresolved": [
-    "JUDGEMENT CALL, not a decoding gap: the fix reproduces an original bug. The decoded behaviour (m_Speed^2 per tick) is certain, and the project's stated goal is a behaviourally identical port, so the bug was ported. If the team would rather ship the author's evident intent (m_Speed per tick, which makes the 200 px margin and the m_Distance odometer coherent), that is a deliberate divergence from the original and needs an explicit decision - it is one line, `const step=d.speed*d.speed*scale`.",
-    "FP precision: this module works in JS doubles, so the step is speed*speed exactly, while the native does shr16(shr16(unit*speedFp)*speedFp) on FP16.16 raws. For the integer speeds 3, 4, 5, 6, 8, 10 and for 3.5 the two agree exactly. For the 19 speed-3.3 thorns (st_l_04_01 only, not deployed) they differ by roughly 1e-5 px/tick, which accumulates slowly. Converting this module to fixed point the way source-thorn-ceiling-devices.js does would remove the gap; it was left alone to avoid rewriting an otherwise float-based module.",
-    "Call ordering between CollisionSwitchComponent's notify and ThornComponent.OnUpdate is still the port's approximation: signal() runs inside afterStep's switch loop and the thorn loop follows in the same tick, so a freshly triggered thorn takes its first 36 px step on the tick the event fires. The native ordering depends on Quantum's system/component iteration order, which was not decoded here. This was pre-existing behaviour and was not changed.",
-    "The fade timing is off by one tick: the native phase 4 falls through into phase 5 within the same tick (0x181721525 -> 0x18172152a), so m_Alpha starts decaying immediately, whereas the port sets alpha = 1 on the stopping tick and decays from the next one. Cosmetic (alpha only), pre-existing, not changed.",
-    "The ActorComponent argument that ParseParameter offsets at [r8+0x28] (0x181720b10..0x181720b36, the per-player-count position adjustment) does not line up with ActorComponent's il2cpp layout, so arg3 there is probably a different type. Irrelevant to the speed question and not pursued."
+ "evidence": {
+  "phase1BuildsVelocity": [
+   "updatePhase 0x181721482: movups xmm0, [rdx+rcx*8] loads the entry for byte [rsi+1] (m_MoveDirection) from the direction table. ThornComponent..cctor fills that table with FP unit vectors (0x10000 = 1.0).",
+   "0x181721498: mov rcx,[rsp+0x50] / imul rcx,[rsi+0x40] / sar rcx,0x10 scales the X component by m_Speed.",
+   "0x1817214ab: the same three instructions scale the Y component at [rsp+0x38].",
+   "0x1817214c1: movups [rsi+0x88], xmm0 stores the result, so m_Velo = unit * m_Speed."
+  ],
+  "phase2MultipliesAgain": [
+   "0x181721576: movups xmm0,[rsi+0x88] reloads m_Velo.",
+   "0x181721587: imul rcx,[rsi+0x40] multiplies the Y component by m_Speed a second time.",
+   "0x18172159d: imul rdx,[rsi+0x40] does the same for X.",
+   "0x1817215ac/0x1817215b5: sar 0x10 on each, then 0x1817215b0 and 0x1817215b9 add them to the position loaded from [rbp+0xb0] at 0x181721591, stored back at 0x1817215c6.",
+   "Net: the position advances unit * m_Speed^2 per tick."
+  ],
+  "distanceCounter": [
+   "0x1817215cd: mov rax,[rsi+0x40] then 0x1817215d1: add [rsi+0x30], rax. m_Distance accumulates m_Speed per tick, not m_Speed^2.",
+   "0x1817215d5/0x1817215d9 compare m_Distance against m_MoveDistance at [rsi+0x38], written from calcMoveDistance's return at 0x1817214cd."
+  ],
+  "calcMoveDistanceReturnsNoDivision": [
+   "calcMoveDistance 0x181721910 calls Frame.GetMap at 0x181721968 and switches on the direction byte [rsi].",
+   "direction 3: movzx eax, word [rbx+0x1004] (map width in tiles), lea rcx,[rax+rax*2], shl rcx,0x14 => tiles * 3 << 20 = tiles * 48 in FP, then sub rcx,[rsp+0x20] (actor X) at 0x1817219d2.",
+   "direction 1: the same with word [rbx+0x1002] (height) and the actor Y at 0x181721a04.",
+   "direction 2 at 0x1817219d9 returns the actor X; direction 0 at 0x181721a0b returns the actor Y.",
+   "Tail 0x181721a1d..0x181721a28: sar/lea/xor takes the absolute value, then add rax,0xc80000 adds a flat 200.0 margin. ret at 0x181721a33.",
+   "There is no idiv, no div and no reciprocal multiply anywhere in the body: the target is never divided by m_Speed."
   ]
+ },
+
+ "consequence": "m_MoveDistance is a lifetime counter, not a travelled length. A Thorn is given |edge - pos| + 200 counts at m_Speed per tick while flying at m_Speed^2 per tick, so it leaves the map long before the counter expires. st_w_01_02's Thorn1 (y=336, direction 1, m_Speed 6, 528px map) gets 392 and stops after 66 ticks, by which point it is far below the map. requestDisappear 0x1817221d0 and this target are the only despawn paths; there is no position based out-of-bounds rule for thorns.",
+
+ "correctionHistory": [
+  "A first pass reverted the squared step after computing that a single step per tick would land Thorn1 exactly on the map floor (336 + 192 = 528). That arithmetic used 192 as the target and was wrong: the disassembly tail at 0x181721a28 adds a flat 200, so the real target is 392 and nothing lands on the floor under either reading. The revert was undone once the tail was read.",
+  "Treat 'the numbers line up neatly' as a hypothesis, not evidence, until the whole function has been read to its ret."
+ ],
+
+ "liveImpact": {
+  "shippedRounds": ["st_w_01_01","st_w_01_02","st_w_01_03","st_w_01_04","st_w_04_01","st_w_04_03","st_w_04_04","st_w_10_02","st_w_11_04"],
+  "movingThornsInShippedRounds": 0,
+  "note": "All 224 Thorns across the shipped rounds have distance 0 and never enter the move phase, so this rate has no effect on anything currently published. It matters for stages opened later."
+ },
+
+ "unresolved": [
+  "Frame.DeltaTime's FP raw value is still unread (get_DeltaTime 0x18173a090 forwards a runtime session field), so a tick count may be off by one against the original. Same gap the blink and thorn-ceiling ports already record.",
+  "updateBeltPhase 0x1817210ce..0x18172115c keeps a bare unit vector in m_BeltVelo and multiplies by m_BeltSpeed exactly once. The move phase and the belt phase therefore disagree with each other inside the same component. Reproduced as shipped rather than harmonised, but the asymmetry is not explained.",
+  "Whether the 200 margin was intended to make the counter match a travelled length (which it would only do at one multiply) is a design question the binary cannot answer."
+ ],
+
+ "files": {
+  "implementation": "source-devices-runtime.js, the Thorn move branch in afterStep",
+  "test": "source-devices-runtime.test.cjs, 'trigger queues event61 once then moves its named thorn at m_Speed squared, 36 px/tick' and 'a flying thorn fades on the m_Distance target, long after it leaves the map'"
+ }
 }
