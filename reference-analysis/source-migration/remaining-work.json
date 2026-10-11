@@ -1,0 +1,497 @@
+{
+ "generated": "2026-10-11",
+ "note": "compile() blockers per stage with the whitelist guard removed. okCounts = player counts that compile.",
+ "fullyCompiling": [
+  "st_w_01_01",
+  "st_w_01_02",
+  "st_w_01_03",
+  "st_w_01_04",
+  "st_w_04_01",
+  "st_w_04_03",
+  "st_w_04_04",
+  "st_w_10_02",
+  "st_w_11_04"
+ ],
+ "partiallyCompiling": [],
+ "stages": [
+  {
+   "id": "st_w_01_01",
+   "okCounts": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "blockers": []
+  },
+  {
+   "id": "st_w_01_02",
+   "okCounts": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "blockers": []
+  },
+  {
+   "id": "st_w_01_03",
+   "okCounts": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "blockers": []
+  },
+  {
+   "id": "st_w_01_04",
+   "okCounts": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "blockers": []
+  },
+  {
+   "id": "st_w_02_01",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: StepEnemy, DistanceConstraint, WarpAll, WeightedLiftEx"
+   ]
+  },
+  {
+   "id": "st_w_02_02",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: TouchEnergy, Text, WeightedLiftSingle",
+    "Unsupported source devices: Text, WeightedLiftSingle, TouchEnergy"
+   ]
+  },
+  {
+   "id": "st_w_02_03",
+   "okCounts": [],
+   "blockers": [
+    "Runtime scope supports original world01-01 switchType 0 only",
+    "Unsupported source devices: DistanceConstraint, WarpAll, CollisionConstraintMove, SwitchRect, FrontSwitch, SwitchTargetGroup"
+   ]
+  },
+  {
+   "id": "st_w_02_04",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: ColorBox, Text, MoveWall, LinePathLift, Wind, TouchEnergy"
+   ]
+  },
+  {
+   "id": "st_w_03_01",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: Blackout, SearchLight, CheckPoint"
+   ]
+  },
+  {
+   "id": "st_w_03_02",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: LinePathLift, DamageRect"
+   ]
+  },
+  {
+   "id": "st_w_03_03",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: PlayerMagnet, LinePathLift, DamageRect, Text"
+   ]
+  },
+  {
+   "id": "st_w_03_04",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: PlayerMagnet, ColorBox, Arrangement, DummyPlayer, DummyColorBox, Text, DummyGoal"
+   ]
+  },
+  {
+   "id": "st_w_04_01",
+   "okCounts": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "blockers": []
+  },
+  {
+   "id": "st_w_04_02",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: Gear, SwitchTargetGroup"
+   ]
+  },
+  {
+   "id": "st_w_04_03",
+   "okCounts": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "blockers": []
+  },
+  {
+   "id": "st_w_04_04",
+   "okCounts": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "blockers": []
+  },
+  {
+   "id": "st_w_05_01",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: CoinObserver, WeightedLift, Coin"
+   ]
+  },
+  {
+   "id": "st_w_05_02",
+   "okCounts": [],
+   "blockers": [
+    "Runtime scope supports first-stage upward switches only"
+   ]
+  },
+  {
+   "id": "st_w_05_03",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: CoinObserver, PlayerMagnet, Coin"
+   ]
+  },
+  {
+   "id": "st_w_05_04",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: PlayerWarpGun, UpDownLift, Text"
+   ]
+  },
+  {
+   "id": "st_w_06_01",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: BattlePlanePlayer, Text, MapBlockReplacer, PlayerGun, ShootingEnemySpawner, MapBreakBlockRect, OptimizedBulletObserver"
+   ]
+  },
+  {
+   "id": "st_w_06_02",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: BattlePlanePlayer, MapBlockReplacer, PlayerGun, ShootingEnemySpawner, DamageRect, OptimizedBulletObserver"
+   ]
+  },
+  {
+   "id": "st_w_06_03",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: PlaneObstacle, PlayerGun, BattlePlanePlayer"
+   ]
+  },
+  {
+   "id": "st_w_06_04",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: BattlePlanePlayer, MapBlockReplacer, PlayerGun, PlayerGuard, ShootingEnemySpawner, ShootingEnemyBoss, OptimizedBulletObserver, BgmChanger, SwitchTargetGroup, ShootingSuperApple"
+   ]
+  },
+  {
+   "id": "st_w_07_01",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: HalfOperator, StepEnemy, Wind, ArrowSign"
+   ]
+  },
+  {
+   "id": "st_w_07_02",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: Bowwow2Enemy"
+   ]
+  },
+  {
+   "id": "st_w_07_03",
+   "okCounts": [],
+   "blockers": [
+    "Rect population offset encoding requires further verification:  slot 6",
+    "Unverified Bridge geometry/count scaling/push mode"
+   ]
+  },
+  {
+   "id": "st_w_07_04",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: Ghost, FloatingThorn, Lift, CheckPoint"
+   ]
+  },
+  {
+   "id": "st_w_08_01",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: TargetPlayer, BasketPlayer, AppleController, Apple"
+   ]
+  },
+  {
+   "id": "st_w_08_02",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: CannonPlayer, ThrowBallBasket, ThrowBallController"
+   ]
+  },
+  {
+   "id": "st_w_08_03",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: TargetPlayer, BasketPlayer, AppleController, Apple"
+   ]
+  },
+  {
+   "id": "st_w_08_04",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: CannonPlayer, ThrowBallBasket, ThrowBallController"
+   ]
+  },
+  {
+   "id": "st_w_09_01",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: Blackout, TopViewPlayer, BatEnemy, FallingCage"
+   ]
+  },
+  {
+   "id": "st_w_09_02",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: TopViewPlayer, CapturingTarget, CapturingConstraint"
+   ]
+  },
+  {
+   "id": "st_w_09_03",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: Blackout, TopViewPlayer, BatEnemy, Text"
+   ]
+  },
+  {
+   "id": "st_w_09_04",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: TopViewPlayer, DistanceConstraint, Wind"
+   ]
+  },
+  {
+   "id": "st_w_10_01",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: CoopCountUpTimer, CountUpTimer"
+   ]
+  },
+  {
+   "id": "st_w_10_02",
+   "okCounts": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "blockers": []
+  },
+  {
+   "id": "st_w_10_03",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: Text, BoundBallPitcher, BallKeyBox"
+   ]
+  },
+  {
+   "id": "st_w_10_04",
+   "okCounts": [],
+   "blockers": [
+    "Runtime scope supports first-stage upward switches only"
+   ]
+  },
+  {
+   "id": "st_w_11_01",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: TopViewPlayer, DanmakuThunder, DanmakuObserver, DanmakuEmitter, DanmakuModifier, DanmakuLocator, OptimizedBulletObserver"
+   ]
+  },
+  {
+   "id": "st_w_11_02",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: PoleLadder, FloatingThorn"
+   ]
+  },
+  {
+   "id": "st_w_11_03",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: TopViewPlayer, DanmakuObserver, DanmakuEmitter, DanmakuModifier, DanmakuLocator, OptimizedBulletObserver, DanmakuThunder"
+   ]
+  },
+  {
+   "id": "st_w_11_04",
+   "okCounts": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "blockers": []
+  },
+  {
+   "id": "st_w_12_01",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: GoKart",
+    "Unsupported source devices: GoKart, Stick"
+   ]
+  },
+  {
+   "id": "st_w_12_02",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: DeadSwitch, WeightedLiftEx, ColorBox",
+    "Unsupported source devices: DeadSwitch, WeightedLift, ColorBox"
+   ]
+  },
+  {
+   "id": "st_w_12_03",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: SpeedSwitch, Wind, WeightedLiftEx"
+   ]
+  },
+  {
+   "id": "st_w_12_04",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: MoveWall, SpeedSwitch"
+   ]
+  },
+  {
+   "id": "st_w_13_01",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: LandmineSwitch, LandmineSwitchObserver"
+   ]
+  },
+  {
+   "id": "st_w_13_02",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: CircleGraph, CircleGraphController, BarGraph, BarGraphController, GraphController"
+   ]
+  },
+  {
+   "id": "st_w_13_03",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: RallyController, RallyMallet"
+   ]
+  },
+  {
+   "id": "st_w_13_04",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: FakeTimer, FakePlayer"
+   ]
+  },
+  {
+   "id": "st_w_14_01",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: PlayerBlockGun, BreakableRect, Text"
+   ]
+  },
+  {
+   "id": "st_w_14_02",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: PlayerPunch, MoleNest, MoleGroup, Mole"
+   ]
+  },
+  {
+   "id": "st_w_14_03",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: Dossun, PlayerBlockGun"
+   ]
+  },
+  {
+   "id": "st_w_14_04",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: GiantEnemy, PlayerPunch, SwitchTimerActor"
+   ]
+  },
+  {
+   "id": "st_w_15_01",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: LinePathGear, WeightedLiftEx, CheckPoint"
+   ]
+  },
+  {
+   "id": "st_w_15_02",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: Blackout, BlackoutController, ColorBox, DeadSwitch, WeightedLiftEx, CheckPoint"
+   ]
+  },
+  {
+   "id": "st_w_15_03",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: BattlePlanePlayer, PlayerGun, PlayerGuard, ShootingEnemySpawner, ShootingEnemyBoss, ShootingEnemyBossEx, ShootingEnemyBossExParamSetter, OptimizedBulletObserver, BgmChanger, SwitchTargetGroup, ShootingSuperApple"
+   ]
+  },
+  {
+   "id": "st_w_15_04",
+   "okCounts": [],
+   "blockers": [
+    "Unsupported source devices: FrontSwitch, SwitchIceRect, Text, IceRect"
+   ]
+  }
+ ]
+}
