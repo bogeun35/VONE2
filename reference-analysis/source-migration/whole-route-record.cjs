@@ -371,6 +371,102 @@ policies.st_w_10_02=function(run){
  run.mark('all players in goal');
 };
 
+// ------------------------------------------------------------------ 2편 5-2
+// Four trigger boxes (3 pushers each) must be pushed into the wall switches on
+// four tiers; every tier is a 48 px corridor under the next one, so towers
+// (helper + climber) only work right of each tier's edge. The key sits above
+// the ceiling block, the goal is behind a 144 px wall and covered by a 1-pusher
+// box. The last player over the wall needs a staircase: PushBox7 (48) next to
+// PushBox1 (96, 8 pushers) next to the wall.
+// The big box is pushed first while all eight are next to it; 380 px is enough
+// for the box-top -> wall-top jump and still reaches the first timer switch
+// before the 15 s DeadTimer runs out.
+policies.st_w_05_02=function(run){
+ const s=run.s,P=id=>run.p(id),dev=n=>s.deviceState.devices.find(d=>d.name===n);
+ const big=dev('PushBox1'),b3=dev('PushBox3'),b4=dev('PushBox4'),b5=dev('PushBox5'),b6=dev('PushBox6'),b7=dev('PushBox7'),b11=dev('PushBox11');
+ const timer=s.switchTimerState.timers[0];
+ const go=(id,x,o={})=>H.walkTo(run,id,x,{autoJump:false,...o});
+ const holdWhile=(input,cond,max=4000)=>(function*(){for(let i=0;i<max&&cond();i++)yield input;if(cond())throw new K.RouteError('hold timed out',run);})();
+ const ids=s.players.map(p=>p.id);
+ // C stands right of helper Hid, hops on its head, then leaps left onto the tier above.
+ function climb(C,Hid,landX){
+  run.run(C,go(C,P(Hid).x+36),{label:C+' queue'});
+  run.run(C,H.jumpTo(run,C,P(Hid).x+2),{label:C+' onto '+Hid});
+  if(P(C).supportId!==Hid)throw new K.RouteError(C+' not on '+Hid,run);
+  run.run(C,H.jumpTo(run,C,landX),{label:C+' leap'});
+ }
+ const climbL=(C,Hid,landX)=>{ // climber starts LEFT of the helper (inside the gap)
+  run.run(C,go(C,P(Hid).x-36,{autoJump:false}),{label:C+' gap'});
+  run.run(C,H.jumpTo(run,C,P(Hid).x-2),{label:C+' onto '+Hid});
+  if(P(C).supportId!==Hid)throw new K.RouteError(C+' not on '+Hid,run);
+  run.run(C,H.jumpTo(run,C,landX),{label:C+' leap'});
+ };
+ const push=(ids,box,dir,cond)=>run.together(Object.fromEntries(ids.map(id=>[id,holdWhile(dir>0?{right:true}:{left:true},cond)])),{label:'push '+box.name});
+ // P0: everyone pushes the big box 380 px.
+ push(ids,big,1,()=>big.x<1972);
+ run.mark('big box pushed toward the wall',{bigBox:big.x,timer:timer.sec});
+ // P1 tier1: p1-p3 push PushBox3, p4 is the helper at 716 (gap 672..716 left of it).
+ run.together({p1:holdWhile({left:true},()=>b3.x>56),p2:holdWhile({left:true},()=>b3.x>56),p3:holdWhile({left:true},()=>b3.x>56),
+  p4:go('p4',716),p5:go('p5',752),p6:go('p6',786),p7:go('p7',820),p8:go('p8',854)},{label:'tier1'});
+ run.mark('tier1 box in and helper ready',{timer:timer.sec,timerStopped:timer.stopped});
+ // Each climber clears the landing area at once so the next leap is free.
+ for(const [C,x] of [['p5',200],['p6',234],['p7',268],['p8',572]]){climb(C,'p4',620);run.run(C,go(C,x),{label:C+' clear'});}
+ climbL('p3','p4',620);run.run('p3',go('p3',640),{label:'p3 clear'});
+ run.mark('five players on tier2');
+ // P2 tier2: helper p8 at 572; p5-p7 push PushBox4; p3 climbs from the right.
+ push(['p5','p6','p7'],b4,-1,()=>b4.x>56);
+ climb('p3','p8',476);run.run('p3',go('p3',200),{label:'p3 clear'});
+ for(const [C,x] of [['p7',234],['p6',268],['p5',470]]){climbL(C,'p8',476);run.run(C,go(C,x),{label:C+' clear'});}
+ run.mark('four players on tier3');
+ // P3 tier3: p3,p7,p6 push PushBox5; p5 is the helper at 428 (gap 384..428).
+ run.run('p5',go('p5',428),{label:'p5 helper'});
+ push(['p3','p7','p6'],b5,-1,()=>b5.x>56);
+ // Hop over PushBox7 (one pusher would shove it into the corridor).
+ // Rise straight up beside it first: touching it while rising counts as pushing.
+ const hopB7=C=>H.seq(()=>go(C,b7.x+b7.w+4,{tol:1.5}),()=>H.hold(run,C,{jump:true},10),()=>H.hold(run,C,{left:true,jump:true},4));
+ for(const [C,x] of [['p6',144],['p7',178],['p3',212]]){climbL(C,'p5',330);run.run(C,H.seq(()=>hopB7(C),()=>go(C,x)),{label:C+' clear'});}
+ run.mark('three players on tier4');
+ // P4 tier4: all three push PushBox6 (the corridor fits exactly three).
+ push(['p6','p7','p3'],b6,-1,()=>b6.x>56);
+ run.mark('all trigger switches latched',{keyActive:s.keyActive,observer:s.gateState.observers[0].pushedCount});
+ // Key: p3 hops onto PushBox7 (top 96) and leaps left onto the ceiling block (top 48).
+ run.run('p3',go('p3',254));
+ run.run('p3',H.jumpTo(run,'p3',296),{label:'onto box7'});
+ run.run('p3',H.jumpTo(run,'p3',200),{label:'onto ceiling block'});
+ run.run('p3',go('p3',s.map.key.x));
+ if(!s.keyTaken)throw new Error('key not taken');
+ run.mark('key taken');
+ // Step just past the ceiling block's edge and drop into the gap left of PushBox7.
+ run.run('p3',holdWhile({right:true},()=>P('p3').x<242));
+ run.run('p3',holdWhile({},()=>!(P('p3').grounded&&P('p3').y>90)));
+ // P5: one player waits in each lower corridor to take PushBox7 over each edge.
+ run.run('p5',go('p5',340));run.run('p8',go('p8',484));run.run('p4',go('p4',628));
+ run.mark('corridor relay for PushBox7 in place');
+ run.run('p3',holdWhile({right:true},()=>b7.y<150),{label:'box7 off tier4'});
+ run.run('p5',holdWhile({right:true},()=>b7.y<250),{label:'box7 off tier3'});
+ run.run('p8',holdWhile({right:true},()=>b7.y<350),{label:'box7 off tier2'});
+ run.run('p4',holdWhile({right:true},()=>b7.x+b7.w<big.x-0.5),{label:'box7 to big box'});
+ run.mark('PushBox7 against the big box',{b7:b7.x,big:big.x});
+ // P6: everyone down to the floor and over the staircase into the goal room.
+ const down=id=>run.run(id,holdWhile({right:true},()=>!(P(id).grounded&&P(id).y>380&&P(id).x>1500),3000),{label:id+' down'});
+ const over=(id,first)=>{
+  run.run(id,go(id,b7.x-40),{label:id+' before stairs'});
+  run.run(id,H.jumpTo(run,id,b7.x+8),{label:id+' onto box7'});
+  run.run(id,H.jumpTo(run,id,big.x+30),{label:id+' onto big box'});
+  // The box top -> wall top jump needs a start within ~11 px of the box's right edge.
+  run.run(id,go(id,big.x+big.w-5,{tol:1}),{label:id+' big box edge'});
+  run.run(id,H.jumpTo(run,id,2172),{label:id+' onto wall'});
+  // Step off the wall top and drop straight down beside PushBox11.
+  run.run(id,holdWhile({right:true},()=>P(id).x<2210),{label:id+' off wall'});
+  run.run(id,holdWhile({},()=>!(P(id).grounded&&P(id).y>380)),{label:id+' into room'});
+  if(first)run.run(id,holdWhile({right:true},()=>b11.x<2304),{label:'PushBox11 off the goal'});
+  run.run(id,H.enter(run,id),{label:id+' goal'});
+ };
+ over('p4',true);
+ for(const id of ['p8','p5','p3','p7','p6','p2','p1']){down(id);over(id,false);}
+ run.mark('all players in goal');
+};
+
 function recordOne(stage){
  const policy=policies[stage];
  if(!policy)return {stage,count:COUNT,status:'no-policy',commands:[],milestones:[]};

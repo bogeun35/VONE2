@@ -99,7 +99,7 @@ const H={
  waitUntil(run,id,cond,max=100000){return (function*(){for(let i=0;i<max&&!cond(run);i++)yield {};})();},
  // Walk to x (within tolerance). Optional jump rule: jumpIf(p,run) -> start a
  // full held jump when grounded. Auto-jumps when blocked while grounded.
- walkTo(run,id,x,{tol=1.6,jumpIf=null,hold=14,autoJump=true,max=4000,extra=null}={}){
+ walkTo(run,id,x,{tol=1.6,jumpIf=null,hold=14,autoJump=true,max=4000,extra=null,strict=true}={}){
   return (function*(){
    const p=run.p(id);let holdLeft=0,lastX=null,stuck=0;
    for(let i=0;i<max;i++){
@@ -117,6 +117,7 @@ const H={
     if(extra)Object.assign(v,extra(p,run)||{});
     yield v;
    }
+   if(strict)throw new RouteError('walkTo '+id+' -> '+x+' timed out',run);
   })();
  },
  // One full jump steering toward x; ends when grounded again (or max ticks).
