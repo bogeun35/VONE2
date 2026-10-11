@@ -1,0 +1,110 @@
+{
+ "runs": 20,
+ "identical": 20,
+ "diff": [],
+ "avgRenderMs": 3.94,
+ "frames": 11092,
+ "detail": {
+  "st_w_01_01:2": {
+   "hash": "f6c594ff:14268",
+   "ticks": 900,
+   "status": "play"
+  },
+  "st_w_01_01:8": {
+   "hash": "2917b4ae:16067",
+   "ticks": 900,
+   "status": "play"
+  },
+  "st_w_01_02:2": {
+   "hash": "66b2c7f:17455",
+   "ticks": 563,
+   "status": "dead"
+  },
+  "st_w_01_02:8": {
+   "hash": "df6ff3da:19273",
+   "ticks": 101,
+   "status": "dead"
+  },
+  "st_w_01_03:2": {
+   "hash": "b62c0c87:5043",
+   "ticks": 900,
+   "status": "play"
+  },
+  "st_w_01_03:8": {
+   "hash": "736ca860:6860",
+   "ticks": 900,
+   "status": "play"
+  },
+  "st_w_01_04:2": {
+   "hash": "913a0e69:18892",
+   "ticks": 785,
+   "status": "dead"
+  },
+  "st_w_01_04:8": {
+   "hash": "816f1f84:20644",
+   "ticks": 900,
+   "status": "play"
+  },
+  "st_w_04_01:2": {
+   "hash": "54d6451d:5660",
+   "ticks": 900,
+   "status": "play"
+  },
+  "st_w_04_01:8": {
+   "hash": "52d405eb:10861",
+   "ticks": 900,
+   "status": "play"
+  },
+  "st_w_04_03:2": {
+   "hash": "1dc814b5:11006",
+   "ticks": 33,
+   "status": "dead"
+  },
+  "st_w_04_03:8": {
+   "hash": "87168296:13589",
+   "ticks": 33,
+   "status": "dead"
+  },
+  "st_w_04_04:2": {
+   "hash": "bdec4979:10028",
+   "ticks": 4,
+   "status": "dead"
+  },
+  "st_w_04_04:8": {
+   "hash": "c8b2c59e:11001",
+   "ticks": 4,
+   "status": "dead"
+  },
+  "st_w_05_02:2": {
+   "hash": "7a3dec0a:15654",
+   "ticks": 900,
+   "status": "dead"
+  },
+  "st_w_05_02:8": {
+   "hash": "d9c02941:22894",
+   "ticks": 900,
+   "status": "dead"
+  },
+  "st_w_10_02:2": {
+   "hash": "97fa500a:6944",
+   "ticks": 900,
+   "status": "play"
+  },
+  "st_w_10_02:8": {
+   "hash": "4e8f9074:9038",
+   "ticks": 499,
+   "status": "dead"
+  },
+  "st_w_11_04:2": {
+   "hash": "1c53ebad:15156",
+   "ticks": 45,
+   "status": "dead"
+  },
+  "st_w_11_04:8": {
+   "hash": "11bcfff1:20870",
+   "ticks": 25,
+   "status": "dead"
+  }
+ },
+ "method": "10 rounds x 2/8 players, 900 ticks of the same seeded random inputs. a = runtime only, b = runtime with ParkCamera.update + ParkArt.render after every tick (browser), node = root source-stage-runtime.js on play/data. identical = a, b and node hashes all equal."
+}
