@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "title": "참치파크 라이브 10라운드 사람 기준 난이도 판정",
- "generatedAt": "2026-10-11T13:46:25.661Z",
+ "generatedAt": "2026-10-11T13:49:22.905Z",
  "target": {
   "entry": "https://bogeun35.github.io/chamchicode/coop.html",
   "resolvedUrl": "https://bogeun35.github.io/chamchicode/park/source-play/index.html?v=20261011-08",
@@ -3892,7 +3892,7 @@
    ]
   },
   "teammateRecording": {
-   "source": "reference-analysis/source-migration/play/whole-route-input-replay.json (origin/main bd61553 시점)",
+   "source": "reference-analysis/source-migration/play/whole-route-input-replay.json (fef4f98 녹화, 최신 d3fb7b6 과 10라운드 입력 동일 확인)",
    "recordedAt": "2026-10-11T13:32:26.079Z",
    "runtimeSha256": "be3d824fed3a2847cfd305555efd7643c3aaae7aef8b01e9712eaceef9df8f34"
   }
@@ -4125,7 +4125,7 @@
   }
  ],
  "pending": {
-  "teammateRecording": "4-3 은 녹화 없음(no-policy) - B1 로 녹화 불가가 정상",
+  "teammateRecording": "4-3 은 다른 팀원 리포트(d3fb7b6)에서도 blocked - B1 과 같은 결론",
   "notMeasured": [
    "1-4 2·4인 닫힌 루프 봇",
    "11-4 닫힌 루프 봇(창·횟수로 계산)",
