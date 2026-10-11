@@ -83,7 +83,45 @@ Unverified Bridge geometry/count scaling/push mode
 | `ForTopView` 사각형 | 미적용 | `StageComponent.IsTopViewSort` 비트를 **세팅하는 코드를 못 찾았다**(호출지점 0개). **탑뷰 스테이지를 연결하기 전에 반드시 재확인** |
 | 방향0 접촉 판정 | 원작보다 좁게 유지(의도적) | 원작은 단순 겹침인데 현재는 "착지 상태로 발이 밴드 안". 넓히면 `whole-route-replay.cjs --check` 로 영향 라운드를 보고 재녹화 |
 | 4-3 열쇠 | **현재 런타임으로 클리어 불가** | 열쇠 충돌 상자(224,452,32,56)가 지형(192..288 × 432..480) 안이고 줍기는 단순 겹침. 원작의 열쇠 밀어내기/부착이 미이식인 것으로 추정. 근거 `whole-route-replay-report.json` |
-| 5-2 타이머 스위치 | **+2초가 아니라 DeadTimer 정지** | `spring-switch-runtime.js` 이벤트에 `timerAddSecond` 가 없어 `signal()` 이 add=0 → 정지. 고치면 5-2 재녹화 필요(현재 녹화 175초) |
+| 5-2 타이머 스위치 | **DeadTimer 정지(버그 후보). 근거 미확정이라 런타임은 안 고침** | 슬롯4 → `m_TimerAddSecond` 저장을 원작 PC에서 확인해야 한다. 아래 "버그 후보: 5-2 타이머 스위치" 절 |
+
+### 버그 후보: 5-2 타이머 스위치 — 근거 판정 (2026-10-11, 게임 없는 PC)
+
+**판정: 미확정. 런타임은 고치지 않았다.** 스위치가 타이머에 시간을 더하는 구조와 신호 형식은 git 안 근거로 확정된다.
+그러나 "5-2 스위치가 보내는 값이 2초"는 확정되지 않는다. 슬롯4가 `m_TimerAddSecond` 로 들어가는 저장 명령이 어느 문서에도 없다.
+
+| 고리 | 상태 | git 안 근거 |
+|---|---|---|
+| Timer 가 61 이벤트를 받으면 payload 0 은 정지, 0 이 아니면 더한 뒤 정수 초로 올림 | 확정 | `switchtimer-device-report.json` `behaviour.incomingEvents` (OnRecvEvent 0x18172e250, 정지 0x18172e35e, 더하기 0x18172e374) |
+| Switch 가 보내는 61/60 의 payload(QEventParam +0x60 Time)는 `SwitchComponent.m_TimerAddSecond` | 확정 | `switchtimer-device-report.json` `nativeEvidence.supportingCalls.eventPayloadMeaning` (NotifyTarget 0x181714e06, il2cpp 48 = struct +0x20, setter 0x18169cdf0), `switch-direction-report.json` `contactCondition.stateMachine.transitions` |
+| 5-2 Switch1~23 의 datas[4] = 2, 대상 DeadTimer1 | 확정(추출 데이터) | `play/data/st_w_05_02/*.json` `relays.relays[].timerAddSeconds`·`target` (2~8인 공통). 접속 10라운드의 Switch 41개 중 타이머를 겨냥한 23개만 2, 나머지 18개(JumpStandMediator·Gate·관찰자용)는 전부 0 |
+| datas[4] 가 변환 없이 `m_TimerAddSecond` 에 저장된다 | **미확정** | `spring-switch-schema.json` `types.Switch.slots["4"]`="timer add seconds" 는 함수 주소(0x181888840)만 있고 저장 주소가 없다. `parameter-schema.json` Switch 는 슬롯4 읽기 위치 0x181888a0b 만 있고 `status: meaning-pending`. `switchtimer-device-report.json` `unresolved[4]` 가 "어느 슬롯이 m_TimerAddSecond 를 쓰는지 추적 안 함"이라고 적어 뒀다 |
+
+- `switch-direction-report.json` `noInputBehaviour.st_w_05_02` 의 "each carry m_TimerAddSecond 2 ... ~10.8 s left" 는 근거가 아니다.
+  런타임 필드명(`timerAddSeconds:d(4)`)을 옮겨 적은 문장이다. 10.8초도 시간이 늘어난 값이 아니라 252틱에 타이머가 멈춘 값이다(15 − 252/60 = 10.8).
+- "타이머를 겨냥한 스위치에만 2가 있다"는 정황은 가설을 지지할 뿐 증거가 아니다(HANDOFF §6.1 교훈).
+  값을 FP 그대로 저장하는지, 정수로 잘라 저장하는지에 따라 +2초가 아닐 수 있다. Timer 는 +0x60 을 FP 원시값으로 더하기 때문이다.
+
+**원작 PC에서 확인할 것** (전부 정적 역어셈블, 위에서부터):
+
+1. `NormalSwitchComponent.ParseParameter 0x181888840` — 슬롯4 경계검사 0x181888a0b 뒤로 값이 어디에 저장되는가.
+   목적지가 SwitchComponent +0x20(il2cpp 48, `m_TimerAddSecond`)인지, 직접 `mov` 인지 `SetTimerAddSecond 0x18169cdf0` 호출인지.
+   슬롯5 저장(0x181888b89)과 슬롯1 저장(0x181888ba7/0x181888bad)이 있는 같은 구간이다.
+2. 같은 경로의 변환 — `sar 0x10`/floor 정수화, 0 이하 무시 같은 조건, 곱셈이 있는가. 런타임은 슬롯2(switchId)를 정수로 잘라 읽으므로 같은 함수 안에서 두 슬롯의 처리를 대조할 것.
+3. `quantum-field-offsets.json` — `SwitchComponent.m_TimerAddSecond` 와 `QEventParam.Time`(+0x60)의 타입(FP 인지 int 인지).
+4. `SwitchComponent.NotifyTarget 0x181714cd0`(복사 지점 0x181714e06) — m_TargetName·m_SubTargetName 두 대상, on(61)·off(60) 모두 payload 를 그대로 싣는가.
+5. `SetTimerAddSecond 0x18169cdf0` 호출자 전수 — Creator(0x1818886d5 부근)나 다른 컴포넌트가 파싱값을 덮어쓰는가.
+6. (부수) `DelaySwitchComponent.ParseParameter 0x1818191a0` 가 `m_TimerAddSecond` 를 쓰는가. 런타임은 DelaySwitch 를 0 으로 고정해 뒀다.
+
+**1~3이 "슬롯4를 FP 그대로 +0x20 에"로 나오면 고칠 곳**:
+
+- `spring-switch-runtime.js` `notify()` 가 만드는 이벤트에 `timerAddSecond:r.timerAddSeconds` 추가(루트와 `play/` 둘 다). 1번에서 찾은 저장 주소를 근거 주석으로 단다.
+- `source-switchtimer-devices.test.cjs` 또는 `source-stage-runtime.test.cjs` 에 5-2 실제 액터(Switch1, datas[4]=2 → DeadTimer1)로 테스트.
+- 영향 실측(스크래치에서 같은 패치를 덧씌워 돌림, 저장소 파일은 안 바꿈):
+  - 왼쪽으로 걷기: 252틱에 Switch9·10 이 동시에 눌려 10.817초 → 15초(올림 13 → +2 = 15).
+  - **현재 5-2 녹화(10529틱)는 3862틱(64.4초)에 시간초과로 죽는다.** 22번 더해지고 마지막은 2122틱에 29초. 재녹화가 필요하다.
+  - 지금 녹화가 클리어되는 이유는 850틱에 0.833초를 남기고 타이머가 멈췄기 때문이다.
+  - 나머지 8라운드는 같은 패치로도 녹화 그대로 클리어(틱 수 동일, 4-3 은 원래 불가). 타이머를 겨냥한 스위치가 5-2 에만 있다.
 
 ---
 
