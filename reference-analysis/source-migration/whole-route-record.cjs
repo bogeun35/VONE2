@@ -333,6 +333,44 @@ policies.st_w_11_04=function(run){
  run.mark('all players in goal');
 };
 
+// ------------------------------------------------------------------ 2편 10-2
+// Nobody can climb from the spawn ledges, but the pit below is a WarpInitPos
+// volume (x -100..1400) whose destination is each player's own init position
+// plus the authored offset (0,-600): falling in drops you back from above onto
+// the upper platform over your spawn. Right-side players must drift left of
+// x 1400 while falling or they miss the volume. On the upper platforms the
+// two DashBoards (vx +-40, vy -13) are mirror images, so a left and a right
+// player stepping on them in the same tick collide over the centre and fall
+// straight through the key and the goal (up held).
+policies.st_w_10_02=function(run){
+ const s=run.s,P=id=>run.p(id),box=s.deviceState.devices.find(d=>d.type==='PushBox');
+ function drop(id,side){return (function*(){const p=P(id);let warped=false,prevY=p.y;
+  for(let i=0;i<3000;i++){
+   if(p.y<prevY-300)warped=true;prevY=p.y;
+   if(warped&&p.grounded)return;
+   let dir=0;
+   if(!warped)dir=side==='L'?1:-1;
+   else{const lo=side==='L'?250:1400,hi=side==='L'?600:1740;dir=p.x<lo?1:p.x>hi?-1:0;}
+   yield {right:dir>0,left:dir<0};
+  }throw new K.RouteError('warp drop '+id,run);})();}
+ const left=['p1','p3','p5','p7'],right=['p2','p4','p6','p8'];
+ run.together(Object.fromEntries([...left.map(id=>[id,drop(id,'L')]),...right.map(id=>[id,drop(id,'R')])]),{label:'warp up'});
+ run.mark('everyone warped onto the upper platforms');
+ // Hop over the PushBox instead of pushing it (one pusher moves it).
+ const overBox=(p)=>p.grounded&&p.x+p.w<=box.x+0.5&&box.x-(p.x+p.w)<8&&p.y+p.h>box.y;
+ // p7 and p8 come down on top of p5 and p6, so riders dash before carriers.
+ const order=[['p1','p2'],['p3','p4'],['p7','p8'],['p5','p6']];
+ for(let k=0;k<4;k++){
+  const [L,Rt]=order[k];
+  run.together({[L]:H.walkTo(run,L,510,{jumpIf:overBox,autoJump:false}),[Rt]:H.walkTo(run,Rt,1474,{autoJump:false})},{label:'pair '+(k+1)+' ready'});
+  const a=P(L),b=P(Rt);
+  const dash=(p,dir)=>(function*(){for(let i=0;i<400&&!p.exit;i++)yield {right:dir>0,left:dir<0,up:true};if(!p.exit)throw new K.RouteError('dash missed '+p.id,run);})();
+  run.together({[L]:dash(a,1),[Rt]:dash(b,-1)},{label:'pair '+(k+1)+' dash'});
+  run.mark('pair '+(k+1)+' entered',{pair:[L,Rt],keyTaken:s.keyTaken});
+ }
+ run.mark('all players in goal');
+};
+
 function recordOne(stage){
  const policy=policies[stage];
  if(!policy)return {stage,count:COUNT,status:'no-policy',commands:[],milestones:[]};
