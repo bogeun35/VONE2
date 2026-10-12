@@ -50,3 +50,42 @@ test('a switch signal cannot revive a retired Thunder',()=>{
  assert.equal(thunder.phase,phase,'a retired Thunder ignores its switch');
  assert.equal(thunder.lethal,false);
 });
+
+// datas[4] head start, BridgeComponent.ParseParameter 0x1817dd7df..0x1817dd89a.
+// st_w_07_03's only Bridge: 20 segments of 20px leftward from (1856,432), datas[4]=14.
+const headStartBridge=()=>({typeName:'Bridge',name:'Bridge',posX:1856,posY:432,playerCount:0,
+ datas:[20,-1,0,20,14].map(f=>({t:1,f,s:null}))});
+test('a Bridge with datas[4] starts the round already extended, more so for a small party',()=>{
+ const expected={2:160,3:120,4:100,5:80,6:40,7:20,8:0};
+ for(let count=2;count<=8;count++){
+  const b=B.compile([headStartBridge()],count).bridges[0];
+  assert.equal(b.headStart,expected[count],count+' players');
+  // Negative direction: the head start grows the rect leftward off the anchor.
+  assert.deepEqual([b.x,b.w],[1856-expected[count],20+expected[count]]);
+  // init and target are untouched, so a retract still returns to one unit.
+  assert.deepEqual([b.init.x,b.init.w],[1856,20]);
+  assert.deepEqual([b.target.x,b.target.w],[1476,400]);
+ }
+});
+test('the head start floors in fixed point, so 70*0.1 is 6 segments and not 7',()=>{
+ // (8-3)*14 = 70. 0x1999/65536 is 0.09999084, so 70 scales to 6.99936.
+ assert.equal(B.compile([headStartBridge()],3).bridges[0].headStart,6*20);
+});
+test('datas[4] <= 0 leaves the bridge at one unit',()=>{
+ for(const f of [0,-14]){
+  const a=headStartBridge();a.datas[4]={t:1,f,s:null};
+  for(let count=2;count<=8;count++){
+   const b=B.compile([a],count).bridges[0];
+   assert.equal(b.headStart,0);
+   assert.deepEqual([b.x,b.w],[1856,20]);
+  }
+ }
+});
+test('a head start longer than the bridge is rejected rather than clamped',()=>{
+ const a=headStartBridge();a.datas[0]={t:1,f:3,s:null};
+ assert.throws(()=>B.compile([a],2),/head start longer/);
+});
+test('an unverified push mode is still rejected',()=>{
+ const a=headStartBridge();a.datas[5]={t:1,f:1,s:null};
+ assert.throws(()=>B.compile([a],2),/Unverified Bridge/);
+});
