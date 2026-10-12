@@ -330,3 +330,33 @@ test('a direction 1 ceiling switch answers a body below it, not one above it, an
  assert.equal(Relay.step(fresh(), 1/60, {switchContacts:[{...contact, layer:5}]}).events.length, 0);
  assert.equal(Relay.step(fresh(), 1/60, {switchContacts:[{...contact, layer:8}]}).events.length, 1);
 });
+
+// st_w_01_02 는 상자를 머리에 이고 가시를 막는 라운드다. 상자가 사람을 따라오지
+// 않으면 방패가 성립하지 않는다. 엔진은 접촉 액터를 일반적으로 옮기지만
+// (ActorComponent.MoveContactActor 0x1816a0980 등) 그 시스템 전체는 미해독이라,
+// 연결된 라운드가 필요로 하는 이 한 경우만 재현한다.
+test('a box carried on a player shields them from the thorns of 01-02',()=>{
+ const compiled=R.compile({source,geometry,count:2,stageId:'st_w_01_02'});
+ const walkRight=(setup)=>{
+  const s=R.create(compiled,{ids:['p1','p2']});
+  setup(s);
+  let ticks=0;
+  for(;ticks<60*25&&s.status==='play';ticks++)R.step(s,{p1:{right:true}},1/60);
+  return {status:s.status,ticks,x:Math.round(s.players[0].x)};
+ };
+ const shielded=walkRight(s=>{
+  const box=s.deviceState.devices.find(d=>d.type==='PushBox'),p=s.players[0];
+  Object.assign(p,{x:box.x+8,y:box.y+box.h,vy:0});
+  for(let i=0;i<30;i++)R.step(s,{},1/60);
+  assert.equal(box.supportId,'p1','the box must settle on the carrier');
+ });
+ const bare=walkRight(s=>{
+  const box=s.deviceState.devices.find(d=>d.type==='PushBox');
+  Object.assign(box,{x:-9999,y:-9999});
+  s.players[0].x=424;
+ });
+ assert.equal(bare.status,'dead','without the box the thorns must kill');
+ assert.ok(bare.ticks<240,'and quickly: saw tick '+bare.ticks);
+ assert.equal(shielded.status,'play','the carried box must block them');
+ assert.ok(shielded.x>bare.x+1000,'the shielded run must get much further: '+shielded.x+' vs '+bare.x);
+});

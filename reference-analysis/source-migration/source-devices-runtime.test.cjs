@@ -73,3 +73,18 @@ test('swept thorn hits player before terrain, and does not hit behind terrain',(
  const result=D.afterStep(s,{players:[{id:'near',x:646,y:354,w:2,h:2},{id:'shielded',x:646,y:360,w:2,h:2}],platforms:[{x:620,y:358,w:60,h:48}]});
  assert.deepEqual(result.deadPlayerIds,['near']);assert.equal(s.devices[0].phase,'fade');assert.equal(s.devices[0].y,340);
 });
+
+// B3 회귀: st_w_01_02 는 상자를 머리에 이고 가시를 막는 라운드다. 상자가 사람을
+// 따라오지 않으면 방패가 성립하지 않아 라운드를 깰 수 없다. 가시가 상자에서
+// 멈추는 처리는 이미 있었고(swept 충돌이 platforms 와 boxes 를 함께 본다),
+// 빠진 것은 "사람 위에 얹힌 상자"를 옮기는 쪽이었다.
+test('a box resting on a player records that player as its support',()=>{
+ const selected=actors.filter(a=>a.typeName==='PushBox');
+ const s=D.create(D.compile(selected,2)),box=s.devices[0];
+ const carrier={id:'p1',x:box.x+8,y:box.y+box.h,w:32,h:46,supportId:null};
+ const ground=[{id:'floor',x:0,y:carrier.y+carrier.h,w:4096,h:48}];
+ for(let i=0;i<30;i++)D.beforeStep(s,{players:[carrier],platforms:ground});
+ assert.equal(box.supportId,'p1','the box must know whose head it sits on');
+ assert.equal(box.grounded,true);
+ assert.ok(Math.abs((box.y+box.h)-carrier.y)<1.5,'the box must rest on the head, not inside it');
+});
