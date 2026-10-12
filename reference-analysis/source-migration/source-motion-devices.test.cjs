@@ -43,7 +43,26 @@ test('wall step state can serialize/replay identically',()=>{
  const s=M.create(compile(8));M.contactWall(s,s.walls[0].id,{vx:40,vy:0});for(let i=0;i<30;i++)M.step(s);
  const copy=JSON.parse(JSON.stringify(s));for(let i=0;i<120;i++){M.step(s);M.step(copy);}assert.deepEqual(copy,s);
 });
-test('unknown offset strings fail closed rather than silently shifting geometry',()=>{
+test('a malformed offset table still fails closed rather than shifting geometry',()=>{
+ // The table is seven 8 byte entries, one per player count 2..8. Anything that is
+ // not 56 units long is not this grammar and must not be guessed at.
  const actor={typeName:'Rect',name:'unsupported',posX:0,posY:0,datas:Array.from({length:8},()=>({t:1,f:0}))};actor.datas[0].f=10;actor.datas[1].f=10;actor.datas[6]={t:2,s:'not decoded'};
- assert.throws(()=>M.compile([actor],2),/encoding requires further verification/);
+ assert.throws(()=>M.compile([actor],2),/must be 56 units/);
+});
+test('a population offset table shifts the rect per player count',()=>{
+ // st_w_07_03's Rect at (1752,505) authors slot6 = 0,0,0,12,24,12,0 px. The
+ // decoder (native 0x18096f720, byte loop 0x18096f80c) subtracts 0x21 from the
+ // low byte of each UTF-16 unit and reads seven little-endian FP raws.
+ const encode=values=>values.map(v=>{const raw=BigInt(Math.round(v*65536));
+  return Array.from({length:8},(_,k)=>String.fromCharCode(Number((raw>>BigInt(8*k))&0xFFn)+0x21)).join('');}).join('');
+ const actor={typeName:'Rect',name:'shifted',posX:1752,posY:505,datas:Array.from({length:8},()=>({t:1,f:0}))};
+ actor.datas[0].f=240;actor.datas[1].f=73;
+ actor.datas[6]={t:2,s:encode([0,0,0,12,24,12,0])};
+ actor.datas[7]={t:2,s:'!'.repeat(56)};
+ const xFor=count=>M.compile([actor],count).rects[0].x;
+ assert.equal(xFor(2),1752);
+ assert.equal(xFor(5),1764);
+ assert.equal(xFor(6),1776);
+ assert.equal(xFor(7),1764);
+ assert.equal(xFor(8),1752);
 });
