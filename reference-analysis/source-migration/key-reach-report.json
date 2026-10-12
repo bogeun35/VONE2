@@ -1,0 +1,61 @@
+{
+ "schemaVersion": 1,
+ "subject": "Key spawn relocation and inactive keys",
+ "issue": "B1 in HUMAN-DIFFICULTY.md: st_w_04_03 was unclearable for 2..8 players because the key could not be touched.",
+ "status": "fixed",
+ "settledOn": "2026-10-13",
+ "nativeCodeExecuted": false,
+ "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base 0x180000000",
+
+ "rootCause": "The port placed the key at its authored posX/posY. The original does not: KeyComponent.ParseParameter rewrites the spawn position of the create context in place before the factory reads it back, so the authored anchor is only a starting value and the final position depends on the player count.",
+
+ "callChain": [
+  "ActorFactoryComponent.CreateActor 0x1816a3351..0x1816a3373 copies the authored posX/posY into createContext+0x28 / +0x30; +0x10 holds the actorCreateParam whose datas[] live at +0x48.",
+  "The registered creator runs at 0x1816a3628. For Key that is KeyComponent.Creator 0x18186b470, which calls KeyComponent.ParseParameter at 0x18186b558 with the same context.",
+  "Only afterwards does CreateActor read the position back at 0x1816a3658 and hand it to ActorSceneComponent.AddActor 0x1816a3687."
+ ],
+
+ "relocation": {
+  "datas0": "pos.x += (playerCount - 2) * datas[0], FP raw, no sar. imul 0x18186bab1, add 0x18186bab5.",
+  "datas1": "pos.y += (playerCount * PLAYER_COUNT_SCALE * datas[1]) >> 16. imul 0x18186baea, imul 0x18186baef, sar 0x10 at 0x18186baf3, store 0x18186bb01.",
+  "datas6_7": "per-population X / Y offset tables, read at 0x18186b988 and 0x18186b9a4 and applied by the loop at 0x18186bb40..0x18186bbe0.",
+  "playerCount": "Frame.GetPlayerIndexCount 0x181749340 - the same source the already-verified population filter uses (ActorFactoryComponent.Update 0x1816a2fe9, population-rules.cjs)."
+ },
+
+ "playerCountScale": {
+  "value": 52428,
+  "asDecimal": 0.79998779296875,
+  "warning": "It is NOT 0.8. Using 0.8 would drift the key by a fraction of a pixel per unit and is exactly the kind of invented constant this project forbids.",
+  "derivation": [
+   "KeyComponent statics are RESOURCE_PATH 0, EXCLUDE_TIME 8, PLAYER_COUNT_SCALE 16, COLLISION_RECT 24 (quantum-field-offsets.json), which exactly fills the 0x38 that KeyComponent..cctor 0x18186d310 writes.",
+   "That cctor copies +0x10 from QFP statics+0xc0 (load 0x18186d487, store 0x18186d48e).",
+   "Quantum metadata names QFP's 81 FP statics by value; +0xc0 is QFP._0_80. Cross-checked against the same cctor's immediates: +0x70 _0_25 = 0x4000 at 0x181780fde, +0x90 _0_50 = 0x8000, +0xb8 _0_75 = 0xc000 at 0x1817810ff.",
+   "QFP..cctor 0x181781124 fills _0_80 with FP.FromString_UNSAFE 0x18163fcb0, which runs Double.Parse then cvtsd2ss (float32 0.800000011920928955) then FP.FromFloat_UNSAFE 0x18163fc40: mulss by 65536.0f (0x182e87660) then cvttss2si, i.e. truncation. 0.8f * 65536 is exactly 52428.80078125, so the raw value is 52428."
+  ]
+ },
+
+ "inactiveKeys": {
+  "field": "Key slot 2 is m_Inactive (KeyComponent raw +4, il2cpp 20).",
+  "evidence": "ParseParameter 0x18186bbd1 compares the sar'd datas[2] against 0 and 0x18186bbe7 writes 1 when it is positive. InitPost 0x18186bec9 branches on that field and 0x18186bef9 calls setActive 0x18186d170, which turns off both the view (ActorComponent.SetVisible 0x18186d1e4) and the collision (ActorComponent.SetCollisionActive 0x18186d1fc).",
+  "consequence": "An inactive key is not collidable at all until an event re-activates it."
+ },
+
+ "collisionShapeUnchanged": "KeyComponent.InitCollision 0x18186bdb0 reads the rectangle from class statics +0x18/+0x28, so the 32x56 box at (-16,-28) is fixed and independent of the slots. Only the anchor moves.",
+
+ "whyOnlyTwoStagesLookedBroken": "A survey of all 60 world keys found only st_w_04_03 and st_w_05_03 whose unrelocated box overlapped solid tiles. Six keys carry a non-zero datas[1]: 04_03 (-48), 01_03 (-36), 10_01 (-16), 04_01 (-48), 01_02 (-41), 10_02 (-24). st_w_04_01 carries two keys, one of them with the same -48, and that round was already clearable - which is why 'just shift the key up by datas[1]' was rejected as a hypothesis. The population-scaled rule explains every one of them without special cases.",
+
+ "verification": {
+  "st_w_04_03_keyAnchor": {"2": [224, 375], "4": [224, 298], "8": [224, 145], "before": [224, 452]},
+  "otherRelocatedKeys": {"st_w_04_01": [[1376,157],[1376,80],[1376,44]], "st_w_01_02": [[2096,226],[2096,161],[2096,30]], "st_w_10_02": [[992,538],[992,499],[992,422]]},
+  "tileOverlap": "No key in any connected round is fully inside solid tiles or below the map any more, for any count 2..8.",
+  "compile": "10 rounds x 2..8 players = 70/70 compile, create and run 300 ticks without error.",
+  "tests": "17 files, 183 passing."
+ },
+
+ "unresolved": [
+  "st_w_05_03 also had an overlapping key before this change. It is not a connected round yet, so the fix is not verified there; check it when that stage is connected.",
+  "The datas[6]/[7] per-population offset tables are implemented from the loop at 0x18186bb40, but no connected round authors a non-empty table, so that path is untested against real data.",
+  "A human has still never cleared st_w_04_03. Compiling and a reachable key are not the same as a clearable round - the electricity below the gap still covers x 48..864.",
+  "This agent was cut off by a session limit before writing its own report and before running the old-vs-new regression it had started. The report was reconstructed from its code comments; the compile and behaviour checks above were run independently afterwards."
+ ]
+}
