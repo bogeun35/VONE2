@@ -6,10 +6,11 @@
     "source-collision-map.js",
     "source-collision-rect.js",
     "source-collision-inertia.js",
-    "source-collision-scene.js"
+    "source-collision-scene.js",
+    "source-collision-pipeline.js"
   ],
-  "dependency": "Frozen source-distanceconstraint-math.js native LUT; table SHA256 de5265f651730f20b54cc24bdcd3047e61320be44a5ae54796d290a189f4bca5",
-  "summary": "Explicit ordered collision snapshots execute the full rectangle chunk phases: Map requests, repeated ordinary/forced passes and position rollback, inertia, corner-limited scale growth, Actor synchronization, actor/map contact lifecycle, then supplied late-collision dispatch. Live stage runtime is not yet connected.",
+  "dependency": "Frozen source-distanceconstraint-math.js native LUT; table SHA256 de5265f651730f20b54cc24bdcd3047e61320be44a5ae54796d290a189f4bca5; reviewed frozen source-gear-devices.js/source-gear-collision.js for circle solver and source-collision-broadphase.js for slots/CLR/Morton",
+  "summary": "Native storage slots and CLR priority sort now feed Map, rectangle/circle response, repeated pushback passes, inertia CLR ordering, scale and Actor/cache lifecycle, then synchronous late collision callbacks. source-stage-runtime.js is not yet connected.",
   "nativeEvidence": {
     "map": "Map.Move 0x18187e0a0, IsContacted 0x18187ea30, IsMovable 0x18187dd30; tile48, separator655 raw, epsilon4. Grid conversion divides by48 then sar16, clamps outside cells; DDA Y wins equal times. Collision.MoveMap 0x181692eb0 slides tangential remainder and deduplicates normals.",
     "rectangles": "UpdatePushBack 0x1817f9c30 gates current overlap and absence of previous overlap, layer matrix, movement flag64 and unyielding flag4/8. updatePushBackRect 0x1817f9ec0 computes fixed-point rollback ratios and X-then-Y contact faces. reviseMov 0x1817fb680 / force call sites 0x1817fac0f..e0e add655 only at abs(delta)>=4.",
@@ -21,7 +22,9 @@
     "newPhaseFindings": "checkChunk comparator0x1818007b0 is descending SIGNED collision priority byte+5 (Player=-1). updatePushBack0x1817f90c0 visits i then j>i without sorting the quadtree list: OnUpdate0x18177eae0 only updates each Morton descriptor in place. Same-level descriptors require index equality; mixed levels use ((deeperIndex >> (2*levelDifference &31)) ^ shallowIndex)&3 ==0 at0x1817f972b..976c. Ordinary pass excludes unyielding bodies; forced pass requires at least one. Forced pass snapshots all positions and restores them when a pair returns1 at0x1817f9880..9a53, while changed flags persist. checkChunk repeats each pass on0 up to8 and both passes on final1 up to8. These pass semantics are implemented in pushBackPass/solvePushBack/checkChunk; tree descriptors/candidate filtering remain explicit host adapters.",
     "mapQueue": "addContactMapInfo0x181691c10 deduplicates retained+requested normals, queues only requests. updateContactMap0x181694440 retains existing contacts with active gate, then probes requests without that gate; Added/Contacted run before append. Map.IsMovable0x18187de8f supplies grid coordinates, not tile flags.",
     "scale": "updateScale0x1817fe370 directly shrinks; growth over65raw tests four corner displacements with nonsliding Map.MoveMap and Collision.Move0x181693160 against actors. Restoring each trial position retains map requests. Partial growth subtracts1310raw toward previous scale.",
-    "sync": "updateAfter0x181693610 clears movement64, notifies registered scale callback, updates previous/expected scale, synchronizes Actor when absolute FP displacement squared >=4, then registered pushback callback, actor contacts, map contacts. 511raw displacement misses;512raw reaches threshold."
+    "sync": "updateAfter0x181693610 clears movement64, notifies registered scale callback, updates previous/expected scale, synchronizes Actor when absolute FP displacement squared >=4, then registered pushback callback, actor contacts, map contacts. 511raw displacement misses;512raw reaches threshold.",
+    "pipeline": "source-collision-pipeline.step enumerates active physical dictionary slots, sorts signed priority, runs checkChunk, then writes results to original slots. Late OnCollided captures owner flag2 for outer loop, target flag2 before callbacks, owner then target, descriptors refreshed afterward.",
+    "circle": "Frozen Gear circleResponse is called only for circle/circle. Temporary adapter IDs do not escape; canonical IDs/cache remain owned by scene. Mixed pairs use scaled bounding rectangles. Retention probes arbitrary FP normals with signed normalRaw>>1."
   },
   "contracts": {
     "world": "JSON {isEnableInertia, collisions:[native ordered collision records], map:{tileFlags}, layerChecks, cameraAreaRaw:{x,width}}. Each collision supplies explicit IDs, entityId, raw current/previous positions, current/previous local GetRect bounds, flags, layer, pushBackTarget, collisionType0, contacts and mapNormals. No supportId-to-cache conversion. mapNormals/requestMapNormals store raw vectors; contact normals store exact FP pixels. Full chunk additionally needs scale/preScale/expectedScale, base rectangle/pivot, actorExists and expected position.",
@@ -44,14 +47,17 @@
       "forced pass restores every position after a later pair fails, preserving flag8",
       "map queued Added/Contacted then retention/pruning",
       "scale shrink,65raw threshold, map/actor growth fractions and1310raw margin",
-      "Actor sync squared threshold and scale→sync→map→late ordering"
+      "Actor sync squared threshold and scale→sync→map→late ordering",
+      "physical freed-slot reuse plus17-key unstable CLR sort through full pipeline",
+      "late callbacks mutate flags and positions; next pair observes refreshed descriptors",
+      "circle response/cache survives JSON tick, diagonal half-normal probe and mixed rectangle response"
     ],
     "scope": "JS tests against statically derived expectations. Authored lift facts are real; contact stacks and player rectangles in tests are synthetic. No original-game execution, complete stage play, or side-by-side native comparison.",
     "fullCommand": "node --test source-migration/*.test.cjs",
     "full": {
-      "pass": 724,
+      "pass": 733,
       "fail": 0,
-      "note": "Latest shared-tree run includes auxiliary WIP tests; those files are excluded from this phase checkpoint."
+      "note": "Latest shared-tree wildcard run includes auxiliary WIP tests; only reviewed frozen dependencies and lead changes are selected."
     }
   },
   "rea": {
@@ -60,13 +66,14 @@
     "limits": "4G heap/max-cpu2; separate lead-ghidra.local project deleted by Ghidra -deleteProject. Shared snapshots untouched. Targeted pseudocode is a reading aid, assembly remains evidence; no-analysis has weaker inferred types and no-return metadata."
   },
   "unresolved": [
-    "Auxiliary source-collision-broadphase.js now implements slot order/CLR sorting/Morton relations, reviewed but not connected at this checkpoint. Native dictionary bootstrap capacity remains unresolved.",
-    "Chunk orchestration exists for explicit rectangle snapshots; actual stage Actor lifecycle, native broadphase and late-collision adapters still require runtime integration.",
+    "Native dictionary bootstrap capacity0x18197edc0 still explicit; actual runtime creation order and actor collision payloads must be constructed from native initialization.",
+    "Native storage/phase pipeline is executable; actual stage Actor lifecycle and callbacks still require integration.",
     "Actual Player and device OnContactAdded/OnContacted adapters and complete collision layer/shape/scale facts for each live actor remain necessary.",
     "Live runtime still uses its existing movement and supportId model. This core does not authorize opening14-3/5-1/7-3/12-4 or claiming corrected live10-4/3-2 carry.",
-    "Safe integer rectangle path only. Circle/other shape behavior and malformed/extreme input equivalence are not claimed."
+    "Safe integer rectangle and circle paths only; malformed/extreme input and full-game equivalence not claimed."
   ],
   "corrections": [
-    "Map normals formerly appended directly to retained cache; corrected to request queue using addContactMapInfo0x181691c10. Tests now distinguish first Added from retained Contacted."
+    "Map normals formerly appended directly to retained cache; corrected to request queue using addContactMapInfo0x181691c10. Tests now distinguish first Added from retained Contacted.",
+    "Inertia previously sorted rows before equal-X adapter. It now supplies original contact cache order to native CLR sort; mixed equal keys with17 contacts demonstrate the different permutation."
   ]
 }

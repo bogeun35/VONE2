@@ -10,14 +10,14 @@
  * Native updateMap @0x1817f8fac..9029 rewinds moving map targets to prePos,
  * then runs Map.MoveMap. Cache callback order @0x1816940c1..197 is preserved.
  */
-(function(root,factory){const c=typeof module==='object'&&module.exports,api=factory(c?require('./source-collision-map.js'):root.SourceCollisionMap,c?require('./source-collision-rect.js'):root.SourceCollisionRect,c?require('./source-move-contact.js'):root.SourceMoveContact,c?require('./source-collision-inertia.js'):root.SourceCollisionInertia);if(c)module.exports=api;root.SourceCollisionScene=api;})(typeof globalThis!=='undefined'?globalThis:this,function(MapMove,Rect,Contacts,Inertia){
+(function(root,factory){const c=typeof module==='object'&&module.exports,api=factory(c?require('./source-collision-map.js'):root.SourceCollisionMap,c?require('./source-collision-rect.js'):root.SourceCollisionRect,c?require('./source-move-contact.js'):root.SourceMoveContact,c?require('./source-collision-inertia.js'):root.SourceCollisionInertia,c?require('./source-gear-collision.js'):root.SourceGearCollision);if(c)module.exports=api;root.SourceCollisionScene=api;})(typeof globalThis!=='undefined'?globalThis:this,function(MapMove,Rect,Contacts,Inertia,Gear){
 'use strict';
 const clone=x=>JSON.parse(JSON.stringify(x));
 const mul=(a,b)=>Number(BigInt.asIntN(64,BigInt(a)*BigInt(b))>>16n);
 const position=(b,x,y)=>{b.xRaw=x;b.yRaw=y;b.flags=(b.flags&~64)|((x!==b.preXRaw||y!==b.preYRaw)?64:0);};
 const find=(w,id)=>{const b=w.collisions.find(b=>b.id===id);if(!b)throw Error('Native collision missing: '+id);return b;};
-function bounds(b,pre=false){const r=pre?b.preRectRaw:b.rectRaw;if(b.collisionType!==0||!r)throw Error('Only resolved rectangle bounds supported');return {x:(pre?b.preXRaw:b.xRaw)+r.x,y:(pre?b.preYRaw:b.yRaw)+r.y,width:r.width,height:r.height};}
-function overlap(a,b,pre=false){if(a.entityId===b.entityId||((a.flags|b.flags)&1))return false;const x=bounds(a,pre),y=bounds(b,pre);return x.x<y.x+y.width&&y.x<x.x+x.width&&x.y<y.y+y.height&&y.y<x.y+x.height;}
+function bounds(b,pre=false){const r=pre?b.preRectRaw:b.rectRaw;if(![0,1].includes(b.collisionType)||!r)throw Error('Resolved native GetRect bounds required');return {x:(pre?b.preXRaw:b.xRaw)+r.x,y:(pre?b.preYRaw:b.yRaw)+r.y,width:r.width,height:r.height};}
+function overlap(a,b,pre=false){if(a.entityId===b.entityId||((a.flags|b.flags)&1))return false;if(a.collisionType===1&&b.collisionType===1)return Gear.isCollided(circleAdapter(a,0),circleAdapter(b,1),{pre});const x=bounds(a,pre),y=bounds(b,pre);return x.x<y.x+y.width&&y.x<x.x+x.width&&x.y<y.y+y.height&&y.y<x.y+x.height;}
 function layer(w,a,b){const value=w.layerChecks?.[a.layer]?.[b.layer];if(typeof value!=='boolean')throw Error('Native collision layer matrix missing');return value;}
 function mapMove(w,b,delta){const r=MapMove.moveMap(w.map,b,delta);Object.assign(b,r.collision);return r;}
 function moveCollided(w,source,d,depth){
@@ -42,9 +42,27 @@ function add(w,c){
  const r=Contacts.addContactInfo({bodies:w.collisions},c.ownerId,c.targetId,c.face);
  find(w,c.ownerId).contacts=r.world.bodies.find(b=>b.id===c.ownerId).contacts;
 }
+// Adapter IDs are temporary local indices only; canonical IDs/caches stay intact.
+function circleAdapter(b,index){
+ if(b.collisionType!==1||!b.circleRaw||!b.scaleRaw||!b.preScaleRaw||!b.pivotRaw)throw Error('Native circle/scale/pivot facts required');
+ return {collisionId:index,actorId:typeof b.entityId+':'+String(b.entityId),shape:'circle',flags:b.flags,layer:b.layer,pushBackTarget:b.pushBackTarget,
+  xRaw:b.xRaw,yRaw:b.yRaw,preXRaw:b.preXRaw,preYRaw:b.preYRaw,scaleXRaw:b.scaleRaw.xRaw,scaleYRaw:b.scaleRaw.yRaw,preScaleXRaw:b.preScaleRaw.xRaw,preScaleYRaw:b.preScaleRaw.yRaw,pivotXRaw:b.pivotRaw.xRaw,pivotYRaw:b.pivotRaw.yRaw,circle:{...b.circleRaw},contacts:[]};
+}
 function updatePair(w,aId,bId,options={}){
- const a=find(w,aId),b=find(w,bId),r=Rect.update(a,b,{...options,layerEnabled:layer(w,a,b),forceMove:(other,target,ctx)=>({...forceCollision(w,other.id,target),sourceCollision:clone(find(w,ctx.sourceId))})});
- Object.assign(a,r.a);Object.assign(b,r.b);for(const c of r.contacts)add(w,c);return r.code;
+ const a=find(w,aId),b=find(w,bId);
+ if(a.collisionType===1&&b.collisionType===1){
+  const ca=circleAdapter(a,0),cb=circleAdapter(b,1);
+  const r=Gear.pushBackPair({collisions:[ca,cb]},0,1,{isEnableCheck:()=>layer(w,a,b),
+   preOverrideA:options.previousA&&{xRaw:options.previousA.x,yRaw:options.previousA.y},preOverrideB:options.previousB&&{xRaw:options.previousB.x,yRaw:options.previousB.y}});
+  if(r.code===0){position(a,r.positionA.xRaw,r.positionA.yRaw);position(b,r.positionB.xRaw,r.positionB.yRaw);
+   add(w,{ownerId:a.id,targetId:b.id,face:{x:r.normal.xRaw/65536,y:r.normal.yRaw/65536}});
+   add(w,{ownerId:b.id,targetId:a.id,face:{x:-r.normal.xRaw/65536||0,y:-r.normal.yRaw/65536||0}});
+  }return r.code;
+ }
+ // Native mixed pairs use the already scaled circle bounding rectangle.
+ const ta=a.collisionType,tb=b.collisionType;
+ const r=Rect.update({...a,collisionType:0},{...b,collisionType:0},{...options,layerEnabled:layer(w,a,b),forceMove:(other,target,ctx)=>({...forceCollision(w,other.id,target),sourceCollision:clone(find(w,ctx.sourceId))})});
+ Object.assign(a,r.a,{collisionType:ta});Object.assign(b,r.b,{collisionType:tb});for(const c of r.contacts)add(w,c);return r.code;
 }
 function forceSide(w,id,d,seen=new Set()){
  if(seen.has(id))return;seen.add(id);const source=find(w,id);mapMove(w,source,d);
@@ -66,14 +84,13 @@ function applyPair(input,aId,bId,options={}){const world=clone(input),code=updat
 function discoverForcedContacts(w,b){
  if(!b.baseRectRaw||!b.scaleRaw||!b.pivotRaw)throw Error('ForceSearchUp requires native base rectangle, scale and pivot');
  const halfScale={...b.scaleRaw,xRaw:mul(b.scaleRaw.xRaw,32768)};
- const source={...b,rectRaw:Rect.getRect(b.baseRectRaw,halfScale,b.pivotRaw)};
- const a=bounds(source),down=!!(b.flags&256),probe={...a,y:a.y+(down?32768:-32768)};
- const intersect=(x,y)=>x.x<y.x+y.width&&y.x<x.x+x.width&&x.y<y.y+y.height&&y.y<x.y+x.height;
+ const source={...b,scaleRaw:halfScale,rectRaw:Rect.getRect(b.baseRectRaw,halfScale,b.pivotRaw)};
+ const a=bounds(source),down=!!(b.flags&256),probe={...source,yRaw:source.yRaw+(down?32768:-32768)};
  if(!(b.pushBackTarget&2))return;
  for(const target of w.collisions){
   if(target.id===b.id||(target.flags&1)||!(target.pushBackTarget&2)||!layer(w,target,b)||target.entityId===b.entityId)continue;
   const t=bounds(target);
-  if(intersect(a,t)||!intersect(probe,t))continue;
+  if(overlap(source,target)||!overlap(probe,target))continue;
   const center=t.y+mul(t.height,32768);
   if(down?center>a.y+a.height:center<a.y)add(w,{ownerId:b.id,targetId:target.id,face:0});
  }
@@ -84,8 +101,11 @@ function refreshActorInPlace(w,b,host,events){
   const remove=[];const count=b.contacts.length;
   for(let i=0;i<count;i++){
    const c=b.contacts[i],target=w.collisions.find(q=>q.id===c.id);
-   const fact=q=>({...q,collisionRectRaw:bounds(q)});
-   if(!Contacts.retainsRectContact(fact(b),target?fact(target):null,c)){remove.push(i);continue;}
+   const fact=q=>({...q,collisionType:0,collisionRectRaw:bounds(q)});
+   const retained=target&&b.collisionType===1&&target.collisionType===1
+    ?Gear.isCollided(circleAdapter(b,0),circleAdapter(target,1),{offsetA:{xRaw:Number(BigInt(c.normal.x*65536)>>1n),yRaw:Number(BigInt(c.normal.y*65536)>>1n)}})
+    :Contacts.retainsRectContact(fact(b),target?fact(target):null,c);
+   if(!retained){remove.push(i);continue;}
    if(!Number.isInteger(c.state))throw Error('Native contact State required');
    for(const type of c.state===0?['OnContactAdded','OnContacted']:['OnContacted']){
     if(type==='OnContactAdded')c.state=1;
@@ -178,7 +198,7 @@ function scaleInPlace(w,b){
  for(const other of w.collisions){
   if(other.id===b.id||!(other.pushBackTarget&2)||!layer(w,b,other)||overlap(b,other))continue;
   for(let i=0;i<4;i++){
-   const r=Rect.moveAgainst(b,other,clipped[i]);Object.assign(b,r.collision);position(b,start.x,start.y);limit(r.delta,moves[i]);
+   const shape=b.collisionType,r=Rect.moveAgainst({...b,collisionType:0},{...other,collisionType:0},clipped[i],{isCollided:(a,t)=>overlap({...a,collisionType:shape},{...t,collisionType:other.collisionType})});Object.assign(b,r.collision,{collisionType:shape});position(b,start.x,start.y);limit(r.delta,moves[i]);
   }
  }
  const result={};for(const k of ['xRaw','yRaw']){
@@ -224,5 +244,5 @@ function checkChunk(input,host={}){
  host.lateCollided(world,events);
  return {world,events,pushTrace:push.trace,inertiaTrace:inertia.trace};
 }
-return {applyPair,postPushBack,updateMap,refreshContacts,refreshMapContacts,pushBackPass,solvePushBack,updateScale,finishCollision,checkChunk,completePhysicsFidelity:false};
+return {isCollided:overlap,applyPair,postPushBack,updateMap,refreshContacts,refreshMapContacts,pushBackPass,solvePushBack,updateScale,finishCollision,checkChunk,completePhysicsFidelity:false};
 });

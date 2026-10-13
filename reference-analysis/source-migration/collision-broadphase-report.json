@@ -1,0 +1,120 @@
+{
+  "status": "partial",
+  "module": "source-collision-broadphase.js",
+  "verification": {
+    "method": "Read-only GameAssembly disassembly; original game never executed",
+    "addresses": {
+      "grid": "0x18177f160",
+      "initialize": "0x18177e630",
+      "morton": "0x18177efb0",
+      "descriptor": "0x18177ec90",
+      "coarseRelation": "0x18177ec30",
+      "descriptorInPlaceUpdate": "0x18177eae0",
+      "activePhysicalSlots": "0x181800370",
+      "splitCopy": "0x1817f8020",
+      "prioritySort": "0x1817f8330",
+      "priorityComparator": "0x1818007b0",
+      "directionalXComparator": "0x1818007d0",
+      "introsort": "0x1808ef130",
+      "partition": "0x1808ef610",
+      "heap": "0x1808efa00",
+      "downHeap": "0x1808efc20",
+      "allocateEntry": "0x1807fb8a0",
+      "removeEntry": "0x1809529a0",
+      "createCollision": "0x1817f6370",
+      "bootstrapCapacityTableLookup": "0x18197edc0"
+    },
+    "dedicatedTests": 15,
+    "fullSuite": {
+      "pass": 725,
+      "fail": 0
+    },
+    "independentClrCheck": "Installed CLR Array.Sort with all-equal comparator and 17 distinct IDs produced 0,14,13,12,11,10,9,15,8,6,5,4,3,2,1,7,16. This supplements assembly, not original-game parity.",
+    "capacityEvidence": {
+      "cctor": "0x18197f4e0",
+      "handleSlot": "0x1831a1448",
+      "encodedToken": "0x800002ad",
+      "kind": 4,
+      "fieldRefIndex": 342,
+      "fieldRef": {
+        "typeIndex": 14318,
+        "localFieldIndex": 1
+      },
+      "typesPair": "0x182ca8ee0",
+      "typesCount": 40936,
+      "typesArray": "0x182ce8880",
+      "typePointer": "0x1831f0fa0",
+      "typeDefinitionIndex": 8793,
+      "owner": "<PrivateImplementationDetails>",
+      "fieldIndex": 41356,
+      "fieldName": "FA856B58B602D1AFB828D70020BB2D88B0C50B97FE8920E56AEBF6D280C11175",
+      "defaultDataIndex": 323976,
+      "metadataByteOffset": 6127992,
+      "byteLength": 120,
+      "sha256": "fa856b58b602d1afb828d70020bb2d88b0c50b97fe8920e56aebf6d280c11175",
+      "table": [
+        3,
+        7,
+        17,
+        29,
+        53,
+        97,
+        193,
+        389,
+        769,
+        1543,
+        3079,
+        6151,
+        12289,
+        24593,
+        49157,
+        98317,
+        196613,
+        393241,
+        786433,
+        1572869,
+        3145739,
+        6291469,
+        12582917,
+        25165843,
+        50331653,
+        100663319,
+        201326611,
+        402653189,
+        805306457,
+        1610612741
+      ],
+      "requestedCapacity": 90,
+      "allocatedCapacity": 97
+    }
+  },
+  "findings": [
+    "Priority is signed byte descending, no X tie breaker. CLR introsort threshold 16 changes equal-item order above threshold.",
+    "X comparator wraps signed 64-bit subtraction; positive direction highest X first, nonpositive lowest first.",
+    "Active enumeration is physical occupied slots, primary then secondary; deleted slots reuse LIFO. Disabled flag bit 0 filters after enumeration.",
+    "splitSpace copies all active entries; descriptor updates preserve current order.",
+    "Morton different-depth candidate check compares only two low bits, preserving coarse false positives.",
+    "Inclusive far rectangle corner and negative/outside grid become root descriptor. FP reciprocal multiplication, not float cell division.",
+    "scanCandidates checks each pair live; host callbacks may mutate descriptors affecting later pairs."
+  ],
+  "unresolved": [
+    "Dictionary growth/rebucket is refused. Scene live limit 90 per dictionary means no growth with capacity >=90.",
+    "Host must supply exact Collision.GetRect scaled local rectangle and position raws, populate collision payload, and connect scene/map/rect/inertia callbacks.",
+    "Pure helpers are not registered into shared runtime; no standalone stage simulation or original-game execution performed.",
+    "Host removal adapter must perform Collision.Dispose before storage unlink; pure storage helper handles dictionary bookkeeping only."
+  ],
+  "integration": {
+    "buildChunk": "Call once from current storage at native checkChunk entry; priority-sort happens once.",
+    "updateDescriptors": "Call after position changes with collision lookup; mutates same array slots without reorder.",
+    "scanCandidates": "Call in current sorted order; callback must perform native resolution and descriptor refresh before returning where native does so.",
+    "storage": "createStorage() uses native capacity97; createCollision(storage,resolvedPayload), removeCollision(storage,id). Explicit capacity override remains available for host verified storage snapshots."
+  },
+  "continuation": {
+    "capacity": "Resolved; prior handle address 0x183ba1448 was an arithmetic transcription error; correct address 0x1831a1448 verified directly.",
+    "nextStep": "Lead integrates pure helpers into scene phases, provides Collision.GetRect-scaled raws, native actor initialized payloads, and resolution callbacks."
+  },
+  "correctionHistory": [
+    "Initial report required explicit capacity pending metadata decoding. Cctor/encoded fieldref/type registration/field default data chain now resolves 97. Default storage capacity uses verified native value.",
+    "Corrected intermediate handoff handle-slot transcription 0x183ba1448 -> 0x1831a1448."
+  ]
+}

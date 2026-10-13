@@ -70,10 +70,15 @@ function apply(input,host={}){
   if(!dx)return;
   const ny=faceIndex?1:-1;
   let contacts=source.contacts.filter(c=>c.normal.x===0&&c.normal.y===ny).map(c=>find(c.id)).filter(Boolean).map(b=>({id:b.id,x:b.xRaw}));
-  contacts.sort((a,b)=>dx>0?b.x-a.x:a.x-b.x);
-  if(contacts.some((b,i)=>i&&b.x===contacts[i-1].x)){
+  // CLR introsort must see the original cache order: pre-sorting loses its
+  // unstable equal-key permutation for arrays larger than16.
+  if(typeof host.sortContactPositions==='function')contacts=host.sortContactPositions(contacts,dx);
+  else {
+   const original=contacts.slice();contacts.sort((a,b)=>dx>0?b.x-a.x:a.x-b.x);
+   if(contacts.some((b,i)=>i&&b.x===contacts[i-1].x)){
    if(typeof host.sortEqualContactPositions!=='function')throw Error('Native equal-position contact sort order required');
-   contacts=host.sortEqualContactPositions(contacts,dx);
+   contacts=host.sortEqualContactPositions(original,dx);
+   }
   }
   const gravity=!!(source.flags&0x100),different=!!(source.flags&0x200);
   for(const row of contacts){const target=find(row.id);

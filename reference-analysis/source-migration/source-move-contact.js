@@ -45,7 +45,8 @@ function addContactInfo(world,ownerId,targetId,face){
  const out=JSON.parse(JSON.stringify(world)),s=setup(out,ownerId,{});
  if(!s.root)throw Error('Contact owner collision is required');
  const contacts=s.contacts(s.root),n=normal(face);
- if(!NORMALS.some(q=>equal(q,n)))throw Error('Resolved cardinal contact normal is required');
+ if(typeof face!=='object'&&!NORMALS[face])throw Error('Resolved cardinal face or FP normal is required');
+ raw(n.x);raw(n.y); // circle response supplies arbitrary FP normals, including zero.
  if(contacts.some(c=>c.id===targetId))return {world:out,added:false};
  const target=s.find(targetId);
  if(equal(n,NORMALS[0])&&target&&s.contacts(target).some(c=>c.id===ownerId&&equal(c.normal,n)))return {world:out,added:false};
@@ -63,10 +64,10 @@ function retainsRectContact(owner,target,contact){
  if(owner.entityId===target.entityId||((owner.flags||0)|(target.flags||0))&1)return false;
  if(owner.collisionType!==0||target.collisionType!==0)throw Error('Only explicit rectangle collision probes are recovered');
  const n=contact.normal;
- if(!NORMALS.some(q=>equal(q,n)))throw Error('Resolved cardinal contact normal is required');
+ const nx=raw(n.x),ny=raw(n.y);
  const a=owner.collisionRectRaw,b=target.collisionRectRaw;
  for(const r of [a,b])if(!r||!['x','y','width','height'].every(k=>Number.isSafeInteger(r[k]))||r.width<0||r.height<0)throw Error('Resolved world collisionRectRaw is required');
- const x=a.x+n.x*(FP/2),y=a.y+n.y*(FP/2);
+ const x=a.x+Number(BigInt(nx)>>1n),y=a.y+Number(BigInt(ny)>>1n);
  const values=[x,y,x+a.width,y+a.height,b.x+b.width,b.y+b.height];
  if(!values.every(Number.isSafeInteger))throw Error('Contact probe exceeds safe FP range');
  return x<b.x+b.width&&b.x<x+a.width&&y<b.y+b.height&&b.y<y+a.height;

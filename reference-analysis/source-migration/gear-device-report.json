@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "devices": [
+    "Gear"
+  ],
+  "module": "source-gear-devices.js",
+  "status": "partial_circle_response_cache_complete_host_scene_not_connected",
+  "settledOn": "2026-10-13",
+  "nativeCodeExecuted": false,
+  "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base 0x180000000",
+  "summary": "Gear R2: FPSqrt 전체65537항목과 signed-int64 lookup을 복원했다. 초기 위치의 스테이지 FP 직접 복사, Actor 이동 적분·점프 요청/중력, 원형 global geometry·strict overlap, Gear CauseDead0 event43의 플레이어/SharedHP 수신 분기를 순수 함수로 제공한다. Collision.m_Layer와 pushBackTarget/isEnableSyncPos의 R1 명명 오류를 정정했다. 공통 원형 collision response/cache 생성 및 네이티브 콜백 순서 연결은 리드가 담당한다.",
+  "creator": {
+    "actorType": 94,
+    "site": "0x181776d7c",
+    "creator": "GearComponent.Creator 0x1818526e0"
+  },
+  "fields": {
+    "source": "quantum-field-offsets.json; instance offsets minus16",
+    "standby": "0x00",
+    "entity": "0x08",
+    "angle": "0x10",
+    "speed": "0x18",
+    "direction": "0x20",
+    "previousPosition": "0x30"
+  },
+  "parameters": {
+    "direction": "datas[0] -> signed sar16 (0x18185293e), >0 means dirX=-65536 otherwise+65536 (0x18185298e..9a9); dirY zero",
+    "speed": "abs(datas[1] raw)>=4 -> authored absolute speed (0x1818529b4..9c1), otherwise SPEED=65536 (0x1818536ca)",
+    "standby": "datas[2] signed sar16 !=0 (0x181852985..9cb)",
+    "unusedSlots": "ParseParameter reads only slots0..2; slots3..31 are not invented semantics",
+    "stage": "st_w_04_02, 2..8 players: Gear1 at authored(684,264) dir+1; Gear2 at(1984,264) dir-1; speedRaw524288, standbytrue",
+    "conversion": "loader 0x18055427c/281/291 -> convertFP0x180554373 -> FP.FromString_UNSAFE0x18163fd46/51 -> FP.FromFloat_UNSAFE0x18163fc6d/7e; signed float32 multiply/truncate"
+  },
+  "constants": {
+    "SPEED": "raw65536 at0x1818536ca",
+    "ROT_SPEED": "raw-32768 at0x1818536e0; rotate does not read it",
+    "HEIGHT": "raw6291456 at0x1818536f6",
+    "RADIUS": "raw2949120 = HEIGHT/2 - raw196608, at0x181853723/729",
+    "COLLISION_CIRCLE": "(radius,x,y)=(2949120,-131072,-3145728); 0x1818536ba/755/769. Actor.CreateCollision0x18169f68e..719 confirms first qword radius and next x/y. No AABB approximation. R2 GetGlobalCircle0x181690926..94e: 중심 오프셋은 scale과 곱하지 않고 collision.pos에 더한다. 반지름만 signed max(scaleX,scaleY)와 FP곱한다.",
+    "braking": "raw65536 in both components per OnUpdate, vector0x182e87af0 loaded0x181852c58; no DeltaTime multiplication",
+    "rotation": "twoPiRaw411774 at0x18185308c/0a8; radToDegRaw3754936 at0x1818530b3; radius denominator; all FP intermediate sar16 preserved",
+    "gravity": "Stage.prepare3 0x18170ac47..53: baseScale*raw42598>>16. real4-2 scale1 ->42598; Frame.GetGravity0x18174ac60은 stage+0x38을 그대로 읽는다. dt 곱셈 없음.",
+    "collisionSetup": "Gear.InitCollision0x181852a8a: r9b3 -> Collision.initialize0x181690b08의 byte+3 m_PushBackTarget=3(All). stack argumenttrue -> setupCollision0x18169f950의 CollisionHolder.isEnableSyncPos. 첫 holder index0. byte+1=8(0x181852aad)은 m_Layer(Enemy), attribute/mask가 아니다. 활성화 플래그는 generic collision setup/host가 유지한다."
+  },
+  "behavior": {
+    "update": "0x181852b66 chooses standby branch. Active checkFall0x181852d30 reads collision0 and IsContacted(face1,true). Falling preserves Actor velocity and infers horizontal direction above epsilon4; grounded vy>=0 sets vx=dirX*speed and vy0; upward jump preserves velocity.",
+    "standby": "0x181852c23/41 epsilon4 checks either component; clamp magnitude minus65536 to0 then restore sign, 0x181852c92..d0c. It brakes rather than immediately zeroing velocity.",
+    "switch": "OnRecvEvent0x181853126 event61 toggles standby at0x181853167..16e; all other events delegate to ActorComponent0x18169e840",
+    "contact": "OnContacted0x181853180: contactType0 map horizontal normal abs>=4 flips. Type1 actor normalY<=0 can flip via checkCollision0x1818534e0. normalY>0 and otherLayer8 requests Gear jump x=-sign(normalX)*3,y=-3; zeroX selects-3. Layer1 sends targeted event43 at0x181853357/36d, not direct event19. R2 missing Frame.GetActor result rejects contact; emitted event43 explicitly carries causeDead0.",
+    "flip": "negate both dir components and PlaySe3 at0x1818533d7..43a",
+    "rotation": "OnPost0x181852f79 calls rotate. Previous position is zero-initialized; rotate measures post-movement displacement, sqrt0x181640c40, FP ratio radius*twoPi, direction previousX<currentX?-1:+1, multiplies twoPi and radToDeg. Always stores previous position0x1818530cc, even below epsilon. No angle modulo.",
+    "rotationIntegerCheck": "Independent Python reproduction from disassembly: denominator18529830; distanceRaw65536 ratio231, negative step-83194, positive83136. Horizontal out/back accumulates-58raw. Distance524288 negative step-667496. Tests assert these constants.",
+    "event43": "QEventParamManager.Get0x181780c31 resets causeDead0; Actor.GetEventParam0x18169dc43/4a writes only type/sender. Gear does not write CauseDead. Player.OnRecvEvent0x1816c14a2..16dd: life<=0 ignored; CauseDead0 checks immortal flagbit8 then skips IsInvincible. Missing/disabled SharedHP ->life0/requestedState3/ForcePlaySe11/RequestShake. Enabled SharedHP.DealDamage0x1816f3107..32c7 decrementsHP, records victim once whileHP>0; HP exhaustion sends event43/CauseDead0 to previous victims in list order and receiver dies. Surviving receiver gets invincibleTimer/flashTimer49152 and isFlashingtrue (SetInvincible0x1816bfee5..ff05), actorSe11 start32768/end163840 and cameraShake1965 (QFP._0_03, actual raw from cctor0x181780cc0 static+0x30; no guessed decimal conversion).",
+    "actorMotion": "Actor.OnUpdate2 0x18169e153..1ff: pos += velo + signed accel>>1, then velo += accel; syncCollisionPos0x18169e206 afterwards. requestGearJump stores m_JumpVelo/bit19 (0x1816a21e1..2250); Actor.Post1 skips jumpProc when warpProc succeeds (0x18169e2af..2f8). jumpProc0x18169e753..75d copies pending vector into velo and clears it, then adds Stage.gravity only if collision0 exists without exact face1 contact. Ground/missing collision clamps positivevy0,0x18169e803..81b. No guessed timestep or maxfall.",
+    "face1": "face1 normal=(0,65536), ContactFaceExtensions.GetNormal0x18177e310. Collision.IsContacted0x181692b16..53 invokes exact cached actor-normal equality0x1816928f7/912, includeMaptrue, aggregateAttributesfalse; map-normal equality0x181692c5d/73. face1ContactFromCache must consume these caches, never regenerate grounded state from AABB overlap."
+  },
+  "sqrt": {
+    "source": "D:/SteamLibrary/steamapps/common/PICO PARK 2/pico_park_2_Data/resources.assets TextAsset FPSqrt; length at11384404=262148; body11384408;65537 little-endian int32 entries",
+    "sha256": "de5265f651730f20b54cc24bdcd3047e61320be44a5ae54796d290a189f4bca5",
+    "storage": "All entries delta-varint/base64 encoded inside source-gear-devices.js; packed69666bytes/base6492888bytes. Node Buffer and browser atob decoder both tested. No additional module/script dependency. Exposes sqrtTableEntry and sqrtMetadata.",
+    "loader": "FPMathUtils.LoadLookupTables 0x1818c3bee ->0x18165adf0; FPSqrt literal0x1831b9a40; loader0x18165af8a..b074 creates int32 array(length/4) and Buffer.BlockCopy copies all bytes to sqrt static+0",
+    "algorithm": "Native0x181640c40..e08: q<=65536 and nonnegative =>table[q]>>6. q>65536 => bit scan in32,16,8,4,2 steps gives even highestbit; shift=evenBit-14; result=(table[q>>shift]<<floor(shift/2))>>6. Negative q takes exception branch0x181640d6a; native nonnegative signed64 represented by safe Number or BigInt. No Math.sqrt approximation.",
+    "verification": "all65537 emitted int32 values match installedbytes/hash; entire small-input domain0..65536 verified; bit-boundaries17..62 and int64max tested against independently expressed instruction bit-scan oracle",
+    "rangeExamples": {
+      "123": 2839,
+      "65535": 65535,
+      "65536": 65536,
+      "65537": 65536,
+      "9007199254740991": 24295636992,
+      "9223372036854775807": 777460383744
+    },
+    "resolved": "R1 unverified table-index refusal removed for every native valid q. Outside nonnegative signed64 or inexact Number representation still rejects with accurate range/input reason."
+  },
+  "integration": {
+    "compile": "Default compile still refuses active Gear without nativeActorBridge:true because collision adapter remains absent. Opt-in is callback/host contract, not proof of playable4-2.",
+    "coordinates": "initialPositionRaw(device) returns raw authored stage X/Y, proven ActorFactory0x1816a3351..373 ->AddActor0x1816a73c7..3ee ->SetInitPos0x18169d2ca..2d6. This removes R1 stage-to-world uncertainty. No chipSize reciprocal: that belongs to camera rendering.",
+    "collisionSetup": "Load source-gear-devices.js then source-gear-collision.js. Keep circle0 layer8/pushBackTarget3/syncPos=true and actor bit19. Route circle/circle to SourceGearCollision.pushBackPair; mixed circle/rect uses exact scaled bounding rect and supplied lead rectResponse. Native pair response produces collision pose/flag6 and contact caches, not actor velocity or immediate Gear.contact.",
+    "update": "In Gear.OnUpdate, signal named event61 then update/beforeStep using actorSnapshots; apply returned actorVelocities. In native Actor.OnUpdate2 phase call integrateActorMotion with actual accelX/Y raws then synchronize collisionPos. It returns prePos/preVelo as well. These phases must not be folded into arbitrary dt movement.",
+    "contact": "After map/push/inertia/scale, call finishCollision in native active-list order with actual callback registry, ActorPositionSync/OnPushedBack hooks and lead refreshMapContacts. refreshActorContacts dispatches OnContactAdded thenOnContacted using cached normal/2 validity; Gear OnContacted receives contactType1 with collisionIDs/otherLayer/native other velocity. Do not run device contact immediately upon AddContactInfo. Native map callbacks contactType0 follow actor cache callbacks.",
+    "post": "In Actor.Post1 call actorJumpPost only after warpTaken is resolved, with cached collision0 face1 and native Stage.gravity. Then run Gear.OnPost rotate in the actual registered component order. afterStep groups contacts then rotation for existing module interface; it does not establish generic ActorUpdater/CollisionScene scheduling order.",
+    "player": "Gear event43 has causeDead0. resolveGearPlayerEvent43 is pure Gear-specific plan: apply sharedPatch then dispatch exhaustion events in supplied list order before receiver playerPatch/effects. Guarded immortal/life and SharedHP branches are exact; full generic player events remain the host responsibility. No causeDead1 default guess.",
+    "dependencies": "Existing SwitchTargetGroup now has a module; route its named event61 to Gear.signal. Do not add another Gear or Group implementation. Entire sqrt implementation is internal, so lead needs only the Gear script, not a new shared LUT file.",
+    "nativeInterface": "Generic collision solver, prototype asset flags/acceleration and ActorUpdater registration/delegate phase ordering must be supplied from the lead's verified Actor/collision adapter. No source-move-contact/common contactResponse edits.",
+    "hostScene": "The new helper implements recovered circle numeric/cache paths; host must supply native layer table, active/chunk/quadtree order, rectResponse, Map.Move/IsContacted, inertia/fixPlayerPos/scale, callback registry and typed event dispatch. Source-move-contact/common runtime remain lead-owned."
+  },
+  "verification": {
+    "unitTests": "Gear device35/35; Gear collision27/27; combined62/62 passed",
+    "fullSuite": "Final node --test all source-migration/*.test.cjs:699/699 passed,0 failed,exit0",
+    "measured": [
+      "2..8 player-count variants use the exact same two authored Gear actors",
+      "default stage compilation refuses at every count; bridge compilation round-trips JSON",
+      "8raw-unit braking stops after8 updates",
+      "epsilon4/default speed, signed floor and tags match parsing",
+      "named event61 toggles only the matching Gear",
+      "fall, ground and upward-jump velocity branches",
+      "map/actor contact flip, sound3, relative speed and targeted event43",
+      "Gear underside jump sign including zero normalX",
+      "three FPSqrt entries read directly from installed resource",
+      "exact integer rotation including asymmetric signed shifts",
+      "missing snapshots/collision data refuse explicitly",
+      "Complete65537 FPSqrt entries match installed bytes and fixed hash",
+      "entire0..65536 sqrt input domain, normalized bit boundaries17..62 and int64 maximum",
+      "browser UMD without Buffer/node module",
+      "real Gear initial position direct FP, raw gravity42598 from scale1",
+      "exact actor/map cached face1 normal, diagonal does not count",
+      "signed half acceleration Actor update and deferredJump/Post gravity",
+      "native scaled circle radius and unscaled offsets; strict tangent exclusion",
+      "correct Layer8/1 and PushBackTarget3/sync holder fields",
+      "Gear CauseDead0 event43 normal/immortal/invincible/SharedHP survival/exhaustion branches",
+      "Real Gear first-post rawangles -61178654 and -167010141 from native zero pre-position; previous sparse indexes no longer refuse",
+      "mixed bounding rectangle routing instead of invented Euclidean corner response",
+      "circle head-on/single real-radius/same-direction/effectivePre/diagonal rewind exact intermediate FPvalues",
+      "normal65535/65537 retained; signed epsilon pad asymmetry",
+      "native pair eligibility and prior-overlap refusal",
+      "cache duplicateID and reciprocal Up suppression",
+      "half-normal probe lifecycle: first Added then Contacted, repeated Contacted, stale reverse removal",
+      "synchronous callback effects and fixed callback-mask capture",
+      "ForceUp temporaryscale restoration and exact adapter refusal",
+      "ActorPositionSync squared511/512raw boundary, optional registered handlers, actor-before-map contact order",
+      "separate late OnCollided order after callback flag capture",
+      "browser helper reuses original full Gear LUT",
+      "OnContacted reloads cached normal after synchronous OnContactAdded mutation,matching0x1816940c7/4130"
+    ],
+    "humanOriginalComparison": false,
+    "runtimeRegistered": false
+  },
+  "unresolved": [
+    "Native circle/circle response and actor contact-cache lifecycle are implemented/tested in Gear-owned helper, but not connected to common runtime. Default compile still requires explicit nativeActorBridge. Device-alone compilation is not playable stage evidence.",
+    "Mixed circle/rect native route is conclusively bounding-rect/updatePushBackRect. Implementation of the generic rect solver, Map.Move/Map.IsContacted, inertia/fixPlayerPos/scale, and exact broadphase/active/chunk ordering belongs to the lead and is mandatory adapter input; no invented nearest-point or empty map cache.",
+    "Stage Actor.Update->Collision.Update->Actor.Post and collision callback phases are proved. Individual ActorUpdater registration/delegate ordering inside Update/Post and generic actor prototype/pause/warp/out-of-map lifecycle remain host metadata/inputs; do not infer them from interface batching.",
+    "Direct typed callback registry checks and actor gameplay mutation are host inputs; missing hasOnPushedBack/hasOnChangeScale, ForceUp search, map-cache or mixed-rect adapter throws. Gear-specific event43/functions remain separate from generic player events.",
+    "No runtime/play packaging/deployment/commit or human side-by-side gameplay validation. Current tests verify static exact functions and adapter contracts, not registered live physics."
+  ],
+  "correctionHistory": [
+    "During local verification, normalized JS negative zero to integer0 so JSON state is exact. Initial test arithmetic for rotation was replaced after independent Python reproduction of every native intermediate; final expected values preserve signed right-shift asymmetry.",
+    "R2 removes R1 sparse-FPSqrt unresolved: full65537 native int32 table is recovered from installed resources.assets, hashed, and every item verified. The table and exact signed64 native normalization now live inside Gear module.",
+    "R2 corrects R1 byte+1 attribute8/1 terminology to Collision.m_Layer. r9b3 was misnamed mask3; actual Collision.initialize stores m_PushBackTarget3. Fifth argumenttrue is CollisionHolder.isEnableSyncPos, not collision index; first collider index0. New schema rejects legacy otherAttribute.",
+    "R2 resolves R1 stage-to-world mapping uncertainty: ActorFactory/AddActor/SetInitPos directly copy authored FP X/Y to native Actor positions, with no reciprocal tile scale.",
+    "R2 resolves R1 generic Gear jump/gravity and event43 semantic uncertainty with pure Actor motion/post helpers and Gear-specific player/SharedHP plan. Current velocity is not immediately replaced by a contact jump; m_JumpVelo is deferred to Actor.Post1.",
+    "R2 effect QFP._0_03 read from cctor actual raw1965, not decimal trunc(0.03*65536)=1966. Report/code use actual native raw. Other recovered constants unchanged.",
+    "R3 corrects blanket R1/R2 prohibition on circle AABB substitution: native explicitly uses radial response ONLY for both-circle. Mixed pairs intentionally use circle scaled bounding rectangle and generic rect response. Universal radial nearest-point mixed solver would be wrong.",
+    "R3 normalizing5FP horizontally yields65535 rather than exact65536; raw65 padding therefore becomes64 positive and-65 negative. Initial new-test arithmetic assumed unitnormal and was corrected after independent assembly/LUT Python calculation; response implementation preserves reciprocal quantization.",
+    "R3 resolves prior unknown circle numeric response, AddContactInfo generation, actor cache refresh and coarse callback-phase order. Map/rect/inertia/broadphase host contracts remain explicit; no claim of whole native scene implementation.",
+    "R3 updates local tool evidence: REA first-run now15880bytes, snapshot17787bytes and actual Ghidra pseudo code verified; old0byte observation is obsolete. The shared CODEX-HANDOFF remains lead-owned and was not edited."
+  ],
+  "collisionModule": "source-gear-collision.js",
+  "collisionTests": "source-gear-collision.test.cjs",
+  "circleR3": {
+    "scope": "Gear-owned reusable pure CollisionScene circle/circle numeric response, exact mixed shape routing, actor contact-cache generation/refresh and per-collision/late callback adapter. No original execution or public runtime changes.",
+    "shapeRouting": "Collision.IsCollided0x181691f3f/49 and UpdatePushBack0x1817f9da7/db1 select radial logic only when BOTH shape bytes are1. All mixed circle/rect pairs use Collision.GetRect0x18169210d/145 and updatePushBackRect0x1817f9e88. Circle bounding rect H=W=2r,X=circleX-r,Y=circleY-r is stored0x18169f6b6..719 and scales about pivot0x18169063d..6ec. Therefore Euclidean corner-outside-circle can collide in the mixed native path. A universal circle-nearest-rect solver would contradict these branches.",
+    "normalization": "Helper0x1816463a0 returns halfShift and FPSqrt int32 value for unsigned sum-of-raw-squares. Caller0x1817fb933..974 calculates signed reciprocal=(1<<44)/entry then signed64(component*reciprocal)>>(halfShift+14). Zero vector ->zero. Actual axis5FP gives+65535/-65536, certain final separation gives65537. These are not snapped to exact unit FP, so face1 exact equality remains meaningful.",
+    "pairGates": "UpdatePushBack0x1817f9c80..da1: same/null ->2; both pushBackTarget bit1 required; native layer table check; at least one movedbit6; both fixed(bit2 set,bit3clear) ->2; current strict collision required and prior collision forbidden. Pre-overlap is not forcibly resolved. Only after all gates does response run. Mixed response calls supplied lead rectResponse; unknown adapter throws.",
+    "circleResponse": "0x1817fb7a0..f04 reads scaled circle centers/radius and absolute nullable effective previous positions, normalizes each current-minus-effectivePre vector, zeroes one rewind for same-sign dot products, solves A=FP(relativeDelta squared), B=sum((2*relativeDelta*currentCenterDiff)>>16), C=FP(centerDiff squared)-FP(radiusSum squared). discriminant=FP(B squared)-((C*A)<<2>>16); t=min65536, signed((sqrt(discriminant)-B)<<16)/(2*A); A0->t0, no lower clamp. rewind=FP(delta*t)+FP(normal*65) except zeroDelta; rewindMagnitude>=originalDeltaMagnitude ->useOriginalDelta. Final pos=current-rewind. Does not edit velocity.",
+    "padding": "QFP._0_001 actual raw65, cctor0x181780cc0 static+8/literal0x183165038; read by circle solver0x1817fbbd9/fbcc1. Positive normal65535 scales raw65 to64; negative-65536 scales to-65. FP asymmetry is retained.",
+    "responseState": "0x1817fbd6c..e04 normalizes final collision POSITION2-POSITION1, not shifted circle centers. Position1/flag6 then AddContactInfo for collision2 occur first0x1817fbe11..e69; position2/flag6 then opposite normal for collision1 follow0x1817fbe84..edc. flag6 reflects current!=original native prePos, even when nullable previous override is used. Returns0.",
+    "cacheAdd": "Collision.AddContactInfo0x181691020..042 deduplicates otherCollisionID and preserves old normal/state. Up exact(0,-65536) rejects reciprocal Up cycle0x181691075..204. New record state0/hasCalledAddedfalse0x181691269..2bb; adding cache is not a callback. Cached normals retain native quantized values.",
+    "cacheRefresh": "updateContactCollision0x181693fd9..419e probes own current position+signed half cachedNormal with other offset0 through strict Collision.IsCollided; absent/disabled/noOverlap schedules deletion by original index and removes in reverse order0x1816941c7..317. New valid record setsstate1 before Invoke_OnContactAdded0x1816940c1/412b, then Invoke_OnContacted0x181694197. Existing valid record invokes onlyOnContacted. Native callbacks execute synchronously before next cached contact. ForceUp flag5 halves onlyscaleX and invokes native ordered SearchCollidedCollisions with bit8 argument then restores fullscale0x181693c67..e89; host search adapter is mandatory for this branch.",
+    "finishCollision": "Collision.updateAfter0x181693641..a71 storesprePos=current and clearsmoved6 before callbacks; type-registry OnChangeScale executes only if actor exists, scales changed and registered. preScale and expectedScale becomeactualScale. abs(FP(pos-expected squared))>=4 triggers actor-position write and type-registry OnPushedBack only if registered, then expectedPos=current. This is squared threshold: one-axis511raw does notsync,512raw syncs. Actor contact refresh then Map contact refresh last. Map.IsContacted adapter remains lead-owned; no empty-map guessed cache is installed.",
+    "lateCallbacks": "updateCollide0x1817ff360 iterates active chunk candidates i<j in native supplied order; disabled bit0 excluded; owner notify-bit1(0x2) captured outside inner loop, other-bit captured before pair callbacks; layer table and strict currentcollision tested. Invoke_OnCollided first owner then other, only enabled sides,0x1817ff734..789. Quadtree update follows callbacks0x1817ff7b3/822. Helper requires exact candidateCheck/layer adapters rather than inventing native broadphase.",
+    "phaseOrder": "Stage.onUpdate0x18170b4cc/4fc/561: ActorScene.Update -> CollisionScene.Update -> calcPlayerRange/updateAutoScroll -> ActorScene.Post. Collision.checkChunk: updateMap0x1817f88d7; normal updatePushBack pass and fixed pass0x1817f8911/8951 bounded8 each, fixed return1 restarts outer up to8 at0x1817f8963..6f; postPushBack inertia/fixPlayerPos0x1817f8993; scale0x1817f8add; each Collision.updateAfter0x1817f8c92 (actor contact then map contact); late OnCollided0x1817f8d15. Broadphase/chunk ordering and generic rect/inertia/map mechanics remain native host inputs.",
+    "independentIntegerCheck": "Python implementation expressed directly from the disassembly plus installed LUT independently checks head-on A6553600,B19660800,discriminant10485760000,t32768,rewinds163904/-163905; same-direction leading rewind0; effectivePre override t21845,rewinds218514/-109290. Diagonal case discriminant2620391424,t28783,rewind(86387,115183),position(110221,146961),normal(40362,51632). Hardcoded tests assert these native intermediates.",
+    "browser": "UMD SourceGearCollision requires SourceGearDevices first. Node requires main Gear module. No second full sqrt table is copied. State world.collisions/contact records survives JSON serialization."
+  },
+  "reaVerification": {
+    "observedFiles": {
+      "first-run.md": "C:/Users/user/tools/rea-snapshots/first-run.md:15880bytes,modified2026-10-13 22:32:41",
+      "gameassembly.json": "C:/Users/user/tools/rea-snapshots/gameassembly.json:17787bytes,modified2026-10-13 22:32:40"
+    },
+    "provider": "Ghidra12.1.4; observed subject binarySHA256 dc554e2008b23c7d52f0c063886ea19acf20369ac698c77be7c67cfb516edd71; actual procedure0x1818713e0 pseudo code",
+    "accuracyCheck": "Pseudo signed magic-0x5c28f5c28f5c28f5, high64 product plus n<<32, sar22 minus sar63 equals native magic0xa3d70a3d70a3d70b at0x181871571, imul0x181871585/5b7, sar22 at0x18187159e/5c2, stores+0x30/+0x28 at0x1818715af/5d0. Executed pure arithmetic checks5->3276,66->43253,-5->-3276,-66->-43253,0->0,100->65536. Original game never executed.",
+    "cliInspection": "rea decompile --help confirms --snapshot loads/updates local analysis snapshot. Installed dist/cli.js says commands acquire/close own sessions; GhidraProviderCapabilities.js explicitly says imported Program/temp project ephemeral and deleted onclose. Current snapshot entries/workflow_entries are empty and evidence_bundle records only that decompile operation, not a full persistent Ghidra project or general function cache.",
+    "useLimit": "Read and verified existing pseudo code as FP magic-division corroboration. No circle-function Ghidra pseudocode exists in observed snapshot, so circle derivation is from exact assembly addresses plus verified LUT. No new heavy whole-binary import/reanalysis, original snapshot overwrite, or duplicate background analysis was launched. Do not cite nonexistent circle pseudo code as evidence."
+  }
+}
