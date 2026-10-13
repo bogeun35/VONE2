@@ -120,3 +120,12 @@ unresolved: <everything you refused or could not establish>
 ```
 
 Write the result note in Korean if you can; the human owner reads Korean.
+
+## Lead session (from 2026-10-13)
+
+Claude's session ended. ONE Codex session at a time may act as the lead: read
+[`CODEX-HANDOFF.md`](CODEX-HANDOFF.md) and do what it lists — registering modules in
+`source-stage-runtime.js`, `play/*`, `package-source-play.cjs`, `deploy-source-play.cjs`,
+deploying and committing. That overrides the "create only your new files" and
+"do not commit or deploy" rules **for the lead session only**. Any other session
+running in parallel keeps the old rules and works on device modules alone.
