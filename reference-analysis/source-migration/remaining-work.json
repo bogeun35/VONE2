@@ -18,11 +18,12 @@
   "st_w_10_01",
   "st_w_10_04",
   "st_w_13_01",
-  "st_w_11_02"
+  "st_w_11_02",
+  "st_w_12_03"
  ],
  "worldStages": 60,
- "remainingStages": 45,
- "remainingDistinctBlockers": 91,
+ "remainingStages": 44,
+ "remainingDistinctBlockers": 90,
  "nearest": [
   {
    "id": "st_w_03_02",
@@ -43,20 +44,20 @@
    "guardsAfterTypes": []
   },
   {
+   "id": "st_w_09_04",
+   "blockerCount": 2,
+   "blockers": [
+    "DistanceConstraint",
+    "TopViewPlayer"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
    "id": "st_w_12_01",
    "blockerCount": 2,
    "blockers": [
     "GoKart",
     "Stick"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_12_03",
-   "blockerCount": 2,
-   "blockers": [
-    "SpeedSwitch",
-    "Wind"
    ],
    "guardsAfterTypes": []
   },
@@ -223,17 +224,6 @@
     "st_w_15_02",
     "st_w_03_04",
     "st_w_12_02"
-   ],
-   "appearsIn": 4,
-   "opensAlone": []
-  },
-  {
-   "type": "Wind",
-   "stages": [
-    "st_w_02_04",
-    "st_w_09_04",
-    "st_w_12_03",
-    "st_w_07_01"
    ],
    "appearsIn": 4,
    "opensAlone": []
@@ -408,15 +398,6 @@
    "stages": [
     "st_w_07_03",
     "st_w_15_02"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "SpeedSwitch",
-   "stages": [
-    "st_w_12_04",
-    "st_w_12_03"
    ],
    "appearsIn": 2,
    "opensAlone": []
@@ -668,6 +649,14 @@
    "type": "Stick",
    "stages": [
     "st_w_12_01"
+   ],
+   "appearsIn": 1,
+   "opensAlone": []
+  },
+  {
+   "type": "SpeedSwitch",
+   "stages": [
+    "st_w_12_04"
    ],
    "appearsIn": 1,
    "opensAlone": []
@@ -1299,10 +1288,9 @@
     "LinePathLift",
     "MoveWall",
     "Text",
-    "TouchEnergy",
-    "Wind"
+    "TouchEnergy"
    ],
-   "blockerCount": 6,
+   "blockerCount": 5,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
@@ -1312,7 +1300,6 @@
       "Text",
       "MoveWall",
       "LinePathLift",
-      "Wind",
       "TouchEnergy"
      ]
     },
@@ -1323,7 +1310,6 @@
       "Text",
       "MoveWall",
       "LinePathLift",
-      "Wind",
       "TouchEnergy"
      ]
     },
@@ -1334,7 +1320,6 @@
       "Text",
       "MoveWall",
       "LinePathLift",
-      "Wind",
       "TouchEnergy"
      ]
     },
@@ -1345,7 +1330,6 @@
       "Text",
       "MoveWall",
       "LinePathLift",
-      "Wind",
       "TouchEnergy"
      ]
     },
@@ -1356,7 +1340,6 @@
       "Text",
       "MoveWall",
       "LinePathLift",
-      "Wind",
       "TouchEnergy"
      ]
     },
@@ -1367,7 +1350,6 @@
       "Text",
       "MoveWall",
       "LinePathLift",
-      "Wind",
       "TouchEnergy"
      ]
     },
@@ -1378,7 +1360,6 @@
       "Text",
       "MoveWall",
       "LinePathLift",
-      "Wind",
       "TouchEnergy"
      ]
     }
@@ -2001,66 +1982,58 @@
    "connected": false,
    "distinctBlockers": [
     "DistanceConstraint",
-    "TopViewPlayer",
-    "Wind"
+    "TopViewPlayer"
    ],
-   "blockerCount": 3,
+   "blockerCount": 2,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
       "TopViewPlayer",
-      "DistanceConstraint",
-      "Wind"
+      "DistanceConstraint"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
       "TopViewPlayer",
-      "DistanceConstraint",
-      "Wind"
+      "DistanceConstraint"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
       "TopViewPlayer",
-      "DistanceConstraint",
-      "Wind"
+      "DistanceConstraint"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
       "TopViewPlayer",
-      "DistanceConstraint",
-      "Wind"
+      "DistanceConstraint"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
       "TopViewPlayer",
-      "DistanceConstraint",
-      "Wind"
+      "DistanceConstraint"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
       "TopViewPlayer",
-      "DistanceConstraint",
-      "Wind"
+      "DistanceConstraint"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
       "TopViewPlayer",
-      "DistanceConstraint",
-      "Wind"
+      "DistanceConstraint"
      ]
     }
    }
@@ -2279,61 +2252,53 @@
   },
   {
    "id": "st_w_12_03",
-   "connected": false,
+   "connected": true,
    "distinctBlockers": [
-    "SpeedSwitch",
-    "Wind"
+    "SpeedSwitch"
    ],
-   "blockerCount": 2,
+   "blockerCount": 1,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "SpeedSwitch",
-      "Wind"
+      "SpeedSwitch"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
-      "SpeedSwitch",
-      "Wind"
+      "SpeedSwitch"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
-      "SpeedSwitch",
-      "Wind"
+      "SpeedSwitch"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
-      "SpeedSwitch",
-      "Wind"
+      "SpeedSwitch"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
-      "SpeedSwitch",
-      "Wind"
+      "SpeedSwitch"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
-      "SpeedSwitch",
-      "Wind"
+      "SpeedSwitch"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
-      "SpeedSwitch",
-      "Wind"
+      "SpeedSwitch"
      ]
     }
    }
@@ -3791,10 +3756,9 @@
    "distinctBlockers": [
     "ArrowSign",
     "HalfOperator",
-    "StepEnemy",
-    "Wind"
+    "StepEnemy"
    ],
-   "blockerCount": 4,
+   "blockerCount": 3,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
@@ -3802,7 +3766,6 @@
      "missing": [
       "HalfOperator",
       "StepEnemy",
-      "Wind",
       "ArrowSign"
      ]
     },
@@ -3811,7 +3774,6 @@
      "missing": [
       "HalfOperator",
       "StepEnemy",
-      "Wind",
       "ArrowSign"
      ]
     },
@@ -3820,7 +3782,6 @@
      "missing": [
       "HalfOperator",
       "StepEnemy",
-      "Wind",
       "ArrowSign"
      ]
     },
@@ -3829,7 +3790,6 @@
      "missing": [
       "HalfOperator",
       "StepEnemy",
-      "Wind",
       "ArrowSign"
      ]
     },
@@ -3838,7 +3798,6 @@
      "missing": [
       "HalfOperator",
       "StepEnemy",
-      "Wind",
       "ArrowSign"
      ]
     },
@@ -3847,7 +3806,6 @@
      "missing": [
       "HalfOperator",
       "StepEnemy",
-      "Wind",
       "ArrowSign"
      ]
     },
@@ -3856,7 +3814,6 @@
      "missing": [
       "HalfOperator",
       "StepEnemy",
-      "Wind",
       "ArrowSign"
      ]
     }
