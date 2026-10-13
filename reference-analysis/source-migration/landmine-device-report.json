@@ -1,0 +1,102 @@
+{
+ "schemaVersion": 1,
+ "devices": ["LandmineSwitch", "LandmineSwitchObserver"],
+ "module": "source-landmine-devices.js",
+ "status": "implemented_tested_and_connected",
+ "settledOn": "2026-10-13",
+ "nativeCodeExecuted": false,
+ "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base 0x180000000",
+ "note": "The address-by-address derivation lives in the module header comment. This file records the conclusions, the verification and what is still open.",
+
+ "summary": "st_w_13_01's whole round. Twelve switches lie on the floor and a lottery turns one of them into a landmine; nobody can see which. One player at a time may move - everyone else is frozen and drawn grey - and that player steps on a switch. A safe switch lights up and control passes to the next player; a landmine hesitates half a second, beeps for a second and a half and then kills whoever stepped on it. Eight safe presses switch the round's authored-inactive key on.",
+
+ "aLandmineSwitchIsAlsoASwitch": {
+  "why": "LandmineSwitchComponent has no InitCollision and its Creator 0x18186fc00 never calls one, so on its own the box would be unknowable from the binary.",
+  "evidence": "It shares its entity with a SwitchComponent. LandmineSwitchComponent.GetSwitch 0x18186fba0 resolves that component through m_EntityRef (+0x18), and the Idle branch of OnUpdate reads its m_Flags bit2 (0x18187054b) and m_ContactCollisionId (0x18187056b) at exactly the offsets quantum-field-offsets.json gives for SwitchComponent.",
+  "consequence": "The contact box is SwitchComponent.COLLISION_RECT, already derived in spring-switch-runtime.js, and m_Direction is never written by either ParseParameter, so the zero default applies. The port registers LandmineSwitch as a relay switch and the device never computes a box of its own."
+ },
+
+ "theThreeTimers": {
+  "values": {"PUSHED_WAIT_TIME_SAFE": "0.4 (raw 26214)", "PUSHED_WAIT_TIME_FAIL": "0.5 (raw 32768)", "EXPLODE_TIME": "1.5 (raw 98304)"},
+  "how": "LandmineSwitchComponent..cctor 0x1818709c0 builds all three with FP.FromString_UNSAFE from metadata string literals, which earlier passes recorded as unreadable. resolve-string-literals.local.py reads them: an IL2CPP literal slot holds an encoded token in the file, and il2cpp_codegen_initialize_runtime_metadata 0x1802c5dc0 decodes it (bit0 the unresolved marker, bits 1..28 the index, top 3 bits the kind, string literals being kind 5). The tool reproduces all 22 QFP literals as a check.",
+  "slots": {"0x1831c9b28": "\"0.4\" stored at 0x181870a34", "0x1831c9e80": "\"0.5\" stored at 0x181870a53", "0x18317f040": "\"1.5\" stored at 0x181870a73"}
+ },
+
+ "percentages": {
+  "formula": "(n << 32) / (100 * 65536), i.e. the FP raw is trunc(n * 65536 / 100)",
+  "where": "ParseParameter 0x181871571 loads the divide magic 0xa3d70a3d70a3d70b and the shifts land at 0x18187159e and 0x1818715c2; the stores are 0x1818715af (m_LandminePercent) and 0x1818715d0 (m_ClearPercent)",
+  "shipped": "st_w_13_01 authors 5 and 66, which become raw 3276 (0.049988) and raw 43253 (0.65997)."
+ },
+
+ "lottery": {
+  "where": "lottelyLandmine 0x181872370, called once from OnStart 0x181871ddc",
+  "mines": "ceil(FP(switchCount) * m_LandminePercent), clamped to switchCount - 1 and floored at 1 (0x181872518..0x181872583)",
+  "clearSwitchCount": "ceil(FP(switchCount) * m_ClearPercent), clamped to switchCount - mines and floored at 1 (0x181872528..0x181872599)",
+  "selection": "a descending Fisher-Yates over the switch list using the integer RNGSession.Next 0x181662090 with (0, i+1) (0x181872690, swaps at 0x1818726e0 and 0x181872708), then the first `mines` entries get SetIsLandmine(true) (0x18187273e)",
+  "shippedResult": "12 switches, 5 percent and 66 percent give 1 mine and 8 presses to clear, at every player count - the whole field is pc0, so it does not scale.",
+  "whyEight": "12 * 0.65997 is 7.9196 and the ceiling is an FP ceiling, so the stage asks for 8 and not 7."
+ },
+
+ "oneAtATime": {
+  "mechanism": "changeControlablePlayer 0x181872cc0 walks every player actor and, for the one whose actor index matches, CLEARS PlayerComponent m_Flags bits 7 and 0x19; for everyone else it SETS them (0x181872df8 jne, then 0x181872dfa/0x181872dfe versus 0x181872e04/0x181872e0b).",
+  "bitMeanings": "Bit 7 is SetEnableInput - the setter 0x1816bcff0 sets the bit when the argument is FALSE, so a set bit means input is off - and bit 0x19 is IsGrayscale (SetGrayscale 0x1816bd050). The chosen player moves in colour and everyone else is frozen and grey.",
+  "rotation": "m_CurrentPushPlayerIndex = (m_CurrentPushPlayerIndex + 1) % list.Count each time the safe-press count changes (0x18187221a), then changeControlablePlayer (0x181872280).",
+  "release": "unlockPlayerControl 0x181872e40, called once on clear at 0x18187231f.",
+  "firstPress": "Nothing locks anybody before the first safe press: neither Creator, InitPost nor OnStart calls changeControlablePlayer, and m_PushedSwitchCount starts equal to the count the first sweep measures, so no rotation happens until a switch actually finishes. The opening press is a free-for-all and the rotation starts after it. That is what the code does, not an interpretation."
+ },
+
+ "switchStateMachine": {
+  "enum": "LandmineSwitchState Start, Idle, Judge, Explosion, End = 0..4",
+  "Start": "0x1818706ab: m_Timer = 0 and on to Idle",
+  "Idle": "0x181870536: needs SwitchComponent m_Flags bit2, a live collision whose owner is a player (Frame.GetCollisionById 0x181870575) and an observer that is neither over nor clear. Only for a mine does it record m_PushedActor (0x181870670). Either way the presser's input goes off (0x181870691) and the state becomes Judge.",
+  "Judge": "0x1818703fe: waits PUSHED_WAIT_TIME_FAIL for a mine and PUSHED_WAIT_TIME_SAFE otherwise (0x18187043b chooses). A mine goes to Explosion with the presser's input handed back (0x1818704e3); anything else plays SeId 4 and goes to End.",
+  "Explosion": "0x1818702d3: beeps SeId 4 every QFP._0_05 (0x181870342 against the inlined raw 0xccb) until EXPLODE_TIME, then SeId 11, Flash, RequestShake, killPlayer and End.",
+  "End": "m_OnPlayerKilled = 0 (0x1818702ca) and nothing else."
+ },
+
+ "theKill": "killPlayer 0x181870820 uses GetEventParam(0x13 = 19 = QEventType.Dead) and Frame.NotifyEvent 0x18174a110, the by-entity overload, so it kills exactly the player who stepped on it rather than broadcasting. Being event 19, an immortal player survives it - the same rule deadtimer-device-report.json established.",
+
+ "theKey": "st_w_13_01's Key3 authors datas[2] = 1 = m_Inactive. One second after the round clears (m_Timer against QFP._1 at 0x1818722c9) the observer plays SeId 0x18 and calls NotifySwitchOnOffEvent with on = true (0x18187230a), which sends event 61 to m_TargetName = \"Key3\". The gate layer already activates a named key on 61.",
+
+ "integerTime": {
+  "decision": "Every timer accumulates trunc(dt * 65536) rather than the float, because the native adds Frame.DeltaTime's FP raw - an integer - and compares against integer raws.",
+  "why": "One frame of 60Hz truncates to 1092, which is exactly QFP.OneFrame's own raw. Accumulating the float instead drifted the 0.5s judge by a whole frame: 30 float additions landed on 32767.999999999996 and lost the >= against 32768.",
+  "consequence": "0.4s settles after 25 frames and 0.5s after 31, because 1092 is a hair under one sixtieth of a second. That is the native's own arithmetic, not a port artefact."
+ },
+
+ "verification": {
+  "unitTests": "source-landmine-devices.test.cjs, 20 passing.",
+  "measured": [
+   "All seven player counts compile from the real stage data: 12 switches, 1 observer aimed at Key3, 1 mine, 8 presses to clear.",
+   "The percent conversion truncates: 5 percent is raw 3276 and 66 percent is raw 43253.",
+   "The FP ceiling rounds 1.0 plus one raw unit up to 2, which is what makes the stage ask 8.",
+   "The same seed always picks the same mine and a different seed picks a different one; over 400 seeds every one of the twelve positions was drawn at least once, so no position is safe by construction.",
+   "A safe switch settles on the 27th update and is still judging on the 26th; a mine needs 33 and explodes 91 updates later.",
+   "The explosion emits event 19 at exactly one player with Flash and shake, reveals itself, and sets the observer's game-over flag. An immortal player gets the event and lives.",
+   "Control rotates p1 -> p2 -> p3 -> p4 -> p1 with everyone else locked and grey on each step.",
+   "The eighth safe press clears, and one second later event 61 goes to Key3, the clear sound plays, everyone is unlocked, and nothing further is emitted over the next 120 updates.",
+   "A switch nobody touches never leaves Idle over 600 updates, and a lost round refuses further presses.",
+   "displays() returns null for a switch's landmine state until it has revealed itself, and the word isLandmine never appears in the view payload.",
+   "End to end through the stage runtime at 4 players: a safe press rotates control and locks the other three; stepping on the mine ends the round 1.5s later with the failure reason."
+  ],
+  "regression": "14 rounds x 2..8 players = 98/98 compile and build. 234 tests pass across 21 files."
+ },
+
+ "unlocks": {
+  "stagesUsingThesePair": ["st_w_13_01"],
+  "fullyOpenedByThisAlone": 1,
+  "connectedAs": "round 14, '2편 13–1'"
+ },
+
+ "unresolved": [
+  "LandmineSwitch datas[0] and datas[1] are QPlayerCountParam tables and datas[2] is an int, and none of the three reaches a stored field in any shipped stage - every one of st_w_13_01's twelve authors zeros. compile() refuses a non-zero one rather than guess what it would do.",
+  "The shuffle at 0x181872670 makes TWO integer RNG draws per step, one with (0, i+1) that is used for the swap and one with (0, i) at 0x18187272f whose result is not stored anywhere this pass could find. The port makes one draw per step. The shuffle is uniform either way and the host ships the drawn result, so this cannot change what a player sees; it would only matter to someone trying to match the original's RNG stream.",
+  "m_IsJudging (+0x10) and m_LandmineCount (+0x02) are fields the observer declares; the port keeps the count but never found a reader for m_IsJudging.",
+  "m_IsEndless on a switch is never set by any shipped stage, and EndlessLandmineObserverComponent 0x18182c690 - with its own lottery, level-up and game-over timer - is not ported. No World stage uses it.",
+  "lottelyPushPlayerRoutine 0x181872890 exists but nothing in the component calls it: the full call lists of Creator, InitPost, OnStart, OnUpdate and OnExit contain no reference. The push order is therefore the order OnStart fills m_PushPlayerIndexList in, which is player index order. If that turns out to be a shuffle, this is where to look.",
+  "RevealLandmine 0x1818708d0 is modelled only for the switch that goes off. Whether something reveals the rest at the end of the round was not traced.",
+  "The two view fields Judge writes on the presser before the explosion (0x1818704d1 sets +0x1c to 1 and 0x1818704d8 writes FP 10 to +0x60 of PlayerComponent) are not modelled; neither offset is named in the metadata this pass consulted.",
+  "Frame.DeltaTime's FP raw is still unread in general. The module assumes one frame, which is now known to be 1092, so the arithmetic is exact at 60Hz and would drift at any other rate.",
+  "No human has played this round. The lottery, the rotation, the kill and the key opening are machine-verified; whether one mine in twelve with eight presses needed is fair is not."
+ ]
+}

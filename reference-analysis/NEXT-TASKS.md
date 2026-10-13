@@ -4,8 +4,8 @@
 > 수치는 전부 `source-migration/remaining-work.json` 실측이다. 추정이 아니다.
 > 그 파일은 `node reference-analysis/source-migration/scan-remaining-work.cjs` 로 다시 만든다.
 
-**현재**: 런타임 연결 **13라운드** / PP2 월드 60개. 남은 47개, 고유 차단 요소 96종.
-테스트 214건 전부 통과.
+**현재**: 런타임 연결 **14라운드** / PP2 월드 60개. 남은 46개, 고유 차단 요소 94종.
+테스트 234건 전부 통과.
 
 ---
 
@@ -34,21 +34,23 @@
 
 `WeightedLiftEx` 로 `st_w_10_04` 를 열면서 1종 구간이 비었다. 이제 최단 거리는 2종이다.
 
-### 1순위 — 2종이면 열리는 곳 (9개)
+### 1순위 — 2종이면 열리는 곳 (8개)
 
 `03_02`(DamageRect, LinePathLift) · `04_02`(Gear, SwitchTargetGroup) ·
 `11_02`(FloatingThorn, PoleLadder) · `12_01`(GoKart, Stick) · `12_04`(MoveWall, SpeedSwitch) ·
-`13_01`(LandmineSwitch, LandmineSwitchObserver) · `13_03`(RallyController, RallyMallet) ·
-`13_04`(FakePlayer, FakeTimer) · `14_03`(Dossun, PlayerBlockGun)
+`13_03`(RallyController, RallyMallet) · `13_04`(FakePlayer, FakeTimer) ·
+`14_03`(Dossun, PlayerBlockGun)
 
 고를 때 참고:
 
-- **`LandmineSwitch` + `LandmineSwitchObserver`** — 이름 그대로면 이미 이식된
-  `CollisionSwitch` + `SwitchObserver` 와 같은 구조일 가능성이 높다(관찰자가 스위치 묶음을 세고
-  대상에 61/60 을 쏘는 형태). 가장 싸 보이는 쌍이다.
+- **`SwitchTargetGroup`** 은 `04_02`·`02_03`·`06_04`·`15_03` 네 곳에 있다. 이름대로면
+  스위치 이벤트를 묶음에 중계하는 얇은 장치라 재사용 효율이 가장 좋다. 짝은 `Gear`.
 - **`SpeedSwitch`** 는 `12_04` 와 `12_03` 양쪽에 있다.
 - **`LinePathLift`** 는 `03_02`·`02_04`·`03_03` 에 있고 `LinePathLiftComponent.ParseParameter
-  0x1818785b0` 이 `Frame.GetPlayerIndexCount` 를 쓴다(인원 배율 있음).
+  0x1818785b0` 이 `Frame.GetPlayerIndexCount` 를 쓴다(인원 배율 있음). 다만 `03_02` 의
+  datas[4]=2.3335 가 "1/65536 배수가 아닌 슬롯" 거부에 걸린다 — 아래 항목 참고.
+- 지뢰 라운드에서 만든 **플레이어 입력 잠금**(`p.inputLocked` / `p.grayscale`)은
+  다른 장치도 쓸 수 있다. 원작에서 조작을 빼앗는 장치가 또 나오면 그대로 재사용할 것.
 
 ### 2순위 — 한 번에 2라운드
 
@@ -77,6 +79,7 @@
 | 방향0 접촉 판정 | 원작보다 좁게 유지(의도적) | 원작은 단순 겹침인데 현재는 "착지 상태로 발이 밴드 안". 넓히면 `whole-route-replay.cjs --check` 로 영향 라운드를 보고 재녹화 |
 | 4-3 열쇠 | **열쇠는 닿을 수 있게 고쳐졌다. 라운드가 실제로 클리어되는지는 미확인** | 열쇠가 authored 위치에 머물던 것이 원인이었다 — 원작은 `KeyComponent.ParseParameter` 가 인원수에 따라 스폰 위치를 옮긴다(`key-reach-report.json`). 2인 (224,375) 로 지형 밖이다. 다만 틈 아래 전기(x 48..864)는 그대로이고 **사람이 클리어한 적은 아직 없다** |
 | 10-1 (새 라운드) | 컴파일·판정·열쇠 개방까지 기계 검증됨. **사람이 해본 적 없음** | 8인에서 합 3.20초 안에 전원이 눌러야 한다. 반응속도 요구가 사람에게 공정한지 확인 필요. 근거 `countup-device-report.json` |
+| 13-1 (새 라운드) | 추첨·조작권 이동·사망·열쇠 개방까지 기계 검증됨. **사람이 해본 적 없음** | 12칸 중 지뢰 1개에 8개를 밟아야 한다. 사람에게 공정한 확률인지 확인 필요. 근거 `landmine-device-report.json` |
 | 10-4 (새 라운드) | 인원별 탑승 인원 요구·이동·충돌 기계 검증됨. **사람이 해본 적 없음** | 8인이 192px 발판에 7명을 올릴 수 있는지는 미확인. 근거 `lift-device-report.json` |
 | 세로 WeightedLift | **거부함(추측하지 않음)** | `MoveLift` 가 `ActorComponent.IsEnableMoveContactActor 0x1816a15c0` 로 세로 이동을 막는데 그 함수를 역어셈블하지 않았다. 없이 옮기면 탑승자를 천장으로 밀어 넣는다. 세로 액터 6개 + `WeightedLiftSingle` 3개가 여기 걸려 있다 |
 | 1/65536 배수가 아닌 슬롯 | **거부함(추측하지 않음)** | 애셋이 평범한 소수로 적어 두는데 FP 변환의 절삭 방향이 확정되지 않았다. 걸리는 값: `st_l_04_04` datas[9]=1.1, `WeightedLift` datas[4]=-0.1(05_01·07_03), `LinePathLift` datas[4]=2.3335(03_02) |

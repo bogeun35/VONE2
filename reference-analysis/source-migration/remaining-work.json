@@ -16,11 +16,12 @@
   "st_w_11_04",
   "st_w_07_02",
   "st_w_10_01",
-  "st_w_10_04"
+  "st_w_10_04",
+  "st_w_13_01"
  ],
  "worldStages": 60,
- "remainingStages": 47,
- "remainingDistinctBlockers": 96,
+ "remainingStages": 46,
+ "remainingDistinctBlockers": 94,
  "nearest": [
   {
    "id": "st_w_03_02",
@@ -64,15 +65,6 @@
    "blockers": [
     "MoveWall",
     "SpeedSwitch"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_13_01",
-   "blockerCount": 2,
-   "blockers": [
-    "LandmineSwitch",
-    "LandmineSwitchObserver"
    ],
    "guardsAfterTypes": []
   },
@@ -130,6 +122,16 @@
     "Coin",
     "CoinObserver",
     "WeightedLift"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_05_03",
+   "blockerCount": 3,
+   "blockers": [
+    "Coin",
+    "CoinObserver",
+    "PlayerMagnet"
    ],
    "guardsAfterTypes": []
   }
@@ -775,22 +777,6 @@
    "type": "MapBreakBlockRect",
    "stages": [
     "st_w_06_01"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "LandmineSwitch",
-   "stages": [
-    "st_w_13_01"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "LandmineSwitchObserver",
-   "stages": [
-    "st_w_13_01"
    ],
    "appearsIn": 1,
    "opensAlone": []
@@ -3031,7 +3017,7 @@
   },
   {
    "id": "st_w_13_01",
-   "connected": false,
+   "connected": true,
    "distinctBlockers": [
     "LandmineSwitch",
     "LandmineSwitchObserver"
