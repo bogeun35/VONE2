@@ -1,88 +1,88 @@
 # 다음 작업 — 바로 착수용
 
-> 2026-10-11 기준. 먼저 [`HANDOFF.md`](HANDOFF.md)를 읽을 것(저장소 구조·재생성 명령·함정 7가지).
+> 2026-10-13 기준. 먼저 [`HANDOFF.md`](HANDOFF.md)를 읽을 것(저장소 구조·재생성 명령·함정 목록).
 > 수치는 전부 `source-migration/remaining-work.json` 실측이다. 추정이 아니다.
+> 그 파일은 `node reference-analysis/source-migration/scan-remaining-work.cjs` 로 다시 만든다.
 
-**현재**: 런타임 연결 **10라운드** / PP2 월드 60개. 남은 50개, 고유 차단 요소 102종. 테스트 177건.
+**현재**: 런타임 연결 **12라운드** / PP2 월드 60개. 남은 48개, 고유 차단 요소 96종.
+테스트 191건 통과(아래 "진행 중"의 리프트 모듈 제외).
 
 ---
 
-## ⚠️ 먼저: "최다 차단 = 최우선"이 아니다
+## ⚠️ 순위를 매길 때 틀리는 두 가지
 
-`Text`는 10개 스테이지를 막는 **최다 차단 액터**지만, **등록해도 새로 열리는 스테이지가 0개**다(실측).
-10곳 전부 다른 장치를 더 필요로 한다:
+둘 다 실제로 틀린 순위를 만들어 냈다. `scan-remaining-work.cjs` 는 이 두 함정을 피하려고 존재한다.
 
-| 스테이지 | Text 말고 더 필요한 것 |
-|---|---|
-| 10_03 | BoundBallPitcher, BallKeyBox |
-| 14_01 | PlayerBlockGun, BreakableRect |
-| 05_04 | PlayerWarpGun, UpDownLift |
-| 02_02 | TouchEnergy, WeightedLiftSingle |
-| 나머지 6곳 | 3종 이상 |
+**1. `stageInitParamList[0]` 만 읽으면 안 된다.**
+스테이지는 변종을 여러 개 싣고, 어느 것이 살아나는지는 인원수가 결정한다
+(`population-rules.selectVariant`). `needPlayerCount: 5` 인 변종은 4인 이하에서 쓰이지 않고
+다른 액터 목록이 올라온다. 10-1 은 변종 둘이 대기 시간을 서로 다르게 적어 뒀다.
 
-**라운드를 열려면 "스테이지별 남은 종류 수"를 봐야 한다.** 액터별 등장 횟수가 아니다.
-(`remaining-work.json`의 `stages[].blockers`가 그 데이터다. `topBlockers`는 참고용일 뿐이다.)
+**2. `compile()` 이 던지는 메시지로 순위를 매기면 안 된다.**
+장치 모듈이 미지원 타입 검사보다 **먼저** 돌기 때문에, 먼저 걸린 가드가 그 뒤의 미지원 목록을
+가려 버린다. `st_w_07_03` 은 "Bridge 가드 하나만 남았다"처럼 보였지만 실제로는 장치 3종이 더 필요하다.
+
+**3. "최다 차단 = 최우선"도 아니다.**
+`Text` 는 10개 스테이지를 막는 최다 차단 액터지만 **등록해도 새로 열리는 라운드가 0개**다.
+지금 혼자서 라운드를 여는 타입은 **`WeightedLiftEx` 하나뿐**이다(`remaining-work.json` 의 `byType[].opensAlone`).
 
 ---
 
 ## 우선순위
 
-### 1순위 — 장치 1종이면 라운드가 열리는 곳 (2개)
+### 1순위 — 장치 1종이면 라운드가 열리는 곳 (1개)
 
-| 스테이지 | 필요한 장치 | 메모 |
+| 스테이지 | 필요한 장치 | 상태 |
 |---|---|---|
-| `st_w_07_02` | `Bowwow2Enemy` | 조사 안 됨 |
-| `st_w_10_04` | `WeightedLiftEx` | **출발점 주소 이미 확보** ↓ |
+| `st_w_10_04` | `WeightedLiftEx` | **모듈 작성 중이다. 아래 "진행 중" 먼저 읽을 것** |
 
-**`WeightedLiftEx` 출발점** (`switch-direction-report.json`의 `unresolved[0]`에서):
-```
-NormalWeightedLiftComponent.ParseParameter 0x181889b40 / OnUpdate 0x18188a120
-ExtraWeightedLiftComponent.ParseParameter  0x18183b160 / OnUpdate 0x18183b8c0
-VariableWeightedLiftComponent              0x181733240 / 0x181733520 / .cctor 0x181733a40
-공용 WeightedLiftComponent  InitCollision 0x181737a50 / OnUpdate 0x181737be0
-                            CalcMoveContactCount 0x181738090 / MoveLift 0x181738170
-                            .cctor 0x181738470
-```
-액터는 하나뿐: `WeightedLiftEx1 (2133,175)`, `datas[8..13] = 100, 3, 1, -1, 900, 1`.
-형제가 많다(`WeightedLift`, `WeightedLiftSingle`, `DarknessWeightedLift`, `UpDownLift`,
-`LinePathLift`, `RouletteLift`, `Lift`). 공용 컴포넌트를 공유한다면 분기 조건까지 기록하면
-다음 작업이 크게 빨라진다 — `TimerComponent`가 SwitchTimer/DeadTimer를 함께 처리한 것과 같은 구조.
-`WeightedLiftEx`는 근접 스테이지 3곳에 걸쳐 있어 1종당 효율이 가장 높다.
+`WeightedLiftEx` 는 근접 스테이지 6곳(`02_01 10_04 12_02 12_03 15_01 15_02`)에 걸쳐 있어
+1종당 효율이 가장 높다.
 
-### 2순위 — 새 장치가 아예 필요 없는 곳 (1개)
+### 2순위 — 2종이면 열리는 곳 (9개)
 
-`st_w_07_03`은 **가드 2개**만 걸려 있다. 새 장치가 아니라 기존 모듈의 범위를 넓히는 일이다:
-```
-Rect population offset encoding requires further verification: slot 6
-Unverified Bridge geometry/count scaling/push mode
-```
-바로 직전에 같은 종류의 작업(스위치 방향 가드)으로 `st_w_05_02`를 열었다. **비용이 가장 낮은 유형이다.**
-`spring-switch-runtime.js`의 `zeroOffsets()`(슬롯 6/7의 56자 인코딩 표를 거부)와
-`source-bridge-devices.js`를 보면 된다.
-
-### 3순위 — 한 번에 2라운드
-
-`CannonPlayer` + `ThrowBallBasket` + `ThrowBallController` 3종이면 **`st_w_08_02`와 `st_w_08_04`가 동시에** 열린다.
-(`st_w_08_01`/`08_03`은 `TargetPlayer, BasketPlayer, AppleController, Apple` 4종으로 또 한 쌍이다.)
-
-### 2종이면 열리는 나머지
-
-`03_02`(DamageRect, LinePathLift) · `04_02`(Gear, SwitchTargetGroup) · `10_01`(CoopCountUpTimer, CountUpTimer) ·
+`03_02`(DamageRect, LinePathLift) · `04_02`(Gear, SwitchTargetGroup) ·
 `11_02`(FloatingThorn, PoleLadder) · `12_01`(GoKart, Stick) · `12_04`(MoveWall, SpeedSwitch) ·
 `13_01`(LandmineSwitch, LandmineSwitchObserver) · `13_03`(RallyController, RallyMallet) ·
 `13_04`(FakePlayer, FakeTimer) · `14_03`(Dossun, PlayerBlockGun)
 
+고를 때 참고:
+
+- **`LandmineSwitch` + `LandmineSwitchObserver`** — 이름 그대로면 이미 이식된
+  `CollisionSwitch` + `SwitchObserver` 와 같은 구조일 가능성이 높다(관찰자가 스위치 묶음을 세고
+  대상에 61/60 을 쏘는 형태). 가장 싸 보이는 쌍이다.
+- **`SpeedSwitch`** 는 `12_04` 와 `12_03` 양쪽에 있다.
+- **`LinePathLift`** 는 `03_02`·`02_04`·`03_03` 에 있고 `LinePathLiftComponent.ParseParameter
+  0x1818785b0` 이 `Frame.GetPlayerIndexCount` 를 쓴다(인원 배율 있음).
+
+### 3순위 — 한 번에 2라운드
+
+`CannonPlayer` + `ThrowBallBasket` + `ThrowBallController` 3종이면 **`st_w_08_02`와 `st_w_08_04`가
+동시에** 열린다. (`st_w_08_01`/`08_03`은 `TargetPlayer, BasketPlayer, AppleController, Apple`
+4종으로 또 한 쌍이다.)
+
+`Blackout` + `BlackoutController` 는 5곳(`03_01 07_03 09_01 09_03 15_02`)에 걸쳐 있지만
+어디서도 단독으로 라운드를 열지 않는다. `07_03` 은 이 둘에 `WeightedLift` 까지 있으면 열린다.
+
 ---
+
+## 진행 중 (다른 작업자가 손대던 것)
+
+| 항목 | 상태 | 해야 할 일 |
+|---|---|---|
+| `source-lift-devices.js` + `.test.cjs` | **테스트 8건 실패. 등록 안 됨** | 세션 한도로 중간에 끊긴 작업이다. 모듈 머리말은 상당히 완성돼 있다(공용 `WeightedLiftComponent` 분기까지 기록됨). 실패하는 8건을 마무리하고 리포트를 쓴 뒤 등록하면 `st_w_10_04` 가 열린다. **등록 전에는 게임에 영향이 없다** — 어느 빌드 목록에도 들어 있지 않다 |
+| `source-text-devices.js` | 테스트 17건 통과, **리포트 없고 미등록** | 근거 리포트를 쓴 뒤 등록. 단독으로는 라운드가 안 열리니 급하지 않다 |
+| `Blackout` / `BlackoutController` | **착수만 하고 아무 파일도 안 남았다** | 처음부터. 먼저 답할 질문: Blackout 이 시뮬레이션(충돌·사망·이벤트)에 영향이 있는지, 아니면 시야만인지. 시야만이면 어둠 상태를 모듈이 내보내 렌더러가 쓰게 하고 스테이지를 막지 말 것 |
 
 ## 미완성으로 남은 것
 
 | 항목 | 상태 | 해야 할 일 |
 |---|---|---|
-| `Text` 모듈 | `source-text-devices.js` + 테스트 17건 통과, **리포트 없고 미등록** | 근거 리포트를 쓴 뒤 등록. 단독으로는 라운드가 안 열리니 급하지 않다 |
 | 방향 2(LEFT) 스위치 | 바이너리·static 이름으로만 확정 | 월드에 인스턴스 0개라 실데이터 검증 불가. 쓰는 스테이지가 생기면 확인 |
 | `ForTopView` 사각형 | 미적용 | `StageComponent.IsTopViewSort` 비트를 **세팅하는 코드를 못 찾았다**(호출지점 0개). **탑뷰 스테이지를 연결하기 전에 반드시 재확인** |
 | 방향0 접촉 판정 | 원작보다 좁게 유지(의도적) | 원작은 단순 겹침인데 현재는 "착지 상태로 발이 밴드 안". 넓히면 `whole-route-replay.cjs --check` 로 영향 라운드를 보고 재녹화 |
-| 4-3 열쇠 | **현재 런타임으로 클리어 불가** | 열쇠 충돌 상자(224,452,32,56)가 지형(192..288 × 432..480) 안이고 줍기는 단순 겹침. 원작의 열쇠 밀어내기/부착이 미이식인 것으로 추정. 근거 `whole-route-replay-report.json` |
+| 4-3 열쇠 | **열쇠는 닿을 수 있게 고쳐졌다. 라운드가 실제로 클리어되는지는 미확인** | 열쇠가 authored 위치에 머물던 것이 원인이었다 — 원작은 `KeyComponent.ParseParameter` 가 인원수에 따라 스폰 위치를 옮긴다(`key-reach-report.json`). 2인 (224,375) 로 지형 밖이다. 다만 틈 아래 전기(x 48..864)는 그대로이고 **사람이 클리어한 적은 아직 없다** |
+| 10-1 (새 라운드) | 컴파일·판정·열쇠 개방까지 기계 검증됨. **사람이 해본 적 없음** | 8인에서 합 3.20초 안에 전원이 눌러야 한다. 반응속도 요구가 사람에게 공정한지 확인 필요. 근거 `countup-device-report.json` |
 | 5-2 타이머 스위치 | **DeadTimer 정지(버그 후보). 근거 미확정이라 런타임은 안 고침** | 슬롯4 → `m_TimerAddSecond` 저장을 원작 PC에서 확인해야 한다. 아래 "버그 후보: 5-2 타이머 스위치" 절 |
 
 ### 버그 후보: 5-2 타이머 스위치 — 근거 판정 (2026-10-11, 게임 없는 PC)
