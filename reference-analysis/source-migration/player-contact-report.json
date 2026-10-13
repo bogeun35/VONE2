@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "status": "implemented-explicit-native-state-not-live-registered",
+  "nativeCodeExecuted": false,
+  "module": "source-player-contact.js",
+  "evidence": {
+    "dispatch": "Player.OnContactAdded0x1816c1b50/OnContacted0x1816c1c20 only state1",
+    "added": "Default0x1816c6c50 uses player flags0x800000 reverse-gravity sign, NotifyJump37 with vy/(UpDepth+1) before setting vy0 for nonplayer targets",
+    "contacted": "Default0x1816c6df0 checks horizontal velocity/normal, ice0x1816c6f40, clears Actor acceleration/jump and resetForceJumpVelo0x1816c6150",
+    "ice": "Both Actor flags0x800000, target layer1, input0x0c or positional delta>=4raw; FP transfer49152 and owner maximum clamp",
+    "depth": "GetContactRecursiveMax0x181695110 exact normal/mask, max depth not contact count"
+  },
+  "contract": "onContact mutates pipeline cloned world. world.actors maps entityId to Actor flags/positionRaw/prePositionRaw/velocityRaw/accelerationRaw/jumpVelocityRaw and player state/flags/inputBit/walkSpeedMaxOnIceRaw/jumpVelocityRaw. Host supplies actual NotifyJump dispatch on relevant ceiling path. No fake support graph contacts.",
+  "verification": {
+    "own": 9,
+    "releaseSuitePass": 788,
+    "releaseSuiteFail": 0,
+    "scope": "Static-source expectations, no original-game execution or complete-stage claim"
+  },
+  "unresolved": [
+    "Actor.NotifyJump event dispatch and actual Actor lifecycle binding",
+    "R.create/R.step native collision backend, native camera state and complete actor initialization"
+  ]
+}

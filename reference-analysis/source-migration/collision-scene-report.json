@@ -24,7 +24,8 @@
     "scale": "updateScale0x1817fe370 directly shrinks; growth over65raw tests four corner displacements with nonsliding Map.MoveMap and Collision.Move0x181693160 against actors. Restoring each trial position retains map requests. Partial growth subtracts1310raw toward previous scale.",
     "sync": "updateAfter0x181693610 clears movement64, notifies registered scale callback, updates previous/expected scale, synchronizes Actor when absolute FP displacement squared >=4, then registered pushback callback, actor contacts, map contacts. 511raw displacement misses;512raw reaches threshold.",
     "pipeline": "source-collision-pipeline.step enumerates active physical dictionary slots, sorts signed priority, runs checkChunk, then writes results to original slots. Late OnCollided captures owner flag2 for outer loop, target flag2 before callbacks, owner then target, descriptors refreshed afterward.",
-    "circle": "Frozen Gear circleResponse is called only for circle/circle. Temporary adapter IDs do not escape; canonical IDs/cache remain owned by scene. Mixed pairs use scaled bounding rectangles. Retention probes arbitrary FP normals with signed normalRaw>>1."
+    "circle": "Frozen Gear circleResponse is called only for circle/circle. Temporary adapter IDs do not escape; canonical IDs/cache remain owned by scene. Mixed pairs use scaled bounding rectangles. Retention probes arbitrary FP normals with signed normalRaw>>1.",
+    "capacity": "Resolved independently and by auxiliary: Initialize0x1817f5a82/5b37 request90 -> Allocate0x18000fab8 -> QCollectionsUtils0x18197edc0; cctor0x18197f4e0 field-ref342 at0x1831a1448 -> field41356 -> metadata byte6127992/120bytes with SHA256 FA856B58B602D1AFB828D70020BB2D88B0C50B97FE8920E56AEBF6D280C11175. First >=90 is97."
   },
   "contracts": {
     "world": "JSON {isEnableInertia, collisions:[native ordered collision records], map:{tileFlags}, layerChecks, cameraAreaRaw:{x,width}}. Each collision supplies explicit IDs, entityId, raw current/previous positions, current/previous local GetRect bounds, flags, layer, pushBackTarget, collisionType0, contacts and mapNormals. No supportId-to-cache conversion. mapNormals/requestMapNormals store raw vectors; contact normals store exact FP pixels. Full chunk additionally needs scale/preScale/expectedScale, base rectangle/pivot, actorExists and expected position.",
@@ -55,9 +56,9 @@
     "scope": "JS tests against statically derived expectations. Authored lift facts are real; contact stacks and player rectangles in tests are synthetic. No original-game execution, complete stage play, or side-by-side native comparison.",
     "fullCommand": "node --test source-migration/*.test.cjs",
     "full": {
-      "pass": 733,
+      "pass": 788,
       "fail": 0,
-      "note": "Latest shared-tree wildcard run includes auxiliary WIP tests; only reviewed frozen dependencies and lead changes are selected."
+      "note": "Source wildcard + play wildcard + rebuild/camera.test.cjs release run; includes auxiliary WIP tests excluded from staging."
     }
   },
   "rea": {
@@ -66,7 +67,7 @@
     "limits": "4G heap/max-cpu2; separate lead-ghidra.local project deleted by Ghidra -deleteProject. Shared snapshots untouched. Targeted pseudocode is a reading aid, assembly remains evidence; no-analysis has weaker inferred types and no-return metadata."
   },
   "unresolved": [
-    "Native dictionary bootstrap capacity0x18197edc0 still explicit; actual runtime creation order and actor collision payloads must be constructed from native initialization.",
+    "Dictionary bootstrap capacity97 is resolved. Actual runtime actor creation order and all collision payloads still require native initialization adapters.",
     "Native storage/phase pipeline is executable; actual stage Actor lifecycle and callbacks still require integration.",
     "Actual Player and device OnContactAdded/OnContacted adapters and complete collision layer/shape/scale facts for each live actor remain necessary.",
     "Live runtime still uses its existing movement and supportId model. This core does not authorize opening14-3/5-1/7-3/12-4 or claiming corrected live10-4/3-2 carry.",

@@ -1,7 +1,8 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),B=require('./source-collision-broadphase.js'),P=require('./source-collision-pipeline.js'),S=require('./source-collision-scene.js');
 const F=65536;
 function body(x,y,extra={}){const r={x:0,y:0,width:10*F,height:10*F};return {entityId:`${x},${y}`,priority:0,xRaw:x*F,yRaw:y*F,preXRaw:x*F,preYRaw:y*F,expectedXRaw:x*F,expectedYRaw:y*F,flags:0,layer:6,pushBackTarget:3,collisionType:0,rectRaw:{...r},preRectRaw:{...r},baseRectRaw:{...r},scaleRaw:{xRaw:F,yRaw:F},preScaleRaw:{xRaw:F,yRaw:F},expectedScaleRaw:{xRaw:F,yRaw:F},pivotRaw:{xRaw:0,yRaw:0},contacts:[],mapNormals:[],requestMapNormals:[],actorExists:true,...extra};}
-function state(){return {storage:B.createStorage(97),isEnableInertia:false,map:{tileFlags:Array.from({length:10},()=>Array(10).fill(0))},layerChecks:{6:{6:true}}};}
+function state(){return {storage:P.createStorage(),isEnableInertia:false,map:{tileFlags:Array.from({length:10},()=>Array(10).fill(0))},layerChecks:{6:{6:true}}};}
+test('native90-element dictionaries allocate first recovered prime97',()=>{const s=P.createStorage();assert.equal(s.primary.capacity,97);assert.equal(s.secondary.capacity,97);assert.equal(s.primary.buckets.length,97);assert.equal(s.issueId,0);});
 const host={onContact:()=>{},hasOnChangeScale:()=>false,hasOnPushedBack:()=>false,syncActorPosition:()=>{}};
 test('pipeline sorts active storage and persists map correction/cache across JSON ticks',()=>{
  const w=state();w.map.tileFlags[1].fill(1);

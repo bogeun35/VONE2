@@ -3,11 +3,16 @@
  * Late collision0x1817ff510 captures owner flag2 once and target flag2 before
  * callbacks; owner then target, followed by two descriptor updates.
  * Input storage is actual ordered dictionary state, never supportId contacts.
- * Actor callbacks and dictionary initialization capacity remain explicit.
+ * Initialize requests90 twice @0x1817f5a82/5b37. Allocate0x18000fab8
+ * uses QCollectionsUtils.GetNextPrimeGreaterThanOrEqual0x18197edc0.
+ * cctor0x18197f4e0 initializes30 signed ints via field-ref342. Metadata
+ * field41356/default-data323976 =3,7,17,29,53,97,...; capacity is97.
+ * Actor callbacks remain explicit.
  */
 (function(root,factory){const c=typeof module==='object'&&module.exports,api=factory(c?require('./source-collision-broadphase.js'):root.SourceCollisionBroadphase,c?require('./source-collision-scene.js'):root.SourceCollisionScene);if(c)module.exports=api;root.SourceCollisionPipeline=api;})(globalThis,function(Broad,Scene){
 'use strict';
 const clone=x=>JSON.parse(JSON.stringify(x));
+function createStorage(){return Broad.createStorage(97);}
 function treeObject(config,b){const r=b.rectRaw;if(!r)throw Error('Resolved native GetRect required');return Broad.descriptor(config,{id:b.id,xRaw:b.xRaw,yRaw:b.yRaw,rect:{xRaw:r.x,yRaw:r.y,widthRaw:r.width,heightRaw:r.height}});}
 function sortContactPositions(rows,dx){return Broad.nativeSort(rows.map(r=>({...r,xRaw:r.x})),Broad.xCompare(dx)).map(({xRaw,...r})=>r);}
 function lateCollided(w,events,config,host){
@@ -39,5 +44,5 @@ function step(input,host={}){
  const {collisions,...worldFields}=result.world;Object.assign(state,worldFields);
  return {state,orderedIds:collisions.map(b=>b.id),events:result.events,pushTrace:result.pushTrace,inertiaTrace:result.inertiaTrace};
 }
-return {step,treeObject,sortContactPositions,lateCollided,completePhysicsFidelity:false};
+return {createStorage,step,treeObject,sortContactPositions,lateCollided,completePhysicsFidelity:false};
 });

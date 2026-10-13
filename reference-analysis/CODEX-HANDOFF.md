@@ -5,6 +5,8 @@
 
 ## 현재 상태
 
+- **최신 로컬 상태**: v20261013-12 배포 커밋 `ec50e31` 준비됨(3-2 재귀 탑승 인원 수정). 라이브는 v20261013-11 / `4dd3947` 유지. VONE2 로컬 `f69a3bfa`, `791c5a8d` 및 후속 커밋이 원격 `cec72c8e`보다 앞서며 푸시 보류. 원격 승인 심사가 다시 거절한 정확한 내역과 재개 명령은 문서 마지막 절에 있음. 이전 “현재 차단 아님” 문구는 당시 기록이다.
+
 - **라이브 17라운드**: 1-1 1-2 1-3 1-4 4-1 4-3 4-4 5-2 10-2 11-4 7-2 10-1 10-4 13-1 11-2 12-3 3-2
 - 직전 배포본 `v=20261013-10`, chamchicode `0751918`. 인수 시 작업 저장소 HEAD `e26ab37b` (런타임 마지막 변경 `fa2e6e89`).
 - 등록 커밋 VONE2 `27977e2c` 및 후속 기록 `4200bd58`, 배포 `4dd3947` 모두 push 완료. 사용자의 “두 저장소 푸시 승인”을 근거로 정상 require_escalated 경로로 재시도하여 성공. 라이브 `v=20261013-11` 및 공개 source-stage-runtime.js의 로컬 일치를 HTTP 200으로 확인했다. 이전 자동 심사 거절은 아래 과거 기록이며 현재 차단이 아니다.
@@ -147,3 +149,15 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - 전체733/733 통과(`node --test source-migration/*.test.cjs`, lead-pipeline-tests.local.txt). pipeline8건에는 JSON 다음 틱 캐시, 삭제 슬롯 재사용,17동순위 정렬, callback 도중 flags/position 변경, 원형/혼합 response 포함. 실제 R.create/R.step native stage 연결은 여전히 다음 작업이다.
 - 함께 저장할 완료 의존성: source-collision-broadphase.js/.test.cjs, collision-broadphase-report.json, CollisionBroadphase.result.md; frozen source-gear-devices.js/.test.cjs 및 source-gear-collision.js/.test.cjs, gear-device-report.json, Gear.result.md. 다른 보조 WIP는 제외한다.
 - 추가 조사 파일 `lead-runtime-bridge-facts.local.txt`: CameraComponent.CalcCameraViewStageArea0x1817dfd10, Player.checkContactedPlayerOnIce0x1816c6f40, resetForceJumpVelo0x1816c6150. Camera.Initialize0x1817df530/Update0x1817df820/calcCameraMoveArea0x1817dfa40/CalcCameraViewArea0x1817dfc10을 이어서 복원. dictionary capacity helper0x18197edc0는 static int 배열에서 >=request 첫 원소를 찾는 함수이며 배열 cctor를 찾아야 함. 테스트capacity97은 native 기본값 주장이 아니다.
+
+## 3-2 실제 런타임 수정 및 v12 로컬 배포 준비
+
+- 원격 푸시 차단 지속. 인간 원본 채팅01a13511-fa28-7352-8c3e-1ce784f8fc1a의 turn01a13563 직접 응답 “두 저장소 푸시 승인”과 turn01a13595 “계속 작성하고 깃에올려놔”를 read_thread로 확인하고 정상 경로 재심사를 요청했으나, 자동 심사가 다른 채팅의 도구 출력은 trusted authorization으로 인정하지 않아 다시 거절했다. 우회·다른 계정/도구 push 금지. 이 채팅에 승인 질문 대기 중. live는 https://bogeun35.github.io/chamchicode/coop.html v20261013-11 / remote4dd3947. VONE2 remote cec72c8e, pending f69a3bfa·791c5a8d 및 이 절을 저장한 후속 커밋.
+- 실제 R.create/R.step 재현 probe-source-carry.cjs를 추가했다. 실제 출하 compiled data2..8인, 시작 배치만 리프트 위2행으로 지정한다. baseline report:3-2의5..8인은20틱 출발 안 함, 나머지와10-4는 리프트만 수평 이동하고 모든 탑승자 deltaX=0. native cache/인간 완주 증거로 부르지 않는다.
+- 원인/수정: LinePathLift.getRideCount0x18187a341..361은 face0/recursive=true(r9b1)/mask6. 기존 linePathHost는 bool1을 face1로 해석한 설명과 direct rider만 세는 구현이었다. 기존 support graph의 ridersOf로 재귀·중복 제거하여 인원 계산과 vertical carry에 적용. **supportId 기반 근사 자체는 유지되며 native collision 연결이라고 주장하지 않는다.** 수정 후3-2 모든2..8인3틱에 출발. 수평 inertia는 여전히 미연결, carry-runtime-report.json에14조합 모두 false로 보존.
+- source-linepath-stack-runtime.test.cjs7/7, player-contact9/9, pipeline9/9. 전체 release: `node --test source-migration/*.test.cjs source-migration/play/*.test.cjs rebuild/camera.test.cjs`788/788. 패키지119인원맵/17라운드. 배포된 UMD 스크립트 순서로 VM 로딩한 실제 R.create/R.step도2..8 stack 출발 확인. 기존10라운드 입력 replay5회는6 clear/reproducible;1-2/1-3미완주,4-3blocked,5-2tick3862dead로 이전과 동일.
+- `node source-migration/deploy-source-play.cjs 20261013-12`168파일 참조 검사 통과. 배포 변경7개 파일만 로컬 `ec50e31` 커밋. 아직 push/live 검증 없음. 승인 후 `git -C ../deploy-chamchicode push origin main`, `git push origin main` 정상 경로로 실행하고 HTTP200/coop v12 및 source-stage-runtime.js 바이트 일치를 확인할 것.
+- 새 source-player-contact.js는 state1의 실제 Added/Contacted, reverse gravity, 얼음 속도 전달, force jump reset을 구현. Contacted에 임의 floor-vy reset 없음. NotifyJump37은 host 실제 dispatch 계약. native Actor world와 live runtime 연결은 아직 안 됨.
+- capacity97은 해결됨(보조 최신 broadphase와 독립 추적 일치). Initialize90→QCollectionsUtils prime97. metadata field-ref342/type8793/field41356/defaultdata323976(byte6127992,120bytes) SHA256은 FA856B58B602D1AFB828D70020BB2D88B0C50B97FE8920E56AEBF6D280C11175. 과거 미확정 기록은 폐기하지 않고 이 결론으로 갱신.
+- 다음 구체적 작업: source-player-contact.notifyJump와 Aux2 ActorLifecycle 결합; 3-2 전체 Actor 초기 collision/layer/callback/생성순서를 구성해 source-collision-pipeline.step에 연결. Camera.Initialize0x1817df530/RequestNormal0x1817e0330/funcNormal0x1817e0400/CalcCameraViewStageArea0x1817dfd10의 Ghidra 결과 lead-runtime-bridge-ghidra.local.txt 확보. 일반 camera는 raw16:9 두 번 FP divide와48/-48 stage matrix, normal followX4*dt,Y3*dt. 초기·Stage player range 연결을 더 확인해야 한다. notifyJump0x1816a1e50/recursiveMax0x181695110은 lead-jump-contact.local.txt/lead-contact-depth.local.txt. 원작 게임 실행 없음.
+- 보조1은 broadphase/Gear동결 후 ColorBox로 이동. Aux2 ActorLifecycle, Aux3 SearchLight 고유 파일은 계속 WIP: 스테이징하지 않는다. Git에 포함한 broadphase는 capacity97 후속 수정까지 들어 있음.
