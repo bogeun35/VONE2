@@ -1,9 +1,10 @@
 // Isolated native scene integration, not full R.create/R.step or stage fidelity.
-// Shipped rail/camera configuration; an empty map and synthetic stacked starts
-// isolate cache generation, next-tick inertia, Player contacts and Actor sync.
+// Shipped rail/camera configuration; both empty and shipped tile-grid cases.
+// Synthetic stacked starts isolate cache generation, next-tick inertia, Player
+// contacts and Actor sync. Other authored actors/hazards are not created here.
 const {test}=require('node:test'),assert=require('node:assert/strict');
 const P=require('./source-collision-pipeline.js'),B=require('./source-collision-broadphase.js'),C=require('./source-camera-native.js'),PC=require('./source-player-contact.js'),L=require('./source-linepath-devices.js'),pop=require('./population-rules.cjs'),data=require('./installed-stage-decoded.local.json');
-const Callbacks=require('./source-collision-callbacks.js');
+const Callbacks=require('./source-collision-callbacks.js'),Terrain=require('./terrain-runtime.js'),geometry=require('./source-geometry.local.json');
 const F=65536;
 function body(entityId,xRaw,yRaw,rectRaw,extra={}){return {entityId,xRaw,yRaw,preXRaw:xRaw,preYRaw:yRaw,priority:0,layer:6,flags:0,pushBackTarget:3,collisionType:0,rectRaw,baseRectRaw:{...rectRaw},preRectRaw:{...rectRaw},scaleRaw:{xRaw:F,yRaw:F},preScaleRaw:{xRaw:F,yRaw:F},expectedScaleRaw:{xRaw:F,yRaw:F},pivotRaw:{xRaw:0,yRaw:0},contacts:[],mapNormals:[],requestMapNormals:[],actorExists:true,...extra};}
 const host=Callbacks.createHost({
@@ -14,9 +15,10 @@ const host=Callbacks.createHost({
  syncActorPosition:(w,b,e)=>{const a=w.actors.find(a=>a.entityId===b.entityId);assert.ok(a);a.positionRaw={xRaw:e.xRaw,yRaw:e.yRaw};}
 });
 function riderIds(w,lift){const list=B.active(w.storage),seen=new Set();function up(b){for(const c of b.contacts){if(c.normal.x!==0||c.normal.y!==-1||seen.has(c.id))continue;const next=list.find(b=>b.id===c.id);if(next&&((1<<next.layer)&6)){seen.add(c.id);up(next);}}}up(lift);return [...seen];}
-function setup(count){
+function setup(count,actualTerrain=false){
  const stage=pop.selectVariant(data.stages.find(s=>s.stageId==='st_w_03_02').json.stageInitParamList,count,true),rail=L.create(L.compile(pop.actorsForCount(stage,count),count)).devices.find(d=>d.type==='LinePathLift');
  const cam=C.create(C.compile(stage),null),w={storage:P.createStorage(),isEnableInertia:true,layerChecks:P.createLayerChecks(),cameraAreaRaw:C.stageAreaRaw(cam),map:{tileFlags:Array.from({length:stage.mapInitParam.height},()=>Array(stage.mapInitParam.width).fill(0))},actors:[]};
+ if(actualTerrain){const terrain=Terrain.createTerrain({source:data,geometry,stageId:'st_w_03_02',count,online:true}),attrs=new Map(geometry.tileAttributes.map(a=>[a.id,a.flags]));w.map.tileFlags=terrain.grid.map(row=>row.map(id=>{assert.ok(attrs.has(id));return attrs.get(id);}));assert.ok(w.map.tileFlags.flat().some(f=>f&1));}
  const cols=Math.min(count,4);
  for(let i=0;i<count;i++){
   const x=rail.xRaw+(i%cols-(cols-1)/2)*32*F,y=rail.yRaw+rail.rectRaw.y+F-Math.floor(i/cols)*46*F;
@@ -27,8 +29,8 @@ function setup(count){
  w.actors.push({entityId:b.entityId,actorType:103,flags:0,positionRaw:{xRaw:b.xRaw,yRaw:b.yRaw}});
  return {w,rail};
 }
-for(let count=2;count<=8;count++)test(`shipped3-2 rail ${count} players: empty cache -> native contacts -> inertia -> Actor sync`,()=>{
- let {w,rail}=setup(count);assert.ok(B.active(w.storage).every(b=>b.contacts.length===0));let firstMovement=null;
+for(const actualTerrain of [false,true])for(let count=2;count<=8;count++)test(`shipped3-2 rail ${count} players ${actualTerrain?"shipped terrain":"empty terrain"}: empty cache -> native contacts -> inertia -> Actor sync`,()=>{
+ let {w,rail}=setup(count,actualTerrain);assert.ok(B.active(w.storage).every(b=>b.contacts.length===0));let firstMovement=null;
  for(let tick=1;tick<=5;tick++){
   const bodies=B.active(w.storage),lift=bodies.find(b=>b.entityId===rail.id),players=bodies.filter(b=>b.layer===1),before=players.map(b=>b.xRaw),riders=riderIds(w,lift),oldX=lift.xRaw;
   // Open horizontal fixture makes the obstruction decision explicitly true;

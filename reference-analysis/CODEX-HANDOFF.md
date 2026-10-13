@@ -200,3 +200,10 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - 3-2 isolated empty-cache carry 테스트에 실제 registry dispatcher 연결. 실제 지형·전체 액터·R.step 수평 운반 해결을 주장하지 않음.
 - 집중103/103, 전체971/971 통과. 전체에는 보조 진행 중 작업 포함; ActorLifecycle/PlayerCollisionInit/PlayerWarpGun 파일은 이 커밋에 넣지 않음.
 - 원격 푸시는 이전 자동 승인 심사 거절로 보류 유지. 새 직접 사용자 승인이 없으므로 재시도하지 않음.
+
+## 리드 Key·Goal 콜백 (2026-10-14)
+
+- Key.OnCollided/Goal.OnCollided 실제 late-pair dispatcher 연결 테스트12건 통과. 열쇠 재획득 제외16384raw=16 native60Hz ticks, transfer bit1/ghost55 bit4, Goal openbit0/Player enterbit16과 event61 순서 보존. 생성·phase update·R.step 연결은 미완료.
+- FrameEvents.PlaySe 인자 메타데이터도 확인: EntityRef,SeId,Position,Volume,Pitch,IsDisableCheckBlankTime. Goal은 EntityRef.None/sound9. 끝의 stack0은 숨은 MethodInfo.
+- 3-2 carry fixture를 실제 지형/MapRect 적용 grid까지 확대: empty+shipped terrain 총14/14, 인원2..8. 합성 배치와 수직 입력, 나머지 액터 제외이므로 전체 스테이지 검증 아님.
+- 전체1003/1003(보조 WIP 포함), 그 뒤 음향 필드명 대조 정정 후 Key/Goal12/12. 원격 push 차단 유지.

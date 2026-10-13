@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "scope": "Native Key/Goal collision callbacks connected to the native late-pair dispatcher; no original code executed",
+  "registration": {
+    "nativePipelineTests": true,
+    "runtime": false,
+    "browserPackage": false,
+    "newPlayableStages": 0
+  },
+  "evidence": [
+    {
+      "va": "0x18186cc20",
+      "fact": "Key layers1/11 attach; layer12 sets phase2 and flagbit2. Same target then exclusion timer reset then transfer-bit gate, in that order."
+    },
+    {
+      "va": "0x18186cd14..98",
+      "fact": "ActorType55 Ghost, permanent theft gatebit4, sound22 on first pickup or stealing from Ghost."
+    },
+    {
+      "va": "0x18186cd98..dff / 0x18186ce25..cf4a",
+      "fact": "Handoff stores previous carrier/exclusion time. First pickup optionally notifies named switch event61 synchronously before new target/layer and transfer bit1 are assigned."
+    },
+    {
+      "va": "0x18186d447..459 / 0x181780fde",
+      "fact": "EXCLUDE_TIME from QFP._0_25, raw16384; excludeTargetProc subtracts dt and clears reference/timer at <=0."
+    },
+    {
+      "va": "0x18186c922..93f",
+      "fact": "updatePhase clears transfer bit1 at end; not implemented by collision-only helper."
+    },
+    {
+      "va": "0x18185f970",
+      "fact": "Goal layer1 requires Goal bit0 then sets Player bit16; layer10 opens closed Goal after FrameEvents.PlaySe9."
+    },
+    {
+      "va": "0x18185f9e5",
+      "fact": "MethodSpec96393 resolves Frame.GetComponent<PlayerComponent>, slot0x1831d2918; missing Player component returns."
+    },
+    {
+      "metadataMethodDefinition": 31642,
+      "fact": "FrameEvents.PlaySe parameters EntityRef,SeId,Position,Volume,Pitch,IsDisableCheckBlankTime. Trailing stack0 is hidden MethodInfo, not a gameplay argument."
+    }
+  ],
+  "verification": {
+    "keyTests": 9,
+    "goalTests": 3,
+    "carryTests": 14,
+    "nativePairOrdering": "Player-Key, Player-Goal, Key-Goal produces pickup then Goal open; Player entry flag on next late-pair pass.",
+    "carryTerrain": "3-2 populations2..8 shipped tile grid including MapRect overlays plus empty-map control. Synthetic stacked starts and imposed vertical step; other authored actors absent.",
+    "releaseTests": 1003,
+    "includesAuxiliaryWorkInProgress": true
+  },
+  "unresolved": [
+    "Key creation/phase movement/return logic and complete Goal lifecycle remain unconnected to R.create/R.step",
+    "Named switch validity and synchronous event61 dispatch require native host; no silent fallback",
+    "FrameEvents audio records require runtime event sink",
+    "Actual stage hazards, all collision creation ordering and ordinary Player update still required for full carry runtime",
+    "No full-stage or human completion claim"
+  ],
+  "corrections": [
+    "Before commit, metadata signature verification corrected an initial audio-record draft: EntityRef.None is not a player index, and the final stack zero is hidden MethodInfo. Final record uses entityId:null and isDisableCheckBlankTime:false; 12 Key/Goal tests passed after correction."
+  ]
+}
