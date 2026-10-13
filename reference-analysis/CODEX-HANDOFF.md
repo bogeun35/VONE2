@@ -214,3 +214,8 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - PlayerCollisionInit 동결29건 대조후 포함. carry fixture에서일반Player의실제431.5 스폰/expected0/scale생성을사용하고명시적으로합성탑승배치에재배치함. 직접collision좌표수정대신Actor.Update1/2/Post2사용.
 - 집중48(Actor5+PlayerInit29+carry14), 전체1008/1008통과. 전체에는진행중보조파일이있으나ActorLifecycle/defaultPlayer/capture/WarpGun은본커밋미포함.
 - actualR.create/R.step은여전히미연결. 다음은실제actorfactory/위험물sensor/전체phase및defaultPlayer연결. 원격푸시보류유지.
+
+## 리드 Actor 후처리 보강 (2026-10-14)
+
+- SetCollisionActive owner gate/모든holder flag0,CheckOutMap anchor/warp임계4raw,Stage.prepare3 failbounds,warp없을때bit25해제 구현. carry fixture는Update1/2/Post1/2 전부사용하며Actor9+carry14=23통과. activewarp/jump/defaultPlayer와전체typedphase연결은여전히명시호스트필수.
+- 다음 생성경로 조사핵심: ThunderBase.InitCollision0x18172aa50은두collider를항상생성함. index0 beam(layer7,priority127,push0),index1 probe(push2through/3otherwise,기본layer0). 기존BlinkThunder 주석의조건부생성해석은충돌ID/저장순서에사용하면안됨. getLengthToMap0x18172acc0이probe활성비트를임시변경하는중; lead-thunder-probe-lifecycle.local.txt/lead-native-sensor-create.local.txt 정적근거. 아직미구현이며기존모듈변경안함.

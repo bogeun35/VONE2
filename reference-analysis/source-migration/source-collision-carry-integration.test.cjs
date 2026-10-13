@@ -20,6 +20,7 @@ function setup(count,actualTerrain=false){
  const stage=pop.selectVariant(data.stages.find(s=>s.stageId==='st_w_03_02').json.stageInitParamList,count,true),rail=L.create(L.compile(pop.actorsForCount(stage,count),count)).devices.find(d=>d.type==='LinePathLift');
  const cam=C.create(C.compile(stage),null),w={storage:P.createStorage(),isEnableInertia:true,layerChecks:P.createLayerChecks(),cameraAreaRaw:C.stageAreaRaw(cam),map:{tileFlags:Array.from({length:stage.mapInitParam.height},()=>Array(stage.mapInitParam.width).fill(0))},actors:[]};
  if(actualTerrain){const terrain=Terrain.createTerrain({source:data,geometry,stageId:'st_w_03_02',count,online:true}),attrs=new Map(geometry.tileAttributes.map(a=>[a.id,a.flags]));w.map.tileFlags=terrain.grid.map(row=>row.map(id=>{assert.ok(attrs.has(id));return attrs.get(id);}));assert.ok(w.map.tileFlags.flat().some(f=>f&1));}
+ w.stage=Motion.compileStageBounds(stage);
  const authoredPlayers=pop.actorsForCount(stage,count).filter(a=>a.typeName==='Player');
  const cols=Math.min(count,4);
  for(let i=0;i<count;i++){
@@ -32,7 +33,7 @@ function setup(count,actualTerrain=false){
  }
  const b=B.createCollision(w.storage,body(rail.id,rail.xRaw,rail.yRaw,{...rail.rectRaw},{actorType:103,layer:13,pushBackTarget:2,flags:4|1024|(rail.isInertia?0:128)}));
  w.actors.push({entityId:b.entityId,actorType:103,flags:0,positionRaw:{xRaw:b.xRaw,yRaw:b.yRaw}});
- for(const a of w.actors){const c=B.active(w.storage).find(b=>b.entityId===a.entityId);a.velocityRaw=a.velocityRaw||{xRaw:0,yRaw:0};a.accelerationRaw={xRaw:0,yRaw:0};a.requestAnimationId=0;a.playingAnimationId=0;a.collisionHolders=[{syncPos:true,collisionId:c.id}];}
+ for(const a of w.actors){const c=B.active(w.storage).find(b=>b.entityId===a.entityId);a.warpPositionRaw={xRaw:0,yRaw:0};a.inactiveCollisionEntity=null;a.velocityRaw=a.velocityRaw||{xRaw:0,yRaw:0};a.accelerationRaw={xRaw:0,yRaw:0};a.requestAnimationId=0;a.playingAnimationId=0;a.collisionHolders=[{syncPos:true,collisionId:c.id}];}
  return {w,rail};
 }
 for(const actualTerrain of [false,true])for(let count=2;count<=8;count++)test(`shipped3-2 rail ${count} players ${actualTerrain?"shipped terrain":"empty terrain"}: empty cache -> native contacts -> inertia -> Actor sync`,()=>{
@@ -49,7 +50,7 @@ for(const actualTerrain of [false,true])for(let count=2;count<=8;count++)test(`s
   // input/gravity is not substituted. Shared Actor integration handles it.
   for(const a of w.actors)Motion.update2(phaseWorld,a);
   const out=P.step(w,host);w=JSON.parse(JSON.stringify(out.state));
-  for(const a of w.actors)Motion.post2({...w,collisions:B.active(w.storage)},a);
+  for(const a of w.actors){const pw={...w,collisions:B.active(w.storage)};Motion.post1(pw,a,{warpProc:Motion.idleWarpProc,checkOutMap:Motion.checkOutMap});Motion.post2(pw,a,{setCollisionActive:Motion.setCollisionActive});}
   if(tick===1){assert.equal(riderIds(w,B.active(w.storage).find(b=>b.entityId===rail.id)).length,count);assert.ok(out.events.some(e=>e.type==='OnContactAdded'));}
   const delta=lift.xRaw-oldX;
   if(delta){firstMovement=tick;assert.equal(riders.length,count);assert.equal(delta,count===2?209600:count===3?156800:121600);

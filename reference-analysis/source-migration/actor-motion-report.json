@@ -33,19 +33,36 @@
     {
       "va": "0x18169e370",
       "fact": "Synchronize collision positions; CollisionVelo=current-pre; flag13 calls SetCollisionActive(false,selfEntityRef)."
+    },
+    {
+      "va": "0x18169ffcf..0x1816a0164",
+      "fact": "SetCollisionActive native owner gate applies flag0 to all holder collisions including unsynced sensor holders, preserves caches."
+    },
+    {
+      "va": "0x1816a1cb0",
+      "fact": "CheckOutMap uses actor anchor. Pending WarpPos absolute component>=4 suppresses; right<=0 disables right fail boundary; equality stays inside."
+    },
+    {
+      "va": "0x18170ab63..ac3e / 0x18178077b/791",
+      "fact": "Stage fail bounds: default up=-2400,down=2400 added to height*48; left=-480,right=(width+10)*48 or0 for unlimitScroll. Verified branch only."
+    },
+    {
+      "va": "0x18169e4a5..51e",
+      "fact": "Idle warp branch requires both WarpPos abs components<4, clears Actor bit25, returns false; active request explicitly refused."
     }
   ],
   "verification": {
-    "dedicatedTests": 5,
+    "dedicatedTests": 9,
     "carryIntegrationTests": 14,
     "playerInitializerTests": 29,
-    "carryDescription": "Actual3-2 tile grid and rail/camera settings, native initialized Player collider, synthetic relocated stack and fixed vertical velocity input. Common Actor Update1/2 and Post2 replace direct collision coordinate writes. No Actor.Post1/Player normal input/device lifecycle substitution.",
+    "carryDescription": "Actual3-2 tile grid and rail/camera settings, native initialized Player collider, synthetic relocated stack and fixed vertical velocity input. Common Actor Update1/2 and Post1/2 used with verified idle-warp/fail-bound and collision-active helpers. No full Player input or device typed-phase ordering substitution.",
     "releaseTests": 1008,
-    "includesAuxiliaryWorkInProgress": true
+    "includesAuxiliaryWorkInProgress": true,
+    "latestTargetedTests": 23
   },
   "unresolved": [
     "Actual R.create/R.step stage factory and all actor phases not connected",
-    "SetCollisionActive,warpProc,jumpProc,CheckOutMap remain explicit native host callbacks; no default no-op",
+    "Active warp/jump remain explicit native hosts; SetCollisionActive,CheckOutMap and idle warp are now implemented. Stage verified prepare3 bounds compilation does not imply full Stage lifecycle.",
     "Full Player velocity/gravity/input state is external; fixed velocity only used in the isolated fixture",
     "SourcePlayerCollisionInit reviewed and frozen; ActorLifecycle/default Player auxiliaries remain separate WIP"
   ]
