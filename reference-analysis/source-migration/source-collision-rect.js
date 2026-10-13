@@ -94,5 +94,25 @@ function update(a,b,options={}){
  if(a.id===b.id||a.entityId===b.entityId||!(a.pushBackTarget&2)||!(b.pushBackTarget&2)||!options.layerEnabled||((a.flags|b.flags)&1)||!((a.flags|b.flags)&64)||fixed(a)&&fixed(b)||!overlap(bounds(a),bounds(b))||overlap(bounds(a,true),bounds(b,true)))return {a:clone(a),b:clone(b),code:2,contacts:[]};
  return resolve(a,b,options);
 }
-return {update,resolve,revise,getRect,completePhysicsFidelity:false};
+// Collision.Move0x181693160 is a separate one-body trial used by updateScale.
+// No layer/target/movement gates, no reciprocal movement or cache append.
+function moveAgainst(input,target,delta,{isCollided}={}){
+ check(input);check(target);const a=clone(input),start={x:a.xRaw,y:a.yRaw};
+ position(a,{x:start.x+safe(delta.xRaw),y:start.y+safe(delta.yRaw)});
+ if(!(isCollided?isCollided(a,target):a.entityId!==target.entityId&&!((a.flags|target.flags)&1)&&overlap(bounds(a),bounds(target))))return {collision:a,delta:{...delta},success:true};
+ const A=bounds(a),B=bounds(target),hits=[];
+ for(const [key,size,d]of [['x','w',delta.xRaw],['y','h',delta.yRaw]]){
+  let ratio=0,face=0;
+  if(d){if(A[key]-d+A[size]<=B[key]){face=1;ratio=div(B[key]-A[size]-A[key],d);}else if(B[key]+B[size]<=A[key]-d){face=-1;ratio=div(B[key]+B[size]-A[key],d);}}
+  hits.push({key,d,face,ratio:Math.max(-F,Math.min(0,ratio))});
+ }
+ if(hits.some(h=>h.face)){
+  const p={x:a.xRaw,y:a.yRaw};
+  for(const h of hits){p[h.key]=corrected(p[h.key],start[h.key],h.d,h.ratio);
+   if(h.face&&Math.abs(h.d)>=E)p[h.key]=h.face>0?Math.max(start[h.key],p[h.key]-G):Math.min(start[h.key],p[h.key]+G);
+  }position(a,p);
+ }
+ return {collision:a,delta:{xRaw:a.xRaw-start.x,yRaw:a.yRaw-start.y},success:true};
+}
+return {update,resolve,revise,getRect,moveAgainst,completePhysicsFidelity:false};
 });

@@ -1,7 +1,7 @@
 const {test}=require('node:test'),assert=require('node:assert/strict');
 const M=require('./source-collision-map.js'),F=65536,G=655;
 const map=(w=6,h=6)=>({tileFlags:Array.from({length:h},()=>Array(w).fill(0))});
-const body=(x=10,y=10,w=10,h=10)=>({xRaw:x*F,yRaw:y*F,preXRaw:x*F,preYRaw:y*F,rectRaw:{x:0,y:0,width:w*F,height:h*F},flags:0,pushBackTarget:1,mapNormals:[]});
+const body=(x=10,y=10,w=10,h=10)=>({xRaw:x*F,yRaw:y*F,preXRaw:x*F,preYRaw:y*F,rectRaw:{x:0,y:0,width:w*F,height:h*F},flags:0,pushBackTarget:1,mapNormals:[],requestMapNormals:[]});
 test('cell conversion is FP divide/truncate then arithmetic shift, including tiny negatives',()=>{
  assert.deepEqual([-49*F,-48*F,-1,-48,0,48*F-1,48*F].map(M.cell),[-2,-1,0,-1,0,0,1]);
 });
@@ -34,14 +34,14 @@ test('diagonal first hit stops both axes; wrapper slides remainder without dupli
  const g=map();for(const row of g.tileFlags)row[1]=1;
  const b=body(),d={xRaw:40*F,yRaw:20*F},single=M.mapMove(g,b,d),slide=M.moveMap(g,b,d);
  assert.deepEqual(single.delta,{xRaw:28*F-G,yRaw:14*F});
- assert.deepEqual(slide.delta,{xRaw:28*F-G,yRaw:20*F});assert.equal(slide.collision.mapNormals.length,1);
+ assert.deepEqual(slide.delta,{xRaw:28*F-G,yRaw:20*F});assert.equal(slide.collision.requestMapNormals.length,1);
  assert.deepEqual(M.moveMap(g,b,d,{slide:false}).delta,single.delta);
 });
 test('DDA tie chooses Y, then slide records X at the corner',()=>{
  const g=map();g.tileFlags[0][1]=1;g.tileFlags[1][0]=1;g.tileFlags[1][1]=1;
  const b=body(),d={xRaw:40*F,yRaw:40*F};
  assert.deepEqual(M.mapMove(g,b,d).normal,{xRaw:0,yRaw:F});
- assert.deepEqual(M.moveMap(g,b,d).collision.mapNormals,[{xRaw:0,yRaw:F},{xRaw:F,yRaw:0}]);
+ assert.deepEqual(M.moveMap(g,b,d).collision.requestMapNormals,[{xRaw:0,yRaw:F},{xRaw:F,yRaw:0}]);
 });
 test('inactive and map-target flags precede movement and keep unrelated flag bits',()=>{
  const g=map();g.tileFlags.forEach(r=>r.fill(1));const b=body();b.flags=1;

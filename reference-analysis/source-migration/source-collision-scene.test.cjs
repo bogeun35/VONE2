@@ -1,6 +1,6 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),S=require('./source-collision-scene.js');
 const F=65536;
-function body(id,x,y,layer=1){const r={x:0,y:0,width:10*F,height:10*F};return {id,entityId:id,xRaw:x*F,yRaw:y*F,preXRaw:x*F,preYRaw:y*F,rectRaw:r,preRectRaw:{...r},layer,flags:0,pushBackTarget:3,collisionType:0,contacts:[],mapNormals:[],playerFacts:layer===1?{wakeUpCount:1,inertiaAttachmentId:null}:null};}
+function body(id,x,y,layer=1){const r={x:0,y:0,width:10*F,height:10*F};return {id,entityId:id,xRaw:x*F,yRaw:y*F,preXRaw:x*F,preYRaw:y*F,rectRaw:r,preRectRaw:{...r},layer,flags:0,pushBackTarget:3,collisionType:0,contacts:[],mapNormals:[],requestMapNormals:[],playerFacts:layer===1?{wakeUpCount:1,inertiaAttachmentId:null}:null};}
 function world(bodies){return {isEnableInertia:true,collisions:bodies,map:{tileFlags:Array.from({length:20},()=>Array(20).fill(0))},layerChecks:{1:{1:true,2:true,13:true},2:{1:true,2:true,13:true},13:{1:true,2:true,13:true}},cameraAreaRaw:{x:0,width:960*F}};}
 function stack(count){const lift=body('lift',100,150,13);lift.pushBackTarget=2;lift.flags=4|64;lift.xRaw+=2*F;const bodies=[lift];for(let i=0;i<count;i++){const b=body('p'+i,100,140-10*i);bodies[bodies.length-1].contacts=[{id:b.id,state:1,normal:{x:0,y:-1}}];bodies.push(b);}return world(bodies);}
 test('2..8 native cached stacks receive horizontal inertia once; previous positions reset',()=>{

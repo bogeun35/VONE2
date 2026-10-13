@@ -129,3 +129,13 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - **남은 런타임 연결**: chunk 생성 및 같은 priority/X의 CLR 정렬 순서, pass-wide 실패 복원, scale-change pass, map-cache lifecycle, Actor 위치 동기화, 각 타입 실제 contact callbacks. live runtime 미변경, 신규 라운드·배포 없음. 14-3/5-1/7-3/12-4 해제 증거 아님.
 - REA 최초 결과 first-run.md15880bytes / gameassembly.json17787bytes 확인 및 지뢰 대조 완료. 별도 `tools/LeadSelectedDecompile.java`와 Ghidra `-noanalysis`로 필요한5개 함수만 의사코드 확보. 4G heap, max-cpu2, 별도 프로젝트 `lead-ghidra.local`, `-deleteProject`; 공유 REA snapshot 변경 없음. 원본 DLL 실행 없음. no-analysis 의사코드는 타입/no-return 추론이 약하므로 assembly 근거를 유지한다.
 - 최신 전체 wildcard 검사701/701 통과(보조 WIP 검사 포함). 리드 관련4개 test 파일은53건; 보조 WIP 수정·등록·커밋 없음.
+
+## 충돌 단계 체크포인트 — 후속 세션 재개 정보
+
+- live: https://bogeun35.github.io/chamchicode/coop.html , v20261013-11, 배포 local/remote `4dd3947`. 이 체크포인트는 라이브 변경 없음. 작업 직전 VONE2 local/remote `cec72c8e`; 아래 변경은 별도 선별 커밋한다.
+- Map 요청 큐와 실제 접촉 캐시를 분리했다. forced pass 전체 위치 복원, 반복 pass, 네 모서리 scale 제한, Actor sync, actor→map contact 순서까지 `source-collision-scene.js`의 checkChunk에 연결했다. 동기화 제곱 임계값은511raw 미달/512raw 충족이다. 타입별 callback과 late dispatcher는 명시 호스트 계약이며 가짜 no-op로 채우지 않는다.
+- 신규 `source-collision-phase.test.cjs`9/9, 전체 `node --test source-migration/*.test.cjs`724/724. 전체에는 보조 파일 검사가 포함된다. 실제 R.create/R.step 연결·신규 라운드·인간 완주 검증은 아직 없음.
+- 다음: 완료된 `codex-briefs/CollisionBroadphase.result.md` 검토 후 scene의 treeObject/candidateCheck 및 inertia CLR 정렬에 연결. 현재 inertia는 같은X를 정렬한 뒤 host에 넘기므로 원래 cache 순서 전체를 CLR sort에 넘기는 수정이 필요하다. source-collision-broadphase의 dictionary capacity는 미확정(0x18197edc0; --raw disasm 필요). 그 다음 frozen Gear circle helper 통합, Player 실제 접촉 callbacks와 runtime bridge.
+- 런타임 연결 우선 파일: source-stage-runtime.js, source-linepath-devices.js의 linePathHost, source-lift-devices.js. 3-2/10-4 실제2..8 데이터의 R.create/R.step 테스트를 추가해야 한다. supportId를 native cache로 재명명하지 않는다. Player.initCollision0x1816bde50, OnContactAdded_Default0x1816c6c50, OnContacted_Default0x1816c6df0, ice검사0x1816c6f40, resetForceJumpVelo0x1816c6150 및 카메라 영역 근거가 남아 있다.
+- Ghidra 결과 `lead-lifecycle-ghidra.local.txt`(scale0x1817fe370/updateAfter0x181693610/updateContactMap0x181694440), assembly `lead-phase-lifecycle.local.txt`, Player callbacks `lead-player-contact-runtime.local.txt`. 4G heap/max-cpu2/noanalysis, 원본 DLL 실행 없음. local 파일은 재생성 가능한 조사 산출물이며 Git에 포함하지 않는다.
+- 보조 소유권 유지: Aux1 broadphase3파일, Aux2 actor-lifecycle3파일, Aux3 SearchLight. Gear/LinePathGear/DistanceConstraint frozen. 보조 WIP와 VONE2 다른 사용자 변경을 staging하지 않는다. 새 변경이 검증되면 작은 선별 커밋·push를 이어가고, 실제 동작 수정이 준비됐을 때만 deploy+live 검증한다.

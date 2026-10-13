@@ -14,6 +14,7 @@
 'use strict';
 const clone=x=>JSON.parse(JSON.stringify(x));
 const mul=(a,b)=>Number(BigInt.asIntN(64,BigInt(a)*BigInt(b))>>16n);
+const position=(b,x,y)=>{b.xRaw=x;b.yRaw=y;b.flags=(b.flags&~64)|((x!==b.preXRaw||y!==b.preYRaw)?64:0);};
 const find=(w,id)=>{const b=w.collisions.find(b=>b.id===id);if(!b)throw Error('Native collision missing: '+id);return b;};
 function bounds(b,pre=false){const r=pre?b.preRectRaw:b.rectRaw;if(b.collisionType!==0||!r)throw Error('Only resolved rectangle bounds supported');return {x:(pre?b.preXRaw:b.xRaw)+r.x,y:(pre?b.preYRaw:b.yRaw)+r.y,width:r.width,height:r.height};}
 function overlap(a,b,pre=false){if(a.entityId===b.entityId||((a.flags|b.flags)&1))return false;const x=bounds(a,pre),y=bounds(b,pre);return x.x<y.x+y.width&&y.x<x.x+x.width&&x.y<y.y+y.height&&y.y<x.y+x.height;}
@@ -77,9 +78,7 @@ function discoverForcedContacts(w,b){
   if(down?center>a.y+a.height:center<a.y)add(w,{ownerId:b.id,targetId:target.id,face:0});
  }
 }
-function refreshContacts(input,host={}){
- const w=clone(input),events=[];
- for(const b of w.collisions){
+function refreshActorInPlace(w,b,host,events){
   if(b.flags&0x20)discoverForcedContacts(w,b);
   if(!Array.isArray(b.contacts))throw Error('Native contact cache required');
   const remove=[];const count=b.contacts.length;
@@ -96,8 +95,134 @@ function refreshContacts(input,host={}){
    }
   }
   for(let i=remove.length-1;i>=0;i--)b.contacts.splice(remove[i],1);
- }
+}
+function refreshContacts(input,host={}){
+ const w=clone(input),events=[];
+ for(const b of w.collisions)refreshActorInPlace(w,b,host,events);
  return {world:w,events};
 }
-return {applyPair,postPushBack,updateMap,refreshContacts,completePhysicsFidelity:false};
+function refreshMapInPlace(w,b,host,events){
+ if(!Array.isArray(b.mapNormals)||!Array.isArray(b.requestMapNormals))throw Error('Native map cache and request queue required');
+ const notify=(type,n,cell)=>{
+  if(typeof host.onContact!=='function')throw Error('Native map contact callback adapter required');
+  const event={type,ownerId:b.id,targetId:null,normal:{x:n.xRaw/65536,y:n.yRaw/65536},isCollision:false,mapCell:{...cell}};
+  events.push(event);host.onContact(w,event);
+ };
+ const remove=[],count=b.mapNormals.length;
+ for(let i=0;i<count;i++){
+  const n=b.mapNormals[i],cell=b.flags&1?null:MapMove.isContacted(w.map,b,n);
+  if(cell)notify('OnContacted',n,cell);else remove.push(i);
+ }
+ for(let i=remove.length-1;i>=0;i--)b.mapNormals.splice(remove[i],1);
+ // Unlike retained normals, request processing has no inactive-flag gate.
+ // 0x1816949ce..a24 probes, invokes callbacks, then appends @0x181694abe.
+ const requests=b.requestMapNormals.length;
+ for(let i=0;i<requests;i++){
+  const n=b.requestMapNormals[i],cell=MapMove.isContacted(w.map,b,n);if(!cell)continue;
+  notify('OnContactAdded',n,cell);notify('OnContacted',n,cell);b.mapNormals.push({...n});
+ }
+ b.requestMapNormals.length=0;
+}
+function refreshMapContacts(input,id,host={}){const world=clone(input),events=[];refreshMapInPlace(world,find(world,id),host,events);return {world,events};}
+function pushPass(w,forced,host,trace){
+ const list=w.collisions;if(list.length<2)return 2;
+ const saved=forced?list.map(b=>({id:b.id,x:b.xRaw,y:b.yRaw})):[];
+ if(forced&&!list.some(b=>b.flags&64))return 2;
+ if(typeof host.treeObject!=='function'||typeof host.candidateCheck!=='function')throw Error('Native quadtree descriptor/candidate adapter required');
+ const descriptors=list.map(b=>host.treeObject(w,b));let code=2;
+ const fixed=b=>!!(b.flags&4)&&!(b.flags&8);
+ for(let i=0;i<list.length-1;i++){
+  const a=list[i];if(!(a.pushBackTarget&2)||!forced&&fixed(a))continue;
+  for(let j=i+1;j<list.length;j++){
+   const b=list[j];if(!host.candidateCheck(descriptors[i],descriptors[j])||!(b.pushBackTarget&2)||(forced?!(fixed(a)||fixed(b)):fixed(b)))continue;
+   const next=updatePair(w,a.id,b.id);if(next===2)continue;code=next;trace.push({forced,a:a.id,b:b.id,code});
+   if(code===1){for(const p of saved)position(find(w,p.id),p.x,p.y);return code;}
+   descriptors[i]=host.treeObject(w,a);descriptors[j]=host.treeObject(w,b);
+  }
+ }
+ return code;
+}
+function pushBackPass(input,forced,host={}){const world=clone(input),trace=[];return {world,code:pushPass(world,forced,host,trace),trace};}
+function solvePushBack(input,host={}){
+ const world=clone(input),trace=[];let code=2,outer=0;
+ do{
+  for(let i=0;i<8;i++){code=pushPass(world,false,host,trace);if(code!==0)break;}
+  for(let i=0;i<8;i++){code=pushPass(world,true,host,trace);if(code!==0)break;}
+  outer++;
+ }while(code===1&&outer<8);
+ return {world,trace,code,outerPasses:outer};
+}
+function setScale(b,scale){
+ b.scaleRaw={...scale};b.rectRaw=Rect.getRect(b.baseRectRaw,b.scaleRaw,b.pivotRaw);
+}
+// updateScale0x1817fe370: shrink directly; growth >QFP._0_001(65)
+// tests four corner deltas TL,BL,TR,BR with old shape. Map trials do not
+// slide; positions are restored but requested map normals survive.
+// Result ratios clamp0..1; partial growth subtracts QFP._0_02(1310).
+function scaleInPlace(w,b){
+ for(const name of ['scaleRaw','preScaleRaw','expectedScaleRaw','pivotRaw'])for(const k of ['xRaw','yRaw'])if(!Number.isSafeInteger(b[name]?.[k]))throw Error('Native scale/pivot facts required');
+ const old={...b.scaleRaw},desired=b.expectedScaleRaw;
+ if(desired.xRaw<=old.xRaw&&desired.yRaw<=old.yRaw){setScale(b,desired);return;}
+ if(Math.abs(old.xRaw-desired.xRaw)<=65&&Math.abs(old.yRaw-desired.yRaw)<=65)return;
+ const start={x:b.xRaw,y:b.yRaw},before=bounds(b);setScale(b,desired);
+ if(!(b.pushBackTarget&2))return;
+ const after=bounds(b);setScale(b,b.preScaleRaw);
+ const corners=r=>[{x:r.x,y:r.y},{x:r.x,y:r.y+r.height},{x:r.x+r.width,y:r.y},{x:r.x+r.width,y:r.y+r.height}];
+ const prior=corners(before),next=corners(after),moves=next.map((p,i)=>({xRaw:p.x-prior[i].x,yRaw:p.y-prior[i].y}));
+ const fractions={xRaw:65536,yRaw:65536},clipped=[];
+ const ratio=(actual,requested)=>Number(BigInt.asIntN(64,BigInt(actual)<<16n)/BigInt(requested));
+ function limit(actual,requested){for(const k of ['xRaw','yRaw'])if(Math.abs(requested[k])>65)fractions[k]=Math.max(0,Math.min(fractions[k],ratio(actual[k],requested[k])));}
+ for(const d of moves){
+  const r=MapMove.moveMap(w.map,b,d,{slide:false});Object.assign(b,r.collision);clipped.push(r.delta);position(b,start.x,start.y);limit(r.delta,d);
+ }
+ for(const other of w.collisions){
+  if(other.id===b.id||!(other.pushBackTarget&2)||!layer(w,b,other)||overlap(b,other))continue;
+  for(let i=0;i<4;i++){
+   const r=Rect.moveAgainst(b,other,clipped[i]);Object.assign(b,r.collision);position(b,start.x,start.y);limit(r.delta,moves[i]);
+  }
+ }
+ const result={};for(const k of ['xRaw','yRaw']){
+  const delta=desired[k]-b.preScaleRaw[k];result[k]=b.scaleRaw[k]+mul(desired[k]-b.scaleRaw[k],Math.max(0,Math.min(65536,fractions[k])));
+  if(Math.abs(fractions[k]-65536)>4)result[k]=delta>0?Math.max(b.preScaleRaw[k],result[k]-1310):Math.min(b.preScaleRaw[k],result[k]+1310);
+ }setScale(b,result);
+}
+function updateScale(input,id){const world=clone(input);scaleInPlace(world,find(world,id));return {world};}
+function finishInPlace(w,b,host,events){
+ if(typeof b.actorExists!=='boolean')throw Error('Native Actor lookup result required');
+ for(const k of ['expectedXRaw','expectedYRaw'])if(!Number.isSafeInteger(b[k]))throw Error('Native expected collision position required');
+ if(!b.scaleRaw||!b.expectedScaleRaw)throw Error('Native expected collision scale required');
+ b.preXRaw=b.xRaw;b.preYRaw=b.yRaw;b.flags&=~64;
+ const invoke=(type,extra={})=>{
+  if(typeof host[type]!=='function')throw Error('Native '+type+' adapter required');
+  const e={type,ownerId:b.id,...extra};events.push(e);host[type](w,b,e);
+ };
+ const registered=type=>{if(typeof host[type]!=='function')throw Error('Native '+type+' registry required');return host[type](b);};
+ if(b.actorExists&&(b.scaleRaw.xRaw!==b.expectedScaleRaw.xRaw||b.scaleRaw.yRaw!==b.expectedScaleRaw.yRaw)&&registered('hasOnChangeScale'))invoke('onChangeScale',{scaleRaw:{...b.scaleRaw}});
+ b.preScaleRaw={...b.scaleRaw};b.expectedScaleRaw={...b.scaleRaw};b.preRectRaw={...b.rectRaw};
+ const d={xRaw:b.xRaw-b.expectedXRaw,yRaw:b.yRaw-b.expectedYRaw};
+ if(Math.abs(mul(d.xRaw,d.xRaw)+mul(d.yRaw,d.yRaw))>=4){
+  if(b.actorExists){invoke('syncActorPosition',{xRaw:b.xRaw,yRaw:b.yRaw});if(registered('hasOnPushedBack'))invoke('onPushedBack',{correctionRaw:d});}
+  b.expectedXRaw=b.xRaw;b.expectedYRaw=b.yRaw;
+ }
+ refreshActorInPlace(w,b,host,events);refreshMapInPlace(w,b,host,events);
+}
+function finishCollision(input,id,host={}){const world=clone(input),events=[];finishInPlace(world,find(world,id),host,events);return {world,events};}
+function checkChunk(input,host={}){
+ let world=clone(input);const changed=[];
+ for(const b of world.collisions){
+  b.flags&=~8;b.expectedXRaw=b.xRaw;b.expectedYRaw=b.yRaw;
+  if(!b.scaleRaw||!b.preScaleRaw)throw Error('Native current/previous collision scale required');
+  if(b.scaleRaw.xRaw!==b.preScaleRaw.xRaw||b.scaleRaw.yRaw!==b.preScaleRaw.yRaw){
+   b.expectedScaleRaw={...b.scaleRaw};setScale(b,b.preScaleRaw);changed.push(b.id);
+  }
+ }
+ world=updateMap(world);const push=solvePushBack(world,host);world=push.world;
+ const inertia=postPushBack(world,host);world=inertia.world;
+ for(const id of changed)scaleInPlace(world,find(world,id));
+ const events=[];for(const b of world.collisions)finishInPlace(world,b,host,events);
+ if(typeof host.lateCollided!=='function')throw Error('Native late OnCollided dispatcher required');
+ host.lateCollided(world,events);
+ return {world,events,pushTrace:push.trace,inertiaTrace:inertia.trace};
+}
+return {applyPair,postPushBack,updateMap,refreshContacts,refreshMapContacts,pushBackPass,solvePushBack,updateScale,finishCollision,checkChunk,completePhysicsFidelity:false};
 });

@@ -11,7 +11,9 @@
  * the starting cell count, offset by accepted crossings @0x18187e683..749.
  * First hit stops BOTH axes at the hit time with separator on hit axis
  * @0x18187e811..9d7. Collision.MoveMap repeats with tangential remainder
- * when slide=true @0x181693012..077, and records each map contact.
+ * when slide=true @0x181693012..077. addContactMapInfo0x181691c10
+ * queues NEW normals in requestMapNormals (+0x10); mapNormals (+0xc)
+ * becomes valid only in updateContactMap after actor contact callbacks.
  * Inputs/outputs are safe 16.16 integer raws; original code is never run.
  */
 (function(root,factory){const api=factory(typeof module==='object'&&module.exports?require('./source-distanceconstraint-math.js'):root.SourceDistanceConstraintMath);if(typeof module==='object'&&module.exports)module.exports=api;root.SourceCollisionMap=api;})(typeof globalThis!=='undefined'?globalThis:this,function(FPMath){
@@ -74,14 +76,14 @@ function moveMap(map,input,delta,{slide=true}={}){
  validate(map,input);let b=clone(input);safe(delta.xRaw);safe(delta.yRaw);
  if(b.flags&1)return {collision:b,delta:{xRaw:0,yRaw:0},success:false};
  if(!(b.pushBackTarget&1)){position(b,b.xRaw+delta.xRaw,b.yRaw+delta.yRaw);return {collision:b,delta:{...delta},success:true};}
- if(!Array.isArray(b.mapNormals))throw Error('Native map normal cache required');
+ if(!Array.isArray(b.mapNormals)||!Array.isArray(b.requestMapNormals))throw Error('Native map normal cache and request queue required');
  let remaining={...delta},total={xRaw:0,yRaw:0};const states=new Set();
  for(;;){
   // A repeated state is a JS guard, not a native iteration limit.
   const key=[b.xRaw,b.yRaw,remaining.xRaw,remaining.yRaw].join(',');if(states.has(key))throw Error('Non-progressing native map slide');states.add(key);
   const result=mapMove(map,b,remaining);b=result.collision;total.xRaw+=result.delta.xRaw;total.yRaw+=result.delta.yRaw;
   const n=result.normal;if(!n.xRaw&&!n.yRaw)break;
-  if(!b.mapNormals.some(q=>q.xRaw===n.xRaw&&q.yRaw===n.yRaw))b.mapNormals.push(n);
+  if(![...b.mapNormals,...b.requestMapNormals].some(q=>q.xRaw===n.xRaw&&q.yRaw===n.yRaw))b.requestMapNormals.push(n);
   if(!slide)break;
   const rest={xRaw:remaining.xRaw-result.delta.xRaw,yRaw:remaining.yRaw-result.delta.yRaw};
   const projection=mul(rest.xRaw,n.xRaw)+mul(rest.yRaw,n.yRaw);
