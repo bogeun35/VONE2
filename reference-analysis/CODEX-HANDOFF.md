@@ -6,8 +6,9 @@
 ## 현재 상태
 
 - **라이브 17라운드**: 1-1 1-2 1-3 1-4 4-1 4-3 4-4 5-2 10-2 11-4 7-2 10-1 10-4 13-1 11-2 12-3 3-2
-- 배포본 `v=20261013-10`, chamchicode `0751918`. 작업 저장소 VONE2 `fa2e6e89`.
-- 테스트 478건 전부 통과(`node --test source-migration/*.test.cjs`, `reference-analysis` 에서).
+- 직전 배포본 `v=20261013-10`, chamchicode `0751918`. 인수 시 작업 저장소 HEAD `e26ab37b` (런타임 마지막 변경 `fa2e6e89`).
+- 리드 등록 라운드: Text/Coin/CheckPoint/TouchEnergy 상태·온라인 스냅샷·렌더 adapter 등록. 새 스테이지 개방 없음. 배포·커밋 결과는 아래 리드 실행 기록 참조.
+- 인수 시 전체 478건 통과. 등록 라운드 테스트는 아래 실측 기록 참조(보조의 진행 중 테스트는 별도).
 - 남은 월드 43개. 최신 차단 목록: `node source-migration/scan-remaining-work.cjs` → `remaining-work.json`.
 
 ## 리드 세션이 할 일 (우선순위)
@@ -64,6 +65,19 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 커밋 메시지는 한국어로, 무엇을 원작에서 확인했고 무엇이 근사인지 적는다. 끝에
 `Co-Authored-By:` 줄은 각 도구 관례대로.
 
+## 리드 실행 기록 (2026-10-13)
+
+- 우선순위 1/2/3/5: 연결 보류, 근거는 아래 열린 질문 6~9. 근거 없는 콜백/AABB 접촉 캐시를 만들어 개방하지 않았다.
+- 우선순위 4: Text/Coin/CheckPoint/TouchEnergy 등록. Coin event1은 다음 Update에 Key로 전달한다. CheckPoint는 충돌 당시 raw play time을 저장하고 로컬/온라인 재시작에서 authored respawn을 적용한다. TouchEnergy event43은 immortality를 존중한다.
+- 기존 런타임의 AABB geometry adapter 사용이며 원작 충돌 순서·뷰 일치 검수 아님. Text textId의 실제 문자열 자산 미확정, 식별자만 보존하고 임의 번역을 그리지 않음. 새 렌더는 기존 포트 스타일의 도형이며 원작 리소스 재현이 아님.
+- 등록 통합 테스트 3건 통과. release 파일 목록(기존 추적 테스트 + 등록 테스트) 491건 통과. play 테스트 9건 통과. 전체 wildcard 관측은 513건 중 512 통과/1 실패: 진행 중 DistanceConstraint 테스트에서 raw11234 vs11233 불일치. 해당 보조 파일은 수정·패키징·커밋하지 않음.
+- 최종 wildcard 전체 533/533 통과: 보조 DistanceConstraint 수정 완료 후 재관측. 초기 실패 관측은 위 기록에 보존.
+- 보조 소유권: 작업중-DistanceConstraint.md / 작업중-Gear.md / 작업중-SwitchTargetGroup.md 확인. 미완료 신규 파일 전부 제외.
+- REA first-run.md는 빈 파일(0 bytes). 의사코드 0x1818713e0 대조는 결과 생성 전까지 보류. 원본 게임 실행 없음.
+- 119개 인원별 맵 360틱 이내 무입력 smoke: 총 37,520틱, 런타임 예외 없음(사망 시 해당 실행 종료). 인간 완주 아님.
+- 기존 10라운드 8인 녹화 5회 재생: 6 clear/reproducible, 1-2/1-3 미완주, 5-2 tick3862 시간초과, 4-3 기존 blocked. 실패 3개는 변경 전 HEAD 런타임으로도 같은 status/tick 확인: 이번 등록으로 인한 회귀 아님. 인수인계의 9/10 완주 주장은 현재 runtime으로 재현 안 됨.
+- 배포 클론 생성 완료: v20261013-11, 168 files/17 stages, 참조 누락 없음. 배포 로컬 커밋 `4dd3947`. 원격 push는 네트워크 기본 실행 실패 후 자동 승인 심사에서 거절됨: 정확한 외부 대상에 대한 trusted user authorization 미확인 및 139파일 export 위험. 원격 라이브는 아직 v20261013-10 / 0751918이며 변경 배포 완료라고 보고하지 않음. 승인 전 우회하지 않음.
+
 ## 열린 질문 (중요한 순)
 
 1. **옆으로 움직이는 발판이 탑승자를 데려가는가.** 모듈 근거로는 MoveContactActor 가 X 를 안 넘긴다
@@ -73,6 +87,12 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 3. `source-move-contact.js` 부분 완료 — 원작 충돌 캐시 생성과 타입별 콜백 근거.
 4. 11-2 기둥: 원작은 좌/우로 기둥 반대편(52px)으로 도는 것으로 보이나 미구현, 탑승자끼리 충돌 없음.
 5. 새로 연 라운드(10-1 10-4 13-1 11-2 12-3 3-2)는 **사람이 끝까지 해본 적 없다**.
+
+6. **14-3 런타임 계약 차단**: source-dossun-devices.js moveActors는 원작 Actor 이동·ordered contact discovery 콜백을 요구한다. PlayerBlock 65/66의 pause/hide/returnKey와 cameraAreaRaw/equipment도 필요. source-move-contact.js는 cached contacts/mapNormals 필수, 플레이어 contactResponse 미복원 시 throw한다(0x1816a1517). 센서 Map.Move 결과를 단순 바닥 AABB로 대체하지 않았다. 모듈 컴파일 성공을 라운드 개방으로 집계하지 않음.
+7. **5-1 수직 리프트 차단**: 실제 2/8인 모두 moveDirection.Y=-310, X=0. -0.1의 FP 변환은 확정(0x180554310 → 0x18163fcb0 → 0x18163fc40)이나 수직 IsEnableMoveContactActor gate와 플레이어 transport callback은 별도 미확정이다. fractional refusal 해제만으로 개방 불가.
+8. **7-3 차단**: 실제 WeightedLift Y=-194(2인)/-224(8인), X=0. 위 수직 transport가 필요하다. Blackout event53의 일반 액터 일시정지 dispatcher가 기존 런타임에 없으므로 시야만 연결하지 않음.
+9. **12-4 차단**: MoveWall transport는 원작 contact cache 및 타입별 callback 필요(source-move-contact.js / move-contact-report.json). AABB 새 overlap/sweep를 원작 캐시로 주장하지 않음.
+10. **수평 carry 추가 조사**: Player.OnUpdate 0x1816c0010 및 OnUpdate_Default 0x1816c3060를 정적 disasm으로 확인. checkIceFloor, calcLittleStep, calcScreenEndWalkVeloX 및 virtual call 0x1816c326d가 있으므로 이 함수 표면만으로 바닥 속도 경로 부재를 단정할 수 없다. 10-4/3-2 동작은 변경하지 않았고 질문 1 유지.
 
 ## 도구
 

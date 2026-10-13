@@ -24,14 +24,63 @@
  ],
  "worldStages": 60,
  "remainingStages": 43,
- "remainingDistinctBlockers": 88,
+ "remainingDistinctBlockers": 83,
  "nearest": [
   {
+   "id": "st_w_02_02",
+   "blockerCount": 1,
+   "blockers": [
+    "WeightedLiftSingle"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
    "id": "st_w_03_03",
+   "blockerCount": 1,
+   "blockers": [
+    "PlayerMagnet"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_05_01",
+   "blockerCount": 1,
+   "blockers": [
+    "WeightedLift"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_05_03",
+   "blockerCount": 1,
+   "blockers": [
+    "PlayerMagnet"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_15_01",
+   "blockerCount": 1,
+   "blockers": [
+    "LinePathGear"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_02_04",
    "blockerCount": 2,
    "blockers": [
-    "PlayerMagnet",
-    "Text"
+    "ColorBox",
+    "MoveWall"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_03_01",
+   "blockerCount": 2,
+   "blockers": [
+    "Blackout",
+    "SearchLight"
    ],
    "guardsAfterTypes": []
   },
@@ -45,6 +94,24 @@
    "guardsAfterTypes": []
   },
   {
+   "id": "st_w_05_04",
+   "blockerCount": 2,
+   "blockers": [
+    "PlayerWarpGun",
+    "UpDownLift"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_07_04",
+   "blockerCount": 2,
+   "blockers": [
+    "Ghost",
+    "Lift"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
    "id": "st_w_09_04",
    "blockerCount": 2,
    "blockers": [
@@ -54,107 +121,60 @@
    "guardsAfterTypes": []
   },
   {
-   "id": "st_w_12_01",
+   "id": "st_w_10_03",
    "blockerCount": 2,
    "blockers": [
-    "GoKart",
-    "Stick"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_12_04",
-   "blockerCount": 2,
-   "blockers": [
-    "MoveWall",
-    "SpeedSwitch"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_13_03",
-   "blockerCount": 2,
-   "blockers": [
-    "RallyController",
-    "RallyMallet"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_13_04",
-   "blockerCount": 2,
-   "blockers": [
-    "FakePlayer",
-    "FakeTimer"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_14_03",
-   "blockerCount": 2,
-   "blockers": [
-    "Dossun",
-    "PlayerBlockGun"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_15_01",
-   "blockerCount": 2,
-   "blockers": [
-    "CheckPoint",
-    "LinePathGear"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_02_01",
-   "blockerCount": 3,
-   "blockers": [
-    "DistanceConstraint",
-    "StepEnemy",
-    "WarpAll"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_02_02",
-   "blockerCount": 3,
-   "blockers": [
-    "Text",
-    "TouchEnergy",
-    "WeightedLiftSingle"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_03_01",
-   "blockerCount": 3,
-   "blockers": [
-    "Blackout",
-    "CheckPoint",
-    "SearchLight"
+    "BallKeyBox",
+    "BoundBallPitcher"
    ],
    "guardsAfterTypes": []
   }
  ],
  "byType": [
   {
-   "type": "Text",
+   "type": "PlayerMagnet",
    "stages": [
-    "st_w_02_04",
-    "st_w_10_03",
-    "st_w_15_04",
-    "st_w_09_03",
     "st_w_03_03",
-    "st_w_06_01",
-    "st_w_02_02",
-    "st_w_14_01",
-    "st_w_03_04",
-    "st_w_05_04"
+    "st_w_05_03",
+    "st_w_03_04"
    ],
-   "appearsIn": 10,
-   "opensAlone": []
+   "appearsIn": 3,
+   "opensAlone": [
+    "st_w_03_03",
+    "st_w_05_03"
+   ]
+  },
+  {
+   "type": "WeightedLift",
+   "stages": [
+    "st_w_07_03",
+    "st_w_05_01",
+    "st_w_12_02"
+   ],
+   "appearsIn": 3,
+   "opensAlone": [
+    "st_w_05_01"
+   ]
+  },
+  {
+   "type": "WeightedLiftSingle",
+   "stages": [
+    "st_w_02_02"
+   ],
+   "appearsIn": 1,
+   "opensAlone": [
+    "st_w_02_02"
+   ]
+  },
+  {
+   "type": "LinePathGear",
+   "stages": [
+    "st_w_15_01"
+   ],
+   "appearsIn": 1,
+   "opensAlone": [
+    "st_w_15_01"
+   ]
   },
   {
    "type": "TopViewPlayer",
@@ -230,17 +250,6 @@
    "opensAlone": []
   },
   {
-   "type": "CheckPoint",
-   "stages": [
-    "st_w_03_01",
-    "st_w_15_02",
-    "st_w_07_04",
-    "st_w_15_01"
-   ],
-   "appearsIn": 4,
-   "opensAlone": []
-  },
-  {
    "type": "SwitchTargetGroup",
    "stages": [
     "st_w_04_02",
@@ -263,31 +272,11 @@
    "opensAlone": []
   },
   {
-   "type": "WeightedLift",
-   "stages": [
-    "st_w_07_03",
-    "st_w_05_01",
-    "st_w_12_02"
-   ],
-   "appearsIn": 3,
-   "opensAlone": []
-  },
-  {
    "type": "DistanceConstraint",
    "stages": [
     "st_w_09_04",
     "st_w_02_01",
     "st_w_02_03"
-   ],
-   "appearsIn": 3,
-   "opensAlone": []
-  },
-  {
-   "type": "PlayerMagnet",
-   "stages": [
-    "st_w_03_03",
-    "st_w_05_03",
-    "st_w_03_04"
    ],
    "appearsIn": 3,
    "opensAlone": []
@@ -361,15 +350,6 @@
    "stages": [
     "st_w_02_04",
     "st_w_12_04"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "TouchEnergy",
-   "stages": [
-    "st_w_02_04",
-    "st_w_02_02"
    ],
    "appearsIn": 2,
    "opensAlone": []
@@ -496,24 +476,6 @@
    "stages": [
     "st_w_02_01",
     "st_w_02_03"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "Coin",
-   "stages": [
-    "st_w_05_01",
-    "st_w_05_03"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "CoinObserver",
-   "stages": [
-    "st_w_05_01",
-    "st_w_05_03"
    ],
    "appearsIn": 2,
    "opensAlone": []
@@ -795,14 +757,6 @@
    "opensAlone": []
   },
   {
-   "type": "WeightedLiftSingle",
-   "stages": [
-    "st_w_02_02"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
    "type": "Mole",
    "stages": [
     "st_w_14_02"
@@ -894,14 +848,6 @@
    "type": "UpDownLift",
    "stages": [
     "st_w_05_04"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "LinePathGear",
-   "stages": [
-    "st_w_15_01"
    ],
    "appearsIn": 1,
    "opensAlone": []
@@ -1266,74 +1212,58 @@
    "connected": false,
    "distinctBlockers": [
     "ColorBox",
-    "MoveWall",
-    "Text",
-    "TouchEnergy"
+    "MoveWall"
    ],
-   "blockerCount": 4,
+   "blockerCount": 2,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
       "ColorBox",
-      "Text",
-      "MoveWall",
-      "TouchEnergy"
+      "MoveWall"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
       "ColorBox",
-      "Text",
-      "MoveWall",
-      "TouchEnergy"
+      "MoveWall"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
       "ColorBox",
-      "Text",
-      "MoveWall",
-      "TouchEnergy"
+      "MoveWall"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
       "ColorBox",
-      "Text",
-      "MoveWall",
-      "TouchEnergy"
+      "MoveWall"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
       "ColorBox",
-      "Text",
-      "MoveWall",
-      "TouchEnergy"
+      "MoveWall"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
       "ColorBox",
-      "Text",
-      "MoveWall",
-      "TouchEnergy"
+      "MoveWall"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
       "ColorBox",
-      "Text",
-      "MoveWall",
-      "TouchEnergy"
+      "MoveWall"
      ]
     }
    }
@@ -1343,16 +1273,14 @@
    "connected": false,
    "distinctBlockers": [
     "BallKeyBox",
-    "BoundBallPitcher",
-    "Text"
+    "BoundBallPitcher"
    ],
-   "blockerCount": 3,
+   "blockerCount": 2,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "Text",
       "BoundBallPitcher",
       "BallKeyBox"
      ]
@@ -1360,7 +1288,6 @@
     "3": {
      "variant": 0,
      "missing": [
-      "Text",
       "BoundBallPitcher",
       "BallKeyBox"
      ]
@@ -1368,7 +1295,6 @@
     "4": {
      "variant": 0,
      "missing": [
-      "Text",
       "BoundBallPitcher",
       "BallKeyBox"
      ]
@@ -1376,7 +1302,6 @@
     "5": {
      "variant": 1,
      "missing": [
-      "Text",
       "BoundBallPitcher",
       "BallKeyBox"
      ]
@@ -1384,7 +1309,6 @@
     "6": {
      "variant": 1,
      "missing": [
-      "Text",
       "BoundBallPitcher",
       "BallKeyBox"
      ]
@@ -1392,7 +1316,6 @@
     "7": {
      "variant": 1,
      "missing": [
-      "Text",
       "BoundBallPitcher",
       "BallKeyBox"
      ]
@@ -1400,7 +1323,6 @@
     "8": {
      "variant": 1,
      "missing": [
-      "Text",
       "BoundBallPitcher",
       "BallKeyBox"
      ]
@@ -1637,66 +1559,58 @@
    "connected": false,
    "distinctBlockers": [
     "Blackout",
-    "CheckPoint",
     "SearchLight"
    ],
-   "blockerCount": 3,
+   "blockerCount": 2,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
       "Blackout",
-      "SearchLight",
-      "CheckPoint"
+      "SearchLight"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
       "Blackout",
-      "SearchLight",
-      "CheckPoint"
+      "SearchLight"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
       "Blackout",
-      "SearchLight",
-      "CheckPoint"
+      "SearchLight"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
       "Blackout",
-      "SearchLight",
-      "CheckPoint"
+      "SearchLight"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
       "Blackout",
-      "SearchLight",
-      "CheckPoint"
+      "SearchLight"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
       "Blackout",
-      "SearchLight",
-      "CheckPoint"
+      "SearchLight"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
       "Blackout",
-      "SearchLight",
-      "CheckPoint"
+      "SearchLight"
      ]
     }
    }
@@ -1879,10 +1793,9 @@
    "distinctBlockers": [
     "FrontSwitch",
     "IceRect",
-    "SwitchIceRect",
-    "Text"
+    "SwitchIceRect"
    ],
-   "blockerCount": 4,
+   "blockerCount": 3,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
@@ -1890,7 +1803,6 @@
      "missing": [
       "FrontSwitch",
       "SwitchIceRect",
-      "Text",
       "IceRect"
      ]
     },
@@ -1899,7 +1811,6 @@
      "missing": [
       "FrontSwitch",
       "SwitchIceRect",
-      "Text",
       "IceRect"
      ]
     },
@@ -1908,7 +1819,6 @@
      "missing": [
       "FrontSwitch",
       "SwitchIceRect",
-      "Text",
       "IceRect"
      ]
     },
@@ -1917,7 +1827,6 @@
      "missing": [
       "FrontSwitch",
       "SwitchIceRect",
-      "Text",
       "IceRect"
      ]
     },
@@ -1926,7 +1835,6 @@
      "missing": [
       "FrontSwitch",
       "SwitchIceRect",
-      "Text",
       "IceRect"
      ]
     },
@@ -1935,7 +1843,6 @@
      "missing": [
       "FrontSwitch",
       "SwitchIceRect",
-      "Text",
       "IceRect"
      ]
     },
@@ -1944,7 +1851,6 @@
      "missing": [
       "FrontSwitch",
       "SwitchIceRect",
-      "Text",
       "IceRect"
      ]
     }
@@ -2282,10 +2188,9 @@
    "distinctBlockers": [
     "BatEnemy",
     "Blackout",
-    "Text",
     "TopViewPlayer"
    ],
-   "blockerCount": 4,
+   "blockerCount": 3,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
@@ -2293,8 +2198,7 @@
      "missing": [
       "Blackout",
       "TopViewPlayer",
-      "BatEnemy",
-      "Text"
+      "BatEnemy"
      ]
     },
     "3": {
@@ -2302,8 +2206,7 @@
      "missing": [
       "Blackout",
       "TopViewPlayer",
-      "BatEnemy",
-      "Text"
+      "BatEnemy"
      ]
     },
     "4": {
@@ -2311,8 +2214,7 @@
      "missing": [
       "Blackout",
       "TopViewPlayer",
-      "BatEnemy",
-      "Text"
+      "BatEnemy"
      ]
     },
     "5": {
@@ -2320,8 +2222,7 @@
      "missing": [
       "Blackout",
       "TopViewPlayer",
-      "BatEnemy",
-      "Text"
+      "BatEnemy"
      ]
     },
     "6": {
@@ -2329,8 +2230,7 @@
      "missing": [
       "Blackout",
       "TopViewPlayer",
-      "BatEnemy",
-      "Text"
+      "BatEnemy"
      ]
     },
     "7": {
@@ -2338,8 +2238,7 @@
      "missing": [
       "Blackout",
       "TopViewPlayer",
-      "BatEnemy",
-      "Text"
+      "BatEnemy"
      ]
     },
     "8": {
@@ -2347,8 +2246,7 @@
      "missing": [
       "Blackout",
       "TopViewPlayer",
-      "BatEnemy",
-      "Text"
+      "BatEnemy"
      ]
     }
    }
@@ -2426,59 +2324,51 @@
    "id": "st_w_03_03",
    "connected": false,
    "distinctBlockers": [
-    "PlayerMagnet",
-    "Text"
+    "PlayerMagnet"
    ],
-   "blockerCount": 2,
+   "blockerCount": 1,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "PlayerMagnet",
-      "Text"
+      "PlayerMagnet"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
-      "PlayerMagnet",
-      "Text"
+      "PlayerMagnet"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
-      "PlayerMagnet",
-      "Text"
+      "PlayerMagnet"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
-      "PlayerMagnet",
-      "Text"
+      "PlayerMagnet"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
-      "PlayerMagnet",
-      "Text"
+      "PlayerMagnet"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
-      "PlayerMagnet",
-      "Text"
+      "PlayerMagnet"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
-      "PlayerMagnet",
-      "Text"
+      "PlayerMagnet"
      ]
     }
    }
@@ -2768,17 +2658,15 @@
     "MapBreakBlockRect",
     "OptimizedBulletObserver",
     "PlayerGun",
-    "ShootingEnemySpawner",
-    "Text"
+    "ShootingEnemySpawner"
    ],
-   "blockerCount": 7,
+   "blockerCount": 6,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
       "BattlePlanePlayer",
-      "Text",
       "MapBlockReplacer",
       "PlayerGun",
       "ShootingEnemySpawner",
@@ -2790,7 +2678,6 @@
      "variant": 0,
      "missing": [
       "BattlePlanePlayer",
-      "Text",
       "MapBlockReplacer",
       "PlayerGun",
       "ShootingEnemySpawner",
@@ -2802,7 +2689,6 @@
      "variant": 0,
      "missing": [
       "BattlePlanePlayer",
-      "Text",
       "MapBlockReplacer",
       "PlayerGun",
       "ShootingEnemySpawner",
@@ -2814,7 +2700,6 @@
      "variant": 0,
      "missing": [
       "BattlePlanePlayer",
-      "Text",
       "MapBlockReplacer",
       "PlayerGun",
       "ShootingEnemySpawner",
@@ -2826,7 +2711,6 @@
      "variant": 0,
      "missing": [
       "BattlePlanePlayer",
-      "Text",
       "MapBlockReplacer",
       "PlayerGun",
       "ShootingEnemySpawner",
@@ -2838,7 +2722,6 @@
      "variant": 0,
      "missing": [
       "BattlePlanePlayer",
-      "Text",
       "MapBlockReplacer",
       "PlayerGun",
       "ShootingEnemySpawner",
@@ -2850,7 +2733,6 @@
      "variant": 0,
      "missing": [
       "BattlePlanePlayer",
-      "Text",
       "MapBlockReplacer",
       "PlayerGun",
       "ShootingEnemySpawner",
@@ -3041,11 +2923,10 @@
    "distinctBlockers": [
     "Blackout",
     "BlackoutController",
-    "CheckPoint",
     "ColorBox",
     "DeadSwitch"
    ],
-   "blockerCount": 5,
+   "blockerCount": 4,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
@@ -3054,8 +2935,7 @@
       "Blackout",
       "BlackoutController",
       "ColorBox",
-      "DeadSwitch",
-      "CheckPoint"
+      "DeadSwitch"
      ]
     },
     "3": {
@@ -3064,8 +2944,7 @@
       "Blackout",
       "BlackoutController",
       "ColorBox",
-      "DeadSwitch",
-      "CheckPoint"
+      "DeadSwitch"
      ]
     },
     "4": {
@@ -3074,8 +2953,7 @@
       "Blackout",
       "BlackoutController",
       "ColorBox",
-      "DeadSwitch",
-      "CheckPoint"
+      "DeadSwitch"
      ]
     },
     "5": {
@@ -3084,8 +2962,7 @@
       "Blackout",
       "BlackoutController",
       "ColorBox",
-      "DeadSwitch",
-      "CheckPoint"
+      "DeadSwitch"
      ]
     },
     "6": {
@@ -3094,8 +2971,7 @@
       "Blackout",
       "BlackoutController",
       "ColorBox",
-      "DeadSwitch",
-      "CheckPoint"
+      "DeadSwitch"
      ]
     },
     "7": {
@@ -3104,8 +2980,7 @@
       "Blackout",
       "BlackoutController",
       "ColorBox",
-      "DeadSwitch",
-      "CheckPoint"
+      "DeadSwitch"
      ]
     },
     "8": {
@@ -3114,8 +2989,7 @@
       "Blackout",
       "BlackoutController",
       "ColorBox",
-      "DeadSwitch",
-      "CheckPoint"
+      "DeadSwitch"
      ]
     }
    }
@@ -3408,67 +3282,51 @@
    "id": "st_w_05_01",
    "connected": false,
    "distinctBlockers": [
-    "Coin",
-    "CoinObserver",
     "WeightedLift"
    ],
-   "blockerCount": 3,
+   "blockerCount": 1,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "CoinObserver",
-      "WeightedLift",
-      "Coin"
+      "WeightedLift"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
-      "CoinObserver",
-      "WeightedLift",
-      "Coin"
+      "WeightedLift"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
-      "CoinObserver",
-      "WeightedLift",
-      "Coin"
+      "WeightedLift"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
-      "CoinObserver",
-      "WeightedLift",
-      "Coin"
+      "WeightedLift"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
-      "CoinObserver",
-      "WeightedLift",
-      "Coin"
+      "WeightedLift"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
-      "CoinObserver",
-      "WeightedLift",
-      "Coin"
+      "WeightedLift"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
-      "CoinObserver",
-      "WeightedLift",
-      "Coin"
+      "WeightedLift"
      ]
     }
    }
@@ -3809,67 +3667,59 @@
    "id": "st_w_07_04",
    "connected": false,
    "distinctBlockers": [
-    "CheckPoint",
     "Ghost",
     "Lift"
    ],
-   "blockerCount": 3,
+   "blockerCount": 2,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
       "Ghost",
-      "Lift",
-      "CheckPoint"
+      "Lift"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
       "Ghost",
-      "Lift",
-      "CheckPoint"
+      "Lift"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
       "Ghost",
-      "Lift",
-      "CheckPoint"
+      "Lift"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
       "Ghost",
-      "Lift",
-      "CheckPoint"
+      "Lift"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
       "Ghost",
-      "Lift",
-      "CheckPoint"
+      "Lift"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
       "Ghost",
-      "Lift",
-      "CheckPoint"
+      "Lift"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
       "Ghost",
-      "Lift",
-      "CheckPoint"
+      "Lift"
      ]
     }
    }
@@ -3878,67 +3728,51 @@
    "id": "st_w_05_03",
    "connected": false,
    "distinctBlockers": [
-    "Coin",
-    "CoinObserver",
     "PlayerMagnet"
    ],
-   "blockerCount": 3,
+   "blockerCount": 1,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "CoinObserver",
-      "PlayerMagnet",
-      "Coin"
+      "PlayerMagnet"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
-      "CoinObserver",
-      "PlayerMagnet",
-      "Coin"
+      "PlayerMagnet"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
-      "CoinObserver",
-      "PlayerMagnet",
-      "Coin"
+      "PlayerMagnet"
      ]
     },
     "5": {
      "variant": 1,
      "missing": [
-      "CoinObserver",
-      "PlayerMagnet",
-      "Coin"
+      "PlayerMagnet"
      ]
     },
     "6": {
      "variant": 1,
      "missing": [
-      "CoinObserver",
-      "PlayerMagnet",
-      "Coin"
+      "PlayerMagnet"
      ]
     },
     "7": {
      "variant": 1,
      "missing": [
-      "CoinObserver",
-      "PlayerMagnet",
-      "Coin"
+      "PlayerMagnet"
      ]
     },
     "8": {
      "variant": 1,
      "missing": [
-      "CoinObserver",
-      "PlayerMagnet",
-      "Coin"
+      "PlayerMagnet"
      ]
     }
    }
@@ -3947,67 +3781,51 @@
    "id": "st_w_02_02",
    "connected": false,
    "distinctBlockers": [
-    "Text",
-    "TouchEnergy",
     "WeightedLiftSingle"
    ],
-   "blockerCount": 3,
+   "blockerCount": 1,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "TouchEnergy",
-      "Text",
       "WeightedLiftSingle"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
-      "TouchEnergy",
-      "Text",
       "WeightedLiftSingle"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
-      "TouchEnergy",
-      "Text",
       "WeightedLiftSingle"
      ]
     },
     "5": {
      "variant": 1,
      "missing": [
-      "Text",
-      "WeightedLiftSingle",
-      "TouchEnergy"
+      "WeightedLiftSingle"
      ]
     },
     "6": {
      "variant": 1,
      "missing": [
-      "Text",
-      "WeightedLiftSingle",
-      "TouchEnergy"
+      "WeightedLiftSingle"
      ]
     },
     "7": {
      "variant": 1,
      "missing": [
-      "Text",
-      "WeightedLiftSingle",
-      "TouchEnergy"
+      "WeightedLiftSingle"
      ]
     },
     "8": {
      "variant": 1,
      "missing": [
-      "Text",
-      "WeightedLiftSingle",
-      "TouchEnergy"
+      "WeightedLiftSingle"
      ]
     }
    }
@@ -4168,66 +3986,58 @@
    "connected": false,
    "distinctBlockers": [
     "BreakableRect",
-    "PlayerBlockGun",
-    "Text"
+    "PlayerBlockGun"
    ],
-   "blockerCount": 3,
+   "blockerCount": 2,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
       "PlayerBlockGun",
-      "BreakableRect",
-      "Text"
+      "BreakableRect"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
       "PlayerBlockGun",
-      "BreakableRect",
-      "Text"
+      "BreakableRect"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
       "PlayerBlockGun",
-      "BreakableRect",
-      "Text"
+      "BreakableRect"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
       "PlayerBlockGun",
-      "BreakableRect",
-      "Text"
+      "BreakableRect"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
       "PlayerBlockGun",
-      "BreakableRect",
-      "Text"
+      "BreakableRect"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
       "PlayerBlockGun",
-      "BreakableRect",
-      "Text"
+      "BreakableRect"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
       "PlayerBlockGun",
-      "BreakableRect",
-      "Text"
+      "BreakableRect"
      ]
     }
    }
@@ -4241,10 +4051,9 @@
     "DummyColorBox",
     "DummyGoal",
     "DummyPlayer",
-    "PlayerMagnet",
-    "Text"
+    "PlayerMagnet"
    ],
-   "blockerCount": 7,
+   "blockerCount": 6,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
@@ -4255,7 +4064,6 @@
       "Arrangement",
       "DummyPlayer",
       "DummyColorBox",
-      "Text",
       "DummyGoal"
      ]
     },
@@ -4267,7 +4075,6 @@
       "Arrangement",
       "DummyPlayer",
       "DummyColorBox",
-      "Text",
       "DummyGoal"
      ]
     },
@@ -4279,7 +4086,6 @@
       "Arrangement",
       "DummyPlayer",
       "DummyColorBox",
-      "Text",
       "DummyGoal"
      ]
     },
@@ -4291,7 +4097,6 @@
       "Arrangement",
       "DummyPlayer",
       "DummyColorBox",
-      "Text",
       "DummyGoal"
      ]
     },
@@ -4303,7 +4108,6 @@
       "Arrangement",
       "DummyPlayer",
       "DummyColorBox",
-      "Text",
       "DummyGoal"
      ]
     },
@@ -4315,7 +4119,6 @@
       "Arrangement",
       "DummyPlayer",
       "DummyColorBox",
-      "Text",
       "DummyGoal"
      ]
     },
@@ -4327,7 +4130,6 @@
       "Arrangement",
       "DummyPlayer",
       "DummyColorBox",
-      "Text",
       "DummyGoal"
      ]
     }
@@ -4539,66 +4341,58 @@
    "connected": false,
    "distinctBlockers": [
     "PlayerWarpGun",
-    "Text",
     "UpDownLift"
    ],
-   "blockerCount": 3,
+   "blockerCount": 2,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
       "PlayerWarpGun",
-      "UpDownLift",
-      "Text"
+      "UpDownLift"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
       "PlayerWarpGun",
-      "UpDownLift",
-      "Text"
+      "UpDownLift"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
       "PlayerWarpGun",
-      "UpDownLift",
-      "Text"
+      "UpDownLift"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
       "PlayerWarpGun",
-      "UpDownLift",
-      "Text"
+      "UpDownLift"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
       "PlayerWarpGun",
-      "UpDownLift",
-      "Text"
+      "UpDownLift"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
       "PlayerWarpGun",
-      "UpDownLift",
-      "Text"
+      "UpDownLift"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
       "PlayerWarpGun",
-      "UpDownLift",
-      "Text"
+      "UpDownLift"
      ]
     }
    }
@@ -4607,59 +4401,51 @@
    "id": "st_w_15_01",
    "connected": false,
    "distinctBlockers": [
-    "CheckPoint",
     "LinePathGear"
    ],
-   "blockerCount": 2,
+   "blockerCount": 1,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "LinePathGear",
-      "CheckPoint"
+      "LinePathGear"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
-      "LinePathGear",
-      "CheckPoint"
+      "LinePathGear"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
-      "LinePathGear",
-      "CheckPoint"
+      "LinePathGear"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
-      "LinePathGear",
-      "CheckPoint"
+      "LinePathGear"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
-      "LinePathGear",
-      "CheckPoint"
+      "LinePathGear"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
-      "LinePathGear",
-      "CheckPoint"
+      "LinePathGear"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
-      "LinePathGear",
-      "CheckPoint"
+      "LinePathGear"
      ]
     }
    }
