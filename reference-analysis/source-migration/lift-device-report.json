@@ -7,9 +7,7 @@
  "nativeCodeExecuted": false,
  "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base 0x180000000",
  "provenance": "The module and its 21 tests were written by a session that was cut off by a rate limit before it could write this report. The derivation below is taken from that module's own header comment and its exported `unresolved` list, which carry the addresses. The registration, the stage connection and the measurements under `verification.runAfterwards` were done separately afterwards.",
-
  "summary": "A weighted lift is a platform that only moves while enough players are standing on it. The threshold is recomputed every update from the live population, so the same stage asks 1 rider of a pair and 7 of a full party. st_w_10_04's lift travels horizontally, which in the original means it carries nobody: a player standing still slides off the back.",
-
  "componentMap": {
   "evidence": "creator-delegates-resolved.local.json, call sites in the 0x1817762e8..0x181776446 block",
   "rows": [
@@ -21,7 +19,6 @@
   "shared": "Normal/Extra/Variable are thin wrappers; the simulation is the shared WeightedLiftComponent. ExtraWeightedLiftComponent.Creator runs exactly three calls on it - Initialize 0x181737990, ExtraWeightedLiftComponent.ParseParameter 0x18183b160 and InitCollision 0x181737a50 - and ExtraWeightedLiftComponent.OnUpdate 0x18183b8c0 is a pure tail call (0x18183b95d jmp) into WeightedLiftComponent.OnUpdate 0x181737be0. Same structure as TimerComponent serving SwitchTimer and DeadTimer.",
   "warning": "WeightedLiftEx and WeightedLiftSingle share one component but NOT one slot map with WeightedLift. The Normal slot map is recorded in the module's `unresolved.siblingSlotMaps` and differs in almost every index, including which slot clears EnableReturn."
  },
-
  "mechanic": [
   "The rider threshold is CalcMoveContactCount 0x181738090: trunc(population * m_MovePercent / 100), ceilinged, then clamped in min-then-max order, then m_MoveOffset added. st_w_10_04 authors percent 100 and offset -1, so it asks for population - 1.",
   "Riders are counted off the UP contact face. ContactFace reads as Invalid=0 in the metadata but is not: ContactFaceExtensions.GetNormal 0x18177e310 sign-extends the byte, rejects above 3 and indexes four normals, so Invalid=-1 and Up=0. The walk recurses, so a player standing on a player standing on the lift counts.",
@@ -29,7 +26,6 @@
   "Travel advances m_OffsetPos at m_Speed while extending and m_ReturnSpeed while returning, clamped to |m_MoveDirection| and to zero, then signed by the travel vector.",
   "MoveLift 0x181738170 writes a literal zero X into the MoveContactActor vector (0x1817383cb), so a HORIZONTAL lift never carries its riders. That is the original's behaviour, not a port shortcut."
  ],
-
  "slots": {
   "note": "ExtraWeightedLiftComponent.ParseParameter 0x18183b160, bounds-checked to 19 slots at 0x18183b42e.",
   "0": "moveDirection.Y base (raw)",
@@ -48,13 +44,19 @@
   "20": "population table -> m_ReturnSpeed",
   "1..7": "per-population entries added to the moveDirection.Y base (0x18183b48a..0x18183b4e4); all zero on st_w_10_04, which is why its geometry does not move with the party size"
  },
-
  "shippedValues": {
   "st_w_10_04": "one WeightedLiftEx at (2037 after the InitCollision centring), 192 wide, m_MoveDirection X 900, percent 100, offset -1, EnableRideReversal set so the lower-contact freeze never arms.",
-  "thresholdPerCount": {"2": 1, "3": 2, "4": 3, "5": 4, "6": 5, "7": 6, "8": 7},
+  "thresholdPerCount": {
+   "2": 1,
+   "3": 2,
+   "4": 3,
+   "5": 4,
+   "6": 5,
+   "7": 6,
+   "8": 7
+  },
   "others": "st_l_04_04 authors m_MoveMax 1, so one rider is enough at every population. st_w_15_02 authors m_MoveMin 2 and a datas[16] table that overrides m_Width. st_w_12_02 authors a datas[19] table that gives a pair a different speed from everyone else."
  },
-
  "verification": {
   "unitTests": "source-lift-devices.test.cjs, 21 passing.",
   "runAfterwards": [
@@ -63,26 +65,56 @@
    "Live through the stage runtime: the st_w_10_04 lift reports need=1 at 2 players and need=7 at 8, sits at x 2037 with no riders, and does not drift over 2 seconds of empty ticks."
   ]
  },
-
  "registration": {
   "done": "solids() joined baseSolids() in source-stage-runtime.js (CollisionLayer.Lift, InitCollision 0x181737b82 writes 13); beforeStep() runs where Gates.beforeStep() does, before terrain=solids(s), because it reads the supportId the previous tick left on each player; ['lifts','liftState'] added to DEVICE_STATES in play/online.js; the platform and its riders/threshold readout drawn in play/play.js; added to the copy list, the deploy list and the index.html script tags.",
   "noEvents": "WeightedLiftComponent declares no OnRecvEvent, so nothing can signal a weighted lift and no event routing was added. LiftComponent.OnRecvEvent 0x181876310 and VariableWeightedLiftComponent.OnRecvEvent 0x181733880 belong to different components."
  },
-
  "unlocks": {
-  "stagesUsingWeightedLiftEx": ["st_w_02_01", "st_w_10_04", "st_w_12_02", "st_w_12_03", "st_w_15_01", "st_w_15_02"],
+  "stagesUsingWeightedLiftEx": [
+   "st_w_02_01",
+   "st_w_10_04",
+   "st_w_12_02",
+   "st_w_12_03",
+   "st_w_15_01",
+   "st_w_15_02"
+  ],
   "fullyOpenedByThisAlone": 1,
   "connectedAs": "round 13, '2편 10–4'",
   "remainingPerStage": {
-   "st_w_02_01": ["StepEnemy", "DistanceConstraint", "WarpAll"],
-   "st_w_12_02": ["DeadSwitch", "WeightedLift", "ColorBox"],
-   "st_w_12_03": ["SpeedSwitch", "Wind"],
-   "st_w_15_01": ["LinePathGear", "CheckPoint"],
-   "st_w_15_02": ["Blackout", "BlackoutController", "ColorBox", "DeadSwitch", "CheckPoint"]
+   "st_w_02_01": [
+    "StepEnemy",
+    "DistanceConstraint",
+    "WarpAll"
+   ],
+   "st_w_12_02": [
+    "DeadSwitch",
+    "WeightedLift",
+    "ColorBox"
+   ],
+   "st_w_12_03": [
+    "SpeedSwitch",
+    "Wind"
+   ],
+   "st_w_15_01": [
+    "LinePathGear",
+    "CheckPoint"
+   ],
+   "st_w_15_02": [
+    "Blackout",
+    "BlackoutController",
+    "ColorBox",
+    "DeadSwitch",
+    "CheckPoint"
+   ]
   }
  },
-
  "unresolved": "The module exports the full list as `unresolved`, with severity and addresses on each item. The headline ones: vertical travel is REFUSED rather than guessed, because MoveLift gates it on ActorComponent.IsEnableMoveContactActor 0x1816a15c0, which was not reversed - porting the carry without it would push riders through ceilings. That refusal blocks the 6 vertical WeightedLiftEx actors and all 3 WeightedLiftSingle actors. A slot that is not an exact multiple of 1/65536 is also refused, which blocks 4 more lift actors (st_l_04_04 datas[9] = 1.1, WeightedLift datas[4] = -0.1 in st_w_05_01 and st_w_07_03, LinePathLift datas[4] = 2.3335 in st_w_03_02). EnableCountReversal has no shipped case and is left out. QFP.OneFrame's raw value was not read from the file, so the module counts 6 updates instead, which is exact whenever DeltaTime equals one frame.",
-
- "humanCheck": "Nobody has played st_w_10_04 yet. The threshold, the travel and the collision are machine-verified; whether a party of 8 can actually get 7 players onto a 192px platform is not."
+ "humanCheck": "Nobody has played st_w_10_04 yet. The threshold, the travel and the collision are machine-verified; whether a party of 8 can actually get 7 players onto a 192px platform is not.",
+ "oneFrameResolved": {
+  "settledOn": "2026-10-13",
+  "value": "QFP.OneFrame = FP raw 1092, from the metadata string literal \"0.0166666666666667\"",
+  "how": "resolve-string-literals.local.py. An IL2CPP string-literal slot holds an encoded TOKEN in the file, not a pointer: il2cpp_codegen_initialize_runtime_metadata 0x1802c5dc0 reads it (0x1802c5dcf), treats bit0 as the unresolved marker (0x1802c5dda), takes the index from bits 1..28 (0x1802c5dee) and the kind from the top 3 bits (0x1802c5df6). Kind 5 is the string-literal arm at 0x1802c5e56.",
+  "correctsThisReport": "This module's `unresolved.oneFrameRaw` guessed that the only candidate decimal in global-metadata.dat was \"0.01660\", which would have given raw 1087. That guess was WRONG - the literal is \"0.0166666666666667\" and the raw is 1092. The module was right to refuse it rather than ship it.",
+  "behaviourChange": "None. beforeStep() counts 6 updates instead of multiplying OneFrame by QFP._6, which is exact whenever DeltaTime equals one frame. The constant is recorded here so a future change does not have to re-derive it."
+ }
 }
