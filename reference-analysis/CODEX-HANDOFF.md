@@ -161,3 +161,9 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - capacity97은 해결됨(보조 최신 broadphase와 독립 추적 일치). Initialize90→QCollectionsUtils prime97. metadata field-ref342/type8793/field41356/defaultdata323976(byte6127992,120bytes) SHA256은 FA856B58B602D1AFB828D70020BB2D88B0C50B97FE8920E56AEBF6D280C11175. 과거 미확정 기록은 폐기하지 않고 이 결론으로 갱신.
 - 다음 구체적 작업: source-player-contact.notifyJump와 Aux2 ActorLifecycle 결합; 3-2 전체 Actor 초기 collision/layer/callback/생성순서를 구성해 source-collision-pipeline.step에 연결. Camera.Initialize0x1817df530/RequestNormal0x1817e0330/funcNormal0x1817e0400/CalcCameraViewStageArea0x1817dfd10의 Ghidra 결과 lead-runtime-bridge-ghidra.local.txt 확보. 일반 camera는 raw16:9 두 번 FP divide와48/-48 stage matrix, normal followX4*dt,Y3*dt. 초기·Stage player range 연결을 더 확인해야 한다. notifyJump0x1816a1e50/recursiveMax0x181695110은 lead-jump-contact.local.txt/lead-contact-depth.local.txt. 원작 게임 실행 없음.
 - 보조1은 broadphase/Gear동결 후 ColorBox로 이동. Aux2 ActorLifecycle, Aux3 SearchLight 고유 파일은 계속 WIP: 스테이징하지 않는다. Git에 포함한 broadphase는 capacity97 후속 수정까지 들어 있음.
+
+## ColorBox / SearchLight 완료 코어 보존
+
+- ColorBox30건과 SearchLight25건, 전체 source wildcard782/782 통과. 두 결과 노트와 모듈·검사·근거 JSON·SearchLight 재현 추출 스크립트만 선별 저장한다. 실제 runtime 등록/라운드 개방은 아직 아니다.
+- ColorBox는 native Actor bridge/Frame player index 목록/색 매핑/ordered contact/즉시 event dispatch가 필요하다. SearchLight의 출하 prototype 초기 kill/bright/dark0은 asset + native zero-init 경로로 확정되어 3-1의2..8인12개 기본 컴파일이 가능하다. 이전 default 미확정 기록은 결과 노트 정정 이력 참조.
+- Aux1 TopViewPlayer, Aux2 ActorLifecycle, Aux3 UpDownLift는 진행 중이므로 수정·스테이징하지 않는다. 원격 push 승인 대기와 live v20261013-11 상태는 유지한다.

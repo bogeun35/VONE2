@@ -1,0 +1,311 @@
+{
+  "method": "Static UnityPy/TypeTreeGenerator reads; original game never executed",
+  "asset": "resources.assets",
+  "searchLightEntityPrototypeAsset": {
+    "m_GameObject": {
+      "m_FileID": 0,
+      "m_PathID": 0
+    },
+    "m_Enabled": 1,
+    "m_Script": {
+      "m_FileID": 1,
+      "m_PathID": 25
+    },
+    "m_Name": "SearchLightEntityPrototype",
+    "Settings": {
+      "Identifier": {
+        "Path": "Game/Resources/Actor/Blackout/SearchLight|EntityPrototype",
+        "Guid": {
+          "Value": 1421855438945819390
+        }
+      },
+      "Container": {}
+    },
+    "Parent": {
+      "m_FileID": 0,
+      "m_PathID": 8037
+    }
+  },
+  "searchLightEntityPrototype": {
+    "m_GameObject": {
+      "m_FileID": 0,
+      "m_PathID": 1276
+    },
+    "m_Enabled": 1,
+    "m_Script": {
+      "m_FileID": 1,
+      "m_PathID": 1793
+    },
+    "m_Name": "",
+    "TransformMode": 2,
+    "Transform2DVertical": {
+      "IsEnabled": 0,
+      "Height": {
+        "RawValue": 0
+      },
+      "PositionOffset": {
+        "RawValue": 0
+      }
+    },
+    "PhysicsCollider": {
+      "IsTrigger": 0,
+      "Material": {
+        "Id": {
+          "Value": 0
+        }
+      },
+      "SourceCollider": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "IsEnabled": 0,
+      "Shape2D": {
+        "ShapeType": 0,
+        "PolygonCollider": {
+          "Id": {
+            "Value": 0
+          }
+        },
+        "CircleRadius": {
+          "RawValue": 0
+        },
+        "EdgeExtent": {
+          "RawValue": 0
+        },
+        "BoxExtents": {
+          "X": {
+            "RawValue": 0
+          },
+          "Y": {
+            "RawValue": 0
+          }
+        },
+        "PositionOffset": {
+          "X": {
+            "RawValue": 0
+          },
+          "Y": {
+            "RawValue": 0
+          }
+        },
+        "RotationOffset": {
+          "RawValue": 0
+        },
+        "UserTag": 0,
+        "IsPersistent": 1,
+        "CompoundShapes": [],
+        "IsSetFromSourceCollider": 0
+      },
+      "Shape3D": {
+        "ShapeType": 0,
+        "SphereRadius": {
+          "RawValue": 0
+        },
+        "PositionOffset": {
+          "X": {
+            "RawValue": 0
+          },
+          "Y": {
+            "RawValue": 0
+          },
+          "Z": {
+            "RawValue": 0
+          }
+        },
+        "BoxExtents": {
+          "X": {
+            "RawValue": 0
+          },
+          "Y": {
+            "RawValue": 0
+          },
+          "Z": {
+            "RawValue": 0
+          }
+        },
+        "RotationOffset": {
+          "X": {
+            "RawValue": 0
+          },
+          "Y": {
+            "RawValue": 0
+          },
+          "Z": {
+            "RawValue": 0
+          }
+        },
+        "UserTag": 0,
+        "IsPersistent": 1,
+        "CompoundShapes": [],
+        "IsSetFromSourceCollider": 0
+      },
+      "Layer": 0,
+      "CallbackFlags": {
+        "Value": 0
+      }
+    },
+    "PhysicsBody": {
+      "IsEnabled": 0,
+      "Version2D": 0,
+      "Version3D": 0,
+      "Config2D": 116,
+      "Config3D": 58,
+      "RotationFreeze": 0,
+      "Mass": {
+        "RawValue": 65536
+      },
+      "Drag": {
+        "RawValue": 32768
+      },
+      "AngularDrag": {
+        "RawValue": 32768
+      },
+      "CenterOfMass2D": {
+        "X": {
+          "RawValue": 0
+        },
+        "Y": {
+          "RawValue": 0
+        }
+      },
+      "CenterOfMass3D": {
+        "X": {
+          "RawValue": 0
+        },
+        "Y": {
+          "RawValue": 0
+        },
+        "Z": {
+          "RawValue": 0
+        }
+      },
+      "GravityScale": {
+        "_hasValue": 0,
+        "_value": {
+          "RawValue": 65536
+        }
+      }
+    },
+    "NavMeshPathfinder": {
+      "IsEnabled": 0,
+      "NavMeshAgentConfig": {
+        "Id": {
+          "Value": 0
+        }
+      },
+      "InitialTarget": {
+        "IsEnabled": 0,
+        "Target": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "Position": {
+          "X": {
+            "RawValue": 0
+          },
+          "Y": {
+            "RawValue": 0
+          },
+          "Z": {
+            "RawValue": 0
+          }
+        },
+        "NavMesh": {
+          "Reference": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          },
+          "Asset": {
+            "Id": {
+              "Value": 0
+            }
+          },
+          "Name": ""
+        }
+      }
+    },
+    "NavMeshSteeringAgent": {
+      "IsEnabled": 0,
+      "MaxSpeed": {
+        "IsEnabled": 0,
+        "Value": {
+          "RawValue": 0
+        }
+      },
+      "Acceleration": {
+        "IsEnabled": 0,
+        "Value": {
+          "RawValue": 0
+        }
+      }
+    },
+    "NavMeshAvoidanceAgent": {
+      "IsEnabled": 0
+    },
+    "View": {
+      "Id": {
+        "Value": 0
+      }
+    }
+  },
+  "searchLightGameObject": {
+    "m_Component": [
+      {
+        "component": {
+          "m_FileID": 0,
+          "m_PathID": 3411
+        }
+      },
+      {
+        "component": {
+          "m_FileID": 0,
+          "m_PathID": 8037
+        }
+      },
+      {
+        "component": {
+          "m_FileID": 0,
+          "m_PathID": 7530
+        }
+      },
+      {
+        "component": {
+          "m_FileID": 0,
+          "m_PathID": 7579
+        }
+      }
+    ],
+    "m_Layer": 0,
+    "m_Name": "SearchLight",
+    "m_Tag": 0,
+    "m_IsActive": true
+  },
+  "searchLightTransform": {
+    "m_GameObject": {
+      "m_FileID": 0,
+      "m_PathID": 1276
+    },
+    "m_LocalRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "m_LocalPosition": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "m_LocalScale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "m_Children": [],
+    "m_Father": {
+      "m_FileID": 0,
+      "m_PathID": 0
+    }
+  },
+  "interpretation": "Prefab contains EntityPrototype, EntityView, SearchLightView; no serialized EntityComponentSearchLightComponent and no children. Materialize asset+0x78 is not established as the shipped creation path. Follow Creator 0x1816f06f0 -> generic component helper 0x1802010a0 -> default value factory 0x1806845a0 before assigning defaults."
+}

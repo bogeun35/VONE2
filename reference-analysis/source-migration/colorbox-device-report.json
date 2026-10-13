@@ -1,0 +1,122 @@
+{
+  "status": "partial",
+  "verification": {
+    "nativeCodeExecuted": false,
+    "analysis": "direct read-only disassembly",
+    "dedicatedTests": {
+      "pass": 30,
+      "fail": 0
+    },
+    "fullSuite": {
+      "pass": 782,
+      "fail": 0
+    },
+    "realSelections": 56,
+    "stages": [
+      "st_w_02_04",
+      "st_w_03_04",
+      "st_w_12_02",
+      "st_w_15_02"
+    ],
+    "population": "2..8, offline and online, population-rules.cjs selectVariant/actorsForCount",
+    "ownership": "Existing supportedTypes source search no ColorBox implementation, no claim file; atomic CreateNew claim succeeded. Gear/Broadphase/shared runtime untouched."
+  },
+  "confirmed": {
+    "parse": "0x181802e80: slots0 width,1 height, subtract MARGIN4 each; rect H/W/X/Y=(h-4,w-4,-trunc((w-4)/2),-(h-4)); slots5,6 hat offset; slot7 positive hat scale else1. Slots2 index ordinal modulo current player list,3 nonnegative excluded ordinal,4 jump enable. Actual index/color come from Frame list/color lookup.",
+    "initCollision": "0x181803280: pushBackTarget3, syncPos true, rect kind; attribute2; layer2 or5 if jump enabled. Actor flag bits15/16, weight100. OnStart y-=49152.",
+    "update": "0x181803430: caught zeros actor velocity/pending force and clears force flag. Otherwise requires collision0. Reset vx; nonjumper side2 then3 recursive matching-player push gives +65536/-65536. vy>=0 resets jumpCount. Jump input enum8 initial sets player jump velocity/count1/sound12; held counts1..13 adds jumpVelo * FP((1-count/14)*13107). Face0 prevents pending forceX; face1 ground clamp except count1 negativevy preserved. Air adds native gravity; forceflag adds forceY once.",
+    "recursivePush": "0x1818038d0: ordered contact collision ID list, actor lookup, directional velocity check then layer1/playerIndex equality; otherwise recurses with ORIGINAL ColorBox component on contacted actor. No cycle guard in native. Positive direction0/2 requires velocity>65; direction1/3 accepts velocity<65.",
+    "jumpEligibility": "0x181803ca0: jump option enabled; no face0 and face1 contact OR count1..13.",
+    "event": "0x181803da0:30 returnsplayerIndex+1;16 IsCatched->flagbit1,zero velocity,return1;27 copies force velo and setsbit0;36/37 copy force and choose abs(forceX) sign from current actorvx,bit0;65 hide+pause;66 unpause, warpPos=event.Position, velo=event.Velo,actorflag17;other delegates Actor.OnRecvEvent."
+  },
+  "next": "Lead connects ColorBox lifecycle using native Actor and Collision helpers; use compile contract and direct onEvent/update functions. There are no unresolved ColorBox constants in the traced paths.",
+  "module": "source-colorbox-devices.js",
+  "supportedTypes": [
+    "ColorBox"
+  ],
+  "stageCompilesAlone": false,
+  "completePhysicsFidelity": false,
+  "files": [
+    "source-migration/source-colorbox-devices.js",
+    "source-migration/source-colorbox-devices.test.cjs",
+    "source-migration/colorbox-device-report.json",
+    "codex-briefs/ColorBox.result.md"
+  ],
+  "constants": {
+    "fpRaw": {
+      "value": 65536,
+      "source": "0x18163fc40"
+    },
+    "marginRaw": {
+      "value": 262144,
+      "source": "0x1818040ff"
+    },
+    "hatScaleDefaultRaw": {
+      "value": 65536,
+      "source": "0x181802e60 -> QFP._1 offset0xf0"
+    },
+    "startYOffsetRaw": {
+      "value": 49152,
+      "source": "0x18180340a"
+    },
+    "weightRaw": {
+      "value": 6553600,
+      "source": "0x181803266"
+    },
+    "pushVeloRaw": {
+      "value": 65536,
+      "source": "0x1818034e8/56d"
+    },
+    "pushThresholdRaw": {
+      "value": 65,
+      "source": "0x181803b79/83/8b/95"
+    },
+    "forceEpsilonRaw": {
+      "value": 4,
+      "source": "0x181803777"
+    },
+    "heldJumpFactorRaw": {
+      "value": 13107,
+      "source": "0x1818036a8"
+    },
+    "heldJumpDivisor": {
+      "value": 14,
+      "source": "0x18180367f..6a5 signed multiply-high division"
+    },
+    "jumpInputEnum": {
+      "value": 8,
+      "source": "0x181803631"
+    },
+    "jumpSoundId": {
+      "value": 12,
+      "source": "0x181803710"
+    }
+  },
+  "integration": {
+    "compileOptions": "nativeActorBridge:true, framePlayerIndexList: exact native ordered signed byte identities, gamePlayerInfo:[{playerRef: playerIndex+1,colorIndex}] from Frame list. Do not assume indices or display colors equal ordinal.",
+    "initialization": "Assign compiled id to actual native actor entity binding; unnamed IDs colorbox:N are host binding keys, not original entity IDs. Apply actor bits15/16 and weight100; allocate collision0 from collisionDescriptors then run OnStart SetPosForce(initialPositionRaw). Preserve native stage coords, use host world-to-screen transform separately.",
+    "updateContext": [
+      "getCollision(actor)->collision0 or null",
+      "getContactCollisionList(collision,face)->ordered collision IDs, NOT geometric touching guesses",
+      "getCollisionById(id)->collision or null",
+      "getActor(entityId)->native snapshot {id,vxRaw,vyRaw}",
+      "getPlayer(entityId)->{playerIndex} or null",
+      "isContacted(collision,face,true)->native actor+map contact boolean",
+      "getPlayerByIndex(playerIndex)->Player snapshot or null",
+      "isPressInput(player,8), isOnInput(player,8)",
+      "getJumpVelo(player,boxActor)->exact native Player.GetJumpVelo raw",
+      "getGravityRaw()->exact Frame.GetGravity raw"
+    ],
+    "updateResult": "update returns actor velocity snapshot and sound effects; shared Actor OnPreUpdate/OnPostUpdate/motion integration handles positions, collision sync, wind etc. afterStep does not integrate.",
+    "events": "Route onEvent synchronously through host and execute actions before native eligibility/update dispatch. Preserve query returnValue. Capture65 hide/pause and release66 unpause/warp/actorflag17 must connect real Actor helpers. All unknown event types delegate Actor.OnRecvEvent. Convenience beforeStep rejects events that require Actor actions.",
+    "beforeStep": "Only call for eligible native actors. actorSnapshot(id) and applyActorPatch(id,actor) required; local events match targetId or nonempty targetName. Returns eventResults, effects and collisionDescriptors. Host should route events in actual native notification order, not gather/reorder."
+  },
+  "unresolved": [
+    "Shared stage runtime registration and exact ColorBox actor lifecycle/collision/input/gravity bridge are not connected; full stage compiles remain refused without explicit nativeActorBridge.",
+    "Host Actor visibility/pause/warp and generic event dispatch are external contracts, not implemented here. Convenience beforeStep refuses delayed action dispatch.",
+    "Native recursion has no cycle guard; this helper explicitly rejects cyclic same-face contact chains instead of inventing a false result.",
+    "Raw state uses JS safe integers; signed64 intermediate wraps are preserved where copied. Values whose final raw is outside safe integer range are refused.",
+    "DummyColorBox and ForceColorBox are separate actor types; not added to supportedTypes.",
+    "No original-game execution, live human completion, runtime deployment or Git changes."
+  ]
+}

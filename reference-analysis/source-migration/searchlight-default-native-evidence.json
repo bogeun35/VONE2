@@ -1,0 +1,275 @@
+[
+  {
+    "assembly": "mscorlib.dll",
+    "type": "System.RuntimeType",
+    "method": "CreateInstanceDefaultCtor",
+    "va": "0x1814dc9b0",
+    "token": "0x6000e46"
+  },
+  {
+    "assembly": "mscorlib.dll",
+    "type": "System.RuntimeType",
+    "method": "CreateInstanceMono",
+    "va": "0x1814dd0e0",
+    "token": "0x6000e4b"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "get_m_PlayerTimer",
+    "va": "0x1816effe0",
+    "token": "0x6000fd4"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "set_m_PlayerTimer",
+    "va": "0x18141fba0",
+    "token": "0x6000fd5"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "GetHashCode",
+    "va": "0x1816f0020",
+    "token": "0x6000fd6"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "ClearPointers",
+    "va": "0x18169c680",
+    "token": "0x6000fd7"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "OnRemoved",
+    "va": "0x1816f0120",
+    "token": "0x6000fd8"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "Serialize",
+    "va": "0x1816f01c0",
+    "token": "0x6000fd9"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "SetEntityRef",
+    "va": "0x180538380",
+    "token": "0x6000fda"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "GetEntityRef",
+    "va": "0x180491c00",
+    "token": "0x6000fdb"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "Creator",
+    "va": "0x1816f06f0",
+    "token": "0x6000fdc"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "Creator",
+    "va": "0x1816f0820",
+    "token": "0x6000fdd"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "Initialize",
+    "va": "0x1816f09e0",
+    "token": "0x6000fde"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "Initialize",
+    "va": "0x1816f09f0",
+    "token": "0x6000fdf"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "ParseParameter",
+    "va": "0x1816f0b40",
+    "token": "0x6000fe0"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "InitCollision",
+    "va": "0x180476130",
+    "token": "0x6000fe1"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "InitPost",
+    "va": "0x1816f1200",
+    "token": "0x6000fe2"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "OnExit",
+    "va": "0x1816f12f0",
+    "token": "0x6000fe3"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "OnStart",
+    "va": "0x1816f1390",
+    "token": "0x6000fe4"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "OnUpdate",
+    "va": "0x1816f1480",
+    "token": "0x6000fe5"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "OnPost",
+    "va": "0x180476130",
+    "token": "0x6000fe6"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "updatePhase",
+    "va": "0x1816f14f0",
+    "token": "0x6000fe7"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "startFade",
+    "va": "0x1816f1700",
+    "token": "0x6000fe8"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "updateFade",
+    "va": "0x1816f1900",
+    "token": "0x6000fe9"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "checkPlayerCollision",
+    "va": "0x1816f19c0",
+    "token": "0x6000fea"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "IsPlayerInside",
+    "va": "0x1816f1da0",
+    "token": "0x6000feb"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "IsInside",
+    "va": "0x1816f1f00",
+    "token": "0x6000fec"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "IsInside",
+    "va": "0x1816f20b0",
+    "token": "0x6000fed"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "IsLightsOn",
+    "va": "0x1816f2310",
+    "token": "0x6000fee"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "SetLightEnable",
+    "va": "0x1816f23d0",
+    "token": "0x6000fef"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "SetDecisionCriteria",
+    "va": "0x1816f23f0",
+    "token": "0x6000ff0"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "GetBrightness",
+    "va": "0x1816f2400",
+    "token": "0x6000ff1"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "SetMulBrightness",
+    "va": "0x180ad3100",
+    "token": "0x6000ff2"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "GetSpotLightAngle",
+    "va": "0x1804a9a10",
+    "token": "0x6000ff3"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "GetWorldSpaceLightRange",
+    "va": "0x1816f2450",
+    "token": "0x6000ff4"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "GetWorldSpaceDirection",
+    "va": "0x1816f24c0",
+    "token": "0x6000ff5"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": "SetWorldSpaceDirection",
+    "va": "0x1816f24d0",
+    "token": "0x6000ff6"
+  },
+  {
+    "assembly": "PhotonQuantumCode.dll",
+    "type": "Quantum.SearchLightComponent",
+    "method": ".cctor",
+    "va": "0x1816f24e0",
+    "token": "0x6000ff7"
+  },
+  {
+    "assembly": "quantum.core.dll",
+    "type": "Quantum.Core.FrameBase",
+    "method": "Create",
+    "va": "0x1819786c0",
+    "token": "0x6000888"
+  }
+]

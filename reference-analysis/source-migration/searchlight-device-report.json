@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 1,
+  "devices": [
+    "SearchLight"
+  ],
+  "module": "source-searchlight-devices.js",
+  "status": "partial_shipped_defaults_and_native_core_verified_host_integration_pending",
+  "settledOn": "2026-10-13",
+  "nativeCodeExecuted": false,
+  "summary": "출하 3-1의 12개 SearchLight를 2..8인 전부 검증했다. 실제 prefab에는 직렬화된 SearchLight component가 없으며, generic default 생성 경로가 zero-init struct를 추가한다. killPlayerOff/초기 bright/dark=0이므로 prototype 옵션 없이 compile 가능하다. 공통 Actor/Player 이벤트 및 렌더 통합은 별도 남아 있다.",
+  "creator": {
+    "ordinal": 106,
+    "delegateSite": "0x1817774c4",
+    "method": "0x1816f06f0",
+    "directInitialize": "0x1816f09e0 decisionCriteriaRaw65536만저장",
+    "programmaticCreator": "0x1816f0820->0x1816f09f0:다른생성경로로killPlayerOff1을명시저장(0x1816f0b1a). 출하3-1의resourceCreator기본값근거로사용하지않음.",
+    "prototype": "SearchLightComponent_Prototype.Materialize0x1817b9bc0:0x1817b9c87가asset prototype+0x78을읽어struct+4 m_KillPlayerOff에복사. 일반Creator/ParseParameter는해당필드미저장.",
+    "shippedDefaults": {
+      "killPlayerOff": 0,
+      "brightRaw": 0,
+      "darkRaw": 0,
+      "prefab": "resources.assets GameObject1276; EntityPrototypeAsset6310 -> Parent8037; Transform3411 children=[]; root components Transform/EntityPrototype/EntityView/SearchLightView만 존재",
+      "nativeChain": [
+        "Creator0x1816f07a1 -> Frame.CreateActorEntity0x1817482c0",
+        "Frame prototype Create call0x181748398 ->0x1819786c0",
+        "Creator0x1816f07c5 -> generic helper0x1802010a0",
+        "default factory call0x1802010ff ->0x1806845a0",
+        "RuntimeType.CreateInstanceDefaultCtor call0x1806846de ->0x1814dc9b0",
+        "RuntimeType.CreateInstanceMono0x1814dd0e0: instance ctor 없을 때 boxed value allocate0x1814dd35e ->0x1802d5680 ->0x180319f60",
+        "allocator0x180319f95/9c xor edx; data zero fill0x180319fdd/fe8 ->0x18037b8e0",
+        "boxed data104bytes copy0x180684711..757 -> helper Add call0x18020125d ->0x180788b20",
+        "Add component104bytes copy0x180788c00..41"
+      ],
+      "metadata": "PhotonQuantumCode.dll Quantum.SearchLightComponent 36 methods; .cctor 존재, instance .ctor 없음",
+      "fixtures": [
+        "searchlight-prototype-evidence.json",
+        "searchlight-default-native-evidence.json"
+      ]
+    }
+  },
+  "parameters": {
+    "method": "0x1816f0b40",
+    "bright": "slot0 numericFP; abs(raw)>=4때nonnegativeclamp후+0x20저장(0x1816f0e48..6b)",
+    "dark": "slot1..7 numericFP의count-2직접선택(0x1816f0cb7/cfd..d25),abs(raw)>=4때nonnegativeclamp후+0x28(0x1816f0e6f..e92). QPlayerCountParam문자열이나이전인원nonzerofallback이아님.",
+    "rotation": "slot8 FP0x1816f0d37..55; DEG2RADraw1143(0x477)곱sar16,Quaternion.EulerZ0x181644e70및rotateVector0x181645b90로world(0,-1)회전(0x1816f0e9f..f32)",
+    "angle": "slot9 FP0x1816f0d5e..7d ->spotAngle+0x48(0x1816f0f29)",
+    "range": "slot10..16각numericFP를sar16int32화하는helper0x180201410,선택index=count-2,shl16으로거리FP재구성(0x1816f0d87..e10). 소수부절삭및음수floor가native.",
+    "initial": "slot17 raw==65536일때phase0,그외phase2(0x1816f0f42..53)",
+    "mulBrightness": "raw65536(0x1816f0f3a)",
+    "criteria": "Creatorraw65536(0x1816f07d9)",
+    "timerList": "ParseParameter8개raw0추가(0x1816f113d..14a)",
+    "prototypeRefusal": "출하 default bright/dark=0. abs(raw)<4이면 이를 유지; raw>=4만 nonnegative override. options.chipSize는 native camera map 값 필수. 선택적 prototypeKillPlayerOff는 alternate prototype에 대한 명시적 int32 override."
+  },
+  "constants": {
+    "fatalRaw": {
+      "value": 13107,
+      "store": "0x1816f254a"
+    },
+    "fadeRaw": {
+      "value": 4369,
+      "text": "0.0666666666666667",
+      "literalSlot": "0x1831c3af8",
+      "store": "0x1816f256b",
+      "verification": "resolve-string-literals.local.py --cctor0x1816f24e0"
+    },
+    "degToRadRaw": {
+      "value": 1143,
+      "instruction": "0x1816f0e9f /0x1816f21d5 imul0x477"
+    },
+    "numericSinCosEntries": {
+      "source": "FPSinCos TextAsset body4908336 in installedresources.assets",
+      "loader": "0x18165aed3 static+0x20",
+      "sin": "0x18164665b low32 signed; negativeangle sign restored",
+      "entries": {
+        "0": [
+          0,
+          65536
+        ],
+        "25718": [
+          25062,
+          60554
+        ],
+        "77152": [
+          60526,
+          25131
+        ],
+        "85725": [
+          63286,
+          17021
+        ]
+      },
+      "use": "authoredrotation0/-45halfangleandcone30/45threshold. 그외조회index는특정거부.",
+      "worldDirectionMinus45Raw": {
+        "xRaw": -46314,
+        "yRaw": -46368
+      },
+      "thresholdAngle30Raw": 63286,
+      "thresholdAngle45Raw": 60526
+    }
+  },
+  "stateMachine": {
+    "method": "0x1816f14f0",
+    "bothTimersZero": "0x1816f1529..536:아무것도하지않음",
+    "phase0": "bright timer로드후phase1만,노출검사없음(0x1816f16e4..e8)",
+    "phase1": "updateFade완료전return. 완료후killPlayerOff==0때checkPlayers, dark0이면hold,그외timer-=DeltaTime<=0이면phase2와darkfade시작(0x1816f1620..16d5)",
+    "phase2": "darktimer로드후phase3만(0x1816f1613..1b)",
+    "phase3": "darkfade완료전return. bright0이면hold,그외timer-=DeltaTime<=0이면phase0와brightfade시작(0x1816f1567..15f9)",
+    "initialFade": "InitPost0x1816f1200->startFade(immediate=true,duration0)->updateFade1회,phase0이면alpha1,phase2이면alpha0",
+    "fade": "startFade0x1816f1700는end=bright?1:0,start=1-end,full endpoints의linearFPInterpolator를매번시작.8개노출timers를전부0(0x1816f187b..18cf). Run0x18183bf8c..bfd8의별도start/end곱sar16합산복제. default60Hzraw1092에서4369fade는5frames. tick4 alpha는bright65520,dark16.",
+    "measuredCycle": "SearchLight1 initialphase0:tick1phase1;tick181timer48;tick182phase2/startDarkFade;tick183phase3/startDarkTimer;tick188darkfade완료및첫darkcountdown;tick307timer32;tick308phase0;tick309phase1."
+  },
+  "geometry": {
+    "pointMethod": "0x1816f20b0",
+    "radius": "r=range*criteria>>16, squared distance=(dx²>>16)+(dy²>>16). STRICT dist<r²>>16 (0x1816f2174). brightness/IsLightsOn는여기서검사하지않음.",
+    "angle": "threshold=Sin((90degrees-(angle*criteria>>16)/2)*1143>>16). Camera.WorldToStagePoint0x1817df940으로world direction변환후normalize,point-lightseparationnormalize,STRICT dot>threshold(0x1816f22d7).",
+    "camera": "Camera.Initialize0x1817df646..683 WorldToStage diagonal(chipSize,-chipSize). 축변환후normalize여서정수절삭의순서를보존한다.",
+    "normalization": "read-onlysource-distanceconstraint-math.js의전체nativeFPSqrt와low64algorithm사용. 기존파일동결및미수정.",
+    "rectMethod": "0x1816f1f00 tests fourcorners(x,y),(x,y+h),(x+w,y),(x+w,y+h),ANY true. 큰rectangle이cone를둘러싸도모든corner밖이면false. center/edgeintersection판정아님.",
+    "playerMethod": "0x1816f1da0:state9이면collisionindex1,그외0;missingcollider/Collision.flagsbit0이면false. Collision.GetRect+globalPos로절대rect제공.",
+    "unverifiedAngles": "출하rotation0/-45,cone30/45만nativeSinCossparse확정. 외부criteria/rotation변경으로새index가필요하면특정오류를반환하며Math.sin대체안함."
+  },
+  "exposure": {
+    "method": "0x1816f19c0",
+    "outside": "playerTimer[index]=0(0x1816f1c12..47)",
+    "inside": "playerTimer+=DeltaTime(0x1816f1c68..93),>=fatalRaw13107(0x1816f1cf3)이면서statebyte1(0x1816f1d0c)때event26GetEventParam/NotifyEventbyentity(0x1816f1d2d..5a)",
+    "ticks": "raw1092에서12ticks=13104<13107,13ticks=14196>=13107. phase0start는제외하며완료된brightfade때부터검사.",
+    "repetition": "threshold뒤state1이계속유지되면매tickevent26이반복. 멋대로one-shotlatch를추가하지않음.",
+    "eventContract": "{eventType:26,targetId:playerEntity,senderId:lightEntity}; 직접deadPlayerIds에넣지않음. Player.OnRecvEvent/상태전이를호스트가처리해야함. state9등다른state는timer증가하지만state1event없음."
+  },
+  "blackoutRelation": {
+    "registration": "SearchLight.OnStart0x1816f1390 finds Blackout singleton and AddSearchLight(entity)0x1816f1465. AddSearchLight0x1817cfba0는m_SearchLightListappend.",
+    "view": "BlackoutView.updateSearchLight0x18058bac0 traverses registered list, IsLightsOn0x18058be39, rangegetter0x18058c060/c1d2, brightnessgetter0x18058c225. Blackoutoverlay안의조명렌더링목록.",
+    "simulation": "SearchLight.OnUpdate/Blackout.updatePhase가상대timer/brightness를덮어쓰는호출없음. 3-1 Blackout은bright/dark0,phase4staticalpha0.45(raw29491);SearchLight는독립주기진행.",
+    "pause": "Blackout.OnRecvEvent0x1817cfb39는event53을explicitignore. SearchLight는OnRecvEventoverride없고updatePhase에localpausetest없음. commonActor의pause후componentUpdate여부는호스트계약이다. unresolved53입력은beforeStep거부하고native결과pausedLightIds제공시해당light전체phase/exposurefreeze. 이차이를무조건둘다ignore로구현하지않음.",
+    "existingModuleChanged": false
+  },
+  "realStage": {
+    "id": "st_w_03_01",
+    "populations": "2..8 allselectedvariants,12lights각인원(84actorcases)",
+    "brightSeconds": [
+      3,
+      2,
+      3,
+      2,
+      3,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "darkSeconds": [
+      2,
+      3,
+      2,
+      3,
+      2,
+      3,
+      6.5,
+      6.5,
+      6.5,
+      6.5,
+      6.5,
+      6.5
+    ],
+    "alternatingShortRangesBy2To8": [
+      320,
+      320,
+      280,
+      280,
+      280,
+      240,
+      240
+    ],
+    "finalPairRangesBy2To8": [
+      330,
+      330,
+      306,
+      306,
+      282,
+      272,
+      272
+    ]
+  },
+  "integration": {
+    "compile": "compile(actors,count,{chipSize:selectedVariant.mapInitParam.chipSize}); 출하 prototypeKillPlayerOff 옵션 불필요, 기본값0. 이 옵션을 명시하면 int32 검증 후 alternate prototype override로 사용.",
+    "players": "beforeStepctx.searchLightPlayers:[{index,id,state,hasCollision,collisionDisabled,collisionRectRaw:{xRaw,yRaw,widthRaw,heightRaw}}]. nativeindex0..7,원작statebyte,globalcollisionrect. state9선택collider1은호스트가책임. 사실없는readybrightupdate를안전한빈목록으로가정하지않음.",
+    "events": "incomingcommonActorevents는actorEvents로전달,hostcommonActorhandler로라우팅. event53면resolvedpausedLightIds반드시제공. outgoing26은Playerhandler로라우팅. event15는SearchLight자체phase중단으로추정하지않음.",
+    "render": "displayslights필드를Blackout조명listoverlay에렌더링. rangeRaw는stagepixel범위,worldDirectionRaw는원작worldvector. palette/shader/Unityassets는복사안함.",
+    "browser": "source-distanceconstraint-math.js먼저로드;source-searchlight-devices.jsUMD SourceSearchLightDevices. Noderequire자동연결.",
+    "ownership": "SearchLightmodule/test/report/result및선점만작성. DistanceConstraint/Blackout/commonruntime/play/배포파일미수정.",
+    "stageCompilesAlone": "SearchLight 코어는 3-1 2..8인 모두 실제 map chipSize만 제공하면 12개 compile 가능. 전체 playable에는 host common Actor pause, Player event26, collision facts, Blackout lightlist 렌더 연결 필요."
+  },
+  "verification": {
+    "unitCommand": "node --test source-migration/source-searchlight-devices.test.cjs",
+    "unitTests": {
+      "tests": 25,
+      "pass": 25,
+      "fail": 0
+    },
+    "fullCommand": "node --test source-migration/*.test.cjs",
+    "fullSuite": {
+      "tests": 745,
+      "pass": 745,
+      "fail": 0
+    },
+    "checked": [
+      "84realactorcases",
+      "directcountnumericselection",
+      "installedsparseSinCosbytes",
+      "signednativequaterniondirection",
+      "strictcone/radius",
+      "ANYcornerrectangle",
+      "exact13tickevent26",
+      "outside/disabledreset",
+      "phase/fade8timerclear",
+      "5tickfade",
+      "full3s/2scycleticks",
+      "state9noevent",
+      "brightnessspecialcases",
+      "killPlayerOffexplicitdisable",
+      "staticBlackoutindependence",
+      "commonActor53guard/freeze",
+      "JSONreplay",
+      "shipped_default_compile_all_populations",
+      "subepsilon_signed_raw_-5_-4_-3_-1_0_1_3_4_5",
+      "nonfloat_period_zero",
+      "static_prefab_and_no_instance_ctor_fixtures",
+      "unknown_angles_and_invalid_override_refusal"
+    ],
+    "independentArithmetic": "Pythoninteger t=(4368<<16)//4369=65520、65536-t=16. 최초테스트기대값15/65521을native정수계산16/65520으로수정. 모듈페이드알고리즘변경없음.",
+    "prototypeAttempt": "기존 UnityPy 의존성은 cp312, 기본 Python3.11과 ABI 불일치였다. bundled Python3.12.14 -I -B로 read-only 기존 의존성을 사용해 자산 추출 복구. game 실행/pip/shared dependency 수정 없음. extractor 두 개로 fixture 재현 가능."
+  },
+  "unresolved": [
+    "출하rotation0/-45,cone30/45외SinCoslookupindex는미지원. 외부SetDecisionCriteria는알려진index일때만채택하고그외rollback/error.",
+    "SearchLight공통Actorevent53pause판정과event26Playerhandler,state9alternatecollider선택은리드통합필요. 정확한hostfacts없으면명시거부.",
+    "BlackoutViewlightlist/holeshader등록과실제3-1playable검수는미완료. 기존Blackout파일을수정하지않았다.",
+    "원작 실행 및 실제 사람 플레이 대조는 하지 않았다. 출하 기본값과 조명 코어 검증 완료는 전체 playable/배포 완료를 의미하지 않는다."
+  ],
+  "reaCalibration": {
+    "readExistingOnly": true,
+    "firstRunMarkdownBytes": 15880,
+    "snapshotBytes": 17787,
+    "provider": "Ghidra12.1.4",
+    "cli": "REA6.4.0, C:/Users/user/AppData/Roaming/npm/rea.ps1; rea --help 및 rea decompile --help 실행 확인",
+    "procedure": "0x1818713e0 LandmineSwitchObserver.ParseParameter",
+    "assembly": "0x181871571 magic0xa3d70a3d70a3d70b (signed -0x5c28f5c28f5c28f5); imul0x181871585, add0x18187159b, sar22 0x18187159e, shr63/add0x1818715a5/5a9. 두FP퍼센트저장+0x30/+0x28과의사코드일치",
+    "decompilerExpression": "x=n<<32;v=high64(signedMagic*x)+x;result=(v>>22)-(v>>63)",
+    "checkedValues": {
+      "-100": -65536,
+      "-5": -3276,
+      "0": 0,
+      "5": 3276,
+      "66": 43253,
+      "100": 65536,
+      "2147483647": 1407374882897
+    },
+    "accuracyScope": "해당퍼센트분기의정수결과와저장주소를확인. 의사코드전체의무조건정확도를주장하지않음. SearchLight최종수치/분기는disasm주소근거유지.",
+    "snapshotMeaning": "decompile help: --snapshot loads/updates a local analysis snapshot. JSON contains0entries/0workflow_entries andoneevidenceprocedure. Limitations explicitly state importedProgram/temporaryProject areephemeral anddeletedonclose. 이를영속Ghidraproject/전체analysiscache로단정하지않음.",
+    "newDecompileRun": false,
+    "reason": "당시 checkpoint에서는 resource prototype 값이 차단이라고 기록했으나, 이후 actual prefab의 component 부재 및 native zero-init 생성 경로로 해소했다. REA 기존 결과 읽기/CLI help만 실행했으며 새 전체 analysis나 원작 실행은 하지 않았다."
+  },
+  "correctionHistory": [
+    {
+      "date": "2026-10-13",
+      "previous": "Materialize0x1817b9c87가asset+0x78을복사한다는 사실을 실제 출하 생성 경로에 적용하여 m_KillPlayerOff 미확정으로 default compile을 거부했으며 sub-epsilon도 거부했다. UnityPy 실패를 자산 조사 장애로 기록했다.",
+      "correction": "직렬화 SearchLight component가 없는 실제 prefab을 확인했다. boxed zero-init default struct를 추가하는 native generic helper 및 instance .ctor 부재를 확인하여 killPlayerOff/bright/dark default0 확정. abs(raw)<4 유지값도0. Materialize 복사 명령과 programmaticCreator kill1 근거는 유지하지만 shipped resource 경로와 구분. Python ABI를 맞춰 추출 복구."
+    }
+  ]
+}
