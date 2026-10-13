@@ -1,0 +1,101 @@
+{
+ "schemaVersion": 1,
+ "devices": ["CountUpTimer", "CoopCountUpTimer"],
+ "module": "source-countup-devices.js",
+ "status": "implemented_tested_and_connected",
+ "settledOn": "2026-10-13",
+ "nativeCodeExecuted": false,
+ "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base 0x180000000",
+ "note": "The address-by-address derivation lives in the module header comment. This file records the conclusions, the verification and what is still open.",
+
+ "summary": "st_w_10_01's entire round is a group reaction test. The single CoopCountUpTimer waits half a second, shows Ready, waits a random 1.25..5.36s, shows Go, and starts every player's own CountUpTimer at once. Each player stops their own timer by standing on their own Switch. The SUM of the stop times, in centiseconds, has to land strictly inside (m_JudgeTimeMin, m_JudgeTimeMax). Win and the round's key - authored inactive - is switched on. Lose and after 1.5s of red everything resets and the party tries again; nobody ever dies.",
+
+ "twoSeparateComponents": "Unlike SwitchTimer/DeadTimer, which share one TimerComponent, these are two components: CountUpTimerComponent (actor type 166) and CoopCountUpTimerComponent (actor type 165), per creator-delegates-resolved.local.json ordinals 165/166.",
+
+ "slots": {
+  "CountUpTimer": {
+   "0": "m_Index, floored (sar 0x10 at 0x18180ca60). It is the slot in the parent's _m_TimerInfos_, not a cosmetic label.",
+   "1": "m_ParentName. CountUpTimerComponent.OnStart 0x18180cc69 name-targets event 2 at it carrying m_Index, and CoopCountUpTimerComponent.OnRecvEvent 0x1818089b7 answers by storing the sender at that index.",
+   "2": "m_UIScale multiplier, applied only above QFP._0 (0x18180cb63). Cosmetic."
+  },
+  "CoopCountUpTimer": {
+   "0": "feeds m_JudgeTimeMin. 0.05 in every shipped instance.",
+   "1": "QPlayerCountParam feeding m_JudgeTimeMax, resolved by the walk-down loop at 0x181807e26.",
+   "2,3": "m_UIPos offsets, each added to a static pair (0x181807f30). Cosmetic.",
+   "4": "m_UIScale, applied only at or above the FP epsilon 4/65536 (0x181807f3c). Cosmetic.",
+   "5": "m_ReadySecMin, stored only above QFP._0 (0x181807f98).",
+   "6": "m_ReadySecMax, stored only above QFP._0 (0x181807fc4)."
+  }
+ },
+
+ "centisecondConversion": {
+  "formula": "(int)((QFP._0_005 + slot) * 100), one FP multiply by 0x640000 followed by sar 0x20",
+  "where": "m_JudgeTimeMin 0x181807eb3/0x181807ebe, m_JudgeTimeMax 0x181807ed7/0x181807ee2",
+  "why": "The three int fields m_JudgeTimeMax/m_JudgeTimeMin/m_SumTime are centiseconds, not FP. QFP._0_005 is a half-centisecond nudge that turns the FP->int floor into a round: without it the 0.8 table entry, whose FP raw is 52428 = 0.79998779, would floor to 79cs instead of 80.",
+  "roundBiasRaw": 327,
+  "roundBiasDerivation": "FP.FromString_UNSAFE 0x18163fcb0 parses to double, narrows to float32 and hands FP.FromFloat_UNSAFE 0x18163fc40, which multiplies by 65536.0f and truncates with cvttss2si - the same chain key-reach-report.json used for PLAYER_COUNT_SCALE. 0.005f is 0.004999999888..., so 0.005f * 65536 = 327.6799 and the raw is 327."
+ },
+
+ "floatToFpAmbiguity": "The stage asset stores t==1 slots as floats and the loader converts them to FP, but which way a non-representable decimal rounds is not in the binary. compile() therefore computes the centisecond result for BOTH candidate raws and throws if they disagree. For st_w_10_01 they never do: 0.05 gives 5cs whether its raw is 3276 or 3277.",
+
+ "judgeWindowAsShipped": {
+  "min": "5 centiseconds for every player count, from datas[0] = 0.05",
+  "max": {"2": 80, "3": 120, "4": 160, "5": 200, "6": 240, "7": 280, "8": 320},
+  "table": [0.79998779296875, 1.1999969482421875, 1.5999908447265625, 2, 2.399993896484375, 2.79998779296875, 3.1999969482421875],
+  "reading": "0.4 seconds of slack per player, and the window is open at both ends (isCleared 0x181808940 uses two strict <). So a party that is too FAST also loses: eight players who all stop within the first three ticks sum to 5cs or less and fail the minimum."
+ },
+
+ "readyWindowAsShipped": {
+  "2-4": [2.75, 4.136],
+  "5-8": [1.25, 5.36],
+  "note": "st_w_10_01 ships two stage variants - createIndex 0 with needPlayerCount 0 and createIndex 1 with needPlayerCount 5 - and they author different ready windows. A scan that only reads stageInitParamList[0] sees the 5+ one for every count and gets this wrong."
+ },
+
+ "phaseMachine": "0 paint neutral + wait QFP._0_50; 1 Ready notice + SeId 0x17 + draw the random delay; 2 Go notice + NotifyEvent by actor type 166 which starts every timer + hold QFP._1; 3 release the Go notice once everyone has stopped or the hold expires; 4 judge; 5 paint red + hold QFP._1_50; 6 broadcast event 47 and go back to phase 0; 7 paint green + NotifyEvent event 1 by actor type 17 (Key); 8 terminal, because the jump table at 0x1818086c0 bails above 7. A false start short-circuits phases 1..3 straight to 5 (0x18180855b).",
+
+ "whyNobodyDies": "CountUpTimerComponent.OnUpdate 0x18180cdc6 only sets IsFailed when m_Flags bit4 is set, and bit4 is set in OnStart 0x18180cd1b only when the parent's m_ActorType is 0xcf = 207 = CountUpJudge, the versus-mode judge. With a coop parent the limit also stays LIMIT_TIME = QFP._10 = 10 instead of BATTLE_LIMIT_TIME = QFP._3 = 3. So a coop timer that is never pressed just stops at 10s and its 1000 centiseconds blow the window - a lost round, not a death.",
+
+ "theKey": {
+  "mechanism": "KeyComponent.OnRecvEvent 0x18186cf90 treats event 1 exactly like event 61 - 0x18186cff4 and 0x18186cffd both jump to 0x18186d0e2 - and calls KeyComponent.setActive 0x18186d170 with true. CoopCountUpTimer phase 7 sends that event 1 keyed on actor type 17, so it reaches every Key whatever its name.",
+  "stageData": "st_w_10_01's Key authors datas[2] = 1 = m_Inactive, so winning the minigame is what makes the key touchable.",
+  "portChange": "source-gate-devices.js already modelled m_Inactive and gated the pickup through keyActive, but its signal() accepted only events 60 and 61 and only by name. It now also accepts event 1 and a broadcastActorType of 17. Gates still answer only to a named 60/61, so no gate reacts to the new path."
+ },
+
+ "random": {
+  "native": "RNGSession.Next(FP,FP) 0x181662020 - the multiplier 0x5851f42d4c957f2d appears literally at 0x181662031. It is the same PCG32 XSH-RR the thorn ceiling already uses; this is the FP range variant rather than the integer one at 0x181662090. The top 16 bits of the 32 bit output are used as an FP fraction in [0,1), scaled by (max-min) and added to min.",
+  "limitation": "The live seed is Quantum session data and is NOT in the binary, so a run matches the original in distribution only. compile() takes rngState/rngIncrement and defaults to Photon's documented stream; the state travels in the device snapshot so online peers draw the same delay."
+ },
+
+ "verification": {
+  "unitTests": "source-countup-devices.test.cjs, 22 passing.",
+  "measured": [
+   "All seven player counts compile from the real stage data: one coop timer, one CountUpTimer per present player, slots 0..count-1 filled, no warnings.",
+   "Judge windows measured per count: min 5cs throughout, max 80/120/160/200/240/280/320cs.",
+   "Ready lands on tick 31 at 60Hz (0.5s plus the tick the > 0 test costs) with SeId 0x17; Go follows after a drawn delay inside the authored window; only at Go do the timers start.",
+   "A false start puts the machine in phase 5 on the same tick, holds red, broadcasts event 47 on tick 91 (1.5s) and clears every timer, then runs a second Ready/Go pair.",
+   "A win: 8 players stopping after 9 ticks sum to 120cs, phase 4 judges on the next tick, phase 7 the tick after that emits {broadcastActorType:17, eventType:1}, and phase 8 is terminal for the next 120 ticks.",
+   "A loss by slowness: 2 players holding 60 ticks sum past the 80cs window with anyFailed false, and the machine goes to phase 5.",
+   "An unpressed timer stops at exactly 10.0s with IsStopped set and IsFailed clear.",
+   "A JSON round trip of the state keeps drawing the same numbers, which the Firebase snapshot path needs.",
+   "End to end through the stage runtime at 8 players: keyActive is false at spawn, and two ticks after the judgement it is true."
+  ],
+  "regression": "12 rounds x 2..8 players = 84/84 compile and build. 191 tests pass across 18 files (the lift module another agent is mid-edit on is excluded)."
+ },
+
+ "unlocks": {
+  "stagesUsingThesePair": ["st_w_10_01"],
+  "fullyOpenedByThisAlone": 1,
+  "connectedAs": "round 12, '2편 10–1'"
+ },
+
+ "unresolved": [
+  "The m_UIScale static that both components multiply their authored scale by lives in a class whose statics holder is 0x1831D77D8, which this pass did not identify. It is cosmetic - compile() keeps the authored slot as uiScaleParam and leaves the base to the renderer.",
+  "The m_UIPos static pair added to CoopCountUpTimer datas[2]/[3] (0x181807f0c/0x181807f18) is likewise unread. Cosmetic.",
+  "CountUpJudge (actor type 207) and CountUpJudgeComponent 0x18180a2d0 - the versus-mode sibling that sets m_Flags bit4, shortens the limit to 3s and gives hatena its purpose - are not implemented. A CountUpTimer naming a CountUpJudge parent is refused rather than guessed, and no World stage does it.",
+  "EndlessCountUpScoreComponent 0x181820900 shares the addTimer/sumTime/isCleared shape and is also unimplemented. No World stage uses it.",
+  "StageComponent +4 bit1 suppresses updatePhase entirely (0x1818080a6). The bit's meaning is not recovered, so the port runs the machine every tick.",
+  "Frame.DeltaTime's FP raw is still unread (get_DeltaTime 0x18173a090 forwards a session field), so every tick count here may be one off against the original. Same gap the other device reports record.",
+  "The exact dispatch order between a Switch's event 61 and CountUpTimerComponent.OnUpdate inside one native tick was not recovered. The port applies events before the timers advance, which is what makes a press on the Go tick itself score zero and fail the minimum; the opposite order would score one tick. No shipped stage can tell the two apart at human reaction speed.",
+  "No human has played this round yet. It compiles, it judges, and the key opens - that is not the same as being fun or fair at 8 players."
+ ]
+}

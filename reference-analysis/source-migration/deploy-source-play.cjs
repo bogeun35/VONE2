@@ -11,7 +11,7 @@ const version=process.argv[2]||new Date().toISOString().slice(0,10).replace(/-/g
 const app=['index.html','catalogue.json','status.json','music-info.json','browser-check.json',
  'actor-runtime.js','spring-switch-runtime.js','source-bridge-devices.js','source-gate-devices.js',
  'source-motion-devices.js','source-devices-runtime.js','source-blink-devices.js',
- 'source-blinkthunder-devices.js','source-warpinit-devices.js','source-switchtimer-devices.js','source-thorn-ceiling-devices.js','source-enemy-devices.js',
+ 'source-blinkthunder-devices.js','source-warpinit-devices.js','source-switchtimer-devices.js','source-thorn-ceiling-devices.js','source-enemy-devices.js','source-countup-devices.js',
  'source-stage-runtime.js','camera.js','park-art.js',
  'network.js','online.js','play.js','review.html',
  'population-review-report.json','whole-route-completion-report.json','whole-route-input-replay.json',
