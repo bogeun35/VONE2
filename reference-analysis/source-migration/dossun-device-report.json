@@ -1,35 +1,109 @@
 {
- "schemaVersion": 1,
- "devices": ["Dossun", "PlayerBlockGun"],
- "module": "source-dossun-devices.js",
- "status": "partial_do_not_register",
- "nativeCodeExecuted": false,
- "summary": "확인된 파라미터 해석과 Dossun 컴포넌트 단독 phase 갱신을 구현했다. 실제 장치가 포함된 compile은 명시적으로 거부한다. 플레이 가능한 이식이나 스테이지 개방으로 계산하면 안 된다.",
- "evidence": {
-  "creators": "creator-delegates-resolved.local.json: ordinal157 Dossun -> DossunComponent.Creator, ordinal161 PlayerBlockGun -> PlayerBlockGunComponent.Creator.",
-  "dossunParameters": "ParseParameter 0x18181cd2b..ce62: datas[1] m_Accel, [2] m_WaitSec, [3] m_ReturnSpeed; 0이 아니면 저장. datas[4] FP를 sar16한 정수가 0이 아니면 flags bit0 설정. datas[0]은 이 메서드에서 읽지 않는다.",
-  "defaults": "Initialize 0x18181cc70/90/a9: QFP static offsets 0x140/0xf0/0x120 = _5/_1/_2_50. Gun Initialize 0x1818932e0: static BULLET_SPEED; cctor 0x181894136가 QFP[0x150] = _6을 저장한다.",
-  "dossunPhase": "updatePhase 0x18181d3c0: 0은 대기, 1은 매 업데이트 vy += accel (0x18181d535), 2는 속도 0과 wait 타이머 초기화 후 3, 3은 DeltaTime 빼기 후 <=0이면 4, 4는 y -= returnSpeed 후 initialY까지 clamp하고 0. 낙하 가속과 복귀 변위에 dt를 곱하지 않는다.",
-  "sensor": "createSensor 0x18181d070는 별도 충돌을 생성하고 Map.Move 0x18187e0a0에 (0, raw0x27100000=10000) 이동을 요청한다. 반환값과 actor scale로 센서 필드를 만든다. 단순 고정 거리나 화면 AABB를 추측하지 않았다.",
-  "rectangles": "cctor 0x18181d9c8..da45: COLLISION_RECT 네 FP 필드 [170,458,-229,-182], THORN_COLLISION_RECT [194,442,-221,-194]. 화면상의 x/y/w/h로 해석하는 코드는 작성하지 않았다.",
-  "trigger": "OnCollided 0x18181d605/626는 actor type27 또는163을 허용; phase0 또는 phase4이고 flag0 설정일 때 위치차/센서 필드와 QFP._0_50을 비교해 phase1로 전환한다 (0x18181d62c..6a3). 정확한 센서 필드 의미와 collision kind 매핑은 미완성.",
-  "death": "OnCollided 0x18181d6bf..703는 collision discriminator1 및 상대 +1 byte1 조건으로 entity 대상 event19를 보낸다. OnContacted 0x18181d7ab..846는 phase1, 상대 존재, 접촉 구조 +8 FP>0, 상대 +1 byte1일 때 event19; phase1이면 끝에서 phase2로 전환한다. event19는 기존 자료에서 Dead. 접촉 방향 필드가 확정되지 않아 '모든 접촉 사망' 또는 '지형 압착일 때만 사망'으로 단정하지 않는다.",
-  "equipment": "Gun ParseParameter 0x181893399..437: datas[0] actor index로 플레이어 조회, player ref/index/color 복사, PlayerComponent.Equip 및 SetHoldGun(true). datas[1] nonzero가 bullet speed를 덮어쓴다.",
-  "shoot": "OnUpdate 0x181893630/63a/67e: actor flags bit3이면 무시, m_Bullet이 있으면 무시, input9 IsPressInput일 때 발사. createBullet 0x181893962는 actor162를 생성. 방향 flag0x400/0x1000에 따라 성분을 반전한다.",
-  "hit": "Bullet OnCollided 0x181892acd는 소멸 요청 후 actor27인지 확인, target player index가 bullet player index와 다르면 0x181892bc0에서 PlayerBlockComponent.Creator 0x181891200를 호출한다. 지형에 새 블록을 놓는 총이라고 구현하면 잘못이다. OnContacted 0x181892a05도 소멸 요청.",
-  "stage": "population-rules.selectVariant 및 actorsForCount로 두 스테이지의 2..8인을 모두 읽었다. 둘 다 gun8개 actor indices0..7 speed6. st_w_14_03 Dossun1 (1032,192), accel1 wait1 return2 flag0; 모든 인원에서 동일. 존재하지 않는 player index의 gun은 native lookup 결과 미장착될 수 있으며 데이터를 count개로 잘라내지 않았다."
- },
- "integration": {
-  "registration": "등록하지 말 것. supportedTypes는 요청된 이름 목록이며 플레이 가능 지원을 의미하지 않는다. compile은 두 타입 모두 거부한다.",
-  "needed": ["PlayerBlockComponent 이식 의존성 (현재 source-*.js 검색 결과 없음)", "input9 edge 및 Equip/SetHoldGun 플레이어 훅", "동적 bullet162 생성/충돌/화면밖 소멸/owner notify lifecycle", "Dossun Map.Move 기반 센서, native collision normal/kind, actor 이동 단계 연결", "event19 대상 엔티티 전달과 기존 immortal 규칙 유지"],
-  "helper": "updatePhase는 native actor y/initialY/vx/vy의 FP raw를 외부에서 제공하는 컴포넌트 단독 계산 함수다. 런타임 beforeStep에 연결하지 않았다."
- },
- "verification": {
-  "unitTests": "11 passing, node --test source-migration/source-dossun-devices.test.cjs",
-  "fullSuite": "245 passing, 0 failures, node --test source-migration/*.test.cjs",
-  "tested": ["실제 14-01/14-03 2..8인 데이터의 정확한 장비 슬롯과 속도", "실제 Dossun 위치와 파라미터", "phase1 두 번 후 vy raw131072", "phase2 속도0/타이머 초기화", "raw65536 대기는 raw1092 기준 60틱 후16, 61틱 후복귀", "복귀 위치 clamp 및 phase0 전환", "미구현 compile의 구체적 거부", "빈 상태 JSON 왕복", "QFP 기본값 5/1/2.5 및 gun6"],
-  "notTested": "원작 실행, 실제 충돌, 발사/블록화, 런타임 통합, 스테이지 클리어"
- },
- "corrections": ["작업 중 초안에서 QFP offset의 값이 accel2.5/return1.75/gun4로 잘못 적혔다. quantum-field-offsets.json의 QFP 이름을 확인해 최종 5/2.5/6으로 정정하고 기본값 테스트를 추가했다."],
- "unresolved": ["Dossun 센서의 Map.Move 결과와 충돌 구조체 필드 의미/단계 순서가 연결되지 않아 trigger와 사망 판정 미구현", "PlayerBlockComponent 의존성이 없고 bullet lifecycle 및 장비 input 훅 미구현", "기본 QFP 상수의 값은 메타데이터 이름과 Initialize 참조 offset으로 확인했으며 이번 작업에서 QFP cctor raw 생성 자체는 재검증하지 않음", "두 cctor에 literal resolver 실행: Dossun은 문자열 FP 없음, gun inline offset8 raw1376256=21; 문자열 미해독을 미확정 근거로 삼지 않음", "OnRecvEvent / syncPlayerPos / bullet offscreen 세부 이식 미완성", "st_w_14_03 2..8인 모두 단독 개방 불가; st_w_14_01은 추가 BreakableRect/Text 의존성도 존재"]
+  "schemaVersion": 2,
+  "devices": [
+    "Dossun",
+    "PlayerBlockGun"
+  ],
+  "module": "source-dossun-devices.js",
+  "status": "component_hooks_ready_unregistered",
+  "nativeCodeExecuted": false,
+  "summary": "Dossun과 PlayerBlockGun을 2..8인 실제 데이터로 컴파일한다. 총알과 PlayerBlock은 직렬화 가능한 동적 상태로 관리한다. 네이티브 공통 이동·충돌은 명시적 런타임 훅으로 연결하며 등록과 실제 플레이 검증은 하지 않았다.",
+  "evidence": {
+    "creators": "creator-delegates-resolved.local.json: ordinal157 Dossun -> DossunComponent.Creator, ordinal161 PlayerBlockGun -> PlayerBlockGunComponent.Creator.",
+    "dossunParameters": "ParseParameter 0x18181cd2b..ce62: datas[1] m_Accel, [2] m_WaitSec, [3] m_ReturnSpeed; 0이 아니면 저장. datas[4] FP를 sar16한 정수가 0이 아니면 flags bit0 설정. datas[0]은 이 메서드에서 읽지 않는다.",
+    "defaults": "Initialize 0x18181cc70/90/a9: QFP static offsets 0x140/0xf0/0x120 = _5/_1/_2_50. Gun Initialize 0x1818932e0: static BULLET_SPEED; cctor 0x181894136가 QFP[0x150] = _6을 저장한다.",
+    "dossunPhase": "updatePhase 0x18181d3c0: 0은 대기, 1은 매 업데이트 vy += accel (0x18181d535), 2는 속도 0과 wait 타이머 초기화 후 3, 3은 DeltaTime 빼기 후 <=0이면 4, 4는 y -= returnSpeed 후 initialY까지 clamp하고 0. 낙하 가속과 복귀 변위에 dt를 곱하지 않는다.",
+    "sensor": "createSensor 0x18181d156: 본체 rect로 kind1 collision 생성. 0x18181d16e (0,10000) 이동; bit6 clear 0x18181d182; scale=actor.m_Scale * actor.m_BaseScale 0x18181d1a5..1cd. Map.Move 0x18181d225의 out-vector Y를 0 이상 clamp (254..27b). 0x18181d2f4..316: local height=(QFP._1 / effectiveScaleY) * max(outY,0) + QFP._8. width458,x-229,y0. 0x18181d32d는 layer14를 저장한다. 런타임 mapMoveDossunSensor(request) 반환 moveYRaw로 계산한다.",
+    "rectangles": "cctor 0x18181d9c8..da45: COLLISION_RECT 네 FP 필드 [170,458,-229,-182], THORN_COLLISION_RECT [194,442,-221,-194]. 화면상의 x/y/w/h로 해석하는 코드는 작성하지 않았다. Round2: Established facts의 HEIGHT,WIDTH,X,Y 순서 적용: 본체458×170,(-229,-182), 가시442×194,(-221,-194).",
+    "trigger": "OnCollided 0x18181d5b2가 읽는 collision+4는 m_Index이다. index2 센서는 상대 actor27 또는163만 허용한다. phase0 또는 (phase4 && flag0)에서 (actor.y-initialY)/sensor.localHeight <= QFP._0_50이면 phase1 (0x18181d658..6a3).",
+    "death": "thorn index1은 상대 layer1이면 phase와 무관하게 event19 (0x18181d6bf..703). OnContacted는 phase1에서만 처리한다. 상대 존재 && contact vector Y(+8)>0 && 상대 layer1이면 대상 event19 (0x18181d7ab..846); 조건과 무관하게 착지음6·shake QFP._0_20·phase2로 전환한다 (0x18181d85c..8c5). 불사 판정은 event19 수신 측 몫이다.",
+    "equipment": "Gun ParseParameter 0x181893399..437: datas[0] actor index로 플레이어 조회, player ref/index/color 복사, PlayerComponent.Equip 및 SetHoldGun(true). datas[1] nonzero가 bullet speed를 덮어쓴다.",
+    "shoot": "OnUpdate 0x181893630/63a/67e: actor flags bit3이면 무시, m_Bullet이 있으면 무시, input9 IsPressInput일 때 발사. createBullet 0x181893962는 actor162를 생성. 방향 flag0x400/0x1000에 따라 성분을 반전한다.",
+    "hit": "Bullet OnCollided 0x181892acd는 소멸 요청 후 actor27인지 확인, target player index가 bullet player index와 다르면 0x181892bc0에서 PlayerBlockComponent.Creator 0x181891200를 호출한다. 지형에 새 블록을 놓는 총이라고 구현하면 잘못이다. OnContacted 0x181892a05도 소멸 요청. Round2: collision보다 먼저 requestDisappear가 실행되며, disappearing bit0이면 재진입 무시 (0x181892aa9). 자기 플레이어도 총알은 소멸하지만 블록 생성만 제외한다 (0x181892b73).",
+    "stage": "population-rules.selectVariant 및 actorsForCount로 두 스테이지의 2..8인을 모두 읽었다. 둘 다 gun8개 actor indices0..7 speed6. st_w_14_03 Dossun1 (1032,192), accel1 wait1 return2 flag0; 모든 인원에서 동일. 존재하지 않는 player index의 gun은 native lookup 결과 미장착될 수 있으며 데이터를 count개로 잘라내지 않았다.",
+    "bulletConstants": "cctor 0x181892d98..dd1: H10,W10,X-5,Y-5. 0x181892e09 QFP._0_50 -> disappear raw32768; 0x181892e22 margin10. requestDisappear 0x181892c47..c8c: animation2, velocity0, flag0, timer32768. Update 0x18189270b는 collision disable 후 DeltaTime countdown; <=0이면 actor destroy. OnExit 0x181892977에서 owner gun bullet ref를 0으로 만든다. 60Hz 31틱. checkOffScreen 0x181892884..8d9는 camera X 범위 [left-10,right+10)만 검사한다. 비행 중 임의 lifetime은 없다.",
+    "gunGeometry": "cctor 0x18189407f: gun X21; 0x1818940c5 Y=-QFP._10. bullet X=QFP._10 at0x1818940ec, Y=-QFP._7 at0x181894116, speed=QFP._6 at0x18189413d. createBullet 0x1818937cf..83f: effective scale에 속도와 offset을 곱함; player flipH 0x400은 vx와 Xoffset 반전, flipV0x1000은 Yoffset 반전 (883..8b7). syncPlayerPos 0x181893e92..f61로 장비 위치를 player에 맞춘다.",
+    "stageScale": "Actor.Initialize 0x18169ccfa의 rdata0x182e87af0을 정적 읽기: m_Scale=(raw65536,65536). 0x18169cd02는 m_BaseScale을 StageComponent+0x10에서 복사한다. 이 stage 값은 1로 추정하지 않고 options.actorScaleRaw 또는 ctx.stageActorScaleRaw로 받는다."
+  },
+  "integration": {
+    "registration": "미등록. source-stage-runtime.js / 패키징 / 배포 파일은 수정하지 않았다.",
+    "loadOrder": "source-playerblock-devices.js 먼저 로드, 그 다음 source-dossun-devices.js. CommonJS는 require로 의존성을 로드한다.",
+    "compile": "compile(actors,count,{actorScaleRaw?})는 컴포넌트 상태만 작성. actorScaleRaw는 네이티브 StageComponent m_BaseScale raw여야 하며 없으면 최초 실행에서 명시적으로 거부한다.",
+    "players": "ctx.players는 id,actorIndex,playerIndex,colorIndex,playerState,sortingOrder,flipH,flipV,xRaw,yRaw,vxRaw,vyRaw,scaleXRaw,scaleYRaw,actorScaleRaw,rectRaw{height,width,x,y}를 포함하는 native actor snapshot. 화면좌표 변환을 여기서 추정하지 않는다.",
+    "update": "beforeStep(state,ctx): dt의 raw는 trunc(dt*65536). ctx.input9는 플레이어 id별 held boolean; ctx.pressed9는 네이티브 IsPressInput9 결과로 대체 가능. ctx.heldInputs는 눈방향용 logical6/7. equipment output을 Equip/SetHoldGun으로 적용한다. Gun inactive 필드는 actor flags bit3을 런타임이 반영한다.",
+    "sensor": "ctx.mapMoveDossunSensor({actor,rectRaw,collisionKind:1,collisionFlagsClear:64,dxRaw:0,dyRaw:655360000}) -> {moveYRaw}. 임시 collision을 구성하고 네이티브 Map.Move out-vector Y를 돌려줄 것. 반환 position이나 요청 dy를 대신 쓰지 않는다.",
+    "move": "Update 다음 moveActors(state, moveDeviceActor)를 호출한다. callback(actor,collisionDescriptors)는 actor FP 위치/속도를 갱신하고 native Map.Move 및 move-contact를 사용한다. Dossun, bullet, PlayerBlock의 공통 actor 이동에는 dt나 중력 상수를 이 모듈에서 임의로 적용하지 않는다.",
+    "contacts": "afterStep(state,{players,contacts})의 contacts는 native 순서대로 {actorId,callback:OnCollided|OnContacted,collisionIndex,otherId,otherActorType,otherLayer,contactYRaw,otherRectRaw}. index/layer는 Collision metadata 오프셋 의미 그대로. 반환 actorPushes를 해당 actor 위치에 더하고 playerPositions를 SetPosForce로 적용한다.",
+    "events": "event19는 대상 player에 전달하여 기존 불사 판정을 유지한다. event65/66는 playerblock 리포트의 native Player.OnRecvEvent 규칙으로 전달한다. sounds와 shake도 output에서 적용한다.",
+    "boxes": "solids()의 geometry는 FP raw이며 fpRaw:true. 본체/가시/센서/총알을 모두 내보내되 collisionKind,layer,index를 보존한다. 전부 평범한 발판으로 취급하면 안 된다. PlayerBlock만 kind3(layer2) solid이다.",
+    "camera": "ctx.cameraAreaRaw{x,width}는 Camera.CalcCameraViewStageArea 결과. 비행 중 총알이 있는데 누락되면 명시적으로 throw한다. fade 중에는 native처럼 검사하지 않는다."
+  },
+  "verification": {
+    "unitTests": "source-dossun-devices.test.cjs 20 passing; source-playerblock-devices.test.cjs 5 passing (총25).",
+    "fullSuite": "node --test source-migration/*.test.cjs: 최종 관측 478 passing, 0 failures. 병렬 작업의 테스트 추가로 앞선 관측467보다 늘었다.",
+    "tested": [
+      "실제 st_w_14_01,st_w_14_03 2..8인 module compile 및 정확한 파라미터",
+      "Dossun sensor map output, 음수clamp, 배율2 및 half-height 경계",
+      "collision index/layer 및 대상 event19",
+      "gun rising edge, 장비 lookup, one outstanding bullet, 정확한 spawn 위치/속도",
+      "타인 hit만 PlayerBlock 생성, contact-first 순서 및 중복 방지",
+      "총알 fade31틱, block release7틱, Dossun wait61틱",
+      "camera 왼쪽 포함/오른쪽 제외와 Y무시",
+      "callback을 통한 이동 및 JSON 왕복"
+    ],
+    "notTested": "실제 원작 실행, move-contact 실제 구현과의 결합, 런타임 등록, 인간 플레이/클리어."
+  },
+  "corrections": [
+    "작업 중 초안에서 QFP offset의 값이 accel2.5/return1.75/gun4로 잘못 적혔다. quantum-field-offsets.json의 QFP 이름을 확인해 최종 5/2.5/6으로 정정하고 기본값 테스트를 추가했다.",
+    "Round2: 원래 rectangles의 네 FP 필드는 의미 미확정으로 두었으나 AGENTS Established facts의 H,W,X,Y를 적용해 geometry를 확정했다. 숫자458/170/442/194 자체는 보존했다.",
+    "Round2: 기존 report의 collision discriminator1 및 상대 byte1은 quantum-field-offsets.json 확인 결과 각각 m_Index1과 m_Layer1이다. collisionKind1이나 임의 contact category로 해석하면 잘못된다.",
+    "Round2: 기존 decodeActor는 f*65536 double trunc였으나 확정된 loader chain에 맞춰 float32 곱셈 trunc로 수정. 1.1 raw72089 회귀 검증.",
+    "Round2: 기존 compile refusal은 의존성 없는 Round1 상태를 반영했다. PlayerBlock 구현과 runtime hook 계약 추가 후 component compile을 허용한다. 기존 refusal 결과는 round1 필드에 보존했다."
+  ],
+  "unresolved": [
+    "공통 ActorComponent 이동·Map.Move·move-contact의 실제 런타임 연결은 작업17 및 Claude 등록 단계에서 필요. 대체 AABB/중력/속도 dt규칙을 만들어 넣지 않았다.",
+    "Native actor 생성 플래그, baseScale, input/equipment, events65/66, 카메라 영역의 런타임 adapter가 필요하다. 특히 actorScaleRaw 누락은 실행에서 거부한다.",
+    "Gun OnRecvEvent30/41/54 및 일반 Actor event forwarding은 호스트 기존 장비/event dispatcher에서 적용해야 한다. 이 모듈은 해당 전체 dispatcher를 대체하지 않는다.",
+    "st_w_14_03은 2..8인 이 module compile 가능; 전체 source-stage-runtime compile/플레이는 미등록이므로 아직 불가. st_w_14_01은 별도 BreakableRect/Text 의존성이 있다."
+  ],
+  "round1": {
+    "status": "partial_do_not_register",
+    "summary": "확인된 파라미터 해석과 Dossun 컴포넌트 단독 phase 갱신을 구현했다. 실제 장치가 포함된 compile은 명시적으로 거부한다. 플레이 가능한 이식이나 스테이지 개방으로 계산하면 안 된다.",
+    "integration": {
+      "registration": "등록하지 말 것. supportedTypes는 요청된 이름 목록이며 플레이 가능 지원을 의미하지 않는다. compile은 두 타입 모두 거부한다.",
+      "needed": [
+        "PlayerBlockComponent 이식 의존성 (현재 source-*.js 검색 결과 없음)",
+        "input9 edge 및 Equip/SetHoldGun 플레이어 훅",
+        "동적 bullet162 생성/충돌/화면밖 소멸/owner notify lifecycle",
+        "Dossun Map.Move 기반 센서, native collision normal/kind, actor 이동 단계 연결",
+        "event19 대상 엔티티 전달과 기존 immortal 규칙 유지"
+      ],
+      "helper": "updatePhase는 native actor y/initialY/vx/vy의 FP raw를 외부에서 제공하는 컴포넌트 단독 계산 함수다. 런타임 beforeStep에 연결하지 않았다."
+    },
+    "verification": {
+      "unitTests": "11 passing, node --test source-migration/source-dossun-devices.test.cjs",
+      "fullSuite": "245 passing, 0 failures, node --test source-migration/*.test.cjs",
+      "tested": [
+        "실제 14-01/14-03 2..8인 데이터의 정확한 장비 슬롯과 속도",
+        "실제 Dossun 위치와 파라미터",
+        "phase1 두 번 후 vy raw131072",
+        "phase2 속도0/타이머 초기화",
+        "raw65536 대기는 raw1092 기준 60틱 후16, 61틱 후복귀",
+        "복귀 위치 clamp 및 phase0 전환",
+        "미구현 compile의 구체적 거부",
+        "빈 상태 JSON 왕복",
+        "QFP 기본값 5/1/2.5 및 gun6"
+      ],
+      "notTested": "원작 실행, 실제 충돌, 발사/블록화, 런타임 통합, 스테이지 클리어"
+    },
+    "unresolved": [
+      "Dossun 센서의 Map.Move 결과와 충돌 구조체 필드 의미/단계 순서가 연결되지 않아 trigger와 사망 판정 미구현",
+      "PlayerBlockComponent 의존성이 없고 bullet lifecycle 및 장비 input 훅 미구현",
+      "기본 QFP 상수의 값은 메타데이터 이름과 Initialize 참조 offset으로 확인했으며 이번 작업에서 QFP cctor raw 생성 자체는 재검증하지 않음",
+      "두 cctor에 literal resolver 실행: Dossun은 문자열 FP 없음, gun inline offset8 raw1376256=21; 문자열 미해독을 미확정 근거로 삼지 않음",
+      "OnRecvEvent / syncPlayerPos / bullet offscreen 세부 이식 미완성",
+      "st_w_14_03 2..8인 모두 단독 개방 불가; st_w_14_01은 추가 BreakableRect/Text 의존성도 존재"
+    ]
+  },
+  "settledOn": "2026-10-13"
 }

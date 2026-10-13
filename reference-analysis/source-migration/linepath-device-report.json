@@ -1,12 +1,15 @@
 {
   "schemaVersion": 1,
-  "devices": ["DamageRect", "LinePathLift"],
+  "devices": [
+    "DamageRect",
+    "LinePathLift"
+  ],
   "module": "source-linepath-devices.js",
-  "status": "partial_parameter_decoding_verified_runtime_refused",
+  "status": "implemented_03_02_with_explicit_native_host_calls_unregistered",
   "settledOn": "2026-10-13",
   "nativeCodeExecuted": false,
   "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base 0x180000000",
-  "summary": "두 장치의 실제 파라미터를 주소 근거로 복원했다. 분석용 decodeDamageRect/decodeLinePathLift와 float32→FP 변환 도우미를 제공한다. 런타임은 미완성이므로 해당 액터가 있으면 compile이 구체적인 오류를 던지며, 정지한 리프트나 죽이지 않는 위험 영역을 성공한 구현처럼 반환하지 않는다.",
+  "summary": "st_w_03_02의 LinePathLift와 DamageRect를 2~8인에서 컴파일한다. 원본 FPSqrt 표의 실제 항목을 사용해 선로 이동·탑승 대기·종점 정지를 구현했고, 피해 영역의 활성화와 이벤트43 수신 규칙을 복원했다. 공통 런타임은 수정하지 않았으며 네이티브 충돌 그래프 조회와 접촉 액터 운반은 명시적 호스트 호출 계약으로 제공한다.",
   "loader": {
     "status": "authored_fractional_obstacle_settled",
     "entryPath": [
@@ -25,45 +28,182 @@
       "0x18163fc6d mulss by float32 65536 (constant 0x182e87660); 0x18163fc7e cvttss2si rax truncates toward zero"
     ],
     "conclusion": "일반 double×65536 반올림이 아니다. 입력은 Single이며 문자열 왕복 후 Single 곱셈과 signed 정수 절삭을 거친다. 2.3335는 float32 2.3334999084472656, 곱 152928.25, raw 152928이다. 정확한 FP 배수가 아니라는 이유만으로 이 출하 값을 거부할 필요가 없다.",
-    "authoredValues": {"2.3335": 152928, "-0.2": -13107, "-1": -65536},
-    "scope": "fpFromFloatRaw는 유한하고 JS 안전 정수 범위의 FromFloat 변환을 재현한다. stageFpRaw는 이 작업의 정확한 Single 정수와 검증한 두 분수만 받는다. 일반 Single 포매터, 정밀도 경계, locale 및 예외 경로는 이식하지 않았으므로 다른 분수를 임의로 허용하지 않는다. 기존 actor-runtime.js/source-lift-devices.js는 수정하지 않았다."
+    "authoredValues": {
+      "2.3335": 152928,
+      "-0.2": -13107,
+      "-1": -65536
+    },
+    "scope": "Established facts의 shortest float32 string 왕복을 적용해 유한한 안전 정수 범위의 입력을 FromFloat_UNSAFE 방식으로 변환한다. FP 배수가 아닌 출하 값의 거부를 제거했다. 공통 변환기는 수정하지 않았다."
   },
   "damageRect": {
     "parse": "0x18180ded0: datas[0] width, datas[1] height. width<0이면 0x18180df69에서 create X에 width를 더하고 폭의 부호를 뒤집는다. 0x18180dfa3/dfa8에서 RectFP (Height,Width,X,Y)=(height,abs(width),0,-height).",
     "collision": "InitCollision 0x18180e050 creates collider, 0x18180e05a sets type 6, 0x18180e067/e070 sets flags bits 2/4. InitPost 0x18180e0d2 sets Actor bit18. OnStart 0x18180e16c sets collision inactive.",
-    "activation": "OnUpdate 0x18180e208 checks actor bit3, 0x18180e242 checks collision flag bit0. When appropriate it queries IsCollidedByPushBackTarget with argument 3 at 0x18180e291 and calls SetCollisionActive(true) at 0x18180e2e1 only if the query returns false. The meaning of flag bit0 must come from CollisionScene, not a guessed AABB.",
+    "activation": "OnStart 0x18180e16c는 자기 entity를 owner로 SetCollisionActive(false)를 호출한다. SetCollisionActive 0x1816a015f는 collider flag bit0을 SET한다: bit0은 inactive다. 매 OnUpdate, actor bit3이 꺼지고 collider가 존재하며 bit0이 SET이면 IsCollidedByPushBackTarget(mask3) 0x18180e291을 조회한다. false이면 0x18180e2e1에서 자기 owner로 true를 호출하고 bit0을 CLEAR한다(0x1816a014d). 스위치 신호가 아니라 밀어내기 대상과의 겹침이 해소되는 것이 활성화 조건이다. mask3은 map contact(0x1817f7457..74a0) 및 active actor collision(0x1817f74a9..76e3): 양측 push-back actor flag, IsEnableCheck, IsCollidedPre/IsCollided를 검사한다. 단순 플레이어 AABB로 대체하지 않는다.",
     "events": "checkDamage 0x18180e61e filters collision type1; 0x18180e63c/0x18180e65a emits event 43 by entity. A second pass 0x18180e923 onward checks player-side contacts, skips Player flag0x200 at 0x18180e952, and emits the same event at 0x18180eae3 only for contacts not already in its first-pass entity list.",
-    "runtime": "refused: collision activation, symmetric contacts, and event43 receiving behaviour have no implemented host adapter"
+    "runtime": "updateDamageActivation / damageContactEvents 순수 함수 구현. beforeStep에서 host 충돌 데이터로 활성화와 이벤트를 처리한다. afterStep은 재송신하지 않는다: native OnPost는 bare ret 0x180476130.",
+    "recipient": "첫 패스는 자기 contact list에서 collisionType1인 각 collider의 owner EntityRef에 NotifyEvent43을 보낸다(0x18180e61e, e63c, e653, e65a). 같은 entity의 복수 collider는 첫 패스에서 여러 번 보낸다. 두 번째 패스는 플레이어의 역방향 contact list를 검사하고 flag0x200은 생략(0x18180e952), 첫 패스에 이미 포함된 entity는 생략한다. 따라서 사건은 해당 접촉 entity만 수신하고 전체 플레이어 broadcast가 아니다.",
+    "playerEvent43": {
+      "entry": "PlayerComponent.OnRecvEvent 0x1816c1199에서 0x2b(43)를 0x1816c14a2로 분기한다. m_Life(struct+0x0d)가 >0이어야 처리된다(0x1816c14a2..14a6). 기본 상태의 OnRecvEvent_Default는43을 처리하지 않아 이 공통 분기에 도달한다.",
+      "ordinary": "event+0x6c !=1이면 Player flags0x100을 확인하고 set이면 무시한다(0x1816c14ae..14ca). IsImmortal 0x1816bcd20도 이 같은 비트를 반환한다. DamageRect는 force를 설정하지 않는다. QEventParamManager.Get 0x181780c31이 +0x6c를0으로 초기화하고 GetEventParam은 type/sender만 저장(0x18169dc43/4a), DamageRect는 이를 수정하지 않고 송신한다. 따라서 불사 플레이어는 DamageRect 이벤트43을 생존한다.",
+      "forced": "event+0x6c==1이면 불사 검사를 우회한다. 이때만 IsInvincible 0x1816bff20을 호출(0x1816c14df..1500); true면 0x1816c16a0의 사망으로 이동한다. 비강제 경로는 0x1816c14dd에서1506으로 가므로 일시 무적 검사를 하지 않는다. 일시 무적이면 무조건 생존한다고 번역하면 반대 결과가 된다.",
+      "sharedHP": "Frame.GetActorManager 0x1816c1535에서 +0x98 entity를 해석하고 ShareHitPoint bit0 확인(0x1816c157a). 존재하고 활성화된 경우 DealDamage 0x1816c15be 결과가 true이면 SetInvincible(true) 0x1816c15ea 후 피격 효과만 발생한다. component 없음/비활성/false 결과면 사망한다. DealDamage 내부 체력 계산은 이 작업 범위 밖이며 host가 결과를 전달한다.",
+      "death": "0x1816c16a0은 m_Life=0을 쓰고 ForcePlaySe11(16b5), RequestShake(16bf), m_RequestPlayerState(struct+4)=3(16dd 또는17a2)를 설정한다. 별명 QuakeDead가 맞고 보통03-02 플레이어는 사망하지만 immortal 또는 공유체력의 조건부 생존을 고려해야 한다.",
+      "pureHelper": "playerEvent43Outcome({life,flags,immortal,invincibleTimerRaw},{force,sharedHitPointActive,dealDamageSurvived}) -> ignored | dead | shared-damage. 이벤트 생성과 수신 판정을 분리하고 host가 실제 수신 state 변경을 담당한다."
+    }
   },
   "linePathLift": {
     "parseAddress": "0x1818785b0",
-    "slots": {"4": "base speed FP raw", "5": "mode signed sar16", "6": "external start signed sar16 >0", "7": "ride percent signed sar16", "8": "enable line when signed sar16 ==1", "9": "width growth per player above2 signed sar16", "10..29": "up to10 offset vector pairs, stop at first zero pair", "30": "base width signed sar16, fallback118", "31": "speed growth per player above2 FP raw"},
+    "slots": {
+      "4": "base speed FP raw",
+      "5": "mode signed sar16",
+      "6": "external start signed sar16 >0",
+      "7": "ride percent signed sar16",
+      "8": "enable line when signed sar16 ==1",
+      "9": "width growth per player above2 signed sar16",
+      "10..29": "up to10 offset vector pairs, stop at first zero pair",
+      "30": "base width signed sar16, fallback118",
+      "31": "speed growth per player above2 FP raw"
+    },
     "playerCount": "Frame.GetPlayerIndexCount 0x1818787e7; count-2 influences speed 0x18187899f..9b4 and width 0x181878a71..acf.",
     "geometry": "0x181878a55/0x181878a63: height18, offsetY -9. Width=baseWidth+(count-2)*growth. OffsetX=-trunc(baseWidth/2)-trunc(totalGrowth/2), 0x181878a51..ac4.",
     "path": "QPackingParamUtility.UnpackVector2ArrayParam 0x181786800, start10/max10 passed at 0x1818788a5..8cb. Zero pair is terminator at 0x1817868e6..8f2; no path sets disabled bit0 and clears moving bit2 at 0x181878963..97a.",
     "speed": "abs(base)<4 raw defaults65536; otherwise max(0,base+(count-2)*growth), 0x181878992..9b4. This is speed×DeltaTime at 0x181879008..00c, not a guessed per-tick pixel speed.",
     "rideCount": "0x181878a13..a4e converts positive percent to raw trunc(percent*65536/100), multiplies by count and ceilings; nonpositive percent defaults1. getRideCount 0x18187a361 queries Collision.GetContactCount with face1 and argument6. calcNeedRideCount 0x18187a2e7 returns max(0,required-current).",
-    "movement": "OnUpdate first satisfies ride condition and sets bit2 (0x181878dd4), moving branch enters liftUpdate 0x181878e77 or fakeLiftUpdate 0x181878ea1. liftUpdate 0x181879195 requires recursive ActorComponent.IsEnableMoveContactActor. It measures StageToWorldPoint segment length via sqrt helper 0x181640c40 (0x181879217), interpolates in FP, discards segment overshoot and reverses at the endpoint (0x1818792f7..35c). MoveLift 0x18187a221 moves contact actors using only deltaY with abs(deltaY)>=4 raw, not deltaX.",
+    "movement": "OnUpdate idle branch에서 required-current를 needRideCount에 저장하고0일 때 moving bit2를 설정(0x181878dc8..ddc); 같은 틱에는 liftUpdate를 실행하지 않는다. 이후 탑승자 감소로 멈추지 않는다. liftUpdate에서 speed*DeltaTime>>16을 distance(timerRaw)에 누적(0x181879008/00c/1ac), ratio=(distance<<16)/nativeLength를 정수 절삭(0x18187922c..239),[0,65536] clamp 후 stage offset을 sar16 보간한다(0x181879255..28b). ratio>=65536이면 excess를 버리고 timer0, index++(0x1818792f7..314). mode0은 마지막 index에서 returnDirection1/index8로 되돌린 후 moving을 CLEAR하여 정지한다(0x18187933b..39e).",
     "switch": "OnRecvEvent 0x1818799b1 handles event61. External-start bit3 and idle bit2 gate start. Zero riders selects fake motion; normalized native vector is scaled by QFP static+0x188 at 0x181879c98/0x181879f4a. Native normalization and this static's identity are not ported.",
     "cosmetics": "cctor0x18187a460: SIGN_OFFSET_Y raw -7208960 (-110), GUIDE_LINE_WIDTH from literal '0.075' at0x1831c3b78 gives raw4915. DamageRect cctor0x18180ecf0 produces no numeric FP constants.",
-    "runtime": "refused: segment sqrt, recursive contacts, fake path motion and endpoint flags are not implemented"
+    "runtime": "실제03-02 mode0 선로의 compile/create/solids/beforeStep/displays와 순수 advanceLift 구현. external-start 또는 nonzero mode는 명시적으로 거부하며 다른 스테이지 동작을 성공한 구현처럼 반환하지 않는다.",
+    "sqrt": {
+      "resource": "resources.assets TextAsset FPSqrt: name byte11384396, length field byte11384404=262148, body byte11384408. SHA256 de5265f651730f20b54cc24bdcd3047e61320be44a5ae54796d290a189f4bca5. 현재 출하 선로에 필요한19개 int32 항목만 코드에 넣었다.",
+      "loading": "FPMathUtils.LoadLookupTables 0x1818c3bee ->0x18165adf0. 0x18165af8a가 읽는 metadata literal slot0x1831b9a40은 FPSqrt. bytes length/4로 int32 array를 만들고 sqrt static+0에 저장(0x18165afd5..b00c), Buffer.BlockCopy 호출0x18165b074. sqrt helper0x181640c40은 이 static+0을 읽는다.",
+      "formula": "Camera.Initialize0x1817df592/5bc: signed trunc(65536/chipSize), negative reciprocal for Y.03-02 chipSize48 ->+1365/-1365. StageToWorldPoint0x1817df8f1 matrix multiply 이후 각 성분 제곱을 sar16하여 합산(0x181879204..214). sqrt는 q>65536이면 최상위 비트 위치를 짝수로 낮춘 뒤 shift=evenBit-14, table[q>>shift]<<floor(shift/2)>>6 (0x181640cf1..d29); 작은q는 table[q]>>6(0x181640d5b/60). Math.hypot 근사가 아니다.",
+      "03_02_lengthsRaw": [
+        1091997,
+        409497,
+        492155,
+        341248,
+        409497,
+        395847,
+        409497,
+        458637,
+        341248
+      ]
+    },
+    "carry": "IsEnableMoveContactActor 0x181879195는 음수 segmentY일 때 static vector(0,-65536)0x182e88680, 그렇지 않으면 전체 segment vector를 검사한다(0x18187914a..15d). false일 때 timer/위치가 진행하지 않는다. MoveLift0x18187a110은 자기 offset과 actor position을 갱신한 뒤, abs(deltaY)>=4 raw이면 MoveContactActor0x1816a0b70으로 오직(0,deltaY)를 전달한다(0x18187a1dd..221). 수평 이동으로 탑승자를 강제로 수평 운반하지 않는다. ctx.isEnableMoveContactActor / ctx.moveLinePathLiftContactActors가 병렬17번 공통 런타임의 명확한 접속점이다."
   },
   "verification": {
+    "unitTests": "node --test source-migration/source-linepath-devices.test.cjs:19 passing,0 failing",
+    "fullSuite": "node --test source-migration/*.test.cjs:475 passing,0 failing (2026-10-13 concurrent snapshot)",
+    "realStageCoverage": "03-02 selected actual variants and population rules2..8 compile and serialize; other three task stages retain exact parameter decode tests.",
+    "exactArrivalTicksByPopulation": {
+      "2": [
+        251,
+        345,
+        458,
+        537,
+        631,
+        722,
+        816,
+        921,
+        1000
+      ],
+      "3": [
+        335,
+        460,
+        611,
+        716,
+        841,
+        962,
+        1087,
+        1227,
+        1332
+      ],
+      "4..8": [
+        430,
+        591,
+        785,
+        919,
+        1080,
+        1236,
+        1397,
+        1577,
+        1711
+      ]
+    },
+    "tickDefinition": "첫 틱은 전원 탑승으로 moving을 설정하는 대기 틱이다. 이후 native gate=true, dtRaw=1092 조건에서 측정했다. mode0은 마지막 점에서 정지하며, gate가 막힌 틱에는 거리가 누적되지 않는다. 중간 JSON 왕복 후에도 결과가 같다.",
+    "checks": [
+      "FPSqrt installed bytes/hash",
+      "7 populations native raws/lengths/solid dimensions",
+      "exact segment arrival ticks",
+      "startup separate branch and rider loss inertia",
+      "collision gate freezes timer",
+      "vertical-only carry and negativeY probe",
+      "DamageRect inactive while overlapping and one activation",
+      "first-pass duplicate colliders/reverse dedup/flag0x200",
+      "event43 immortal/forced invincible/sharedHP branches",
+      "required host calls fail explicitly"
+    ],
+    "notVerified": "기존 source-stage-runtime에 미등록. 게임 실행, 브라우저 플레이, 실제 원작 비교, 공통 17번 그래프 구현과의 통합은 수행하지 않았다."
+  },
+  "registration": {
+    "registered": false,
+    "instruction": "사용자/Claude가 등록한다. compile/create/solids/beforeStep/afterStep/displays를 연결하고 runtimeCallContract를 먼저 구현한다. 장치 이동·피해 event를 host에 적용하지 않고 컴파일만 된 상태를 플레이 완료로 보고하지 않는다."
+  },
+  "stageCompilesAlone": {
+    "st_w_03_02": true,
+    "all2to8": true,
+    "scope": "이 모듈에 해당stage actors를 넘긴compile만 검증. 전체source-stage-runtime compile은 미등록이므로 새 지원을 제공하지 않음.",
+    "requires": [
+      "runtime registration by Claude",
+      "native collision contact adapters",
+      "brief17 recursive gate/carry runtime calls",
+      "Player event43 receiver routing"
+    ]
+  },
+  "corrections": [
+    "The brief's type summary omits DamageRect in03-02; its instance list is correct: selected actual data has6 at2players and4 at3..8.",
+    "Previous lift report refusal for fractional2.3335 is superseded by the concrete loader path. Existing report was not modified.",
+    "R2: R1의모든runtime compile거부는03-02 mode0와DamageRect 구현으로 대체. 외부시작/loop모드는 여전히거부.",
+    "R2: collider bit0 의미를미확정으로남겼던 부분은 SetCollisionActive0x1816a014d/15f에서inactive임을확정.",
+    "R2: native FPSqrt runtime pointer가read-only파일에서 미확정이라는R1기록을 resource body와loader proof로 대체. FPSqrt hash와필요한 실제table entries 기록.",
+    "R2: R1명칭OnRecvEvent0x1818799b1은실제메서드내분기주소다. 메서드시작은0x1818798e0. calcNeedRideCount시작은0x18187a280.",
+    "R2: 일반stageFpRaw거부삭제: Established facts의shortest float32왕복 적용. 기존raw152928/-13107/다른올바른발견 유지.",
+    "R2: 이벤트43은불사flag를무시하는무조건사망이아니다. 비강제는불사생존; 공유HP활성+DealDamage true도생존. force1의일시무적true분기는오히려사망으로이동."
+  ],
+  "unresolved": [
+    "03-02외부의external-start no-rider fake path normalization(0x181879c10),nonzero loop modes 및 fakeLiftUpdate는 아직거부.03-03은그래서compile거부.02-04 mode0는컴파일가능하나 별도전체이동전환은검증범위밖.",
+    "원본FPSqrt 전체table를배포하지않고출하선로필요19항목만사용. 다른chipSize/새선로로미확보index가나오면compile가명확히거부.",
+    "공통충돌graph와MapComponent collision검사/원본contact 생성은host 계약이다. 이모듈은그호스트를수정하거나17번작업구현을기다리지않았다.",
+    "Player sharedHP DealDamage 내부와수신후view/audio/죽음restart는공통Player host담당. pure outcome helper는분기판정이며전체Player state machine을대체하지않음.",
+    "런타임미등록·미배포. 실제게임play/원본비교는수행하지않음."
+  ],
+  "round1VerificationHistory": {
     "unitTests": "node --test source-migration/source-linepath-devices.test.cjs: 11 passing, 0 failing",
     "fullSuite": "node --test source-migration/*.test.cjs: 406 passing, 0 failing (2026-10-13 snapshot; concurrent sessions may add tests later)",
     "realStageCoverage": "All 4 task stages ×2..8 populations: every target actor decodes and serializes through JSON. Every applicable target device is refused by compile.",
-    "exactChecks": ["03-02 lift speeds by count2..8: 262144,196608,152928,152928,152928,152928,152928", "03-02 DamageRect counts by count2..8:6,4,4,4,4,4,4", "03-02 selects pc-3 lift for2/3 and pc4 fractional lift for4..8", "03-03 speed =262144-(count-2)*13107, width120, 9 path points", "02-04 one path point, width160+(count-2)*70", "Negative width shifts X; sar16 of raw -13107 produces -1; zero base speed fallback65536", "Required empty-state API survives JSON, but cannot disguise an applicable unimplemented device as an empty state"],
+    "exactChecks": [
+      "03-02 lift speeds by count2..8: 262144,196608,152928,152928,152928,152928,152928",
+      "03-02 DamageRect counts by count2..8:6,4,4,4,4,4,4",
+      "03-02 selects pc-3 lift for2/3 and pc4 fractional lift for4..8",
+      "03-03 speed =262144-(count-2)*13107, width120, 9 path points",
+      "02-04 one path point, width160+(count-2)*70",
+      "Negative width shifts X; sar16 of raw -13107 produces -1; zero base speed fallback65536",
+      "Required empty-state API survives JSON, but cannot disguise an applicable unimplemented device as an empty state"
+    ],
     "notVerified": "No dynamic device transitions, exact movement ticks, game completion, original-game visual comparison or runtime integration are claimed. Refusal is tested instead."
   },
-  "registration": {"registered": false, "instruction": "Do not register this partial module as working mechanics. It deliberately refuses target devices. Only proven loader/parse findings are reusable after review."},
-  "stageCompilesAlone": {"st_w_03_02": false, "all2to8": false, "reason": "LinePathLift and DamageRect runtime remain unported; original runtime/packager untouched"},
-  "corrections": ["The brief's type summary omits DamageRect in03-02; its instance list is correct: selected actual data has6 at2players and4 at3..8.", "Previous lift report refusal for fractional2.3335 is superseded by the concrete loader path. Existing report was not modified."],
-  "unresolved": [
-    "DamageRect CollisionScene flags, IsCollidedByPushBackTarget, symmetric contact dedup and PlayerComponent receiving event43 need a verified implementation.",
-    "LinePathLift needs exact FP sqrt helper0x181640c40 and CameraComponent.StageToWorldPoint segment conversion; using Math.hypot would not establish native tick counts.",
-    "Recursive contact gate0x1816a15c0 checks map contacts, collision flagbit4 and recursively traverses adjacent actors (0x1816a1977..19f9); existing runtime provides no equivalent graph. Blind vertical carry would bypass the proven gate.",
-    "Event61 fake path uses FP vector normalization0x1816463a0 and QFP static+0x188, not reconstructed here; loop/end-point flags have no tested state machine.",
-    "General stage Single formatting is not ported; the helper intentionally accepts only exact Single integers and two verified fractional literals in this task. No existing project-wide converter was changed.",
-    "No stages are opened, registered, packaged, deployed or committed by this partial result."
-  ]
+  "runtimeCallContract": {
+    "phase": "Update/beforeStep에서 호출. 기존 collision contacts를 읽는 native 순서. afterStep에서 피해를 다시 체크하지 않음.",
+    "isActorPaused": "선택 함수(id)->boolean; native actor bit3을 의미한다. stage actor pause를 사용하는 host는 반드시 제공.",
+    "isCollidedByPushBackTarget": "필수 함수(id,3)->boolean. 비활성DamageRect의 map/active push-back actor 충돌을 조회. unknown은false로 간주하지 않음.",
+    "setCollisionActive": "필수 함수(id,true). activation 시 자기 collider와 host의 native contact 상태를 동기화.",
+    "damageRectOwnContacts": "필수 함수(id)->[{entityId,collisionType}] 원본 순서. DamageRect 측 contact collider별 목록.",
+    "damageRectReversePlayers": "필수 함수(id)->[{entityId,flags,contactsDamageRect}] player 원본 순서. flags는native Player flags이고contactsDamageRect는 역방향 contact list 조회 결과.",
+    "getRideCount": "필수 함수(id,1,6)->count. getRideCount0x18187a361의 face1/mask6 GetContactCount. AABB나 단순 플레이어 수로 추측하지 않음.",
+    "isEnableMoveContactActor": "필수 함수(id,{xRaw,yRaw})->boolean. caller가 native negativeY 특수 벡터를 이미 전달. map/recursive actor graph 검사.",
+    "moveLinePathLiftContactActors": "필수 함수(id,{xRaw:0,yRaw:deltaYRaw}). MoveContactActor0x1816a0b70로 접촉 액터 재귀 운반. 함수는 host 상태를 갱신. 비영(deltaY) 호출 누락은throw.",
+    "coordinates": "모듈solid/displays는 계산된stage pixels; beforeStep 후 host가 actor/collider 위치를 이 값으로 동기화해야 한다. state에는 함수/BigInt가 없어 JSON 왕복 가능.",
+    "incomingEvents": "DamageRect.OnRecvEvent는 ActorComponent.OnRecvEvent로 위임(0x18180ebf0); 일반 actor visibility/pause 등은 host 담당. mode0 lift에61은 처리할 외부시작 flag가 없어 동작하지 않음.",
+    "playerEvents": "events[{targetId,eventType:43,senderId}]를 해당 entity에 전달. host는 playerEvent43Outcome을 사용하거나 native Player event dispatcher를 호출. dead는 life0/requestState3/Se11/shake; shared-damage는 native 공유HP 결과 후 무적+피격효과. 중복 collider별 이벤트를 임의로 제거하지 않음."
+  }
 }

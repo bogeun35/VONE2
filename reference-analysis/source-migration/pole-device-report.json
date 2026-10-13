@@ -1,56 +1,237 @@
 {
   "schemaVersion": 1,
-  "devices": ["FloatingThorn", "PoleLadder"],
+  "devices": [
+    "FloatingThorn",
+    "PoleLadder"
+  ],
   "module": "source-pole-devices.js",
-  "status": "partial_verified_pole_component_thorn_refused",
+  "status": "implemented_tested_runtime_integration_pending",
   "settledOn": "2026-10-13",
   "nativeCodeExecuted": false,
   "registered": false,
   "completePhysicsFidelity": false,
-  "summary": "PoleLadder 컴포넌트의 이동과 OnPost 위치 제약을 구현했다. FloatingThorn은 정확한 사인 조회표를 확보하지 못해 compile이 예외를 발생시킨다. 플레이어 상태10의 별도 시뮬레이션은 런타임에 연결해야 하므로 이 모듈만으로 11–2를 열 수 없다.",
+  "summary": "원본 FPSinCos 조회표로 FloatingThorn 이동을 구현하여 st_w_11_02와 st_w_07_04의 모든 2..8인 변형이 모듈 compile에 성공한다. PoleLadder 이동/OnPost와 플레이어 상태10의 진입·업데이트·종료를 순수 함수로 제공한다. 실제 플레이에는 Claude의 런타임 등록, 플레이어 함수 호출, 충돌·이벤트·렌더러 연결이 필요하다.",
   "creators": {
     "FloatingThorn": "ordinal126, token0x60008d2, static Creator0x181849990. Creator0x181849ae0은 다른 액터 종류가 아니라 factory type0x7e=126을 요청하는 동적 생성 오버로드다. 작은 CollisionTable_S를 쓰고 AddActor 후 Disappear를 호출한다. EndlessPoleLadderObserver 연계의 동적 생명주기는 지원하지 않는다.",
     "PoleLadder": "ordinal158, token0x6000e9d, Creator0x1816da470"
   },
   "findings": [
-    {"address": "0x181849a81..0x181849a89", "value": "FloatingThorn 기본 진폭10, 속도1; 슬롯0/1이0이면 기본값 유지(0x181849d83..0x181849d95)."},
-    {"address": "0x18184a10e..0x18184a159", "value": "누적 시간 raw에 속도를 곱해 사인 함수를 호출하고 진폭을 곱한 값을 actor 초기Y에 더한다."},
-    {"address": "0x181646630..0x181646663", "value": "FPMath.Sin은 절댓값 각도를 raw411774(0x6487e)로 나눈 나머지를 LUT 인덱스로 사용한다. int32 항목은8바이트 간격이며 마지막에 부호를 복구한다. Math.sin 근사값은 동일성의 근거가 아니다."},
-    {"address": "0x18184a5da..0x18184a656", "value": "일반 thorn 충돌 사각형 w16,h40,x-20,y-8 및 w40,h16,x-8,y-20. 슬롯2는 actor 두 scale축을 바꾼다(0x181849daf/0x181849db6)."},
-    {"address": "0x18184a1bf..0x18184a1fd", "value": "category1 또는8과 충돌 시 상대 entity에 이벤트43을 보낸다. 이벤트19로 대체하지 않는다."},
-    {"address": "0x1816da690..0x1816da713", "value": "Pole 슬롯0은 인원2..8별 signed FP 높이 표로, 현재 인원부터 아래로 첫 nonzero를 찾는다. 슬롯1은 매틱 속도, 슬롯2는 이동거리다."},
-    {"address": "0x1816da8f1..0x1816da936", "value": "매틱 sign(distance)*speed를 moveX에 더하고 signed >= distance이면 distance로 덮어쓴다. dt를 곱하지 않는다. 음수 거리도 이 비교 그대로이며 개선된 양방향 clamp를 발명하지 않았다."},
-    {"address": "0x1816daf3f/0x1816daf55", "value": "POLE_WIDTH4, PLAYER_POS_X_OFFSET12."},
-    {"address": "0x1816dabfa..0x1816dad95", "value": "상태3..5만 제외하고 전 플레이어를 상태10으로 요청한다. 이미 상태10이면 native anchorY를 봉Y..봉Y+height에 제한하고 x=poleX-12로 설정한다. 왼쪽을 보면 PLAYER_H48+4를 추가한다. 접촉 여부로 진입을 제한하지 않는다."}
+    {
+      "address": "0x181849a81..0x181849a89",
+      "value": "FloatingThorn 기본 진폭10, 속도1; 슬롯0/1이0이면 기본값 유지(0x181849d83..0x181849d95)."
+    },
+    {
+      "address": "0x18184a10e..0x18184a159",
+      "value": "누적 시간 raw에 속도를 곱해 사인 함수를 호출하고 진폭을 곱한 값을 actor 초기Y에 더한다."
+    },
+    {
+      "address": "0x181646630..0x181646663",
+      "value": "FPMath.Sin은 절댓값 각도를 raw411774(0x6487e)로 나눈 나머지를 LUT 인덱스로 사용한다. int32 항목은8바이트 간격이며 마지막에 부호를 복구한다. Math.sin 근사값은 동일성의 근거가 아니다."
+    },
+    {
+      "address": "0x18184a5da..0x18184a656",
+      "value": "일반 thorn 충돌 사각형 h16,w40,x-20,y-8 및 h40,w16,x-8,y-20. 슬롯2 nonzero일 때 actor 두 scale축을 바꾼다(0x181849d95..db6)."
+    },
+    {
+      "address": "0x18184a1bf..0x18184a1fd",
+      "value": "category1 또는8과 충돌 시 상대 entity에 이벤트43을 보낸다. 이벤트19로 대체하지 않는다."
+    },
+    {
+      "address": "0x1816da690..0x1816da713",
+      "value": "Pole 슬롯0은 인원2..8별 signed FP 높이 표로, 현재 인원부터 아래로 첫 nonzero를 찾는다. 슬롯1은 매틱 속도, 슬롯2는 이동거리다."
+    },
+    {
+      "address": "0x1816da8f1..0x1816da936",
+      "value": "매틱 sign(distance)*speed를 moveX에 더하고 signed >= distance이면 distance로 덮어쓴다. dt를 곱하지 않는다. 음수 거리도 이 비교 그대로이며 개선된 양방향 clamp를 발명하지 않았다."
+    },
+    {
+      "address": "0x1816daf3f/0x1816daf55",
+      "value": "POLE_WIDTH4, PLAYER_POS_X_OFFSET12."
+    },
+    {
+      "address": "0x1816dabfa..0x1816dad95",
+      "value": "상태3..5만 제외하고 전 플레이어를 상태10으로 요청한다. 이미 상태10이면 native anchorY를 봉Y..봉Y+height에 제한하고 x=poleX-12로 설정한다. 왼쪽을 보면 PLAYER_H48+4를 추가한다. 접촉 여부로 진입을 제한하지 않는다."
+    },
+    {
+      "address": "0x18165adf0..0x18165aed7 /0x1801efad0",
+      "value": "FPLut.Init의 첫 Load<T>가 FPSinCos literal을 읽어 static+0x20에 byteLength/8 배열을 생성하고 바이트 전체를 복사한다. 리소스 경로는 FPSinCos; resources.assets pathID112에서 실제 테이블을 읽었다."
+    },
+    {
+      "address": "0x1816cbb81..0x1816cbc18,0x1816cbdb2/9",
+      "value": "상태10 기본 collision rect는 HEIGHT44,WIDTH20,X-10,Y-47. actor bit10일 때 Initialize0x1816c94e1..f3은 x에서 원래width20을 빼고 width를40으로 바꾼다. 일반적인 좌우 반사식으로 바꾸지 않았다."
+    },
+    {
+      "address": "0x1816c96a8..0x1816c9923",
+      "value": "위(input4) 우선, 아래(input5) 차순, idle은0. animation14/15/13. Collision.IsContactedMapOrRect face=(direction>0?1:0)를 먼저 호출하여 false일 때만 velo=(0,direction*m_WalkSpeed)를 쓴다. true일 때는 이전 두 속도 성분을 유지한다. 함수는 Actor의 위치 적분을 하지 않는다."
+    },
+    {
+      "address": "0x1816c9b90..0x1816c9c28",
+      "value": "calcSerchLength는 ActorManager의 EndlessPoleLadderObserver가 있으면 그 instance+0x68의 정수를 반환하고 없으면0. 따라서 st_w_11_02는0이며 가시 사전검색/흔들림 분기를 실행하지 않는다."
+    },
+    {
+      "address": "0x1816c999c..0x1816c9a24",
+      "value": "Collision.GetRect 결과에 collision 현재 위치를 더한 뒤 x += 기존width+15; width += searchLength(FP). height/y는 유지. native-order 첫 category8 충돌을 조회한다."
+    },
+    {
+      "address": "0x1816c9a46..0x1816c9b75",
+      "value": "양의 searchLength에서 miss는 flags2 bit0 clear, hit는 set. 길이가0 이하일 때는 비트를 유지한다. |상대collisionX-자신collisionX|<QFP._255이면 session PCG32 출력 &3 -2를 Actor positionOffsetX에 쓰고 Y=0. anchor/velo를 직접 흔들지 않는다."
+    },
+    {
+      "address": "0x181690667..0x1816906ec",
+      "value": "Collision.GetRect는 scale/pivot를 적용한 FP 사각형을 반환한다. thornRects는 기본 pivot0의 정적 가시에 actor scale을 적용하고, 플레이어 검색 함수는 host가 현재 GetRect 결과를 전달할 수 있다."
+    },
+    {
+      "address": "0x1816c1199/0x1816c14a2..0x1816c16e1",
+      "value": "Player event43은 Player의 life/immortal/invincible 및 ShareHitPoint 경로를 처리한다. 일반 life1 플레이어는 life0과 requestedState3(Dead), Se11/shake를 요청한다. 가시 callback을 event19로 무조건 치환하면 이 분기를 잃는다. host는43 수신부를 연결해야 한다."
+    }
   ],
   "realStageData": {
-    "st_w_07_04": {"floatingThornCounts2to8": [8,8,8,8,8,8,8]},
+    "st_w_07_04": {
+      "floatingThornCounts2to8": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ]
+    },
     "st_w_11_02": {
-      "floatingThornCounts2to8": [36,30,24,18,18,12,12],
-      "poleCount2to8": [1,1,1,1,1,1,1],
-      "poleInitialPosition": [168,48],
+      "floatingThornCounts2to8": [
+        36,
+        30,
+        24,
+        18,
+        18,
+        12,
+        12
+      ],
+      "poleCount2to8": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "poleInitialPosition": [
+        168,
+        48
+      ],
       "poleSpeedPerTick": 3,
       "poleDistance": 4775,
-      "selectedPoleHeights2to8": [480,480,480,480,540,505,515],
+      "selectedPoleHeights2to8": [
+        480,
+        480,
+        480,
+        480,
+        540,
+        505,
+        515
+      ],
       "lastMovingTick": 1592
     }
   },
-  "integration": "모듈 integration export에 native anchor 좌표 변환, 상태 전환/위치 제약 적용 순서, 플레이어 초기화/업데이트/종료 메서드 주소, 센서 형태와 미해결 항목을 기록했다. 기존 런타임은 수정하지 않았다.",
+  "integration": {
+    "moduleRegistration": "Claude가 supportedTypes와 compile/create/beforeStep/afterStep/displays를 등록. 공통 런타임은 이 작업에서 수정하지 않았다.",
+    "contract": "source-pole-devices.js의 exported integration은 정확한 런타임 계약이다. 모든 player scalar는 FP raw/JSON-safe 숫자, RNG state/inc는 문자열이다. pure functions는 인자를 변경하지 않는다.",
+    "tickOrder": [
+      "device beforeStep: pole 매틱 이동, thorn dtRaw 누적 사인 이동",
+      "이전 pole OnPost가 요청한 상태10 전환에서 LookRight를 먼저 반영하고 poleEnter(player)를 호출하여 collisionRectRaw 및 animation13 적용",
+      "플레이어 Update: 기본 걷기/점프 대신 poleStep(player,input,context). context.contactedMapOrRect는 native face0(위/idle) 또는1(아래) 접촉판정이다. player.walkSpeedRaw는 현재 native m_WalkSpeed. 해당 함수에 별도 dt/중력/가로 입력을 넣지 않는다.",
+      "observer가 없으면 context.searchLength=0. 있으면 calcSerchLength 정수와 현재 Collision.GetRect local rect를 poleSearchRect에 전달하여 첫 category8 hit/null을 조회. context.hit.anchorXRaw는 상대 collision의 현재 위치X이다. 흔들림에만 session RNG를 전달하고 반환된 rng/positionOffset을 반영한다.",
+      "Actor의 기존 velocity 이동/충돌 처리를 실행한다. poleStep은 위치를 직접 적분하지 않음. thornRects를 collision scene에 넣고 callbacks를 afterStep의 collisions 배열로 전달하여 event43을 native player 수신 처리로 dispatch한다.",
+      "device OnPost: afterStep playerConstraints 적용. 상태3..5는 제외. 다른 상태는 nextNativeState10/LookRight 요청만, 이미10이면 pole X snap/Y clamp 적용. 즉시 모든 state를10으로 덮어쓰지 않는다.",
+      "상태10 종료 시 poleExit는 flags2 bit0만 해제한다. 이후 상태 변경/그 상태 초기화/충돌 rect는 host가 처리한다."
+    ],
+    "exports": [
+      "poleEnter",
+      "poleStep",
+      "poleExit",
+      "poleSearchRect",
+      "nativeSin",
+      "thornRects"
+    ],
+    "st_w_11_02": "기본 Player/Goal/Key 외 유일한 추가 타입은 PoleLadder/FloatingThorn. 모듈 compile은2..8 모두 성공. 이 모듈의 runtime calls/충돌·event43·display wiring을 연결하면 데이터 컴파일의 pole 차단은 제거된다. 실플레이 검수 완료를 뜻하지 않는다.",
+    "st_w_07_04": "FloatingThorn 모듈 compile2..8 성공. 다른 Ghost/Lift/DelaySwitch/Thunder/CheckPoint 메커닉/등록은 본 작업 범위 밖."
+  },
   "verification": {
-    "staticAnalysis": "AGENTS/HANDOFF 및 필수3개 참조 파일을 읽고 Quantum 필드/메서드 인덱스와 creator delegates를 교차 확인했다. disasm으로 위 주소와 PlayerComponent.OnInitialize/OnFinalize/OnUpdate_PoleLadder0x1816c9380/0x1816c9550/0x1816c95b0을 읽었다. resolve-string-literals.local.py --cctor0x18184a4c0도 실행했으나 이 cctor는 FP 문자열 상수를 만들지 않는다.",
+    "staticAnalysis": "Round1 필수 참고 자료 및 전체 AGENTS/HANDOFF를 읽고, Player 상태10 전체 메서드/종료/검색, Collision.GetRect/IsContactedMapOrRect, thorn InitCollision/ParseParameter/update/OnCollided를 disasm했다. PhotonDeterministic.dll module0x182d54da0의 token0x60002e7 -> FPLut.Init0x18165adf0을 읽고 literal FPSinCos와 static+0x20 연결을 추적했다. resolve-string-literals --cctor0x1816cb910으로 플레이어 rect 상수를 확인했다.",
     "individualCommand": "node --test source-migration/source-pole-devices.test.cjs",
-    "individualPassed": 10,
+    "individualPassed": 19,
     "fullSuiteCommand": "node --test source-migration/*.test.cjs",
-    "fullSuitePassed": 269,
+    "fullSuitePassed": 477,
     "fullSuiteFailed": 0,
-    "measured": ["인원2..8 실제 변형별 높이/가시 수", "1591틱 이동4773, 1592틱4775에 정지", "dt0과dt100에도 매틱 이동3", "상태3..5 제외 및 접촉 없는 상태10 요청", "좌우 앵커와 높이 양끝 제한", "JSON 왕복 후 동일한 이동", "실제 가시 포함 스테이지의 명시적 컴파일 거부"]
+    "measured": [
+      "2..8인 실제 stage 변형별 compile 성공/높이/가시수",
+      "sine411775개 low32 전체 SHA256 및 음수/period modulo",
+      "가시 timeRaw1092/틱, 첫tick yRaw5253790,60tick yRaw5794250",
+      "봉1592tick 정확 정지 및 상태/앵커 양끝 clamp",
+      "순수 상태10 초기화/종료/위입력우선/idle/접촉시 두velocity 유지",
+      "observer 검색 rect15마진,flags2 bit0,255px 경계,seeded PCG 결과/무변경 인자",
+      "JSON 왕복 및 Buffer 없는 브라우저 atob 복원",
+      "author1.1 FP raw72089"
+    ],
+    "fullSuiteTransientFailure": "최초 전체 실행 source-dossun-devices.test.cjs에서 기존 compile-refusal 및 inert-interface 기대값이 병렬 구현 중 불일치했다. 해당 파일은 수정하지 않았다. 재실행475/475 통과, 마지막 코드/테스트 수정 후 최종477/477 통과."
   },
   "unresolved": [
-    "FloatingThorn 원본 FPMath.Sin LUT를 확보하지 못했다. 모든 유효한 FloatingThorn 진폭은 nonzero이므로 compile은 해당 타입이 있으면 명확한 예외를 던진다. 지원 타입 목록은 작업 소유권을 나타내며 완료를 뜻하지 않는다.",
-    "FloatingThorn 충돌 이벤트43의 수신부 처리, 스케일 적용 충돌 변환, Disappear/Resume 전체 생명주기는 아직 이식하지 않았다.",
-    "Player 상태10의 m_PoleLadderSpeed(+0x88), static 충돌사각형(+0xe8), calcSerchLength0x1816c9b90 및 충돌 검색 임계값의 상수를 모두 추적하지 못했다. 플레이어 시뮬레이션은 integration 계약으로 남아 있다.",
-    "Player 상태10의 category8 검색과 PCG wobble(-2..1), hit 반응을 구현하지 않았다. 랜덤을 임의로 사용하지 않았다.",
-    "동적 작은 가시 생성/Endless observer는 범위 밖이며 미지원이다.",
-    "런타임 등록과 renderer 연결을 하지 않았다. st_w_11_02와 st_w_07_04는 이 모듈로 전체 컴파일되지 않는다. 원작 실행/사람의 플레이 검수는 없었다."
-  ]
+    "런타임 등록/플레이어 상태10 호출, collision scene queries, event43 수신 및 렌더러 연결은 Claude 담당이다. 함수 인터페이스와 순서는 integration에 명시했다.",
+    "범위 밖인 동적 작은 가시 생성/Endless observer 전체 생명주기(Disappear/Resume)는 미지원. 정적 World11-2/7-4 가시는 이 경로를 사용하지 않는다.",
+    "원작 게임 실행/사람의 나란히 플레이 검수는 없었다. completePhysicsFidelity=false를 유지한다."
+  ],
+  "correctionHistory": [
+    {
+      "round": 2,
+      "previous": "FloatingThorn LUT를 확보하지 못하여 컴파일 거부",
+      "correction": "FPLut.Init0x18165aed3이 static+0x20으로 FPSinCos를 로드한다. 실제 데이터는 DLL 인라인이 아니라 resources.assets TextAsset pathID112이다. 전 항목을 손실 없이 복원하여 거부를 제거했다.",
+      "evidence": "0x18165aec5의 literal slot0x1831b9a78=FPSinCos; helper0x1801efb25..bbc는 byteLength/8 배열 생성 및 전체 바이트 복사; Sin0x18164665b는 8바이트당 signed low32 읽기"
+    },
+    {
+      "round": 2,
+      "previous": "thorn rect w16,h40 및 w40,h16",
+      "correction": "Established facts의 HEIGHT,WIDTH 순서에 따라 h16,w40 및 h40,w16으로 수정했다. 기존 리포트의 가로/세로가 뒤집혔다.",
+      "evidence": "0x18184a5ed/f5 및0x18184a62c/63c; Key cctor 기준과 동일"
+    },
+    {
+      "round": 2,
+      "previous": "Player +0x88=m_PoleLadderSpeed 미확정",
+      "correction": "quantum-field-offsets.json PlayerComponent m_WalkSpeed il2cpp offset152 minus16=136(0x88)이다. 별도 봉 전용 속도 상수는 없다. InitWalkSpeed에서 파생된 현 플레이어 속도를 함수 인자로 받는다.",
+      "evidence": "0x1816bec85..bd,0x1816c98f0"
+    },
+    {
+      "round": 2,
+      "previous": "PLAYER_H48 근거0x1816cba37, sensor width=height,height4",
+      "correction": "0x1816cba37은 PLAYER_W44; PLAYER_H48은0x1816cba4d. 봉 센서는 height=선택높이,width4. 기존 센서 integration 문장만 뒤집혔고 실제 봉 이동/제약 값은 맞았다.",
+      "evidence": "0x1816cba4d,0x1816da7c9/802"
+    }
+  ],
+  "sineTable": {
+    "source": "D:/SteamLibrary/steamapps/common/PICO PARK 2/pico_park_2_Data/resources.assets",
+    "asset": "FPSinCos",
+    "pathId": 112,
+    "objectByteStart": 4908320,
+    "objectByteSize": 3294216,
+    "scriptBytes": 3294200,
+    "entries": 411775,
+    "entryStride": 8,
+    "read": "signed int32 LE at entry+0; remaining4 bytes are cosine",
+    "periodRaw": 411774,
+    "resourceSHA256": "5c1659881bfcf3d7d2bde44c7b6757eba3152745eee26857ef4c4bd96e19b8a9",
+    "sineLow32SHA256": "df5d19c35ac2594ef98c6a5924efdb7eeea75d0f936e91314f98f6a05891781c",
+    "storage": "모듈에 signed-byte delta base64로 손실 없이 포함. 브라우저 atob/Node Buffer에서 Int32Array로 복원; 근사/Math.sin/보간 없음. sine[411774]=0은 period endpoint로 실제 Sin은 modulo 후 index0 사용.",
+    "extraction": "UnityPy를 .tools/unity-analysis에서 로드하여 read only resources.assets의 pathID112 TextAsset.m_Script를 utf8 surrogateescape로 다시 bytes로 변환; struct.unpack_from(<i,bytes,index*8). 게임 코드를 실행하지 않음.",
+    "samples": {
+      "0": 0,
+      "1": 1,
+      "1092": 1091,
+      "65536": 55146,
+      "102943": 65536,
+      "205887": 0,
+      "308830": -65536,
+      "411773": -1,
+      "411774": 0
+    }
+  }
 }

@@ -92,3 +92,39 @@ test('JSON round trip preserves contact, timer and future transitions exactly',(
  const a=state(),w=a.walls[0];w.state=2;advance(a,22);mod.afterStep(a,{switchContacts:[{switchId:a.switches[0].id,actorId:'p1',layer:1,attributeFlags:3}]});
  const b=JSON.parse(JSON.stringify(a));for(let i=0;i<200;i++){assert.deepEqual(tick(a),tick(b));assert.deepEqual(a,b);}
 });
+
+test('12-3 SpeedSwitch compiles without wall adapters and applies native event57 for 2..8',()=>{
+ for(let count=2;count<=8;count++){
+  const stage=stages.find(s=>s.stageId==='st_w_12_03');
+  const v=pop.selectVariant(stage.json.stageInitParamList,count,true);
+  assert.equal(v.scale,1);assert.equal(v.iceSpeedUp,1.5);
+  const s=mod.create(mod.compile(actors('st_w_12_03',count),count));
+  assert.deepEqual(s.walls,[]);assert.deepEqual(mod.solids(s),[]);
+  const sw=s.switches[0];assert.equal(sw.yRaw,28311552);assert.equal(sw.direction,0);
+  assert.deepEqual(mod.beforeStep(s).events,[]);
+  mod.afterStep(s,{switchContacts:[{switchId:sw.id,actorId:'p1',layer:1,attributeFlags:3}]});
+  const event=mod.beforeStep(s).events[0];assert.equal(event.broadcastActorType,27);
+  const current=Object.freeze({stageBaseScaleRaw:65536,iceSpeedUpRaw:98304,walkSpeedRaw:196608,walkSpeedMaxOnIceRaw:294912,jumpRaw:123});
+  const next=mod.applyPlayerSpeedEvent(current,Object.freeze(event));
+  assert.deepEqual(next,{...current,speedScaleRaw:196608,walkSpeedRaw:589824,walkSpeedMaxOnIceRaw:884736});
+  assert.deepEqual(mod.applyPlayerSpeedEvent(next,event),next);
+  mod.afterStep(s);assert.deepEqual(mod.beforeStep(s).events,[]);
+  assert.equal(current.walkSpeedRaw,196608);
+ }
+});
+test('player event57 clamp boundaries and arithmetic shifts are exact',()=>{
+ const current={stageBaseScaleRaw:65537,iceSpeedUpRaw:98305,walkSpeedRaw:99,walkSpeedMaxOnIceRaw:88};
+ for(const scale of [-65536,0,6552,6553]){
+  const r=mod.applyPlayerSpeedEvent(current,{eventType:57,speedScaleRaw:scale});
+  assert.equal(r.speedScaleRaw,6553);assert.equal(r.walkSpeedRaw,19659);assert.equal(r.walkSpeedMaxOnIceRaw,29488);
+ }
+ for(const scale of [196608,196609,999999]){
+  const r=mod.applyPlayerSpeedEvent(current,{eventType:57,speedScaleRaw:scale});
+  assert.equal(r.speedScaleRaw,196608);assert.equal(r.walkSpeedRaw,589833);assert.equal(r.walkSpeedMaxOnIceRaw,884758);
+ }
+ const negative=mod.applyPlayerSpeedEvent({...current,stageBaseScaleRaw:-65537},{eventType:57,speedScaleRaw:6553});
+ assert.equal(negative.walkSpeedRaw,-19662);assert.equal(negative.walkSpeedMaxOnIceRaw,-29494);
+ assert.throws(()=>mod.applyPlayerSpeedEvent(current,{eventType:47,speedScaleRaw:65536}),/event 57/);
+ assert.throws(()=>mod.applyPlayerSpeedEvent({}, {eventType:57,speedScaleRaw:65536}),/stageBaseScaleRaw/);
+ assert.throws(()=>mod.applyPlayerSpeedEvent(current,{eventType:57,speedScale:3}),/speedScaleRaw/);
+});

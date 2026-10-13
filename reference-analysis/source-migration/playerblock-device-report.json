@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "module": "source-playerblock-devices.js",
+  "devices": [
+    "PlayerBlock (dynamic actor163)"
+  ],
+  "status": "component_hooks_ready_unregistered",
+  "nativeCodeExecuted": false,
+  "summary": "총알에 맞은 타 플레이어를 별도 동적 solid block으로 바꾼다. 플레이어는 숨겨지고 pause 상태가 되며 블록 위치로 따라간다. 입력9 edge로 위치/속도를 돌려받고 블록은 숨긴 뒤 raw6553 동안 남았다가 제거된다.",
+  "evidence": {
+    "creation": "Creator0x181891282 actor163. Initialize0x181891524 dead state3 거부; player collision geometry를 복사한다.",
+    "box": "Initialize0x18189152e..592 H,W,X,Y -> H,H,-H/2,Y. player collider의 현재 크기를 사용하므로 고정 플레이어 크기를 지어내지 않았다. 0x1818915e0 attribute2/layer2, collision kind3 at0x1818915ac, flags bit7 at0x1818915ee. m_Rect probe는 H+2,Y-1 (0x18189161f..63e).",
+    "player": "0x1818916cd..6f1 event65, byte74=1, word78=0x101. Player.OnRecvEvent0x1816c12e8..1399: SetVisible(false),SetPause(true), actor bit24 설정, notifyKeyReturn, player bit10 설정. OnPost0x181891b49가 매 tick player를 block 위치로 SetPosForce.",
+    "release": "updatePhase0x18189187f input9 IsPressInput. block invisible, se8,event66+position/velocity0x1818918fd..929; player ref clear, QFP._0_10(raw6553) timer, phase1. phase1 subtract dt, <=0 destroy flag13. 7 ticks at1092. phase0에 lifetime timer 없음.",
+    "restore": "Player.OnRecvEvent0x1816c1259..12de: SetPause(false), warpPosition/warpVelocity 저장, actor bits17/24 설정, ResetVeloAll, player bit10 clear. 즉 event66의 vx/vy를 곧바로 현재 velocity로 쓰는 것이 아니라 기존 warpProc에 넘겨야 한다. visibility 복원도 기존 actor warp lifecycle에 맡긴다.",
+    "push": "OnCollided0x181891bbb 상대 layer1일 때만; Collision.GetRect 두 박스 중심*QFP._10을 floor 정수로 양자화(0x181891d59..d96), 축별 중심 비교, 해당 edge 차의 절댓값을 QFP._1으로 clamp하여 상대 actor position에 가감(0x181891da8..eea). 겹침 탐색은 native dispatcher 몫이다.",
+    "eye": "eyeProc0x181891a51..aa6 logical input6 held 우선 ->255, 아니면7 held ->1, 아니면0.",
+    "constants": "cctor0x181892025 MARGIN=QFP._1; resolve-string-literals --cctor0x181891f00에 FP 문자열 없음. QFP --verify 22/22 일치, _0_10 inline raw6553."
+  },
+  "integration": {
+    "state": "compile([],count), create(compiled). 동적 actor이므로 supportedTypes=[]; stage PlayerBlock을 주면 compile throws. Dossun 모듈은 playerBlocks 하위 상태로 포함한다.",
+    "attach": "attach(state, resolvedPlayerSnapshot) -> {block,event} 또는 dead이면 null. PlayerState, scale, position, velocity, rect는 runtime native snapshot. block의 초기 velocity는 새 entity zero-init; 이후 common actor movement를 호스트가 수행한다.",
+    "tick": "beforeStep(state,{dt,players,pressed9,heldInputs})는 release/눈방향 처리. afterStep(state,{contacts}) 반환 actorPushes와 playerPositions를 native actor 위치에 순서대로 적용. event65/66는 수신 플레이어의 native semantics로 처리.",
+    "geometry": "solids()는 FP raw, kind3/layer2/attribute2; phase1은 invisible이어도 소멸 전까지 collision 유지. displays()는 visible/phase를 제공한다. rectAt는 공통 effective scale을 적용한다."
+  },
+  "verification": {
+    "unitTests": "source-playerblock-devices.test.cjs 5 passing; companion dossun20 passing (총25).",
+    "fullSuite": "node --test source-migration/*.test.cjs: 최종 관측 478 passing, 0 failures. 병렬 작업의 테스트 추가로 앞선 관측467보다 늘었다.",
+    "tested": [
+      "정확한 dynamic rectangle·probe·event65 payload",
+      "dead refusal·geometry missing refusal",
+      "600 active ticks에서도 자동해제 없음",
+      "입력9 release payload와 6틱 후raw1/7틱 후소멸",
+      "player position sync·eye priority",
+      "collision push 축별1픽셀clamp·동일중심·layer exclusion·raw1 경계",
+      "JSON 직렬화"
+    ]
+  },
+  "corrections": [
+    "Round1의 PlayerBlockComponent가 플레이어 엔티티에 붙는다는 표현은 Creator가 actor163 별도 entity를 생성하는 실제 코드와 다르다. 플레이어 참조를 가진 별도 block actor이다."
+  ],
+  "unresolved": [
+    "실제 공통 actor movement/contact 및 player event65/66 warp/pause/visibility adapter는 Claude/runtime 단계에서 연결해야 한다. 이 작업은 런타임 등록을 하지 않는다.",
+    "원작과 나란히 플레이하거나 스테이지를 클리어한 검증은 하지 않았다."
+  ]
+}

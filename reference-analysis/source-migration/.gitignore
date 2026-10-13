@@ -19,3 +19,4 @@ quantum-field-offsets.json
 population-type-index.json
 population-method-index.json
 stage-transfer-audit-report.json
+__pycache__/

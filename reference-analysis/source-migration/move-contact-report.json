@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "status": "partial",
+  "module": "source-move-contact.js",
+  "settledOn": "2026-10-13",
+  "nativeCodeExecuted": false,
+  "summary": "네이티브 접촉 그래프에 대한 축 방향 이동 가능 검사와 순수 이동 결과 계산을 구현했다. 이동 가능 검사와 실제 이동은 별도 함수이며, 실제 이동 함수는 천장 충돌을 막지 않는다. AABB만으로 원작 접촉 캐시를 재생성하는 경로는 아직 구현하지 않았다.",
+  "nativeEvidence": {
+    "faces": "ContactFaceExtensions..cctor 0x18177e46c..0x18177e4f6: 0=(0,-1), 1=(0,1), 2=(-1,0), 3=(1,0). GetNormal 0x18177e364는 3보다 큰 값을 거부한다.",
+    "options": "MoveContactOption.Reset 0x18177e252..25d, GetMoveContactOption 0x18169dce6..cf1, ActorComponent..cctor 0x1816a2737..2744 및 27c5..27d0: sync=true, ignoreTargetVelo=false, recursive=true, attached=false, recursiveFaceIsMov=false, calcScreenEnd=false, collisionIndex=0, layerMask=0. 객체 필드 offset 16..28은 MoveContactOption metadata를 사용하며 객체이므로 -16 하지 않는다.",
+    "preflight": "IsEnableMoveContactActor 0x1816a1681..16b6: 두 성분 모두 abs(raw)<4면 false. 0x1816a16e2: 지정 collisionIndex로 GetCollision, 없으면 false. 0x1816a173f..17c9: 방향 정규화. 0x1816a181e: 정규화된 방향으로 contact list 조회. 0x1816a1991: 대상 map contact가 같은 방향이면 false. 0x1816a19f9: 대상 Actor에 같은 direction/face, collisionIndex=0로 항상 재귀한다. 재귀 옵션 또는 layer mask는 이 검사에 쓰이지 않는다.",
+    "staticTarget": "0x1816a196d: flags 0x10 대상은 map/Actor 재귀 검사 대신 faceNormal dot normalizedDirection 분기를 수행. 0x1816a1a0a..1a30: 내적 >=0이면 false, 음수면 해당 대상을 건너뛴다. flags 0x80은 preflight에서 필터하지 않는다.",
+    "contacts": "Collision.GetContactCollisionList 0x1816919a5: 기존 collision의 contact buffer를 가져온다. 0x181691a55..a88: 두 normal FP raw를 정확히 비교한다. 겹침, epsilon 거리, swept AABB 판정을 여기서 수행하지 않는다. Collision.IsContactedMap 0x181692c48..c78도 저장된 map normal의 정확한 일치만 검사한다.",
+    "overloads": "0x1816a0980/0x1816a0b70: face enum을 normal로 바꿔 전달. 0x1816a0a70: explicit option, 0x1816a0c50: MOVE_CONTACT_OPTION_DEFAULT 사용. 둘 다 0x1816a0af0..af6 / 0x1816a0cd0..cd5에서 이동 목록을 매 호출마다 비운 뒤 private moveContactActor 0x1816a0d40 호출.",
+    "transportFilter": "0x1816a0f96..faa: 대상 collision flags 0x80 또는 0x10이면 제외. 0x1816a0fb0..fce: mask가 0이면 모든 layer, 아니면 1<<(layer&31) 포함 대상만 이동. 0x1816a0fde: Actor가 없는 collision도 제외.",
+    "dedup": "MoveByContactActor 0x1816a1182..11d5: EntityRef가 이동 목록에 있으면 return, 아니면 먼저 추가. 루트는 미리 목록에 추가되지 않는다.",
+    "velocity": "0x1816a1208..12d2: ignoreTargetVelo일 때 원래 delta의 normalized vector n으로 대상 m_Velo(+0xf0)의 내적 p를 구한다. p<0인 경우에만 적용 delta = delta - n*p. 축 방향 계산을 구현했다. recursion에는 적용된 delta가 아니라 원래 r15 delta를 전달한다(0x1816a152b,1550..157d).",
+    "positionAndSync": "0x1816a1324..134c: 대상 m_Pos(+0xb0)에 적용 delta 추가. sync option이면 syncCollisionPos 0x18169fc70 호출(0x1816a1353..1377). 루트 위치 갱신은 caller 책임이다.",
+    "callback": "0x1816a13fa..1517: actor flags +0xc의 0x10 또는 callback 부재가 아니면 actor type별 callback을 호출한다. callback은 위치 이동과 sync 뒤, recursion 전에 실행된다. 현재 helper는 contactResponse='none'을 명시한 대상만 허용한다.",
+    "recursion": "0x1816a151a..157d: recursive=true이면 원래 delta와 원래 face normal로 private moveContactActor 재호출. recursiveFaceIsMov=true이면 recursive face만 원래 delta의 normalized vector로 바꾼다. isEnableAttached는 이 core에서 직접 읽히지 않으며 callback에 option 객체가 전달된다.",
+    "ceilingPolicy": "WeightedLift.MoveLift 0x1817382e2..2eb 및 34a..351: preflight false이면 44d의 return으로 가므로 lift offset/position 및 탑승자를 모두 이동하지 않는다. 성공하면 offset 및 root position 저장(357..3b3), abs(dY)>=4일 때 face0 이동(3fc), EnableRideReversal이면 face1도 별도 이동(448). 이 함수에는 crush/death 이벤트 또는 이동량 clamp가 없다. 접촉하지 않은 먼 천장에 대한 sweep 안전성은 이 검사로 입증하지 않았다."
+  },
+  "api": {
+    "world": "{bodies:[{id,x,y,w,h,solid,layer,flags,actor,hasCollision,contacts:[{id,normal:{x,y}}],mapNormals:[{x,y}],velocity:{x,y},contactResponse:'none'}]}. 좌표는 top-left 픽셀, +Y 아래. solid는 AABB 메타데이터이며 네이티브 필터 대신 사용하지 않는다. flags는 원작 collision flags. actor=false는 owner Actor 부재, hasCollision=false는 선택된 collision 부재를 뜻한다. 생략 시 일반 Actor/collision 있음으로 해석한다.",
+    "directionAndDelta": "{x,y}의 정확한 16.16 픽셀 값 또는 {xRaw,yRaw}. preflight direction은 축 방향만 허용한다. 이동 delta와 선택 contact face는 별개이다.",
+    "option": "네이티브 필드 이름과 동일하며 추가 face는 contact normal 선택용 enum(0..3) 또는 {x,y}. preflight에서 face는 staticTarget dot 분기에만 사용되고 접촉 조회는 direction으로 한다.",
+    "returns": "isEnableMoveContactActor -> boolean. moveContactActor -> {world: JSON clone, moved:[{id,xRaw,yRaw,x,y}],synced:[id]}. 입력을 수정하지 않고 루트도 이동하지 않는다. moved는 대상별 실제 적용 delta이며 순서가 네이티브 contact 순서와 depth-first recursion 순서다. callback 또는 미확정 경로가 있으면 throw하고 결과를 내보내지 않는다."
+  },
+  "integration": {
+    "WeightedLift": "같은 tick의 이동 전 native contact snapshot으로 preflight(world,lift,{x:0,y:-1},{face:0}) 또는 하강 {x:0,y:1},{face:1} 호출. false이면 원작처럼 offset/position 갱신을 취소. true면 루트 target position을 caller가 저장하고 helper.moveContactActor(snapshot,lift,{xRaw:0,yRaw:dY},{face:0}) 결과의 moved만 런타임 actor 좌표에 적용한다. abs(dY)<4면 transport를 생략한다. EnableRideReversal이면 동일 delta face1을 별도 호출하여 결과를 순차 적용하며 두 호출의 dedup 목록은 공유하지 않는다. Helper가 반환하는 cloned root 좌표로 이미 commit한 root를 덮어쓰지 않는다. 아직 contact snapshot 및 callback 근거가 없으면 기존 verticalTravel refusal을 유지해야 한다.",
+    "MoveWall": "기존 ctx.isEnableMoveContactActor(request)는 helper.isEnableMoveContactActor(world,request.wallId,request.delta,{face:request.face,collisionIndex:request.collisionIndex})로 대응한다. request.face=0과 delta의 수평 방향은 별개임을 유지한다. ctx.moveContactActor(request)는 helper.moveContactActor(snapshot,request.wallId,request.delta,{...request.options,face:request.face})를 호출하고 returned moved를 runtime actors에 적용한다. wall target은 이미 caller가 commit했다. snapshot의 접촉 목록은 transport 중 AABB 재계산하지 않는다. 양쪽 callback은 전역 함수 등록 없이 caller scope에서 구성하고 JSON state에 저장하지 않는다.",
+    "parallelDependencies": "17~21 다른 작업의 파일, 공통 런타임 또는 큐를 수정하지 않았다. helper는 다른 새 모듈에 의존하지 않는다. 실제 contact cache와 actor callback adapter를 제공하기 전에는 런타임 연결 완료 또는 스테이지 해제라고 주장할 수 없다."
+  },
+  "correctionHistory": [
+    {
+      "date": "2026-10-13",
+      "prior": "source-lift-devices.js unresolved.verticalTravel은 preflight가 복원되지 않았으므로 수직 carry를 거부한다고 기록했다.",
+      "correction": "preflight core는 이제 축 방향 캐시 접촉 그래프에서 복원했다. 기존 refusal은 contact cache 생성과 actor callback 연결이 여전히 미완료이므로 제거하지 않았다. 원래 발견된 face0/face1 및 deltaY 호출은 맞으며 유지했다.",
+      "evidence": "0x1816a181e,1991,19f9; 0x1817383fc,448"
+    }
+  ],
+  "verification": {
+    "individualCommand": "node --test source-migration/source-move-contact.test.cjs",
+    "individual": {"pass":13,"fail":0},
+    "fullCommand": "node --test source-migration/*.test.cjs",
+    "full": {"pass":445,"fail":0},
+    "cases": ["상승 carry", "천장 접촉 시 lift transaction 취소", "2단 stack", "수평 push와 face 분리", "transport에 ceiling 검사 없음", "epsilon 3/4 raw 경계", "mask/flags", "static dot >=0/negative 분기", "반대 target velocity 제거", "재귀/sync 옵션", "recursiveFaceIsMov", "중복 방지", "JSON 직렬화 및 입력 불변", "미확정 경로 명시적 거부"],
+    "stageData": "장치가 없는 순수 helper이므로 compile/타이머/인원별 파라미터 또는 tick 상태 머신이 없다. 합성 테스트는 실제 stage compile 검증을 대체하지 않는다. 실제 2..8인 스테이지 연결 검증은 수행하지 않았으며 런타임 미등록이다."
+  },
+  "unresolved": [
+    "AABB-only 입력에서 원작 contact buffer와 map contact normals를 만드는 collision pass 미복원. contacts/mapNormals가 없으면 추측하지 않고 throw한다. 저장된 contact 순서를 caller가 제공해야 한다.",
+    "대각선 FP 정규화는 0x1816463a0 및 0x18163df00의 정확한 LUT/반올림/overflow 미복원. preflight 또는 velocity/recursiveFaceIsMov 정규화에 대각선을 쓰면 throw한다.",
+    "actor type별 OnMoveByContact delegate/PlayerMagnet callback 미복원. callback 없음이 입증된 actor만 contactResponse='none'을 지정해야 한다. 일반 플레이어가 항상 callback 없음이라고 가정하면 안 된다.",
+    "calcScreenEnd=true 및 collisionIndex!=0은 adapter 미복원으로 throw한다.",
+    "Preflight cycle은 native가 별도 visited list 없이 재귀하므로 helper가 명시적으로 거부한다. 실제 collision scene이 cyclic graph를 배제하는지는 미확정이다.",
+    "숫자는 안전 정수 범위의 축 방향 FP 값으로 제한한다. 극단적인 int64 overflow 및 비정상/malformed 입력은 원작과 일치한다고 주장하지 않는다.",
+    "천장 정책은 이미 기록된 map contact에 대한 lift caller의 이동 취소를 입증했다. contact 없는 천장을 한 tick에 관통하는 sweep/crush 정책 및 Dossun/GoKart caller 정책은 입증하지 않았다."
+  ]
+}

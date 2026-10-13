@@ -52,6 +52,11 @@
  * Player default event57 handler clamps raw to [0x1999,0x30000]
  * @0x1816c6858..878 then InitWalkSpeed 0x1816bec10 sets walk and ice
  * max from stage walk-speed and ice multiplier. Jump/gravity unchanged.
+ * InitWalkSpeed: scale*Stage.m_BaseScale (+0x10), sar16 @0x1816bec85/91;
+ * multiply QPlayerDefine.SPEED_X=QFP._3 (raw196608), sar16
+ * @0x1816becb4/b9; store walk @0x1816becbd; multiply Stage.m_IceSpeedUp
+ * (+0x50), sar16/store ice max @0x1816becc4/c9/cd. SPEED_X is copied
+ * from QFP+0x128 @0x18177e300/307, NOT QFP+8 (earlier report corrected).
  *
  * This is a facts-driven native device core, not an invented AABB solver.
  * compile refuses MoveWall unless nativeContactFacts:true explicitly opts
@@ -64,7 +69,7 @@ const FP=65536,EPSILON=4; // FP16.16; abs tolerance 0x181885a97.
 const C=Object.freeze({moveDefaultRaw:3276800,triggerDefaultRaw:3276800,widthRaw:1179648,
  heightDefaultRaw:17039360,waitRaw:98304,idleRaw:98304,returnStartRaw:98304,
  moveSpeedRaw:131072,returnSpeedRaw:98304,timerCapRaw:6553600,
- speedMinRaw:6553,speedMaxRaw:196608}); // Addresses in header.
+ speedMinRaw:6553,speedMaxRaw:196608,playerSpeedXRaw:196608}); // Addresses in header.
 const clone=v=>JSON.parse(JSON.stringify(v));
 const allowed=(v,c)=>!v||v<0&&c<=-v||v>0&&v<10&&c>=v||v>=10&&c>=Math.trunc(v/10)&&c<=v%10;
 function raw(v,label){if(!Number.isFinite(v))throw Error('Invalid FP '+label);const r=Math.trunc(v*FP);if(!Number.isSafeInteger(r))throw Error('Unsafe FP '+label);return r;}
@@ -101,6 +106,20 @@ function compile(actors,count,options={}){
   }
  });
  return {schemaVersion:1,count,walls,switches,nativeContactFacts:options.nativeContactFacts===true,completePhysicsFidelity:false};
+}
+// Pure event57 receiver. The runtime supplies native stage factors in current
+// speed state; existing derived speeds are replaced, never compounded.
+function applyPlayerSpeedEvent(current,event){
+ if((event.eventType??event.event)!==57)throw Error('Player speed receiver requires event 57');
+ for(const [name,value] of Object.entries({speedScaleRaw:event.speedScaleRaw,stageBaseScaleRaw:current.stageBaseScaleRaw,iceSpeedUpRaw:current.iceSpeedUpRaw}))
+  if(!Number.isSafeInteger(value))throw Error('Player speed receiver requires safe integer '+name);
+ // Native imul64 wraps before arithmetic sar16; BigInt avoids JS rounding.
+ const multiply=(a,b)=>{const r=Number(BigInt.asIntN(64,BigInt(a)*BigInt(b))>>16n);
+  if(!Number.isSafeInteger(r))throw Error('Unsafe player speed result');return r;};
+ const speedScaleRaw=Math.max(C.speedMinRaw,Math.min(C.speedMaxRaw,event.speedScaleRaw));
+ const walkSpeedRaw=multiply(multiply(speedScaleRaw,current.stageBaseScaleRaw),C.playerSpeedXRaw);
+ const walkSpeedMaxOnIceRaw=multiply(walkSpeedRaw,current.iceSpeedUpRaw);
+ return {...current,speedScaleRaw,walkSpeedRaw,walkSpeedMaxOnIceRaw};
 }
 const create=clone;
 function wallRect(w,sensor=false){const r=w.rect;return {id:w.id,type:'MoveWall',x:(w.xRaw+w.offsetXRaw+r.xRaw+(sensor?Math.min(w.triggerWidthRaw,0):0))/FP,
@@ -160,10 +179,10 @@ function afterStep(s,ctx={}){
 }
 function displays(s){return {walls:s.walls.map(w=>({...wallRect(w),state:w.state,timerRaw:w.timerRaw,blocked:w.blocked,trigger:wallRect(w,true)})),
  switches:s.switches.map(sw=>({id:sw.id,name:sw.name,type:sw.type,x:sw.xRaw/FP,y:sw.yRaw/FP,direction:sw.direction,rect:clone(sw.rect),pressed:sw.pressed,speedScale:sw.speedScaleRaw/FP,allPlayers:sw.allPlayers}))};}
-return {compile,create,solids,beforeStep,afterStep,displays,signal,table,pairedOffset,supportedTypes:['MoveWall','SpeedSwitch'],nativeConstants:C,
+return {compile,create,solids,beforeStep,afterStep,displays,signal,table,pairedOffset,applyPlayerSpeedEvent,supportedTypes:['MoveWall','SpeedSwitch'],nativeConstants:C,
  integration:{compile:'MoveWall requires options.nativeContactFacts:true. Until the native recursive adapter is available, compile throws rather than claiming st_w_12_04 runs.',
  contacts:'afterStep consumes wallContacts [{wallId,layer}], wallPushBacks [{wallId,positionXRaw,positionYRaw}], switchContacts [{switchId or relayId,actorId,layer,attributeFlags}]. These must be original collision facts, including native contact order; not arbitrary overlaps.',
  motion:'beforeStep needs ctx.isEnableMoveContactActor(request) -> boolean and ctx.moveContactActor(request). Preflight must be pure; move applies contact-chain displacement after wall target is committed. All coordinates and deltas are FP raws. Neither callback is serialized.',
- speed:'Route outgoing event57 to entity or actor type27. Player default handler clamps scale to raw6553..196608 then recalculates walk and ice max (InitWalkSpeed); do not multiply existing speed or change jump. No speed reset is sent on release.',
+ speed:'Call applyPlayerSpeedEvent(current, event57) with current.stageBaseScaleRaw (Stage raw+0x10) and current.iceSpeedUpRaw (Stage raw+0x50). It returns a new state with walkSpeedRaw and walkSpeedMaxOnIceRaw, preserving other fields. Route outgoing event57 to entity or actor type27. Player default handler clamps scale to raw6553..196608 then recalculates walk and ice max (InitWalkSpeed); do not multiply existing speed or change jump. No speed reset is sent on release.',
  order:'Update reads previous collision phase contacts; afterStep records the current collision phase. Common switch state is consumed after speed notification.'},completePhysicsFidelity:false};
 });
