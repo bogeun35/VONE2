@@ -1,0 +1,87 @@
+{
+  "status": "partial_host_integration__scoped_birth_scale_helpers_verified",
+  "verification": {
+    "method": "read-only disassembly; collision-bootstrap-evidence.json reused",
+    "nativeCodeExecuted": false,
+    "dedicatedTests": {
+      "pass": 29,
+      "fail": 0
+    },
+    "fullSuite": {
+      "pass": 957,
+      "fail": 0
+    },
+    "realSelections": 28,
+    "stageIds": [
+      "st_w_03_02",
+      "st_w_10_04"
+    ],
+    "populations": "2..8 offline/online via existingselectVariant/actorsForCount;8Player requests each, native limitflag2/currentcount restricts2..8",
+    "independentArithmeticFixture": "player-collision-init-scale-evidence.json:11 signed64/mask/division cases calculated independently inPython directly from0x1816bf700;nooriginalnativeexecution",
+    "bootstrapReuse": "collision-bootstrap-evidence.json pivot/unit/zero allocation reused; shared files untouched"
+  },
+  "confirmed": {
+    "ear": "GetEarLength0x1816bc850 = (524288*earScale >>16)-524288; Initialize0x1816bd61c/620 ear/preEarScale65536.",
+    "scale": "setCollisionScale0x1816bf700 args(baseScale,bodyScale); body height3014656. If bodyScale>65536 andearScale<81920, adjustedBody=65536+((bodyScale-65536)*(57671+7865*((earScale-65536)<<16/16384)>>16)>>16). X=baseScale*bodyScale>>16. Y=(masked(adjustedBody*height)+masked(earLength*originalBodyScale))/height then*baseScale>>16. mask=low16clear on signed64products. Onlycurrentcollision.scale written.",
+    "addScale": "0x1816bf5f0 addsdelta toActor.scaleY, clamps26214..229376, writesbothActorScaleX/Y, callssetCollisionScale(baseScale=Actor.baseScale), returnsactualdelta.",
+    "birthPhases": "Collision zero-fill2000x1817f64fa:positions0,attribute0. initialize0x181690b15/1f/29 all3scales65536. setupCollision0x18169f790 onlyentity/callbackflag/index/holder;doesnotsetposition. Player.initCollision0x1816bde50 selectsregularrect46x32(-16,-47)forPlayer27,priority-1,layer1,forceSearchflag5,pivot(0,-65536),dynamicScale(1,Actor.scaleY),copiescurrentScale topre/expected0x1816be014..020.",
+    "addActor": "Player.CreateEntity0x1816bd4e8 subtracts32768 frommutableFactoryParam.y. CreateActor0x1816a3658 readsupdatedposition beforeAddActor0x1816a3687. ActorScene.AddActor callsSetInitPos0x1816a73ee thenSetBaseScale0x1816a7422. SetInitPos0x18169d41f/423 setscollisioncur/prepositions,expectedremains0;flag6clear. SetBaseScale0x1816a08c0 multipliesall3collisionScalevectorsbyActorScale*stageBaseScale via0x1816a0370.",
+    "actorScale": "Actor.Initialize0x18169cd02 setsActor.baseScale=Stage.scale;0x18169cd06 Actor.scale=(65536,65536),bootstrapliteral.",
+    "state1": "Player.Initialize0x1816bd5db state0/request1;OnInitialize_Default0x1816c2f70 setsanimation1 andnoextraCollider. parserforPlayer27 default3-2slotsallzero,10-4slot5=1 addsplayerflag22(0x1816bdc9a);scopeexcludesOnUpdate_Default movement."
+  },
+  "next": "Lead plugs helper birth/current/pre/expected snapshots intoactual3-2/10-4PlayerActorcreation andsharedpipeline; aux2 suppliesActor lifecycle/delegate facts. Treat scale snapshotphases distinctly, neverflatteninitialexpectedpos tocurrent. No remaining numericconstants in copiedscaleformula.",
+  "module": "source-player-collision-init.js",
+  "supportedTypes": [],
+  "completePhysicsFidelity": false,
+  "constants": {
+    "baseRectRaw": {
+      "height": 3014656,
+      "width": 2097152,
+      "x": -1048576,
+      "y": -3080192
+    },
+    "earLengthDefaultRaw": 524288,
+    "earMinRaw": 65536,
+    "earMaxRaw": 1310720,
+    "bigBodyEarLimitRaw": 81920,
+    "bigBodyEarDiffRaw": 16384,
+    "collisionModifyScaleRaw": 57671,
+    "collisionModifyScaleDiffRaw": 7865,
+    "bodyMinRaw": 26214,
+    "bodyMaxRaw": 229376,
+    "pivotRaw": [
+      0,
+      -65536
+    ],
+    "factoryYAdjustmentRaw": -32768,
+    "constantSources": {
+      "rect": "0x1816cba8f..bb10 andcbcff..cbd22",
+      "earDefaultLength": "0x1816cbcd1/8 ->QFP._8",
+      "earMinMax": "0x1816cbc7d/84 ->QFP._1;cbca7/ae ->QFP._20",
+      "bigBodyEarLimitDiff": "0x1816cbebb/ec2 ->QFP._1_25;0x1816cbee5/e9 ->QFP._0_25",
+      "modify": "0x1816cbf0c/13 ->QFP._0_88;cbf36..44 computes1-Player.modify (.12raw7865),notQFP._4",
+      "bodyMinMax": "0x1816cbe67/6e ->QFP._0_40;0x1816cbe91/98 ->QFP._3_50"
+    }
+  },
+  "integration": {
+    "purpose": "Standalone ordinary Player collider birth/scale helper. No general Player runtime implementation/registration; supportedTypes[] avoids pretending Player27 movement is complete.",
+    "bindings": "Each actualfactory-createdPlayer needs {id:allocatedCollisionID,entityId:nativeActorBinding,hasOnCollided:boolean fromActorType27registry}. IDs/registration not inferred; genericColliderID allocation/holder/cachehandles andDelegateTypeInit are host/aux2.",
+    "compile": "compile(authoredActors,count,{actorSceneFlags,stageScaleRaw,bindings}) supports fresh-stage ordinaryPlayer inputs exactly3-2/10-4 shown. Requires scene limitbit2 andmatchingcount actualbindings. NondefaultgeneralPlayer params exceptinitDir/slot5 explicitlyrefuse. No entitycreation or scene registration occurs.",
+    "birth": "bootstrap producesphases.playerInitCollision (positions0/scalescomputed+historiescopied), actorSetInitPos (cur/pre spawn,expected0),actorSetBaseScale (all3scalehistoriesmultipliedbybasefactor) andfinalcollisions. ActorreturnedInit/Pos supplied, no inventedActorPrePos. currentPlayerState1/animation1 metadata only, not wholePlayer struct.",
+    "spawnHalfPixel": "Player.CreateEntity mutatesFactoryParam.y-=32768 @0x1816bd4e8; genericCreateActor readsmodifiedvector@0x1816a3658 andpassesAddActor@0x1816a3687, thenSetInitPos@0x1816a73ee. Therefore3-2/10-4 y432->431.5(raw28278784) isverified. PriorTopView notes stopped atmutableparameter; thistaskfullytracesAddActortransport withouteditingfrozenfiles.",
+    "collisionFields": "Bodyrect46x32(-16,-47),kindrect0,layer1,priority-1,pushBack3,syncPos=true,pivot(0,-1). FreshCollider.attribute0 stays0 in traced init/State1entry; do not substitute inventedattribute1. ForceSearchflag5 alwaysset; callbackflag1 onlyactualregistry. Contacts/mapRequests emptyatbirth; hostbindsnativeallocatedlist handles.",
+    "scaleUpdates": "earLengthRaw/dynamicScale reproduceGetEarLength/setCollisionScale. updateScale(player{earScaleRaw},Actor{baseScaleRaw,scaleYRaw},collision) writesCURRENTscale+GetRect;history/positionunchanged. addBodyScale writesActorXYclamp.4..3.5,updatescurrentcolliderscale,returnsapplieddelta.",
+    "baseScale": "applyBaseScale isSetBaseScale/setAllCollisionScale MULTIPLICATION of pre/current/expectedscalevectors byActorXY*stagebase; callonlyatactualbirth/baseScalephase,not everytick.",
+    "sceneBoundary": "Descriptors uselead baseRectRaw/rectRaw/preRectRaw/scaleRaw/preScaleRaw/expectedScaleRaw/pivotRaw/position schema. Beforefirst scene movement/scale check hoststillmustperformnativeActorPre/expectedtarget preparation,registryfacts, actorExists/playerFacts/actorFlags andcallbacks. Birth expectedpositions0 areintentionalphasefacts,notmovementrequests.",
+    "dynamicEarTransport": "checkExpandEar0x1816c45c0 onlyifplayerflag20. It callssetCollisionScale(baseActor,bodyActorY)0x1816c48a8 andmayMoveContactActor0x1816c4a1d. Thishelperdoesnotfakeearinputevolution orcarry; sharedPlayer bridge suppliesearScale andexecutesactualtransport.10-4slot5setsbit22,notearflag20.",
+    "dependencies": "BrowserSourceCollisionRect mustload first. ExistingRect.getRect usedread-only. SharedActorLifecycle/PlayerContact/MoveContact/runtime/camera/scene notmodified."
+  },
+  "unresolved": [
+    "GeneralPlayer movement,input,gravity,ear-expansiontransport,events andnon-state1 lifecycle outside scope, notreimplemented.",
+    "Host colliderallocation,ActorType27 callbackregistration,list handles,actorExists/playerFacts/actorFlags and pipelinephaseintegration stillrequired.",
+    "MemoryexhaustedCollision.Create=null branch notrepresented; bindingrequiresactualsuccessfulcollisionallocation.",
+    "NondefaultPlayerparameterbranches beyondshipped3-2/10-4 refuse;TopView/Pole/etc multiplecolliders notsupportedbythisordinaryPlayerhelper.",
+    "Safe integer raw inputs/results only; signed64 intermediateswrappreserved.",
+    "Nooriginalgameexecution/humancompletion/deployment/Gitmodification."
+  ]
+}

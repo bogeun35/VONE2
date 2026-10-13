@@ -207,3 +207,10 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - FrameEvents.PlaySe 인자 메타데이터도 확인: EntityRef,SeId,Position,Volume,Pitch,IsDisableCheckBlankTime. Goal은 EntityRef.None/sound9. 끝의 stack0은 숨은 MethodInfo.
 - 3-2 carry fixture를 실제 지형/MapRect 적용 grid까지 확대: empty+shipped terrain 총14/14, 인원2..8. 합성 배치와 수직 입력, 나머지 액터 제외이므로 전체 스테이지 검증 아님.
 - 전체1003/1003(보조 WIP 포함), 그 뒤 음향 필드명 대조 정정 후 Key/Goal12/12. 원격 push 차단 유지.
+
+## 리드 Actor 공통 이동·Player 생성 대조 (2026-10-14)
+
+- source-actor-motion.js의Update1/2,Post1/2,syncCollisionPos 복원. velocity+signed-half-acceleration 이동, holder의 pre-position 비교로 collision bit6 설정, Post 실제변위 기록. Verified=DeterministicFrame class+24 metadata 확인. warp/jump/outmap/disable는검증된호스트필수.
+- PlayerCollisionInit 동결29건 대조후 포함. carry fixture에서일반Player의실제431.5 스폰/expected0/scale생성을사용하고명시적으로합성탑승배치에재배치함. 직접collision좌표수정대신Actor.Update1/2/Post2사용.
+- 집중48(Actor5+PlayerInit29+carry14), 전체1008/1008통과. 전체에는진행중보조파일이있으나ActorLifecycle/defaultPlayer/capture/WarpGun은본커밋미포함.
+- actualR.create/R.step은여전히미연결. 다음은실제actorfactory/위험물sensor/전체phase및defaultPlayer연결. 원격푸시보류유지.

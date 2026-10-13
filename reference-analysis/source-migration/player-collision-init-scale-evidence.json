@@ -1,0 +1,104 @@
+{
+  "scope": "Independent Python signed64 arithmetic fromnative0x1816bf700; not gameexecution",
+  "rows": [
+    {
+      "earScaleRaw": 65536,
+      "baseScaleRaw": 65536,
+      "bodyScaleRaw": 65536,
+      "expected": [
+        65536,
+        65536
+      ]
+    },
+    {
+      "earScaleRaw": 65536,
+      "baseScaleRaw": 65536,
+      "bodyScaleRaw": 131072,
+      "expected": [
+        131072,
+        123207
+      ]
+    },
+    {
+      "earScaleRaw": 73728,
+      "baseScaleRaw": 65536,
+      "bodyScaleRaw": 131072,
+      "expected": [
+        131072,
+        129988
+      ]
+    },
+    {
+      "earScaleRaw": 81919,
+      "baseScaleRaw": 65536,
+      "bodyScaleRaw": 131072,
+      "expected": [
+        131072,
+        136769
+      ]
+    },
+    {
+      "earScaleRaw": 81920,
+      "baseScaleRaw": 65536,
+      "bodyScaleRaw": 131072,
+      "expected": [
+        131072,
+        136770
+      ]
+    },
+    {
+      "earScaleRaw": 131072,
+      "baseScaleRaw": 65536,
+      "bodyScaleRaw": 131072,
+      "expected": [
+        131072,
+        153867
+      ]
+    },
+    {
+      "earScaleRaw": 65536,
+      "baseScaleRaw": 196608,
+      "bodyScaleRaw": 65536,
+      "expected": [
+        196608,
+        196608
+      ]
+    },
+    {
+      "earScaleRaw": 65536,
+      "baseScaleRaw": 65536,
+      "bodyScaleRaw": 26214,
+      "expected": [
+        26214,
+        26214
+      ]
+    },
+    {
+      "earScaleRaw": 65536,
+      "baseScaleRaw": 65536,
+      "bodyScaleRaw": 229376,
+      "expected": [
+        229376,
+        209713
+      ]
+    },
+    {
+      "earScaleRaw": 65537,
+      "baseScaleRaw": 98304,
+      "bodyScaleRaw": 65539,
+      "expected": [
+        98308,
+        98307
+      ]
+    },
+    {
+      "earScaleRaw": 65535,
+      "baseScaleRaw": 65536,
+      "bodyScaleRaw": 131072,
+      "expected": [
+        131072,
+        123205
+      ]
+    }
+  ]
+}

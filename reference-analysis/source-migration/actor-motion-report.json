@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "scope": "Actor common phase math and collision-holder synchronization, not a complete Actor lifecycle",
+  "nativeCodeExecuted": false,
+  "registration": {
+    "runtime": false,
+    "browserPackage": false,
+    "newPlayableStages": 0
+  },
+  "evidence": [
+    {
+      "va": "0x18169e0b0",
+      "fact": "Clear offset draw position; snapshot position/velocity; verified frame alone consumes nonzero request animation byte."
+    },
+    {
+      "metadataType": 13048,
+      "field": "DeterministicFrame.Verified",
+      "classFieldOffset": 24,
+      "fact": "Full metadata/fieldOffsets table resolves Frame+0x18 flag, no struct-header subtraction on this class field."
+    },
+    {
+      "va": "0x18169e100",
+      "fact": "Position adds velocity plus signed64 shift-left15 then arithmetic-right16 acceleration; velocity adds full acceleration; no dt multiplier at this phase."
+    },
+    {
+      "va": "0x18169fc70",
+      "fact": "Holder sync uint32 is at+0,collision id+4. Iterate holder order; missing id skipped. Compare actor position to collision previous position, set/clear collision flag6 and write current position."
+    },
+    {
+      "va": "0x18169e260",
+      "fact": "warpProc true returns; bit19 invokes jump; then bit18 bypasses CheckOutMap, otherwise true sets actor bit13. Jump callback changes are visible before next gate."
+    },
+    {
+      "va": "0x18169e370",
+      "fact": "Synchronize collision positions; CollisionVelo=current-pre; flag13 calls SetCollisionActive(false,selfEntityRef)."
+    }
+  ],
+  "verification": {
+    "dedicatedTests": 5,
+    "carryIntegrationTests": 14,
+    "playerInitializerTests": 29,
+    "carryDescription": "Actual3-2 tile grid and rail/camera settings, native initialized Player collider, synthetic relocated stack and fixed vertical velocity input. Common Actor Update1/2 and Post2 replace direct collision coordinate writes. No Actor.Post1/Player normal input/device lifecycle substitution.",
+    "releaseTests": 1008,
+    "includesAuxiliaryWorkInProgress": true
+  },
+  "unresolved": [
+    "Actual R.create/R.step stage factory and all actor phases not connected",
+    "SetCollisionActive,warpProc,jumpProc,CheckOutMap remain explicit native host callbacks; no default no-op",
+    "Full Player velocity/gravity/input state is external; fixed velocity only used in the isolated fixture",
+    "SourcePlayerCollisionInit reviewed and frozen; ActorLifecycle/default Player auxiliaries remain separate WIP"
+  ]
+}
