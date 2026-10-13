@@ -9,13 +9,27 @@
 # non-interactively. The final message lands in <worktree>/CODEX-RESULT.md and
 # the full event log in <worktree>/codex-events.jsonl.
 #
+# approval_policy "never" is what makes a headless run work at all: with nobody
+# to answer, any command that would ask is otherwise rejected "by policy". The
+# workspace-write sandbox still confines writes to the worktree.
+#
 # --ignore-user-config keeps the desktop config's computer-use / browser plugins
 # and its turn-ended notify hook out of a background run, so Codex can never take
 # the screen while the user is at the PC. Auth still comes from ~/.codex.
 set -euo pipefail
 task="$1"; brief="$2"
 repo="$(cd "$(dirname "$0")/../.." && pwd)"
-codex="${CODEX_BIN:-/c/Users/user/.codex/.sandbox-bin/codex.exe}"
+# The desktop app's real install. ~/.codex/.sandbox-bin/codex.exe is only the
+# sandbox shim: it runs, but its shell tool fails because codex-code-mode-host.exe
+# is not beside it. The bin/<hash> folder changes when the app updates, so take
+# whichever one currently holds both executables.
+codex="${CODEX_BIN:-}"
+if [ -z "$codex" ]; then
+  for d in /c/Users/user/AppData/Local/OpenAI/Codex/bin/*/; do
+    [ -x "$d/codex.exe" ] && [ -e "$d/codex-code-mode-host.exe" ] && codex="$d/codex.exe"
+  done
+fi
+[ -n "$codex" ] || { echo "Codex CLI not found" >&2; exit 1; }
 wt="$(cd "$repo/.." && pwd)/codex-wt/$task"
 src="$repo/reference-analysis/source-migration"
 
@@ -31,6 +45,8 @@ cp -n "$repo/reference-analysis/tools/disasm.py" "$wt/reference-analysis/tools/"
 "$codex" exec \
   --ignore-user-config \
   -c service_tier='"priority"' \
+  -c approval_policy='"never"' \
+  -c windows.sandbox='"elevated"' \
   -s workspace-write \
   -C "$wt" \
   --json \
