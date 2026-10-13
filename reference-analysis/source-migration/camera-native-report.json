@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "scope": "Normal CameraComponent and Stage.calcPlayerRange pure native core; no original executable run",
+  "registration": {
+    "runtime": false,
+    "browserPackage": false,
+    "newPlayableStages": 0
+  },
+  "evidence": [
+    {
+      "va": "0x1817df530",
+      "fact": "Initialize reciprocal view matrix +/-1/chip, stage matrix +/-chip, authored map dimensions, displayHeight fallback, initial startY=mapHeight-1 if zero"
+    },
+    {
+      "va": "0x1817dfa40",
+      "fact": "viewHeight=ortho*2; viewWidth=FPdiv(1920,FPdiv(1080,viewHeight)); movement limits collapse on small maps"
+    },
+    {
+      "va": "0x1817e0330",
+      "fact": "RequestNormal initializes start position and flag8 once"
+    },
+    {
+      "va": "0x1817dffd0",
+      "fact": "Initial player center uses Stage range average X transformed through reciprocal matrix, retains authored camera startY"
+    },
+    {
+      "va": "0x1817e0190",
+      "fact": "Initial map center averages xMin/xMax and retains authored startY"
+    },
+    {
+      "va": "0x1817e0501..511",
+      "fact": "Top -= QGameDefine.MAP_CHIP_SIZE_FP/2, static48 from0x181780766"
+    },
+    {
+      "va": "0x1817e0668..6c7",
+      "fact": "Average range then add targetOffset in stage coordinates"
+    },
+    {
+      "va": "0x1817e0790..81f",
+      "fact": "Clipped target lerp factors X4dt/Y3dt clamp0..65536"
+    },
+    {
+      "va": "0x1817dfd10",
+      "fact": "Transform top-left and bottom-right separately with signed stage matrix to obtain stage-space RectFP"
+    },
+    {
+      "va": "0x18170d191..2cd",
+      "fact": "Unless Stage flag256, any Player flag512 freezes previous range"
+    },
+    {
+      "va": "0x18170d537..5a5",
+      "fact": "Only Actor flag0x1000000 contributes Actor.m_Pos extrema; not collision extents and not exclusively Player actors"
+    },
+    {
+      "va": "0x18170b4cc..58d",
+      "fact": "Stage.onUpdate: Actor.Update -> Collision.Update -> calcPlayerRange -> updateAutoScroll -> Actor.Post -> Camera.funcNormal. Range captured before Post; collision consumes preceding camera state. Range/camera skipped when ebx=0 (stage flags1 or2)."
+    }
+  ],
+  "verification": {
+    "dedicatedTests": 22,
+    "releaseTests": 834,
+    "failures": 0,
+    "command": "node --test source-migration/*.test.cjs source-migration/play/*.test.cjs rebuild/camera.test.cjs",
+    "includesAuxiliaryWorkInProgress": true,
+    "actualStageVariants": [
+      "st_w_03_02:2..8",
+      "st_w_10_04:2..8"
+    ],
+    "viewHeightRaw": 31457280,
+    "viewWidthRaw": 55924032,
+    "tests": "fixed expected raws for native matrix precision, separate divisions, per-axis follow, authored start Y, odd width corners, range flags, JSON continuation"
+  },
+  "unresolved": [
+    "Auto scroll, zoomOut, unlimitScroll, unreturnScroll explicitly refused in this core",
+    "Empty target set retains native int64 extrema, refused because safe-number JSON representation cannot preserve them",
+    "Host Actor/Player lifecycle, creation order and existing runtime connection still pending",
+    "Camera/Collision/Actor.Post phase ordering confirmed statically but not registered in actual R.step",
+    "No whole-stage or human completion claim"
+  ]
+}

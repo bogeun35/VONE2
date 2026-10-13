@@ -167,3 +167,12 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - ColorBox30건과 SearchLight25건, 전체 source wildcard782/782 통과. 두 결과 노트와 모듈·검사·근거 JSON·SearchLight 재현 추출 스크립트만 선별 저장한다. 실제 runtime 등록/라운드 개방은 아직 아니다.
 - ColorBox는 native Actor bridge/Frame player index 목록/색 매핑/ordered contact/즉시 event dispatch가 필요하다. SearchLight의 출하 prototype 초기 kill/bright/dark0은 asset + native zero-init 경로로 확정되어 3-1의2..8인12개 기본 컴파일이 가능하다. 이전 default 미확정 기록은 결과 노트 정정 이력 참조.
 - Aux1 TopViewPlayer, Aux2 ActorLifecycle, Aux3 UpDownLift는 진행 중이므로 수정·스테이징하지 않는다. 원격 push 승인 대기와 live v20261013-11 상태는 유지한다.
+
+## Native camera / range 후속 체크포인트
+
+- source-camera-native.js/.test.cjs 및 camera-native-report.json 추가. normal scroll1, zoom/unlimit/unreturn0에 한정한 원작 FP 카메라/Stage range. 전용22/22, release834/834 통과(보조 WIP 검사 포함). 새 browser 등록/배포/라운드 개방은 없다.
+- 실제3-2/10-4의2..8 camera stage rect는 width55924032raw, height31457280raw. 단순16:9 곱셈과 다름. view matrix1/48 raw1365, Y-1365. default10tile high camera initialX582542,Y-327680. rangeTop에서24px를 빼고 중심을 잡으며 X4dt/Y3dt 보간한다. 초기 ToPlayerCenter는 X만 추적하고 Y는 authored startY를 보존한다.
+- Stage.calcPlayerRange0x18170d191..2cd: Stage flag256이 없고 Player flag512가 하나라도 있으면 이전 range를 유지. 0x18170d537..5a5는 Actor flag0x1000000만 m_Pos extrema로 합친다. player collision bbox나 모든 player의 단순 평균이 아니다. 빈 집합의 signed64 extrema는 명시 거부.
+- Stage.onUpdate0x18170b4cc..58d 순서 확정: Actor.Update → Collision.Update → calcPlayerRange → updateAutoScroll → Actor.Post → Camera.funcNormal. 즉 collision은 이전 camera를 소비하고 range는 Post 이전 좌표다. ebx0(stage flags1/2)에서는 range/camera 생략. 순서 조사 lead-stage-order.local.txt, 영역 lead-camera-area.local.txt. 원본 실행 없음.
+- ColorBox/SearchLight 선별 로컬커밋 ec3cb6b5. 원격 푸시 승인은 여전히 대기하며 재시도하지 않음. live v11, local deploy v12/ec50e31 유지.
+- 다음: lead-native-create-collisions.local.txt에서 Player.initCollision, Actor.CreateCollision, LinePathLift/DamageRect/Thunder/Goal/Key 초기화 확인 중. Player pivot literal은0x1816bdf74 RIP0x17ca704에서 읽을 것. Aux2 ActorLifecycle의 typed phase와 이 카메라를 실제 collision pipeline에 연결해야 하며 supportId에서 native cache를 만들어 넣지 않는다.
