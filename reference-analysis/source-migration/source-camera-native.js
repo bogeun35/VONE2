@@ -1,4 +1,4 @@
-/* CameraComponent normal-scroll core, read-only native extraction.
+/* CameraComponent scroll core, read-only native extraction.
  * Initialize0x1817df530: tile dimensions, displayHeight fallback, reciprocal
  * view matrix(+1/chip,-1/chip), stage matrix(+chip,-chip), zero startY -> H-1.
  * calcCameraMoveArea0x1817dfa40 / CalcCameraViewArea0x1817dfc10:
@@ -12,7 +12,11 @@
  * This camera consumes Stage.playerRange; it does not guess player selection
  * or frame ordering. Zoom branch0x1817e0524..64e uses aspect116508,
  * fit multiplier66, deadband24, gain1311, and lerp factor0.75*dt.
- * Auto/unlimit/unreturn remain explicit refusals.
+ * RequestAuto0x1817e0910 calculates start but does NOT assign position.
+ * funcAuto0x1817e0980 centers on Stage.scrollPosition + half viewStage size,
+ * then view-transforms/clips; no lerp or scrollPosition writeback.
+ * CreateEntity0x1817df4f8 helper0x1807871f0 zero-fills432 bytes@0x1807872ac.
+ * Unlimit/unreturn remain explicit refusals.
  */
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;root.SourceCameraNative=api;})(globalThis,function(){
 'use strict';
@@ -46,14 +50,14 @@ function calculatePlayerRange({stageFlags,players,actors,previousRange}){
  if(!result)throw Error('Camera empty target range uses native int64 extrema');return result;
 }
 function compile(stage){
- if(stage.scrollType!==1)throw Error('Camera native core supports normal scrollType1 only');
+ if(![0,1,2].includes(stage.scrollType))throw Error('Camera native scrollType0/1/2 required');
  for(const k of ['unlimitScroll','unreturnScroll'])if(stage[k]!==0)throw Error('Camera native '+k+' requires additional branch implementation');
  if(!Number.isInteger(stage.zoomOut))throw Error('Camera explicit zoomOut required');
  const m=stage.mapInitParam;if(!m)throw Error('Camera mapInitParam required');
  for(const k of ['width','height','chipSize','displayTileHeight'])if(!Number.isInteger(m[k]))throw Error('Camera integer '+k+' required');
  if(m.width<=0||m.height<=0||m.chipSize<=0||m.displayTileHeight<0)throw Error('Camera positive map dimensions required');
  if(!Number.isInteger(stage.cameraStartType))throw Error('Camera explicit cameraStartType required');
- return {schemaVersion:1,cameraFlags:stage.zoomOut?4:0,mapTileWidthRaw:exact(m.width*F,'map width'),mapTileHeightRaw:exact(m.height*F,'map height'),chipRaw:exact(m.chipSize*F,'chip'),upTileHeightRaw:(m.displayTileHeight||m.height)*F,startTileRaw:{xRaw:raw(m.startTileX),yRaw:m.startTileY===0?(m.height-1)*F:raw(m.startTileY)},cameraStartType:stage.cameraStartType};
+ return {schemaVersion:1,scrollType:stage.scrollType,cameraFlags:stage.zoomOut?4:0,mapTileWidthRaw:exact(m.width*F,'map width'),mapTileHeightRaw:exact(m.height*F,'map height'),chipRaw:exact(m.chipSize*F,'chip'),upTileHeightRaw:(m.displayTileHeight||m.height)*F,startTileRaw:{xRaw:raw(m.startTileX),yRaw:m.startTileY===0?(m.height-1)*F:raw(m.startTileY)},cameraStartType:stage.cameraStartType};
 }
 function dimensions(s){const height=mul(s.orthographicSizeRaw,2*F);return {height,width:div(1920*F,div(1080*F,height))};}
 function moveArea(s){
@@ -66,15 +70,16 @@ function moveArea(s){
 function clip(s,p){const a=s.moveAreaRaw;return{xRaw:clamp(p.xRaw,a.xMin,a.xMax),yRaw:clamp(p.yRaw,a.yMin,a.yMax)};}
 function stageToWorld(s,p){point(p,'stage point');return{xRaw:mul(p.xRaw,s.viewScaleRaw.xRaw),yRaw:mul(p.yRaw,s.viewScaleRaw.yRaw)};}
 function worldToStage(s,p){point(p,'world point');return{xRaw:mul(p.xRaw,s.chipRaw),yRaw:mul(p.yRaw,-s.chipRaw)};}
-function requestNormal(s){
- if(!(s.flags&8)){const a=moveArea(s);s.startPositionRaw={xRaw:add(s.startTileRaw.xRaw,a.xMin),yRaw:sub(add(sub(s.viewTileHeightRaw,s.startTileRaw.yRaw),a.yMax),F)};s.positionRaw=clip(s,s.startPositionRaw);s.flags|=8;}
- s.function=1;
+function request(s,type){
+ if(!(s.flags&8)){const a=moveArea(s);s.startPositionRaw={xRaw:add(s.startTileRaw.xRaw,a.xMin),yRaw:sub(add(sub(s.viewTileHeightRaw,s.startTileRaw.yRaw),a.yMax),F)};if(type!==2)s.positionRaw=clip(s,s.startPositionRaw);s.flags|=8;}
+ s.function=type;
 }
+const requestNormal=s=>request(s,1),requestAuto=s=>request(s,2),requestStop=s=>request(s,0);
 function toPlayerCenter(s,r){range(r);const center=stageToWorld(s,{xRaw:half(add(r.left,r.right)),yRaw:half(add(r.bottom,r.top))});s.positionRaw=clip(s,{xRaw:center.xRaw,yRaw:s.startPositionRaw.yRaw});}
 function toMapCenter(s){const a=s.moveAreaRaw;s.positionRaw=clip(s,{xRaw:half(add(a.xMin,a.xMax)),yRaw:s.startPositionRaw.yRaw});}
 function create(compiled,initialPlayerRange){
- const s={...clone(compiled),flags:compiled.cameraFlags,function:0,orthographicSizeRaw:half(compiled.upTileHeightRaw),orthographicMinRaw:half(compiled.upTileHeightRaw),orthographicMaxRaw:half(compiled.mapTileHeightRaw),viewScaleRaw:{xRaw:div(F,compiled.chipRaw),yRaw:div(-F,compiled.chipRaw)},targetOffsetRaw:{xRaw:0,yRaw:0}};
- requestNormal(s);
+ const s={...clone(compiled),flags:compiled.cameraFlags,function:0,positionRaw:{xRaw:0,yRaw:0},orthographicSizeRaw:half(compiled.upTileHeightRaw),orthographicMinRaw:half(compiled.upTileHeightRaw),orthographicMaxRaw:half(compiled.mapTileHeightRaw),viewScaleRaw:{xRaw:div(F,compiled.chipRaw),yRaw:div(-F,compiled.chipRaw)},targetOffsetRaw:{xRaw:0,yRaw:0}};
+ request(s,compiled.scrollType);
  // Stage.initScroll0x18170b34a..3cb only centers types0/1; no players skips0.
  if(s.cameraStartType===0&&initialPlayerRange!==null)toPlayerCenter(s,initialPlayerRange);
  else if(s.cameraStartType===1)toMapCenter(s);
@@ -91,8 +96,15 @@ function updateZoom(s,r,dtRaw){
  else if(span>=add(fit,24*F))next=Math.min(s.orthographicMaxRaw,add(original,mul(Math.abs(sub(sub(span,fit),24*F)),1311)));
  if(next!==original)s.orthographicSizeRaw=add(original,mul(sub(next,original),clamp(mul(dtRaw,49152),0,F)));
 }
-function update(s,playerRange,dtRaw){
- if(s.function!==1)throw Error('Camera update requires normal function1');
+function updateAuto(s,scrollPositionRaw){
+ point(scrollPositionRaw,'native Stage.scrollPosition');const area=stageAreaRaw(s);
+ s.positionRaw=clip(s,stageToWorld(s,{xRaw:add(scrollPositionRaw.xRaw,half(area.width)),yRaw:add(scrollPositionRaw.yRaw,half(area.height))}));
+ return {cameraAreaRaw:stageAreaRaw(s),scrollPositionRaw:clone(scrollPositionRaw)};
+}
+function update(s,playerRange,dtRaw,scrollPositionRaw){
+ if(s.function===0)return {cameraAreaRaw:stageAreaRaw(s)};
+ if(s.function===2)return updateAuto(s,scrollPositionRaw);
+ if(s.function!==1)throw Error('Camera update requires function0/1/2');
  if(s.flags&3)throw Error('Camera flags need additional branch implementation');
  range(playerRange);exact(dtRaw,'delta time');point(s.targetOffsetRaw,'targetOffset');if(s.flags&4)updateZoom(s,playerRange,dtRaw);moveArea(s);
  const center={xRaw:add(half(add(playerRange.left,playerRange.right)),s.targetOffsetRaw.xRaw),yRaw:add(half(add(playerRange.bottom,sub(playerRange.top,24*F))),s.targetOffsetRaw.yRaw)};
@@ -100,5 +112,5 @@ function update(s,playerRange,dtRaw){
  s.positionRaw=clip(s,{xRaw:add(p.xRaw,mul(sub(target.xRaw,p.xRaw),clamp(mul(dtRaw,4*F),0,F))),yRaw:add(p.yRaw,mul(sub(target.yRaw,p.yRaw),clamp(mul(dtRaw,3*F),0,F)))});
  const cameraAreaRaw=stageAreaRaw(s);return {cameraAreaRaw,scrollPositionRaw:{xRaw:cameraAreaRaw.x,yRaw:cameraAreaRaw.y}};
 }
-return {compile,create,calculatePlayerRange,requestNormal,toPlayerCenter,toMapCenter,stageToWorld,worldToStage,viewAreaRaw,stageAreaRaw,update};
+return {compile,create,calculatePlayerRange,requestNormal,requestAuto,requestStop,toPlayerCenter,toMapCenter,stageToWorld,worldToStage,viewAreaRaw,stageAreaRaw,update,updateAuto};
 });

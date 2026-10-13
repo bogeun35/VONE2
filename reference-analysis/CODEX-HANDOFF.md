@@ -191,3 +191,12 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - 12-4는 실제2..8 scrollType2다. 네 대상 전부normal이라는 테스트 가정은 실패 후 데이터 확인하여 명시적인auto거부 테스트로 정정했다. source runtime 미등록/배포 미변경.
 - lead-camera-auto.local.txt: RequestAuto0x1817e0910은 최초calcArea/startPosition/flag8만 하고 position을 쓰지 않는다(normal/stop과 다름). funcAuto0x1817e0980은 현재viewStageArea의width/height 절반을 Stage.scrollPosition에 더하고 reciprocal view matrix로 변환, clip 후 position을 저장한다. 보간/zoom/Stage.scrollPosition writeback 없음. Stage auto-scroll 속도·timer와 초기position 생명주기를 더 확인한 뒤 구현해야 한다.
 - 완료 로컬커밋 누적: ec3cb6b5(ColorBox/SearchLight),3f9aa3a4(camera),79f8ff68(layer table/빈캐시carry). 이 절과 zoom은 후속 선별 커밋. Push 재시도 없음. Aux1 TopViewPlayer32tests, Aux3 UpDownLift20tests 결과 노트는 있으나 coordinator의 동결 확인 전이라 이 커밋에 포함하지 않음. Aux2 ActorLifecycle도 미포함.
+
+## 리드 카메라·등록 대조 (2026-10-14)
+
+- Auto Camera Request/Update 구현, 실제12-4 2..8 설정 수용. Stage.scrollPosition producer와 R.step 연결은 미완료. fresh auto는 초기 position을 쓰지 않는 원작 차이를 보존.
+- TopView/Cardboard/UpDownLift 완료본 검토. 9-4 slot8 bit18에 따라 Cardboard 할당 전에 반환하므로 requiresCardboard=false로 정정. 원래 결과와 정정 기록 함께 보존.
+- CollisionCallbacks.initCallbacks 정적 MethodSpec 115개 추출(Added10/Contacted31/Collided65/MoveByContact1/PushedBack6/ChangeScale2). Player27에는 Added/Contacted만 있음. pause bit4는 contact/collided/move 콜백만 막고 pushedBack/scale은 막지 않음. 등록된 미구현 콜백은 명시적 오류.
+- 3-2 isolated empty-cache carry 테스트에 실제 registry dispatcher 연결. 실제 지형·전체 액터·R.step 수평 운반 해결을 주장하지 않음.
+- 집중103/103, 전체971/971 통과. 전체에는 보조 진행 중 작업 포함; ActorLifecycle/PlayerCollisionInit/PlayerWarpGun 파일은 이 커밋에 넣지 않음.
+- 원격 푸시는 이전 자동 승인 심사 거절로 보류 유지. 새 직접 사용자 승인이 없으므로 재시도하지 않음.

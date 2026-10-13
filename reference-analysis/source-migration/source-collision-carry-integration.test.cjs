@@ -3,13 +3,16 @@
 // isolate cache generation, next-tick inertia, Player contacts and Actor sync.
 const {test}=require('node:test'),assert=require('node:assert/strict');
 const P=require('./source-collision-pipeline.js'),B=require('./source-collision-broadphase.js'),C=require('./source-camera-native.js'),PC=require('./source-player-contact.js'),L=require('./source-linepath-devices.js'),pop=require('./population-rules.cjs'),data=require('./installed-stage-decoded.local.json');
+const Callbacks=require('./source-collision-callbacks.js');
 const F=65536;
 function body(entityId,xRaw,yRaw,rectRaw,extra={}){return {entityId,xRaw,yRaw,preXRaw:xRaw,preYRaw:yRaw,priority:0,layer:6,flags:0,pushBackTarget:3,collisionType:0,rectRaw,baseRectRaw:{...rectRaw},preRectRaw:{...rectRaw},scaleRaw:{xRaw:F,yRaw:F},preScaleRaw:{xRaw:F,yRaw:F},expectedScaleRaw:{xRaw:F,yRaw:F},pivotRaw:{xRaw:0,yRaw:0},contacts:[],mapNormals:[],requestMapNormals:[],actorExists:true,...extra};}
-const host={
- onContact:(w,e)=>{if(w.collisions.find(b=>b.id===e.ownerId).layer===1)PC.onContact(w,e);},
- hasOnChangeScale:()=>false,hasOnPushedBack:()=>false,
+const host=Callbacks.createHost({
+ 'PlayerComponent.OnContactAdded':(w,a,b,e)=>PC.onContact(w,e),
+ 'PlayerComponent.OnContacted':(w,a,b,e)=>PC.onContact(w,e)
+},{
+ actorForCollision:(w,b)=>w.actors.find(a=>a.entityId===b.entityId)||null,
  syncActorPosition:(w,b,e)=>{const a=w.actors.find(a=>a.entityId===b.entityId);assert.ok(a);a.positionRaw={xRaw:e.xRaw,yRaw:e.yRaw};}
-};
+});
 function riderIds(w,lift){const list=B.active(w.storage),seen=new Set();function up(b){for(const c of b.contacts){if(c.normal.x!==0||c.normal.y!==-1||seen.has(c.id))continue;const next=list.find(b=>b.id===c.id);if(next&&((1<<next.layer)&6)){seen.add(c.id);up(next);}}}up(lift);return [...seen];}
 function setup(count){
  const stage=pop.selectVariant(data.stages.find(s=>s.stageId==='st_w_03_02').json.stageInitParamList,count,true),rail=L.create(L.compile(pop.actorsForCount(stage,count),count)).devices.find(d=>d.type==='LinePathLift');
@@ -17,11 +20,11 @@ function setup(count){
  const cols=Math.min(count,4);
  for(let i=0;i<count;i++){
   const x=rail.xRaw+(i%cols-(cols-1)/2)*32*F,y=rail.yRaw+rail.rectRaw.y+F-Math.floor(i/cols)*46*F;
-  const b=B.createCollision(w.storage,body('player:'+i,x,y,{width:32*F,height:46*F,x:-16*F,y:-47*F},{priority:-1,layer:1,flags:32,pivotRaw:{xRaw:0,yRaw:-F},playerFacts:{wakeUpCount:1,inertiaAttachmentId:null}}));
-  w.actors.push({entityId:b.entityId,flags:0,positionRaw:{xRaw:x,yRaw:y},prePositionRaw:{xRaw:x,yRaw:y},velocityRaw:{xRaw:0,yRaw:F},player:{state:1,flags:0,inputBit:0}});
+  const b=B.createCollision(w.storage,body('player:'+i,x,y,{width:32*F,height:46*F,x:-16*F,y:-47*F},{actorType:27,priority:-1,layer:1,flags:32,pivotRaw:{xRaw:0,yRaw:-F},playerFacts:{wakeUpCount:1,inertiaAttachmentId:null}}));
+  w.actors.push({entityId:b.entityId,actorType:27,flags:0,positionRaw:{xRaw:x,yRaw:y},prePositionRaw:{xRaw:x,yRaw:y},velocityRaw:{xRaw:0,yRaw:F},player:{state:1,flags:0,inputBit:0}});
  }
- const b=B.createCollision(w.storage,body(rail.id,rail.xRaw,rail.yRaw,{...rail.rectRaw},{layer:13,pushBackTarget:2,flags:4|1024|(rail.isInertia?0:128)}));
- w.actors.push({entityId:b.entityId,flags:0,positionRaw:{xRaw:b.xRaw,yRaw:b.yRaw}});
+ const b=B.createCollision(w.storage,body(rail.id,rail.xRaw,rail.yRaw,{...rail.rectRaw},{actorType:103,layer:13,pushBackTarget:2,flags:4|1024|(rail.isInertia?0:128)}));
+ w.actors.push({entityId:b.entityId,actorType:103,flags:0,positionRaw:{xRaw:b.xRaw,yRaw:b.yRaw}});
  return {w,rail};
 }
 for(let count=2;count<=8;count++)test(`shipped3-2 rail ${count} players: empty cache -> native contacts -> inertia -> Actor sync`,()=>{

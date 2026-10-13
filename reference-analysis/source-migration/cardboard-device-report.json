@@ -1,0 +1,89 @@
+{
+  "status": "partial_general_cardboard__verified_complete_shipped_9_4_suppressed_path",
+  "module": "source-cardboard-devices.js",
+  "supportedTypes": [],
+  "nativeCodeExecuted": false,
+  "scope": "Actual shipped st_w_09_04 TopViewPlayer -> Cardboard.Creator(player) path only; no general Player state or free Cardboard implementation",
+  "verification": {
+    "dedicatedTests": {
+      "pass": 13,
+      "fail": 0
+    },
+    "fullSuite": {
+      "pass": 880,
+      "fail": 0
+    },
+    "realStageSelections": 14,
+    "population": "2..8 offline/online from population-rules selection;8 authored TopView slots, every datas8={t:1,f:1}, zero authoredCardboard",
+    "ownership": "Atomic claim; only5 new Cardboard files. Existing frozen TopViewPlayer/ColorBox/Gear/Broadphase and shared ActorLifecycle unchanged."
+  },
+  "criticalFinding": {
+    "summary": "9-4 does not attach Cardboard. TopView factory calls the creator, which returns before allocation because Player.DisableEquipCardboard bit18 is set by native slot8=1.",
+    "playerParse": "0x1816bda7c..9a reads slot8; 0x1816bdca1..cc4 nonzero ->flagsbit18",
+    "topViewCallOrder": "0x1816a4b05 createsPlayer (Player.Initialize0x1816bd520 ->parseParameter0x1816bd754),then0x1816a4b30 Cardboard.Creator0x1817ebcd0",
+    "creatorGate": "0x1817ebd8a getsPlayer; 0x1817ebd95 null ->return; 0x1817ebdb0 testsPlayerFlags0x40000 and0x1817ebdb7 ->0x1817ebece return",
+    "independentAccessor": "Player.IsDisableEquipCardboard0x1816bcf60 test0x40000; setter0x1816bcf70 bit18",
+    "skippedCalls": [
+      "Frame.GetFactoryParam1540x1817ebdcb",
+      "Frame.CreateActorEntity0x1817ebe24",
+      "InitCollision0x1817ebe63",
+      "InitPost0x1817ebe74",
+      "ActorScene.AddActor0x1817ebec4"
+    ]
+  },
+  "playerCardboardFlags": {
+    "disableEquipBit": 18,
+    "disableEquipMask": 262144,
+    "topViewBit": 17,
+    "topViewAccessor": "0x1816bcf30",
+    "equipBit": 19,
+    "equipAccessor": "0x1816bcf90",
+    "coveredByte": "Player+1; quantum m_CardboardCoveredFlags offset17 minus16",
+    "equipOrCover": "0x1816cb8b0 nonzero coveredByte OR equipbit19",
+    "topViewInputGate": "0x1816ca190..1a5 equipbit19/cardboardCoveredFlags suppress normal inputs; disableEquipbit18 itself does not block input",
+    "skippedCreatorEffects": "No Cardboard allocation, collision registration, equip/cover patches, display changes, events or removal. Existing Player fields remain untouched."
+  },
+  "unreachableAttachmentFacts": {
+    "note": "Read for control-flow confirmation; not implemented or needed by9-4 suppressed creator",
+    "Initialize": "0x1817ebef0 colorIndex8/playerRef",
+    "InitPost": "0x1817ec1a0 actorbits7/22. Attached owner setsCardboardflags0/2, disables own collision/display, copiesPlayerIndex.",
+    "Update": "0x1817ec300 phase0checkPersonalEquip->equip,phase1wait->checkRemove/checkMove,phase2remove,phase3wait->remove2;thencheckPlayersInCollision",
+    "Post": "0x1817ed3b0 Cardboardflag2/playerref present -> copiescurrentPlayerActorpos plusoffsetY",
+    "Events": "Cardboard method index has no OnRecvEvent; any generic Actor handling would be host dispatcher, no guessed Cardboard events added."
+  },
+  "correctionHistory": [
+    {
+      "prior": "TopViewPlayer.result.md and frozen source-topviewplayer-devices.js compile row requiresCardboard:true described call as mandatory attachment",
+      "corrected": "Call occurs, but actual shipped slot8 disables attachment before allocation. Prior mandatory dependency/metadata is wrong. Existing files deliberately frozen; companion correctTopViewRequirement returns a corrected copy without mutation.",
+      "evidence": "0x1816bdcc0 +0x1817ebdb0/7 +0x1816bcf60 +all8real9-4slots8=1"
+    }
+  ],
+  "integration": {
+    "decision": "creationDecision(nativePlayerOrExplicitNull) inspectsactualuint32flags. MissingPlayer is native no-op; disableEquipBit18 no-op; otherwise decisioncreate=true but createAttached refuses outside scope.",
+    "compile": "compile(actors,count,{nativeCreatedPlayers:[{id,playerIndex,flags,...}]}) only verifiesalreadycreated9-4players after native factory limit. Does not synthesize player state or instantiateCardboard. allslot8mustbe nonzero; actualnativePlayerflags mustagree; stateattempts+cardboards[] JSONsafe.",
+    "topViewCorrection": "correctTopViewRequirement(frozenTopViewCompiled,nativePlayerSnapshots) checksbindingorder and disabledgate,returnsnewcompiled rows requiresCardboard:false. Leave inputcompiled/source untouched. Lead can instead correct metadata directly after reviewing/owning integration.",
+    "playerFields": "inspectPlayerState reads disable/equip/covered/topView/inputblocked facts, does not mutate generalPlayer. Do not zero covered/equip flags merely because creator skipped.",
+    "runtime": "9-4 adds noCardboard lifecycle. solids/displays/beforeStep/afterStep only operate on verified emptyCardboardstate and return no effects; rejectactiveCardboards. Do not register this companion as implemented authoredCardboard actor; supportedTypes intentionallyempty."
+  },
+  "unresolved": [
+    "General non-disabled player-attached Cardboard and authoredCardboard creation/equip/cover/timers/collisions/remove/display behavior outside scoped9-4 path remains unimplemented and explicitlyrefused.",
+    "ActualPlayer lifecycle and shared scene/runtime registration remain lead responsibilities; nativeCreatedPlayers are explicit host inputs.",
+    "FrozenTopViewPlayer dependency metadata requires lead correction or companion copy adapter. No old files modified."
+  ],
+  "next": "Lead removes mandatory Cardboard dependency for shipped9-4 or applies companion metadata correction; continues actual generalPlayer/TopView state/scene/input/camera/DistanceConstraint integration. For future activeCardboard task use exact pendingaddresses below.",
+  "continuation": {
+    "activePlayerAttachment": "0x1817ebdc3 onward ifdisableEquipbit18clear",
+    "freeCreator": "0x1817ebb50 (separate overload)",
+    "equip": "0x1817ec600",
+    "pushBack": "0x1817ec7f0",
+    "checkRemove": "0x1817ec8e0",
+    "checkMove": "0x1817eca30",
+    "remove": "0x1817ecb70",
+    "remove2": "0x1817ecde0",
+    "coverage": "0x1817ecf00",
+    "startEquip": "0x1817ed470",
+    "cctor": "0x1817ed5e0",
+    "playerVisibility": "0x1816cb630/0x1816cb6c0/0x1816cb750",
+    "nextCommand": "python -I tools/disasm.py 0x1817ec600 0x1817ec8e0 0x1817eca30 0x1817ecb70 0x1817ecde0 0x1817ecf00 0x1817ed470 0x1817ed5e0; only if a future task expands scope beyond9-4."
+  }
+}

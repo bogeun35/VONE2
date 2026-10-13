@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "devices": [
+    "UpDownLift"
+  ],
+  "module": "source-updownlift-devices.js",
+  "status": "partial_native_core_verified_host_collision_integration_pending",
+  "settledOn": "2026-10-13",
+  "nativeCodeExecuted": false,
+  "creator": {
+    "ordinal": 40,
+    "delegateSite": "0x1817763b0",
+    "method": "0x181732300",
+    "chain": [
+      "Frame.CreateActorEntity call0x1817323b0",
+      "generic helper0x18020b640 call0x1817323d4",
+      "Initialize0x181732430 call0x1817323e8",
+      "Parse0x1817324d0 call0x1817323f9",
+      "InitCollision0x1817325e0 tail0x18173241e"
+    ],
+    "defaultZero": "prefab2545 root EntityPrototype7377/EntityView7578/UpDownLiftView7531; descendants2167 SortingGroup and2114 SpriteRenderer; no serialized UpDownLift component. No instance .ctor in method metadata. generic helper call0x18020b69a -> default factory0x180688c10 -> RuntimeType.CreateInstanceDefaultCtor call0x180688d4e, boxed112bytes copy0x180688d81..dc6. Runtime value allocation zero fill0x180319fdd/fe8."
+  },
+  "nativeMethods": [
+    {
+      "type": "UpDownLiftComponent",
+      "namespace": "Quantum",
+      "method": "GetHashCode",
+      "va": "0x181731ec0",
+      "fileOffset": 24315584,
+      "token": "0x6001371"
+    },
+    {
+      "type": "UpDownLiftComponent",
+      "namespace": "Quantum",
+      "method": "Serialize",
+      "va": "0x181731fb0",
+      "fileOffset": 24315824,
+      "token": "0x6001372"
+    },
+    {
+      "type": "UpDownLiftComponent",
+      "namespace": "Quantum",
+      "method": "SetEntityRef",
+      "va": "0x181507220",
+      "fileOffset": 22043168,
+      "token": "0x6001373"
+    },
+    {
+      "type": "UpDownLiftComponent",
+      "namespace": "Quantum",
+      "method": "Creator",
+      "va": "0x181732300",
+      "fileOffset": 24316672,
+      "token": "0x6001374"
+    },
+    {
+      "type": "UpDownLiftComponent",
+      "namespace": "Quantum",
+      "method": "Initialize",
+      "va": "0x181732430",
+      "fileOffset": 24316976,
+      "token": "0x6001375"
+    },
+    {
+      "type": "UpDownLiftComponent",
+      "namespace": "Quantum",
+      "method": "ParseParameter",
+      "va": "0x1817324d0",
+      "fileOffset": 24317136,
+      "token": "0x6001376"
+    },
+    {
+      "type": "UpDownLiftComponent",
+      "namespace": "Quantum",
+      "method": "InitCollision",
+      "va": "0x1817325e0",
+      "fileOffset": 24317408,
+      "token": "0x6001377"
+    },
+    {
+      "type": "UpDownLiftComponent",
+      "namespace": "Quantum",
+      "method": "InitPost",
+      "va": "0x180476130",
+      "fileOffset": 4671792,
+      "token": "0x6001378"
+    },
+    {
+      "type": "UpDownLiftComponent",
+      "namespace": "Quantum",
+      "method": "OnStart",
+      "va": "0x180476130",
+      "fileOffset": 4671792,
+      "token": "0x6001379"
+    },
+    {
+      "type": "UpDownLiftComponent",
+      "namespace": "Quantum",
+      "method": "OnUpdate",
+      "va": "0x1817326b0",
+      "fileOffset": 24317616,
+      "token": "0x600137a"
+    },
+    {
+      "type": "UpDownLiftComponent",
+      "namespace": "Quantum",
+      "method": "OnPost",
+      "va": "0x180476130",
+      "fileOffset": 4671792,
+      "token": "0x600137b"
+    },
+    {
+      "type": "UpDownLiftComponent",
+      "namespace": "Quantum",
+      "method": ".cctor",
+      "va": "0x181732a00",
+      "fileOffset": 24318464,
+      "token": "0x600137c"
+    }
+  ],
+  "fields": {
+    "flags": "0x00",
+    "entity": "0x08",
+    "height": "0x10",
+    "oldTimer": "0x18",
+    "pushLimit": "0x20",
+    "pushTimer": "0x28",
+    "speed": "0x30",
+    "timer": "0x38",
+    "offset": "0x40/0x48",
+    "rect": "0x50..0x6f (Height Width X Y)"
+  },
+  "parameters": {
+    "height": "slot0 raw+slot1 raw*actualPlayerCount, integer multiply not FP shift, store if abs>=4 (0x181732588..5a3)",
+    "speed": "slot2 raw, store if abs>=4, negative retained (0x1817325a7..5bb)",
+    "defaults": "height=-70 (cctor0x181732b23->Initialize0x181732484); speed=65536 (cctor0x181732b39->Initialize0x18173249a)",
+    "realStage": "5-4 2..8 all one UpDownLift1 at1414,312; slots[-140,0,1]; no createThreshold",
+    "floatConversion": "FP.FromString_UNSAFE0x18163fcb0 narrows parsed double tofloat32; FromFloat0x18163fc40 float32*65536 and truncate, matches module Math.fround conversion"
+  },
+  "constants": {
+    "sizeWidth": {
+      "raw": 7864320,
+      "store": "0x181732af7"
+    },
+    "sizeHeight": {
+      "raw": 1310720,
+      "store": "0x181732b0d"
+    },
+    "interval": {
+      "raw": 327680,
+      "store": "0x181732b4b"
+    },
+    "rect": {
+      "heightRaw": 1179648,
+      "widthRaw": 7733248,
+      "xRaw": -3866624,
+      "yRaw": -589824,
+      "source": "cctor0x181732b64..bcf subtract2 and inset1; InitCollision copy0x181732620..670"
+    },
+    "piRaw": {
+      "raw": 205887,
+      "source": "imul0x1817328df literal0x3243f"
+    }
+  },
+  "update": {
+    "method": "0x1817326b0",
+    "unblocked": "clear push timers; clear flagbit0; oldTimer=timer; timer+=(dt*speed)>>16 (0x181732843..84e); if timer>5 subtract5 ONCE, equality retained (0x181732875..89f)",
+    "sine": "ratio=(timer<<16)/5 trunc towardzero; ratio*=2; radians=(ratio*205887)>>16; nativeSin0x1816465d0; targetOffsetY=(sin*height)>>16 (0x1817328ca..903)",
+    "preflight": "delta=(0,targetOffsetY-currentOffsetY); IsEnableMoveContactActor0x1816a15c0 call0x181732943 with defaults. Failure setsbit0 and returns, offset/Actor.Pos unchanged; candidate timer retained for next rollback. Epsilon-small delta itself is rejected by shared helper.",
+    "blockedNextTick": "restore timer=oldTimer (0x181732718..71c); if abs(pushLimit)<4 compute half=2.5, t=timer-(timer>half?half:0), limit=half-2*t; if negative add interval+half (0x181732761..7c5); pushTimer+=unscaled dt; >=limit adds limit to restored timer and resets push timers (0x1817327d6..805), then normal advance",
+    "success": "offsetY=target (0x18173297d); Actor.m_Pos+0xb0 = m_InitPos+0x80 + offset (0x181732996..9e2). MoveContactActor0x1816a0b70 call0x1817329f0, default Up face even descending, recursive riders, root position write distinct from transport.",
+    "events": "no OnRecvEvent override; OnStart/InitPost/OnPost bare ret; no NotifyEvent calls. Common Actor53/pause external."
+  },
+  "lut": {
+    "module": "source-updownlift-math.js",
+    "asset": "resources.assets numeric FPSinCos body4908336, stride8 firstint32",
+    "count": 411775,
+    "sha256": "df5d19c35ac2594ef98c6a5924efdb7eeea75d0f936e91314f98f6a05891781c",
+    "packing": "signed byte exact deltas; browser atob/NodeBuffer ->Int32Array; native abs(radians)%0x6487e andsign restore",
+    "extractor": "extract-updownlift-native-data.local.py uses bundled Python3.12 -I -B existingcp312 UnityPy read-only, no pip/nativegame"
+  },
+  "collision": {
+    "init": "CreateCollision(pushBackTarget2,true) call0x181732670; Collision.initialize stores arg2 to+3 at0x181690b08. CreateCollision sets type0 at0x18169f586. UpDownLift sets layer5 at+1 (0x18173267a) and ORs flags bit2(0x181732687). collisionFlagsSet=4 is an OR mask, not complete flags. Actor.setupCollision separately sets/clears flagbit1 at0x18169f8d9/df from actor-type metadata; host owns full flags/priority/attribute.",
+    "runtime": "read-only source-move-contact.js dependency uses full FPSqrt normalization/cached native contact normals/mapNormals; no synthetic supportId contacts or callback bypass"
+  },
+  "integration": {
+    "hostInput": "ctx.contactWorld from native cache adapter: {bodies:[{id,x,y,actorType,hasCollision,contacts:[{id,normal}],mapNormals,...}]}. Native exact normal equality including normalizedFP rounding. Missing facts refuse.",
+    "hostOutput": "contactWorld contains moved/synced riders; pendingActorPositions is a host write list for native Actor.m_Pos, NOT a new native NextPos field. Host applies these position writes in device update and then collision pipeline/rect/inertia phase. Module never duplicates root movement inside MoveContact helper.",
+    "rootSync": "native code shown writes Actor.Pos only, not collision position; shared Actor/collision pipeline owns synchronization and contact rebuild",
+    "pause": "ctx.pausedLiftIds from common Actor lifecycle; incoming53 without resolved array refuses; events forward viaactorEvents",
+    "browser": "load DistanceConstraintMath, SourceMoveContact, SourceUpDownLiftMath, then SourceUpDownLiftDevices",
+    "render": "solids box118x18 vs sprite nominal120x20. displays returns actorcenter/currentoffset. Renderer remains lead.",
+    "ownership": "new UpDownLift files only; shared Lift/move-contact/runtime and SearchLight/DistanceConstraint untouched"
+  },
+  "verification": {
+    "unitCommand": "node --test source-migration/source-updownlift-devices.test.cjs",
+    "unitTests": {
+      "tests": 20,
+      "pass": 20,
+      "fail": 0
+    },
+    "checked": [
+      "real5-4 allpopulations",
+      "slot linearcount formula",
+      "signed epsilon defaults",
+      "full411775entry LUT/sha vsinstalledasset",
+      "signed phase quartercycles",
+      "singlewrap/equality",
+      "blockedrollback/limitbranches",
+      "riderstack recursion bothdirections",
+      "missingcache/unknowncallback atomicrefusal",
+      "Actor53hostpause",
+      "JSON replay",
+      "browser LUTdecode",
+      "actualprefabchildren"
+    ],
+    "fullCommand": "node --test source-migration/*.test.cjs",
+    "fullSuite": {
+      "tests": 854,
+      "pass": 853,
+      "fail": 1,
+      "failure": "source-topviewplayer-devices.test.cjs:18 analog threshold inclusive and no normalization; actual{xRaw:0,yRaw:0}, expected{xRaw:13107,yRaw:0}",
+      "note": "다른 세션의 신규 파일/변경이 유입된 후 최신 전체run. UpDownLift 전용20개는 재검증 모두 통과. 다른 소유 파일 미수정."
+    },
+    "fullSuiteHistory": [
+      {
+        "tests": 822,
+        "pass": 822,
+        "fail": 0,
+        "note": "UpDownLift 신규20개 포함, 첫 전체run 전부 통과"
+      }
+    ]
+  },
+  "correctionHistory": [
+    {
+      "previous": "초기 테스트가 자식 부재 및 quantized timer phase의 부호 대칭을 가정했다.",
+      "correction": "실제 prefab에는 SortingGroup/SpriteRenderer descendants2개가 있다. 그들에도 serialized component가 없다. 음수 timer의 idiv는0쪽절삭하고 다음 multiply는산술shift라 ±1092 offsets가191520/191660으로 비대칭. 테스트를 native 정수 순서에 맞췄다. LUT 음수zero는 JS -0 대신 native0으로 정규화했다."
+    },
+    {
+      "previous": "첫 draft는 +1에 저장된5를 collisionType, CreateCollision의 byte2를 layer로 잘못 읽고 flags4를 전체값으로 표현했다.",
+      "correction": "Collision field offset 확인: +1=m_Layer, +2=m_CollisionType, +3=m_PushBackTarget. layer5/type0/pushBackTarget2로 수정하고 collisionFlagsSet=4 OR mask만 노출. 전체 flag/priority/attribute는 host setupCollision metadata 계약. Actor +0x80=m_InitPos,+0xb0=m_Pos도 확인하여 임시 NextPos라는 표현 수정."
+    }
+  ],
+  "unresolved": [
+    "호스트의 native collision cache adapter와 Actor.Pos commit/sync 순서 및 common Actor pause 연결이 아직 모듈과 통합되지 않았다. 공유 pipeline/Map/rect/inertia helper는 읽기만 한다.",
+    "수송 대상에 PlayerMagnet 등 아직 sharedhelper가 미지원하는 callback 타입이 나타나면 specific error 유지.",
+    "실제5-4 playable/원작병행검수는 미실시. compile success나 빈 native contact fixture를 playable로 주장하지 않음."
+  ],
+  "completePhysicsFidelity": false
+}

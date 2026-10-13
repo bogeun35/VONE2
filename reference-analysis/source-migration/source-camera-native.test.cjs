@@ -45,7 +45,7 @@ test('delta-time clamping and stage-space target offset occur before view transf
 });
 test('unimplemented camera branches and missing native range remain explicit errors',()=>{
  for(const k of ['unreturnScroll','unlimitScroll'])assert.throws(()=>C.compile(stage({[k]:1})),new RegExp(k));
- assert.throws(()=>C.compile(stage({scrollType:2})),/normal/);
+ assert.throws(()=>C.compile(stage({scrollType:3})),/scrollType/);
  assert.throws(()=>C.create(C.compile(stage())),/playerRange/);
  const s=C.create(C.compile(stage()),null);assert.throws(()=>C.update(s,{left:0,right:1,top:0},1092),/range.bottom/);
 });
@@ -71,13 +71,26 @@ test('zoom deadband preserves both boundaries; one pixel beyond shrinks or expan
   const s=C.create(C.compile(zoomStage()),null);s.orthographicSizeRaw=8*F;C.update(s,{left:0,right:0,top:0,bottom:bottom*F},1092);assert.equal(s.orthographicSizeRaw,expected);
  }
 });
-test('target stages2..8 preserve normal/zoom settings and explicitly refuse12-4 auto scroll',()=>{
+test('target stages2..8 preserve normal,zoom and12-4 auto settings',()=>{
  for(const id of ['st_w_14_03','st_w_05_01','st_w_07_03','st_w_12_04'])for(let count=2;count<=8;count++){
   const selected=pop.selectVariant(data.stages.find(s=>s.stageId===id).json.stageInitParamList,count,true);
-  if(id==='st_w_12_04'){assert.equal(selected.scrollType,2);assert.throws(()=>C.compile(selected),/normal/);continue;}
+  if(id==='st_w_12_04'){assert.equal(selected.scrollType,2);const s=C.create(C.compile(selected),center(100,432)),r=C.update(s,null,1092,{xRaw:48*F,yRaw:0});assert.equal(s.function,2);assert.equal(r.cameraAreaRaw.height,480*F);assert.deepEqual(r.scrollPositionRaw,{xRaw:48*F,yRaw:0});continue;}
   const s=C.create(C.compile(selected),null),before=s.orthographicSizeRaw;
   const out=C.update(s,{left:0,right:10000*F,top:0,bottom:10000*F},F);
   assert.equal(s.orthographicSizeRaw,before);assert.equal(out.cameraAreaRaw.height,selected.mapInitParam.height*48*F);
   if(id==='st_w_05_01'){assert.equal(s.flags&4,4);assert.equal(s.orthographicMinRaw,s.orthographicMaxRaw);}
  }
+});
+test('first auto request preserves zero position until Stage.initScroll or funcAuto runs',()=>{
+ const s=C.create(C.compile(stage({scrollType:2})),null);assert.deepEqual(s.positionRaw,{xRaw:0,yRaw:0});assert.deepEqual(s.startPositionRaw,{xRaw:582542,yRaw:-327680});
+ const input={xRaw:48*F,yRaw:0},result=C.update(s,null,0,input);assert.deepEqual(s.positionRaw,{xRaw:647919,yRaw:-327680});assert.equal(result.cameraAreaRaw.x,3138096);assert.deepEqual(result.scrollPositionRaw,input);assert.notEqual(result.scrollPositionRaw,input);
+ // Auto consumes supplied stage scroll and does not interpolate or write its
+ // slightly biased reciprocal transform back into that scroll coordinate.
+ const again=C.update(JSON.parse(JSON.stringify(s)),null,F,input);assert.deepEqual(again,result);
+});
+test('switching normal/auto/stop preserves position after initial flag8 and auto clips',()=>{
+ const s=C.create(C.compile(stage()),center(960,432)),original={...s.positionRaw};C.requestAuto(s);assert.deepEqual(s.positionRaw,original);
+ C.update(s,null,1092,{xRaw:100000*F,yRaw:100000*F});assert.deepEqual(s.positionRaw,{xRaw:s.moveAreaRaw.xMax,yRaw:s.moveAreaRaw.yMin});
+ C.requestStop(s);const fixed={...s.positionRaw};assert.deepEqual(C.update(s),{cameraAreaRaw:C.stageAreaRaw(s)});assert.deepEqual(s.positionRaw,fixed);C.requestNormal(s);assert.deepEqual(s.positionRaw,fixed);
+ const auto=C.create(C.compile(stage({scrollType:2})),null);assert.throws(()=>C.update(auto,null,1092),/scrollPosition/);
 });

@@ -1,0 +1,182 @@
+{
+  "status": "partial",
+  "verification": {
+    "nativeCodeExecuted": false,
+    "method": "read-only assembly and installed LUT bytes",
+    "dedicatedTests": {
+      "pass": 32,
+      "fail": 0
+    },
+    "fullSuite": {
+      "pass": 857,
+      "fail": 0
+    },
+    "realStageSelections": 14,
+    "population": "st_w_09_04 2..8 offline/online;8 authored spawn requests, native actorScene limitbit2 keeps current player count",
+    "realBaseMap": "48x50, padding1 column-major byte2600,1012 chip69;spawn8 probes nonfall andhole(1,1)fall before dynamic overlays",
+    "sourceGameRun": false
+  },
+  "confirmed": {
+    "creation": "ActorFactory.createTopViewPlayer0x1816a4ac0 calls general createPlayer0x1816a3e40 then Cardboard.Creator0x1817ebcd0. Actor becomes ordinaryPlayer27 while Player.originalActorType144 and requested state9. Player factory consumes native current playerActorCount ordinal and framePlayerIndexList, limited by actorScene flagsbit2. 9-4 has8 authored slots, selectedplayercount differs.",
+    "parse": "Player.parseParameter0x1816bd860 slot8nonzero sets flagsbit18 at0x1816bdcc0; originaltype144 requestedstate9 at0x1816bdd89. Nonzero other parameter branches require general host parsing.",
+    "state": "OnInitialize_TopView0x1816c9d20 resets state/topViewFunc=0;actorflag22; firsttime playerflag17,collision0flag7,create collision1 regularrect46x32(-16,-47),pushBack0,syncPos true,layer1,pivot(0,-1);stageflags5/6. body collision0 is topViewrect28x32(-16,-29),priority-1,flag5.",
+    "default": "topViewFunc_Default0x1816ca0d0 requires no playerflag19 and cardboardCoveredFlags0. MoveVector threshold13107. Ordered Y then X contact checks return contacted+out blocking; only out blocking suppresses velocity. Walkvector*walkspeed then camera end correction. FaceX3/2 turns actor right/left. anim based rawinput and contacted result. Final actorVelo=walkVelo+Wind;Windzero.",
+    "fallCheck": "checkFall0x1816ca690 scales CheckW7,CheckH2 by actorScale*baseScale. All4 sampled corners require chip>1 withinbounds; midpoint shiftedYhalfheight IsFall(Attrbit4).",
+    "fall": "OnUpdate_TopView0x1816c9fc9 sets state0,func1 and RETURNS on first detection. Fallphase0 cameraShake.1/sound8/anim6/collisioninactive/sorting-1900/playerflag9/wait.6;phase1 timerexpires getFallOffset and native normalize+length /2 to velo,flags2bit8,wait0,state2;phase2 wait+=dt*6,scaleX-=dt*waitclamp0,scaleY=scaleX/colorRGBA=scaleX,at0requestplayerstate4,velo0,stageflags10 unlessflags8,phase3.",
+    "constants": "Native cctor0x1816cb910 confirms topView rect,stickthresholdQFP._0_20,checkWQFP._7,checkHQFP._2,exclamationoffset24/64; pivotdata0x182e88680=(0,-65536)."
+  },
+  "next": "Lead integrates special state9 into general Player dispatcher and Cardboard lifecycle, then collision/input/camera/actions/Constraint/post transport in native phase order. Pure TopView paths have no unresolved numeric constants.",
+  "tileAttributes": {
+    "cctor": "0x1817818b0",
+    "fieldHandleSlot": "0x183164fd0",
+    "token": "0x800000a9",
+    "fieldRefIndex": 84,
+    "typeIndex": 14302,
+    "typeDefinitionIndex": 5482,
+    "fieldIndex": 24217,
+    "fieldName": "7BA700CA04155CB5F2E6803A5771EAFC9701B5E56736057BC415BF3042301A08",
+    "byteOffset": 6006064,
+    "length": 80,
+    "sha256": "7ba700ca04155cb5f2e6803a5771eafc9701b5e56736057bc415bf3042301a08",
+    "values": [
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      13,
+      13,
+      13,
+      13,
+      13,
+      13,
+      13,
+      13,
+      13,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      5,
+      16,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      5,
+      0
+    ],
+    "lookup": "0x18178184a rejects chip>=79 even though array80"
+  },
+  "module": "source-topviewplayer-devices.js",
+  "supportedTypes": [
+    "TopViewPlayer"
+  ],
+  "completePhysicsFidelity": false,
+  "stageCompilesAlone": false,
+  "inputLut": {
+    "source": "resources.assets TextAssetFPSinCos body4908336 length3294200",
+    "sha256": "5c1659881bfcf3d7d2bde44c7b6757eba3152745eee26857ef4c4bd96e19b8a9",
+    "loader": "0x18165aec5 literalFPSinCos /0x18165aed3 static+0x20",
+    "indexRule": "button angle raw *1143 >>16; sin signedlow32 / cos signedhigh32",
+    "entries": {
+      "51435": [
+        46314,
+        46367
+      ],
+      "154305": [
+        46419,
+        -46262
+      ],
+      "257175": [
+        -46210,
+        -46470
+      ],
+      "360045": [
+        -46522,
+        46158
+      ]
+    },
+    "stickBoundaryEvidence": "Native length0x1818878bd uses sqrt of shifted squares. Installed FPSqrt entry2621=838790 =>length13106 forraw13107/13108;entry2622=838950 =>length13108 forraw13109. Thus raw13107 threshold compares length, not component."
+  },
+  "integration": {
+    "compile": "Requires nativeActorBridge:true, framePlayerIndexList, gamePlayerInfo[{playerRef,colorIndex}], actorSceneFlags and optional existingPlayerActorCount. CurrentPlayerActorCount determines identity and spawn truncation. Authored source names are not player identity. nondefault general parse params refuse.",
+    "creation": "Run existing general Player.CreateEntity/Actor.Initialize, then Cardboard.Creator0x1817ebcd0; parsed slot8 sets Player flag18, so this call returns before allocation in shipped9-4. Source actor144 becomes Actor.type27; original Player.actorType144 requestedstate9. Apply parsePlayerFlagsSet bit18, source initDir, and native mutable create parameter y-=32768 AFTER CreateEntity (0x1816bd4e8); do not claim this postcreation parameter write moved actor at that point.",
+    "stateDispatch": "Player.OnUpdate0x1816c0010 does battlePlaneDamageProc/invincibleProc then updatePlayerState0x1816c07c0. Dispatch9 entry0x1816c0b46/update0x1816c0cd6/exit0x1816c0977. Call this helper at that state branch; do not replace ordinary Player. Other requested states (sleep5 from input4 and death4 etc) remain general host dispatch.",
+    "snapshots": "Player flags/flags2/state/topViewFunc/wakeUpCount/cardboardCoveredFlags/currentAnimationId/walkSpeedRaw/flash fields; Actor exact position/scale/baseScale/velocity/wind/flags. All safe integer raws; stage flags and mode exact.",
+    "collision": "collisionDescriptors only body initialization:rect28x32(-16,-29),priority-1,layer1,push3,syncpos,flag5,pivot(0,-1). initializeTopView firstentrybodyflag7 adds secondregular46x32(-16,-47),push0,syncpos,layer1,pivot. Generic collision initialize/attribute/scale/player contact callbacks remain shared host responsibility.",
+    "contactProbe": "contactProbe(collisionIndex0,face,{includeMap:true,collectAttributes:true})->{contacted,attribute}. Native0x1816927a0 scans exact-normal ordered cache, ORs attributes of matched actor collisions;map consulted onlyifno matchedactor. Mapcontact returns true with outattribute0. Only outattribute bit0 blocks topview input; horizontal contacted changes animation. Never substitute a single blocked boolean.",
+    "movement": "Y then X; ctx.calcScreenEndWalkVeloY/X exact Actor/camera correction. Helper updates velocity, consumes Wind to0; shared Actor integration/scene collisions transports positions. No dt velocity reinterpretation added.",
+    "input": "Native Input.LeftStick raw; buttons are [native int32 at button+0,native int32 at button+4], pressed iff second>first. Input fields Left0x48/Right0x6c/Up0x84/Down0x30 (structoffsets). Opposing left/up win. Analog length>=13107 returns unnormalized stick; four exact diagonal entries supplied.",
+    "effects": "Host atomically executes returned CreateCollision/SetCollisionActive/SetSortingOrder/SetAnim/look/sound/camera/exclamation actions before next native phase; preserve field assignments and original action order. beforeStep requires topViewSnapshot(id) and applyTopViewUpdate(id,result) returningtrue after transaction.",
+    "distanceConstraint": "Shared native player actor-index snapshots feed frozen DistanceConstraint; state byte is p.state (notPlayerState9), same flags/position/velocity/contact facts. Fall phase0 sets flag0x200 and existing DistanceConstraint skips whole frame, preserving event24 flags. Compute all tensions before force transport; mode2 transport mutates current actors in original index order. Never fabricate event24 from browser directions.",
+    "post": "General Player.OnPost0x1816c0dd0 adds PushBackVec ifflagbit3 (0x1816c0e67..80), runs postPlayerState0x1816c0ea8, CheckOutMap0x1816c0ecb/event43. This helper does not replace that phase."
+  },
+  "unresolved": [
+    "General Player entity creation, damage/input/state dispatch, Actor integration and native contact callbacks are required host dependencies; not connected to shared runtime.",
+    "Camera screen-end velocity correction and dynamic map overlays must be supplied at their real phases. Helpers verify base-map holes only, not original-game gameplay.",
+    "Nondefault general Player parameter branches explicitly refuse; only shipped9-4 defaults supported.",
+    "No general Player events invented: delegate through native host, including state transitions, capture and equipment.",
+    "Safe integer raws only. Frozen DistanceConstraint math is a read-only dependency; source-distanceconstraint-math.js must load before browser UMD.",
+    "No original executable, human completion, deployment or Git modification."
+  ],
+  "correctionHistory": [
+    "Initial threshold test assumed component13107 qualifies. Independent native FPSqrt bytes showed length13106; test corrected to raw13109 boundary without changing native math.",
+    "First base-map inspection used rawbuffer row-major and observedwrongcoordinates; verification now uses established padded column-major indexing. No module semantics relied on rawbuffer inspection.",
+    "Lead integration: requiresCardboard true was incorrect for accepted slot8!=0 inputs. Cardboard.Creator0x1817ebdb0/7 tests Player flag18 and returns before allocation. Metadata now false; general Cardboard lifecycle is not a9-4 dependency. See cardboard-device-report.json."
+  ]
+}

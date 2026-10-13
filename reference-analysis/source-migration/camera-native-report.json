@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "scope": "Normal CameraComponent including zoomOut and Stage.calcPlayerRange pure native core; no original executable run",
+  "scope": "Normal/stop/auto CameraComponent including zoomOut and Stage.calcPlayerRange pure native core; no original executable run",
   "registration": {
     "runtime": false,
     "browserPackage": false,
@@ -58,11 +58,23 @@
     {
       "va": "0x1817e0524..64e",
       "fact": "Zoom selects dominant excess of horizontal span minus FP(ortho*116508)*66 or vertical span minus ortho*66. +/-24 deadband, gain1311, target clamped min/max, interpolation factor clamp(0.75*dt,0,1)."
+    },
+    {
+      "va": "0x1817e0910",
+      "fact": "RequestAuto initializes area/start flag8 once but does not write position; unlike RequestNormal/Stop."
+    },
+    {
+      "va": "0x1817e0980",
+      "fact": "Auto uses Stage.scrollPosition plus half current camera area, reciprocal transform and clip, without normal interpolation/zoom or writing Stage.scrollPosition."
+    },
+    {
+      "va": "0x1817df4c4..519 / 0x18078729f..2ac",
+      "fact": "Camera prototype has no serialized CameraComponent; get-or-add creates a zeroed 432-byte component before Initialize."
     }
   ],
   "verification": {
-    "dedicatedTests": 25,
-    "releaseTests": 877,
+    "dedicatedTests": 27,
+    "releaseTests": 892,
     "failures": 0,
     "command": "node --test source-migration/*.test.cjs source-migration/play/*.test.cjs rebuild/camera.test.cjs",
     "includesAuxiliaryWorkInProgress": true,
@@ -72,20 +84,21 @@
       "st_w_14_03:2..8",
       "st_w_05_01:2..8 (zoom enabled, authored min=max)",
       "st_w_07_03:2..8",
-      "st_w_12_04:2..8 verified auto-scroll refusal"
+      "st_w_12_04:2..8 auto camera accepted; Stage scroll-position producer not connected"
     ],
     "viewHeightRaw": 31457280,
     "viewWidthRaw": 55924032,
     "tests": "fixed expected raws for native matrix precision, separate divisions, per-axis follow, authored start Y, odd width corners, range flags, JSON continuation"
   },
   "unresolved": [
-    "Auto scroll, unlimitScroll, unreturnScroll explicitly refused. Actual12-4 is scrollType2. RequestAuto/funcAuto recovered statically but not implemented; Stage auto-scroll timer/speed host remains separate.",
+    "unlimitScroll/unreturnScroll refused. Stage auto-scroll timer/speed and runtime phase host remain unconnected.",
     "Empty target set retains native int64 extrema, refused because safe-number JSON representation cannot preserve them",
     "Host Actor/Player lifecycle, creation order and existing runtime connection still pending",
     "Camera/Collision/Actor.Post phase ordering confirmed statically but not registered in actual R.step",
     "No whole-stage or human completion claim"
   ],
   "corrections": [
-    "Initial camera implementation refused zoomOut. Native0x1817e0524..64e now implemented. A test initially assumed all four blocked target stages used normal scroll; actual12-4 data is type2 for every population and is now asserted to refuse explicitly."
+    "Initial camera implementation refused zoomOut. Native0x1817e0524..64e now implemented. A test initially assumed all four blocked target stages used normal scroll; actual12-4 data is type2 for every population and is now asserted to refuse explicitly.",
+    "Auto refusal recorded above is superseded: RequestAuto/funcAuto implemented and tested. Fresh auto camera leaves position zero until initial-center selection or first update, confirmed via component zero-allocation and static prefab inspection."
   ]
 }
