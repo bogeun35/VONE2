@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "devices": ["DamageRect", "LinePathLift"],
+  "module": "source-linepath-devices.js",
+  "status": "partial_parameter_decoding_verified_runtime_refused",
+  "settledOn": "2026-10-13",
+  "nativeCodeExecuted": false,
+  "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base 0x180000000",
+  "summary": "두 장치의 실제 파라미터를 주소 근거로 복원했다. 분석용 decodeDamageRect/decodeLinePathLift와 float32→FP 변환 도우미를 제공한다. 런타임은 미완성이므로 해당 액터가 있으면 compile이 구체적인 오류를 던지며, 정지한 리프트나 죽이지 않는 위험 영역을 성공한 구현처럼 반환하지 않는다.",
+  "loader": {
+    "status": "authored_fractional_obstacle_settled",
+    "entryPath": [
+      "QStageFileConverter.convertStageInitParam 0x180553fb2 → convertActorCreateParam 0x1805540c0",
+      "0x180554274/0x180554279: authored tag copied to entry+0x10",
+      "0x18055427c: movss loads authored data.f at source+0x14 (Single / float32)",
+      "0x180554281: call convertFP 0x180554310",
+      "0x180554291: returned qword stored at destination entry+0x18",
+      "LinePathLift ParseParameter 0x1818786f6 reads datas[4] qword entry+0x18"
+    ],
+    "conversionPath": [
+      "convertFP 0x180554369 → single formatter 0x18148f0d0, format=null; provider fetched at 0x180554341",
+      "Formatter passes Single to FormatSingle 0x18148f360 at 0x18148f1db; default precision 7 loaded at 0x18148f3f6",
+      "convertFP 0x180554373 → FP.FromString_UNSAFE 0x18163fcb0",
+      "0x18163fd41 parses decimal as double, 0x18163fd46 narrows to float32, 0x18163fd51 tail-calls FP.FromFloat_UNSAFE 0x18163fc40",
+      "0x18163fc6d mulss by float32 65536 (constant 0x182e87660); 0x18163fc7e cvttss2si rax truncates toward zero"
+    ],
+    "conclusion": "일반 double×65536 반올림이 아니다. 입력은 Single이며 문자열 왕복 후 Single 곱셈과 signed 정수 절삭을 거친다. 2.3335는 float32 2.3334999084472656, 곱 152928.25, raw 152928이다. 정확한 FP 배수가 아니라는 이유만으로 이 출하 값을 거부할 필요가 없다.",
+    "authoredValues": {"2.3335": 152928, "-0.2": -13107, "-1": -65536},
+    "scope": "fpFromFloatRaw는 유한하고 JS 안전 정수 범위의 FromFloat 변환을 재현한다. stageFpRaw는 이 작업의 정확한 Single 정수와 검증한 두 분수만 받는다. 일반 Single 포매터, 정밀도 경계, locale 및 예외 경로는 이식하지 않았으므로 다른 분수를 임의로 허용하지 않는다. 기존 actor-runtime.js/source-lift-devices.js는 수정하지 않았다."
+  },
+  "damageRect": {
+    "parse": "0x18180ded0: datas[0] width, datas[1] height. width<0이면 0x18180df69에서 create X에 width를 더하고 폭의 부호를 뒤집는다. 0x18180dfa3/dfa8에서 RectFP (Height,Width,X,Y)=(height,abs(width),0,-height).",
+    "collision": "InitCollision 0x18180e050 creates collider, 0x18180e05a sets type 6, 0x18180e067/e070 sets flags bits 2/4. InitPost 0x18180e0d2 sets Actor bit18. OnStart 0x18180e16c sets collision inactive.",
+    "activation": "OnUpdate 0x18180e208 checks actor bit3, 0x18180e242 checks collision flag bit0. When appropriate it queries IsCollidedByPushBackTarget with argument 3 at 0x18180e291 and calls SetCollisionActive(true) at 0x18180e2e1 only if the query returns false. The meaning of flag bit0 must come from CollisionScene, not a guessed AABB.",
+    "events": "checkDamage 0x18180e61e filters collision type1; 0x18180e63c/0x18180e65a emits event 43 by entity. A second pass 0x18180e923 onward checks player-side contacts, skips Player flag0x200 at 0x18180e952, and emits the same event at 0x18180eae3 only for contacts not already in its first-pass entity list.",
+    "runtime": "refused: collision activation, symmetric contacts, and event43 receiving behaviour have no implemented host adapter"
+  },
+  "linePathLift": {
+    "parseAddress": "0x1818785b0",
+    "slots": {"4": "base speed FP raw", "5": "mode signed sar16", "6": "external start signed sar16 >0", "7": "ride percent signed sar16", "8": "enable line when signed sar16 ==1", "9": "width growth per player above2 signed sar16", "10..29": "up to10 offset vector pairs, stop at first zero pair", "30": "base width signed sar16, fallback118", "31": "speed growth per player above2 FP raw"},
+    "playerCount": "Frame.GetPlayerIndexCount 0x1818787e7; count-2 influences speed 0x18187899f..9b4 and width 0x181878a71..acf.",
+    "geometry": "0x181878a55/0x181878a63: height18, offsetY -9. Width=baseWidth+(count-2)*growth. OffsetX=-trunc(baseWidth/2)-trunc(totalGrowth/2), 0x181878a51..ac4.",
+    "path": "QPackingParamUtility.UnpackVector2ArrayParam 0x181786800, start10/max10 passed at 0x1818788a5..8cb. Zero pair is terminator at 0x1817868e6..8f2; no path sets disabled bit0 and clears moving bit2 at 0x181878963..97a.",
+    "speed": "abs(base)<4 raw defaults65536; otherwise max(0,base+(count-2)*growth), 0x181878992..9b4. This is speed×DeltaTime at 0x181879008..00c, not a guessed per-tick pixel speed.",
+    "rideCount": "0x181878a13..a4e converts positive percent to raw trunc(percent*65536/100), multiplies by count and ceilings; nonpositive percent defaults1. getRideCount 0x18187a361 queries Collision.GetContactCount with face1 and argument6. calcNeedRideCount 0x18187a2e7 returns max(0,required-current).",
+    "movement": "OnUpdate first satisfies ride condition and sets bit2 (0x181878dd4), moving branch enters liftUpdate 0x181878e77 or fakeLiftUpdate 0x181878ea1. liftUpdate 0x181879195 requires recursive ActorComponent.IsEnableMoveContactActor. It measures StageToWorldPoint segment length via sqrt helper 0x181640c40 (0x181879217), interpolates in FP, discards segment overshoot and reverses at the endpoint (0x1818792f7..35c). MoveLift 0x18187a221 moves contact actors using only deltaY with abs(deltaY)>=4 raw, not deltaX.",
+    "switch": "OnRecvEvent 0x1818799b1 handles event61. External-start bit3 and idle bit2 gate start. Zero riders selects fake motion; normalized native vector is scaled by QFP static+0x188 at 0x181879c98/0x181879f4a. Native normalization and this static's identity are not ported.",
+    "cosmetics": "cctor0x18187a460: SIGN_OFFSET_Y raw -7208960 (-110), GUIDE_LINE_WIDTH from literal '0.075' at0x1831c3b78 gives raw4915. DamageRect cctor0x18180ecf0 produces no numeric FP constants.",
+    "runtime": "refused: segment sqrt, recursive contacts, fake path motion and endpoint flags are not implemented"
+  },
+  "verification": {
+    "unitTests": "node --test source-migration/source-linepath-devices.test.cjs: 11 passing, 0 failing",
+    "fullSuite": "node --test source-migration/*.test.cjs: 406 passing, 0 failing (2026-10-13 snapshot; concurrent sessions may add tests later)",
+    "realStageCoverage": "All 4 task stages ×2..8 populations: every target actor decodes and serializes through JSON. Every applicable target device is refused by compile.",
+    "exactChecks": ["03-02 lift speeds by count2..8: 262144,196608,152928,152928,152928,152928,152928", "03-02 DamageRect counts by count2..8:6,4,4,4,4,4,4", "03-02 selects pc-3 lift for2/3 and pc4 fractional lift for4..8", "03-03 speed =262144-(count-2)*13107, width120, 9 path points", "02-04 one path point, width160+(count-2)*70", "Negative width shifts X; sar16 of raw -13107 produces -1; zero base speed fallback65536", "Required empty-state API survives JSON, but cannot disguise an applicable unimplemented device as an empty state"],
+    "notVerified": "No dynamic device transitions, exact movement ticks, game completion, original-game visual comparison or runtime integration are claimed. Refusal is tested instead."
+  },
+  "registration": {"registered": false, "instruction": "Do not register this partial module as working mechanics. It deliberately refuses target devices. Only proven loader/parse findings are reusable after review."},
+  "stageCompilesAlone": {"st_w_03_02": false, "all2to8": false, "reason": "LinePathLift and DamageRect runtime remain unported; original runtime/packager untouched"},
+  "corrections": ["The brief's type summary omits DamageRect in03-02; its instance list is correct: selected actual data has6 at2players and4 at3..8.", "Previous lift report refusal for fractional2.3335 is superseded by the concrete loader path. Existing report was not modified."],
+  "unresolved": [
+    "DamageRect CollisionScene flags, IsCollidedByPushBackTarget, symmetric contact dedup and PlayerComponent receiving event43 need a verified implementation.",
+    "LinePathLift needs exact FP sqrt helper0x181640c40 and CameraComponent.StageToWorldPoint segment conversion; using Math.hypot would not establish native tick counts.",
+    "Recursive contact gate0x1816a15c0 checks map contacts, collision flagbit4 and recursively traverses adjacent actors (0x1816a1977..19f9); existing runtime provides no equivalent graph. Blind vertical carry would bypass the proven gate.",
+    "Event61 fake path uses FP vector normalization0x1816463a0 and QFP static+0x188, not reconstructed here; loop/end-point flags have no tested state machine.",
+    "General stage Single formatting is not ported; the helper intentionally accepts only exact Single integers and two verified fractional literals in this task. No existing project-wide converter was changed.",
+    "No stages are opened, registered, packaged, deployed or committed by this partial result."
+  ]
+}

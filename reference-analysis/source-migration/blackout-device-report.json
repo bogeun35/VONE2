@@ -1,0 +1,67 @@
+{
+ "schemaVersion": 1,
+ "devices": ["Blackout", "BlackoutController"],
+ "module": "source-blackout-devices.js",
+ "status": "implemented_tested_not_registered",
+ "settledOn": "2026-10-13",
+ "nativeCodeExecuted": false,
+ "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base 0x180000000",
+ "summary": "상시 어두운 맵 또는 밝음/암전을 반복하는 장치다. 7-3과 15-2에서는 밝은 동안 일반 액터를 정지시키고 어두운 동안 재개한다. 고정된 무작위 플레이어에게 Shot 입력 UI가 나타나고, 그 플레이어가 누르면 다음 밝은 구간으로 돌아간다.",
+ "centralQuestion": {
+  "answer": "옵션 0의 상시 암전 세 스테이지는 가시성 효과다. 옵션 1을 쓰는 st_w_07_03 및 st_w_15_02는 시뮬레이션에도 영향을 주므로 가시성만의 장치로 등록하면 안 된다.",
+  "pause": "suspendStage 0x1817cf849 및 resumeStage 0x1817cf8e9: option==1일 때 전체 장면에 event53, param+0x76=true/false를 송신한다. ActorComponent.OnRecvEvent 0x18169eaa8 -> setPause 0x18169f020가 액터 플래그 bit4/6을 변경한다. 이는 StageComponent.Suspend와 다른 액터별 정지다.",
+  "exemptions": "Blackout.OnRecvEvent 0x1817cfb39 및 Controller.OnRecvEvent 0x1817d0d0e는 event53을 무시한다. 두 장치를 정지시키면 영구 정지에 빠진다.",
+  "collisionAndDeath": "Creator 0x1817ce950 / 0x1817d0170에 InitCollision 호출이 없다. 자체 충돌체나 직접 사망 이벤트는 만들지 않는다. 정지 중에도 기존 고체를 제거해서는 안 된다. CheckAlivePlayer 0x1817cfcfa는 어느 한 플레이어라도 죽으면 false이며, 이는 타이머 전환과 UI 종료에 사용된다.",
+  "input": "Controller phase2 0x1817d08d4는 선택된 PlayerRef-1의 Input을 읽는다. Input.Shot의 실제 구조체 오프셋은 0x78(메타데이터 offset136-16); 0x1817d08e2..f3의 +0x7c==+0x80>0 조건만 받는다. 일반 이동 입력을 임의로 대체하지 않는다. Frame.GetGamePlayerInput 0x18174a69c는 Stage 입력 마스크가 설정된 플레이어를 null로 처리한다."
+ },
+ "parameters": {
+  "Blackout": "ParseParameter 0x1817ceb20: datas0/1=양수 bright/dark 시간, datas2=darkness(최소 raw13107, 0x1817ced09), datas3=option byte, datas4=양수 fade 시간, datas5=배경 변경 플래그, datas6=커튼 플래그. 정수 추출은 sar16이다.",
+  "Controller": "ParseParameter 0x1817d036c/386: datas0/1은 56 UTF16 문자에 인코딩된 7개의 signed LE int64 FP 값이다. (charCode-0x21)&255로 바이트를 만들고 count-2에서 아래로 첫 nonzero를 찾는다(0x1817d03f0/470). 그 값이 양수일 때만 기본 4초를 대체한다(0x1817d0506/532).",
+  "st_w_03_01": {"brightRaw":0,"darkRaw":0,"darknessRaw":29491,"option":0,"phase":4},
+  "st_w_09_01_and_09_03": {"brightRaw":0,"darkRaw":0,"darknessRaw":22937,"option":0,"phase":4},
+  "st_w_07_03_and_15_02": {"brightRaw":98304,"darkRaw":196608,"authoredDarknessRaw":65536,"authoredFadeRaw":13107,"option":1,"curtain":true,"effectiveDarknessRaw":39321,"effectiveFadeRaw":52428,"activeTableRaw":[262144,262144,262144,262144,262144,262144,262144],"inactiveTableRaw":[229376,229376,229376,229376,229376,229376,229376]},
+  "curtainOverride": "OnStart 0x1817cf15c/18a는 커튼 사용 시 작성된 darkness=1 및 fade=.2를 .6(raw39321) 및 .8(raw52428)로 덮어쓴다. 작성값만 읽고 구현하면 틀린다."
+ },
+ "constants": {
+  "defaultFadeRaw": {"value":4368,"address":"0x1817cfe47..68","derivation":"QFP.OneFrame(raw1092)*QFP._4 >>16"},
+  "curtainFadeRaw": {"value":52428,"address":"0x1817cfe88 / 0x1817cf15c","derivation":"QFP._0_80"},
+  "curtainDarknessRaw": {"value":39321,"address":"0x1817cf18a","derivation":"QFP._0_60"},
+  "controllerBiasRaw": {"value":327,"address":"0x1817d09b8 / 0x1817d0b5f","derivation":"QFP._0_005"},
+  "defaultControllerTimeRaw": {"value":262144,"address":"0x1817d02d0 / 0x1817d02e9","derivation":"QFP._4"},
+  "literalVerification":"두 Blackout .cctor에 resolve-string-literals.local.py --cctor를 실행했다. FP.FromString 호출은 없고 QFP 정적 필드를 참조한다. --verify로 QFP 22개 문자열이 모두 일치함을 확인했다(.005=327, .6=39321, .8=52428, OneFrame=1092)."
+ },
+ "stateMachines": {
+  "Blackout": "updatePhase 0x1817cf220: phase0=밝은 페이드 실행 후 정지 및 bright timer 설정, phase1=시간 또는 controller bit5를 기다렸다 dark fade 시작 및 재개, phase2=dark fade 실행 후 dark timer 설정, phase3=시간 또는 !controller bit5를 기다렸다 bright fade 시작 및 정지, phase4=완료. 페이드 시작 틱에는 보간 시간이 증가하지 않는다.",
+  "fade": "startFade 0x1817cf950가 이전 interpolator.result를 start로 복사한다. isFade 0x1817cfa30에서만 Run을 호출한다. FPInterpolator.Run 0x18183bf99..c4는 tRaw=trunc(timeRaw*65536/totalRaw), alpha=((65536-t)*start>>16)+(t*end>>16)이며 두 곱을 각각 내린다.",
+  "Controller": "updatePhase 0x1817d07c0: phase0=inactive 대기 후 bit5=true, timer=active+.005, phase1=timer 종료 후 UI 공개, phase2=선택 플레이어 Shot edge 후 bit5=false, UI 숨김, timer=inactive+.005, phase3=종료. 첫 inactive 대기는 .005 보정이 없다. 재선택은 없으며 OnStart의 decideControlPlayer 0x1817d0670만 RNG를 소비한다.",
+  "end": "Blackout event15는 bit6을 영구 설정(0x1817cfb7e). Controller는 any-dead 또는 stage requested-any에서 phase3 및 UI false로 종료(0x1817d0b7d)하고 Blackout bit5는 그대로 둔다."
+ },
+ "verification": {
+  "unitTests": {"command":"node --test source-migration/source-blackout-devices.test.cjs","passed":8,"failed":0},
+  "fullSuite": {"command":"node --test source-migration/*.test.cjs","passed":432,"failed":0},
+  "realStageSelections":35,
+  "exactTimingAt60Hz": {"initialInactiveExpiryTick":211,"activeUiWaitTicks":241,"curtainFadeTicks":49,"defaultFadeTicks":4,"darkFadeAtTick48AlphaRaw":39311},
+  "checks":["실제 5스테이지×2..8인 모듈 컴파일과 raw 값 일치","QPlayerCountParam 양수/0 fallback/음수/default 및 오류 거절","49틱 페이드와 두 번의 FP 내림","선택된 플레이어 Shot만 입력 수용, 재선택 없음","정지 이벤트 출력과 자체 event53 무시","단일 플레이어 사망 및 requested-any 종료","event15 종료","seed/playerInfo 매핑 및 500틱 JSON 왕복 상태·출력 동등","컨트롤러 없는 반복 타이머와 4틱 기본 페이드"],
+  "correction":"초기 테스트의 48틱 페이드 기대값39312를39311로 수정했다. 네이티브 0x18183bf99..c0는 나눗셈과 곱셈을 각각 내리므로 floor(52416*65536/52428)=65520, floor(65520*39321/65536)=39311이다. 구현은 변경하지 않았다.",
+  "scope":"정적 네이티브 분석 및 독립 장치 테스트다. 원작 실행, 브라우저·렌더러·물리 엔진 통합 비교, 사람 플레이는 수행하지 않았다."
+ },
+ "registration": {
+  "performed":false,
+  "reason":"AGENTS.md 및 요청에 따라 기존 파일을 수정하지 않았다. Claude가 등록한다.",
+  "requirements":["UMD/CommonJS 의존성에 SourceBlackoutDevices 추가; compile/create 상태와 supportedTypes 연결","초기 pendingEvents를 첫 액터 이동 전에 처리; 각 틱 Blackout→Controller 순서 유지","event53을 일반 액터 시뮬레이션/애니메이션에 적용하되 장치 둘은 계속 갱신, 고체는 유지","gamePlayerInputs의 native Shot edge, 입력 마스크, 모든 플레이어 dead 상태, stageRequestedAny를 공급","session RNG 및 native 순서 playerInfo/colorIndex 전달; 스냅샷에 장치 상태 포함","렌더러가 alpha·커튼 animationId·curtainDown·UI player/color를 사용","화이트리스트, 패키징 및 배포 목록은 별도 등록 작업에서 추가"]
+ },
+ "unlocks": {
+  "stages":["st_w_03_01","st_w_07_03","st_w_09_01","st_w_09_03","st_w_15_02"],
+  "moduleCompilesFor2Through8":true,
+  "wholeStagesOpenedAlone":0,
+  "st_w_07_03":"등록 및 event53/Shot/렌더러 연결과 WeightedLift가 필요하다. 독립 모듈 2..8인 검증은 완료했지만 현재 runtime 화이트리스트에는 없는 단계라 전체 스테이지 컴파일 완료라고 주장하지 않는다."
+ },
+ "unresolved": [
+  "실제 Quantum 세션 RNG seed 및 게임 참가자 색상/순서는 런타임 외부 상태다. compile(options)로 공급할 수 있고, 기본 seed는 재현 가능한 기본 스트림일 뿐 원작 세션 일치를 주장하지 않는다. 색상 미공급은 null로 남긴다.",
+  "여러 Blackout 또는 여러 Controller의 엔티티 실행 순서는 검증하지 않아 compile이 명시적으로 거절한다. 다섯 월드 스테이지는 모두 단일 장치다.",
+  "전체 런타임 등록, 일반 액터별 pause 소유권, Shot edge 및 Stage 입력 마스크 연결은 기존 파일 수정 금지로 수행하지 않았다. actorsPaused만 보고 전체 업데이트를 중지하면 장치가 재개할 수 없다.",
+  "Unity 커튼 애니메이션/배경 재질 및 SearchLight 마스크의 시각적 동등성은 구현하지 않았다. displays와 curtainCommands에 확인된 상태만 노출한다. SearchLight는 다른 액터이며 해당 모듈을 대신 작성하지 않았다.",
+  "Blackout과 Controller 사이의 갱신은 실제 두 스테이지의 작성 순서를 따른다. 원작 전체 Quantum system 스케줄과 다른 장치 사이의 실행 순서 동등성은 통합 검증이 필요하다.",
+  "원작과 나란히 하는 플레이/렌더링 검수는 수행하지 않았으며 completePhysicsFidelity=false이다."
+ ]
+}

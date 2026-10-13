@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "devices": ["Wind"],
+  "module": "source-wind-devices.js",
+  "status": "implemented_tested_not_registered",
+  "settledOn": "2026-10-13",
+  "nativeCodeExecuted": false,
+  "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base 0x180000000",
+  "summary": "측면 Wind의 인원별 힘·위치, 범위와 본체 충돌 영역을 복원했다. 이벤트 61은 강풍, 60은 약풍으로 전환한다. 충돌한 액터에 기록되는 힘을 런타임용 일회성 movementVelocityOffset으로 반환한다.",
+  "evidence": {
+    "creator": "ordinal 77 -> WindComponent.Creator 0x181738820; Initialize/ParseParameter/InitCollision/InitPost 모두 확인",
+    "defaults": "0x181738a2a range raw 0x5000000=1280; 0x181738a58 QFP static +0x118=_2 => strongScale=2",
+    "parameters": "0x181738ac5 count-2; 0x181738b8e slot=count power; 0x181738c01..20 position += (count-2)*slots0/1; 0x181738c24..3a slot9 integer!=0 => direction2 and negative power, else direction3; 0x181738c61..92 positive slots10/11 override strongScale/range",
+    "geometry": "RectFP Height,Width,X,Y. 0x1817392c2..339: body [74,48,-31,-75], wind [16,0,0,-60]. 0x181738dd1 replaces Width with range; direction2 negates Width at 0x181738de6. Normalize signed width for runtime AABB.",
+    "collision": "0x181738d72 body category2 (solid), 0x181738d97 userTag5; 0x181738e1b wind category0 (sensor), 0x181738e50 userTag4. ActorComponent.CreateCollision 0x18169f4d0 forwards category to Collision.initialize and stores RectFP.",
+    "strong": "0x181738f4e..fd9 events61/60 set/clear flags bit0, initially zero. IsStrong 0x1816f2970 and SetStrong 0x1816f2950 confirm bit0.",
+    "force": "0x181739026..099: strong multiplies power by scale and signed shifts16; result overwrites ActorComponent.m_Wind at struct+0x120. No addition, deltaTime, player-only test or local timer.",
+    "consumption": "PlayerComponent.OnUpdate_Default 0x1816c3dcc..e00 adds m_Wind to the computed movement velocity and clears m_Wind. Runtime must consume each collision assignment once, not accelerate persistent velocity.",
+    "topView": "ForTopView 0x1816b9080 flags bit1; InitPost 0x181738ec8..edb sets it from StageComponent struct+4 bit6. compile explicitly refuses topView/isTopViewSort/stageFlags bit6.",
+    "fixedPoint": "FP.FromFloat_UNSAFE 0x18163fc40 float32 multiply65536 then truncate; same verified conversion described in key-reach-report.json. Strong multiplication uses BigInt signed right shift to preserve negative floor.",
+    "cctorStrings": "resolve-string-literals.local.py --cctor 0x1817390c0 completed with no FP.FromString constants; rectangle values are literal raw immediates."
+  },
+  "shipped": {
+    "st_w_02_04": "1 Wind at (1942,289), right, range1276, scale1; counts2..7 power1, count8 power0.6 (raw39321)",
+    "st_w_07_01": "2 Wind at (2304,192)/(2304,432), left, range898, scale2, power1 at all counts",
+    "st_w_09_04": "1 Wind at (2160,864), left, range1280, scale2, powers counts2..8: 1,.9,.8,.7,.6,.5,.4; parameter decoding only, top-view simulation refused",
+    "st_w_12_03": "1 Wind at (780,432), left, range1280, scale2, power1.8 (raw117964) at all counts"
+  },
+  "verification": {
+    "unitTests": "node --test source-migration/source-wind-devices.test.cjs: 8 passing",
+    "fullSuite": "node --test source-migration/*.test.cjs: 314 passing, 0 failing",
+    "measured": ["All four real stage variants selected with population-rules.cjs for every count2..8", "Exact powers, position, defaults and overrides", "Native body and both signed wind directions", "60/61 state transitions and one-tick force consumption", "Last collision overwrites; non-player actorId accepted", "JSON round-trip preserves pending forces", "Position slots0/1 scale with count-2", "Explicit top-view and invalid contact refusal"],
+    "runtimeIntegrationTest": "Not run: runtime registration is outside this task's authorization."
+  },
+  "integration": {
+    "registration": "Expose SourceWindDevices UMD dependency, compile/create its state, add supportedTypes, call beforeStep and afterStep, and register body solids plus volumes. No existing file modified.",
+    "contacts": "afterStep accepts windContacts [{windId,actorId}] in collision dispatch order; derive them using the host collision masks and native-equivalent actor collision shapes. Module does not guess masks or player boxes.",
+    "forces": "beforeStep returns prior contact forces [{actorId,windId,xRaw,yRaw,x,y,mode:'movementVelocityOffset'}]; host applies once to computed movement velocity, then consumes. Units are native pixels/tick, not pixels/second. Overlapping winds use final assignment, never sum.",
+    "events": "Named or by-type77 events60/61 set weak/strong. Host retains responsibility for generic ActorComponent events.",
+    "stageCompilesAlone": false
+  },
+  "unresolved": [
+    "Top-view movement and collision adaptation remain unported; compile refuses an explicitly flagged top-view stage. st_w_09_04 contains TopViewPlayer and is not a playable side-view stage.",
+    "Host must implement native collision filtering/contact order and force application. The beforeStep/afterStep queue models Update followed by collision dispatch; exact placement in the web runtime has not been verified because this module is intentionally unregistered.",
+    "OnCollided can write non-player actors. PushBox and other actor consumers of m_Wind were not traced; only ordinary Player consumption was established.",
+    "Full physics fidelity and human original-game comparison are unverified; completePhysicsFidelity remains false.",
+    "Brief says st_w_12_03 needs only Wind and SpeedSwitch; current source-migration/remaining-work.json also lists WeightedLiftEx. Other sessions may supply/register dependencies."
+  ]
+}

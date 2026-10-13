@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "devices": ["FakePlayer", "FakeTimer"],
+  "module": "source-fake-devices.js",
+  "status": "partial_analysis_helpers_tested_runtime_refused",
+  "settledOn": "2026-10-13",
+  "nativeCodeExecuted": false,
+  "binary": "PICO PARK 2 GameAssembly.dll, image base 0x180000000",
+  "summary": "참가자별 입력으로 조종하는 몸체를 24개의 FakePlayer 중 무작위로 배정한다. 나머지는 AI 또는 추가 수동 모드의 가짜다. 타이머가 멈추면 참가자별 FakeCursor로 자신의 몸체를 선택하며, 정답은 해당 FakeCage를 열고 FakePlayer를 실제 플레이어 충돌 속성으로 드러낸다. 전체 게임 구현은 완료되지 않았다.",
+  "participantBodies": {
+    "assignment": "FakeTimer.OnStart 0x181842458 -> assignPlayer 0x1818424c0. 기존 FakePlayer 목록에서 RNGSession.Next(int,int)로 하나 뽑고 stable remove 한다(0x181842963..9ce). 참가자 인덱스는 Frame.GetPlayerIndexList 기반이며 0x181842a8d에서 m_PlayerIndex, 0x181842a97에서 참가자 색, 0x181842aa3에서 m_Mode=1을 저장한다. authored Player가 없다는 이유로 평지 spawn을 만들어서는 안 된다.",
+    "manualDoesNotMeanPlayer": "IsManual 0x181840e20은 mode==1, IsPlayer 0x181840e00은 signed fadeState>0이다. 참가자에 배정된 몸체도 정답 선택 전에는 IsPlayer=false다. 추가 수동 가짜도 mode=1이므로 mode만으로 실제 참가자 몸체를 판정할 수 없다.",
+    "reveal": "ReceiveResult 0x181844dd0의 성공 경로는 cage에 event35(0x181844fa3..fb4), fake에 event1 및 param+0x70=1(0x181844fc3..fe1)을 보내고 info.FakePlayer를 지운다(0x181844fe6). OnRecvEvent 0x181840b74..bbc는 bit0을 해제하고 manual일 때 fadeState=1, collision attribute=1로 전환한다. 이 경로에서 별도 Player actor를 생성하지 않는다.",
+    "lateJoinCaution": "일반 늦은 참가의 별도 경로는 GameComponent.createJoinedPlayerActor 0x18184e840 -> ActorFactoryComponent.CreateJoinedPlayer 0x1816a4b50이다. 이 일반 경로를 FakeTimer의 최초 배정으로 대체 해석하지 않는다. 게임 참가/재참가의 전체 순서는 이번 모듈에서 구현하거나 검증하지 않았다.",
+    "collision": "FakePlayer.InitCollision 0x18183e30f에서 ActorComponent.CreateCollision을 호출하고 0x18183e319에서 attribute=6을 저장한다. 장식물만이 아니다. 정확한 pushback, 다른 몸체 위에 서기, grounded 판정은 미이식이다.",
+    "updateOrder": "FakePlayer.OnUpdate 0x18183e50a -> aiProc, 0x18183e51b -> manualProc, 0x18183e53b -> actionProc. startImitate 0x18183f038은 참가자 인덱스를 RNG로 뽑아 입력을 모방하며 finishImitate 0x18183f090은 인덱스를 -1로 되돌린다. AI 전체는 미이식이다."
+  },
+  "requiredGeneratedComponents": {
+    "FakeCage": "FakePlayer.Creator 0x18183e1b5 -> FakeCageComponent.Creator 0x18183c170. 24개 몸체 각각의 cage 생성 및 cage 충돌이 필요하다.",
+    "FakeCursor": "FakeTimer.showCursor 0x181843610에서 Frame.GetPlayerIndexList를 순회하고 0x181843741 -> FakeCursorComponent.Creator 0x18183cd80. 선택/이동/입력/결과 전달 구현이 필요하다.",
+    "availability": "source-migration의 기존 source-*.js를 검색했지만 두 컴포넌트를 구현한 모듈은 없었다. AGENTS.md의 다른 작업 모듈 부재 시 직접 작성하지 말라는 규칙에 따라 추가 actor type을 구현하지 않았다."
+  },
+  "parameters": {
+    "stage": "st_w_13_04: offline default variant 1개. online=true로 2..8인 각각 selectVariant/actorsForCount 적용. 각 인원에서 Key 1, Goal 1, FakeTimer 1, FakePlayer 24, Player 0.",
+    "seconds": "datas[0], seven int64 FP raws: [655360,655360,720896,720896,786432,786432,851968] = [10,10,11,11,12,12,13]. ParseParameter 0x181841e29/0x181841f0b..fb2. zero이면 이전 비영 항목으로 fallback; 전체 zero이면 Initialize 기본 10초(0x181841d27, QFP+0x170).",
+    "extraManual": "datas[4], seven int32: [2,2,1,1,0,0,0]. 0x181841ed1의 helper 0x180970770 및 Find 0x181786950. 0은 이전 비영 항목으로 fallback이므로 실제 2..8인 결과는 [2,2,1,1,1,1,1]. 저장은 signed byte(0x181841fe4). assignPlayer 0x181842b1f/ba6은 각 추가 수동 가짜에 bit(i+5), color=8, mode=1을 저장한다.",
+    "ui": "datas[1..3]=[0,0,1]. .cctor 0x181845127/13d/153: UI_BASE_SCALE raw655360, UI_POSX 0, UI_POSY raw27262976. ParseParameter 0x18184200e..032은 위치를 더하고 abs(scale raw)>=4이면 base와 FP 곱셈(0x18184203f..074).",
+    "literalCheck": "resolve-string-literals.local.py --cctor 0x181840e30 및 --cctor 0x181845000 실행. 이 cctor들의 FP.FromString 직접 생성값은 없고, Timer의 inline raw 655360/0/27262976/67108864를 확인했다. FakePlayer MOVE_TREND/JUMP_TREND는 QFP의 0.125/0.10을 복사(0x181840f65/89), collision rect는 다른 static+0xa8을 복사(0x181840fb7..fd7). 이 rect 값을 추측해 solids로 내보내지 않는다."
+  },
+  "history": {
+    "meaning": "FakeTimer_History는 가짜가 움직인 기록이 아니라 참가자 입력 기록이다. Frame.GetGamePlayerInput 0x181843ccf에서 참가자별 left/right/jump를 1/2/4로 묶는다(0x181843cdc..cff).",
+    "shape": "4 samples x 8 bytes, historyIndex wraps at 4(0x181843c4a/c62/d22). 현재 참가자 수만 기록/집계하며 처음부터 4개 샘플을 분모에 포함한다.",
+    "trend": "0x181843e14..e2c가 4개 sample의 left/right/jump 수를 합하고 0x181843e80..edc가 count*4로 FP 나눗셈한다. 3인에서 버튼 하나가 한 sample에 있으면 trend raw5461, 2인에서 한 sample이면 raw8192.",
+    "phase": "OnPost 0x181843b1a가 storeHistory, 0x181843b28이 updateAngle을 호출한다. 이번 함수는 storeHistory만 복원했으며 주 실행 hook에는 연결하지 않았다."
+  },
+  "resultAndClear": {
+    "checkPlayer": "0x181844c90: index 범위 밖/빈 FakePlayer ref=0, PlayerIndex 일치=1, 불일치=-1(0x181844d90..da0).",
+    "failure": "ReceiveResult false는 Stage flag bit10을 세운다(0x181844e9a). 전체 게임 실패 연동은 미이식.",
+    "clear": "FakeTimer.checkStageClear 0x181843a8b은 manual list의 flags bit3을 검사한다. updatePhase 0x181843240는 Stage flag bit11을 세우며 SeId15를 재생한다. 단순 Key 활성화 미니게임으로 구현하면 틀린다.",
+    "fade": "FakePlayer.fadeProc 0x181840a65는 fakeLevel raw에서 DeltaTime raw를 빼고 <=0에서 fadeState=2, level=0(0x181840ab0..ab6). 초기 level=65536(Initialize 0x18183e234). 60Hz raw1092로 60틱 후 raw16, 61틱 후 완료."
+  },
+  "verification": {
+    "ownCommand": "node --test source-migration/source-fake-devices.test.cjs",
+    "ownTests": 12,
+    "ownPassing": 12,
+    "fullCommand": "node --test source-migration/*.test.cjs",
+    "fullTests": 358,
+    "fullPassing": 358,
+    "fullFailing": 0,
+    "testFilesAtRun": 29,
+    "verified": ["실제 모든 인원 데이터 및 24개 좌표", "FP/int32 표 및 비영 fallback", "명시 seed로 정확한 배정과 stable removal", "추가 manual의 mask/colour 및 참가자 인덱스 분리", "4 sample 입력 history의 정확한 FP trend와 wrap", "IsManual/IsPlayer/IsClear 구분", "event35/event1 부분 상태 전이", "fade 60/61틱 경계", "checkPlayer 0/1/-1", "JSON round trip", "전체 2..8인 compile 거부 및 inventory 우회 거부"],
+    "limits": "테스트는 부분 helper와 안전한 거부를 검증한다. 실제 스테이지 simulation, cursor/cage, 게임 클리어, 원본 실행 비교, online play를 검증했다는 뜻이 아니다."
+  },
+  "stageCompilesAlone": {"st_w_13_04": {"2": false, "3": false, "4": false, "5": false, "6": false, "7": false, "8": false}},
+  "registration": "등록하지 말 것. supportedTypes는 요청된 인터페이스 명칭이며 구현 완료를 뜻하지 않는다. compile은 active fake stage에서 항상 throws, 다른 hook도 부분 inventory를 거부한다.",
+  "unresolved": [
+    "FakeCage collision, cage position offset, opening/disappearance lifecycle의 웹 구현 없음. 지정 actor types 밖의 추가 작업이 필요하다.",
+    "FakeCursor 선택 이동, 입력, 중복 선택 순서, 결과 전달 lifecycle의 웹 구현 없음. 지정 actor types 밖의 추가 작업이 필요하다.",
+    "FakePlayer aiProc/moveProc/jumpProc/actionProc 및 grounded/contact/gravity/pushback 전체 미이식. 확인한 작은 helper가 전체 simulation을 대체하지 않는다.",
+    "FakeTimer updatePhase의 notices, whistle, countdown, selection 진입/종료, updateAngle, Text 생성 및 전체 Stage flags 연동 미이식. 원본 jump table/주요 분기는 읽었지만 hook으로 구현하지 않았다.",
+    "정확한 COLLISION_RECT raw 및 cage offset의 static 공급자 값은 이번 모듈에서 복원하지 않았다. solids를 추측하지 않는다.",
+    "assignment helper는 native 등록 순서와 참가자 index/color 목록을 caller가 전달해야 한다. 실제 Quantum RNG seed 및 등록 순서는 세션 상태이므로 stage asset만으로 재현할 수 없다.",
+    "현재 runtime의 일반 Player spawn/입력/충돌/Key/Goal이 이 stage의 특수 revealed FakePlayer 경로와 통합되지 않았다. 기존 runtime은 수정하지 않았다.",
+    "재참가/late-join과 최초 FakePlayer 배정의 전체 관계, 인간 플레이 검수, 원본 대조 및 online 결정성 검증 없음."
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "devices": ["Text"],
+  "module": "source-text-devices.js",
+  "status": "partial_verified_existing_module_changes_prohibited",
+  "settledOn": "2026-10-13",
+  "nativeCodeExecuted": false,
+  "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base 0x180000000",
+  "note": "정적 역어셈블과 실제 스테이지 데이터로 기존 모듈을 검증했다. 사용자 지시가 기존 파일 수정을 금지하므로 모듈과 기존 테스트는 수정하지 않았다. 필요한 정정은 corrections와 unresolved에 명시한다. 등록·배포·커밋·푸시는 수행하지 않았다.",
+  "summary": "출하된 스테이지에 배치된 Text는 안내 문구를 표시하는 액터다. 충돌체·위험 판정·입력 제어를 추가하지 않는다. 다만 TextComponent 전체가 시뮬레이션 동작 없는 타입은 아니다. 런타임에서 생성되는 수명과 소유자가 있는 Text는 퇴장 요청 및 TextExit 이벤트를 처리한다.",
+  "creator": {
+    "ordinal": 79,
+    "registration": "0x18177704f loads MethodInfo slot 0x1831667f8; delegate construction 0x181777061; ordinal 0x4f at 0x18177706c; add_Creator at 0x181777070.",
+    "metadata": "slot file value 0x6000f229, kind 3, encoded index 61993; creator-delegates-resolved.local.json identifies TextComponent.Creator token 0x600123c / 0x18171b200.",
+    "stageCreator": "0x18171b29f calls Frame.CreateActorEntity 0x1817482c0; 0x18171b2c3 adds TextComponent through 0x180207e00; 0x18171b2dd calls ParseParameter 0x18171b4e0.",
+    "entityCreation": "Frame.CreateActorEntity spans 432 bytes. The ordinary path creates/resolves the entity and calls ActorComponent.Initialize at 0x18174841f. No explicit collision initialization occurs in this path. Prototype internals are not independently traced.",
+    "runtimeCreator": "0x18171b300 is a separate overload that calls SetParameter 0x18171b8f0; this is distinct from the stage-authored ParseParameter path."
+  },
+  "simulation": {
+    "emptyHooks": "quantum-method-index.json maps Initialize, InitPost, OnStart and OnUpdate to 0x180476130. Its bytes decode as ret 0.",
+    "collisionHooks": "TextComponent declares exactly the 19 methods listed in the task brief, including two Creator overloads, and no InitCollision, OnCollided, OnContacted, OnPushedBack or OnRecvEvent. Across the same index, 196 types declare Creator; 112 declare InitCollision and 84 do not.",
+    "stageDefaults": "ParseParameter 0x18171b4e0 never writes lifetime +0x28, owner +0x18, width +0x30 or alignment +0. The stage conclusion relies on the zero-initialized component default, as the existing module does. No shipped Text authors nonzero velocity or deferred creation.",
+    "onPost": "0x18171bbbe reads lifetime; 0x18171bbc5 returns if <=0. 0x18171bbe2 subtracts integer Frame.DeltaTime raw; 0x18171bbe5 stores it. On expiry, 0x18171bc06 sets ActorComponent flags bit 13. OnPost itself does not emit TextExit.",
+    "onExit": "0x18171bb19 compares owner to zero and 0x18171bb1e skips if zero. 0x18171bb3b selects event 0x3e = 62; 0x18171bb3f obtains the event and 0x18171bb56 notifies the owner by entity.",
+    "setLifeTime": "Shared body 0x180643460 writes rdx to [rcx+0x28] and returns at 0x180643464. Use --raw for this shared address because the method disassembler otherwise extends into unrelated code.",
+    "requestExit": "0x18171bcf6 resolves ActorComponent by entity; 0x18171bd1b sets flags bit 13.",
+    "setText": "0x18171bc58 constructs QStringUtf8_64 and 0x18171bc67..0x18171bc7d copies it into m_Text +0x38.",
+    "cctor": "0x18171bd40 builds RESOURCE_PATH and zeroes s_CreateParam at 0x18171bf4c..0x18171bf5c. resolve-string-literals.local.py --cctor returned no FP.FromString constants; no timer constant is invented."
+  },
+  "parameterSlots": {
+    "0": "textId, string type 2 checked at 0x18171b5ac; QString at 0x18171b799, destination +0x78 at 0x18171b7c0.",
+    "1": "literal text, string type 2 checked at 0x18171b620; QString at 0x18171b803, destination +0x38 at 0x18171b821.",
+    "2": "fontSize FP, type 1 checked at 0x18171b667; destination +0x20 at 0x18171b81d.",
+    "3": "color: sar 16 at 0x18171b69a; nonzero writes literal byte 1 at 0x18171b866, zero leaves default.",
+    "4": "border: sar 16 at 0x18171b6c7; test/setne at 0x18171b843..0x18171b849 writes +8.",
+    "5": "back: sar 16 at 0x18171b6f4; test/setne at 0x18171b84e..0x18171b854 writes +4.",
+    "6": "velocity x FP, read at 0x18171b71d; pair assembled at 0x18171b871.",
+    "7": "velocity y FP, read at 0x18171b743; pair assembled at 0x18171b876 and written to ActorComponent +0xf0 at 0x18171b8ce.",
+    "8": "follow: sar 16 at 0x18171b76e; test/setne at 0x18171b857..0x18171b85e writes +0xc.",
+    "other": "No reads above slot 8. Native nonnumeric slot types contribute zero; missing array elements trigger bounds/null errors. The existing JS decoder instead rejects a nonnumeric numeric slot but silently defaults an absent slot to zero."
+  },
+  "view": {
+    "method": "TextView.OnInitialize 0x1805ca0d0, Unity view index rather than Quantum index.",
+    "sorting": "0x1805ca288 loads -10000, 0x1805ca28d loads 20000; m_IsBack checked at 0x1805ca292 chooses behind/front.",
+    "text": "Nonempty textId is resolved through GameTextManager.GetText at 0x1805ca3b2; empty ID branches to m_Text at 0x1805ca3d7. modifyText at 0x1805ca3c3/0x1805ca43f performs further view processing, which labels() does not reproduce.",
+    "fixedPoint": "0x1805ca579 reads 0x182e86e14; direct binary float decode is 0.0000152587890625 = 1/65536. Font size is applied only if positive (0x1805ca585).",
+    "color": "View checks color 1 at 0x1805ca5a3 and 2 at 0x1805ca619, whereas stage ParseParameter produces only 0 or 1.",
+    "outline": "0x1805ca6be checks border. Direct float decode at 0x182e86fa8 is 0.30000001192092896.",
+    "fields": "quantum-field-offsets.json minus 16 confirms alignment +0, color +1, back +4, border +8, follow +0xc, entity +0x10, owner +0x18, fontSize +0x20, lifetime +0x28, width +0x30, text +0x38, textId +0x78."
+  },
+  "corrections": [
+    "The header says RequestExit is called only by six named gameplay component families. A repeated rel32 scan of both .text and il2cpp additionally finds helper calls at 0x180222e80, 0x1802265c0, 0x18022d0e0 and an adjustor jump at 0x180209974. Nearest indexed method names are unreliable for these helper addresses. Their upstream reachability is unresolved; do not claim exhaustive absence of other callers.",
+    "No direct rel32 call to stage Creator 0x18171b200 was found; the registered delegate remains the supported stage path. Runtime calls found include BallReceiver 0x1816b4ebc; RallyJudge 0x1816e29a7/0x1816e3c81 and SetText 0x1816e284a; EndlessLandmine 0x18182fead; FakeTimer 0x181843549/0x1818435f0; GiantEnemy 0x181859205/0x181858fea/0x1818592a0; Mole 0x181881536/0x181881359/0x1818815d0. A byte scan alone does not establish indirect-call reachability.",
+    "Existing afterStep is not an exact OnPost transcription: it subtracts floating seconds and emits event 62 immediately upon expiry, whereas native OnPost subtracts FP raw and only requests exit; native OnExit emits the event later.",
+    "Existing interface test omits the required displays function. Module exports labels but no displays. The task's tests passing does not establish shared interface compliance.",
+    "NativeBehaviour none is valid only for the observed immediate, stationary, zero-lifetime stage actors. Nonzero velocity or createThreshold is accepted with warnings, although generic movement/deferred creation has not been verified; shared rules require refusal for such unresolved cases.",
+    "Existing decoder preserves decimal FP values verbatim, which is not raw-exact: authored fontSize 0.7 truncates to raw 45875, i.e. 0.6999969482421875. Negative integer slots must first truncate to FP raw before sar 16; Math.floor(decimal) differs close to zero."
+  ],
+  "verification": {
+    "unitTests": "node --test source-migration/source-text-devices.test.cjs: existing 17 tests pass. No existing test was edited and no new test file was authorized by name.",
+    "regression": "node --test source-migration/*.test.cjs: 244 tests pass, 0 fail, exit 0 at verification time.",
+    "measured": [
+      "All decoded variants contain 17 Text instances across 13 distinct stages, including ten World stages. Every instance has playerCount 0, createThreshold 0, empty literal text, color 0 and both velocity slots 0.",
+      "Selected actual online variants with population-rules.cjs for each of the ten World stages at 2..8 players: 70/70 Text compiles with no warnings. st_w_02_02 and st_w_10_03 select variant 1 at 5..8 players and variant 0 at 2..4. st_w_03_03 has two labels; every other selected stage has one.",
+      "For all 70 selected stage/count combinations, state survives JSON stringify/parse and produces identical state after one subsequent tick.",
+      "Existing tests check 3000 updates per one of the 17 authored instances without solids, hazards, events or deaths; lifetime remains zero and exit flag remains clear.",
+      "Separate lifetime probe: lifeTime 1 at dt 1/60 expires in existing JS at tick 60; native integer arithmetic requires ceil(65536/1092) = 61 ticks. This is a confirmed mismatch, not a failing result of the existing 17 tests.",
+      "Direct binary float reads confirm FP scale and outline constant. Metadata recheck confirms 19 declared TextComponent methods and 196/112/84 Creator/collision-hook counts."
+    ],
+    "limits": "No original game code ran. No human gameplay or rendered visual fidelity comparison was performed. Existing tests alone do not cover interface compliance, raw FP accuracy or the native exit lifecycle."
+  },
+  "unlocks": {
+    "stagesUsingThesePair": ["st_w_02_02", "st_w_02_04", "st_w_03_03", "st_w_03_04", "st_w_05_04", "st_w_06_01", "st_w_09_03", "st_w_10_03", "st_w_14_01", "st_w_15_04"],
+    "fullyOpenedByThisAlone": 0,
+    "connectedAs": "Unregistered; no runtime changes made. Brief identifies st_w_03_03 and st_w_02_02 as opening with other briefs; this report does not claim those other modules are ready."
+  },
+  "unresolved": [
+    "Existing module changes are forbidden by the current user instruction. FP timer correction, displays export, lifecycle separation, precise slot decoding and fail-closed unsupported inputs remain to be implemented and tested by the owner.",
+    "Runtime floating-text API is outside the verified stage-only scope. Owner notifications must be dispatched at actual actor exit, not merely lifetime expiry.",
+    "Prototype internals and zero-initialized component allocator are not independently disassembled here. The stage conclusion relies on the established zero-default contract and the observed stage path; no absolute proof of every possible entity prototype is claimed.",
+    "Generic movement for nonzero Text velocity and deferred actor creation are unresolved. Existing compile warns rather than throws, so synthetic unsupported actors are not fail-closed.",
+    "RequestExit helper callers and indirect callers were not traced to all upstream roots. Absence of OnRecvEvent means no component-specific event handler, not proof that no generic actor lifecycle can affect a Text.",
+    "Localized GameTextManager strings, modifyText substitutions, actual fonts, follow rendering and complete visual behavior are not ported or verified. labels preserves data; it does not demonstrate a faithful rendered label.",
+    "Full stage/runtime compilation after registration and coordination with other device modules was not performed, as registration is prohibited. Only Text module compilation is verified for the 70 selected World stage/count combinations."
+  ]
+}

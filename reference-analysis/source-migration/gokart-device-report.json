@@ -1,0 +1,45 @@
+{
+ "schemaVersion": 1,
+ "devices": ["GoKart", "Stick"],
+ "module": "source-gokart-devices.js",
+ "status": "partial_analysis_helpers_compile_refused",
+ "settledOn": "2026-10-13",
+ "nativeCodeExecuted": false,
+ "binary": "GameAssembly.dll, image base 0x180000000",
+ "summary": "플레이어 전원이 카트에 탑승하며 최대 네 명이 운전한다. 5인 이상은 운전자를 교대할 수 있다. 현재 파일은 확인된 파라미터·운전자 순서·점프·중력 계산만 제공하고 실제 장치 컴파일은 거부한다.",
+ "evidence": {
+  "creators": "creator-delegates-resolved.local.json: ordinal 173 GoKartComponent.Creator 0x18185c330; ordinal 224 StickComponent.Creator 0x18170f650",
+  "parameters": "0x18185c74c/766: datas[0]/[1] QPlayerCountParam. 0x18185c7c3..825 and 844..8ab descend from count-2 to first nonzero. Stores 0x18185c8e6 jump, 0x18185c912 speed; zero leaves Initialize defaults.",
+  "defaults": "Initialize 0x18185c6af/c6c5 copies JUMP_VELO/MAX_SPEED; cctor 0x18185f1e3/f251/f27d copies QFP offsets 0x170/0x188/0x138 = input interval 10, jump 20, speed 4. resolve-string-literals.local.py --cctor 0x18185f130 returns no FromString constants because these are copies of QFP statics, not inaccessible literals.",
+  "realStage": "st_w_12_01 all selected online variants for 2..8: GoKart1 at (144,432), jump raw table [1114112,1310720,1310720,1310720,1310720,1310720,1310720], speed all 327680. Stick counts 0/0/0/5/5/5/5. Positions (816,288),(1536,288),(2881,240),(3743,432),(4968,144).",
+  "stickParameter": "Shared body 0x1816f93b0 checks non-null r8 then ret; no parameter stores. Initialize/InitPost 0x180476130 are empty. This is not proof of no collider: Creator 0x18170f703 calls Frame.CreateActorEntity using a resource prototype.",
+  "driverRotation": "prepareDrivers 0x18185cfcc..cfda sets min(playerCount,4); changeDrivers 0x18185d118..1aa selects four consecutive circular indices. changeNextDriverIndex 0x18185efb9..efdf subtracts four modulo count only above four; seven-player initial rotation is 0 -> 3, not 0 -> 4.",
+  "jump": "calcJumpVelo 0x18185ec3c..ecc0 computes [1-(1-inputCount/driverCount)^2]*m_JumpVelo*ActorScale with FP division and arithmetic shifts; not a linear vote fraction.",
+  "gravity": "calcGravity 0x18185ea87 adds raw 0xa666 each update and 0x18185ea8e caps at raw 0x138000; 0x18185eb0d scales the delta. It does not multiply by dt.",
+  "collisionTuples": "cctor 0x18185f1a7..2d3 body [16,248,-34,-16], head [40,40,-20,-56], head2 [40,40,-20,-114]. InitCollision 0x18185cafd..cb40 changes head second entry by (min(count,4)-1)*56 and third by (4-min(count,4))*56; 0x18185cbd2..cc04 changes head2 second entry by (count-5)*56. Axis semantics are deliberately not assigned in the helper.",
+  "input": "updatePlayerInfos 0x18185dd7f calls GetGamePlayerInputButton with button 8; 0x18185de0b..de1c accepts rising input only when InputTime is zero. Ground resets InputTime at 0x18185dddd; accepted airborne input stores StageComponent+0x58 at 0x18185de1c. Blink countdown uses QFP 0.5 at 0x18185de49.",
+  "ride": "OnStart 0x18185cd5a/cd6b/cd7c prepares, changes drivers, seats; OnPost 0x18185ee29 seats again. Mode 11 at 0x18185cf21; OnInitialize_GoKart 0x1816c7882 disables player collision; OnFinalize_GoKart 0x1816c7937 enables it. SetGoKartDriver 0x1816c79ce..79d8 sets grayscale for non-drivers.",
+  "events": "OnRecvEvent 0x18185eed3..ef37: event 61 param+0x70 nonzero rotates driver, zero sets Stop. Events 26/43 at 0x18185ee94..ef67 notify all riders dead. getOff 0x18185e370 restores player modes, disables kart collision, changes sorting order via event 54, and transfers a kart-bound key to the nearest rider.",
+  "camera": "calcSpeed 0x18185e201 uses StageComponent.CalcAutoScrollSpeed when stage+0x91==2. Camera-left comparisons 0x18185e2a3..e2be include m_CenterX; fail path 0x18185e35f kills riders. OnStart 0x18185cd9a writes camera+0x90 raw 0x1200000 = 288."
+ },
+ "integration": {
+  "registration": "금지: partial 모듈을 플레이 가능한 지원 장치로 등록하면 안 됨. compile은 실제 GoKart/Stick이 있으면 예외를 던짐.",
+  "runtimeHook": "독립 플레이어 이동/충돌을 탑승 중 제외하고 카트 액터의 충돌 이동을 처리한 뒤 OnPost 순서로 좌석에 강제 배치해야 한다. 착지/머리 충돌 정보, 드라이버의 원시 버튼 입력, StageComponent+0x58의 InputInterval과 카메라 자동 스크롤/경계를 공급해야 한다. 하차 시 플레이어 모드·충돌 복구와 열쇠 소유자 변경이 필요하다.",
+  "contact": "checkFloating 0x18185da8d body index 0 down contact 역전. isContactedHead 0x18185eb6b..ebc7 checks indices 2,1,0 upward, including body."
+ },
+ "verification": {
+  "unitTests": "node --test source-migration/source-gokart-devices.test.cjs: 14 pass, 0 fail",
+  "fullSuite": "node --test source-migration/*.test.cjs: 314 pass, 0 fail",
+  "tested": ["실제 2..8인 데이터와 정확한 위치·테이블", "명시적 컴파일 거부", "하향 테이블 fallback과 부호 있는 UTF-16 바이트 복원", "운전자 순환", "비선형 점프와 FP 절삭", "중력 30번째 틱 raw 1277940, 31번째 틱 cap raw 1277952", "원시 충돌 튜플", "JSON 왕복 및 위조된 장치 상태의 런타임 거부"],
+  "notVerified": "게임 실행·카트 동작·스테이지 클리어·온라인 통합은 검증하지 않음"
+ },
+ "unlocks": {"stagesUsingTheseDevices":["st_w_12_01"],"fullyOpenedByThisAlone":0,"stageCompilesAloneFor2To8":false},
+ "unresolved": [
+  "Stick 리소스 prototype의 충돌 형태/레이어와 그 접촉을 소비하는 로직을 복원하지 못함. ParseParameter 무저장은 장식이라는 근거가 아님. Stick compile 거부.",
+  "GoKart 자동 스크롤 분기에서 camera view 좌표, m_CenterX, stage speed의 전체 웹 좌표/단위 연결 미구현. 일반 가속 분기만 넣으면 실스테이지 동작을 대체할 수 없음.",
+  "StageComponent+0x58 InputInterval 공급 및 InputTime/OldInput/NowInput 상태 전환 미구현. 상수 INPUT_INTERVAL=10을 이 타이머에 임의 적용하지 않음.",
+  "하차의 열쇠 소유권 이전, 탑승자 mode/충돌/회색 처리, 전체 사망 전파와 카메라 경계 처리 미구현. GoKart compile 거부.",
+  "FPRect 두 크기 성분의 축 의미와 렌더 좌표 변환 미확정. 충돌 튜플 helper는 원시 메모리 순서만 반환하며 solids를 만들지 않음.",
+  "ridePlayers의 FP sin lookup 및 chassis phase/scale 복원 미구현. 좌석 수치만 확정했고 위치를 움직이는 근사값은 만들지 않음."
+ ]
+}

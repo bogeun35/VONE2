@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "devices": ["Coin", "CoinObserver"],
+  "module": "source-coin-devices.js",
+  "status": "implemented_tested_not_registered",
+  "settledOn": "2026-10-13",
+  "nativeCodeExecuted": false,
+  "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll (image base 0x180000000)",
+  "summary": "모든 코인을 수집하면 관찰자가 비활성 열쇠를 한 번 활성화한다. 점수나 플레이어별 분담 수량을 세는 장치가 아니라, 등록된 미수집 코인의 엔티티 목록이 비었는지 검사한다.",
+  "evidence": {
+    "creator": "creator-delegates-resolved.local.json: Coin ordinal 4 -> CoinComponent.Creator; CoinObserver ordinal 5 -> CoinObserverComponent.Creator. Creator sites 0x181776894 / 0x1817768c6.",
+    "rect": "CoinComponent..cctor 0x1817f2e82..0x1817f2ebb writes RectFP Height=38, Width=22, X=-11, Y=-19 in 16.16 raws. RectFP field order confirmed in quantum-field-offsets.json. No FromString FP constants occur; resolve-string-literals.local.py --cctor 0x1817f2c80 prints no literals.",
+    "trigger": "InitCollision 0x1817f2a4a passes true trigger argument and 0x1817f2a69 writes collision layer byte 4. solids() is empty.",
+    "registration": "Observer Creator 0x1817f3283 writes its entity into ActorManager+0x20. Coin OnStart 0x1817f2af4 resolves this manager entry and 0x1817f2b2b calls AddCoin. AddCoin 0x1817f35df appends; RemoveCoin 0x1817f369f removes the entity.",
+    "capacity": "Initialize 0x1817f3316 allocates list with initial capacity 128, not a collection target or confirmed maximum. No artificial 128-coin restriction is added.",
+    "pickup": "OnCollided 0x1817f2bb3 plays SeId 5; 0x1817f2c3b calls RemoveCoin; 0x1817f2c62 sets ActorComponent flags bit13 requesting deletion. Collected coins are hidden and removedActorIds are returned.",
+    "success": "OnUpdate 0x1817f348b skips if m_IsNotified; 0x1817f34da returns while list Count > 0. 0x1817f34fa builds event 1, 0x1817f350c sends to actor type 17 (Key), 0x1817f3515 marks notified. Empty observer also succeeds. No timer, RNG, authored percentage, or party multiplier exists.",
+    "population": "ActorFactoryComponent.Update 0x1816a30ee..0x1816a3147 population filter retained. All online-selected 2..8 variants contain 58 coins in st_w_05_01, 75 in st_w_05_03, one observer each. Keys author datas[2]=1 (inactive)."
+  },
+  "verification": {
+    "unitTests": "node --test source-migration/source-coin-devices.test.cjs: 6 passed, 0 failed",
+    "fullSuite": "node --test source-migration/*.test.cjs: 269 passed, 0 failed",
+    "measured": [
+      "실제 두 스테이지 × 2..8인 = 14개 선택 조합 컴파일. 첫 코인 좌표 390,392 및 96,144; 열쇠 좌표 860,816 및 960,552; 비활성 파라미터 1 확인.",
+      "마지막 한 개가 남으면 이벤트 없음. 마지막 수집의 afterStep에서는 이벤트 없음. 다음 beforeStep에서 정확히 eventType 1 / broadcastActorType 17; 이후 120틱 동안 재발행 없음.",
+      "엄격 AABB 경계, 사망/퇴장 제외, 동시 2명 접촉의 단일 수집/음향/삭제, 표시 제거 검증.",
+      "명시적인 coinContacts가 기하 검사를 대체하고 알 수 없는 ID는 무시됨.",
+      "수집 직후 JSON 직렬화 왕복 후에도 동일한 완료 이벤트. 빈 관찰자와 관찰자 없는 코인도 검증.",
+      "인원 필터, 지연 생성, 다중 관찰자, 중복 ID, 잘못된 좌표/인원 검증."
+    ]
+  },
+  "registration": {
+    "performed": false,
+    "instructions": "Claude가 SourceCoinDevices UMD 의존성과 지원 타입, compile/create 상태를 등록해야 한다. 매 틱 beforeStep에서 관찰자 이벤트를 라우팅하고 플레이어 이동/충돌 뒤 afterStep을 호출한다. Key 타입 17에 event 1을 전달하고 비활성 열쇠 상태를 유지해야 한다. coinContacts 또는 살아 있는 플레이어 AABB를 공급하고 displays().coins를 렌더링한다. removedActorIds로 원래 코인 표시/콜라이더를 제거한다. 이 세션에서는 런타임/패키저/배포 파일을 수정하지 않았다."
+  },
+  "unlocks": {
+    "stages": ["st_w_05_01", "st_w_05_03"],
+    "fullyOpenedByThisAlone": 0,
+    "remaining": {"st_w_05_01": "WeightedLift 및 런타임 등록 필요", "st_w_05_03": "PlayerMagnet 및 런타임 등록 필요"}
+  },
+  "unresolved": [
+    "Quantum의 전체 충돌 계층 필터·경계 포함 여부·서브프레임 접촉 순서는 복원하지 않았다. players 기반 폴백은 기존 포트의 엄격 AABB 규약이다. native-equivalent dispatcher가 공급하는 coinContacts가 우선하며 completePhysicsFidelity=false다.",
+    "동일 틱의 반복 네이티브 충돌 콜백에서 삭제 예약 전 음향이 중복되는지는 미확정이다. 포트는 수집을 단발 처리한다.",
+    "다중 관찰자의 전역 ActorManager 슬롯 교체 및 종료 수명주기와 지연 생성은 미이식이다. compile()이 구체적인 오류로 거부한다. 실제 두 월드 스테이지는 모두 관찰자 1개, 생성 임계값 0이다.",
+    "런타임 등록, 브라우저/온라인 통합, 실제 원작과 사람이 나란히 비교하는 검수는 수행하지 않았다."
+  ]
+}

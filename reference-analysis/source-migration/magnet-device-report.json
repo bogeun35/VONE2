@@ -1,0 +1,48 @@
+{
+ "schemaVersion": 1,
+ "devices": ["PlayerMagnet"],
+ "module": "source-magnet-devices.js",
+ "status": "partial_static_recovery_compile_refuses_active_devices",
+ "settledOn": "2026-10-13",
+ "nativeCodeExecuted": false,
+ "summary": "플레이어에게 장착되는 자석. 입력 enum 9로 충돌 후보를 포획해 끌어당긴다. 포획 대상은 플레이어만으로 제한되지 않으며, st_w_03_04에는 ColorBox도 있다. 현재 파일은 완성된 게임 장치가 아니라 복원한 상수·파라미터·접근 계산과 명시적 컴파일 거부를 제공한다.",
+ "evidence": {
+  "creator": "creator-delegates-resolved.local.json: ordinal 72 -> PlayerMagnetComponent.Creator 0x1816cf980",
+  "parameters": "ParseParameter 0x1816cfd90는 datas[0]만 읽는다. 0x1816cfe1e의 sar 16으로 정수화하고 0x1816cfe37 Frame.GetPlayerByActorIndex로 소유자를 찾는다. 플레이어가 없으면 0x1816cfea5로 반환한다. Equip slot 0은 0x1816cfe8f, SetHoldGun(true)는 0x1816cfea0이다.",
+  "literalRecovery": "resolve-string-literals.local.py --cctor 0x1816d2be0 실행. 18.5 raw1212416, -17.5 raw-1146880, 0.6 raw39321, 0.03 raw1966, 0.08 raw5242. 별도 slot 0x1831c67a0은 8.25 raw540672. OFFSET_X는 0x1816d301f에서 18.5+8.25=26.75 raw1753088 저장.",
+  "signedCorrection": "리터럴 해석 도구가 inline TRACTOR_Y를 unsigned로 출력하지만 0x1816d2dcd의 0xffffffffffd40000은 signed -2883584, 즉 -44이다. 모듈은 signed 값으로 기록했다.",
+  "collision": "TRACTOR_X/Y/W/H는 20/-44/110/80. .cctor 0x1816d2e38..41은 COLLISION_RECT에 W/H, X/Y 쌍을 저장한다. 이 센서 영역을 solids로 노출해서는 안 된다.",
+  "input": "isInputOn 0x1816d07cf는 Actor flag bit3일 때 false. 0x1816d0809는 PlayerComponent.IsOnInput에 enum 9를 넘긴다.",
+  "approach": "suckTarget 0x1816d1581..160f, 0x1816d164a..16c8: error=destination-position-velocity. |error|가 1(X)/2(Y) 이하이면 destination-position으로 스냅. 그 밖에는 velocity+sign(error)*min(threshold, |error|*rate>>16). rate는 X raw1966, Y raw5242. flag bit0이면 rate 두 배(0x1816d14b3..bf). MIN이라는 필드명과 달리 가속량 상한이다.",
+  "motion": "0x1816d18ce는 target Actor +0xf0에 접근 변위를 저장. 0x1816d1a4e..6e는 같은 변위를 Actor +0xb0 위치에 직접 더하고 0x1816d1aae에서 syncCollisionPos를 호출. caught-relative/floating 분기는 별도 속도·중력 변경이 있으므로 접근 helper만으로 전체 행동을 대체할 수 없다.",
+  "capture": "OnCollided 0x1816d2928은 대상 Actor bit16을 요구한다. 0x1816d2a46..5d에는 LIMIT_ANGLE_DEG 40과 FP 삼각함수 비교가 있다. captureTarget 0x1816d1f6d에서 후보 정렬 후 0x1816d200f event16 생성, param+0x79=1 설정, 0x1816d2037 NotifyEvent 호출. 반환 >0(0x1816d203e)인 첫 후보만 m_Target에 저장한다.",
+  "chain": "captureProc 0x1816d111b에서 대상 플레이어의 장비를 조회하고 조건에 따라 0x1816d125c에서 그 자석 update를 재귀 호출한다. 단순 플레이어 거리순 흡입 구현은 이 계약을 보존하지 못한다."
+ },
+ "integration": {
+  "registration": "등록 금지: partial. 활성 PlayerMagnet이 하나라도 있으면 compile이 구체적 오류를 던진다. options로 우회할 수 없다.",
+  "runtimeHook": "입력 enum9, player actor index 장착 매핑, 네이티브 충돌 후보 순서, 동기 event16 승인/반환, 포획 상대 관계와 floating 상태, 위치 직접 이동 + 충돌 위치 동기화가 필요하다. 이동은 틱당 변위이며 dt를 다시 곱하거나 일반 물리 적분에서 두 번 적용하면 안 된다.",
+  "currentRuntime": "source-stage-runtime.js는 players/inputs 중심 훅을 제공하지만 이 장치의 동기 Actor.NotifyEvent 승인 계약 및 caught-relative FP 물리는 제공하지 않는다. 이 작업은 기존 런타임을 변경할 권한이 없으며 범용 승인 대체물을 만들지 않았다."
+ },
+ "verification": {
+  "unitTests": "node --test source-migration/source-magnet-devices.test.cjs: 8 passing",
+  "fullSuite": "node --test source-migration/*.test.cjs: 269 passing, 0 failing",
+  "measured": [
+   "실제 세 스테이지의 online 선택 2..8인 총21개에서 PlayerMagnet은 각8개, playerCount=0, 위치0/0, datas[0]=0..7이다.",
+   "세 스테이지 모든 인원에서 compile이 명시적으로 거부한다. 플레이 가능하다고 주장하지 않는다.",
+   "접근 helper는 정확한 FP 상한·부호·기존 속도 반영·포함 스냅 경계·boost 두 배를 검증했다.",
+   "장치 없는 상태의 JSON 왕복과 60회 무동작, 임의 활성 상태의 훅 거부를 검증했다. 활성 장치 타이머나 상태 전이 검증은 아직 없다."
+  ]
+ },
+ "stageCompilesAlone": {
+  "st_w_03_03": "no at 2..8: magnet refusal; LinePathLift, DamageRect, Thunder, DelaySwitch, Text also need their established/separate modules",
+  "st_w_03_04": "no at 2..8: magnet refusal; JumpStand, ColorBox, Arrangement and dummy actor semantics remain other tasks",
+  "st_w_05_03": "no at 2..8: magnet refusal; CoinObserver/Coin and DeadTimer require their separate modules"
+ },
+ "unresolved": [
+  "포획 후보 정렬 comparers(0x1816d1f52/0x1816d1f6d)와 동률 순서, 네이티브 FP 각도 필터의 lookup 결과를 아직 복원하지 않았다. Math.sin/부동소수점 normalize로 대체하지 않았다.",
+  "event16 승인 및 해제 수신자의 모든 의미와 반환 계약, OnRecvEvent 0x1816d25e0 및 releaseTarget 0x1816d12e0의 전체 상태 전이는 구현하지 않았다.",
+  "isCatchedRelative 0x1816d1c90 및 suckTarget의 floating/calcGravity 0x1816bf440 분기와 연쇄 갱신 순서를 통합하지 않았다.",
+  "syncPlayerPos, OnPost, checkCatch, particle, sound timer 및 장착 생명주기 전체를 구현하지 않았다. 복원된 intervalTimeRaw39321만으로 타이머 행동을 주장하지 않는다.",
+  "현재 파일은 지원 타입 식별자를 광고하지만 지원 완료를 뜻하지 않는다. 활성 장치 compile은 항상 거부한다. native original 비교 검수 및 플레이 검증은 수행하지 않았다."
+ ]
+}

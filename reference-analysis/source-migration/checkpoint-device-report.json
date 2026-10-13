@@ -1,0 +1,262 @@
+{
+  "schemaVersion": 1,
+  "devices": [
+    "CheckPoint"
+  ],
+  "module": "source-checkpoint-devices.js",
+  "status": "implemented_tested_not_registered",
+  "settledOn": "2026-10-13",
+  "nativeCodeExecuted": false,
+  "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll; image base 0x180000000",
+  "summary": "플레이어 한 명이 체크포인트에 닿으면 파티 전체의 재시작 기준을 활성화한다. 현재 플레이어 위치를 기록하는 장치가 아니라, 생성 시 미리 읽은 인덱스별 재등장 좌표와 접촉 순간의 스테이지 플레이 시간을 사용하는 장치다.",
+  "evidence": {
+    "creator": "creator ordinal 3 -> CheckPointComponent.Creator 0x1817ed930. ParseParameter 0x1817eda50와 InitCollision 0x1817edba0 호출.",
+    "fields": "quantum-field-offsets.json: CheckPointComponent +0 m_IsChecked,+8 m_EntityRef. CheckPointInfo +0 GameOverCount,+4 IsActive,+8 RespawnPositionListPtr,+0x10 PlayTime,+0x18 Position. Frame.GetCheckPointInfo 0x1817475b0: globals+0xf0.",
+    "collision": "RectFP Height/Width/X/Y 순서. .cctor 0x1817edf72..0x1817edfab: 높이64, 너비32, X=-16,Y=-64. InitCollision 0x1817edc4a trigger=true; 0x1817edc69 layer=10. OnCollided 0x1817edccf는 다른 충돌체 layer=1만 받는다. 0x1817edcd5 로컬 checked>0이면 즉시 반환.",
+    "parameters": "Parse 0x1817edadd는 actor.pos를 전역 Position에 저장. 0x1817edb42 목록을 비우고 0x1817edb4c count=9, 시작 slot=0으로 0x181786800 호출. 각 x/y는 t=1만 사용하며 그 외는0. 0x1817868e6..8f2 첫 (0,0)에서 종료, 0x181786915 슬롯을2 증가. 이 목록은 플레이어 수로 잘리지 않는다.",
+    "activation": "0x1817edcf2 SeId24. 0x1817edd3f/43 StageComponent.m_PlayTime(+0x58) -> CheckPointInfo.PlayTime. 0x1817edd47 IsActive=1, 0x1817edd4e 로컬 checked=1. 접촉 당일 틱에 즉시 활성화, 별도 타이머 없음.",
+    "respawn": "ActorFactoryComponent.createPlayerSub 0x1816a3b7f active 검사. 0x1816a3bcd..3be7 네이티브 actorIndex가 목록 범위 안이면 해당 좌표. 0x1816a3c3a..3c75 y+QFP.Minus_1. 목록 밖/음수는 0x1816a3c80..3cc7 checkpoint.x, checkpoint.y-stackIndex*QFP._48+QFP.Minus_1. actorIndex와 stackIndex는 서로 다른 인자다. createPlayer 0x1816a4066/407f/4083에서 호출 인자 확인.",
+    "restartState": "0x1816a3cf1 저장 PlayTime 복원. 0x1816a3d1c..3d2a scrollX=max(0,checkpoint.x-QFP._180). QFP statics +0x240=Minus_1,+0x1b8=_48,+0x200=_180은 quantum-field-offsets.json과 일치. 반환 actorPosition은 네이티브 actor anchor이며 웹 박스 좌상단이 아니다.",
+    "deaths": "StageComponent.CountGameOver 0x18170ddc8는 전역 GameOverCount 증가. CheckPoint OnCollided는 이 필드를 변경하지 않으며 모듈은 호스트가 전달한 값을 보존한다.",
+    "reset": "GameComponent.resetCheckPointInfo 0x18184e759/773/7f2는 GameOverCount,IsActive,목록을 초기화한다. Position/PlayTime을 새로 쓰지 않아도 inactive로 차단된다. 라운드 재생성과 새로운 스테이지 초기화를 구별해야 한다.",
+    "constants": "resolve-string-literals.local.py --cctor 0x1817edd70 실행: FP.FromString_UNSAFE 호출 없음. 충돌 상수는 즉시값으로 읽었다."
+  },
+  "shipped": {
+    "st_w_03_01": {
+      "position": [
+        2289,
+        432
+      ],
+      "respawnPositions": [
+        [
+          2349,
+          432
+        ],
+        [
+          2229,
+          432
+        ],
+        [
+          2179,
+          432
+        ],
+        [
+          2129,
+          432
+        ],
+        [
+          2079,
+          432
+        ],
+        [
+          2029,
+          432
+        ],
+        [
+          1979,
+          432
+        ],
+        [
+          1929,
+          432
+        ]
+      ]
+    },
+    "st_w_07_04": {
+      "position": [
+        3004,
+        384
+      ],
+      "respawnPositions": [
+        [
+          2500,
+          384
+        ],
+        [
+          2550,
+          384
+        ],
+        [
+          2600,
+          384
+        ],
+        [
+          2650,
+          384
+        ],
+        [
+          2700,
+          384
+        ],
+        [
+          2750,
+          384
+        ],
+        [
+          2800,
+          384
+        ],
+        [
+          2850,
+          384
+        ],
+        [
+          2300,
+          250
+        ]
+      ]
+    },
+    "st_w_15_01": {
+      "position": [
+        1920,
+        240
+      ],
+      "respawnPositions": [
+        [
+          1632,
+          432
+        ],
+        [
+          1582,
+          432
+        ],
+        [
+          1532,
+          432
+        ],
+        [
+          1482,
+          432
+        ],
+        [
+          1416,
+          384
+        ],
+        [
+          1368,
+          336
+        ],
+        [
+          1320,
+          288
+        ],
+        [
+          1272,
+          240
+        ]
+      ]
+    },
+    "st_w_15_02": {
+      "position": [
+        2141,
+        240
+      ],
+      "respawnPositions": [
+        [
+          1584,
+          288
+        ],
+        [
+          1634,
+          288
+        ],
+        [
+          1684,
+          288
+        ],
+        [
+          1734,
+          288
+        ],
+        [
+          1584,
+          238
+        ],
+        [
+          1634,
+          238
+        ],
+        [
+          1684,
+          238
+        ],
+        [
+          1734,
+          238
+        ]
+      ]
+    }
+  },
+  "integration": {
+    "tick": "Call afterStep in the collision phase with exact StageComponent playTimeRaw. contacts [{checkpointId,otherLayer,playerId}] is authoritative; without it, players must be live world-space collision rectangles.",
+    "persistence": "Keep checkpointInfo outside the recreated round, include it in host snapshots, pass compile options.checkpointInfo on retry. Recreated local checked starts false as native component zero initialization does. Clear saved info on a new stage or full reset.",
+    "restart": "When status becomes dead, snapshot checkpointInfo before recreating all stage actors. If active, use respawn(state,nativeActorIndex,nativeStackIndex) for each player; restore playTimeRaw and scrollX. Returned actorPosition is a native anchor, requiring the runtime player-box conversion, not a top-left box. Reset velocities/other devices through ordinary round creation. Do not restore player current positions, keys or other device state.",
+    "ordering": "Process checkpoint collision before publishing death/restart; maintain stable native player indices across retries. This module is deliberately not registered in source-stage-runtime.js.",
+    "limitations": "Fallback player AABB dispatch is a port adapter; exact native contact ordering and edge semantics require the host contacts path. No original view animation/assets or full stage behavior verified.",
+    "requiredHooks": [
+      "UMD/import dependency, compile/create state, supportedTypes, displays, collision dispatch에 모듈 등록은 리드 담당.",
+      "스테이지 플레이 시간을 FP raw 정수로 관리하고 afterStep에 playTimeRaw 전달. dt를 접촉 타이머로 대신 계산하지 않음.",
+      "사망 뒤 재시작 전 checkpointInfo 저장, 새 라운드 compile options.checkpointInfo에 전달. 전체 snapshot에 포함해 온라인 동기화.",
+      "respawn의 actorPosition을 기존 네이티브 anchor -> 플레이어 박스 변환으로 적용하고 initPos도 재생성된 actor 위치에 맞게 갱신. 플레이어 인덱스 순서 보존.",
+      "저장된 PlayTime/scrollX 복원 및 일반 라운드 초기화. 체크포인트가 inactive이면 원래 시작점 유지. 새 스테이지/전체 초기화 때 저장 상태 폐기.",
+      "GameOverCount 증가 처리는 호스트 책임. 로컬 checked는 새 컴포넌트 생성처럼 false로 초기화되어 재접촉 시 효과음을 다시 낼 수 있음."
+    ],
+    "authorisation": "source-stage-runtime.js 및 재시작 로직은 수정하지 않았다. 등록/배포/커밋/푸시 없음."
+  },
+  "verification": {
+    "unitTests": {
+      "file": "source-checkpoint-devices.test.cjs",
+      "passing": 17,
+      "failing": 0
+    },
+    "fullSuite": {
+      "command": "node --test source-migration/*.test.cjs",
+      "passing": 424,
+      "failing": 0
+    },
+    "measured": [
+      "4스테이지 x7인원 x온/오프라인=56개 실제 variant/population 선택으로 정확한 좌표 검증.",
+      "충돌 layer 필터, 첫 접촉 즉시 활성화, 같은 인스턴스 재접촉 무시, 시간 raw 그대로 저장.",
+      "600틱 무접촉 상태 불변. 인덱스별 재등장, 아홉 번째 좌표, 범위 밖 fallback, y-1, scroll 및 시간 복원.",
+      "(0,0) 종료와 nonfloat->0, JSON roundtrip, 라운드 재생성 복원 및 checked 초기화.",
+      "unknown rounding/다중 체크포인트/잘못된 스테이지 복원은 throw."
+    ],
+    "correction": "테스트 헬퍼의 기본값 때문에 undefined가 자동으로32768이 되어 최초 검증 한 건 실패. null 입력으로 수정하고 상태 불변을 검증했으며, 별도 dt-only 테스트로 실제 누락도 검증했다. 모듈 동작 변경 없음.",
+    "stageCompilesAlone": false,
+    "deviceCompilesForAllCounts": true,
+    "runtime": "올바른 compile({source,geometry,count,stageId}) 인자로 네 스테이지를 확인했으나 현재 whitelist에서 Source stage runtime does not support this stage yet로 거부한다. 최초 위치인자 호출은 API가 잘못된 검사여서 근거에서 제외했다."
+  },
+  "stagesStillNeed": {
+    "st_w_03_01": [
+      "Blackout",
+      "SearchLight",
+      "checkpoint restart hook"
+    ],
+    "st_w_07_04": [
+      "Ghost",
+      "FloatingThorn",
+      "DelaySwitch",
+      "checkpoint restart hook"
+    ],
+    "st_w_15_01": [
+      "LinePathGear",
+      "CollisionSwitch",
+      "checkpoint restart hook"
+    ],
+    "st_w_15_02": [
+      "Blackout",
+      "BlackoutController",
+      "ColorBox",
+      "DeadSwitch",
+      "checkpoint restart hook"
+    ],
+    "note": "체크포인트 외 구성요소 목록이며 다른 세션의 새 모듈 등록 여부는 검증하지 않음. WeightedLiftEx 등의 기존 장치도 스테이지 등록/통합 검증 필요."
+  },
+  "unresolved": [
+    "여러 체크포인트는 전역 좌표/목록을 생성 순서대로 덮어쓰므로 그 순서가 미확정인 다중 배치는 compile이 명시적으로 거부한다. 네 출하 스테이지는 모두1개.",
+    "16.16에 정확히 표현되지 않는 새 float 데이터의 로더 변환은 추측하지 않고 compile이 거부한다. 실제 출하 좌표는 전부 정수.",
+    "players AABB 경로는 포트 어댑터다. 원본의 접촉 가장자리 판정/동일 틱 사망과 접촉 순서는 전체 충돌 엔진의 근거를 추가해야 한다. 정확한 dispatch를 가진 호스트는 contacts 경로 사용.",
+    "원본 뷰 애니메이션 및 리소스는 이식하지 않음. 네 스테이지의 실제 플레이, 사망 후 런타임 재시작, 온라인 통합은 아직 검증하지 않음."
+  ],
+  "completePhysicsFidelity": false
+}

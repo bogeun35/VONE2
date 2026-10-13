@@ -1,0 +1,51 @@
+{
+ "schemaVersion": 1,
+ "devices": ["RallyController", "RallyMallet"],
+ "module": "source-rally-devices.js",
+ "status": "partial_analysis_only_do_not_register",
+ "settledOn": "2026-10-13",
+ "nativeCodeExecuted": false,
+ "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base 0x180000000",
+ "summary": "플레이어마다 패들 하나를 조작하여 공을 16회 받아치는 협동 장치다. 5·10·15회에 공과 패들 속도를 올리고, 공이 사라지면 기록과 패들 가속을 초기화한다. 16회 성공 다음 Post에서 열쇠를 활성화하고 공·패들을 정지한다. 현재 파일은 분석용 파라미터 해석과 컨트롤러 상태 전이만 구현했다.",
+ "sourcesRead": ["AGENTS.md", "codex-briefs/02-13-03-rally.md", "HANDOFF.md", "source-migration/source-landmine-devices.js", "source-migration/landmine-device-report.json", "source-migration/source-countup-devices.js", "source-migration/quantum-field-offsets.json", "source-migration/creator-delegates-resolved.local.json", "source-migration/installed-stage-decoded.local.json", "source-migration/population-rules.cjs"],
+ "parameterMapping": {
+  "controller": {
+   "address": "0x1816dfe40..0x1816e0276",
+   "slots": ["rallyMax", "ballStartPos.x", "ballStartPos.y", "ballSpeed", "ballSpeedInc", "malletSpeedInc", "speedUpRallyCount", "malletSpeed", "ballSpeedMax", "malletSpeedMax", "ballScale", "malletScale"],
+   "defaults": "Initialize 0x1816dfc84: max10/interval2; 0x1816dfcb0..0x1816dfd60: ballScale1/speed6/inc raw6553/max16; malletScale1/speed10/inc raw6553/max20. 위치 이외에는 양수만 덮어쓴다."
+  },
+  "mallet": {
+   "address": "0x1816e4f17..0x1816e5081",
+   "slots": ["player actor index (not input index)", "rail angle", "positive rail length"],
+   "wrap": "음수는 360을 한 번 더하고 360 이상은 한 번 뺀다. 반복 모듈로가 아니다.",
+   "defaultLength": "256, raw0x1000000 at 0x1816e4e64"
+  }
+ },
+ "findings": [
+  {"address": "0x1816e0370 / 0x180476130", "finding": "컨트롤러의 로직은 Post에서 실행한다. Update는 빈 ret다."},
+  {"address": "0x1816e058f / 0x1816e04c5", "finding": "초기 대기는 QFP._0_50 raw32768, 공 소실 후 대기는 QFP._0_25 raw16384다. 60Hz dt raw1092라서 카운트다운 각각 31/16틱이며 단계 진입 틱은 별도다."},
+  {"address": "0x1816e0bba..0x1816e0c8b", "finding": "히트 이벤트9는 phase<3에서 카운트를 증가시키며 마지막 히트에는 가속하지 않는다. 실제 stage는 max16/interval5."},
+  {"address": "0x1816e0cf2..0x1816e0d6a", "finding": "소실 이벤트7은 ball reference를 지우고 미클리어에서만 count0 및 actor189에 reset58을 보낸다. phase는 여기서 바꾸지 않는다."},
+  {"address": "0x1816e09b4..0x1816e0a44", "finding": "클리어는 actor17에 event1, 현 공에 event35, actor189에 event35, ChangeAllPlayerState(1)을 보낸 뒤 자체 종료 flag를 설정한다."},
+  {"address": "0x1816e6263 / 0x1816e517d", "finding": "패들 충돌은 반지름25 원, 오프셋0, layer3다. 지형용 직사각형 solid로 대체할 수 없다."},
+  {"address": "0x1816e5237..0x1816e5246 / 0x1816e5fe5..0x1816e5ff9", "finding": "레일 제한은 (length/2)^2. 제안 위치가 범위 밖이면 이동 전체를 거부하며 끝점에 clamp하지 않는다."},
+  {"address": "0x1816e06fe / 0x1816e085f / 0x1816e091d", "finding": "등록 패들 하나를 정수 RNG로 선택하고 native atan 방향에 FP RNG -20..20도 교란을 더해 RallyBallComponent.Creator를 호출한다. 배치에 RallyBall 액터가 없다는 것은 공이 없다는 뜻이 아니다."}
+ ],
+ "verification": {
+  "unitTests": "node --test source-migration/source-rally-devices.test.cjs: 23/23 passing",
+  "fullSuite": "node --test source-migration/*.test.cjs: 292/292 passing, failed files none",
+  "measured": ["2..8인 전체에서 정확한 controller 12슬롯과 모든 mallet 좌표·angle·length 대조", "31틱/16틱 타이머 경계", "5/10/15회 가속, 16회 후 다음 Post에서 한 번만 클리어", "공 소실시 미클리어 리셋 및 완료 기록 보존", "패들 event57/58/35의 exact raw 누적·리셋·정지", "JSON round trip", "모든 인원에서 compile 거부 및 analysisOnly snapshot step 거부"],
+  "limitations": "게임 플레이, 실제 ball collision, RNG 스트림, controller↔ball↔mallet 통합은 검증하지 않았다. 292건 통과가 stage 실행 가능성을 뜻하지 않는다."
+ },
+ "unlocks": {"stagesUsingThesePair": ["st_w_13_03"], "fullyOpenedByThisAlone": 0, "stageCompilesAlone": "no, every count 2..8 explicitly throws"},
+ "unresolved": [
+  "RallyBall simulation 모듈이 없다. source-migration 파일 검색에서 rally/ball 모듈을 찾지 못했다. Creator 0x1816dda50가 동적으로 생성하므로 다른 작업의 해당 component를 임의로 작성하지 않았다.",
+  "RallyMallet native FP 회전 0x181644e70/0x181645b90 및 공 조준 atan 0x1816407f0의 lookup/rounding을 복원하지 않았다. 사선 stage 3/5/6/7/8인을 Math.sin/cos로 대체하지 않는다.",
+  "Frame.GetPlayerByActorIndex 결과의 +0xe input index / +7 color index와 NormalInputComponent.GetMoveVector 0x181887860의 웹 입력 매핑은 미확정이다. datas[0]을 input index라 가정하지 않았다.",
+  "stage JSON의 비정확 소수(4.8/1.3)→FP raw 변환 경로는 미확정이다. inspectActors는 authored 수치를 유지하며 이를 정확한 실행 FP라고 주장하지 않는다.",
+  "컨트롤러 helper commands는 분석용 semantic records이며 실제 Frame 이벤트나 ball 생성 구현이 아니다. beforeStep/afterStep/solids는 analysisOnly 입력에서 반드시 throw한다.",
+  "네이티브 signed byte overflow 및 비정상 파라미터 조합은 shipped stage 외 범위로 미구현이다.",
+  "런타임 등록, 렌더링, 패키징, 배포, 원작과 나란히 플레이 검수는 수행하지 않았다."
+ ],
+ "registration": {"allowed": false, "reason": "partial 파일이다. runtime whitelist에 추가하지 말 것. 필수 물리 및 의존 모듈을 구현하고 compile 거부를 해소한 뒤 재검토해야 한다."}
+}

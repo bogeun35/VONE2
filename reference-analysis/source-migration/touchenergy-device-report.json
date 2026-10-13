@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "status": "done",
+  "readOnlyStatic": true,
+  "nativeCodeExecuted": false,
+  "supportedTypes": ["TouchEnergy"],
+  "summary": "플레이어끼리 접촉하면 공동 에너지가 감소한다. 닿자마자 감소하고 계속 닿으면 일정 간격으로 다시 감소하며, 떨어졌다 다시 닿으면 즉시 감소한다. 표시 잔량이 0에 도달하면 모든 Player에 QuakeDead를 한 번 보낸다.",
+  "creator": {"ordinal": 221, "site": "0x181776b22", "component": "TouchEnergyComponent", "address": "0x18172f180"},
+  "evidence": {
+    "initialization": "0x18172f2e0..0x18172f336: scale=QFP._1, damage=QFP._1, interval=QFP._1_50, energy/max/target=QFP._10. QFP .cctor 0x181780cc0 resolved statically.",
+    "parameters": "ParseParameter 0x18172f491/4aa/4c3 loads slots 3/4/5 as seven FP raws, then backwards first-nonzero selection from count-2 at 0x18172f5c5..61c, 680..6d3, 72c..780. Only positive overrides are stored at 0x18172f64c/650/654, 703, 7a8. Slot 6 is seven int32s, deserializer 0x180970770 (byte subtract 0x21 at 0x18097085b), Find 0x181786950, visibility bit0 written at 0x18172f7dd..819.",
+    "ui": "Slots 0/1 add UI_POSX=0 and UI_POSY=396 (0x18172f508..52b); slot 2 multiplies by UI_BASE_SCALE=9 when absolute raw>=4 (0x18172f540..575). Initial scale is 1 if not overridden. .cctor inline stores 0x18173042f/445/45b; resolver confirmed raws 589824, 0, 25952256.",
+    "contact": "checkCloseContact 0x18172fbd0: both GetPlayerByPlayerIndex results must exist, state byte +3 must be 1 (QPlayerState.Default), actors and GetCollision must resolve. Collision.GetRect plus collision position forms world bounds. Four tests at 0x18172fe0a/3d/70/9f allow overlap or gap<=QFP._0_01. Helper 0x181730470..4e9; QFP .cctor 0x181780cc0 +0x18 raw=655.",
+    "cooldown": "updateContactedInfos 0x18172f910 iterates i<j, i/j in 0..7 (0x18172f983, 0x18172fb88/97), flat slot i*8+j. Contact timer subtracts FP DeltaTime at 0x18172fa5b. Timer<=0 subtracts damage from target at 0x18172fa94, clamps target to zero at 0x18172fac2..ae9 and sets pair timer=interval at 0x18172faf1. Separation resets timer=0 at 0x18172fb83. No global cooldown or per-player cap.",
+    "displayEnergy": "updateEnergy 0x181730160 skips equal values. Visibility bit0 off snaps energy to target at 0x1817301ed. Otherwise sign(target-energy) * max * QFP._5 * DeltaTime is added using signed FP multiply shifts at 0x181730242/271/279, then clamped at 0x181730288..299. QFP._5 raw=327680 from .cctor.",
+    "failure": "0x1817302e7 GetEventParam(43=QuakeDead); 0x1817302fe NotifyEvent(actorType 27=Player); 0x18173030f sets exhausted flag bit1; OnPost 0x18172f8b9 skips all further processing. This is energy depletion, not a full-energy success signal.",
+    "feedback": "showHitMark 0x18172fee0 resolves both collisions and calls CollisionUtility.CalcCollidedCenterPosition 0x18177f9f0 at 0x181730069, then FrameEvents._TouchEnergy_ShowHitMark at 0x1817300a2. SE 11 at 0x181730110 only if target>0 (0x1817300ce). Every damage also requests shake with QFP._0_10 raw 6553 (0x18172fb4f/53)."
+  },
+  "realStageValues": {
+    "stages": ["st_w_02_02", "st_w_02_04"],
+    "players": [2, 3, 4, 5, 6, 7, 8],
+    "energy": [4, 6, 8, 10, 12, 14, 16],
+    "damage": 2,
+    "intervalRaw": 65536,
+    "visible": true,
+    "uiPosition": {"x": 0, "y": 428},
+    "uiScale": 9,
+    "source": "installed-stage-decoded.local.json; population-rules selects each actual online variant before filtering actors. Both stages have exactly one TouchEnergy at all counts."
+  },
+  "integration": {
+    "moduleGlobal": "SourceTouchEnergyDevices",
+    "registrationPerformed": false,
+    "order": "Call afterStep exactly once in Post, after native player movement. beforeStep is inert. No solids are produced.",
+    "requiredInput": "ctx.players contains native index 0..7, nativeState (1=Default), and collisionRectRaw={left,right,top,bottom} in native WORLD 16.16 coordinates. null collision represents GetCollision returning null. Missing native bounds/state fail explicitly; no sprite-size approximation.",
+    "events": "Route broadcastActorType=27,eventType=43 through the native Player QuakeDead handler, including its state/immortality rules. This module emits the event rather than directly changing players or replacing it with ordinary Dead.",
+    "visuals": "displays supplies visibility, interpolated energy, max, target, UI position/scale. hitMarks carries the two native player indices for the host collision-center effect, sounds carries SE 11, cameraShakes carries strengthRaw 6553.",
+    "stageCompilesAlone": false,
+    "otherTypes02_02": ["SwitchObserver", "Player", "Key", "Goal", "Text", "WeightedLiftSingle", "Warp", "Switch"],
+    "otherTypes02_04": ["Player", "ColorBox", "Key", "Goal", "Text", "MoveWall", "LinePathLift", "Thunder", "Wind", "MapRect"]
+  },
+  "verification": {
+    "unitCommand": "node --test source-migration/source-touchenergy-devices.test.cjs",
+    "unitTests": {"pass": 13, "fail": 0},
+    "fullCommand": "node --test source-migration/*.test.cjs",
+    "fullSuite": {"pass": 358, "fail": 0},
+    "measured": [
+      "14 real stage/population selections compile with exact decoded FP and int tables.",
+      "Contact tolerance accepts raw 655 and rejects 656 on both axes.",
+      "Continuous contact damages on ticks 1 and 62; one second is 65536 raw and one 60Hz tick is 1092.",
+      "2-player visible energy reaches first target on tick 7 and emits one QuakeDead broadcast on tick 68; remains unchanged for 120 later ticks.",
+      "Separate pair timers, sparse player indices, separation reset, hidden snap, missing/nondefault player handling and JSON replay verified."
+    ],
+    "correction": "First test draft incorrectly expected interpolation over 13 ticks and failure on tick 75. max=4 and speed=max*5=20 means a damage of 2 clamps after seven ticks. Corrected expectations to ticks 7/68, with explicit raw residual checks; module behavior was unchanged."
+  },
+  "unresolved": [
+    "Runtime registration and integration intentionally not performed under task scope. The host must provide native bounds/state and route QuakeDead; these requirements cannot be fulfilled by guessing dimensions or a different death event.",
+    "Exact hit-mark pixel position and view animation are not reproduced locally. Pair indices are emitted for host CollisionUtility.CalcCollidedCenterPosition integration (0x18177f9f0), whose geometry helper was not ported in this task.",
+    "Nonrepresentable authored float slots 0/1/2 are refused at compile, since source asset-to-FP rounding was not independently established. Both shipped stages author exact integer values.",
+    "No original gameplay execution, browser integration, deployment, human visual comparison or online test was performed. completePhysicsFidelity remains false."
+  ]
+}

@@ -1,0 +1,56 @@
+{
+ "schemaVersion": 1,
+ "devices": ["CannonPlayer", "ThrowBallBasket", "ThrowBallController"],
+ "module": "source-throwball-devices.js",
+ "status": "partial_static_recovery_compile_refused",
+ "settledOn": "2026-10-13",
+ "nativeCodeExecuted": false,
+ "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base 0x180000000",
+ "summary": "일반 플레이어에게 대포를 장착한다. 컨트롤러가 떨어뜨린 일반 공을 대포로 받아 탄약을 늘리고, 플레이어가 발사한 탄환을 바구니에 넣어 목표 점수를 채운다. 08-04에서는 떨어지는 공 중 25%가 폭탄이다. 현재 산출물은 정적 복원과 검증 보조 함수이며 플레이 가능한 모듈이 아니다.",
+ "creator": {
+  "CannonPlayer": "ActorFactoryComponent.createCannonPlayer 0x1816a49a0: createPlayer 0x1816a3e40 호출 후 datas[14], datas[15]를 PlayerCannonComponent.Creator 0x181895360에 전달. 별도 actor 146을 생성하며 PlayerComponent.Equip(1) 0x1818956b2로 소유자에게 장착한다.",
+  "ThrowBallBasket": "ordinal149, ThrowBallBasketComponent.Creator 0x181726c10",
+  "ThrowBallController": "ordinal155, ThrowBallControllerComponent.Creator 0x181728eb0"
+ },
+ "parameters": {
+  "basket": "0x181726e00: datas[0]는 FP 테이블이 아니라 28문자의 7개 signed int32 테이블. byte=(UTF16 low byte - 0x21) mod256, little endian. 0x181786950 Find는 count-2부터 역순으로 0이 아닌 값 검색. 0x181726f16에서 ushort로 저장. 기본 target=100, height=5, scale=1 (0x181726d70); datas[1]/[2]가 양수일 때 height/scale 덮어씀.",
+  "controller": "0x181729015..02d 기본 speed=1, accel=2, interval=0.5, bombRate=10. 0x1817291b0에서 datas[0..2]가 0이 아니면 각 FP 덮어씀. datas[3]은 FP arithmetic shift16 후 음수가 아니면 low byte로 폭탄 확률 저장.",
+  "cannon": "datas[14]/[15]는 조준 위상 속도와 파워 위상 속도. 두 스테이지에서 둘 다 90, raw5898240. updateAngle 0x181895b80, updatePower 0x181895c50는 dt*속도를 위상에 더하고 0x477을 곱한 후 FP 삼각함수 호출. 단순 선형 각도 증감으로 대체하면 틀린다."
+ },
+ "basket": {
+  "nativeLocalRects": "0x1817277fc..884: (w,h,x,y)=(36,42,-21,-49),(8,20,-10,-50). 0x181727095..0e8에서 전 성분에 scale 곱하고 y에서 height*16 뺌. 16은 0x181727907의 inline raw1048576이며 literal resolver 실행으로 확인.",
+  "scoring": "0x18172740d..532: 추가 접촉 && category5 && actorType147 && sensor. 공의 actor flags bit13을 설정해 제거 예약하고 target 미만일 때만 점수 증가. 목표 도달 시 sensor flags bit0 설정. 센서 외 접촉은 반사 함수 호출.",
+  "clear": "IsCleared 0x1817276e0 unsigned score>=target. basketProc 0x181729500은 모두 충족되면 event1을 actorType17(Key)에 전송하고 controller flags bit1 설정.",
+  "targetsByCount2to8": [[7], [8], [9], [6,5], [4,4,4], [5,4,4], [6,4,4]],
+  "basketCountByCount2to8": [1,1,1,2,3,3,3]
+ },
+ "projectiles": {
+  "PlayerCannonBall": "147, 발사/득점 탄환. createBall 0x181895d30이 FP sin/cos와 static 속도/위치 상수로 초기화 후 Creator 0x1818942a0 호출.",
+  "ThrowBall": "148, 컨트롤러가 생성하는 떨어지는 탄약 또는 폭탄. ballProc 0x181729700이 생성 위치 y=-10과 speed/accel 설정. OnCollided 0x181728300은 actor146(PlayerCannon)에 접촉할 때 일반 공이면 탄약을 최대99까지 증가(0x1817285b6..5bf), 폭탄이면 owner에게 event25를 전달(0x1817284de..56d). 폭탄 반응을 즉사로 가정하지 않았다.",
+  "rng": "ballProc 0x181729874..8c5: 영역 int draw 후 영역 내 x FP draw. 폭탄 확률이 양수일 때 추가 PCG32 draw, rejection threshold96, modulo100<rate (0x1817298fb..974). 런타임 생성/난수 구현은 미완료로 실행하지 않음."
+ },
+ "integration": {
+  "status": "do_not_register",
+  "player": "CannonPlayer는 createPlayer를 통한 정상 플레이어 생성 후 별도 대포 장착. 새 플레이어를 중복 추가하면 안 됨. 실제 2..8인 선택 데이터 모두 후보 스폰8개, 일반 Player0개. 후보8개 중 파티 인원에 맞는 원작 actor index 선택은 미복원으로 전원 생성하지 않음.",
+  "runtime": "대포 소유자 입력, 탄약, 조준/파워 phase, projectile 생성과 이동/충돌, 바구니 contactAdded 전달, controller Update/Post 순서, Key event1 활성화 훅이 필요하다. 기존 runtime 파일은 수정하지 않았다.",
+  "compile": "세 대상 타입의 활성 액터가 하나라도 있으면 구체적 미해결 이유를 담아 throw. options로 차단 우회 불가. unrelated actor만 있는 경우에만 빈 상태를 컴파일한다. inspectParameters와 기타 함수는 복원 단위 검증용이며 runtime으로 연결하지 말 것."
+ },
+ "verification": {
+  "ownCommand": "node --test source-migration/source-throwball-devices.test.cjs",
+  "ownPassing": 20,
+  "fullCommand": "node --test source-migration/*.test.cjs",
+  "fullStatus": "pass, final observed snapshot 424 tests passing; concurrent tasks changed test inventory during the session",
+  "checks": ["두 실제 스테이지 각각 2..8인 variant/population 선택", "exact signed int32 목표/scale/height/속도/폭탄 비율", "타입별 compile refusal", "native FP local rectangles", "sensor 조건/점수 상한/제거 예약", "FP cooldown 30틱 유지 및31틱 phase2→0", "JSON round trip"],
+  "stageCompilesAlone": false,
+  "playableOrNativeParityVerified": false
+ },
+ "unresolved": [
+  "FP 삼각함수 0x1816465d0는 runtime static table+0x20에서 abs(raw angle)%0x6487e 인덱스로 값을 읽고 부호 복원. 원작 table 내용과 cos 0x1816d3190 미복원; Math.sin/cos 대체는 하지 않음.",
+  "대포 firing state 전체, OnPost owner 추종/탄약 수집, 소유자 상태 및 입력9의 web 입력 대응 미이식.",
+  "PlayerCannonBall 반사 감쇠/중력/소멸 및 ThrowBall 가속/충돌/폭발 소멸 전체 미이식. 상수와 상태 전이를 모두 완성하지 않았음.",
+  "createAreaInfo 0x181729b10의 바구니 주변 생성 영역/범위 미복원.",
+  "바구니 native local rectangles의 web 플레이어 anchor/충돌 유형 변환 미검증.",
+  "CannonPlayer 후보8개에서 실제 인원별 player index 배정/선택 미복원.",
+  "따라서 st_w_08_02 및 st_w_08_04는 2..8인 모두 이 모듈로 실행 불가. 완료 구현이라고 등록하면 안 됨."
+ ]
+}

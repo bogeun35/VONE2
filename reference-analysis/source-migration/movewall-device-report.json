@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "devices": ["MoveWall", "SpeedSwitch"],
+  "module": "source-movewall-devices.js",
+  "status": "partial_native_core_verified_runtime_adapters_missing",
+  "settledOn": "2026-10-13",
+  "nativeCodeExecuted": false,
+  "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll; image base 0x180000000",
+  "summary": "MoveWall은 플레이어가 감지 구역에 들어오면 옆으로 이동하고 대기 후 원위치로 돌아오는 벽이다. SpeedSwitch는 접촉 플레이어 또는 전체 플레이어의 걷기 속도와 얼음 위 최대 속도를 재설정한다. 원작 상태 머신과 이벤트 코어는 검증했지만 공통 재귀 접촉 및 플레이어 속도 이벤트 어댑터가 없어 스테이지 단독 실행을 주장하지 않는다.",
+  "evidenceRead": [
+    "AGENTS.md", "HANDOFF.md", "source-landmine-devices.js", "landmine-device-report.json",
+    "source-countup-devices.js", "source-gate-devices.js", "spring-switch-runtime.js",
+    "quantum-field-offsets.json", "quantum-method-index.json",
+    "creator-delegates-resolved.local.json", "installed-stage-decoded.local.json", "population-rules.cjs"
+  ],
+  "creatorMapping": {
+    "MoveWall": {"ordinal": 23, "creator": "0x181885800", "delegateSite": "0x181776608"},
+    "SpeedSwitch": {"ordinal": 96, "creator": "0x1817089b0", "delegateSite": "0x181776153"}
+  },
+  "constants": {
+    "derivation": "resolve-string-literals.local.py --cctor 0x1818861d0 실행. 문자열 FP 상수는 없으며 9개 모두 즉값이다. 수치는 module 첫머리의 주소별 설명과 대응한다.",
+    "moveWidthDefault": {"raw": 3276800, "address": "0x1818862bf"},
+    "triggerWidthDefault": {"raw": 3276800, "address": "0x1818862d5"},
+    "width": {"raw": 1179648, "address": "0x1818862eb"},
+    "heightDefault": {"raw": 17039360, "address": "0x181886301"},
+    "idleTime": {"raw": 98304, "address": "0x181886317"},
+    "waitTime": {"raw": 98304, "address": "0x18188632d"},
+    "outwardPixelsPerTick": {"raw": 131072, "address": "0x181886343"},
+    "returnStartTime": {"raw": 98304, "address": "0x181886359"},
+    "returnPixelsPerTick": {"raw": 98304, "address": "0x18188636f"},
+    "timerAccumulationCap": {"raw": 6553600, "address": "0x181885d40"},
+    "playerSpeedClamp": {"minRaw": 6553, "maxRaw": 196608, "address": "0x1816c6858..0x1816c6878"}
+  },
+  "MoveWall": {
+    "parameters": "0x1818859c0: 슬롯0=m_MoveWidth, 슬롯1=m_TriggerWidth, 슬롯2=m_Height. abs(raw)>=4인 경우만 초기 기본값 대체.",
+    "collision": "0x181885adc..0x181885b54: 실제 고체 rect는 height-2, width=16, x=-8, y=1-height. InitCollision 0x181885b70: layer4, push-back target2, flag bit4. 두 번째 충돌은 layer0 감지 구역으로 width에 abs(triggerWidth)를 더하고 x에 min(triggerWidth,0)를 더한다.",
+    "states": "0=idle, 1=wait, 2=outward, 3=return. 생성 상태0에서 저절로 출발하지 않는다. 감지한 collision.layer가1이고 state<=1, timer>=98304면 state2/timer0 (0x18188615f..0x1818861b2). state1은 같은 1.5초 대기 뒤 자동 재출발한다 (0x181885ee3..0x181885f1f).",
+    "overshoot": "0x181885ec4..0x181885ede: abs(offset)>abs(moveWidth)일 때만 state3. -300은 -300에서 끝나지 않고 -302까지 나간다. 1.5초 뒤 틱마다 +1.5로 돌아오며 0을 넘으면 정확히0에 고정한다 (0x181885e1c..0x181885e46).",
+    "positionCorrection": "처음 읽을 때 actor+0x80을 현재 위치로 오해할 수 있으나 metadata에서는 raw+0x80=m_InitPos이다. 0x181885fa5..0x181885fd2는 InitPos+OffsetPos를 쓴다. 이동량을 현재 위치에 누적하면 원작과 다른 가속 벽이 된다. 구현 전에 필드표로 바로잡았다.",
+    "pushesPlayers": "가능하다. 이동 전 0x181885f75가 IsEnableMoveContactActor를 호출하고 성공한 경우 MoveContactActor를 face2(좌)/3(우)로 호출한다 (0x181886018/0x18188606e). GetMoveContactOption 0x18169dce6은 sync=true/recursive=true를 설정하고 벽이 ignoreTargetVelo=true를 추가한다 (0x181885fec).",
+    "caughtAgainstTerrain": "IsEnableMoveContactActor 0x1816a1991..0x1816a1a08은 접촉 대상이 진행 방향으로 맵에 막혀 있거나 재귀 대상 이동이 불가능하면 false. MoveWall은 이전 offset을 복구하고 움직이지 않는다 (0x181885f7e). 이 경로는 사망 이벤트를 보내지 않는다. 전체 공통 충돌 엔진의 모든 압착 상황을 구현했다고 주장하지 않는다.",
+    "pushback": "0x181886080: 해결된 위치-InitPos를 offset에 저장, count0일 때만1로 변경. 다음 Update는1->2로 바꾸고 이동 생략, 그다음2->0으로 초기화하고 정상 이동 (0x181885d6f..0x181885e53)."
+  },
+  "SpeedSwitch": {
+    "parameters": "0x181708cc0: 슬롯0 FP 배율, 슬롯1 정수!=0이면 전원, 슬롯2 방향 byte, 슬롯3/4 인원별 X/Y 오프셋. repeat bit7을 강제 설정 (0x181708e30). 슬롯3/4는 두 축을 함께 검색하여 어느 한 축이라도0이 아닌 첫 인원 항목을 사용 (0x181708f04..0x181708f18).",
+    "commonSwitch": "Creator 0x181708ca7은 SwitchComponent.InitCollision 호출. OnStart/OnCollided/OnRecvEvent는 SwitchComponent에 위임 (0x18170907e/0x1817092cc/0x181709394). 방향별 rect는 spring-switch-runtime.js가 정리한 0x181715330의 테이블을 따른다.",
+    "speedEvent": "0x181709133..0x1817091bd: 이전 충돌 단계의 contact bit2와 마지막 accepted collision.layer1을 요구. event57, payload+0x50=m_SpeedScale. allPlayers는 actor type27로 NotifyEvent, 아니면 접촉 entity로 전송. 접촉 중 매 Update 다시 발행하므로 한 번만 적용하는 latch가 아니다.",
+    "playerEffect": "PlayerComponent.OnRecvEvent_Default 0x1816c66cd/0x1816c6858은 event57을 받는다. [6553,196608] 범위로 clamp 후 InitWalkSpeed 0x1816bec10 호출. m_WalkSpeed는 FP(FP(scale*stage.walkSpeed)*QFP[8]), ice max는 이 결과*stage[0x50]. 기존 speed에 누적 곱하지 않으며 점프/중력 값은 이 경로에서 변경하지 않는다. 접촉 해제 때 SpeedReset 이벤트를 보내지 않으므로 배율은 유지된다.",
+    "lastContact": "SwitchComponent.OnCollided 0x18171502a..0x18171505e은 pushBackTarget bit1 및 layer1/2/3/8을 검사하고 마지막 accepted collision id를 기록. 마지막 접촉이 box이면 플레이어와 동시에 닿아도 해당 Update의 boost는 없다.",
+    "reset": "event47은 common Switch에서 contact bit2를 지우고 flag5를 설정 (0x1817152f7..0x181715313). Update는 flag5를6으로 넘긴 다음 다음 Update에서 지운다. 양쪽 flag는 OnCollided를 막는다 (0x181715048..0x181715058). 플레이어 속도를 reset하는 이벤트는 아니다.",
+    "notPortedViewSideEffect": "SwitchComponent.OnCollided 0x181715244의 접촉 actor.m_OffsetDrawPos.Y 변경 및 Switch changeSwitchState의 사운드/애니메이션은 현재 코어에서 모델링하지 않는다. 속도 및 contact 분기에는 영향이 없지만 시각/청각 원본 일치 검수는 남는다."
+  },
+  "shippedData": {
+    "st_w_02_04": {"allCounts": "MoveWall1 @(1440,288), slots[-500,-600,256]"},
+    "st_w_12_03": {"allCounts": "SpeedSwitch1 @(3168,432), scale3, allPlayers1, direction0, zero population offsets"},
+    "st_w_12_04": {
+      "counts2to4": "MoveWall1 pc-4 @(3888,288), slots[-300,-500,200]",
+      "counts5to8": "MoveWall2 pc5 @(3888,288), slots[-300,-230,200]",
+      "allCounts": "SpeedSwitch2 @(695,432), scale2, allPlayers1, direction0, zero offsets",
+      "bodyRect": "(3880,89), size16x198",
+      "sensor2to4": "(3380,89), size516x198",
+      "sensor5to8": "(3650,89), size246x198"
+    }
+  },
+  "verification": {
+    "unitCommand": "node --test source-migration/source-movewall-devices.test.cjs",
+    "unitTests": {"total": 15, "pass": 15, "fail": 0},
+    "fullCommand": "node --test source-migration/*.test.cjs",
+    "fullSuite": {"total": 432, "pass": 432, "fail": 0},
+    "concurrentSuiteGrowth": "첫 실행373개 통과, 최종 코드 변경 후 재실행432개 통과. 동시 세션이 테스트를 추가하므로 실행 시점에 따라 총수가 달라진다.",
+    "measured": [
+      "세 실제 스테이지의 모든2..8인 variant/population 필터 및 정확한 원본 슬롯/좌표",
+      "60Hz timer raw1092: 90틱=98280으로1.5초 미달, 91틱에 도달",
+      "-300 벽은150틱째-300/state2,151틱째-302/state3, 복귀91번째틱부터+1.5,202이동틱에0 clamp",
+      "blocked preflight의 offset rollback 및 state transition 유지, 사망 이벤트 없음",
+      "pushback 한 Update 생략 후 다음 Update 재개",
+      "전원 및 접촉자 event57, 마지막 accepted collision 순서, 반복 접촉, 해제 시 reset 없음",
+      "reset47의 두 Update 접촉 차단 및 population paired fallback",
+      "JSON round trip 후200틱의 state/output 동일성",
+      "어댑터 없는 MoveWall compile 및 beforeStep을 명시적으로 거부"
+    ],
+    "testCorrection": "합성 양수 파라미터 테스트가 메모리에 로드한 실제 stage 객체를 수정하여 후속 테스트1개가 실패했다. 테스트 helper에서 원본 배우 데이터를 매번 JSON deep clone하도록 수정했고 전용15개 및 전체373개가 통과했다. 원본 데이터 파일은 수정하지 않았다.",
+    "scope": "콜백 테스트는 장치 요청과 판정 응답의 계약 검증이다. 실제 접촉 연쇄 해석 및 플레이어 이동 속도 변화가 공통 런타임 안에서 통합 검증된 것은 아니다."
+  },
+  "registration": {
+    "performed": false,
+    "required": [
+      "SourceMoveWallDevices UMD/CommonJS 의존성 및 supported types 등록",
+      "MoveWall의 원작 contact-chain preflight 및 displacement adapter 제공. 검증 전 nativeContactFacts:true로 기본 guard를 우회하지 말 것",
+      "원작 phase 순서에 맞춰 beforeStep Update -> collision generation -> afterStep 호출",
+      "SpeedSwitch sensor를 contact generation 및 switch observer 목록에 추가하고 원본 contact 순서 유지",
+      "event57 및 FP payload를 Player default handler와 동등하게 route하고 walk/ice max 업데이트",
+      "renderer에서 벽/스위치 표시 및 공통 Switch 시각/사운드 부작용 연결"
+    ]
+  },
+  "unresolved": [
+    "공통 런타임에 ActorComponent.IsEnableMoveContactActor/MoveContactActor와 동등한 재귀 접촉 어댑터가 없다. walls가 있는 compile은 기본적으로 throw한다. nativeContactFacts:true는 해당 계약을 검증한 호출자 및 정적 코어 테스트 전용이다.",
+    "공통 런타임의 event57 수신과 Player InitWalkSpeed 재계산이 미연결이다. module은 원작 이벤트를 반환할 뿐 플레이어 speed를 추측해서 직접 덮어쓰지 않는다.",
+    "SpeedSwitch의 common Switch 등록 및 contact order 공급, SwitchObserver 통합, 시각/사운드 부작용은 미연결이다.",
+    "Top-view Switch rectangle 및 actor activation/visibility generic event 경로는 이 스테이지용 코어에서 미구현이다.",
+    "st_w_12_04는2..8인 모두 단독 컴파일/실행 불가. 장치의 real-data decode와 state machine harness만 검증됐다.",
+    "원본과 웹을 사람이 나란히 실행한 플레이 및 물리 일치 검수는 수행하지 않았다."
+  ]
+}

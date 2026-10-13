@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "devices": ["TargetPlayer", "BasketPlayer", "AppleController", "Apple"],
+  "module": "source-apple-devices.js",
+  "status": "partial_static_recovery_compile_refuses_nonempty",
+  "settledOn": "2026-10-13",
+  "completePhysicsFidelity": false,
+  "registration": {"allowed": false, "reason": "supportedTypes is the requested discovery list, not playable coverage. Do not register/whitelist this partial module. compile throws for every active requested device."},
+  "implementation": {
+    "implemented": ["Real actor parameter decoding including signed int32 player-count goal table", "Controller selection timer/cap kernel, seeded PCG32 rejection sampling and separate delay kernel", "Controller goal catch kernel and event19 stop kernel", "Target action9 shot cooldown kernel"],
+    "runtime": "Empty/unrelated actor configurations alone compile to inert JSON-safe state. The step/displays APIs are inert only for that empty state. Nonempty Apple configurations never reach them.",
+    "notImplemented": ["Apple activation and its RNG consumption", "Apple phase machine/sway/jump/explosion simulation", "Target crosshair control and native collision", "Basket owner transform/contact simulation", "Scene role assignment integration", "Native text/animation/sound presentation"]
+  },
+  "nativeEvidence": {
+    "creators": {
+      "TargetPlayer": "ActorFactoryComponent.createTargetPlayer 0x1816a47f0 calls createPlayer 0x1816a4835 then PlayerTargetComponent.Creator 0x1816a48e3. Slots12/13 become FP shot interval and boolean visible gauge.",
+      "BasketPlayer": "ActorFactoryComponent.createBasketPlayer 0x1816a4910 calls createPlayer 0x1816a4955 then PlayerBasketComponent.Creator 0x1816a4980.",
+      "Apple": "creator ordinal136 -> AppleComponent.Creator 0x1816a95b0, creator-delegates-resolved.local.json",
+      "AppleController": "creator ordinal137 -> AppleControllerComponent.Creator 0x1816ab960; InitPost 0x1816abe90 sets timer raw65536"
+    },
+    "roles": "createPlayer uses existing PlayerInfo count as actor ordinal (0x1816a4000), reads scene PlayerIndexList[ordinal] (0x1816a4048), resolves GamePlayerInfo (0x1816a4058), then creates playerSub (0x1816a4083). InitPlayerIndexList conditionally shuffles the scene list (0x1816a64d4..0x1816a655d), ascending Fisher-Yates i=1..count-1 with Next(0,i+1) at 0x1816a6512. Both selected stage assets author shufflePlayer=1. No separate role-specific lottery occurs in either role creator. The stage call site passing shufflePlayer to InitPlayerIndexList has not been traced in this pass.",
+    "controllerDefaults": "Initialize 0x1816abaf3..0x1816abb1f: max active8, goal20, apple/bomb3s, sway speed200/height100/width200. ParseParameter 0x1816abc00 nonzero slots1..6 override these; slot7 integer nonzero enables bomb changes; slot8 deserialises integer goal table and positive Find result overrides goal.",
+    "goalEncoding": "0x180970830..0x180970868 subtracts0x21 from low byte of each UTF16 unit; 0x180970977 checks seven elements; 0x1809709fc..0x180970cdf reads seven int32s. Find 0x181786950 scans backward over zero entries. This is28 units/int32, unlike CountUpTimer's56 units/FP64.",
+    "spawn": "OnUpdate 0x1816ac00c stops for death bit1 or count>=goal; 0x1816ac072 subtracts dt raw; 0x1816ac079 returns while positive. Inactive Apple list is formed by active bit6; 0x1816ac225..0x1816ac231 compares total-inactive to signed max active. 0x1816ac253 draws inactive index, 0x1816ac301 calls Activate, 0x1816ac327 samples delay[0x8000,0x18000). Activation consumes RNG before this delay; helpers deliberately split these operations.",
+    "catch": "NotifyCatch 0x1816ac5a5..0x1816ac5c3 increments only below goal. Final catch inactivates active apples then emits event1 to type17 Key (0x1816ac793..0x1816ac7a5) and event47 to type134 Target (0x1816ac7b4..0x1816ac7c7). Target type134 is its separate crosshair actor, not TargetPlayer type132.",
+    "shot": "0x1816d70c1 subtracts dt, 0x1816d70f5 >0 blocks, action9 IsPressInput at 0x1816d7159 sets one-tick bit3 and reloads interval at 0x1816d7172. OnCollided 0x1816d7741 requires shot bit3, 0x1816d7787 requires Apple type136, then event22 at 0x1816d77c8 carries hit position.",
+    "apple": "ParseParameter 0x1816a9730 slots0..4 nonzero FP overrides appleSec,bombSec,swayWidth,swayHeight,swaySpeed; slot5 integer nonzero sets change-bomb bit5. Activate 0x1816aadf2 preserves overrides. updatePhase 0x1816a9c40 has12 nonzero phases. Apple OnRecvEvent 0x1816aa7b0: event22 transforms current1/2 to flying3/4 and phase7; event19 current1 -> phase9, current2 -> phase11. Catch only current3, collision kind3, actor type135 (0x1816aaa52..0x1816aaaa1). Explosion calls controller CheckDead 0x1816ac800, which examines active current1/2 apples and emits event19 to those within radius; this is an apple-chain effect and must not be simplified to player-death radius.",
+    "geometry": "Apple .cctor 0x1816ab2c6..0x1816ab353 rect24x24 offset(-12,-12), collision kind5 at 0x1816a99d9. PlayerBasket .cctor 0x181890ed8..0x181890f11 rect26x44 offset(-22,-30), kind3 at 0x181890839. Basket OnUpdate 0x1818909a3..0x181890ae0 follows owning actor scale, Y flip and GetEarLength; authored positions alone are insufficient.",
+    "math": "Apple updateSway 0x1816aa45c multiplies angle raw by0x477 then >>16 and calls 0x1816465d0. That function indexes a runtime sine table at static+0x20, period raw0x6487e (0x18164664b). Math.sin is not proven bit-exact and has not been substituted. .cctor resolver recovered HIT_SHAKE raw4915 from string0.075; explosion shake raw13107, speed400 and radius250 are inline (0x1816ab30d/323/339). These constants were found, not declared unreadable. They are documented but not simulated."
+  },
+  "stageParameters": {
+    "st_w_08_01": {"counts": [2,3,4,5,6,7,8], "goals": [12,14,21,21,23,24,26], "appleSecRaw": 229376, "bombSecRaw": 196608, "activeAppleMax": 10, "swaySpeedRaw": 13107200, "swayHeightRaw": 6553600, "swayWidthRaw": 9830400, "changeBomb": false, "shufflePlayer": 1, "authoredRoles": 8, "apples": 12},
+    "st_w_08_03": {"counts": [2,3,4,5,6,7,8], "goals": [12,14,20,22,25,27,30], "appleSecRaw": 229376, "bombSecRaw": 196608, "activeAppleMax": 10, "swaySpeedRaw": 13107200, "swayHeightRaw": 6553600, "swayWidthRaw": 13107200, "changeBomb": true, "shufflePlayer": 1, "authoredRoles": 8, "apples": 12},
+    "note": "actorsForCount does not truncate authored role list to live player count; native createPlayer handles actor ordinal and scene limit. All variants were selected using population-rules.selectVariant, not index0 assumptions."
+  },
+  "verification": {
+    "nativeExecution": false,
+    "staticCommands": ["python -I tools/disasm.py <indexed addresses>", "python -I tools/disasm.py --raw 0x1816465d0 230", "python -I tools/disasm.py --raw 0x181662090 210", "python -I tools/disasm.py --raw 0x180970770 450", "python -I tools/disasm.py --raw 0x180970927 1050", "python -I source-migration/resolve-string-literals.local.py --cctor 0x1816acb70", "python -I source-migration/resolve-string-literals.local.py --cctor 0x1816ab1c0", "python -I source-migration/resolve-string-literals.local.py --cctor 0x1816d77f0"],
+    "ownTests": {"command": "node --test source-migration/source-apple-devices.test.cjs", "pass": 22, "fail": 0},
+    "fullSuite": {"command": "node --test source-migration/*.test.cjs", "pass": 406, "fail": 0},
+    "exactBoundaries": "At60Hz dtRaw1092, timer65536 remains16 after60 updates; tick61 expires. Controller cap/death/completion do not consume RNG. Goal catch emits events once.",
+    "pcgOracle": "Independent Python integer calculation seed42/inc55: outputs0,210066564,1160386676; states9039304369631583641,1822410079063825180,3809638523503732771. For span12 rejection skips first0, selects index0; subsequent FP delay raw50474. These are kernel tests, not an original-game RNG replay.",
+    "corrections": ["Initial draft rngRange used multiply-high scaling. Reading landmine reference and native0x181662090 proved rejection+modulo; corrected before delivery. The test's intermediate state literal was transcribed incorrectly and corrected against independent Python calculation."]
+  },
+  "integration": {
+    "status": "do_not_register",
+    "spawns": "actor-runtime.playerSpawns currently accepts only typeName Player. A future integration must include TargetPlayer/BasketPlayer with native ordinal/scene permutation and ordinary PlayerComponent spawn transform.",
+    "roles": "Separate owner players, crosshair type134 and Basket type135. Owner player index is read from shuffled scene list; do not use authored name as player index.",
+    "physics": "Need camera area, native collision IDs/kinds, owner ear length/scale/flip and RequestJump simulation. Current source-stage-runtime has no complete interface for these role actors.",
+    "events": "Native crosshair shot event22 -> Apple; catch callback -> controller and basket count. Final goal -> event1 Key and event47 Target type134. Event19 controller freezes spawning. Runtime hooks remain to be implemented.",
+    "rng": "Maintain a single serialised scene PCG stream across scene shuffle, controller index, Apple activation and delay; helpers do not insert defaults or another RNG stream."
+  },
+  "unresolved": [
+    "Exact sine lookup data and bit-exact FP jump/normalisation/contact physics are not recovered; no approximate values inserted.",
+    "Target camera clamp/return/wake and Basket owner sensor transform are analysed but not implemented.",
+    "Full Apple12-phase update, activation RNG consumption, collision event ordering, chain explosion and presentation are not implemented.",
+    "Scene shuffle stage call site and runtime role spawning integration remain to be traced/implemented.",
+    "Neither st_w_08_01 nor st_w_08_03 compiles with this module for any player count2..8. No stage gameplay or original parity validation was performed."
+  ]
+}
