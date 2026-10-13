@@ -19,18 +19,19 @@
   "st_w_10_04",
   "st_w_13_01",
   "st_w_11_02",
-  "st_w_12_03"
+  "st_w_12_03",
+  "st_w_03_02"
  ],
  "worldStages": 60,
- "remainingStages": 44,
- "remainingDistinctBlockers": 90,
+ "remainingStages": 43,
+ "remainingDistinctBlockers": 88,
  "nearest": [
   {
-   "id": "st_w_03_02",
+   "id": "st_w_03_03",
    "blockerCount": 2,
    "blockers": [
-    "DamageRect",
-    "LinePathLift"
+    "PlayerMagnet",
+    "Text"
    ],
    "guardsAfterTypes": []
   },
@@ -262,16 +263,6 @@
    "opensAlone": []
   },
   {
-   "type": "LinePathLift",
-   "stages": [
-    "st_w_02_04",
-    "st_w_03_03",
-    "st_w_03_02"
-   ],
-   "appearsIn": 3,
-   "opensAlone": []
-  },
-  {
    "type": "WeightedLift",
    "stages": [
     "st_w_07_03",
@@ -287,16 +278,6 @@
     "st_w_09_04",
     "st_w_02_01",
     "st_w_02_03"
-   ],
-   "appearsIn": 3,
-   "opensAlone": []
-  },
-  {
-   "type": "DamageRect",
-   "stages": [
-    "st_w_03_03",
-    "st_w_03_02",
-    "st_w_06_02"
    ],
    "appearsIn": 3,
    "opensAlone": []
@@ -1285,12 +1266,11 @@
    "connected": false,
    "distinctBlockers": [
     "ColorBox",
-    "LinePathLift",
     "MoveWall",
     "Text",
     "TouchEnergy"
    ],
-   "blockerCount": 5,
+   "blockerCount": 4,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
@@ -1299,7 +1279,6 @@
       "ColorBox",
       "Text",
       "MoveWall",
-      "LinePathLift",
       "TouchEnergy"
      ]
     },
@@ -1309,7 +1288,6 @@
       "ColorBox",
       "Text",
       "MoveWall",
-      "LinePathLift",
       "TouchEnergy"
      ]
     },
@@ -1319,7 +1297,6 @@
       "ColorBox",
       "Text",
       "MoveWall",
-      "LinePathLift",
       "TouchEnergy"
      ]
     },
@@ -1329,7 +1306,6 @@
       "ColorBox",
       "Text",
       "MoveWall",
-      "LinePathLift",
       "TouchEnergy"
      ]
     },
@@ -1339,7 +1315,6 @@
       "ColorBox",
       "Text",
       "MoveWall",
-      "LinePathLift",
       "TouchEnergy"
      ]
     },
@@ -1349,7 +1324,6 @@
       "ColorBox",
       "Text",
       "MoveWall",
-      "LinePathLift",
       "TouchEnergy"
      ]
     },
@@ -1359,7 +1333,6 @@
       "ColorBox",
       "Text",
       "MoveWall",
-      "LinePathLift",
       "TouchEnergy"
      ]
     }
@@ -2453,20 +2426,16 @@
    "id": "st_w_03_03",
    "connected": false,
    "distinctBlockers": [
-    "DamageRect",
-    "LinePathLift",
     "PlayerMagnet",
     "Text"
    ],
-   "blockerCount": 4,
+   "blockerCount": 2,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
       "PlayerMagnet",
-      "LinePathLift",
-      "DamageRect",
       "Text"
      ]
     },
@@ -2474,8 +2443,6 @@
      "variant": 0,
      "missing": [
       "PlayerMagnet",
-      "LinePathLift",
-      "DamageRect",
       "Text"
      ]
     },
@@ -2483,8 +2450,6 @@
      "variant": 0,
      "missing": [
       "PlayerMagnet",
-      "LinePathLift",
-      "DamageRect",
       "Text"
      ]
     },
@@ -2492,8 +2457,6 @@
      "variant": 0,
      "missing": [
       "PlayerMagnet",
-      "LinePathLift",
-      "DamageRect",
       "Text"
      ]
     },
@@ -2501,8 +2464,6 @@
      "variant": 0,
      "missing": [
       "PlayerMagnet",
-      "LinePathLift",
-      "DamageRect",
       "Text"
      ]
     },
@@ -2510,8 +2471,6 @@
      "variant": 0,
      "missing": [
       "PlayerMagnet",
-      "LinePathLift",
-      "DamageRect",
       "Text"
      ]
     },
@@ -2519,8 +2478,6 @@
      "variant": 0,
      "missing": [
       "PlayerMagnet",
-      "LinePathLift",
-      "DamageRect",
       "Text"
      ]
     }
@@ -3327,62 +3284,38 @@
   },
   {
    "id": "st_w_03_02",
-   "connected": false,
-   "distinctBlockers": [
-    "DamageRect",
-    "LinePathLift"
-   ],
-   "blockerCount": 2,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "LinePathLift",
-      "DamageRect"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "LinePathLift",
-      "DamageRect"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "LinePathLift",
-      "DamageRect"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "LinePathLift",
-      "DamageRect"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "LinePathLift",
-      "DamageRect"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "LinePathLift",
-      "DamageRect"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "LinePathLift",
-      "DamageRect"
-     ]
+     "missing": []
     }
    }
   },
@@ -3391,13 +3324,12 @@
    "connected": false,
    "distinctBlockers": [
     "BattlePlanePlayer",
-    "DamageRect",
     "MapBlockReplacer",
     "OptimizedBulletObserver",
     "PlayerGun",
     "ShootingEnemySpawner"
    ],
-   "blockerCount": 6,
+   "blockerCount": 5,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
@@ -3407,7 +3339,6 @@
       "MapBlockReplacer",
       "PlayerGun",
       "ShootingEnemySpawner",
-      "DamageRect",
       "OptimizedBulletObserver"
      ]
     },
@@ -3418,7 +3349,6 @@
       "MapBlockReplacer",
       "PlayerGun",
       "ShootingEnemySpawner",
-      "DamageRect",
       "OptimizedBulletObserver"
      ]
     },
@@ -3429,7 +3359,6 @@
       "MapBlockReplacer",
       "PlayerGun",
       "ShootingEnemySpawner",
-      "DamageRect",
       "OptimizedBulletObserver"
      ]
     },
@@ -3440,7 +3369,6 @@
       "MapBlockReplacer",
       "PlayerGun",
       "ShootingEnemySpawner",
-      "DamageRect",
       "OptimizedBulletObserver"
      ]
     },
@@ -3451,7 +3379,6 @@
       "MapBlockReplacer",
       "PlayerGun",
       "ShootingEnemySpawner",
-      "DamageRect",
       "OptimizedBulletObserver"
      ]
     },
@@ -3462,7 +3389,6 @@
       "MapBlockReplacer",
       "PlayerGun",
       "ShootingEnemySpawner",
-      "DamageRect",
       "OptimizedBulletObserver"
      ]
     },
@@ -3473,7 +3399,6 @@
       "MapBlockReplacer",
       "PlayerGun",
       "ShootingEnemySpawner",
-      "DamageRect",
       "OptimizedBulletObserver"
      ]
     }
