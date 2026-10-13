@@ -35,4 +35,3 @@ test('real TouchEnergy exhaustion routes QuakeDead through host, including immor
   if(!immortal)assert.equal(s.failure.reason,'접촉 에너지가 다 됐어요');
  }
 });
-
