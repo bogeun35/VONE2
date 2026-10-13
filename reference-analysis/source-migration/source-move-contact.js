@@ -26,6 +26,48 @@ function vector(v){return {x:v.xRaw===undefined?raw(v.x):v.xRaw,y:v.yRaw===undef
 function axis(v){if(v.x&&v.y)throw Error('Unresolved native diagonal normalization (0x1816463a0)');return {x:Math.sign(v.x),y:Math.sign(v.y)};}
 function normal(face){if(typeof face==='object')return face;return NORMALS[face]||{x:0,y:0};}
 const equal=(a,b)=>a.x===b.x&&a.y===b.y;
+// Empty callback dictionary @0x18177cdf5; initCallbacks registers only
+// PlayerMagnet (72) @0x18177c2ff..304 via 0x180726c40. Player ordinal 27
+// has no entry. Actor flag 0x10 bypasses lookup @0x1816a13fa.
+function hasNoMoveCallback(b){
+ if((b.actorFlags||0)&0x10)return true;
+ if(b.actorType===72)return false; // Never allow an assertion to bypass Magnet.
+ return b.actorType===27||b.contactResponse==='none';
+}
+// Collision.AddContactInfo: dedup by collision ID, not (ID,normal)
+// @0x18169103f..042. Only Up rejects a reciprocal Up link
+// @0x181691070..204. Append State=0 @0x181691269..2bb.
+// The caller supplies the resolved collision/face from the pushback pass.
+function addContactInfo(world,ownerId,targetId,face){
+ const out=JSON.parse(JSON.stringify(world)),s=setup(out,ownerId,{});
+ if(!s.root)throw Error('Contact owner collision is required');
+ const contacts=s.contacts(s.root),n=normal(face);
+ if(!NORMALS.some(q=>equal(q,n)))throw Error('Resolved cardinal contact normal is required');
+ if(contacts.some(c=>c.id===targetId))return {world:out,added:false};
+ const target=s.find(targetId);
+ if(equal(n,NORMALS[0])&&target&&s.contacts(target).some(c=>c.id===ownerId&&equal(c.normal,n)))return {world:out,added:false};
+ contacts.push({id:targetId,normal:{...n},state:0});
+ return {world:out,added:true};
+}
+// A predicate ONLY for the rectangle probe in updateContactCollision.
+// Caller must supply GetRect-derived world bounds, not Actor anchors.
+// Normal/2 displacement @0x181693fe9..4009; IsCollided excludes same
+// EntityRef and flag 1 @0x181691f1b..39, strict edges @0x181692236..268.
+// This neither discovers contacts nor runs OnContactAdded/OnContacted.
+function retainsRectContact(owner,target,contact){
+ if(!target)return false;
+ if(owner.entityId===undefined||target.entityId===undefined)throw Error('Native entity identity is required');
+ if(owner.entityId===target.entityId||((owner.flags||0)|(target.flags||0))&1)return false;
+ if(owner.collisionType!==0||target.collisionType!==0)throw Error('Only explicit rectangle collision probes are recovered');
+ const n=contact.normal;
+ if(!NORMALS.some(q=>equal(q,n)))throw Error('Resolved cardinal contact normal is required');
+ const a=owner.collisionRectRaw,b=target.collisionRectRaw;
+ for(const r of [a,b])if(!r||!['x','y','width','height'].every(k=>Number.isSafeInteger(r[k]))||r.width<0||r.height<0)throw Error('Resolved world collisionRectRaw is required');
+ const x=a.x+n.x*(FP/2),y=a.y+n.y*(FP/2);
+ const values=[x,y,x+a.width,y+a.height,b.x+b.width,b.y+b.height];
+ if(!values.every(Number.isSafeInteger))throw Error('Contact probe exceeds safe FP range');
+ return x<b.x+b.width&&b.x<x+a.width&&y<b.y+b.height&&b.y<y+a.height;
+}
 function setup(world,mover,option){
  const o={...DEFAULT_OPTION,...option};
  if(o.collisionIndex!==0)throw Error('Multiple collision-index adapter is unresolved');
@@ -64,7 +106,7 @@ function moveContactActor(world,mover,delta,option){
    const t=s.find(c.id);if(!t||((t.flags||0)&0x90)||t.actor===false)continue;
    const mask=s.o.targetCollisionLayerMask;if(mask&&!(mask&(1<<((t.layer||0)&31))))continue;
    if(seen.has(t.id))continue;seen.add(t.id); // native per-call entity list @0x1816a1182..11d5
-   if(t.contactResponse!=='none')throw Error('Unresolved actor-type MoveByContact callback for '+t.id+' (0x1816a1517)');
+   if(!hasNoMoveCallback(t))throw Error('Unresolved actor-type MoveByContact callback for '+t.id+' (0x1816a1517)');
    let a={...amount};
    if(s.o.isEnableIgnoreTargetVelo){
     const n=axis(amount),v=vector(t.velocity||{x:0,y:0}),dot=n.x*v.x+n.y*v.y;
@@ -78,5 +120,5 @@ function moveContactActor(world,mover,delta,option){
  }
  transport(s.root,d,normal(s.o.face));return {world:out,moved,synced};
 }
-return {isEnableMoveContactActor,moveContactActor,NORMALS,DEFAULT_OPTION,completePhysicsFidelity:false};
+return {isEnableMoveContactActor,moveContactActor,addContactInfo,retainsRectContact,NORMALS,DEFAULT_OPTION,completePhysicsFidelity:false};
 });

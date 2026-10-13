@@ -307,7 +307,7 @@ test('travel clamps at |m_MoveDirection| and returns to exactly the anchor offse
  assert.equal(s.lifts[0].proc,2);
 });
 
-test('a horizontal lift carries nobody: the rider keeps its own x',()=>{
+test('current root-only port leaves rider x unchanged; native inertia is not integrated',()=>{
  // MoveLift 0x1817383cb hands MoveContactActor a vector with a literal zero X,
  // and the whole call is skipped when |dY| < QFP.Epsilon.
  const s=stateWith(lift1004(),2);
