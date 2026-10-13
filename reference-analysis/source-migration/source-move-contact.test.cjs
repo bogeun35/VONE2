@@ -15,7 +15,7 @@ test('ignore target velocity subtracts negative projection, recursion receives o
 test('recursive option and sync option',()=>{const r=m.moveContactActor(stack(),'lift',up,{isEnableRecursive:false,isEnableSyncCollisionPos:false});assert.deepEqual(r.moved.map(x=>x.id),['p1']);assert.deepEqual(r.synced,[]);assert.equal(r.world.bodies[2].y,0);});
 test('recursiveFaceIsMov changes only recursive contact selection',()=>{const w=stack();w.bodies[1].contacts=[link('p2',right)];assert.deepEqual(m.moveContactActor(w,'lift',right,{recursiveFaceIsMov:true}).moved.map(x=>x.id),['p1','p2']);});
 test('per-call duplicate suppression and serializable output',()=>{const w=stack();w.bodies[0].contacts.push(link('p2'));const r=m.moveContactActor(w,'lift',up);assert.deepEqual(r.moved.map(x=>x.id),['p1','p2']);assert.deepEqual(JSON.parse(JSON.stringify(r)),r);});
-test('unestablished AABB contacts, callbacks and diagonal normalization refuse',()=>{const w=stack();delete w.bodies[0].contacts;assert.throws(()=>m.moveContactActor(w,'lift',up),/cached contacts/);const v=stack();delete v.bodies[1].contactResponse;assert.throws(()=>m.moveContactActor(v,'lift',up),/actor-type/);assert.throws(()=>m.isEnableMoveContactActor(stack(),'lift',{x:1,y:1}),/diagonal/);});
+test('unestablished AABB contacts and callbacks refuse',()=>{const w=stack();delete w.bodies[0].contacts;assert.throws(()=>m.moveContactActor(w,'lift',up),/cached contacts/);const v=stack();delete v.bodies[1].contactResponse;assert.throws(()=>m.moveContactActor(v,'lift',up),/actor-type/);assert.equal(m.isEnableMoveContactActor(stack(),'lift',{x:1,y:1}),true);});
 test('ordinary Player has no registered move callback; Magnet still refuses',()=>{
  const w=stack();w.bodies[1].actorType=27;delete w.bodies[1].contactResponse;
  assert.equal(m.moveContactActor(w,'lift',up).world.bodies[1].y,9);
@@ -42,6 +42,15 @@ test('cache suppresses reciprocal Up only, and permits an absent target ID',()=>
  assert.throws(()=>m.addContactInfo(w,'p1','p2',9),/cardinal/);
 });
 const rect=(entityId,x,y,width=10,height=10)=>({entityId,collisionType:0,flags:0,collisionRectRaw:{x:x*65536,y:y*65536,width:width*65536,height:height*65536}});
+test('native LUT normalization preserves positive-axis rounding and diagonal FP projection',()=>{
+ const w={bodies:[body('wall',0,0,[link('p',right)]),body('p',10,0)]};
+ w.bodies[1].mapNormals=[right];
+ assert.equal(m.isEnableMoveContactActor(w,'wall',right),false);
+ assert.equal(m.isEnableMoveContactActor(w,'wall',{x:200,y:0}),true); // +65535 != cached +65536
+ w.bodies[0].contacts=[link('p')];w.bodies[1].velocity={x:-3,y:-4};
+ const r=m.moveContactActor(w,'wall',{x:3,y:4},{isEnableIgnoreTargetVelo:true});
+ assert.deepEqual(r.moved.map(q=>[q.xRaw,q.yRaw]),[[393211,524281]]);
+});
 test('retention uses half-pixel normal probe and strict edges, not fresh contact discovery',()=>{
  const owner=rect('lift',0,10),target=rect('p',0,0),c=link('p');
  assert.equal(m.retainsRectContact(owner,target,c),true);

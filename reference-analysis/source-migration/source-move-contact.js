@@ -16,14 +16,17 @@
  * must be supplied by the collision adapter even when empty. AABB-only
  * contact generation and arbitrary type callbacks are intentionally refused.
  */
-(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;root.SourceMoveContact=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
+(function(root,factory){const api=factory(typeof module==='object'&&module.exports?require('./source-distanceconstraint-math.js'):root.SourceDistanceConstraintMath);if(typeof module==='object'&&module.exports)module.exports=api;root.SourceMoveContact=api;})(typeof globalThis!=='undefined'?globalThis:this,function(FPMath){
 'use strict';
 const FP=65536,EPSILON=4;
 const NORMALS=Object.freeze([{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}].map(Object.freeze));
 const DEFAULT_OPTION=Object.freeze({isEnableSyncCollisionPos:true,isEnableIgnoreTargetVelo:false,isEnableRecursive:true,isEnableAttached:false,recursiveFaceIsMov:false,calcScreenEnd:false,collisionIndex:0,targetCollisionLayerMask:0,face:0});
 function raw(v){const r=v*FP;if(!Number.isSafeInteger(r))throw Error('Coordinate is not an exact safe FP raw');return r;}
 function vector(v){return {x:v.xRaw===undefined?raw(v.x):v.xRaw,y:v.yRaw===undefined?raw(v.y):v.yRaw};}
-function axis(v){if(v.x&&v.y)throw Error('Unresolved native diagonal normalization (0x1816463a0)');return {x:Math.sign(v.x),y:Math.sign(v.y)};}
+// Shared recovered FPSqrt/normalize LUT, 0x1816463a0 / 0x18163df00.
+// Even an axis of magnitude 200 can normalize to +65535, not +65536.
+function axis(v){const n=FPMath.normalizeRaw({xRaw:v.x,yRaw:v.y});return {x:n.xRaw/FP,y:n.yRaw/FP};}
+const mul=(a,b)=>Number(BigInt.asIntN(64,BigInt(a)*BigInt(b))>>16n);
 function normal(face){if(typeof face==='object')return face;return NORMALS[face]||{x:0,y:0};}
 const equal=(a,b)=>a.x===b.x&&a.y===b.y;
 // Empty callback dictionary @0x18177cdf5; initCallbacks registers only
@@ -84,7 +87,7 @@ function isEnableMoveContactActor(world,mover,direction,option){
   if(active.has(b.id))throw Error('Cyclic native preflight contact graph is unresolved');active.add(b.id);
   for(const c of s.contacts(b).filter(c=>equal(c.normal,n))){
    const target=s.find(c.id);if(!target)continue;
-   if((target.flags||0)&0x10){if(face.x*n.x+face.y*n.y>=0)return false;continue;}
+   if((target.flags||0)&0x10){if(mul(raw(face.x),raw(n.x))+mul(raw(face.y),raw(n.y))>=0)return false;continue;}
    if(!Array.isArray(target.mapNormals))throw Error('Native cached map normals required for '+target.id);
    if(target.mapNormals.some(q=>equal(q,n)))return false;
    if(target.actor===false)continue;
@@ -109,8 +112,8 @@ function moveContactActor(world,mover,delta,option){
    if(!hasNoMoveCallback(t))throw Error('Unresolved actor-type MoveByContact callback for '+t.id+' (0x1816a1517)');
    let a={...amount};
    if(s.o.isEnableIgnoreTargetVelo){
-    const n=axis(amount),v=vector(t.velocity||{x:0,y:0}),dot=n.x*v.x+n.y*v.y;
-    if(dot<0)a={x:a.x-n.x*dot,y:a.y-n.y*dot};
+    const n=axis(amount),v=vector(t.velocity||{x:0,y:0}),dot=mul(raw(n.x),v.x)+mul(raw(n.y),v.y);
+    if(dot<0)a={x:a.x-mul(raw(n.x),dot),y:a.y-mul(raw(n.y),dot)};
    }
    const q=targetOut(t.id);q.x=(raw(q.x)+a.x)/FP;q.y=(raw(q.y)+a.y)/FP;
    moved.push({id:t.id,xRaw:a.x,yRaw:a.y,x:a.x/FP,y:a.y/FP});

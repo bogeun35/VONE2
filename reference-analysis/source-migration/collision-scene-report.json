@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "status": "partial-executable-core-not-runtime-registered",
+  "nativeCodeExecuted": false,
+  "modules": [
+    "source-collision-map.js",
+    "source-collision-rect.js",
+    "source-collision-inertia.js",
+    "source-collision-scene.js"
+  ],
+  "dependency": "Frozen source-distanceconstraint-math.js native LUT; table SHA256 de5265f651730f20b54cc24bdcd3047e61320be44a5ae54796d290a189f4bca5",
+  "summary": "Explicit ordered collision snapshots now execute map movement, rectangle pair pushback, recursive force movement, horizontal inertia, rectangle cache discovery/pruning and callback dispatch. This is not the complete collision tick and is not connected to source-stage-runtime.js.",
+  "nativeEvidence": {
+    "map": "Map.Move 0x18187e0a0, IsContacted 0x18187ea30, IsMovable 0x18187dd30; tile48, separator655 raw, epsilon4. Grid conversion divides by48 then sar16, clamps outside cells; DDA Y wins equal times. Collision.MoveMap 0x181692eb0 slides tangential remainder and deduplicates normals.",
+    "rectangles": "UpdatePushBack 0x1817f9c30 gates current overlap and absence of previous overlap, layer matrix, movement flag64 and unyielding flag4/8. updatePushBackRect 0x1817f9ec0 computes fixed-point rollback ratios and X-then-Y contact faces. reviseMov 0x1817fb680 / force call sites 0x1817fac0f..e0e add655 only at abs(delta)>=4.",
+    "force": "moveCollisionForce 0x1817faf30 requires exact Map displacement and rejects static16; moveCollidedCollision 0x1817fb0a0 extends nontrivial components by65, depth>16 refuses, checks ordered forward overlaps. forceMoveSide 0x1817fdc10 visits layer1/2 forward bodies. Pair and recursive force helpers leave the native pass-wide failure rollback to the missing phase orchestrator.",
+    "inertia": "postPushBack 0x1817fbf10 snapshots X-only displacement before carrying; updateInertia 0x1817fc480 filters layers1/2/13 and flag128. Direction-leading X order comparator0x1818007d0. Player.Initialize0x1816bd5e9 sets wakeUpCount/wakeUpInitCount=1. moveForInertia0x1817fd100 handles attachment before sleeping owner, MoveMap, max4 pair rescans, flag1024 camera restriction. fixPlayerPos0x1817fe120 sets previous position=current and clears64 for1/2/13; it does not synchronize Actor position.",
+    "shape": "Collision.GetRect0x181690610 scales (baseOffset-pivot) then adds pivot; width/height independently FP-multiplied. ForceSearchUp halves scaleX at0x181693c83..cb3, not the already rounded world bounds.",
+    "forceSearch": "Player.initCollision0x1816bdf8b..98 enables flag32. updateContactCollision0x181693cec calls SearchCollidedCollisions with face=(gravity256!=0), then ALWAYS adds face0 at0x181693e03..e0c and restores scale at0x181693e81..e89. Search0x1817f6ca0 scans ordered chunk, target active/push/layer gates, excludes existing overlap, probes0.5px(QFP static+0x90=32768), and requires target center beyond source leading edge0x1817f7245..7280. Reverse-gravity Down discovery can consequently be pruned by the subsequent Up-normal retention probe; this oddity is preserved rather than corrected speculatively.",
+    "cache": "0x1816940af rectangle normal*0.5px strict overlap retention, state0->1 before OnContactAdded, then OnContacted at0x1816940c1..197. Removed indices erased in reverse. Actual type-specific callbacks must be supplied explicitly.",
+    "newPhaseFindings": "checkChunk comparator0x1818007b0 is descending SIGNED collision priority byte+5 (Player=-1). updatePushBack0x1817f90c0 visits i then j>i without sorting the quadtree list: OnUpdate0x18177eae0 only updates each Morton descriptor in place. Same-level descriptors require index equality; mixed levels use ((deeperIndex >> (2*levelDifference &31)) ^ shallowIndex)&3 ==0 at0x1817f972b..976c. Ordinary pass excludes unyielding bodies; forced pass requires at least one. Forced pass snapshots all positions and restores them when a pair returns1 at0x1817f9880..9a53, while changed flags persist. checkChunk repeats each pass on0 up to8 and both passes on final1 up to8. These phase semantics are recorded, not yet implemented."
+  },
+  "contracts": {
+    "world": "JSON {isEnableInertia, collisions:[native ordered collision records], map:{tileFlags}, layerChecks, cameraAreaRaw:{x,width}}. Each collision supplies explicit IDs, entityId, raw current/previous positions, current/previous local GetRect bounds, flags, layer, pushBackTarget, collisionType0, contacts and mapNormals. No supportId-to-cache conversion.",
+    "player": "layer1 requires playerFacts:null for absent native Player lookup or {wakeUpCount,inertiaAttachmentId:null|collisionId}. Equipment facts cannot be omitted.",
+    "forceSearch": "flag32 additionally requires baseRectRaw, scaleRaw and pivotRaw. Missing facts throw.",
+    "callbacks": "refreshContacts requires onContact when a callback would occur. Equal-X inertia contacts require an explicit native tie-order adapter. Callback functions are caller-local and never serialized. Public operations clone input state.",
+    "API": "Map: mapMove/moveMap/isContacted/cell. Rect: update/resolve/revise/getRect. Inertia: apply. Scene: applyPair/updateMap/postPushBack/refreshContacts. All report completePhysicsFidelity:false."
+  },
+  "verification": {
+    "command": "node --test source-migration/source-move-contact.test.cjs source-migration/source-collision-*.test.cjs",
+    "cases": [
+      "fixed-point LUT diagonal projection and long-axis normalization",
+      "map half-pixel contacts, negative coordinates, all faces, DDA tie and sliding",
+      "pair rollback, force failure/success, raw separator thresholds",
+      "2..8 cached contact stacks, map wall, overhead ledge, leading order, reverse gravity, sleep and equipment",
+      "camera clamps and forceSide",
+      "new cache creation then Added/Contacted lifecycle and pruning",
+      "ForceSearchUp central-width discovery and native reverse-gravity behavior",
+      "10-4 and 3-2 population-selected authored lift settings on synthetic contact stacks; mode3/4/5 inertia disabled"
+    ],
+    "scope": "JS tests against statically derived expectations. Authored lift facts are real; contact stacks and player rectangles in tests are synthetic. No original-game execution, complete stage play, or side-by-side native comparison.",
+    "fullCommand": "node --test source-migration/*.test.cjs",
+    "full": {
+      "pass": 701,
+      "fail": 0,
+      "note": "2026-10-13 latest observed shared-tree run, includes auxiliary WIP tests; those WIP files are not included in the lead commit."
+    }
+  },
+  "rea": {
+    "firstRun": "Existing first-run.md15880bytes, gameassembly.json17787bytes, Ghidra12.1.4. Landmine0x1818713e0 pseudocode signed magic multiplication and shift22/sign correction match assembly0x181871571..5d0 and percent trunc(n*65536/100).",
+    "targetedTool": "tools/LeadSelectedDecompile.java imports with -noanalysis, disassembles only requested entries and decompiles each. Tested on landmine validation, updatePushBack, CollisionQuadTree.OnUpdate/UpdateTreeObject and Player.initCollision. Whole-program analysis remains disabled. This is directly invoked Ghidra, not a persistent REA project.",
+    "limits": "4G heap/max-cpu2; separate lead-ghidra.local project deleted by Ghidra -deleteProject. Shared snapshots untouched. Targeted pseudocode is a reading aid, assembly remains evidence; no-analysis has weaker inferred types and no-return metadata."
+  },
+  "unresolved": [
+    "Native chunk construction and equal-priority/tied-X CLR sort order; candidate loop/Morton conditions are now known but no complete pass orchestrator exists.",
+    "Pass-wide force failure rollback, scale-change pass, map-cache lifecycle and Actor/collision synchronization are not yet integrated.",
+    "Actual Player and device OnContactAdded/OnContacted adapters and complete collision layer/shape/scale facts for each live actor remain necessary.",
+    "Live runtime still uses its existing movement and supportId model. This core does not authorize opening14-3/5-1/7-3/12-4 or claiming corrected live10-4/3-2 carry.",
+    "Safe integer rectangle path only. Circle/other shape behavior and malformed/extreme input equivalence are not claimed."
+  ]
+}

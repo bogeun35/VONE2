@@ -74,7 +74,7 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - 등록 통합 테스트 3건 통과. release 파일 목록(기존 추적 테스트 + 등록 테스트) 491건 통과. play 테스트 9건 통과. 전체 wildcard 관측은 513건 중 512 통과/1 실패: 진행 중 DistanceConstraint 테스트에서 raw11234 vs11233 불일치. 해당 보조 파일은 수정·패키징·커밋하지 않음.
 - 최종 wildcard 전체 533/533 통과: 보조 DistanceConstraint 수정 완료 후 재관측. 초기 실패 관측은 위 기록에 보존.
 - 보조 소유권: 작업중-DistanceConstraint.md / 작업중-Gear.md / 작업중-SwitchTargetGroup.md 확인. 미완료 신규 파일 전부 제외.
-- REA first-run.md는 빈 파일(0 bytes). 의사코드 0x1818713e0 대조는 결과 생성 전까지 보류. 원본 게임 실행 없음.
+- 당시 REA first-run.md는 0 bytes였으나, 22:32에 결과가 생성됐다. 아래 최신 충돌 코어 기록에서 0x1818713e0 대조 완료. 원본 게임 실행 없음.
 - 119개 인원별 맵 360틱 이내 무입력 smoke: 총 37,520틱, 런타임 예외 없음(사망 시 해당 실행 종료). 인간 완주 아님.
 - 기존 10라운드 8인 녹화 5회 재생: 6 clear/reproducible, 1-2/1-3 미완주, 5-2 tick3862 시간초과, 4-3 기존 blocked. 실패 3개는 변경 전 HEAD 런타임으로도 같은 status/tick 확인: 이번 등록으로 인한 회귀 아님. 인수인계의 9/10 완주 주장은 현재 runtime으로 재현 안 됨.
 - 배포 클론 생성 완료: v20261013-11, 168 files/17 stages, 참조 누락 없음. 배포 로컬 커밋 `4dd3947`. 원격 push는 네트워크 기본 실행 실패 후 자동 승인 심사에서 거절됨: 정확한 외부 대상에 대한 trusted user authorization 미확인 및 139파일 export 위험. 원격 라이브는 아직 v20261013-10 / 0751918이며 변경 배포 완료라고 보고하지 않음. 승인 전 우회하지 않음.
@@ -104,8 +104,8 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
   **첫 실행 결과(2026-10-13 22:32): 56.3분 걸려 의사코드는 나왔다**(first-run.md). 다만 스냅샷 파일이 17KB 뿐이고
   출력에 "temporary project are ephemeral" 이라 적혀 있어, Ghidra 분석 자체는 저장되지 않고 **매 실행마다 ~1시간
   재분석**할 가능성이 높다. 여러 주소를 한 세션에서 묻는 MCP 방식(`rea setup` 으로 Codex 에 등록)이 나을 수 있다.
-  아직 의사코드 정확도는 검증 전이다: 0x1818713e0(지뢰 관찰자 ParseParameter, 퍼센트 → FP 를
-  매직 나눗셈으로 계산)과 대조해 맞는지 먼저 볼 것. 의사코드는 읽기용, 근거 주소는 어셈블리로.
+  리드가 0x1818713e0 지뢰 ParseParameter의 퍼센트 → FP 매직 곱셈/shift22/음수 보정을
+  어셈블리 0x181871571..5d0과 대조 완료했다. 의사코드는 읽기용, 근거 주소는 어셈블리로.
   이 PC 는 램 하드웨어 오류 이력이 있어 Ghidra 메모리는 6G 로 제한했다.
 
 ## 후속 정적 분석 라운드 — push 승인 이후
@@ -116,4 +116,16 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - helper 18/18, 전체 wildcard 592/592, Lift 별도 23/23 통과. 전체 관측에는 보조 WIP 테스트도 포함되며 보조 파일은 수정·스테이징하지 않는다. 실제 2..8인 연결/인간 완주 증거는 아니다.
 - 수평 inertia는 기본 켜짐(0x1817f5bba), layer1/2/13·flags0x80 필터, gravity0x100/0x200 face 규칙, 진행 방향 선두 정렬(0x1818007d0), Player wakeUpCount(+0x11) 및 equipment 경유 이동, Map.Move→UpdatePushBack(최대4회 scan 재시작)→camera 보정까지 추적했다. 정확한 실행 helper/런타임 반영은 미완료다.
 - 다음 구체적 복원 지점: updatePushBackRect0x1817f9ec0의 face 선택과 ordered collision cache, Map.Move/Map.IsContacted, fixPlayerPos0x1817fe120 및 Player 상태 연결. 이 경로 없이 supportId를 native contact cache로 바꿔 부르거나 단순 dx carry를 추가하지 않는다.
-- REA first-run.md 재확인 0 bytes. 원본 게임 실행 없음.
+- 당시 REA first-run.md 재확인 0 bytes였음. 이후 생성 및 대조 완료는 아래 최신 기록 참조. 원본 게임 실행 없음.
+
+## 최신 실행 코어 — Map / rectangle / inertia / contact cache
+
+- `source-collision-map.js`, `source-collision-rect.js`, `source-collision-inertia.js`, `source-collision-scene.js`와 테스트 추가. 상세 근거·계약·미완료는 `collision-scene-report.json`.
+- Map grid DDA/slide, rectangle rollback/force, 장비·수면·역중력·카메라 정책을 포함한 수평 inertia를 명시적 native collision snapshot 위에서 실행한다. `supportId`는 입력으로 사용하지 않는다. `fixPlayerPos`는 previous position 갱신이며 Actor sync가 아니다.
+- Player 초기 wakeUpCount=1 확정(0x1816bd5e9). Player initCollision은 ForceSearchUp32를 실제로 켠다(0x1816bdf8b..98). X scale 절반→0.5px 검색→원래 scale 복원→cache prune/Added/Contacted를 복원했다. native baseRect/scale/pivot와 실제 callback adapter는 명시적 입력이다.
+- source-move-contact 정규화는 frozen `source-distanceconstraint-math.js` LUT 사용. 대각선과 속도 투영을 지원하며 +200px 축 normal은65535일 수 있다. 종전 Math.sign 단축은 수정. LUT/sqrt와 일반 Player27 OnMoveByContact 부재를 다시 미확정으로 돌리지 말 것.
+- 실제 10-4/3-2의 2..8인 선택 리프트 설정을 합성 접촉 스택에 연결해 검사했다. 원작 플레이어 전체 물리·사람 완주 검증과 다르다. 벽·천장 옆 턱·스택·inertia 비활성 mode3/4/5 포함.
+- **새 구체적 연결 지점**: chunk comparator0x1818007b0는 signed priority byte+5 내림차순(Player=-1). quadtree OnUpdate0x18177eae0는 정렬하지 않고 descriptors만 제자리 갱신. updatePushBack0x1817f90c0은 i,j>i 순서와 Morton 관계를 사용한다. forced pass는 전체 좌표 snapshot을 잡고 결과1에서 좌표만 복원한다(0x1817f9880..9a53); flags는 유지. 평범한 pair 함수 반환을 완성된 phase라고 부르지 말 것.
+- **남은 런타임 연결**: chunk 생성 및 같은 priority/X의 CLR 정렬 순서, pass-wide 실패 복원, scale-change pass, map-cache lifecycle, Actor 위치 동기화, 각 타입 실제 contact callbacks. live runtime 미변경, 신규 라운드·배포 없음. 14-3/5-1/7-3/12-4 해제 증거 아님.
+- REA 최초 결과 first-run.md15880bytes / gameassembly.json17787bytes 확인 및 지뢰 대조 완료. 별도 `tools/LeadSelectedDecompile.java`와 Ghidra `-noanalysis`로 필요한5개 함수만 의사코드 확보. 4G heap, max-cpu2, 별도 프로젝트 `lead-ghidra.local`, `-deleteProject`; 공유 REA snapshot 변경 없음. 원본 DLL 실행 없음. no-analysis 의사코드는 타입/no-return 추론이 약하므로 assembly 근거를 유지한다.
+- 최신 전체 wildcard 검사701/701 통과(보조 WIP 검사 포함). 리드 관련4개 test 파일은53건; 보조 WIP 수정·등록·커밋 없음.
