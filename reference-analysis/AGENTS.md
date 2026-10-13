@@ -75,6 +75,27 @@ verified, self-contained module.
 - If a module you need from another task does not exist yet, say so in the result
   note instead of writing it yourself.
 
+## Established facts — use them, do not re-derive or contradict them
+
+- **Stage parameter floats → FP.** `QStageFileConverter.convertActorCreateParam`
+  reads the asset's float32 (0x18055427c), `convertFP` 0x180554310 turns it into a
+  string and calls `FP.FromString_UNSAFE` (0x180554373), and the raw is stored at
+  entry+0x18 (0x180554291). So the raw of an authored decimal `f` is the FromString
+  chain applied to its shortest float32 string — `fp_raw(str)` in
+  `source-migration/resolve-string-literals.local.py`. Cross-check: `"1.1"` gives
+  72089, the inlined raw of `QFP._1_10`. A slot that is "not an exact multiple of
+  1/65536" is therefore NOT unresolvable any more; convert it this way.
+- **Collision-rect statics are stored HEIGHT, WIDTH, X, Y.** Proved on the Key, whose
+  established box is 32 wide × 56 tall at (-16,-28): its cctor writes 56, 32, -16, -28
+  in that order (0x18186d42e..0x18186d464).
+- `0x180476130` is a bare `ret`; a method there does nothing.
+
+## Round 2 — continuing your own module
+
+A round-2 brief names the files that are yours. You may edit exactly those (and
+create the new files it asks for). Keep every earlier finding that was right; if
+you change one, say why in the report's correction history.
+
 ## Tests
 
 - `node --test source-migration/<your-module>.test.cjs` must pass.
