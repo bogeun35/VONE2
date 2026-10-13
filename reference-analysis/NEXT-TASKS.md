@@ -4,8 +4,8 @@
 > 수치는 전부 `source-migration/remaining-work.json` 실측이다. 추정이 아니다.
 > 그 파일은 `node reference-analysis/source-migration/scan-remaining-work.cjs` 로 다시 만든다.
 
-**현재**: 런타임 연결 **12라운드** / PP2 월드 60개. 남은 48개, 고유 차단 요소 96종.
-테스트 191건 통과(아래 "진행 중"의 리프트 모듈 제외).
+**현재**: 런타임 연결 **13라운드** / PP2 월드 60개. 남은 47개, 고유 차단 요소 96종.
+테스트 214건 전부 통과.
 
 ---
 
@@ -30,16 +30,11 @@
 
 ## 우선순위
 
-### 1순위 — 장치 1종이면 라운드가 열리는 곳 (1개)
+### 1순위 — 장치 1종이면 열리는 곳: 지금은 없다
 
-| 스테이지 | 필요한 장치 | 상태 |
-|---|---|---|
-| `st_w_10_04` | `WeightedLiftEx` | **모듈 작성 중이다. 아래 "진행 중" 먼저 읽을 것** |
+`WeightedLiftEx` 로 `st_w_10_04` 를 열면서 1종 구간이 비었다. 이제 최단 거리는 2종이다.
 
-`WeightedLiftEx` 는 근접 스테이지 6곳(`02_01 10_04 12_02 12_03 15_01 15_02`)에 걸쳐 있어
-1종당 효율이 가장 높다.
-
-### 2순위 — 2종이면 열리는 곳 (9개)
+### 1순위 — 2종이면 열리는 곳 (9개)
 
 `03_02`(DamageRect, LinePathLift) · `04_02`(Gear, SwitchTargetGroup) ·
 `11_02`(FloatingThorn, PoleLadder) · `12_01`(GoKart, Stick) · `12_04`(MoveWall, SpeedSwitch) ·
@@ -55,7 +50,7 @@
 - **`LinePathLift`** 는 `03_02`·`02_04`·`03_03` 에 있고 `LinePathLiftComponent.ParseParameter
   0x1818785b0` 이 `Frame.GetPlayerIndexCount` 를 쓴다(인원 배율 있음).
 
-### 3순위 — 한 번에 2라운드
+### 2순위 — 한 번에 2라운드
 
 `CannonPlayer` + `ThrowBallBasket` + `ThrowBallController` 3종이면 **`st_w_08_02`와 `st_w_08_04`가
 동시에** 열린다. (`st_w_08_01`/`08_03`은 `TargetPlayer, BasketPlayer, AppleController, Apple`
@@ -70,7 +65,6 @@
 
 | 항목 | 상태 | 해야 할 일 |
 |---|---|---|
-| `source-lift-devices.js` + `.test.cjs` | **테스트 8건 실패. 등록 안 됨** | 세션 한도로 중간에 끊긴 작업이다. 모듈 머리말은 상당히 완성돼 있다(공용 `WeightedLiftComponent` 분기까지 기록됨). 실패하는 8건을 마무리하고 리포트를 쓴 뒤 등록하면 `st_w_10_04` 가 열린다. **등록 전에는 게임에 영향이 없다** — 어느 빌드 목록에도 들어 있지 않다 |
 | `source-text-devices.js` | 테스트 17건 통과, **리포트 없고 미등록** | 근거 리포트를 쓴 뒤 등록. 단독으로는 라운드가 안 열리니 급하지 않다 |
 | `Blackout` / `BlackoutController` | **착수만 하고 아무 파일도 안 남았다** | 처음부터. 먼저 답할 질문: Blackout 이 시뮬레이션(충돌·사망·이벤트)에 영향이 있는지, 아니면 시야만인지. 시야만이면 어둠 상태를 모듈이 내보내 렌더러가 쓰게 하고 스테이지를 막지 말 것 |
 
@@ -83,6 +77,9 @@
 | 방향0 접촉 판정 | 원작보다 좁게 유지(의도적) | 원작은 단순 겹침인데 현재는 "착지 상태로 발이 밴드 안". 넓히면 `whole-route-replay.cjs --check` 로 영향 라운드를 보고 재녹화 |
 | 4-3 열쇠 | **열쇠는 닿을 수 있게 고쳐졌다. 라운드가 실제로 클리어되는지는 미확인** | 열쇠가 authored 위치에 머물던 것이 원인이었다 — 원작은 `KeyComponent.ParseParameter` 가 인원수에 따라 스폰 위치를 옮긴다(`key-reach-report.json`). 2인 (224,375) 로 지형 밖이다. 다만 틈 아래 전기(x 48..864)는 그대로이고 **사람이 클리어한 적은 아직 없다** |
 | 10-1 (새 라운드) | 컴파일·판정·열쇠 개방까지 기계 검증됨. **사람이 해본 적 없음** | 8인에서 합 3.20초 안에 전원이 눌러야 한다. 반응속도 요구가 사람에게 공정한지 확인 필요. 근거 `countup-device-report.json` |
+| 10-4 (새 라운드) | 인원별 탑승 인원 요구·이동·충돌 기계 검증됨. **사람이 해본 적 없음** | 8인이 192px 발판에 7명을 올릴 수 있는지는 미확인. 근거 `lift-device-report.json` |
+| 세로 WeightedLift | **거부함(추측하지 않음)** | `MoveLift` 가 `ActorComponent.IsEnableMoveContactActor 0x1816a15c0` 로 세로 이동을 막는데 그 함수를 역어셈블하지 않았다. 없이 옮기면 탑승자를 천장으로 밀어 넣는다. 세로 액터 6개 + `WeightedLiftSingle` 3개가 여기 걸려 있다 |
+| 1/65536 배수가 아닌 슬롯 | **거부함(추측하지 않음)** | 애셋이 평범한 소수로 적어 두는데 FP 변환의 절삭 방향이 확정되지 않았다. 걸리는 값: `st_l_04_04` datas[9]=1.1, `WeightedLift` datas[4]=-0.1(05_01·07_03), `LinePathLift` datas[4]=2.3335(03_02) |
 | 5-2 타이머 스위치 | **DeadTimer 정지(버그 후보). 근거 미확정이라 런타임은 안 고침** | 슬롯4 → `m_TimerAddSecond` 저장을 원작 PC에서 확인해야 한다. 아래 "버그 후보: 5-2 타이머 스위치" 절 |
 
 ### 버그 후보: 5-2 타이머 스위치 — 근거 판정 (2026-10-11, 게임 없는 PC)

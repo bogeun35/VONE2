@@ -15,20 +15,13 @@
   "st_w_10_02",
   "st_w_11_04",
   "st_w_07_02",
-  "st_w_10_01"
+  "st_w_10_01",
+  "st_w_10_04"
  ],
  "worldStages": 60,
- "remainingStages": 48,
+ "remainingStages": 47,
  "remainingDistinctBlockers": 96,
  "nearest": [
-  {
-   "id": "st_w_10_04",
-   "blockerCount": 1,
-   "blockers": [
-    "WeightedLiftEx"
-   ],
-   "guardsAfterTypes": []
-  },
   {
    "id": "st_w_03_02",
    "blockerCount": 2,
@@ -129,24 +122,19 @@
     "SearchLight"
    ],
    "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_05_01",
+   "blockerCount": 3,
+   "blockers": [
+    "Coin",
+    "CoinObserver",
+    "WeightedLift"
+   ],
+   "guardsAfterTypes": []
   }
  ],
  "byType": [
-  {
-   "type": "WeightedLiftEx",
-   "stages": [
-    "st_w_10_04",
-    "st_w_12_03",
-    "st_w_15_02",
-    "st_w_02_01",
-    "st_w_12_02",
-    "st_w_15_01"
-   ],
-   "appearsIn": 6,
-   "opensAlone": [
-    "st_w_10_04"
-   ]
-  },
   {
    "type": "Text",
    "stages": [
@@ -198,6 +186,18 @@
     "st_w_03_01",
     "st_w_09_03",
     "st_w_15_02"
+   ],
+   "appearsIn": 5,
+   "opensAlone": []
+  },
+  {
+   "type": "WeightedLiftEx",
+   "stages": [
+    "st_w_12_03",
+    "st_w_15_02",
+    "st_w_02_01",
+    "st_w_12_02",
+    "st_w_15_01"
    ],
    "appearsIn": 5,
    "opensAlone": []
@@ -1214,7 +1214,7 @@
   },
   {
    "id": "st_w_10_04",
-   "connected": false,
+   "connected": true,
    "distinctBlockers": [
     "WeightedLiftEx"
    ],
