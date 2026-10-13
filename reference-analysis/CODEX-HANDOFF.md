@@ -101,6 +101,9 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
   `REA_ANALYSIS_PROVIDER=ghidra` 를 주고
   `rea decompile "D:\SteamLibrary\steamapps\common\PICO PARK 2\GameAssembly.dll" 0x주소 --provider ghidra --snapshot C:\Users\user\tools\rea-snapshots\gameassembly.json`.
   첫 분석(스냅샷 생성)을 Claude 가 백그라운드로 걸어 두었다 — 결과는 `C:\Users\user\tools\rea-snapshots\first-run.md`.
+  **첫 실행 결과(2026-10-13 22:32): 56.3분 걸려 의사코드는 나왔다**(first-run.md). 다만 스냅샷 파일이 17KB 뿐이고
+  출력에 "temporary project are ephemeral" 이라 적혀 있어, Ghidra 분석 자체는 저장되지 않고 **매 실행마다 ~1시간
+  재분석**할 가능성이 높다. 여러 주소를 한 세션에서 묻는 MCP 방식(`rea setup` 으로 Codex 에 등록)이 나을 수 있다.
   아직 의사코드 정확도는 검증 전이다: 0x1818713e0(지뢰 관찰자 ParseParameter, 퍼센트 → FP 를
   매직 나눗셈으로 계산)과 대조해 맞는지 먼저 볼 것. 의사코드는 읽기용, 근거 주소는 어셈블리로.
   이 PC 는 램 하드웨어 오류 이력이 있어 Ghidra 메모리는 6G 로 제한했다.
