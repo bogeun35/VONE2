@@ -176,3 +176,11 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - Stage.onUpdate0x18170b4cc..58d 순서 확정: Actor.Update → Collision.Update → calcPlayerRange → updateAutoScroll → Actor.Post → Camera.funcNormal. 즉 collision은 이전 camera를 소비하고 range는 Post 이전 좌표다. ebx0(stage flags1/2)에서는 range/camera 생략. 순서 조사 lead-stage-order.local.txt, 영역 lead-camera-area.local.txt. 원본 실행 없음.
 - ColorBox/SearchLight 선별 로컬커밋 ec3cb6b5. 원격 푸시 승인은 여전히 대기하며 재시도하지 않음. live v11, local deploy v12/ec50e31 유지.
 - 다음: lead-native-create-collisions.local.txt에서 Player.initCollision, Actor.CreateCollision, LinePathLift/DamageRect/Thunder/Goal/Key 초기화 확인 중. Player pivot literal은0x1816bdf74 RIP0x17ca704에서 읽을 것. Aux2 ActorLifecycle의 typed phase와 이 카메라를 실제 collision pipeline에 연결해야 하며 supportId에서 native cache를 만들어 넣지 않는다.
+
+## 빈 접촉 캐시에서 시작하는 carry 통합 검사
+
+- source-collision-pipeline.createLayerChecks(): native initCollisionLayer0x1817f5c47..5f53의37쌍/70항목을16x16 boolean 표로 복원. SetEnableCheck0x1817f614f/6194는 두 대칭 index를 쓴다. layer13은1/2/8만, layer6 자기 자신은false, layer15 전부false. 기존 explicit layerChecks 입력을 묵시적으로 대체하지 않음.
+- extract-collision-bootstrap.py는 DLL 파일 bytes를 읽어 capstone의 MOV/constant와 call argument만 추출한다. 원작 실행 없음. collision-bootstrap-evidence.json에37callsite, player pivot literal0x182e88680=(0,-65536), Collision.initialize scale literal0x182e87af0=(65536,65536), CreateCollision0x1817f64fa..6508의200byte zero-fill 근거 저장.
+- source-collision-carry-integration.test.cjs7/7: 실제3-2의 인원별 rail/camera를 사용하되 지형은 빈 배열, 시작 위치는2행 synthetic stack이다. 캐시를 비우고 첫 pipeline에서 생성한 접촉만 다음 틱에 사용한다. Player contact helper와 native matrix/camera를 연결하여2..8모두3틱째 각 탑승자1회 inertia→Actor position sync를 확인. lift delta raw2인209600/3인156800/4..8인121600. 기존 supportId나 준비된 접촉 캐시 입력 없음.
+- 이는 실제 R.create/R.step 수정이 아니다. 센서·전체 map·타입별 Actor update/post/late callbacks·native creation order와 동적 Player scale은 미연결이다. nativePlayer pivot을(0,0)으로 만들지 말 것. InitCollision 세팅 이후 setCollisionScale0x1816bf700는 Actor scale·Player size/ear-length를 적용한다.
+- 전체 release874/874 통과. 보조 WIP(TopViewPlayer/UpDownLift/ActorLifecycle)는 staging하지 않았다. live v11, localdeployv12는 그대로, 실제 carry-runtime-report.json14조합false도 그대로다. 이 검사를 full stage 통과로 바꾸지 않는다.

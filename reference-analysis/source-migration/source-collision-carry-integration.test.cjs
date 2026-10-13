@@ -1,0 +1,46 @@
+// Isolated native scene integration, not full R.create/R.step or stage fidelity.
+// Shipped rail/camera configuration; an empty map and synthetic stacked starts
+// isolate cache generation, next-tick inertia, Player contacts and Actor sync.
+const {test}=require('node:test'),assert=require('node:assert/strict');
+const P=require('./source-collision-pipeline.js'),B=require('./source-collision-broadphase.js'),C=require('./source-camera-native.js'),PC=require('./source-player-contact.js'),L=require('./source-linepath-devices.js'),pop=require('./population-rules.cjs'),data=require('./installed-stage-decoded.local.json');
+const F=65536;
+function body(entityId,xRaw,yRaw,rectRaw,extra={}){return {entityId,xRaw,yRaw,preXRaw:xRaw,preYRaw:yRaw,priority:0,layer:6,flags:0,pushBackTarget:3,collisionType:0,rectRaw,baseRectRaw:{...rectRaw},preRectRaw:{...rectRaw},scaleRaw:{xRaw:F,yRaw:F},preScaleRaw:{xRaw:F,yRaw:F},expectedScaleRaw:{xRaw:F,yRaw:F},pivotRaw:{xRaw:0,yRaw:0},contacts:[],mapNormals:[],requestMapNormals:[],actorExists:true,...extra};}
+const host={
+ onContact:(w,e)=>{if(w.collisions.find(b=>b.id===e.ownerId).layer===1)PC.onContact(w,e);},
+ hasOnChangeScale:()=>false,hasOnPushedBack:()=>false,
+ syncActorPosition:(w,b,e)=>{const a=w.actors.find(a=>a.entityId===b.entityId);assert.ok(a);a.positionRaw={xRaw:e.xRaw,yRaw:e.yRaw};}
+};
+function riderIds(w,lift){const list=B.active(w.storage),seen=new Set();function up(b){for(const c of b.contacts){if(c.normal.x!==0||c.normal.y!==-1||seen.has(c.id))continue;const next=list.find(b=>b.id===c.id);if(next&&((1<<next.layer)&6)){seen.add(c.id);up(next);}}}up(lift);return [...seen];}
+function setup(count){
+ const stage=pop.selectVariant(data.stages.find(s=>s.stageId==='st_w_03_02').json.stageInitParamList,count,true),rail=L.create(L.compile(pop.actorsForCount(stage,count),count)).devices.find(d=>d.type==='LinePathLift');
+ const cam=C.create(C.compile(stage),null),w={storage:P.createStorage(),isEnableInertia:true,layerChecks:P.createLayerChecks(),cameraAreaRaw:C.stageAreaRaw(cam),map:{tileFlags:Array.from({length:stage.mapInitParam.height},()=>Array(stage.mapInitParam.width).fill(0))},actors:[]};
+ const cols=Math.min(count,4);
+ for(let i=0;i<count;i++){
+  const x=rail.xRaw+(i%cols-(cols-1)/2)*32*F,y=rail.yRaw+rail.rectRaw.y+F-Math.floor(i/cols)*46*F;
+  const b=B.createCollision(w.storage,body('player:'+i,x,y,{width:32*F,height:46*F,x:-16*F,y:-47*F},{priority:-1,layer:1,flags:32,pivotRaw:{xRaw:0,yRaw:-F},playerFacts:{wakeUpCount:1,inertiaAttachmentId:null}}));
+  w.actors.push({entityId:b.entityId,flags:0,positionRaw:{xRaw:x,yRaw:y},prePositionRaw:{xRaw:x,yRaw:y},velocityRaw:{xRaw:0,yRaw:F},player:{state:1,flags:0,inputBit:0}});
+ }
+ const b=B.createCollision(w.storage,body(rail.id,rail.xRaw,rail.yRaw,{...rail.rectRaw},{layer:13,pushBackTarget:2,flags:4|1024|(rail.isInertia?0:128)}));
+ w.actors.push({entityId:b.entityId,flags:0,positionRaw:{xRaw:b.xRaw,yRaw:b.yRaw}});
+ return {w,rail};
+}
+for(let count=2;count<=8;count++)test(`shipped3-2 rail ${count} players: empty cache -> native contacts -> inertia -> Actor sync`,()=>{
+ let {w,rail}=setup(count);assert.ok(B.active(w.storage).every(b=>b.contacts.length===0));let firstMovement=null;
+ for(let tick=1;tick<=5;tick++){
+  const bodies=B.active(w.storage),lift=bodies.find(b=>b.entityId===rail.id),players=bodies.filter(b=>b.layer===1),before=players.map(b=>b.xRaw),riders=riderIds(w,lift),oldX=lift.xRaw;
+  // Open horizontal fixture makes the obstruction decision explicitly true;
+  // this is not a substitute for the full runtime MoveContact host contract.
+  L.advanceLift(rail,1092,riders.length,true);lift.xRaw=rail.xRaw+rail.offsetRaw.xRaw;lift.yRaw=rail.yRaw+rail.offsetRaw.yRaw;
+  if(lift.xRaw!==lift.preXRaw||lift.yRaw!==lift.preYRaw)lift.flags|=64;
+  for(const p of players){p.yRaw+=F;p.flags|=64;w.actors.find(a=>a.entityId===p.entityId).positionRaw={xRaw:p.xRaw,yRaw:p.yRaw};}
+  const out=P.step(w,host);w=JSON.parse(JSON.stringify(out.state));
+  if(tick===1){assert.equal(riderIds(w,B.active(w.storage).find(b=>b.entityId===rail.id)).length,count);assert.ok(out.events.some(e=>e.type==='OnContactAdded'));}
+  const delta=lift.xRaw-oldX;
+  if(delta){firstMovement=tick;assert.equal(riders.length,count);assert.equal(delta,count===2?209600:count===3?156800:121600);
+   assert.equal(new Set(out.inertiaTrace.map(t=>t.id)).size,count);
+   for(const [i,p]of B.active(w.storage).filter(b=>b.layer===1).entries()){assert.equal(p.xRaw-before[i],delta);assert.equal(w.actors.find(a=>a.entityId===p.entityId).positionRaw.xRaw,p.xRaw);}
+   break;
+  }
+ }
+ assert.equal(firstMovement,3);
+});

@@ -51,14 +51,16 @@
       "Actor sync squared threshold and scale→sync→map→late ordering",
       "physical freed-slot reuse plus17-key unstable CLR sort through full pipeline",
       "late callbacks mutate flags and positions; next pair observes refreshed descriptors",
-      "circle response/cache survives JSON tick, diagonal half-normal probe and mixed rectangle response"
+      "circle response/cache survives JSON tick, diagonal half-normal probe and mixed rectangle response",
+      "Native16x16 layer matrix:37 symmetric enabled pairs,70 enabled entries; layer15 entirely off",
+      "Shipped3-2 rail/camera2..8: empty cache, native contact discovery, third-tick movement, once-per-rider inertia and Actor sync across JSON restoration"
     ],
-    "scope": "JS tests against statically derived expectations. Authored lift facts are real; contact stacks and player rectangles in tests are synthetic. No original-game execution, complete stage play, or side-by-side native comparison.",
+    "scope": "JS tests against statically derived expectations. Authored lift facts are real; contact stacks and player rectangles in tests are synthetic. No original-game execution, complete stage play, or side-by-side native comparison. New carry integration uses shipped rail/camera but empty terrain and synthetic stacked initial placement, explicit unobstructed movement and only contact callbacks; not full R.create/R.step.",
     "fullCommand": "node --test source-migration/*.test.cjs",
     "full": {
-      "pass": 788,
+      "pass": 874,
       "fail": 0,
-      "note": "Source wildcard + play wildcard + rebuild/camera.test.cjs release run; includes auxiliary WIP tests excluded from staging."
+      "note": "Source wildcard + play wildcard + rebuild/camera.test.cjs; concurrent auxiliary WIP tests included in observation, excluded from this commit."
     }
   },
   "rea": {
@@ -69,12 +71,13 @@
   "unresolved": [
     "Dictionary bootstrap capacity97 is resolved. Actual runtime actor creation order and all collision payloads still require native initialization adapters.",
     "Native storage/phase pipeline is executable; actual stage Actor lifecycle and callbacks still require integration.",
-    "Actual Player and device OnContactAdded/OnContacted adapters and complete collision layer/shape/scale facts for each live actor remain necessary.",
+    "Player contact helper is implemented and tested through the isolated pipeline. Other device callbacks, dynamic Player size/ear scale, full actor creation/binding and live host integration remain necessary. Default16x16 layer matrix is resolved.",
     "Live runtime still uses its existing movement and supportId model. This core does not authorize opening14-3/5-1/7-3/12-4 or claiming corrected live10-4/3-2 carry.",
     "Safe integer rectangle and circle paths only; malformed/extreme input and full-game equivalence not claimed."
   ],
   "corrections": [
     "Map normals formerly appended directly to retained cache; corrected to request queue using addContactMapInfo0x181691c10. Tests now distinguish first Added from retained Contacted.",
     "Inertia previously sorted rows before equal-X adapter. It now supplies original contact cache order to native CLR sort; mixed equal keys with17 contacts demonstrate the different permutation."
-  ]
+  ],
+  "bootstrapEvidence": "collision-bootstrap-evidence.json; regenerate with python -I source-migration/extract-collision-bootstrap.py. 37 layer callsites, Player pivot(0,-65536), initial scale(65536,65536),200-byte Collision zero fill."
 }

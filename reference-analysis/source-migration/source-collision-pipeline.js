@@ -13,6 +13,17 @@
 'use strict';
 const clone=x=>JSON.parse(JSON.stringify(x));
 function createStorage(){return Broad.createStorage(97);}
+function createLayerChecks(){
+ // Fresh zeroed Scene has16x16 FPBoolean entries. initCollisionLayer
+ // 0x1817f5c47..5f53 enables these37 pairs. SetEnableCheck0x1817f614f/6194
+ // writes BOTH indices (b*16+a and a*16+b); layer15 stays entirely disabled.
+ const checks=Array.from({length:16},()=>Array(16).fill(false));
+ for(const [a,b] of [[1,0],[1,1],[1,2],[1,4],[1,5],[1,6],[2,2],[2,5],[2,6],
+  [3,0],[3,4],[3,5],[3,6],[5,5],[5,6],[7,1],[7,2],[7,3],[7,5],[7,6],[7,8],
+  [8,1],[8,2],[8,5],[8,6],[8,8],[9,1],[10,1],[10,12],[10,11],[12,1],
+  [13,1],[13,2],[13,8],[14,1],[14,2],[14,8]])checks[a][b]=checks[b][a]=true;
+ return checks;
+}
 function treeObject(config,b){const r=b.rectRaw;if(!r)throw Error('Resolved native GetRect required');return Broad.descriptor(config,{id:b.id,xRaw:b.xRaw,yRaw:b.yRaw,rect:{xRaw:r.x,yRaw:r.y,widthRaw:r.width,heightRaw:r.height}});}
 function sortContactPositions(rows,dx){return Broad.nativeSort(rows.map(r=>({...r,xRaw:r.x})),Broad.xCompare(dx)).map(({xRaw,...r})=>r);}
 function lateCollided(w,events,config,host){
@@ -44,5 +55,5 @@ function step(input,host={}){
  const {collisions,...worldFields}=result.world;Object.assign(state,worldFields);
  return {state,orderedIds:collisions.map(b=>b.id),events:result.events,pushTrace:result.pushTrace,inertiaTrace:result.inertiaTrace};
 }
-return {createStorage,step,treeObject,sortContactPositions,lateCollided,completePhysicsFidelity:false};
+return {createStorage,createLayerChecks,step,treeObject,sortContactPositions,lateCollided,completePhysicsFidelity:false};
 });

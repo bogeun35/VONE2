@@ -4,6 +4,11 @@ function body(x,y,extra={}){const r={x:0,y:0,width:10*F,height:10*F};return {ent
 function state(){return {storage:P.createStorage(),isEnableInertia:false,map:{tileFlags:Array.from({length:10},()=>Array(10).fill(0))},layerChecks:{6:{6:true}}};}
 test('native90-element dictionaries allocate first recovered prime97',()=>{const s=P.createStorage();assert.equal(s.primary.capacity,97);assert.equal(s.secondary.capacity,97);assert.equal(s.primary.buckets.length,97);assert.equal(s.issueId,0);});
 const host={onContact:()=>{},hasOnChangeScale:()=>false,hasOnPushedBack:()=>false,syncActorPosition:()=>{}};
+test('default native layer table preserves all16 masks and symmetric37-pair bootstrap',()=>{
+ const m=P.createLayerChecks();assert.deepEqual(m.map(row=>row.reduce((mask,on,i)=>mask|(on?1<<i:0),0)),[10,30711,25062,241,10,494,430,366,25062,2,6146,1024,1026,262,262,0]);
+ assert.equal(m.flat().filter(Boolean).length,70);assert.equal(m[13][1],true);assert.equal(m[13][13],false);assert.equal(m[6][6],false);assert.equal(m[10][12],true);
+ m[1][13]=false;assert.equal(P.createLayerChecks()[1][13],true);
+});
 test('pipeline sorts active storage and persists map correction/cache across JSON ticks',()=>{
  const w=state();w.map.tileFlags[1].fill(1);
  const a=B.createCollision(w.storage,body(20,42,{preYRaw:30*F,flags:64,priority:-1}));

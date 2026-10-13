@@ -1,0 +1,279 @@
+{
+  "scope": "Static call arguments and constants, not an original-game execution",
+  "layerTable": {
+    "initialize": "0x1817f5bf0",
+    "setEnableCheck": "0x1817f6080",
+    "symmetricStores": [
+      "0x1817f614f",
+      "0x1817f6194"
+    ],
+    "pairs": [
+      {
+        "callsite": "0x1817f5c47",
+        "a": 1,
+        "b": 0,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5c5f",
+        "a": 1,
+        "b": 1,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5c76",
+        "a": 1,
+        "b": 2,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5c8d",
+        "a": 1,
+        "b": 4,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5ca4",
+        "a": 1,
+        "b": 5,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5cbb",
+        "a": 1,
+        "b": 6,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5cd2",
+        "a": 2,
+        "b": 2,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5ce7",
+        "a": 2,
+        "b": 5,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5cfc",
+        "a": 2,
+        "b": 6,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5d11",
+        "a": 3,
+        "b": 0,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5d26",
+        "a": 3,
+        "b": 4,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5d3b",
+        "a": 3,
+        "b": 5,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5d50",
+        "a": 3,
+        "b": 6,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5d67",
+        "a": 5,
+        "b": 5,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5d7c",
+        "a": 5,
+        "b": 6,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5d92",
+        "a": 7,
+        "b": 1,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5da7",
+        "a": 7,
+        "b": 2,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5dbc",
+        "a": 7,
+        "b": 3,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5dd1",
+        "a": 7,
+        "b": 5,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5de6",
+        "a": 7,
+        "b": 6,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5dfb",
+        "a": 7,
+        "b": 8,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5e11",
+        "a": 8,
+        "b": 1,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5e26",
+        "a": 8,
+        "b": 2,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5e3b",
+        "a": 8,
+        "b": 5,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5e50",
+        "a": 8,
+        "b": 6,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5e67",
+        "a": 8,
+        "b": 8,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5e7d",
+        "a": 9,
+        "b": 1,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5e93",
+        "a": 10,
+        "b": 1,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5ea8",
+        "a": 10,
+        "b": 12,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5ebd",
+        "a": 10,
+        "b": 11,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5ed3",
+        "a": 12,
+        "b": 1,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5ee9",
+        "a": 13,
+        "b": 1,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5efe",
+        "a": 13,
+        "b": 2,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5f13",
+        "a": 13,
+        "b": 8,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5f29",
+        "a": 14,
+        "b": 1,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5f3e",
+        "a": 14,
+        "b": 2,
+        "enabled": true
+      },
+      {
+        "callsite": "0x1817f5f53",
+        "a": 14,
+        "b": 8,
+        "enabled": true
+      }
+    ],
+    "rowMasks": [
+      10,
+      30711,
+      25062,
+      241,
+      10,
+      494,
+      430,
+      366,
+      25062,
+      2,
+      6146,
+      1024,
+      1026,
+      262,
+      262,
+      0
+    ],
+    "enabledEntries": 70
+  },
+  "playerPivot": {
+    "load": "0x1816bdf74",
+    "literal": "0x182e88680",
+    "raw": [
+      0,
+      -65536
+    ]
+  },
+  "initialCollisionScale": {
+    "load": "0x181690b00",
+    "literal": "0x182e87af0",
+    "raw": [
+      65536,
+      65536
+    ]
+  },
+  "collisionZeroInit": {
+    "address": "0x1817f64fa..6508",
+    "sizeBytes": 200,
+    "fact": "edx=0, r8d=0xc8, call fill before issueId assignment"
+  },
+  "remaining": [
+    "Actor setupCollision callback registration, entity/holder index and runtime creation order require host binding",
+    "Player scale additionally uses native size/ear-length; initial unit scale is not a permanent gameplay scale"
+  ]
+}
