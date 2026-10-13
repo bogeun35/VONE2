@@ -184,3 +184,10 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - source-collision-carry-integration.test.cjs7/7: 실제3-2의 인원별 rail/camera를 사용하되 지형은 빈 배열, 시작 위치는2행 synthetic stack이다. 캐시를 비우고 첫 pipeline에서 생성한 접촉만 다음 틱에 사용한다. Player contact helper와 native matrix/camera를 연결하여2..8모두3틱째 각 탑승자1회 inertia→Actor position sync를 확인. lift delta raw2인209600/3인156800/4..8인121600. 기존 supportId나 준비된 접촉 캐시 입력 없음.
 - 이는 실제 R.create/R.step 수정이 아니다. 센서·전체 map·타입별 Actor update/post/late callbacks·native creation order와 동적 Player scale은 미연결이다. nativePlayer pivot을(0,0)으로 만들지 말 것. InitCollision 세팅 이후 setCollisionScale0x1816bf700는 Actor scale·Player size/ear-length를 적용한다.
 - 전체 release874/874 통과. 보조 WIP(TopViewPlayer/UpDownLift/ActorLifecycle)는 staging하지 않았다. live v11, localdeployv12는 그대로, 실제 carry-runtime-report.json14조합false도 그대로다. 이 검사를 full stage 통과로 바꾸지 않는다.
+
+## 5-1 zoom 후속
+
+- source-camera-native의 zoomOut 분기를0x1817e0524..64e와 대조 구현. aspect116508, 선택축 fit66배, deadband±24px, gain1311(1310으로 바꾸지 않음), interpolation0.75dt, min/max clamp. 초기 zoom 거부를 해제. 전용25/25, release877/877 통과. 실제5-1의2..8 모두displayTileHeight0/min=max10tile라 zoom설정1이어도 크기는 고정이다. 14-3/7-3의2..8 정상카메라도 검사.
+- 12-4는 실제2..8 scrollType2다. 네 대상 전부normal이라는 테스트 가정은 실패 후 데이터 확인하여 명시적인auto거부 테스트로 정정했다. source runtime 미등록/배포 미변경.
+- lead-camera-auto.local.txt: RequestAuto0x1817e0910은 최초calcArea/startPosition/flag8만 하고 position을 쓰지 않는다(normal/stop과 다름). funcAuto0x1817e0980은 현재viewStageArea의width/height 절반을 Stage.scrollPosition에 더하고 reciprocal view matrix로 변환, clip 후 position을 저장한다. 보간/zoom/Stage.scrollPosition writeback 없음. Stage auto-scroll 속도·timer와 초기position 생명주기를 더 확인한 뒤 구현해야 한다.
+- 완료 로컬커밋 누적: ec3cb6b5(ColorBox/SearchLight),3f9aa3a4(camera),79f8ff68(layer table/빈캐시carry). 이 절과 zoom은 후속 선별 커밋. Push 재시도 없음. Aux1 TopViewPlayer32tests, Aux3 UpDownLift20tests 결과 노트는 있으나 coordinator의 동결 확인 전이라 이 커밋에 포함하지 않음. Aux2 ActorLifecycle도 미포함.

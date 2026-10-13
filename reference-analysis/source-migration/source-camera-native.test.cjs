@@ -44,7 +44,7 @@ test('delta-time clamping and stage-space target offset occur before view transf
  C.update(s,center(960,480),F);assert.deepEqual(s.positionRaw,{xRaw:1375920,yRaw:-327680});
 });
 test('unimplemented camera branches and missing native range remain explicit errors',()=>{
- for(const k of ['zoomOut','unreturnScroll','unlimitScroll'])assert.throws(()=>C.compile(stage({[k]:1})),new RegExp(k));
+ for(const k of ['unreturnScroll','unlimitScroll'])assert.throws(()=>C.compile(stage({[k]:1})),new RegExp(k));
  assert.throws(()=>C.compile(stage({scrollType:2})),/normal/);
  assert.throws(()=>C.create(C.compile(stage())),/playerRange/);
  const s=C.create(C.compile(stage()),null);assert.throws(()=>C.update(s,{left:0,right:1,top:0},1092),/range.bottom/);
@@ -58,4 +58,26 @@ test('Player bit9 freezes range unless Stage bit8 overrides, empty native range 
  const frozen=C.calculatePlayerRange({stageFlags:0,players,actors,previousRange});assert.deepEqual(frozen,previousRange);assert.notEqual(frozen,previousRange);
  assert.deepEqual(C.calculatePlayerRange({stageFlags:256,players,actors,previousRange}),{left:10,right:10,top:20,bottom:20});
  assert.throws(()=>C.calculatePlayerRange({stageFlags:0,players:[],actors:[]}),/int64 extrema/);
+});
+const zoomStage=()=>stage({zoomOut:1,mapInitParam:{width:62,height:20,chipSize:48,displayTileHeight:10,startTileX:0,startTileY:0}});
+test('zoom uses native1311 gain and0.75dt interpolation with lower and upper bounds',()=>{
+ const s=C.create(C.compile(zoomStage()),null);
+ C.update(s,{left:0,right:0,top:0,bottom:500*F},1092);assert.equal(s.orthographicSizeRaw,330465);
+ s.orthographicSizeRaw=8*F;C.update(s,center(0,0),1092);assert.equal(s.orthographicSizeRaw,521831);
+ s.orthographicSizeRaw=5*F;C.update(s,{left:0,right:0,top:0,bottom:100000*F},F);assert.equal(s.orthographicSizeRaw,573440);
+});
+test('zoom deadband preserves both boundaries; one pixel beyond shrinks or expands',()=>{
+ for(const [bottom,expected]of [[480,8*F],[528,8*F],[479,8*F-17],[529,8*F+16]]){
+  const s=C.create(C.compile(zoomStage()),null);s.orthographicSizeRaw=8*F;C.update(s,{left:0,right:0,top:0,bottom:bottom*F},1092);assert.equal(s.orthographicSizeRaw,expected);
+ }
+});
+test('target stages2..8 preserve normal/zoom settings and explicitly refuse12-4 auto scroll',()=>{
+ for(const id of ['st_w_14_03','st_w_05_01','st_w_07_03','st_w_12_04'])for(let count=2;count<=8;count++){
+  const selected=pop.selectVariant(data.stages.find(s=>s.stageId===id).json.stageInitParamList,count,true);
+  if(id==='st_w_12_04'){assert.equal(selected.scrollType,2);assert.throws(()=>C.compile(selected),/normal/);continue;}
+  const s=C.create(C.compile(selected),null),before=s.orthographicSizeRaw;
+  const out=C.update(s,{left:0,right:10000*F,top:0,bottom:10000*F},F);
+  assert.equal(s.orthographicSizeRaw,before);assert.equal(out.cameraAreaRaw.height,selected.mapInitParam.height*48*F);
+  if(id==='st_w_05_01'){assert.equal(s.flags&4,4);assert.equal(s.orthographicMinRaw,s.orthographicMaxRaw);}
+ }
 });

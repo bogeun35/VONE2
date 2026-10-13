@@ -10,7 +10,9 @@
  * X/Y lerp factors clamp(4*dt,0,1)/clamp(3*dt,0,1), clip again.
  * CalcCameraViewStageArea0x1817dfd10 transforms both corners separately.
  * This camera consumes Stage.playerRange; it does not guess player selection
- * or frame ordering. Auto/zoom/unlimit/unreturn remain explicit refusals.
+ * or frame ordering. Zoom branch0x1817e0524..64e uses aspect116508,
+ * fit multiplier66, deadband24, gain1311, and lerp factor0.75*dt.
+ * Auto/unlimit/unreturn remain explicit refusals.
  */
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;root.SourceCameraNative=api;})(globalThis,function(){
 'use strict';
@@ -45,12 +47,13 @@ function calculatePlayerRange({stageFlags,players,actors,previousRange}){
 }
 function compile(stage){
  if(stage.scrollType!==1)throw Error('Camera native core supports normal scrollType1 only');
- for(const k of ['unlimitScroll','unreturnScroll','zoomOut'])if(stage[k]!==0)throw Error('Camera native '+k+' requires additional branch implementation');
+ for(const k of ['unlimitScroll','unreturnScroll'])if(stage[k]!==0)throw Error('Camera native '+k+' requires additional branch implementation');
+ if(!Number.isInteger(stage.zoomOut))throw Error('Camera explicit zoomOut required');
  const m=stage.mapInitParam;if(!m)throw Error('Camera mapInitParam required');
  for(const k of ['width','height','chipSize','displayTileHeight'])if(!Number.isInteger(m[k]))throw Error('Camera integer '+k+' required');
  if(m.width<=0||m.height<=0||m.chipSize<=0||m.displayTileHeight<0)throw Error('Camera positive map dimensions required');
  if(!Number.isInteger(stage.cameraStartType))throw Error('Camera explicit cameraStartType required');
- return {schemaVersion:1,mapTileWidthRaw:exact(m.width*F,'map width'),mapTileHeightRaw:exact(m.height*F,'map height'),chipRaw:exact(m.chipSize*F,'chip'),upTileHeightRaw:(m.displayTileHeight||m.height)*F,startTileRaw:{xRaw:raw(m.startTileX),yRaw:m.startTileY===0?(m.height-1)*F:raw(m.startTileY)},cameraStartType:stage.cameraStartType};
+ return {schemaVersion:1,cameraFlags:stage.zoomOut?4:0,mapTileWidthRaw:exact(m.width*F,'map width'),mapTileHeightRaw:exact(m.height*F,'map height'),chipRaw:exact(m.chipSize*F,'chip'),upTileHeightRaw:(m.displayTileHeight||m.height)*F,startTileRaw:{xRaw:raw(m.startTileX),yRaw:m.startTileY===0?(m.height-1)*F:raw(m.startTileY)},cameraStartType:stage.cameraStartType};
 }
 function dimensions(s){const height=mul(s.orthographicSizeRaw,2*F);return {height,width:div(1920*F,div(1080*F,height))};}
 function moveArea(s){
@@ -70,7 +73,7 @@ function requestNormal(s){
 function toPlayerCenter(s,r){range(r);const center=stageToWorld(s,{xRaw:half(add(r.left,r.right)),yRaw:half(add(r.bottom,r.top))});s.positionRaw=clip(s,{xRaw:center.xRaw,yRaw:s.startPositionRaw.yRaw});}
 function toMapCenter(s){const a=s.moveAreaRaw;s.positionRaw=clip(s,{xRaw:half(add(a.xMin,a.xMax)),yRaw:s.startPositionRaw.yRaw});}
 function create(compiled,initialPlayerRange){
- const s={...clone(compiled),flags:0,function:0,orthographicSizeRaw:half(compiled.upTileHeightRaw),viewScaleRaw:{xRaw:div(F,compiled.chipRaw),yRaw:div(-F,compiled.chipRaw)},targetOffsetRaw:{xRaw:0,yRaw:0}};
+ const s={...clone(compiled),flags:compiled.cameraFlags,function:0,orthographicSizeRaw:half(compiled.upTileHeightRaw),orthographicMinRaw:half(compiled.upTileHeightRaw),orthographicMaxRaw:half(compiled.mapTileHeightRaw),viewScaleRaw:{xRaw:div(F,compiled.chipRaw),yRaw:div(-F,compiled.chipRaw)},targetOffsetRaw:{xRaw:0,yRaw:0}};
  requestNormal(s);
  // Stage.initScroll0x18170b34a..3cb only centers types0/1; no players skips0.
  if(s.cameraStartType===0&&initialPlayerRange!==null)toPlayerCenter(s,initialPlayerRange);
@@ -79,10 +82,19 @@ function create(compiled,initialPlayerRange){
 }
 function viewAreaRaw(s){const d=dimensions(s);return {height:d.height,width:d.width,x:sub(s.positionRaw.xRaw,half(d.width)),y:add(s.positionRaw.yRaw,s.orthographicSizeRaw)};}
 function stageAreaRaw(s){const r=viewAreaRaw(s),a=worldToStage(s,{xRaw:r.x,yRaw:r.y}),b=worldToStage(s,{xRaw:add(r.x,r.width),yRaw:sub(r.y,r.height)});return {height:sub(b.yRaw,a.yRaw),width:sub(b.xRaw,a.xRaw),x:a.xRaw,y:a.yRaw};}
+function updateZoom(s,r,dtRaw){
+ const original=s.orthographicSizeRaw,wide=mul(original,116508),dx=Math.abs(sub(r.left,r.right)),dy=Math.abs(sub(sub(r.top,24*F),r.bottom));
+ const horizontal=sub(dx,number(BigInt(wide)*66n))>sub(dy,number(BigInt(original)*66n));
+ const span=horizontal?dx:dy,fit=number(BigInt(horizontal?wide:original)*66n);
+ let next=original;
+ if(span<=sub(fit,24*F))next=Math.max(s.orthographicMinRaw,sub(original,mul(Math.abs(add(sub(span,fit),24*F)),1311)));
+ else if(span>=add(fit,24*F))next=Math.min(s.orthographicMaxRaw,add(original,mul(Math.abs(sub(sub(span,fit),24*F)),1311)));
+ if(next!==original)s.orthographicSizeRaw=add(original,mul(sub(next,original),clamp(mul(dtRaw,49152),0,F)));
+}
 function update(s,playerRange,dtRaw){
  if(s.function!==1)throw Error('Camera update requires normal function1');
- if(s.flags&7)throw Error('Camera flags need additional branch implementation');
- range(playerRange);exact(dtRaw,'delta time');point(s.targetOffsetRaw,'targetOffset');moveArea(s);
+ if(s.flags&3)throw Error('Camera flags need additional branch implementation');
+ range(playerRange);exact(dtRaw,'delta time');point(s.targetOffsetRaw,'targetOffset');if(s.flags&4)updateZoom(s,playerRange,dtRaw);moveArea(s);
  const center={xRaw:add(half(add(playerRange.left,playerRange.right)),s.targetOffsetRaw.xRaw),yRaw:add(half(add(playerRange.bottom,sub(playerRange.top,24*F))),s.targetOffsetRaw.yRaw)};
  const target=clip(s,stageToWorld(s,center)),p=s.positionRaw;
  s.positionRaw=clip(s,{xRaw:add(p.xRaw,mul(sub(target.xRaw,p.xRaw),clamp(mul(dtRaw,4*F),0,F))),yRaw:add(p.yRaw,mul(sub(target.yRaw,p.yRaw),clamp(mul(dtRaw,3*F),0,F)))});
