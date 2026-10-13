@@ -171,7 +171,7 @@ const board=['# Codex 작업 목록','',
  '끝난 작업은 `NN-작업.result.md` 가 생깁니다. 검토·등록·배포·커밋은 Claude 가 합니다.','',
  '| # | 장치 | 혼자 여는 라운드 | Codex 에 붙여넣을 지시 |','|---|---|---|---|'];
 for(const r of rows)board.push('| '+r.n+' | '+r.types.join(', ')+' | '+(r.alone.length?r.alone.join(', '):'-')+
- ' | `reference-analysis/codex-briefs/'+r.file+' 작업을 해줘` |');
+ ' | `codex-briefs/'+r.file+' 작업을 해줘` |');
 board.push('','Claude 가 직접 하는 것(Codex 에 주지 말 것): '+RESERVED.join(', ')+'.','');
 board.push('작업 폴더는 `C:\\Users\\user\\projects\\VONE2\\reference-analysis` 로 열어 주세요 — 그래야 Codex 가');
 board.push('`AGENTS.md` 를 자동으로 읽습니다.','');
