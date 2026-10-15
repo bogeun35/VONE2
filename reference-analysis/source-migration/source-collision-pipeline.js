@@ -48,10 +48,12 @@ function step(input,host={}){
  const config=Broad.initialize(state.map.tileFlags[0].length,state.map.tileFlags.length);
  const ordered=Broad.nativeSort(Broad.active(state.storage),Broad.priorityCompare);
  for(const b of ordered)if(!Number.isInteger(b.priority))throw Error('Native signed collision priority required');
- const world={...state,collisions:ordered};delete world.storage;
+ // Keep the complete scene dictionary for callback lookups of inactive
+ // bodies. Current chunk rows overlay their stored snapshots during solving.
+ const world={...state,collisions:ordered};
  const result=Scene.checkChunk(world,{...host,treeObject:(_,b)=>treeObject(config,b),candidateCheck:Broad.relation,sortContactPositions,lateCollided:(w,events)=>lateCollided(w,events,config,host)});
  const byId=new Map(result.world.collisions.map(b=>[b.id,b]));
- for(const d of [state.storage.primary,state.storage.secondary])for(const e of d.entries)if(e.state===2&&byId.has(e.key))e.collision=byId.get(e.key);
+ for(const d of [result.world.storage.primary,result.world.storage.secondary])for(const e of d.entries)if(e.state===2&&byId.has(e.key))e.collision=byId.get(e.key);
  const {collisions,...worldFields}=result.world;Object.assign(state,worldFields);
  return {state,orderedIds:collisions.map(b=>b.id),events:result.events,pushTrace:result.pushTrace,inertiaTrace:result.inertiaTrace};
 }

@@ -250,3 +250,12 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - ScreenBoundary 감사 설명 확인: missing 이웃collision은skip, 현재Actor의 primary collision0는native null 검사없이사용하므로기존throw가맞음. 파일변경불필요하며동결상태유지.
 - bridge15+Default37+Input22+Boundary30+Queries23+Jump38+Pool21=186/186,전체1330/1330. 실제3-2 authored Player·grid 기반 isolated fixture이며 R.create/R.step 전체검증은아님.
 - 다음: 실제 Actor factory/typed phase에 이 API 연결; GoalQuery18 새완료본 검토 후 openGoalOverlap 연결; custom effect/look/animation/device receiver 및전체eventpool host 구현. 실제stage 생성·전체R.step·carry는여전히미완료. 신규Ghost WIP보존.
+
+### typed Scene 실행 후속 (2026-10-15)
+
+- Bridge.runPhase/stepScene 추가: native registry Update→Collision→range/auto host→Post→Camera host 순서. common Actor motion은실구현,typedquery/장치전체callback은명시host. Player전체OnUpdate를Default body로바꿔끼우지않음.
+- PlayerGoalQuery18 검토/연결: manager단일참조→Goal component entity→collision0. 다른Goalfallback없음.
+- Pipeline의callback world에전체storage유지;currentchunk overlay로active좌표를읽고inactive변경도결과에보존. PlayerContact의Player.jumpVelocityRaw를Default.forceJumpXRaw/YRaw로명시변환하여벽접촉reset연결.
+- Bridge18+Pipeline11+Goal18=47/47,전체1379/1379. 실제3-2 Player스폰+전체grid에서12연속프레임접지/중력정지검증. 나머지액터와Playerprelude/camera는제한fixture이므로전체R.step검증아님.
+- 구체적다음차단: Player.OnUpdate1816c0010은flag28이면battlePlaneDamageProc,항상invincibleProc1816c06c0→updatePlayerState1816c07c0,마지막Player+0xa8zero. requestedState/currentState/goalenterflag16소비와무적timer순서가Default바깥에있음. 정적자료lead-player-state-dispatch.local.txt. 별도미구현state를silentno-op하지말것.
+- PlayerEffects25 새동결완료: requestAnimationId(playing이아님),Lookbit14→10,Verified audio queue,38/43 pool. 다음연결대상. customreceiver의중간상태관찰을위해Default effect streaming필요성검토. ActorInitialization/Ghost는현재WIP로staging금지.

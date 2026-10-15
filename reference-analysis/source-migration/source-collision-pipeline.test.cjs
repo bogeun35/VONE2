@@ -19,6 +19,7 @@ test('pipeline sorts active storage and persists map correction/cache across JSO
  assert.equal(a.yRaw,42*F);assert.equal(r.state.storage.primary.entries[2].collision.flags,1);
  const next=P.step(JSON.parse(JSON.stringify(r.state)),host);assert.deepEqual(next.events.map(e=>e.type),['OnContacted']);
 });
+test('callback complete dictionary retains inactive-body mutations while current chunk overlays stored active bodies',()=>{const w=state(),a=B.createCollision(w.storage,body(20,20,{flags:2,pushBackTarget:0})),b=B.createCollision(w.storage,body(22,20,{pushBackTarget:0})),hidden=B.createCollision(w.storage,body(200,20,{flags:1}));const r=P.step(w,{...host,onCollided:(world,self)=>{const inactive=B.getCollisionById(world.storage,hidden.id);assert.equal(inactive.flags&1,1);inactive.attribute=4;self.attribute=8;}});assert.equal(B.getCollisionById(r.state.storage,hidden.id).attribute,4);assert.equal(B.getCollisionById(r.state.storage,a.id).attribute,8);assert.equal(B.getCollisionById(w.storage,hidden.id).attribute,undefined);assert.deepEqual(r.orderedIds,[a.id,b.id]);});
 test('pipeline uses physical free slot order before unstable priority sorting',()=>{
  const w=state();for(let i=0;i<17;i++)B.createCollision(w.storage,body(i*20,20));B.removeCollision(w.storage,2);B.createCollision(w.storage,body(340,20));
  assert.deepEqual(P.step(w,host).orderedIds,[1,15,14,13,12,11,10,16,9,7,6,5,4,3,18,8,17]);
