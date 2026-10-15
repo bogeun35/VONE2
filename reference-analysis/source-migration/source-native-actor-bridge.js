@@ -67,10 +67,11 @@ function dispatch(world,id,event,host){
  }
  if([49,51,52,53,54,55].includes(type)){
   const receiver=Lifecycle.registry.events.find(r=>r.ordinal===a.actorType);
-  if(receiver&&!['Player','Blackout','BlackoutController'].includes(receiver.actorType))return syncResult(required(host,'receiveCustomEvent',world,a,event));
+  if(receiver&&a.actorType!==93&&!['Player','Blackout','BlackoutController'].includes(receiver.actorType))return syncResult(required(host,'receiveCustomEvent',world,a,event));
   // Work on the actual Actor so nested callbacks observe owner/flag writes.
   const previous=a.ordinal;a.ordinal=a.actorType;let result;
-  try {result=Lifecycle.receiveControl(a,event);}finally {if(previous===undefined)delete a.ordinal;else a.ordinal=previous;}
+  // NormalThorn.OnRecvEvent181889613 -> Thorn181721a97: every non61 event forwards Actor unchanged.
+  try {result=a.actorType===93?Lifecycle.commonEvent(a,event):Lifecycle.receiveControl(a,event);}finally {if(previous===undefined)delete a.ordinal;else a.ordinal=previous;}
   for(const call of result.calls){if(call.kind==='setCollisionActive')Motion.setCollisionActive(view(world),a,call.value,call.sourceId);else if(call.kind==='notifyEvent')dispatch(world,call.targetId,{eventType:call.eventType,sourceId:call.sourceId,value:call.value},host);else throw Error('Native lifecycle call not implemented: '+call.kind);}
   return 0;
  }

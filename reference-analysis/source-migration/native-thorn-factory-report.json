@@ -1,0 +1,30 @@
+{
+  "scope": "NormalThorn type93 static creator completion and common control receiver forwarding",
+  "nativeCodeExecuted": false,
+  "verification": {
+    "factoryTests": 49,
+    "fullSuiteTests": 2220,
+    "fullSuitePass": 2220,
+    "includesConcurrentHelperTests": true
+  },
+  "evidence": {
+    "creator": "0x181889120: CreateActorEntity91e1, AddThorn9205, Parse9219, InitCollision922a, Reset923b, AddNormalThorn925b; NormalThorn.Initialize bare ret",
+    "parse": "0x1817206b0: direction byte clamped invalid>3 to0; slots1/2/7 absolute speed/wait/beltSpeed; vectors3..6; slot8!=0 uses slot9 byte without direction validation; packed10/11 downward first-nonzero pair; slot12!=0 flag0",
+    "reset": "0x181720e99..ec3 zero beltPhase/phase/distances/timer/velocities, alpha65536; Actor flag7 at0x181720ee5; pooled sorting54=-2100 at0x181720eef..ef8; beltPhase1 only if both endpoint vectors and speed meet epsilon4 at0x181720f1d..f95",
+    "control": "NormalThorn.OnRecvEvent0x181889613 forwards Thorn.OnRecvEvent0x181721a40; every event other than61 forwards Actor.OnRecvEvent at0x181721abe",
+    "prefab": "Audited Thorn prototype252681393109828677, View4476472674399718534, resource path first element selected0x1818891ca"
+  },
+  "contracts": [
+    "Factory update now dispatches93 to createThorn with explicit materialization and absent/default typed Add facts.",
+    "Two existing native Thorn colliders allocated before Reset; shared event pool is mandatory. Whole-world transaction rolls back late duplicate or pool exhaustion.",
+    "Scene registration follows NormalThorn addition. No OnStart/OnUpdate executed by creator.",
+    "Actual3-2 prefix with real View materialization reaches LinePathLift103 after13 actors; Actor/typed Add and holder allocation in this test remain explicit fixtures."
+  ],
+  "unresolved": [
+    "LinePathLift103 creator/Initialize/Parse and typed execution remain unconnected.",
+    "Native LinePathLift.Initialize allocates path10 and fakePath2 arrays (0x181878471/0x181878523) and writes handles at component+0x20/+0x1c; actual heap allocation must be explicit.",
+    "Ordinary Thorn movement/phase updates remain an explicit component callback boundary.",
+    "Physical name dictionary, raw pool storage and Actor codec synchronization still need lead integration.",
+    "Legacy R.create/R.step/carry unchanged; no full-stage boot, native game execution, push or deployment claim."
+  ]
+}
