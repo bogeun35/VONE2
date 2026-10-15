@@ -16,6 +16,7 @@ const GoalQuery=require('./source-player-goal-query.js');
 const Effects=require('./source-player-effects.js');
 const StateDispatch=require('./source-player-state-dispatch.js');
 const Terminal=require('./source-player-terminal-states.js');
+const Key=require('./source-key-lifecycle.js'),CollisionFactory=require('./source-native-collision-factory.js'),Rect=require('./source-collision-rect.js');
 const Pipeline=require('./source-collision-pipeline.js'),Callbacks=require('./source-collision-callbacks.js'),PlayerContact=require('./source-player-contact.js');
 const clone=x=>JSON.parse(JSON.stringify(x));
 function actor(world,id){const a=world.actors.find(a=>a.entityId===id);if(!a)throw Error('Native bridge Actor missing: '+id);return a;}
@@ -40,6 +41,7 @@ function jumpHost(world,host){return {
 };}
 function dispatch(world,id,event,host){
  const a=actor(world,id),type=event.eventType;
+ if(a.actorType===17)return syncResult(Key.receive(view(world),a,event,keyHost(world,host)));
  if(type===37&&(a.jumpReceiver==='actor-base'||a.jumpReceiver==='player-default'&&a.player?.state===1))return Jump.receive37(a,event).handled;
  if(a.actorType===27&&[30,65,66].includes(type)){
   if(!a.player)throw Error('Native Player component required');
@@ -128,6 +130,29 @@ function postPlayerInPlace(w,id,host){
 }
 function stepPlayer(input,id,dtRaw,host={}){return transaction(input,w=>updatePlayerInPlace(w,id,dtRaw,host));}
 function postPlayer(input,id,host={}){return transaction(input,w=>postPlayerInPlace(w,id,host));}
+function keyHost(w,host){return {
+ actorById:(_,id)=>w.actors.find(a=>a.entityId===id)||null,
+ collision0:(_,a)=>Broad.getCollisionById(w.storage,a.collisionHolders[0]?.collisionId),
+ getRect:(_,c)=>Rect.getRect(c.baseRectRaw,c.scaleRaw,c.pivotRaw),
+ createAttachmentCollision:(_,a,rect,push,sync)=>CollisionFactory.createRect(w,a,rect,push,sync),
+ findActor:(_,name)=>required(host,'findActorByNativeName',w,name),
+ isValidAttachTargetName:(_,name)=>required(host,'isValidNativeName',w,name),
+ mapHeight:()=>w.map?.tileHeight,
+ outMapDiagnostic:(_,a)=>required(host,'keyOutMapDiagnostic',w,a),
+ framePlaySe:(_,id)=>required(host,'keyFramePlaySe',w,id),
+ setCollisionActive:(_,a,value,source)=>Motion.setCollisionActive(view(w),a,value,source),
+ setVisible:(_,a,value,source)=>{
+  const e=Pool.getEventParam(w.eventPool,a,55);if(e===null)throw Error('Native Key visibility event pool exhausted');e.NotifiedActor=source;e.IsVisible=value;
+  return Pool.notifyEvent(a,e,(target,param)=>dispatch(w,target.entityId,{eventType:param.EventType,sourceId:param.NotifiedActor,value:param.IsVisible},host));
+ },
+ notifyEvent:(_,e)=>{
+  const source=actor(w,e.sourceId),target=w.actors.find(a=>a.entityId===e.targetId)||null,param=Pool.getEventParam(w.eventPool,source,e.eventType);
+  return Pool.notifyEvent(target,param,(a,p)=>syncResult(required(host,'invokeOnRecvEvent',w,a,p)));
+ },
+ commonActorReceive:(_,a,e)=>{
+  const out=Lifecycle.commonEvent(a,e);for(const call of out.calls){if(call.kind!=='setCollisionActive')throw Error('Native Key common control call unsupported');Motion.setCollisionActive(view(w),a,call.value,call.sourceId);}return 0;
+ }
+};}
 function terminalCallbacks(w,frame,host){
  const callbacks=Terminal.createCallbacks({
   invokeOnRecvEvent:(_,a,param)=>{
@@ -181,6 +206,9 @@ function runPhaseInPlace(w,phase,frame,host){
     syncActors();
    }
    else if(name==='PlayerComponent.OnPost')componentPost(w,a,frame,host);
+   else if(name==='KeyComponent.OnStart')Key.onStart(view(w),a,keyHost(w,host));
+   else if(name==='KeyComponent.OnUpdate')Key.onUpdate(view(w),a,frame.dtRaw,keyHost(w,host));
+   else if(name==='KeyComponent.OnPost')Key.onPost(view(w),a,keyHost(w,host));
    else {
     // Other component callbacks still require their complete native bodies.
     const operations={updateDefault:()=>updatePlayerInPlace(w,a.entityId,frame.dtRaw,host),postDefault:()=>postPlayerInPlace(w,a.entityId,host),receive:(id,event)=>dispatch(w,id,event,host)};

@@ -1,0 +1,93 @@
+{
+  "device": "KeyLifecycle",
+  "status": "partial — native diagnostic component helper complete and frozen; lead runtime/bridge/factory integration pending",
+  "completePhysicsFidelity": false,
+  "files": [
+    "source-migration/source-key-lifecycle.js",
+    "source-migration/source-key-lifecycle.test.cjs",
+    "source-migration/key-lifecycle-report.json",
+    "codex-briefs/KeyLifecycle.result.md",
+    "codex-briefs/작업중-KeyLifecycle.md"
+  ],
+  "verification": {
+    "dedicatedPassed": 36,
+    "dedicatedTotal": 36,
+    "fullSuitePassed": 1565,
+    "fullSuiteTotal": 1565,
+    "actualStageCounts": "st_w_03_02 and st_w_10_04, each2..8",
+    "originalGameExecuted": false,
+    "existingContactCoreEdited": false,
+    "bridgeFactoryRuntimePlayEdited": false,
+    "gitActions": false
+  },
+  "componentSchemaUnboxed": {
+    "attachTargetLayer": 0,
+    "phase": 1,
+    "flags": 2,
+    "inactive": 4,
+    "attachTarget": 8,
+    "entity": 16,
+    "excludeTarget": 24,
+    "excludeTimer": 32,
+    "ghostAttachOffsetY": 40,
+    "playerAttachOffsetY": 48,
+    "attachOffsetPos": 56,
+    "attachTargetName": 72,
+    "switchTargetName": 104
+  },
+  "birth": {
+    "prefab": "Static UnityPy IL2CPP typetree: actual Key prefabGameObject1855, EntityPrototype7166, EntityView7907,KeyView7981, Root1569/Body1208. No serialized EntityComponentKeyComponent. Other objects namedKey1627(UIText)/2190 are not simulation prefab. No KeyComponent instance.ctor indexed; genericzero construction.",
+    "stageCreator": "0x18186b470: Frame.CreateActorEntity->getKey0x180227f60->ParseParameter0x18186b780->InitCollision0x18186bdb0->InitPost0x18186be90->ActorManager.m_Key(+50)=entity@0x18186b59c. OnStart scheduling separately belongs to shared actor scene.",
+    "dynamicCreator": "0x18186b5c0 (BallKeyBox uses this): Frame.GetFactoryParam(type17)@0x18186b644 ->CreateActorEntity@b698 ->getKey@b6bc ->InitCollision@b6d0 ->InitPost@b6e1 ->ActorScene.AddActor(position)@b72c ->ActorManager.m_Key=entity@b74e ->returnentity. NO ParseParameter, no implicit50 ghostoffset. Initialphase0 and allcomponentfields zero. No standalone birth/entity allocator added.",
+    "collision": "0x18186be6f..be79: CreateRectH56/W32/X-16/Y-28,type0,layer10,pushBackTarget0,syncPos=true. Existing source-native-collision-factory.js createKey reused by lead; no duplicate factory implementation.",
+    "initPost": "0x18186bec9..bef9 checks inactive32bit !=0; iftrue setActive(false). Doesnot writephase/primary/attachment. setActive0x18186d170 executes Actor.SetVisible thenSetCollisionActive with ownerKeyEntity, thenflagsbit0=notactive. Helper preserves actual owner through host arguments."
+  },
+  "stageParse": {
+    "source": "0x18186b780..bd25",
+    "positions": "3-2(2327,192),10-4(3144,192), identical2..8. slots0/1/2=0;3empty;4=0(playerY),5=50(ghostY),6/7all56!,8empty,9=0,10unset. phase0,flags0,inactivefalse,targetnull,excludenull,timer0 for all.",
+    "native": "X+=(playerIndexCount-2)*slot0raw;Y+=(count*PLAYER_COUNT_SCALE)*slot1raw>>16. Scale=QFP.80 raw52428 via0x18186d487/48e andFromStringQFPstore0x181781124. PackedpopulationX/Y arrays7FP, choose currentcount descending until pairnonzero; allzero in owned actualfixtures. slot2 AsInt>0 inactive,slot3switchTargetName,slot4/5nonzerooverrideplayer/ghostY,slot8attachTargetName,slot9AsInt!=0flagsbit3,slot10AsInt!=0flagsbit5. Native AsInt uses arithmetic>>16 thenint32, including negativefraction flags.",
+    "packedRestriction": "0x18096f720 helper subtracts0x21 fromlowbyteeachchar@0x18096f80c..81d;56bangs=>56zero bytes=>7zeroFP. Limited compiler accepts only empty/all56bangs; otherstrings compileActor throws, preserving unsupported parsedarray evidence."
+  },
+  "start": {
+    "call": "OnStart0x18186bf10 tailcalls prepareAttachTarget0x18186bf80.",
+    "order": "nonempty QString/nativeUTF8validity->Scene.FindActor(name)@0x18186c10c -> targetActor.GetCollision(0)@c13e -> copyCollision.baseRect(+a8..c7), NOT transformedGetRect -> targetActor.CreateCollision(rect,push0,synctrue)@c1ba -> ifallocationnon-null layer11@c1cb -> attachOffset=keycurrentPos-targetcurrentPos@c1e4..c220 -> negateOffsetXifActorflagsbit10@c224..234 -> storeactualtargetentity/layer11/flagsbit1@c26a..27e.",
+    "holder": "Extra collision holder is appended on TARGET Actor. Key attachTarget EntityRef is independent from Actor.collisionHolders array and ActorManager primary key ref. Existing native-collision-factory.createRect integration verified; no extraKey collider or syntheticholder created.",
+    "failures": "Empty/invalidname,unresolvedactor,missingcollision0 orallocationnull simplyreturns; helperdoesnotinventtarget. Missing hostimplementation refuses."
+  },
+  "update": {
+    "call": "OnUpdate0x18186c31a updatePhase0x18186c340 THEN tailcall existingexcludeTargetProc0x18186c337/0x18186c960.",
+    "target": "Ifattachrefnon-nullresolveFrame.GetActor;nullresolvedskip target math but retainstale ref. Ifresolved collision0 andGetRect mandatory. Computation occurs BEFOREphase dispatch/events.",
+    "playerLayer1": "0x18186c628..6a5: targetPos+rect(x,y);iflookingLeft (Actorbit10) addwidth toX. OffsetY=playerY; ifActorbit21 addrectheight tobaseY thennegateoffsetY.",
+    "ghost55": "0x18186c5cb..623: whennotlayer1 andActorType55, targetPos+rect(x,y),leftaddswidth;offsetY=ghostY. Invertedbit21 negatesoffsetY butdoesNOTaddrectheight inGhostbranch.",
+    "otherNamed": "0x18186c48e..5c6: ordinarytargetposition; ifconfiguredattachname valid andequalsactualActor.name (ordinalexactUTF16), attachOffset used, elsezerooffset. GeneraloffsetmirrorsXbit10 andYbit21 @c6f5..731. No baseScale extrapolation.",
+    "phase": "0/default followsvalidtarget only;1 ifattachrefnull (notmerelyunresolved) maysetActive(false)whenflagsbit0set then usesActor.InitPos;1nonnull usesresolvedtargetifavailable.2 setActive(false), ifattachrefnonnull Frame.NotifyEvent40(senderactualKey)@c7aa/c7c4, thenincCURRENTsignedphasebyte @c7c9 aftersynchronousreceivers.3/default stillfollowvalidtarget.",
+    "movement": "0x18186c7d5..c90e:delta=desired-current; squared=mul(dx,dx)+mul(dy,dy). Ifsquare<6553snapdesired andphase1->0, elsecurrent+=mul(delta,6553). No dt factor; signed64 products/arithmeticshift preserved. This is native convergence, not immediate player-position copying.",
+    "clearAndCooldown": "EndupdatePhase flagsbit1 cleared@c92f..93f regardlesstarget. THEN existing contact.excludeTargetProc subtractdt,clamp0/clearexcluded at<=0. Quartersecond16384 lasts16ticks1092 (15ticksleaves4). Late contact core onSAME actor.key object resets/newtransfer flag andcooldown innativeorder; no duplicated contactalgorithm."
+  },
+  "returnAndEvents": {
+    "return": "0x18186d240 resetsattachref/layer/flagsbit1; phase0->1only. Keepspos/velocity/exclusion/manager/otherflags; phase2/3 remainunchanged.",
+    "47": "0x18186d051 compares Event.sender(+18) tocurrentattachref; equalcallsreturnToInitPos. Helper uses e.sourceId explicitnativeidentity, notplayerindex/proximity. Returns0. No teleport.",
+    "60": "0x18186d082: ifflagsbit2(goal)orbit3(alwaysactive) noop;unattachedsetActivefalse;attachedsetflagsbit0only (visibility/collision deferred).",
+    "1and61": "0x18186d0e2 ifnotgoalflagsetActive(true),1alsoglobalFrameEvents.PlaySe13(volume1,pitch1,zeroPosition)@d155;61nosound. Allreturn0;othersdelegatecommonActor."
+  },
+  "postAndExit": {
+    "post": "0x18186ca30 onlyflagsbit5 thencheckOutMap0x18186cad0. MapComponent.m_TileHeight(+1002) UInt16;outside iff Actor.PosY>height*48FP+QFP.01(raw655). Equalityinside. Nativeoutside logsdiagnosticthenreturnToInitPos; helperrequiresmapHeight/outMapDiagnostic hosts. No horizontalbounds/layerguess/instantpositionreset.",
+    "exit": "No KeyComponent.OnExit in quantum-method-index; onExit() onlydiagnostic{componentCallback:false,primaryReferenceWrite:false}. Neither return/attachment/postupdatenorKeycomponentexitclearscurrentmanagerprimary. Shared Actor/Scene teardown remains external; no claim that allsystemcleanup isknown. Creator overwritesmanagerprimary even whenoldKey exists."
+  },
+  "hostContract": [
+    "Pure component diagnostic helper; no runtime registration, scene update loop, fakephysics or replacementfactory. compileActor is limited realfixturedecoder; zero isdynamiccomponentconstructor. Caller supplies actual Actor/EntityRef generations, position/InitPos/flags and exact collisions/rects.",
+    "Use same actor.key object as read-only source-key-contact.js. onUpdate clearsflagsbit1 thenexclude; OnCollided runs existingcore atrealcallbacktime. Do not loopall actors/playerpositions independently oraddproximitypickup.",
+    "Native common pause/death/componentdispatch gating, Actor.Update2 movement, collisionrect refresh, scene start/post timing, target FindActor semantics, UTF8validity, owner-aware SetVisible/SetCollisionActive, Frame.NotifyEvent/eventpool and sound remain synchronoushostrequirements.",
+    "Whole-framehosttransaction mustrollback module/actor/collider/holder/manager/nestedreceiver/eventpool effects iferror; lowlevelhelper mutatesactual records innativeorder.",
+    "Prepare uses existingcollisionfactory through explicit createAttachmentCollision hook; leadmustwire actualworld/storage andregistry. No source-native-actor-bridge/factory/runtime/play/sharedfile edited."
+  ],
+  "unresolved": [
+    "Live stage/bridge/factory/scene integration pending; completePhysicsFidelity=false. Human/originalgame comparison notperformed.",
+    "Nonzero packedpopulation arrays anddelayed authoredcreation refused bycompileActor; helperdoesnot claim full Key stageparameter decoder.",
+    "Shared teardown behavior beyondabsenceofKey-specificOnExit isexternal; primaryref cleanup mustnotbeinvented fromthishelper."
+  ],
+  "correctionHistory": [
+    "First nativecollisionfactory integration test incorrectlylookedforstorage.data; corrected toassertactualreturnedbody.id againsttargetcollisionHolders. Implementation unchanged.",
+    "AsInt flagsdecode explicitlyarithmeticshift32; phase2 usesinc currentphasebyte aftersynchronousnestedreceiver, notunconditional3. Testscovernegativefractionflagsandnestedphasewrite."
+  ]
+}

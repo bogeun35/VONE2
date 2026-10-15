@@ -289,3 +289,9 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - initializeAbsentActor는 명시 actorComponentAbsent=true, 실제 EntityRef/holderhandle/QString32bytes를 요구한다. 완료된 ActorInitialization 정정본을 사용하고 native owner 이름을 canonical Lifecycle owner로 한 번 매핑한 뒤 원래 alias를 제거한다. 기존 Actor를 성공적으로 재사용하는 경로 없음.
 - NativeCreationOrder19 및 ActorInitialization16 동결 결과/정정 검토. factory6과 합계41/41, 전체1601/1601(동시 보조파일 포함). 실제3-2·10-4 온/오프2..8 전체28선택의 전체배열순서 대조, stable sort와 다른 동순위교환·threshold FP동률·잘못된생성입력 거부 검증.
 - 이 모듈은 아직 전체 factory가 아니다. 실제 allocator/싱글턴/프리팹 materialization listener, QString 생성, scene unique-name 등록, typed pools, PlayerBootstrap, stage prepare1..5 각 Update 일정 연결이 남는다. 기존 R.create/R.step/carry에 적용됐다고 주장하지 말 것. 다음은 완료 PlayerBootstrap과 실제 collision allocation/Actor AddActor 경계 연결이다.
+
+### Key typed lifecycle 연결 (2026-10-15)
+
+- 완료 동결 KeyLifecycle36을 검토해 bridge의 Key OnStart/Update/Post 및 Key receiver 경로에 연결. Capture event47은 이제 실제 key.attachTargetId/phase를 변경한다. OnStart의 부착 collision은 실제 target Actor holders/storage에 factory.createRect로 추가(layer11), Update는 native고정계수6553 및 같은 key객체의exclude timer를 사용한다.
+- Key visibility는 shared8-slot Pool55→Key.receive→Lifecycle.commonEvent→Motion owner gate, phase2 event40도같은Pool을사용. 원작 Key common control로확인된경로만연결하며 이름UTF8검증/Scene.FindActor/FramePlaySe/진단/event40대상수신기는명시host필수. Key late OnCollided의 bridge 자동등록은아직없음(기존contactcore/host사용).
+- bridge32+Key36=68/68;전체1622/1622(동시보조파일포함). actualtarget에layer11추가,16틱제외타이머,phase2숨김·collision비활성뒤event40→동기변경된phase증가,Post48FP경계/primary보존회귀. 완전factory/R.create/R.step/carry완료아님.
