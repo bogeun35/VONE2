@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "scope": "Thorn collision creation and registered contact/collided/pushed-back callback bodies; not a complete native Actor or playable runtime",
+  "nativeCodeExecuted": false,
+  "registration": {"runtime": false, "browserPackage": false, "newPlayableStages": 0},
+  "evidence": [
+    {"va": "0x181720c10", "fact": "Allocate two direction-table rectangles in order, initialize pushBackTarget0, sync1, layer7. Allocation failure skips only that holder."},
+    {"va": "0x1817227c5", "fact": "Four direction pairs reuse frozen ThornCeiling collision constants, all rectangular, not circles."},
+    {"va": "0x181722350", "fact": "KillPlayer sends43 to state1 Player via Player entity, or directly to ActorType173. Returns true for Player even absent Player component or non-default state."},
+    {"va": "0x1817221d0", "fact": "Only phases1..3 request disappearance. Flag0 sets flag1 and disables collision through component entity owner; Actor velocity becomes zero and phase4."},
+    {"va": "0x181722050", "fact": "Late callback skips flags0+1, executes damage, re-queries target after synchronous event, then type28 disappears and plays sound if beltPhase0."},
+    {"va": "0x181721b20", "fact": "Map contact ignored when beltPhase nonzero. Other contacts request disappearance; Player/173 damage eligibility suppresses sound. Otherwise sound requires normal.Y > QFP._0."},
+    {"va": "0x181721c90", "fact": "PushedBack always reads holder0, materializes IDs from exact cached normal -sign(correction), looks up each surviving collision, invokes contact handler in cache order."},
+    {"slot": "0x1831d0a40", "token": "0x2000bfab", "typeIndex": 24533, "fact": "TypeInfo resolves QFP; static offset0 is _0."},
+    {"va": "0x181889620/0x181889710/0x1818897d0", "fact": "NormalThorn wrappers forward pushed-back/collided/contacted to shared Thorn component."}
+  ],
+  "verification": {
+    "focused": "12/12 passed",
+    "wholeSuite": "1187/1187 passed before final lookup fallback refinement; see subsequent verification",
+    "realStageVariants": "3-2 and10-4, populations2..8: one downward Thorn and three leftward Thorns respectively; two rectangles per actor",
+    "integration": "Native lateCollided pass with real layer matrix and callback registry dispatches event43 once per overlapping Thorn rectangle. Synthetic player geometry; not R.step."
+  },
+  "unresolved": [
+    "NormalThorn parameter/belt/phase update and actor creation position/base-scale initialization are separate; no complete stage factory or R.step registration.",
+    "Event43 and audio remain explicit synchronous hosts; Player death transition is owned by ActorLifecycle.",
+    "Pipeline callback worlds currently expose the active chunk; complete scene storage lookup across inactive bodies must be preserved by the final runtime bridge. This module accepts full storage when supplied.",
+    "Actual horizontal carry in R.step remains unresolved; tests here do not claim it fixed."
+  ]
+}
