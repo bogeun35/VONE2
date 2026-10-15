@@ -266,3 +266,11 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - Default에선택적onEffect 추가: effect발생시점의Player/Actor/Collision snapshot을canonical world에동기반영→host→local snapshot갱신. 반환effects는감사기록이며끝에서재실행안함. landing38이force/wind초기화전값을관찰하는회귀검증.
 - bridge20+Default37+Effects25=82/82,전체1387/1387. sound큐는실제frame.number/verified사용,Actor.Update1 다음verified에서animationrequest소비확인.
 - 다음독립단위: 새완료ActorInitialization16의결과노트검토와factory연결. Player바깥OnUpdate/초기state전환 및장치별nativecallbacks 여전히미완료; R.create/R.step/실제carry고침주장금지. Ghost진행중파일보존.
+
+### Player 공통 Update 실제 연결 (2026-10-15)
+
+- source-native-actor-bridge의 typed PlayerComponent.OnUpdate는 이제 검토한 PlayerStateDispatch.onUpdate를 직접 실행한다. invincibleProc → 요청 상태 전환 → 실제 Default → 최신 canonical Player.pushBackRaw=0 순서를 보존한다. host.dispatchComponent로 Default만 대체하던 fixture 경로를 제거했다.
+- IsPressInput4는 NativeInput.getButtons와 Default.input의 press/wake/stage/menu gate를 사용한다. 특수 상태는 host.playerStateCallbacks의 정확한 native method 이름을 요구하며 미구현 본문을 생략하지 않는다. Player Post의 전체 dispatcher와 stage range/camera는 여전히 host 필요.
+- bridge24 + state dispatcher29 = 집중53/53. 실제3-2 지형12프레임 테스트도 공통 Update를 통과. 초기0/request1, timer 만료, snapshot 교체 뒤 tail clear, warp 조기반환, Goal Press4/menu차단, 실패 시 rollback 회귀 추가. 전체1490/1490(동시에 존재하는 보조 파일 포함) 통과.
+- Default.compile은 부분 snapshot이므로 일반 테스트 fixture의 settled request0/invincible0를 명시했다. 실제 Player 전체 초기화가 구현됐다는 뜻이 아니다. 기존 R.create/R.step 및 수평 carry 버그는 아직 해결되지 않았다.
+- ActorInitialization16 동결본 검토 유지. NativeCreationOrder 보고서가 생성됐지만 완료 통보/전체 검토 전 수정·staging하지 않았다. 다음 생성 연결은 실제 native pairwise priority/threshold 순서를 따라야 하며 authored 배열 순서로 고정하면 안 된다.

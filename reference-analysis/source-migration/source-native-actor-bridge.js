@@ -14,6 +14,7 @@ const Default=require('./source-player-default.js'),Input=require('./source-play
 const Pool=require('./source-native-event-pool.js');
 const GoalQuery=require('./source-player-goal-query.js');
 const Effects=require('./source-player-effects.js');
+const StateDispatch=require('./source-player-state-dispatch.js');
 const Pipeline=require('./source-collision-pipeline.js'),Callbacks=require('./source-collision-callbacks.js'),PlayerContact=require('./source-player-contact.js');
 const clone=x=>JSON.parse(JSON.stringify(x));
 function actor(world,id){const a=world.actors.find(a=>a.entityId===id);if(!a)throw Error('Native bridge Actor missing: '+id);return a;}
@@ -139,10 +140,17 @@ function runPhaseInPlace(w,phase,frame,host){
    else if(name==='Actor.Update2')Motion.update2(v,a,mh);
    else if(name==='Actor.Post1')Motion.post1(v,a,mh);
    else if(name==='Actor.Post2')Motion.post2(v,a,mh);
+   else if(name==='PlayerComponent.OnUpdate'){
+    StateDispatch.onUpdate(w,a,frame.dtRaw,{
+     ...host.playerStateCallbacks,
+     isPressInput:(world,current,id)=>Default.input(current.player,world.playerStage,Input.getButtons(world.inputs,current.player.playerIndex,world.operatingMenuMask),id,'press'),
+     OnUpdate_Default:(world,current)=>updatePlayerInPlace(world,current.entityId,frame.dtRaw,host)
+    });
+    syncActors();
+   }
    else {
-    // PlayerComponent.OnUpdate has state-transition/prelude logic before its
-    // Default body. The component host must execute that, never replace the
-    // entire native callback with state1 Default solely because state==1.
+    // Post and other component callbacks still require their complete native
+    // host bodies; Default Post alone is not the full Player Post dispatcher.
     const operations={updateDefault:()=>updatePlayerInPlace(w,a.entityId,frame.dtRaw,host),postDefault:()=>postPlayerInPlace(w,a.entityId,host),receive:(id,event)=>dispatch(w,id,event,host)};
     const result=required(host,'dispatchComponent',w,a,name,meta,operations);
     if(result&&typeof result.then==='function')throw Error('Native component callback must be synchronous');

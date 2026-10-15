@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "status": "done-common-dispatch-core-special-state-bodies-host-required",
+  "frozen": true,
+  "scope": "Player.OnUpdate0x1816c0010 invincibleProc/updatePlayerState/tail; ordinary Actor27, current/requested0..12; native defaultInitialize only, other actual callbacks explicit hosts.",
+  "verification": {
+    "dedicated": {
+      "command": "node --test source-migration/source-player-state-dispatch.test.cjs",
+      "pass": 29,
+      "fail": 0
+    },
+    "fullSuite": {
+      "command": "node --test source-migration/*.test.cjs",
+      "pass": 1416,
+      "fail": 0
+    },
+    "stages": {
+      "ids": [
+        "st_w_03_02",
+        "st_w_10_04"
+      ],
+      "counts": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "online": [
+        false,
+        true
+      ],
+      "combinations": 28,
+      "boundary": "actualbirthcurrent0/request1 ->DefaultInitialize->sameTick frozenDefault body; explicit native facts, notwholetypedScene"
+    },
+    "nativeExecution": false
+  },
+  "jumpTables": {
+    "finalize": {
+      "va": "0x1816c0d40",
+      "targets": [
+        "0x1816c08ee",
+        "0x1816c0909",
+        "0x1816c09f2",
+        "0x1816c09f2",
+        "0x1816c0931",
+        "0x1816c09f2",
+        "0x1816c09f2",
+        "0x1816c08ee",
+        "0x1816c0959",
+        "0x1816c097e",
+        "0x1816c09a3",
+        "0x1816c09c8"
+      ]
+    },
+    "initialize": {
+      "va": "0x1816c0d70",
+      "targets": [
+        "0x1816c0a10",
+        "0x1816c0a38",
+        "0x1816c0a60",
+        "0x1816c0bba",
+        "0x1816c0a88",
+        "0x1816c0ab0",
+        "0x1816c0ad8",
+        "0x1816c0b00",
+        "0x1816c0b28",
+        "0x1816c0b4d",
+        "0x1816c0b72",
+        "0x1816c0b97"
+      ]
+    },
+    "update": {
+      "va": "0x1816c0da0",
+      "targets": [
+        "0x1816c0bf3",
+        "0x1816c0c1b",
+        "0x1816c0c43",
+        "0x1816c0d25",
+        "0x1816c0d25",
+        "0x1816c0c6b",
+        "0x1816c0c93",
+        "0x1816c0d25",
+        "0x1816c0cb8",
+        "0x1816c0cdd",
+        "0x1816c0d25",
+        "0x1816c0d02"
+      ]
+    }
+  },
+  "evidence": [
+    {
+      "va": "0x1816c0065..00d5",
+      "fact": "flag28 damagePrelude ifset; always invincibleProc ->updatePlayerState ->clearPlayer.pushBack(+a8) after normalreturn."
+    },
+    {
+      "va": "0x1816c0731..0785",
+      "fact": "Invincibletimer !=0 (includesnegative) subtractFrame.dt signed64; <=0 SetInvincible(false). Timer0 leavesotherflashfieldsuntouched."
+    },
+    {
+      "va": "0x1816bfe90..feb0",
+      "fact": "SetInvincible(false) clearsinvincibleTimer(+68),isFlashing(+1c),flashTimer(+60); doesnotwritePlayer.flags."
+    },
+    {
+      "va": "0x1816c0828..08b5",
+      "fact": "goalenterbit16 consumed; ifrequest0/current1,6,7,9,10 Press4 mayrequest5Clear. Existingrequestwins. Clearflagregardlesseligible/result."
+    },
+    {
+      "va": "0x1816c08bf..09f2",
+      "fact": "Nonzero requestalwaysfinalizescurrent even requestequalscurrent; finalize selector actualfirsttable."
+    },
+    {
+      "va": "0x1816c09f2..0bc1",
+      "fact": "Initialize selectorreads live requestAFTERFinalize; currentstateassigned from live requestAFTERInitialize thenrequest0."
+    },
+    {
+      "va": "0x1816c0bc5..0bd5",
+      "fact": "initializeOnly skipsUpdate onlyaftertransition; withoutrequestUpdate stillruns eveninitializeOnlytrue."
+    },
+    {
+      "va": "0x1816c0bd5..0d25",
+      "fact": "Update currentstate single dispatch, pendingrequests frombodywaitnextcall; table-no-callback states0/4/5/8/11 areproven notunknownnoops."
+    },
+    {
+      "va": "0x1816bd5db/0x1816c2ff1/3046",
+      "fact": "Birth current0/request1 word0100; DefaultInitialize currentAnim1,Actorrequest1or10 ifPlayerbit14; callbackobservesoldcurrentstate untilcommit."
+    }
+  ],
+  "stateCallbacks": {
+    "1": "Default initbuilt-in0x1816c2f70; Updatehost0x1816c3060; noFinalize",
+    "2": "Faint finalize7440/init7250/update74d0",
+    "3": "Dead init2ad0/update2c20; noFinalize",
+    "4": "alltablesnoCallback, nameofenumunclaimed",
+    "5": "Clear finalize2750/init2690; noUpdate callback inthismethod",
+    "6": "Plane init81c0/update8400; noFinalize",
+    "7": "BattlePlane init1cf0/update1d80; noFinalize",
+    "8": "Target init9c40; noFinalize/update",
+    "9": "TopView finalize9ed0/init9d20/update9f60",
+    "10": "PoleLadder finalize9550/init9380/update95b0",
+    "11": "GoKart finalize78a0/init77f0; noUpdate callback",
+    "12": "Graph finalize7ad0/init7a70/update7b30"
+  },
+  "goalDeadBoundary": {
+    "ClearInitialize": "0x1816c2690: nativePlayer.subState(+f)=0,Actorvelocity(+f0)=0,Actor.SetVisible(false,source=Player.entityRef),Actor.ClearCollisionContactInfo. Required fullhostcallback; notpartialfieldpatch.",
+    "ClearFinalize": "0x1816c2750: Actor.SetVisible(true,samePlayerentityowner). Requiredfullhostcallback.",
+    "DeadInitialize": "0x1816c2ad0: Playerflag9set,subState(+f)=0,waitTimer(+80)=0,flags2bit1clear. Frame.GamePlayerInfoList firstmatching playerId==signedPlayerIndex+1 getsflag1. Requiredfullhostcallback; no fabricatedlist.",
+    "DeadUpdate": "0x1816c2c20: subState0 SetSortingOrder/velocity0/SetCollisionActive(false)/animation7/waitTimer65536 thenincrement;subState1 subtractdt until<=0 thenActorvy=-589824(-9F),increment;subState2 FrameGravity/addvy,mapheightthreshold/pause/request4/GameOver-stageflags thenincrement. Entirebody remains exacthost requirement.",
+    "PostClear": "Clear state5 has noUpdate callback here but has separate OnPost_Clear0x1816c2800 viaPlayer.OnPost; thishelperdoesnotreplacewholePostdispatcher."
+  },
+  "api": {
+    "onUpdate": "(world,canonicalActor,dtRaw,host={}) -> trace; mutatesPlayer/Actor inprovidedworldclone. actor.actorType27/player.state/requestedPlayerState0..12/flagsuint32/invincibleTimerRaw required. Throwsflag28 beforetimerchanges.",
+    "updatePlayerState": "(world,actor,host={},initializeOnly=false)->trace; nativecallbackmetadata/name/VA supplied to eachhost.",
+    "host": "host.OnUpdate_Default(world,actor,meta), allactualnativeOnInitialize/OnFinalize/OnUpdate names fromstateTable exceptbuilt-inDefaultInitialize. Mustrunentirenativebody synchronously; missingcallbackthrows. No silentnoop fallback.",
+    "goalInput": "host.isPressInput(world,actor,4)->nativeboolean; must use existing native Button/enable/wakeup rules. NevergeneralBooleaninput conversion.",
+    "initializeDefault": "(player,actor) writescurrentAnimationId/requestAnimationId, noEffecthistory replay/no playingIDwrite.",
+    "invincibleProc": "(player,dtRaw)->expiredBool; onlytimer/flash fields.",
+    "tail": "AlwaysclearcanonicalcurrentPlayer.pushBackRaw after normalstatebodyreturn, evenDefaultwarpearlyreturn. Exception doesnotcleartail.",
+    "canonicalReplacement": "After eachstatecallback rereadactor.player; existingbridge storeSnapshot mayreplaceobjectwhilelogicalnativecomponent isthesame. Tailclears latestcanonicalinstance.",
+    "unsupported": "state13..255 refused althoughnativeoutoftable dispatchwouldnotcallbody. Scope0..12 explicit; flag28unverifieddamagebody refused."
+  },
+  "unresolved": [
+    "EntireDead/Clear/Faint/Plane/BattlePlane/Target/TopView/PoleLadder/GoKart/Graph body semantics require named exactnativehost callbacks; dispatcherdoesnotclaimcomplete12statePlayer.",
+    "BattlePlaneDamageProc0x1816c00f0 unverified body explicitlyrefused onPlayerflag28.",
+    "Player wholePost dispatch/OnPost_Clear andtypedScene query/updater remainoutsidehelper.",
+    "Actual input4source/goalcontactbit16 producer/ActorSetVisible/CollisionClear/GamePlayerInfo/StageGameOver arehostfacts, notinferredfromoverlaps orfixturecounts.",
+    "Hostexceptionsmaypartiallymutateworld; discardtransactionclone. Noatomicrollbackprovidedbyhelper.",
+    "No original-game execution/differentialverification orwholeR.create/R.step claim."
+  ],
+  "supportedTypes": [],
+  "completePhysicsFidelity": false,
+  "sourceSha256": {
+    "source-migration/source-player-state-dispatch.js": "860dae0ab31aa2813bcb4d7730305fd9eb91eacb10d939f55068325add529ca0",
+    "source-migration/source-player-state-dispatch.test.cjs": "40093b724461bb9876e6ec41740f5a4bee1b6af8d92c55ec0b67b1cbc10b9def"
+  }
+}
