@@ -274,3 +274,11 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - bridge24 + state dispatcher29 = 집중53/53. 실제3-2 지형12프레임 테스트도 공통 Update를 통과. 초기0/request1, timer 만료, snapshot 교체 뒤 tail clear, warp 조기반환, Goal Press4/menu차단, 실패 시 rollback 회귀 추가. 전체1490/1490(동시에 존재하는 보조 파일 포함) 통과.
 - Default.compile은 부분 snapshot이므로 일반 테스트 fixture의 settled request0/invincible0를 명시했다. 실제 Player 전체 초기화가 구현됐다는 뜻이 아니다. 기존 R.create/R.step 및 수평 carry 버그는 아직 해결되지 않았다.
 - ActorInitialization16 동결본 검토 유지. NativeCreationOrder 보고서가 생성됐지만 완료 통보/전체 검토 전 수정·staging하지 않았다. 다음 생성 연결은 실제 native pairwise priority/threshold 순서를 따라야 하며 authored 배열 순서로 고정하면 안 된다.
+
+### Clear/Dead 및 공통 Player Post 연결 (2026-10-15)
+
+- NativeCreationOrder 결과 검토: 0x1801f9ad0은 Frame.AddComponent<ActorComponent>이며 existing Actor를 반환하는 get-or-add가 아니다. 실제 factory는 부재를 확인한 뒤 zero materialized Actor를 사용해야 한다. ActorInitialization 설명 정정은 현재 보조 소유이므로 수정하지 않았다. converter는 type-priority pairwise swap 후 threshold pairwise swap; authored/stable sort 사용 금지. prepare1..5는 서로 다른 Stage.Update에서 진행하며 초기 singleton/allocator/listener 사실을 생략하지 말 것.
+- PlayerTerminalStates 동결본을 bridge 상태 dispatcher에 연결. Clear Initialize/Finalize와 Dead Initialize/Update는 실제 Pool → bridge control53/54/55 → Lifecycle owner/equipment → Motion/Warp를 동기 실행한다. terminal view는 inactive 포함 전체 collision storage와 현재 frame.dtRaw를 전달한다. roster/index/map.tileHeight/checkpointInfo는 실제 입력 필수이며 population에서 명부를 만들어 넣지 않는다.
+- Player.OnPost0x1816c0dd0 및 postPlayerState0x1816c0f30 정적 확인 후 bridge componentPost 구현. flag3이면 velocity+=pushBack(64bit), state Post, CheckOutMap, pooled43 CauseDead1 순서. 1816c1058 int32 분기표 직접 읽음: [1816c0f8d,1816c1045,1816c1045,1816c1045,1816c0fb5,1816c0fea,1816c101f]. 상태1~4는 본문 없음,5 Clear,6 Plane,7 BattlePlane,나머지 return. Plane/BattlePlane 본문은 정확한 host 필요. outmap43 receiver도 실제 host 필요.
+- bridge28+Terminal30 집중58/58. Dead wait61/launch와동시2인 checkpoint한번집계,Clear wait61/복귀/visibility해제,Post pushBack→callback→outmap43 순서 회귀 추가. 전체1529/1529통과(동시에존재하는보조파일포함).
+- Clear phase2의 IsCollidedByPushBackTarget는 아직 명시 host이며 신규 PushBackTargetQuery 완료 후 연결 대상. public postPlayer는 기존 state1-only helper로 유지하고 typed phase는 전체 componentPost를 사용한다. stage range/camera, actualfactory/R.create/R.step 및 실제 carry는 여전히 미완료. 신규 PlayerBootstrap/KeyLifecycle/PushBackTargetQuery WIP는 수정·stage하지 않았다.

@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "status": "done-terminal-bodies-native-leaf-hosts-required",
+  "frozen": true,
+  "scope": "Clear5 Initialize/Finalize/OnPost_Clear; Dead3 Initialize/Update; Stage.CountGameOver core; delegates exact control receiver registry andclear pushback query. No original executable run.",
+  "verification": {
+    "dedicated": {
+      "command": "node --test source-migration/source-player-terminal-states.test.cjs",
+      "pass": 30,
+      "fail": 0
+    },
+    "fullSuite": {
+      "command": "node --test source-migration/*.test.cjs",
+      "pass": 1490,
+      "fail": 0
+    },
+    "selectedSourceData": {
+      "ids": [
+        "st_w_03_02",
+        "st_w_10_04"
+      ],
+      "counts": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "online": [
+        false,
+        true
+      ],
+      "combinations": 28,
+      "assertion": "selectedactualMap.tileHeight10 ->threshold62914560raw. No actualroster synthesizedfrompopulation."
+    },
+    "rosterTests": "Explicit synthetic native-schema unit fixtures only; notclaimedcapturedoffline/onlineactualroster. Missingrosterrefused.",
+    "nativeExecution": false
+  },
+  "evidence": [
+    {
+      "va": "0x1816c26da..2745",
+      "fact": "ClearInitialize subState0,Actorvelocity0,SetVisible(false,Player.entityRef),ClearCollisionContactInfo inthatorder."
+    },
+    {
+      "va": "0x1816c27af..27dd",
+      "fact": "ClearFinalize SetVisible(true,samePlayer.entityRef owner). Ownergate/nestedreceivers via actualregistry."
+    },
+    {
+      "va": "0x1816c2a9e..2aab;2a5a..2a8b",
+      "fact": "ClearPost sub0wait65536/sub1;sub1subtractdt,<=0increment2 butnoinputuntilnextcall."
+    },
+    {
+      "va": "0x1816c289c..292c",
+      "fact": "sub2 Press4 ->GetCollision0 nullable ->IsCollidedByPushBackTarget mask3. Blocked/missing/noinput returnswithoutflag/requestchange."
+    },
+    {
+      "va": "0x1816c294e..2986",
+      "fact": "Onlyfirstcatchclear: Playerflag11 elseflags2bit2 elseflags2bit3."
+    },
+    {
+      "va": "0x1816c2990..2a46",
+      "fact": "Playerflag12false ->Playerflag17?request9:1;flag12true ->flags2bit4?request7:6."
+    },
+    {
+      "va": "0x1816c2b11..2b4b;2bdb..2c0d",
+      "fact": "DeadInitialize Playerflag9/subState0/wait0/flags2bit1clear. First actualGamePlayerInfo.PlayerRefRaw ==signedPlayerIndex+1 setsflagsbit1;nomatch leavesrosterunchanged."
+    },
+    {
+      "va": "0x1816c2e73..2f4b",
+      "fact": "Deadsub0 sorting=(signedm_Index+592)*10 viaevent54 first; thenvelocity0,SetCollisionActive(false,Player.entityRef),currentAnim7/request7 ifchanged,wait65536,sub++."
+    },
+    {
+      "va": "0x1816c2de7..2e40",
+      "fact": "Deadsub1dt;<=0ActorvelocityY=-589824;sub2. NoFrameGravityuntilnextUpdate."
+    },
+    {
+      "va": "0x1816c2cbd..2d23",
+      "fact": "Deadsub2Frame.GetGravity addedtovy;ActorcurrentY compared unsignedMap.tileHeight(+1002)*3<<21 =height*6291456 (96FP). metadataTileHeight1012-16."
+    },
+    {
+      "va": "0x1816c2d6c..2ddf/2f4b",
+      "fact": "Atthreshold SetPause(true,Player.entityRef) beforeActorflag24clear andrequest4. IfStagebit8false CountGameOver thenStagebit9clear/bit10set. FinallysubState++."
+    },
+    {
+      "va": "0x18170dda6..dde6",
+      "fact": "CountGameOver Stagebit15guard; incrementFrame._globals+f0dword andsetStagebit15. Metadata_globals_.CheckPointInfo offset100-16 andembeddedGameOverCount10-16 ->actualcheckpointInfo.GameOverCount."
+    },
+    {
+      "va": "0x1816916ae/16ed;0x18169149b/4b3",
+      "fact": "Contactclear removesfirstreciprocallink percontact thenownContactInfo count0; mapcacheunchanged. ALLActorholdersincludingnonsync;existingWarphelperreused."
+    },
+    {
+      "va": "0x18169f494..4c5/0x18169efcd..f008/0x18169f1bd..1f8",
+      "fact": "Sorting54/Visible55/Pause53 useActor.GetEventParam andsynchronousNotifyEvent; nulllease throws. No directownerflagshortcut."
+    }
+  ],
+  "api": {
+    "createCallbacks": "(host)->{OnInitialize_Clear,OnFinalize_Clear,OnPost_Clear,OnInitialize_Dead,OnUpdate_Dead}; exactdispatcher callbacksignature(world,actor).",
+    "functions": [
+      "initializeClear(world,actor,host)",
+      "finalizeClear(world,actor,host)",
+      "postClear(world,actor,host)",
+      "initializeDead(world,actor)",
+      "updateDead(world,actor,host)",
+      "countGameOver(world)"
+    ],
+    "world": "Mutablecurrentphase {actors,collisions,eventPool,deltaTimeRaw,gravityRaw,stage:{flags},map:{tileHeight:uint16},checkpointInfo:{gameOverCount:int32},gamePlayerInfos:[{playerRefRaw:int32,flags:uint16}]}. Fields onlyrequiredwhenrespectivebranchreadsthem.",
+    "actor": "CanonicalActor27 withflags,positionRaw,velocityRaw,accelerationRaw,requestAnimationId,collisionHolders/inactiveCollisionEntity; Player={entityId:nativeEntityRef,flags,flags2:uint16,state,requestedPlayerState,index:signedm_Index,playerIndex:signedm_PlayerIndex,subState:signedbyte,waitTimerRaw,currentAnimationId}. indexandplayerIndexdistinct;noinputderivedroster.",
+    "host": "invokeOnRecvEvent(world,target,canonicalQEventParam)->syncint32 actualregistry; effects/nestedcontrolhandledinsideprovidedtransaction. No noopfallback.",
+    "clearQueries": "isPressInput(world,actor,4)->nativebool;getCollision(world,actor,0)->currentnativecollision/null;isCollidedByPushBackTarget(world,collision,3)->exactnativeScene/Mapquerybool. No cachedsupportId orAABB approximation.",
+    "reuse": "EventPool.getEventParam/notifyEvent actual8slotleases;ActorMotion.setCollisionActive ownergate/allholders;ActorWarpJump.clearCollisionContactInfo truecontactcache reciprocalcleanup. Noexistingfilemodified.",
+    "identity": "Controlreceivercanreplaceactor.player; DeadUpdate rereadsnewcanonicalPlayer aftereventcallbackbeforefinalstatewrites. Actoridentitymustremaincanonicalcurrentinstance.",
+    "numeric": "signed64rawtime/velocity adds; signedbytePlayerindex/phase; int32GameOvercounterwrap. No dtmultiplierongravity orlaunch.",
+    "dispatchScope": "Clear5 hasNO OnUpdate callback andDead3 hasNO Finalize callback byStateDispatchtables; notfakefunctions. Clear.OnPost bodymustbecalledfromactualPlayerOnPostwrapper.",
+    "transaction": "Mutatesprovidedworldclone; failuremayleavepartialwrites/leasedbusy events. Discardtransactionclone;noexternalI/Oinsidecallbacks."
+  },
+  "unresolved": [
+    "Actualroster/map/stage/checkpoint/gravity snapshots aremandatoryhostdata. Unit rosterfixtures arenot actualcapturedpopulationdata.",
+    "ExactIsCollidedByPushBackTarget0x1817f73b0 includespushBackTarget flags,Map query,activeScene overlap; unresolvedleafquerymustthrowuntilhostprovidesnativeimplementation. No allowexitfallback.",
+    "Controlreceiverregistry mustpreservePlayer/equipment/owner/nested event semantics. ExistingLifecycleusedonlyinexplicitunitfixtureandhostcanreuseprovenbridge;notwiredbythismodule.",
+    "CommonPlayer.OnPost pushBack/outmap wrapper,Stageclear-completion/globaltypedScene scheduling,andwholeR.create/R.step remainoutsidehelper.",
+    "Otherrequestedreturnstates6/7/9 needtheiractualcallbacks onnextdispatcher;notreplacedwithDefault.",
+    "Native rosterPlayerRef mapping expectsrawsignednativefield,notJSarrayindexoractorcreationindex.",
+    "No original-game differentialverification; fullstagefailure/clearplayabilitynotclaimed."
+  ],
+  "supportedTypes": [],
+  "completePhysicsFidelity": false,
+  "sourceSha256": {
+    "source-migration/source-player-terminal-states.js": "9e8d70c2bae3ca34611cb20a4efa74d2610e929948b49ee2173fcb2fe36c5308",
+    "source-migration/source-player-terminal-states.test.cjs": "845942ee9f3f290a53c62211488a83e232f3dc51a25d1e370b5038734dc4b275"
+  }
+}

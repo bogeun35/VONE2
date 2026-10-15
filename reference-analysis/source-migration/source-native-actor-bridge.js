@@ -15,6 +15,7 @@ const Pool=require('./source-native-event-pool.js');
 const GoalQuery=require('./source-player-goal-query.js');
 const Effects=require('./source-player-effects.js');
 const StateDispatch=require('./source-player-state-dispatch.js');
+const Terminal=require('./source-player-terminal-states.js');
 const Pipeline=require('./source-collision-pipeline.js'),Callbacks=require('./source-collision-callbacks.js'),PlayerContact=require('./source-player-contact.js');
 const clone=x=>JSON.parse(JSON.stringify(x));
 function actor(world,id){const a=world.actors.find(a=>a.entityId===id);if(!a)throw Error('Native bridge Actor missing: '+id);return a;}
@@ -127,6 +128,36 @@ function postPlayerInPlace(w,id,host){
 }
 function stepPlayer(input,id,dtRaw,host={}){return transaction(input,w=>updatePlayerInPlace(w,id,dtRaw,host));}
 function postPlayer(input,id,host={}){return transaction(input,w=>postPlayerInPlace(w,id,host));}
+function terminalCallbacks(w,frame,host){
+ const callbacks=Terminal.createCallbacks({
+  invokeOnRecvEvent:(_,a,param)=>{
+   const field={53:'IsPause',54:'SortingOrder',55:'IsVisible'}[param.EventType];
+   if(!field)throw Error('Native terminal control parameter unsupported: '+param.EventType);
+   return dispatch(w,a.entityId,{eventType:param.EventType,sourceId:param.NotifiedActor,value:param[field]},host);
+  },
+  isPressInput:(_,a,id)=>Default.input(a.player,w.playerStage,Input.getButtons(w.inputs,a.player.playerIndex,w.operatingMenuMask),id,'press'),
+  getCollision:(_,a,index)=>Broad.getCollisionById(w.storage,a.collisionHolders[index]?.collisionId),
+  isCollidedByPushBackTarget:(_,c,mask)=>required(host,'isCollidedByPushBackTarget',view(w),c,mask)
+ });
+ // Keep full/inactive storage and canonical Actor identity visible during the
+ // synchronous state body. DeltaTime belongs to this frame, never a fallback.
+ return Object.fromEntries(Object.entries(callbacks).map(([name,call])=>[name,(_,a)=>call({...view(w),deltaTimeRaw:frame.dtRaw},a)]));
+}
+function componentPost(w,a,frame,host){
+ // OnPost1816c0dd0: flag3 pushBack addition@e2f..e80, state Post@ea8,
+ // outmap@ecb then pooled43 CauseDead1@efd..f0d. Table1816c1058 has
+ // state1 no-op,2/3/4 return,5 Clear,6 Plane,7 BattlePlane; others return.
+ const p=a.player;
+ if(!p||!Number.isInteger(p.state)||p.state<0||p.state>255||!Number.isInteger(p.flags))throw Error('Native Player Post state/flags required');
+ const add=(x,y)=>{if(!Number.isSafeInteger(x)||!Number.isSafeInteger(y))throw Error('Native Player Post exact vector required');const n=Number(BigInt.asIntN(64,BigInt(x)+BigInt(y)));if(!Number.isSafeInteger(n))throw Error('Native Player Post vector overflow');return n;};
+ if(p.flags&8)a.velocityRaw={xRaw:add(a.velocityRaw.xRaw,p.pushBackRaw?.xRaw),yRaw:add(a.velocityRaw.yRaw,p.pushBackRaw?.yRaw)};
+ if(p.state===5)terminalCallbacks(w,frame,host).OnPost_Clear(w,a);
+ else if(p.state===6||p.state===7){const name=p.state===6?'OnPost_Plane':'OnPost_BattlePlane',result=required(host.playerStateCallbacks,name,w,a,{name,va:p.state===6?'0x1816c8af0':'0x1816c2400'});if(result&&typeof result.then==='function')throw Error('Native Player Post must be synchronous');}
+ if(Motion.checkOutMap(w,a)){
+  const e=Pool.getEventParam(w.eventPool,a,43);if(e===null)throw Error('Native Player Post43 event pool exhausted');e.CauseDead=1;
+  Pool.notifyEvent(a,e,(target,param)=>syncResult(required(host,'invokeOnRecvEvent',w,target,param)));
+ }
+}
 function runPhaseInPlace(w,phase,frame,host){
  if(typeof frame?.verified!=='boolean'||!Number.isSafeInteger(frame.dtRaw))throw Error('Native frame Verified/DeltaTime required');
  const state={sceneFlags:w.actorSceneFlags,presentOrdinals:w.presentOrdinals,actors:Object.fromEntries(w.actors.map(a=>[a.entityId,a]))};
@@ -143,14 +174,15 @@ function runPhaseInPlace(w,phase,frame,host){
    else if(name==='PlayerComponent.OnUpdate'){
     StateDispatch.onUpdate(w,a,frame.dtRaw,{
      ...host.playerStateCallbacks,
+     ...terminalCallbacks(w,frame,host),
      isPressInput:(world,current,id)=>Default.input(current.player,world.playerStage,Input.getButtons(world.inputs,current.player.playerIndex,world.operatingMenuMask),id,'press'),
      OnUpdate_Default:(world,current)=>updatePlayerInPlace(world,current.entityId,frame.dtRaw,host)
     });
     syncActors();
    }
+   else if(name==='PlayerComponent.OnPost')componentPost(w,a,frame,host);
    else {
-    // Post and other component callbacks still require their complete native
-    // host bodies; Default Post alone is not the full Player Post dispatcher.
+    // Other component callbacks still require their complete native bodies.
     const operations={updateDefault:()=>updatePlayerInPlace(w,a.entityId,frame.dtRaw,host),postDefault:()=>postPlayerInPlace(w,a.entityId,host),receive:(id,event)=>dispatch(w,id,event,host)};
     const result=required(host,'dispatchComponent',w,a,name,meta,operations);
     if(result&&typeof result.then==='function')throw Error('Native component callback must be synchronous');
