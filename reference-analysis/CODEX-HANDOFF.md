@@ -219,3 +219,11 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 
 - SetCollisionActive owner gate/모든holder flag0,CheckOutMap anchor/warp임계4raw,Stage.prepare3 failbounds,warp없을때bit25해제 구현. carry fixture는Update1/2/Post1/2 전부사용하며Actor9+carry14=23통과. activewarp/jump/defaultPlayer와전체typedphase연결은여전히명시호스트필수.
 - 다음 생성경로 조사핵심: ThunderBase.InitCollision0x18172aa50은두collider를항상생성함. index0 beam(layer7,priority127,push0),index1 probe(push2through/3otherwise,기본layer0). 기존BlinkThunder 주석의조건부생성해석은충돌ID/저장순서에사용하면안됨. getLengthToMap0x18172acc0이probe활성비트를임시변경하는중; lead-thunder-probe-lifecycle.local.txt/lead-native-sensor-create.local.txt 정적근거. 아직미구현이며기존모듈변경안함.
+
+## 리드 재개·번개 센서 (2026-10-15)
+
+- 중단 HEAD9f11c354 및 미추적factory/Thunder 초안을 확인후 검증. source-native-collision-factory.js 3건, source-thunder-native.js 10건, broadphase16건. 전체1109/1109(보조WIP포함).
+- native GetCollisionById 추가: inactive body도 primary→secondary에서조회. active enumeration을사용하던중간Thunder초안을수정,비활성probe재측정/JSON복원회귀검증.
+- 실제3-2(1개)/10-4(7개) Thunder는2..8전체direction3/Through1/ShootBlock0. beam/probe둘다생성,Map.Move직접측정은Through여도지형검사. probe는emit위치유지,캐시계산후inactive로전환. live길이/방향baseRect와26콜백가드복원.
+- 전체Thunder이동/fade/receiver,nonThrough shorten,실제Stage factory/R.step연결은미완료. livev11/localdeployv12차이그대로. 원격push승인상태변경없음/재시도없음.
+- 동결ActorLifecycle34건/PlayerCapture12건은통합검토대상. 보조의PlayerDefault/StageAutoScroll/ActorWarpJump신규WIP는수정·스테이징하지않음.

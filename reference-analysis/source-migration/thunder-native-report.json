@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "scope": "Native Actor rectangular collision allocation and ThunderBase sensor/probe lifecycle; not a complete Thunder or stage runtime",
+  "nativeCodeExecuted": false,
+  "registration": {
+    "runtime": false,
+    "browserPackage": false,
+    "newPlayableStages": 0
+  },
+  "evidence": [
+    {
+      "va": "0x18169f4d0 / 0x18169f790",
+      "fact": "Allocate zero200-byte collision with unit scales, copy base rectangle, set entity/holder byte index and registered OnCollided bit, append sync/id holder. No initial position is synthesized."
+    },
+    {
+      "va": "0x1817f6940",
+      "fact": "ID lookup searches primary then secondary dictionary independently of collision inactive flag. Chunk active enumeration cannot replace lookup."
+    },
+    {
+      "va": "0x18172aa50",
+      "fact": "Always create beam then probe. Beam priority127/layer7/push0; probe defaultlayer0/push2 ifThrough else3, both sync true."
+    },
+    {
+      "va": "0x18172b6ec..ba40",
+      "fact": "Beam width4/length2400, four directions up/down/left/right; probe32x32 centered -16,-16."
+    },
+    {
+      "va": "0x18172acc0",
+      "fact": "Cache flag2; temporarily enable probe, reset current/pre to emitter, clear moved bit6. Native Map.Move displacement -> native FPSqrt plus half current probe WIDTH. Returned map position is not assigned. Unless ShootBlock, disable probe after measurement. No contact queue insertion."
+    },
+    {
+      "va": "0x18172ac00 / 0x18172b380",
+      "fact": "Visible actors reset live length to map length each update and resize directional base rectangle, preserving scale histories."
+    },
+    {
+      "va": "0x18172d030 / 0x18172b000",
+      "fact": "Own probe index1 returns; live Player27 and ActorType173 receive event26. Non-player shortening skipped with Through, otherwise explicit native host required."
+    }
+  ],
+  "verification": {
+    "broadphaseTests": 16,
+    "factoryTests": 3,
+    "thunderTests": 10,
+    "releaseTests": 1109,
+    "includesAuxiliaryWorkInProgress": true,
+    "actualStages": "3-2 one Thunder and10-4 seven Thunders for all2..8 populations; all direction3/Through1/ShootBlock0",
+    "mapFixture": {
+      "wallX": 288,
+      "emitterX": 100,
+      "probeHalfWidth": 16,
+      "separatorRaw": 655,
+      "displacementRaw": 11271537,
+      "squaredRaw": 1938591710,
+      "nativeSqrtRaw": 11271428,
+      "lengthRaw": 12320004
+    }
+  },
+  "corrections": [
+    "Previous BlinkThunder module comment implies conditional probe allocation. Native always allocates it; later probe inactive flag controls participation. Existing browser module unchanged.",
+    "Interrupted Thunder draft used active enumeration for ID lookup. Added native dictionary lookup and regression test for inactive-probe remeasurement/JSON restoration."
+  ],
+  "unresolved": [
+    "Actual Actor factory position/base-scale order and full3-2/10-4 R.create/R.step still unconnected",
+    "Thunder movement/fade/receiver and cache invalidation remain separate component lifecycle work",
+    "Non-Through calcLengthCollided and synchronous event26 Player/Actor receiver remain explicit host callbacks",
+    "CommonJS modules not packaged for browser yet; no playable stage or live deployment claim"
+  ]
+}

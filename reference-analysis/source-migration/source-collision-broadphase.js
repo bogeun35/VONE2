@@ -29,11 +29,14 @@ function remove(d,key){const b=bucket(d,key);let previous=0;for(let h=d.buckets[
 function createStorage(capacity=97){return{primary:dictionary(capacity),secondary:dictionary(capacity),issueId:0};}
 function createCollision(s,payload){const d=s.primary.usedCount-s.primary.freeCount<90?s.primary:s.secondary.usedCount-s.secondary.freeCount<90?s.secondary:null;if(!d)return null;s.issueId=(s.issueId+1)|0;const c={...payload,id:s.issueId};add(d,c.id,c);return c;}
 function removeCollision(s,id){return remove(s.primary,id)||remove(s.secondary,id);}
+// Scene.GetCollisionById0x1817f6940 searches both dictionaries, including
+// inactive collision bodies; active() is only the chunk enumeration filter.
+function getCollisionById(s,id){if(!Number.isInteger(id)||id< -2147483648||id>2147483647)throw Error('Native signed collision ID required');for(const d of [s.primary,s.secondary])for(let h=d.buckets[bucket(d,id)];h;h=d.entries[h-1].next){const e=d.entries[h-1];if(e.key===id)return e.collision;}return null;}
 function active(s){const out=[];for(const d of[s.primary,s.secondary])for(let i=0;i<d.usedCount;i++){const e=d.entries[i];if(e.state===2&&!(e.collision.flags&1))out.push(e.collision);}return out;}
 function buildChunk(s,config){return nativeSort(active(s).map(c=>({...descriptor(config,c),priority:c.priority})),priorityCompare);}
 function updateDescriptors(chunk,config,lookup){for(let i=0;i<chunk.length;i++){const d=descriptor(config,lookup(chunk[i].id));Object.assign(chunk[i],d);}return chunk;}
 function scanCandidates(chunk,visit){for(let i=0;i<chunk.length;i++)for(let j=i+1;j<chunk.length;j++)if(relation(chunk[i],chunk[j]))visit(chunk[i],chunk[j],i,j);}
 function compile(actors,count,options={}){if(actors.length)throw Error('Broadphase requires resolved host collisions, not actor compilation');dictionary(options.dictionaryCapacity);return{config:initialize(options.mapWidth,options.mapHeight),capacity:options.dictionaryCapacity};}
 function create(c){return{config:c.config,storage:createStorage(c.capacity),chunk:[]};}
-return{nativeSort,priorityCompare,xCompare,initialize,morton,descriptor,relation,dictionary,add,remove,createStorage,createCollision,removeCollision,active,buildChunk,updateDescriptors,scanCandidates,compile,create,solids:()=>[],beforeStep:()=>{},afterStep:()=>{},displays:()=>[],supportedTypes:[]};
+return{nativeSort,priorityCompare,xCompare,initialize,morton,descriptor,relation,dictionary,add,remove,createStorage,createCollision,removeCollision,getCollisionById,active,buildChunk,updateDescriptors,scanCandidates,compile,create,solids:()=>[],beforeStep:()=>{},afterStep:()=>{},displays:()=>[],supportedTypes:[]};
 });
