@@ -325,3 +325,13 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - Stage.onUpdate 실제 시작주소18170b3e0 전체 disasm 저장 lead-stage-active-frame.local.txt. Stage flag14이면Actor/Collision/Post/Notice를건너뛰지만verified시간누적tail은진행. flags&3이면Actor.Update→Collision→Actor.Post는계속실행하고factory/input/range/autoscroll/camera/sort/status만생략. 'inactive=프레임전체return'으로구현하면틀림.
 - active(flags&3==0) 순서: Factory.Update(stage.scrollX)@b5f5→Stage.updateInput@b603→Actor.Update@b4cc→Collision.Update@b4fc→calcPlayerRange@b523→autoScroll@b531→Actor.Post@b561→Camera normal/auto@b58d/b61b→sortActors@b63e→checkGameStatus@b64c→StageNotice조건부poll/update@b66d/b67b. eligible gate ebx는진입시점capture이며중간flag변경으로재계산하지않음.
 - 마지막verifiedtail@b68b..b6fb는Stage+58 elapsed FP+=Frame.DeltaTime 후참조static+18상한으로clamp. 해당타입/상한 및sortActors/checkGameStatus/StageNotice 실제host는아직연결안됨. Bridge.stepScene를Stage.onUpdate전체대체로바로등록하지말것. PlayerIndexList/NativeMaterialization 결과동결도아직미확인.
+
+### prepare3 index·Player factory 및 Stage 준비 adapter (2026-10-15)
+
+- PlayerIndexList28 동결본검토및Factory.initializePlayerIndices/createNextPlayer연결. 실제GamePlayerInfo순서/indexlist기존prefix유지,shuffle0무RNG,shuffle1정확postRNG반영. 현재scenePlayerRefs.length로Index선택하며limit/missinginfo는materialization호출전skip. 성공후PlayerInfoListappend가outerScene등록보다먼저진행.
+- 새정적경계: createPlayerSub1816a3970에서Player.CreateEntity3a82→listappend3b5d→checkpoint GameOverCount>0분기3b7f→rosterflags4dummySetActive(false,factoryowner)3dbf..3e0a→outerAddActor3687. 이두tail은아직미구현이므로createNextPlayer는checkpointcount0/non-dummy명부만허용. 이름중복등후속실패는allocator/collision/playerlist모두worldtransactionrollback.
+- source-native-stage-driver.js는전체worldclone에서StagePreparation.update실행. IndexList와Factory,actualCamera/playerRange조립. phase3생성→다음Updatephase4input→다음Updatephase5range/Camera center/SetActive(false)순서검증. phase6는아직실제onActiveStageUpdate호스트필수이며Bridge.stepScene를전체Stage대체로쓰지않음. prefab/싱글턴/activation호스트는명시fixture거나실제구현필수.
+- 범위계산은 ScenePlayerRefs와등록name사전value만사용하고EntityRefgeneration검사. 아직등록안된materializedActor를range에넣지않음. unverifiedprepare에서는adapter별칭추가조차안함. adopt시현재Stage객체identity를유지해prepare3도중worldclone교체로phase/settings쓰기가유실되지않게함.
+- factory22+Index28=50/50,driver5+Preparation63+AutoScroll20=88/88,전체1825/1825통과(동시WIP포함). 실제3-2 2..8명부매핑/색상/인원제한/무RNG,중복명rollback,기존listprefix/10-4후속RNG검증. 명부/materialization은명시fixture이며전체boot검증아님.
+- Scene.SetActive1816a74f0도정적확인:Scene.flagsbit0먼저쓰고이름사전의물리occupied슬롯순회→Frame.GetActor→Actor.SetActive(owner). 현재logical actorNames.entries로물리순서를추정해구현하지않음. source-native-scene-names는lookup용logical projection임. lead-scene-set-active.local.txt근거.
+- StageInputUpdate/StageGameStatus/NativeMaterialization후속보고서는신규보조소유,미수정/미stage. 실제R.create/R.step/carry미완료;remote배포변경없음.

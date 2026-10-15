@@ -12,6 +12,7 @@
 const Init=require('./source-actor-initialization.js'),PlayerInit=require('./source-player-collision-init.js');
 const Bootstrap=require('./source-player-bootstrap.js'),Broad=require('./source-collision-broadphase.js'),Callbacks=require('./source-collision-callbacks.js'),QString=require('./source-native-qstring.js'),Allocator=require('./source-native-entity-allocator.js');
 const Names=require('./source-native-scene-names.js');
+const PlayerIndices=require('./source-player-index-list.js');
 const ZERO=[27,59,26,107,21,24,19,132,133,144,145],ORDERED=[28,70,72,108,121,128,161,17,14,5,102,120,137,152,155,175,178];
 function priority(type){if(!Number.isInteger(type)||type<0||type>65535)throw Error('Native factory supported ushort ActorType required');if(type===0)return 100000;if(ZERO.includes(type))return 0;const i=ORDERED.indexOf(type);return i<0?type+10000:i+1;}
 function orderCreationParams(authored){
@@ -50,6 +51,7 @@ function finishPlayerCreation(input,authored,actorAtPlayerInitialize,binding,opt
  const initialized=Bootstrap.bootstrap(authored,actorAtPlayerInitialize,{...binding,hasOnCollided:Callbacks.has(27,'OnCollided')},{...options,allocateCollision:()=>{
   allocated=Broad.createCollision(w.storage,{});if(!allocated)throw Error('Native Player initCollision capacity exhausted');return allocated.id;
  }});
+ if(options?.beforeSceneRegistration){const result=options.beforeSceneRegistration(w,initialized);if(result&&typeof result.then==='function')throw Error('Native factory registration boundary must be synchronous');}
  Names.addUnique(w,initialized.actor);
  const registered=Bootstrap.register(initialized,{...options,uniqueNameVerified:true}),a=canonicalPlayer(registered);
  Object.assign(allocated,registered.collisions[0],{actorExists:true});w.actors.push(a);
@@ -57,4 +59,30 @@ function finishPlayerCreation(input,authored,actorAtPlayerInitialize,binding,opt
  // typed pools still belong to their actual creation/materialization phases.
  return {world:w,actorId:a.entityId,snapshot:registered};
 }
-module.exports={priority,orderCreationParams,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,completePhysicsFidelity:false};
+function initializePlayerIndices(input,selectedStage){
+ const w=JSON.parse(JSON.stringify(input));
+ const result=PlayerIndices.initialize(w.gamePlayerInfos,{sceneFlags:w.actorSceneFlags,limitPlayer:selectedStage.limitPlayer,shufflePlayer:selectedStage.shufflePlayer,existingIndexList:w.playerIndices?.indexList,rngSnapshot:w.rngSnapshot});
+ w.actorSceneFlags=result.sceneFlags;w.playerIndices={indexList:result.indexList};if(result.rngAccessed)w.rngSnapshot=result.rngSnapshot;
+ return {world:w,result};
+}
+function createNextPlayer(input,authored,host){
+ const w=JSON.parse(JSON.stringify(input));if(!Array.isArray(w.scenePlayerRefs))throw Error('Native factory actual Scene PlayerInfoList required');
+ const selected=PlayerIndices.selectPlayer({sceneFlags:w.actorSceneFlags,indexList:w.playerIndices?.indexList},w.scenePlayerRefs.length,w.gamePlayerInfos);
+ if(selected.status!=='selected')return {world:w,result:selected};
+ // createPlayerSub1816a3b7f gates checkpoint relocation on GameOverCount>0;
+ // 1816a3dbf gates Actor.SetActive(false,factoryOwner) on GamePlayerInfo bit2.
+ // Do not silently omit those creator-tail effects in this fresh-player path.
+ if(w.checkpointInfo?.gameOverCount!==0)throw Error('Native factory restored checkpoint creator tail requires implementation');
+ if(w.gamePlayerInfos[selected.gamePlayerInfoOrdinal].flags&4)throw Error('Native factory dummy inactive creator tail requires implementation');
+ if(typeof host?.materializePlayerBeforeInitialize!=='function')throw Error('Native factory actual materialization/Actor/DamageManage initialization host required');
+ const supplied=host.materializePlayerBeforeInitialize(w,authored,selected);
+ if(supplied&&typeof supplied.then==='function')throw Error('Native factory materialization must be synchronous');
+ if(!supplied?.actor||!supplied?.binding)throw Error('Native factory actual initialized Actor and AddPlayer facts required');
+ const out=finishPlayerCreation(w,authored,supplied.actor,{...supplied.binding,index:selected.nativeIndexArgument,playerIndex:selected.nativePlayerIndexArgument,colorIndex:selected.nativeColorIndexArgument},{stageScaleRaw:w.stage?.baseScaleRaw,iceSpeedUpRaw:w.stage?.iceSpeedUpRaw,beforeSceneRegistration:(world,snapshot)=>{
+  // Successful Player.CreateEntity -> PlayerInfoList.Add@1816a3b5d, BEFORE
+  // outer ActorScene.AddActor@1816a3687. Failed creators never increment count.
+  world.scenePlayerRefs.push(snapshot.actor.entityId);
+ }});
+ return {...out,result:{...selected,actorId:out.actorId}};
+}
+module.exports={priority,orderCreationParams,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,initializePlayerIndices,createNextPlayer,completePhysicsFidelity:false};

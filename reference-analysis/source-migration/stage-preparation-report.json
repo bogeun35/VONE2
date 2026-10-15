@@ -1,0 +1,107 @@
+{
+  "task": "StagePreparation",
+  "status": "verified orchestration with mandatory native hosts; not complete stage boot",
+  "nativeCodeExecuted": false,
+  "readOnlyStatic": true,
+  "verification": {
+    "ownTests": 63,
+    "ownPass": 63,
+    "ownFail": 0,
+    "fullSuiteTests": 1754,
+    "fullSuitePass": 1754,
+    "fullSuiteFail": 0,
+    "commands": ["node --test source-migration/source-stage-preparation.test.cjs", "node --test source-migration/*.test.cjs"],
+    "instructionOracle": "Reads installed DLL bytes only: call targets, live phase byte increments, six jump-table RVA entries, Frame.IsVerified getter and phase6 flag2 gate. Original DLL never loaded/executed.",
+    "actualStageFixtures": "3-2/10-4,2..8 players,offline/online (28 cases): selected original variants, exact converted settings, mandatory host order, threshold0 factory delegate before input singleton, initScroll and SetActive sequencing. Host supplies explicit fixture singleton EntityRefs and range snapshots; these are not asserted to be original whole-game allocator outcomes.",
+    "stageBootComplete": false
+  },
+  "entryContract": {
+    "state": "Existing initialized Stage snapshot: phase byte, flags uint32, inputType byte, entityRef, scrollPositionRaw. create(compiled,{nativeStage}) copies this explicit snapshot; it does not allocate/Initialize the Stage or reset global event state.",
+    "compile": "compile(actors,count,{stage,nativeParamRaws}) stores selected authored stage + converted raws. Nonintegral FP converter inputs require explicit exact nativeParamRaws, never approximate float multiplication. Integers convert exactly. getStageInitParam host returns this representation of the live converted native asset.",
+    "frame": "frame.isVerified boolean corresponds to DeterministicFrame.get_IsVerified0x18050ac60 reading object+18. It is checked only inside prepare1..5; phase6 does not invent an additional verified gate.",
+    "phaseInitializerOutsideScope": "Stage.Initialize0x18170a020 writes phase1@a05f, resets global event parameter InUse flags@a11f and sets Stage flag5@a144. Required upstream action, not replaced by an implicit create-time reset."
+  },
+  "scheduler": {
+    "va": "0x18170a570",
+    "phase1": "prepare1@0x18170a5e3",
+    "phase2": "prepare2@0x18170a61c",
+    "phase3": "prepare3@0x18170a655",
+    "phase4": "prepare4@0x18170a68e",
+    "phase5": "prepare5@0x18170a6c7",
+    "success": "inc LIVE byte[Stage+2] then immediate ret@a5f0/a629/a662/a69b/a6d0. Callbacks changing phase affect the increment; byte wraps. No loop through remaining prepares in one Update.",
+    "failure": "All five return false for unverified frame and perform no phase-specific effects; Update leaves phase unchanged. Missing host/exception propagates without phase increment or rollback of earlier effects. Retry re-enters the whole current phase.",
+    "phase6": "Stage flag2 (mask4) suppresses onUpdate@a6fa..a717. Otherwise mandatory host.onUpdate executes; bits0/1/14 are later onUpdate-owned gates, not duplicated here.",
+    "otherPhases": "phase0 and7..255 return without prepare/onUpdate. Jump table0x18170a728 contains six exact dispatch RVAs."
+  },
+  "phases": [
+    {
+      "phase": 1,
+      "va": "0x18170a740",
+      "order": ["ActorManager GetOrAddSingletonPointer@a7e8", "GetSingletonEntityRef0x1819756e0@a82e -> Manager native+40", "ActorScene GetOrAddSingletonPointer@a8be", "GetSingletonEntityRef@a904 -> Scene native+38", "ActorScene.Initialize0x1816a5a10@a92e", "ActorFactory GetOrAddSingletonPointer@a994", "GetSingletonEntityRef@a9da -> Factory native+8", "ActorFactory.Initialize0x1816a2b50@a9ec"],
+      "existingVsCreated": "Mandatory getOrAddSingleton(frame,kind,{suppliedEntityRef:0,site}) returns {branch:'existing'|'created',component}; mandatory getSingletonEntityRef(frame,kind) retrieves actual ref. Existing component does not consume a new allocator ref, but Stage still writes entityRef and calls Scene/Factory.Initialize. Missing component requires native Frame.Create and default component addition. Host cannot substitute array index IDs.",
+      "branchEvidence": "Manager helper0x180786e80 calls GetSingletonRef0x18193c420@ee0; nonzero skips allocation@eeb->704b. Missing + supplied entity0 calls Frame.Create0x181979090@f08, zeros default168 bytes@f3c, checks version/component then adds. Entity getter0x1819756e0 is retrieval, not allocation. Full component masks/listeners and invalid entity paths remain host-owned."
+    },
+    {
+      "phase": 2,
+      "va": "0x18170aa20",
+      "order": ["Map.CreateEntity0x18187d2b0@aa80", "Camera.CreateEntity0x1817df310@aa8a", "CollisionScene.CreateEntity0x1817f57a0@aaa9", "StageNotice.CreateEntity0x18170e340@aab3"],
+      "host": "createMapEntity/createCameraEntity/createCollisionSceneEntity/createStageNoticeEntity mandatory and synchronous. Each delegate owns prototype lookup, actual Frame.Create(prototype), component materialization/Initialize and listeners. No guessed default roots and no implicit skipped calls. Partial side effects survive exceptions."
+    },
+    {
+      "phase": 3,
+      "va": "0x18170aad0",
+      "order": ["Frame.GetStageInitParam@ab4a", "copy scale/fail bounds/gravity/ice fields@ab5f..ac93", "Stage flags|8@acb1..acb8", "Frame.GetActorScene@acbb", "Scene limit-player bit2@aced/acf3", "InitPlayerIndexList(shufflePlayer!=0)@ad0f", "GetPlayerIndexCount@ad1d", "scroll parameters using count-2@ad22..ad8a", "darkness Stage bit4@ad9a..ada8", "Frame.GetCamera@adae and RequestStop/Normal/Auto@adf1/ade1/add1", "Frame.GetActorFactory@adfb", "ActorFactory.Update(threshold FP0)@ae0c"],
+      "numeric": "QGameDefine.cctor0x181780766/77b/791 proves chip3145728, default failUp-157286400/down157286400. failFall=height*chip+(failDownRaw||157286400)@abfc..ac06; failLeft=-31457280@ac0a; limited failRight=int64(int32((width+10)*48))<<16@ac2c..ac3a, else0. gravity=(signed64wrap(scaleRaw*42598))>>16@ac47..ac53. ice defaults only raw0: resistivity64881/friction2621/speedUp98304@ac42/ac69/ac80. This default resistivity differs from authored0.99 converted raw64880.",
+      "reuse": "Uses existing SourceStageAutoScroll.compile for delay/speed/end count-offset arithmetic. Stores scrollParam and adds cameraStartType. Stage.scrollPositionRaw remains untouched. Uses existing SourceCameraNative.requestStop/requestNormal/requestAuto on actual host-supplied Camera.",
+      "host": "getStageInitParam/getActorScene/initPlayerIndexList/getPlayerIndexCount/getCamera/getActorFactory/updateActorFactory mandatory. Native factory Update cannot be replaced by a successful no-op. Initial actor creation occurs here before prepare4 input singleton; full converter order/RNG/prototypes/registry stay with their native hosts."
+    },
+    {
+      "phase": 4,
+      "va": "0x18170ae40",
+      "inputType": {"0": "NormalInput GetOrAdd0x180026af0@b19f -> entity native+0@b1ea", "1": "MajorityInput GetOrAdd0x180787790@b0c9 -> entity native+60@b12c", "2": "MultiInput GetOrAdd0x180786d10@afd3 -> entity native+8@b021 -> Multi.Initialize0x1818865b0@b02b", "3": "HalfInput GetOrAdd0x180787600@af11 -> entity native+20@af5c", "4..255": "native default returns true@b1ed without singleton creation;4 is MainMenu enum, no guessed component"},
+      "host": "Same explicit existing/created singleton and actual EntityRef contracts; initializeMultiInput required for input2 including existing singleton. inputType comes from existing native Stage, not decoded stageInitParam or authored Player names."
+    },
+    {
+      "phase": 5,
+      "va": "0x18170b220",
+      "order": ["initScroll@b298", "CheckDarkness@b2a6", "Frame.GetGame@b2b0", "SetActive(false,Game.entityRef)@b2e3"],
+      "result": "Success phase5->6 returns. No stage onUpdate in the same call. It requests inactive state; it does not declare game boot finished or activate gameplay."
+    }
+  ],
+  "initScroll": {
+    "va": "0x18170b310",
+    "start0": "GetPlayerActorCount@b356; <=0 returns. >0 calcPlayerRange@b37d -> GetCamera@b387 -> ToPlayerCenter@b395.",
+    "start1": "GetCamera@b3b3 -> tailcall ToMapCenter@b3cb.",
+    "other": "Returns without callbacks@b3a7. Does not assign Stage.scrollPosition.",
+    "host": "getPlayerActorCount and calcPlayerRange required when applicable. calcPlayerRange(stage,frame) returns actual calculated range snapshot, assigned to stage.playerRange; callback owns full native actor storage traversal and target selection. Existing Camera.toPlayerCenter/toMapCenter consume this actual range and preserve startY."
+  },
+  "darkness": {
+    "va": "0x18170d930",
+    "gate": "Stage flags mask16@d987; clear returns with no hosts.",
+    "map": "GetMap@d9a9; Stage entityRef+8; Map.invisibleEntity native+1010. Stage ref0 clears old owner then sets Map.flags bit0. Nonzero Stage ref claims only empty owner0 then sets bit0; existing nonzero owner leaves both Map owner/flags unchanged@d9cf..d9f5.",
+    "camera": "GetCamera@da01; Camera flags bit5 set@da19.",
+    "event": "Stage.GetEventParam(type18)@da40; Stage getter0x181709e10 writes EventType and NotifiedActor=Stage.entityRef. QEventParam.IsDarkness=true@da4d then Frame.NotifyEvent@da57. Null event reaches native null-dereference path@da48/da67; implementation throws and preserves earlier writes. No automatic release after a host exception.",
+    "host": "getMap/getCamera/getStageEventParam/notifyEvent required for active darkness. Event host must use actual persistent native pool and synchronous global dispatcher. Dedicated tests use existing SourceNativeEventPool and prove exhaustion/normal release separately from live runtime integration."
+  },
+  "setActive": {
+    "va": "0x18170ce00",
+    "condition": "Stage flag0 means inactive. If requested active already equals !flag0, return with no propagation@ce80..cea0. Changed state updates Stage flag0@ceab..ceb5 first.",
+    "order": "GetActorScene@cec6 -> ActorScene.SetActive(active,owner)@cef9 -> GetMap@cf03 -> Map.SetActive(active,owner)@cf36. Map.SetActive0x18187d840 delegates SetVisible0x18187d7b0; owner gating/event semantics stay in host.",
+    "exceptions": "Scene exception leaves Stage flag changed and prevents Map call; later same-state request returns early, no fabricated rollback/retry propagation."
+  },
+  "actualSettings": {
+    "bothStages": {"selectedCreateIndex": 0, "scrollType": 1, "cameraStartType": 0, "baseScaleRaw": 65536, "gravityRaw": 42598, "failUpYRaw": -157286400, "failFallYRaw": 188743680, "failLeftXRaw": -31457280, "iceResistivityRaw": 64880, "iceFrictionRaw": 2621, "iceSpeedUpRaw": 98304, "limitPlayer": 1, "darkness": 0, "autoScrollSpeedRaw": 196608},
+    "3-2": {"mapWidth": 62, "mapHeight": 10, "failRightXRaw": 226492416, "shufflePlayer": 0, "authoredParamsBeforePopulationFiltering": 23},
+    "10-4": {"mapWidth": 68, "mapHeight": 10, "failRightXRaw": 245366784, "shufflePlayer": 1, "authoredParamsBeforePopulationFiltering": 26},
+    "interpretation": "All authored createThreshold0; explicit factory host is invoked with0 before input singleton creation. Test supplies range and singleton outcomes and records factory parameter preparation, not actual complete creator/prototype execution. 10-4 shuffle is delegated; no guessed identities or RNG permutation."
+  },
+  "unresolved": [
+    "Global boot/Stage allocation/Stage.Initialize, previous Game/global entity activity, allocator versions and real prototype component/listener streams require upstream native hosts. No whole-stage boot completion claim.",
+    "Singleton helper invalid entity/version/HasComponent branches and actual AddComponent allocation remain mandatory getOrAddSingleton host responsibility; branch/result facts cannot be inferred from authored actors.",
+    "Frame.Create(prototype), Map/Camera/CollisionScene/StageNotice initializers, ActorScene/Factory initialization, Factory.Update creators/registry, shuffle RNG and MultiInput.Initialize must execute through their explicit hosts.",
+    "Camera unlimit/unreturn branches and unsupported counts/scroll types retain existing Camera/StageAutoScroll refusal limits; this module does not replace them with approximations.",
+    "ActorScene.SetActive, Map.SetActive/SetVisible and global event dispatch/pool ownership remain host-owned. Missing callbacks throw when reached; no silently successful no-op adapters supplied.",
+    "prepare5 leaves Stage inactive; subsequent Game-driven activation and complete onUpdate world phases require native host integration owned by lead."
+  ],
+  "filesPolicy": "Created only source-stage-preparation.js/.test.cjs, stage-preparation-report.json, StagePreparation.result.md and claim marker. Existing factory/Camera/AutoScroll/runtime/bridge/play/HANDOFF/Git unchanged."
+}
