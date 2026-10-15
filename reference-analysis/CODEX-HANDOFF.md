@@ -318,3 +318,10 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - finishPlayerCreation이 실제이름중복검사/등록과presentOrdinals갱신후위치/scale등록을수행. caller uniqueNameVerified플래그대신실제complete사전필수로강화. 중복OnExit/Destroy는아직명시거부하며worldrollback. actorNames/presentOrdinals초기상태를임의생성하지않음.
 - Key OnStart이기본QString/SceneNames경로로factory등록Player를찾아실제targetholder에layer11추가하는통합검증추가. 외부findActor호스트는기존호환용으로유지. 이름validity는nativeQString사용.
 - 집중 sceneNames5+factory12=17/17. 전체1760/1760이후마지막Key통합테스트1건추가해집중재검증. 전체수치에는보조WIP포함;신규보조파일미stage. 실제Stage준비/PlayerIndexList/materialization/typedpool/전체R.step/carry는남아있음.
+
+### 다음 Stage driver 정적 확인 (2026-10-15)
+
+- StagePreparation63 결과 및 전체 source를 읽음. 신규 동결본이며 아직 본커밋에stage하지않음. prepare5는SetActive(false)후phase6이며즉시게임활성아님. prepare한Update당1개,verified만진행. source-stage-autoscroll 의존도검토했으나미stage.
+- Stage.onUpdate 실제 시작주소18170b3e0 전체 disasm 저장 lead-stage-active-frame.local.txt. Stage flag14이면Actor/Collision/Post/Notice를건너뛰지만verified시간누적tail은진행. flags&3이면Actor.Update→Collision→Actor.Post는계속실행하고factory/input/range/autoscroll/camera/sort/status만생략. 'inactive=프레임전체return'으로구현하면틀림.
+- active(flags&3==0) 순서: Factory.Update(stage.scrollX)@b5f5→Stage.updateInput@b603→Actor.Update@b4cc→Collision.Update@b4fc→calcPlayerRange@b523→autoScroll@b531→Actor.Post@b561→Camera normal/auto@b58d/b61b→sortActors@b63e→checkGameStatus@b64c→StageNotice조건부poll/update@b66d/b67b. eligible gate ebx는진입시점capture이며중간flag변경으로재계산하지않음.
+- 마지막verifiedtail@b68b..b6fb는Stage+58 elapsed FP+=Frame.DeltaTime 후참조static+18상한으로clamp. 해당타입/상한 및sortActors/checkGameStatus/StageNotice 실제host는아직연결안됨. Bridge.stepScene를Stage.onUpdate전체대체로바로등록하지말것. PlayerIndexList/NativeMaterialization 결과동결도아직미확인.
