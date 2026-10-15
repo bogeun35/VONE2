@@ -75,14 +75,14 @@ test('typed dead threshold pauses and counts checkpoint once across two players 
  const host={...phaseHost,queryFactory:()=>['p','q']};const out=Bridge.runPhase(w,'Update',{verified:false,dtRaw:1092},host).world;
  assert.equal(out.checkpointInfo.gameOverCount,7);assert.equal(out.stage.flags,32768|1024);for(const a of out.actors){assert.equal(a.pauseOwner,a.entityId);assert.equal(a.flags&16,16);assert.equal(a.player.requestedPlayerState,4);assert.equal(a.player.subState,3);assert.deepEqual(a.player.pushBackRaw,{xRaw:0,yRaw:0});}assert.equal(Pool.freeCount(out.eventPool),8);assert.equal(w.checkpointInfo.gameOverCount,6);
 });
-test('typed Clear Post waits61 ticks, requires native leaf query, then finalize restores hidden collisions',()=>{
+test('typed Clear Post waits61 ticks, queries actual terrain, then finalize restores hidden collisions',()=>{
  const Pool=require('./source-native-event-pool.js'),Input=require('./source-player-native-input.js');let w=phaseWorld();w.stage={failFallYRaw:1000000000,failUpYRaw:-1000000000,failLeftXRaw:-1000000000,failRightXRaw:1000000000};w.eventPool=Pool.create();w.actors[0].equipmentIds=[null,null];w.actors[0].player.requestedPlayerState=5;
  w=Bridge.runPhase(w,'Update',{verified:false,dtRaw:1092},phaseHost).world;w=Bridge.runPhase(w,'Post',{verified:false,dtRaw:1092},phaseHost).world;assert.equal(w.actors[0].player.waitTimerRaw,65536);
  for(let i=0;i<60;i++)w=Bridge.runPhase(w,'Post',{verified:false,dtRaw:1092},phaseHost).world;
  assert.equal(w.actors[0].player.waitTimerRaw,16);w=Bridge.runPhase(w,'Post',{verified:false,dtRaw:1092},phaseHost).world;assert.equal(w.actors[0].player.subState,2);
  const pressed=Array(12).fill(false);pressed[4]=true;w=Bridge.applyInputs(w,99,[Input.packetFromPressed(pressed)]).world;
- const before=JSON.stringify(w);assert.throws(()=>Bridge.runPhase(w,'Post',{verified:false,dtRaw:1092},phaseHost),/isCollidedByPushBackTarget/);assert.equal(JSON.stringify(w),before);
- w=Bridge.runPhase(w,'Post',{verified:false,dtRaw:1092},{...phaseHost,isCollidedByPushBackTarget:(world,c,mask)=>{assert.equal(mask,3);assert.equal(c.flags&1,1);return false;}}).world;assert.equal(w.actors[0].player.requestedPlayerState,1);assert.equal(w.actors[0].player.state,5);
+ const before=JSON.stringify(w);assert.throws(()=>Bridge.runPhase(w,'Post',{verified:false,dtRaw:1092},phaseHost),/map|tile/i);assert.equal(JSON.stringify(w),before);const attrs=new Map(w.nativeMapData.tileAttributes.map(a=>[a.id,a.flags]));w.map={tileFlags:w.nativeMapData.grid.map(row=>row.map(id=>attrs.get(id)))};w.layerChecks=Pipeline.createLayerChecks();
+ w=Bridge.runPhase(w,'Post',{verified:false,dtRaw:1092},phaseHost).world;assert.equal(w.actors[0].player.requestedPlayerState,1);assert.equal(w.actors[0].player.state,5);
  w=Bridge.runPhase(w,'Update',{verified:false,dtRaw:1092},phaseHost).world;assert.equal(w.actors[0].player.state,1);assert.equal(w.actors[0].visibleOwner,null);assert.equal(Bridge.allCollisions(w)[0].flags&1,0);assert.equal(Pool.freeCount(w.eventPool),8);
 });
 test('common Post adds pushback before state callback and sends outmap43 after it on the shared pool',()=>{
@@ -109,4 +109,14 @@ test('Key phase2 disables owned visibility and collision before pooled event40 t
 test('Key Post uses map48FP threshold and does not clear primary manager or teleport',()=>{
  const w=keyWorld(),k=w.actors[2];w.map={tileHeight:10};w.actorManager={keyEntityId:'key'};k.positionRaw={xRaw:7,yRaw:10*48*65536+656};k.key.flags=32;k.key.attachTargetId='p';
  const out=Bridge.runPhase(w,'Post',{verified:false,dtRaw:1092},{...keyPhaseHost,keyOutMapDiagnostic:(world,a)=>world.events.push(a.entityId)}).world;assert.equal(out.actors[2].key.phase,1);assert.equal(out.actors[2].key.attachTargetId,null);assert.deepEqual(out.actors[2].positionRaw,k.positionRaw);assert.equal(out.actorManager.keyEntityId,'key');assert.deepEqual(out.events,['key']);
+});
+function clearQueryWorld(){const Input=require('./source-player-native-input.js'),w=phaseWorld(),p=w.actors[0];p.player.state=5;p.player.subState=2;p.player.requestedPlayerState=0;p.flags|=8;Bridge.allCollisions(w)[0].flags|=1;w.stage={failFallYRaw:1000000000,failUpYRaw:-1000000000,failLeftXRaw:-1000000000,failRightXRaw:1000000000};const attrs=new Map(w.nativeMapData.tileAttributes.map(a=>[a.id,a.flags]));w.map={tileFlags:w.nativeMapData.grid.map(row=>row.map(id=>attrs.get(id)))};w.layerChecks=Pipeline.createLayerChecks();const pressed=Array(12).fill(false);pressed[4]=true;return Bridge.applyInputs(w,99,[Input.packetFromPressed(pressed)]).world;}
+test('Clear native query blocks inactive owner at actual floor boundary and opens one raw above',()=>{
+ const w=clearQueryWorld(),a=w.actors[0],c=Bridge.allCollisions(w)[0];c.yRaw+=98304;a.positionRaw.yRaw=c.yRaw;const blocked=Bridge.runPhase(w,'Post',{verified:false,dtRaw:1092},phaseHost).world;assert.equal(blocked.actors[0].player.requestedPlayerState,0);
+ c.yRaw--;a.positionRaw.yRaw--;const open=Bridge.runPhase(w,'Post',{verified:false,dtRaw:1092},phaseHost).world;assert.equal(open.actors[0].player.requestedPlayerState,1);assert.equal(c.flags&1,1);
+});
+test('Clear native query uses full-storage PRE overlap and active-candidate filter',()=>{
+ const w=clearQueryWorld(),owner=Bridge.allCollisions(w)[0],other=actor('blocker',30);w.actors.push(other);const c=Factory.createRect(w,other,owner.baseRectRaw,2,true);c.layer=6;c.preXRaw=owner.preXRaw;c.preYRaw=owner.preYRaw;c.xRaw=c.yRaw=2000000000;
+ const blocked=Bridge.runPhase(w,'Post',{verified:false,dtRaw:1092},phaseHost).world;assert.equal(blocked.actors[0].player.requestedPlayerState,0);
+ c.flags|=1;const open=Bridge.runPhase(w,'Post',{verified:false,dtRaw:1092},phaseHost).world;assert.equal(open.actors[0].player.requestedPlayerState,1);assert.equal(w.actors[0].player.requestedPlayerState,0);
 });

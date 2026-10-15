@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "status": "done-native-query-core-host-data-wiring-required",
+  "frozen": true,
+  "scope": "CollisionScene.IsCollidedByPushBackTarget0x1817f73b0 map/wholeactiveScene/PRE-current geometry query, native maskbyte including3; no original execution.",
+  "verification": {
+    "dedicated": {
+      "command": "node --test source-migration/source-pushback-target-query.test.cjs",
+      "pass": 30,
+      "fail": 0
+    },
+    "fullSuite": {
+      "command": "node --test source-migration/*.test.cjs",
+      "pass": 1601,
+      "fail": 0
+    },
+    "sourceSelections": {
+      "ids": [
+        "st_w_03_02",
+        "st_w_10_04"
+      ],
+      "counts": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "online": [
+        false,
+        true
+      ],
+      "combinations": 28,
+      "fixture": "Real decoded terrain+MapRect overlays+tileattrs+realPlayerbirthcollider; explicit Clear.subState2 queryfixture, notcapturedgoalplay.",
+      "rawBoundary": "birthY28278784,rectbottom430.5FP; +98304raw (1.5FP) bottomtouch432FPsolidcell=>blocked;1rawabove=>open;Terminal request1 onlyopen."
+    },
+    "nativeExecution": false
+  },
+  "evidence": [
+    {
+      "va": "0x1817f7457..7499",
+      "fact": "Ifmaskbit0&owner.pushBackTargetbit0, Map.IsContacted currentGetRect first; maptrueimmediatelyreturns true beforeScene/storage/layerqueries."
+    },
+    {
+      "va": "0x18187ecc0..ee2e",
+      "fact": "Map fullcurrentGetRect worldleft/top/right/bottom ->signed FPdivide48 thenarithshift16 ->inclusive IsMovablecellrectangle. No halfpixel normaloffset."
+    },
+    {
+      "va": "0x18187dea0/df00..df27",
+      "fact": "Scan ythenx inclusive; eachIsMovable clampsedges andtests tileattrbit0. Reuse MapCore.isContacted withzeroDirection (zero normalize exact0)."
+    },
+    {
+      "va": "0x1817f74a9..74db",
+      "fact": "Ifmaskbit1&owner.pushBackTargetbit1, createfullactiveCollisionInfoList, notMortonchunk."
+    },
+    {
+      "va": "0x1817f6c0a/6c53;0x181800565/621",
+      "fact": "Enumeratebothnative dictionaries physicaloccupiedstate2 slots, primarythensecondary, filtercollisioninactivebit0. ExistingBroadphase.active reusedwithcurrentoverlaybeforefilter."
+    },
+    {
+      "va": "0x1817f75ec..762d",
+      "fact": "Skip samecollisionID, requirecandidate.pushBackTargetbit1, IsEnableCheck(candidate.layer,owner.layer); noextraActor/type/static/movement/attributefilter."
+    },
+    {
+      "va": "0x1817f627b..62e5",
+      "fact": "Eitherlayer>=16 =>false; rawlayerentry indexownerLayer*16+candidateLayer; unsigned DWORD>0 enables."
+    },
+    {
+      "va": "0x1817f7670/768b/76bb/76d6",
+      "fact": "IsCollidedPre(candidate,owner,zerooffsets,ignoreInactive=true) first; iffalseIsCollided current true. Eitherblocks. Ownerinactiveisnotarejection."
+    },
+    {
+      "va": "0x1816922bb/181691f1b",
+      "fact": "SameEntityRef alwaysrejects, evenignoreInactive=true."
+    },
+    {
+      "va": "0x1816922df..249b;0x181691f3f..20fb",
+      "fact": "Bothcircle useFP radialdistance/sqrt; anymixed/rect pair usesstorednativeGetPreRect/GetRect. ExistingScene/Gear routing reused."
+    },
+    {
+      "va": "0x1816925de..2608/0x18169223e..2265",
+      "fact": "Recttouch rejects >= equality (strict overlap);circle radialtangency rejectsequalitytoo. UnlikeinclusiveMapcelltouch."
+    }
+  ],
+  "api": {
+    "isCollidedByPushBackTarget": "(world,currentOwnerCollision,maskByte=3)->boolean; directlyfitsTerminal host(world,c,3).",
+    "evaluate": "sameargs -> {blocked,kind,mapcell/collisionId,trace}; tracepreservesmapfirst,activephysicalcandidateorder,PREbeforeCURRENT. Queryispure.",
+    "createHost": "({getWorld:(providedWorld)=>currentNativeWorld})->{isCollidedByPushBackTarget}; supportsclone/phase-specificviews, neverchangesquerysemantics.",
+    "world": "{storage:SourceCollisionBroadphase fullprimary+secondary dictionary slots,map:{tileFlags},nativeLayerChecks:[256nativeDWORD]} orlayerChecks[16][16]boolnativeindex-equivalentmatrix.",
+    "overlay": "world.collisions optionalcurrentchunk/phaseoverlay: substitutes matchingREGISTEREDidvaluesintocompleteStoragebeforeactivefilter. Fullstorage isstillmandatory; overlaysarenotadditionalregisteredcollisionsornotwholeScene. OmittedstoredIDsremaineligible.",
+    "geometry": "Collision{id:int32,entityId,flags:uint16,layer:byte,pushBackTarget:byte,collisionType:0rect/1circle,xRaw,yRaw,preXRaw,preYRaw,baseRectRaw,scaleRaw,preScaleRaw,pivotRaw,circleRaw?}. Bothcircle requireactualcircleRaw;storedrect usedformixed/map regardlesscircle tuple.",
+    "map": "Actualfullcurrentattributegrid, notcommitted mapNormals ormergedterrainplatformAABBs. SourceMap.Move/core cell/clamping usedread-only.",
+    "layer": "nativeLayerChecks[owner.layer*16+candidate.layer], DWORDnonzero;boolmatrix [owner][candidate]. Do notsymmetrizeorassumeenabled pairs.",
+    "numeric": "Safe16.16integerfacts; Map FPshift coordinate overflowoutside[-2^47,2^47-1] refusedbecauseexistingMap.cell doesnotemulateshiftwrap. Rectworldboundsrequiresafesums.",
+    "ignored": "NoActorlookup,ignore-selfbyActorIDwithoutnativeEntityRef,priority/static/movement/attribute/morton/callbackregistrationfilters. Onlynativefilterslisted.",
+    "refs": "Currentownerargmustbeactualcurrentphase nativecollision;functiondoesnotfetchbycachedsupportID ormodifypositions/scales/flags/caches."
+  },
+  "reused": [
+    "source-collision-map.js isContacted withzero direction",
+    "source-collision-rect.js getRect withcurrent/pre scale/pivot",
+    "source-collision-scene.js isCollided andnativeGearcircle shape math",
+    "source-collision-broadphase.js active complete dictionaryphysicalslot enumeration",
+    "terrain-runtime.js andsourcegeometryfixtures onlyintests",
+    "source-player-terminal-states.js PostClear hostcontract onlyintests"
+  ],
+  "unresolved": [
+    "Actualfullstorage/currentoverlays/layerchecks/mapgrid mustbehostprovided. Noactivechunk-only queryfallback.",
+    "Unknowncollisiontypes beyond0/1 rejected whengeometryisneeded;nativeFPoverflow/mapnegative-size branch outsideverifiedsharedcore alsoexplicitlyrefused.",
+    "Metadata/fieldvalidationmayrejectmalformedhostsnapshots earlierthannativecrash; validnativebodysemantics preserved.",
+    "No sourceTerrain dynamic map updates guessed; caller suppliescurrenttileFlags aftercurrentnativeMapchanges.",
+    "Actual Terminal/bridge wiring untouched; completeStage/typedScene/goalclearplayability notclaimed.",
+    "No nativeexecutabledifferentialtest."
+  ],
+  "supportedTypes": [],
+  "completePhysicsFidelity": false,
+  "sourceSha256": {
+    "source-migration/source-pushback-target-query.js": "da19dcedfca10e62ca65e39cd4701e8c763a59c3297ead769d7c035db80a9fa5",
+    "source-migration/source-pushback-target-query.test.cjs": "9e2dca3fd79d39dcb17bc7253f3cc9690202701a9f64f54f8c04d4e9f152c9f4"
+  }
+}

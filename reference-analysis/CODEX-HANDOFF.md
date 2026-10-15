@@ -295,3 +295,9 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - 완료 동결 KeyLifecycle36을 검토해 bridge의 Key OnStart/Update/Post 및 Key receiver 경로에 연결. Capture event47은 이제 실제 key.attachTargetId/phase를 변경한다. OnStart의 부착 collision은 실제 target Actor holders/storage에 factory.createRect로 추가(layer11), Update는 native고정계수6553 및 같은 key객체의exclude timer를 사용한다.
 - Key visibility는 shared8-slot Pool55→Key.receive→Lifecycle.commonEvent→Motion owner gate, phase2 event40도같은Pool을사용. 원작 Key common control로확인된경로만연결하며 이름UTF8검증/Scene.FindActor/FramePlaySe/진단/event40대상수신기는명시host필수. Key late OnCollided의 bridge 자동등록은아직없음(기존contactcore/host사용).
 - bridge32+Key36=68/68;전체1622/1622(동시보조파일포함). actualtarget에layer11추가,16틱제외타이머,phase2숨김·collision비활성뒤event40→동기변경된phase증가,Post48FP경계/primary보존회귀. 완전factory/R.create/R.step/carry완료아님.
+
+### Clear 복귀 실제 PushBackTargetQuery 연결 (2026-10-15)
+
+- 동결 PushBackTargetQuery30을 검토하고 Terminal host의 외부 isCollidedByPushBackTarget stub 요구를 제거했다. bridge는 현재 world/storage/overlay/map/layer table을 검증된 query에 직접 전달한다. Map우선,전체active물리저장순서,owner비활성허용,PRE먼저/current다음 규칙을 유지한다.
+- bridge34+query30=64/64,전체1630/1630(동시보조파일포함). Clear Post61틱 후 실제terrain 복귀,실제floor경계에서차단/1raw위허용,전체storage의PRE-only겹침차단 및candidateinactive제외를 프레임경로에서 검증했다. 맵/레이어정보 누락은 실제query오류로rollback.
+- PlayerBootstrap은 아직 동결확인전이며 NativeQString/NativeEntityAllocator는 신규보조범위. 해당파일 수정·stage하지않음. StageAutoScroll/Camera의순서/API를읽었으나nativeStage gate와현재Stage필드연결없이기존afterCollision/afterPost훅을임의제거하지않았다. 실제factory/R.create/R.step/carry미완료.

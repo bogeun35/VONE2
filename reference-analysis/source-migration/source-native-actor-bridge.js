@@ -17,6 +17,7 @@ const Effects=require('./source-player-effects.js');
 const StateDispatch=require('./source-player-state-dispatch.js');
 const Terminal=require('./source-player-terminal-states.js');
 const Key=require('./source-key-lifecycle.js'),CollisionFactory=require('./source-native-collision-factory.js'),Rect=require('./source-collision-rect.js');
+const PushBackQuery=require('./source-pushback-target-query.js');
 const Pipeline=require('./source-collision-pipeline.js'),Callbacks=require('./source-collision-callbacks.js'),PlayerContact=require('./source-player-contact.js');
 const clone=x=>JSON.parse(JSON.stringify(x));
 function actor(world,id){const a=world.actors.find(a=>a.entityId===id);if(!a)throw Error('Native bridge Actor missing: '+id);return a;}
@@ -162,7 +163,7 @@ function terminalCallbacks(w,frame,host){
   },
   isPressInput:(_,a,id)=>Default.input(a.player,w.playerStage,Input.getButtons(w.inputs,a.player.playerIndex,w.operatingMenuMask),id,'press'),
   getCollision:(_,a,index)=>Broad.getCollisionById(w.storage,a.collisionHolders[index]?.collisionId),
-  isCollidedByPushBackTarget:(_,c,mask)=>required(host,'isCollidedByPushBackTarget',view(w),c,mask)
+  isCollidedByPushBackTarget:(_,c,mask)=>PushBackQuery.isCollidedByPushBackTarget(view(w),c,mask)
  });
  // Keep full/inactive storage and canonical Actor identity visible during the
  // synchronous state body. DeltaTime belongs to this frame, never a fallback.
