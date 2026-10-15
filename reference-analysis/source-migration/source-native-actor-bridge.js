@@ -15,7 +15,7 @@ const Pool=require('./source-native-event-pool.js');
 const GoalQuery=require('./source-player-goal-query.js');
 const Effects=require('./source-player-effects.js');
 const StateDispatch=require('./source-player-state-dispatch.js');
-const StageInput=require('./source-stage-input-update.js');
+const StageInput=require('./source-stage-input-update.js'),Thunder=require('./source-thunder-native.js');
 const Terminal=require('./source-player-terminal-states.js');
 const Key=require('./source-key-lifecycle.js'),CollisionFactory=require('./source-native-collision-factory.js'),Rect=require('./source-collision-rect.js');
 const PushBackQuery=require('./source-pushback-target-query.js');
@@ -217,6 +217,7 @@ function runPhaseInPlace(w,phase,frame,host){
     syncActors();
    }
    else if(name==='PlayerComponent.OnPost')componentPost(w,a,frame,host);
+   else if(name==='ThunderComponent.OnUpdate'&&a.thunderState&&((a.thunder.flags&8)||(a.thunderState.phase===0&&Math.abs(a.thunderState.disappearTimeRaw)<4)))Thunder.update(v,a,a.thunder);
    else if(name==='DamageRectComponent.OnStart'){if(a.damageRect?.entityId!==a.entityId)throw Error('Native DamageRect component identity required');Motion.setCollisionActive(v,a,false,a.damageRect.entityId);}
    else if(name==='KeyComponent.OnStart')Key.onStart(view(w),a,keyHost(w,host));
    else if(name==='KeyComponent.OnUpdate')Key.onUpdate(view(w),a,frame.dtRaw,keyHost(w,host));

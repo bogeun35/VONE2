@@ -1,0 +1,30 @@
+{
+  "scope": "Thunder38 factory completion and static typed Update; common Actor Add/Initialize boundary",
+  "nativeCodeExecuted": false,
+  "verification": {
+    "factoryTests": 46,
+    "actorAddTests": 20,
+    "focusedPass": 66,
+    "fullSuiteTests": 2160,
+    "fullSuitePass": 2160
+  },
+  "evidence": {
+    "creator": "0x18172bfe0: commonActor c0b8, AddBase c0dc, alpha QFP1 c132, AddThunder c13d, Parse c16f, InitPost c174..c1ba, Base.InitCollision c1e4",
+    "parse": "0x18172c410: direction from low32/shift16/byte then invalid>3 becomes0; positive signed int slot1/2 base flags; movement cleared if zero velocity or distance<=0; switch byte only positive, repeat int!=0; positive raw disappear stored",
+    "phase0": "jump table0x18172d018 entry0 ->0x18172cf0a restore/return, no state writes",
+    "update": "0x18172c8f0: Base flag3 skips motion/disappear; else phase0 with abs(disappear)<4 no-op; Base.OnUpdate always follows at0x18172ca66"
+  },
+  "contracts": [
+    "ThunderBase is actor.thunder; movement/disappearance state is actor.thunderState, never aliasing flag words.",
+    "Native alpha65536, initial length/lengthToMap0. Existing native Thunder module allocates beam then probe and computes map length.",
+    "Factory.addAndInitializeActor accepts actual native actorPool/heap/profile and existing allocated entity; Add callbacks precede EntityRef write, QString/scale/weight precede holder allocation.",
+    "Pool/heap outputs are explicit native-boundary snapshots; canonical runtime table is not automatically inserted or silently synchronized."
+  ],
+  "unresolved": [
+    "Moving/disappearing Thunder phases still require complete component callback host.",
+    "Damage/death collision dispatch and remaining Thorn/LinePathLift creation still need integration.",
+    "Actor typed pool versus canonical runtime Actor payload synchronization remains required before replacing all manual creator hosts; exported common Add boundary alone is not full boot.",
+    "Fresh View/Actor pool growth and real holder heap allocation remain external; current tests use prepared-block and explicitly synthetic heap fixture.",
+    "No legacy R.create/R.step or carry repair claimed."
+  ]
+}

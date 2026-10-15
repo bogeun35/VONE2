@@ -14,6 +14,7 @@ const Bootstrap=require('./source-player-bootstrap.js'),Broad=require('./source-
 const Names=require('./source-native-scene-names.js');
 const PlayerIndices=require('./source-player-index-list.js');
 const Population=require('./population-rules.cjs');
+const Thunder=require('./source-thunder-native.js'),ActorAdd=require('./source-native-actor-add.js');
 const ActorData=require('./actor-runtime.js'),LinePath=require('./source-linepath-devices.js');
 const Prefab=require('./source-native-prefab-materializer.js'),UniqueName=require('./source-factory-unique-name.js');
 const Key=require('./source-key-lifecycle.js'),CollisionFactory=require('./source-native-collision-factory.js'),Bridge=require('./source-native-actor-bridge.js');
@@ -28,12 +29,21 @@ function orderCreationParams(authored){
 }
 function materializeActorPrefab(input,actorType){
  // Exact uint64 GUIDs from audited installed ResourceContainer; never Number.
- const guid={30:'3012907236034044674',9:'1028558524506428955',14:'1358310291138607793',17:'843619264496456878',27:'2433998748904079550'}[actorType];
+ const guid={38:'1049018996789292933',30:'3012907236034044674',9:'1028558524506428955',14:'1358310291138607793',17:'843619264496456878',27:'2433998748904079550'}[actorType];
  if(!guid)throw Error('Native factory audited prefab mapping required for ActorType '+actorType);
  const w=JSON.parse(JSON.stringify(input));
  const out=Prefab.createFromPrefab({schemaVersion:1,allocator:w.entityAllocator,viewPool:w.viewPool},{prototypeGuid:guid},w.materializationProfile);
  w.entityAllocator=out.state.allocator;w.viewPool=out.state.viewPool;
  return {world:w,entityId:out.entity.ref,prefab:out.prefab,trace:out.trace};
+}
+function addAndInitializeActor(input,entityId,authored,host={}){
+ // Caller supplies authoritative native Actor pool/heap snapshot at this
+ // boundary. No canonical Actor table insertion or typed-device Add here.
+ const w=JSON.parse(JSON.stringify(input));
+ const added=ActorAdd.addActor({schemaVersion:1,allocator:w.entityAllocator,actorPool:w.actorPool,heapSnapshot:w.heapSnapshot},entityId,w.actorRegistrationProfile);
+ const initialized=ActorAdd.initializeAddedActor(added.state,entityId,{actorType:authored.type,name:authored.name,stageScaleRaw:w.stage?.baseScaleRaw},w.actorRegistrationProfile,{allocateCollisionHolders:host.allocateCollisionHolders});
+ w.entityAllocator=initialized.state.allocator;w.actorPool=initialized.state.actorPool;w.heapSnapshot=initialized.state.heapSnapshot;
+ return {world:w,actor:JSON.parse(JSON.stringify(w.actorPool.slots[initialized.slot].actor)),trace:[...added.trace,...initialized.trace]};
 }
 function initializeAbsentActor(facts){
  if(facts?.actorComponentAbsent!==true)throw Error('Native Actor AddComponent requires verified absence after materialization');
@@ -206,6 +216,34 @@ function createRect(input,authored,host={}){
  const w=JSON.parse(JSON.stringify(input));if(typeof host.materializeRectBeforeInitialize!=='function')throw Error('Native Rect actual prefab/materialization host required');
  const supplied=host.materializeRectBeforeInitialize(w,authored);if(supplied&&typeof supplied.then==='function')throw Error('Native Rect materialization must be synchronous');if(!supplied?.actor||!supplied?.binding)throw Error('Native Rect initialized Actor and Add facts required');return finishRectCreation(w,authored,supplied.actor,supplied.binding);
 }
+function finishThunderCreation(input,authored,actorAtInitialize,binding){
+ // Creator18172bfe0: Actor c0b8 -> AddBase c0dc -> alpha=QFP1 c132
+ // -> AddThunder c13d -> Parse c16f -> InitPost phase c174..c1ba -> collisions c1e4.
+ const w=JSON.parse(JSON.stringify(input)),id=actorAtInitialize.entityId,ref=Allocator.decodeRef(id);
+ if(authored.type!==38||!authored.name)throw Error('Native Thunder resolved factory name required');
+ if(binding?.thunderBaseComponentAbsent!==true||binding.thunderComponentAbsent!==true||binding.thunderAddsDefaultVerified!==true)throw Error('Native Thunder actual two absent-component Add/default facts required');
+ if(ref.index===0||ref.rawVersion<0x80000000||!Allocator.isCurrent(w.entityAllocator,id))throw Error('Native Thunder allocated current EntityRef required');
+ if(!Array.isArray(w.actors)||w.actors.some(a=>a.entityId===id))throw Error('Native Thunder complete Actor table without duplicate identity required');
+ if(actorAtInitialize.actorType!==38||!QString.equals(QString.fromBytes(actorAtInitialize.nameQStringBytes),QString.fromString(authored.name)))throw Error('Native Thunder Actor type/resolved name mismatch');
+ const raw=i=>{const d=authored.datas?.[i];if(!d||!Number.isInteger(d.t))throw Error('Native Thunder parameter slot'+i+' required');return d.t===1?PlayerInit.stageRaw(d.f):0;},integer=i=>Number(BigInt.asIntN(32,BigInt(raw(i))>>16n));
+ let direction=Number((BigInt.asUintN(32,BigInt(raw(0)))>>16n)&255n);if(direction>3)direction=0;
+ const baseFlags=(integer(1)>0?1:0)|(integer(2)>0?2:0);let switchType=integer(3),vx=raw(4),vy=raw(5),distance=raw(6),repeat=integer(7);const disappear=raw(8);
+ // QFP._0 comparison at c675/c696/c6b7, not epsilon. Inactive motion
+ // clears switch/repeat too. Later disappear stores only positive raw@c84c.
+ if((vx===0&&vy===0)||distance<=0){switchType=0;vx=vy=distance=repeat=0;}
+ const a=canonicalActor(JSON.parse(JSON.stringify(actorAtInitialize)));
+ a.thunder={entityId:id,direction,flags:baseFlags,alphaRaw:65536,lengthRaw:0,lengthToMapRaw:0};
+ a.thunderState={entityId:id,lastPhase:0,phase:0,switchType:switchType>0?Number(BigInt.asIntN(8,BigInt(switchType))):0,flags:repeat!==0?1:0,disappearTimeRaw:disappear>0?disappear:0,disappearTimerRaw:0,distanceRaw:0,moveDistanceRaw:distance,speedRaw:0,timerRaw:0,moveVelocityRaw:{xRaw:vx,yRaw:vy},velocityRaw:{xRaw:0,yRaw:0}};
+ if(!(a.thunderState.switchType&1)&&(Math.abs(vx)>=4||Math.abs(vy)>=4))a.thunderState.phase=1;
+ w.actors.push(a);Thunder.createCollisions(w,a,a.thunder);Names.addUnique(w,a);
+ const registered=Init.register(a,Bridge.allCollisions(w),{xRaw:PlayerInit.stageRaw(authored.posX),yRaw:PlayerInit.stageRaw(authored.posY)},w.stage?.baseScaleRaw,{uniqueNameVerified:true});Object.assign(a,registered.actor);
+ for(const c of registered.collisions){Object.assign(Broad.getCollisionById(w.storage,c.id),c);const overlay=w.collisions?.find(b=>b.id===c.id);if(overlay)Object.assign(overlay,c);}
+ return {world:w,actorId:id};
+}
+function createThunder(input,authored,host={}){
+ const w=JSON.parse(JSON.stringify(input));if(typeof host.materializeThunderBeforeInitialize!=='function')throw Error('Native Thunder actual prefab/materialization host required');
+ const supplied=host.materializeThunderBeforeInitialize(w,authored);if(supplied&&typeof supplied.then==='function')throw Error('Native Thunder materialization must be synchronous');if(!supplied?.actor||!supplied?.binding)throw Error('Native Thunder initialized Actor and Add facts required');return finishThunderCreation(w,authored,supplied.actor,supplied.binding);
+}
 function update(input,thresholdRaw,host={}){
  // ActorFactory.Update1816a2f50: count captured@2fe9, marked entry check@30a3
  // BEFORE threshold@30e4; population skip advances cursor without marking.
@@ -228,6 +266,7 @@ function update(input,thresholdRaw,host={}){
   else if(a.type===14&&typeof host.createActorByType!=='function'){const out=createGoal(w,a,host);w=out.world;result={actorId:out.actorId};}
   else if(a.type===9&&typeof host.createActorByType!=='function'){const out=createDamageRect(w,a,host);w=out.world;result={actorId:out.actorId};}
   else if(a.type===30&&typeof host.createActorByType!=='function'){const out=createRect(w,a,host);w=out.world;result={actorId:out.actorId};}
+  else if(a.type===38&&typeof host.createActorByType!=='function'){const out=createThunder(w,a,host);w=out.world;result={actorId:out.actorId};}
   else {if(typeof host.createActorByType!=='function')throw Error('Native factory creator required: '+a.typeName+' ('+a.type+')');result=host.createActorByType(w,a,{authoredIndex:e.authoredIndex,convertedIndex:at});if(result&&typeof result.then==='function')throw Error('Native factory creator must be synchronous');}
   f=check();if(f.cursor>=f.createdEntries.length)throw Error('Native factory live created-list index out of range after creator');
   const markedIndex=f.cursor;f.createdEntries[markedIndex]=1;f.cursor=(f.cursor+1)&65535;
@@ -235,4 +274,4 @@ function update(input,thresholdRaw,host={}){
  }
  return {world:w,result:{trace,capturedPlayerIndexCount:count}};
 }
-module.exports={priority,orderCreationParams,materializeActorPrefab,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,initializePlayerIndices,createNextPlayer,finishKeyCreation,createKey,finishGoalCreation,createGoal,finishDamageRectCreation,createDamageRect,finishRectCreation,createRect,update,completePhysicsFidelity:false};
+module.exports={priority,orderCreationParams,materializeActorPrefab,addAndInitializeActor,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,initializePlayerIndices,createNextPlayer,finishKeyCreation,createKey,finishGoalCreation,createGoal,finishDamageRectCreation,createDamageRect,finishRectCreation,createRect,finishThunderCreation,createThunder,update,completePhysicsFidelity:false};

@@ -2,13 +2,14 @@
   "scope": "Whole-world preparation and active Stage frame orchestration, with explicit remaining native hosts",
   "nativeCodeExecuted": false,
   "verification": {
-    "factoryTests": 42,
+    "factoryTests": 46,
     "driverTests": 11,
     "statusTests": 69,
     "uniqueNameTests": 11,
-    "fullSuiteTests": 2088,
-    "fullSuitePass": 2088,
-    "sceneActivationTests": 48
+    "fullSuiteTests": 2160,
+    "fullSuitePass": 2160,
+    "sceneActivationTests": 48,
+    "actorAddTests": 20
   },
   "contracts": [
     "Caller supplies initialized Stage/Scene/Factory/Map/Camera snapshots, current GamePlayerInfo roster, existing index list, allocator and actual materialization hosts.",
@@ -40,7 +41,7 @@
     "Scene name logical snapshots do not establish the physical enumeration order required for SetActive.",
     "No full R.create/R.step or horizontal carry repair claimed.",
     "Remaining native Notice/audio/global event behavior is an explicit host; TopView sort requires actual physical actorDictionary and >16 equal-Y native sort needs host.",
-    "Actual3-2 full parameter cursor with exact prefab View materialization and synthetic typed Actor/Add facts reaches missing Thunder38 after Player/Key/Goal/DamageRect/Rect. Full device creation remains incomplete.",
+    "Actual3-2 full parameter cursor with exact prefab View materialization and synthetic typed Actor/Add facts reaches missing Thorn93 after Player/Key/Goal/DamageRect/Rect/Thunder. Full device creation remains incomplete.",
     "First active-frame regression uses real3-2 terrain and two fully initialized Players, with other devices deliberately absent and typed query/exit/activation fixture hosts. Not full stage boot or carry repair.",
     "Scene activation requires caller-supplied sceneNameDictionaryPhysical; logical actorNames does not establish its order. Native physical dictionary mutation helper remains separate pending integration.",
     "Current View materialization tests use already allocated blocks. Standard untouched fresh View has activeBlocks0 and needs first2048-byte block allocation; existing helper refuses this boundary. No heap addresses synthesized."
