@@ -1,0 +1,163 @@
+{
+  "task": "ActorInitialization",
+  "status": "verified helper; host integration required",
+  "readOnlyStatic": true,
+  "verification": {
+    "ownTests": 16,
+    "fullSuite": {
+      "tests": 1384,
+      "pass": 1384,
+      "fail": 0
+    }
+  },
+  "api": {
+    "defaultMaterialized": "Requires actorComponentAbsent:true; supplies implicit value-type zero component only. Not an entity allocator. Null refs represent zero EntityRef.",
+    "initialize": "Pure patch over an actual materialized component (prototype-preserving) or verified absent-component default. Requires actual allocated EntityRef, int32 holder handle, uint32 creation ActorType, Stage.BaseScale and resolved 32 QString bytes.",
+    "register": "Pure successful AddActor unique-name branch. Sets Actor.InitPos/Pos, then delegates holder collision positioning and multiplicative scales to SourcePlayerCollisionInit. Does not insert scene dictionary/type bitset or run exit/destroy."
+  },
+  "evidence": {
+    "defaultPath": {
+      "call": "0x1801f9b2f -> 0x180684320",
+      "genericMethodFunctionsTable": "0x182b3a3d0",
+      "methodSpec": 82962,
+      "genericPointerIndex": 75350,
+      "methodDefinition": 3377,
+      "methodName": "System.Activator.CreateInstance",
+      "methodInstantiation": 486,
+      "genericArgumentTypeDefinition": 4490,
+      "genericArgument": "Quantum.ActorComponent",
+      "instanceConstructor": "absent; static .cctor exists and is not an instance constructor",
+      "conclusion": "Frame.AddComponent implicit zero for missing Actor. initialize preserves supplied bytes only as pure Initialize semantics; existing Actor is not a successful factory Add branch.",
+      "factoryOperation": "Frame.AddComponent<ActorComponent>, MethodSpec95521, metadata slot0x1831c6a98; Has0x1801f9c3d, duplicate branch0x1801f9c44 ->0x1801f9d30."
+    },
+    "initialize": {
+      "entityRef": "0x18169cc8e",
+      "actorTypeU16": "0x18169cc9c",
+      "nameQString": "0x18169ccae..0x18169ccc4",
+      "baseScale": "0x18169cd02",
+      "scaleXY": "0x18169ccfa/0x18169cd06; data0x182e87af0 two int64 65536",
+      "weight": "0x18169cd0d =65536",
+      "holderCapacity": "0x18169cd41 =4; allocate0x18169cd4a",
+      "holderHandle": "0x18169cdc5",
+      "flags": "0x18169cdd4 bts14; preserve other bits"
+    },
+    "playerCreatorOrder": [
+      "0x1816bd3e4 Frame.Create(prototype)",
+      "0x1816bd400 store actual EntityRef into creation param",
+      "0x1816bd404 AddComponent<ActorComponent> (requires absent)",
+      "0x1816bd42d Actor.Initialize",
+      "0x1816bd498 DamageManage.Initialize",
+      "0x1816bd4d2 Player.Initialize",
+      "0x1816bd4e1 ActorType=27",
+      "0x1816bd4e8 mutable factory Y-=32768",
+      "0x1816a3658 read resulting factory position",
+      "0x1816a3687 AddActor"
+    ],
+    "registration": {
+      "setInitPosCall": "0x1816a73ee ->0x18169d230",
+      "initPosWrite": "0x18169d2cf raw+0x80",
+      "posWrite": "0x18169d2d6 raw+0xb0",
+      "prePos": "raw+0xc0 untouched; only Update1 later snapshots Pos",
+      "collisionPosition": "0x18169d41f/423 current and pre; clear flag6 at0x18169d42b; expected untouched",
+      "baseScaleCall": "0x1816a7422 ->0x1816a08c0 ->0x1816a0370 all collision scales multiply",
+      "duplicate": "InvokeOnExit and Frame.Destroy0x1816a7467/75; no successful registration"
+    }
+  },
+  "actorFields": {
+    "metadataTypeIndex": 4490,
+    "rawStructSize": "0x150",
+    "instanceOffsets": {
+      "m_Accel": "0x60",
+      "m_ActorType": "0x6",
+      "m_Angle": "0x48",
+      "m_BaseScale": "0x50",
+      "m_CollisionHolderListPtr": "0x8",
+      "m_CollisionVelo": "0x70",
+      "m_DisableAnimationEntity": "0x10",
+      "m_DisableDisplayEntity": "0x18",
+      "m_EntityRef": "0x20",
+      "m_Flags": "0xc",
+      "m_InactiveCollisionEntity": "0x28",
+      "m_InactiveEntity": "0x30",
+      "m_InitPos": "0x80",
+      "m_InvisibleEntity": "0x38",
+      "m_JumpEventType": "0x0",
+      "m_JumpVelo": "0x90",
+      "m_Name": "0x130",
+      "m_OffsetDrawPos": "0xa0",
+      "m_PauseEntity": "0x40",
+      "m_PlayingAnimationId": "0x1",
+      "m_Pos": "0xb0",
+      "m_PrePos": "0xc0",
+      "m_PreVelo": "0xd0",
+      "m_RequestAnimationId": "0x2",
+      "m_Scale": "0xe0",
+      "m_SortingOrder": "0x4",
+      "m_Velo": "0xf0",
+      "m_WarpPos": "0x100",
+      "m_WarpVelo": "0x110",
+      "m_Weight": "0x58",
+      "m_Wind": "0x120"
+    }
+  },
+  "actualPopulation": {
+    "modes": [
+      "offline",
+      "online"
+    ],
+    "counts": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "st_w_03_02": {
+      "authoredActorCounts": [
+        20,
+        18,
+        18,
+        18,
+        18,
+        18,
+        18
+      ],
+      "authoredPlayerSlots": 8
+    },
+    "st_w_10_04": {
+      "authoredActorCounts": [
+        26,
+        26,
+        26,
+        26,
+        26,
+        26,
+        26
+      ],
+      "authoredPlayerSlots": 8
+    },
+    "tests": "First n Player bindings supplied as test-only host IDs, independently compared to frozen PlayerCollisionInit.bootstrap; no authored IDs converted to EntityRefs."
+  },
+  "reuse": [
+    "source-player-collision-init.js setInitPosition/applyBaseScale/createBody/params/bootstrap",
+    "source-actor-motion.js update1 (test only)"
+  ],
+  "corrections": [
+    "Initial reflection helper uncertainty resolved by native GenericMethodFunctions/MethodSpec/GenericInst and raw metadata: Activator<ActorComponent>, no instance .ctor.",
+    "Initialize is OR bit14, not an unconditional flags=16384; zero defaults apply only when Actor component is absent.",
+    "SetInitPos does not initialize Actor.PrePos.",
+    "OffsetDrawPos is distinct from Accel and is not an extra velocity.",
+    "Documentation correction after NativeCreationOrder: helper0x1801f9ad0 resolves Frame.AddComponent<ActorComponent> (slot0x1831c6a98, MethodSpec95521), not get-or-add. Existing Actor Has branch0x1801f9c44 ->0x1801f9d30 zero pointer then0x1801f9d5e write is not successful existing-component reuse. initialize remains the verified pure Actor.Initialize patch and preserves its input bytes; actual factory creation requires Actor absent and defaultMaterialized. API/behavior unchanged."
+  ],
+  "unresolved": [
+    "No allocator order, entity identity, authored-ID mapping or prototype asset resolution implemented; host supplies actual materialized state/EntityRef.",
+    "QString unique-name generation and UTF8 truncation remain host responsibilities; exact resulting32 bytes required.",
+    "Native holder-list allocation ownership/free lifecycle not implemented; host supplies int32 handle; logical list starts empty, native requested capacity4.",
+    "Scene dictionary insertion/type bitset and duplicate-name OnExit/Destroy are outside helper; caller must verify unique-name branch.",
+    "Duplicate collision IDs/holders explicitly refuse; native repeated-lookup multiplication is not emulated.",
+    "Player.Initialize state/flags are owned by existing Player modules; this helper verifies order and pre-PlayerInit generic Actor state only.",
+    "No stage factory/runtime integration or full-stage standalone compile added."
+  ]
+}

@@ -282,3 +282,10 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - Player.OnPost0x1816c0dd0 및 postPlayerState0x1816c0f30 정적 확인 후 bridge componentPost 구현. flag3이면 velocity+=pushBack(64bit), state Post, CheckOutMap, pooled43 CauseDead1 순서. 1816c1058 int32 분기표 직접 읽음: [1816c0f8d,1816c1045,1816c1045,1816c1045,1816c0fb5,1816c0fea,1816c101f]. 상태1~4는 본문 없음,5 Clear,6 Plane,7 BattlePlane,나머지 return. Plane/BattlePlane 본문은 정확한 host 필요. outmap43 receiver도 실제 host 필요.
 - bridge28+Terminal30 집중58/58. Dead wait61/launch와동시2인 checkpoint한번집계,Clear wait61/복귀/visibility해제,Post pushBack→callback→outmap43 순서 회귀 추가. 전체1529/1529통과(동시에존재하는보조파일포함).
 - Clear phase2의 IsCollidedByPushBackTarget는 아직 명시 host이며 신규 PushBackTargetQuery 완료 후 연결 대상. public postPlayer는 기존 state1-only helper로 유지하고 typed phase는 전체 componentPost를 사용한다. stage range/camera, actualfactory/R.create/R.step 및 실제 carry는 여전히 미완료. 신규 PlayerBootstrap/KeyLifecycle/PushBackTargetQuery WIP는 수정·stage하지 않았다.
+
+### Native factory 입력 순서·Actor 생성 경계 (2026-10-15)
+
+- source-native-actor-factory.js 추가: authored threshold를 실제 float32→FP로 변환한 뒤 priority pairwise pass, threshold pairwise pass를 수행하는 orderCreationParams. convertActorCreateParam180554122/12a/138 및 sort1805544d0/4d4,585/589/58d를 직접 재확인. population/Player limit는 이 뒤 단계이며 이 함수가 미리 제거하지 않는다. 반환 authoredIndex/convertedIndex는 EntityRef가 아니다.
+- initializeAbsentActor는 명시 actorComponentAbsent=true, 실제 EntityRef/holderhandle/QString32bytes를 요구한다. 완료된 ActorInitialization 정정본을 사용하고 native owner 이름을 canonical Lifecycle owner로 한 번 매핑한 뒤 원래 alias를 제거한다. 기존 Actor를 성공적으로 재사용하는 경로 없음.
+- NativeCreationOrder19 및 ActorInitialization16 동결 결과/정정 검토. factory6과 합계41/41, 전체1601/1601(동시 보조파일 포함). 실제3-2·10-4 온/오프2..8 전체28선택의 전체배열순서 대조, stable sort와 다른 동순위교환·threshold FP동률·잘못된생성입력 거부 검증.
+- 이 모듈은 아직 전체 factory가 아니다. 실제 allocator/싱글턴/프리팹 materialization listener, QString 생성, scene unique-name 등록, typed pools, PlayerBootstrap, stage prepare1..5 각 Update 일정 연결이 남는다. 기존 R.create/R.step/carry에 적용됐다고 주장하지 말 것. 다음은 완료 PlayerBootstrap과 실제 collision allocation/Actor AddActor 경계 연결이다.
