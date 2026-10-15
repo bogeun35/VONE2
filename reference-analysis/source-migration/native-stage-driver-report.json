@@ -2,13 +2,13 @@
   "scope": "Whole-world preparation and active Stage frame orchestration, with explicit remaining native hosts",
   "nativeCodeExecuted": false,
   "verification": {
-    "factoryTests": 37,
-    "driverTests": 9,
+    "factoryTests": 42,
+    "driverTests": 11,
     "statusTests": 69,
     "uniqueNameTests": 11,
-    "focusedPass": 126,
-    "fullSuiteTests": 2035,
-    "fullSuitePass": 2035
+    "fullSuiteTests": 2088,
+    "fullSuitePass": 2088,
+    "sceneActivationTests": 48
   },
   "contracts": [
     "Caller supplies initialized Stage/Scene/Factory/Map/Camera snapshots, current GamePlayerInfo roster, existing index list, allocator and actual materialization hosts.",
@@ -21,7 +21,8 @@
     "Active frame captures flags14/0/1 at entry: factory/input then Actor.Update/collision/range/autoscroll/Actor.Post/camera/sort/status/Notice/time; inactive retains Actor/collision/Post and Notice/time, suspended retains verified time only.",
     "Session Frame.SetPlayerInput must already be applied; Stage Normal update is a no-op and activeFrame does not stamp packets again.",
     "Status sorting uses the actual shared event pool and synchronous bridge event54; timer wraps int64 and clamps to5662310400.",
-    "Factory resolves blank names lazily after marked/threshold/population gates and before creator/Player-limit branches. Exact generated names are passed to creators; QString encoding remains later."
+    "Factory resolves blank names lazily after marked/threshold/population gates and before creator/Player-limit branches. Exact generated names are passed to creators; QString encoding remains later.",
+    "prepare5 defaults to verified SceneActivation physical-slot iteration with shared event49, live generation lookup and existing owner/equipment/collision controls. Map activation remains an explicit host."
   ],
   "newStaticEvidence": {
     "createPlayerSub": "0x1816a3970",
@@ -39,7 +40,9 @@
     "Scene name logical snapshots do not establish the physical enumeration order required for SetActive.",
     "No full R.create/R.step or horizontal carry repair claimed.",
     "Remaining native Notice/audio/global event behavior is an explicit host; TopView sort requires actual physical actorDictionary and >16 equal-Y native sort needs host.",
-    "Actual3-2 full parameter cursor with exact prefab View materialization and synthetic typed Actor/Add facts reaches missing DamageRect9 after Player/Key/Goal. Full device creation remains incomplete.",
-    "First active-frame regression uses real3-2 terrain and two fully initialized Players, with other devices deliberately absent and typed query/exit/activation fixture hosts. Not full stage boot or carry repair."
+    "Actual3-2 full parameter cursor with exact prefab View materialization and synthetic typed Actor/Add facts reaches missing Thunder38 after Player/Key/Goal/DamageRect/Rect. Full device creation remains incomplete.",
+    "First active-frame regression uses real3-2 terrain and two fully initialized Players, with other devices deliberately absent and typed query/exit/activation fixture hosts. Not full stage boot or carry repair.",
+    "Scene activation requires caller-supplied sceneNameDictionaryPhysical; logical actorNames does not establish its order. Native physical dictionary mutation helper remains separate pending integration.",
+    "Current View materialization tests use already allocated blocks. Standard untouched fresh View has activeBlocks0 and needs first2048-byte block allocation; existing helper refuses this boundary. No heap addresses synthesized."
   ]
 }

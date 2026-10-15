@@ -6,7 +6,7 @@
  * remain explicit host boundaries. Never infer a fresh boot.
  */
 const Preparation=require('./source-stage-preparation.js'),Factory=require('./source-native-actor-factory.js'),Camera=require('./source-camera-native.js'),Allocator=require('./source-native-entity-allocator.js');
-const Bridge=require('./source-native-actor-bridge.js'),Auto=require('./source-stage-autoscroll.js'),InputUpdate=require('./source-stage-input-update.js'),Status=require('./source-stage-game-status.js');
+const Bridge=require('./source-native-actor-bridge.js'),Auto=require('./source-stage-autoscroll.js'),InputUpdate=require('./source-stage-input-update.js'),Status=require('./source-stage-game-status.js'),Activation=require('./source-scene-activation.js');
 const clone=x=>JSON.parse(JSON.stringify(x));
 function need(host,name,...args){if(typeof host?.[name]!=='function')throw Error('Native Stage driver '+name+' required');const result=host[name](...args);if(result&&typeof result.then==='function')throw Error('Native Stage driver synchronous host required: '+name);return result;}
 function adopt(w,next){const stage=w.stage;Object.assign(stage,next.stage);next.stage=stage;Object.assign(w,next);}
@@ -15,6 +15,14 @@ function playerRange(w){
  const actor=id=>Allocator.isCurrent(w.entityAllocator,id)?w.actors.find(a=>a.entityId===id)||null:null;
  return Camera.calculatePlayerRange({stageFlags:w.stage.flags,previousRange:w.stage.playerRange,players:w.scenePlayerRefs.map(id=>actor(id)?.player||null),actors:w.actorNames.entries.map(e=>actor(e.entityId))});
 }
+function activateSceneInPlace(w,scene,frame,active,owner,host={}){
+ const result=Activation.setActive(scene,frame,active,owner,{
+  getNameDictionaryPhysical:()=>{w.actorSceneFlags=scene.flags;return w.sceneNameDictionaryPhysical;},
+  getActor:(_f,id)=>id===0||id===null?null:Allocator.isCurrent(w.entityAllocator,id)?w.actors.find(a=>a.entityId===id)||null:null,
+  setActorActive:(_f,a,value,source)=>Bridge.setActorActiveInPlace(w,a,value,source,host.scene)
+ });w.actorSceneFlags=scene.flags;return result;
+}
+function setActorSceneActive(input,frame,active,owner,host={}){const w=clone(input);return {world:w,result:activateSceneInPlace(w,w.actorScene,frame,active,owner,host)};}
 function activeFrameInPlace(w,f,host){
  // Stage.onUpdate18170b3e0 captures entry flags. Inactive still runs scene
  // Update/Collision/Post; bit14 skips those plus Notice, but not verified time.
@@ -52,6 +60,7 @@ function update(input,frame,host={}){
  const f={...frame,isVerified:frame.verified,world:w},hooks={};
  for(const name of ['getOrAddSingleton','getSingletonEntityRef','initializeActorScene','initializeActorFactory','createMapEntity','createCameraEntity','createCollisionSceneEntity','createStageNoticeEntity','initializeMultiInput','getStageEventParam','notifyEvent','setActorSceneActive','setMapActive'])hooks[name]=(...args)=>need(host,name,w,...args);
  Object.assign(hooks,{
+  setActorSceneActive:(scene,f,active,owner)=>typeof host.setActorSceneActive==='function'?need(host,'setActorSceneActive',w,scene,f,active,owner):activateSceneInPlace(w,scene,f,active,owner,host),
   getStageInitParam:()=>w.stageInitParam,
   getActorScene:()=>w.actorScene,
   getActorFactory:()=>w.actorFactory,
@@ -75,4 +84,4 @@ function update(input,frame,host={}){
  if(w.actorScene&&(result.prepared||result.onUpdate))w.actorSceneFlags=w.actorScene.flags;
  return {world:w,result};
 }
-module.exports={update,activeFrame,playerRange,completePhysicsFidelity:false};
+module.exports={update,activeFrame,setActorSceneActive,playerRange,completePhysicsFidelity:false};

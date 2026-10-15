@@ -14,6 +14,7 @@ const Bootstrap=require('./source-player-bootstrap.js'),Broad=require('./source-
 const Names=require('./source-native-scene-names.js');
 const PlayerIndices=require('./source-player-index-list.js');
 const Population=require('./population-rules.cjs');
+const ActorData=require('./actor-runtime.js'),LinePath=require('./source-linepath-devices.js');
 const Prefab=require('./source-native-prefab-materializer.js'),UniqueName=require('./source-factory-unique-name.js');
 const Key=require('./source-key-lifecycle.js'),CollisionFactory=require('./source-native-collision-factory.js'),Bridge=require('./source-native-actor-bridge.js');
 const ZERO=[27,59,26,107,21,24,19,132,133,144,145],ORDERED=[28,70,72,108,121,128,161,17,14,5,102,120,137,152,155,175,178];
@@ -27,7 +28,7 @@ function orderCreationParams(authored){
 }
 function materializeActorPrefab(input,actorType){
  // Exact uint64 GUIDs from audited installed ResourceContainer; never Number.
- const guid={14:'1358310291138607793',17:'843619264496456878',27:'2433998748904079550'}[actorType];
+ const guid={30:'3012907236034044674',9:'1028558524506428955',14:'1358310291138607793',17:'843619264496456878',27:'2433998748904079550'}[actorType];
  if(!guid)throw Error('Native factory audited prefab mapping required for ActorType '+actorType);
  const w=JSON.parse(JSON.stringify(input));
  const out=Prefab.createFromPrefab({schemaVersion:1,allocator:w.entityAllocator,viewPool:w.viewPool},{prototypeGuid:guid},w.materializationProfile);
@@ -154,6 +155,57 @@ function createGoal(input,authored,host={}){
  if(!supplied?.actor||!supplied?.binding)throw Error('Native Goal initialized Actor and AddGoal facts required');
  return finishGoalCreation(w,authored,supplied.actor,supplied.binding);
 }
+function finishDamageRectCreation(input,authored,actorAtInitialize,binding){
+ // Creator18180dd70: Actor de20 -> Add de44 -> Parse de58 -> Collision de69
+ // -> InitPost inlined Actor flag18 deb1. Parse width/height slots0/1;
+ // negative width shifts creation X and uses NEG/SHL16/SAR16 (signed48).
+ const w=JSON.parse(JSON.stringify(input)),id=actorAtInitialize.entityId,ref=Allocator.decodeRef(id);
+ if(authored.type!==9||!authored.name)throw Error('Native DamageRect resolved factory name required');
+ if(binding?.damageRectComponentAbsent!==true||binding.damageRectAddDefaultVerified!==true)throw Error('Native DamageRect actual absent-component Add/default facts required');
+ if(ref.index===0||ref.rawVersion<0x80000000||!Allocator.isCurrent(w.entityAllocator,id))throw Error('Native DamageRect allocated current EntityRef required');
+ if(!Array.isArray(w.actors)||w.actors.some(a=>a.entityId===id))throw Error('Native DamageRect complete Actor table without duplicate identity required');
+ if(actorAtInitialize.actorType!==9||!QString.equals(QString.fromBytes(actorAtInitialize.nameQStringBytes),QString.fromString(authored.name)))throw Error('Native DamageRect Actor type/resolved name mismatch');
+ const rawAt=i=>{const d=authored.datas?.[i];if(!d||!Number.isInteger(d.t))throw Error('Native DamageRect parameter slot'+i+' required');return d.t===1?PlayerInit.stageRaw(d.f):0;};
+ const exact=n=>{const v=Number(BigInt.asIntN(64,n));if(!Number.isSafeInteger(v))throw Error('Native DamageRect exact signed raw required');return v;};
+ let width=rawAt(0),height=rawAt(1),x=PlayerInit.stageRaw(authored.posX);if(width<0){x=exact(BigInt(x)+BigInt(width));width=exact(BigInt.asIntN(64,(-BigInt(width))<<16n)>>16n);}
+ const decoded=LinePath.decodeDamageRect(authored),rect={...decoded.rectRaw,height,width,y:exact(-BigInt(height))},a=canonicalActor(JSON.parse(JSON.stringify(actorAtInitialize)));
+ a.damageRect={entityId:id,rectRaw:rect};w.actors.push(a);CollisionFactory.createDamageRect(w,a,rect);a.flags=(a.flags|262144)>>>0;
+ Names.addUnique(w,a);const registered=Init.register(a,Bridge.allCollisions(w),{xRaw:x,yRaw:PlayerInit.stageRaw(authored.posY)},w.stage?.baseScaleRaw,{uniqueNameVerified:true});Object.assign(a,registered.actor);
+ for(const c of registered.collisions){Object.assign(Broad.getCollisionById(w.storage,c.id),c);const overlay=w.collisions?.find(b=>b.id===c.id);if(overlay)Object.assign(overlay,c);}
+ return {world:w,actorId:id};
+}
+function createDamageRect(input,authored,host={}){
+ const w=JSON.parse(JSON.stringify(input));if(typeof host.materializeDamageRectBeforeInitialize!=='function')throw Error('Native DamageRect actual prefab/materialization host required');
+ const supplied=host.materializeDamageRectBeforeInitialize(w,authored);if(supplied&&typeof supplied.then==='function')throw Error('Native DamageRect materialization must be synchronous');
+ if(!supplied?.actor||!supplied?.binding)throw Error('Native DamageRect initialized Actor and Add facts required');return finishDamageRectCreation(w,authored,supplied.actor,supplied.binding);
+}
+function finishRectCreation(input,authored,actorAtInitialize,binding){
+ // Static Rect.Creator1816e677c/67a0/67b4/67d9. Parse69a0:
+ // width/height0/1, count-2 FP growth2/3 and position4/5@6b85..6bb3;
+ // packed offsets6/7 scan downward to first nonzero pair@6be9..6c72;
+ // negative width shift/narrow@6cc4..6ccf. Type30 keeps both FPBool defaults0.
+ const w=JSON.parse(JSON.stringify(input)),id=actorAtInitialize.entityId,ref=Allocator.decodeRef(id);
+ if(authored.type!==30||!authored.name)throw Error('Native ordinary Rect resolved factory name required');
+ if(binding?.rectComponentAbsent!==true||binding.rectAddDefaultVerified!==true)throw Error('Native Rect actual absent-component Add/default facts required');
+ if(ref.index===0||ref.rawVersion<0x80000000||!Allocator.isCurrent(w.entityAllocator,id))throw Error('Native Rect allocated current EntityRef required');
+ if(!Array.isArray(w.actors)||w.actors.some(a=>a.entityId===id))throw Error('Native Rect complete Actor table without duplicate identity required');
+ if(actorAtInitialize.actorType!==30||!QString.equals(QString.fromBytes(actorAtInitialize.nameQStringBytes),QString.fromString(authored.name)))throw Error('Native Rect Actor type/resolved name mismatch');
+ const count=w.playerIndices?.indexList?.length;if(!Number.isInteger(count)||count<2||count>8)throw Error('Native Rect actual player index count2..8 required');
+ const exact=n=>{const v=Number(BigInt.asIntN(64,n));if(!Number.isSafeInteger(v))throw Error('Native Rect exact signed raw required');return v;},add=(a,b)=>exact(BigInt(a)+BigInt(b));
+ const slot=i=>{const d=authored.datas?.[i];if(!d||!Number.isInteger(d.t))throw Error('Native Rect parameter slot'+i+' required');return d;},raw=i=>slot(i).t===1?PlayerInit.stageRaw(slot(i).f):0,growth=i=>exact(BigInt.asIntN(64,BigInt(raw(i))*(BigInt(count-2)<<16n))>>16n);
+ const table=i=>{const d=slot(i),s=d.t===2?(d.s||''):'';return s===''?Array(7).fill(0):ActorData.decodePopulationOffsetTable(s);};
+ let width=add(raw(0),growth(2)),height=add(raw(1),growth(3)),x=add(PlayerInit.stageRaw(authored.posX),growth(4)),y=add(PlayerInit.stageRaw(authored.posY),growth(5));
+ const tx=table(6),ty=table(7);for(let i=count-2;i>=0;i--)if(tx[i]!==0||ty[i]!==0){x=add(x,tx[i]);y=add(y,ty[i]);break;}
+ if(width<0){x=add(x,width);width=exact(BigInt.asIntN(64,(-BigInt(width))<<16n)>>16n);}
+ const rect={height,width,x:0,y:exact(-BigInt(height))},a=canonicalActor(JSON.parse(JSON.stringify(actorAtInitialize)));a.rect={entityId:id,isDummy:0,isInDarkness:0,rectRaw:rect};w.actors.push(a);CollisionFactory.createSolidRect(w,a,0,rect);Names.addUnique(w,a);
+ const registered=Init.register(a,Bridge.allCollisions(w),{xRaw:x,yRaw:y},w.stage?.baseScaleRaw,{uniqueNameVerified:true});Object.assign(a,registered.actor);
+ for(const c of registered.collisions){Object.assign(Broad.getCollisionById(w.storage,c.id),c);const overlay=w.collisions?.find(b=>b.id===c.id);if(overlay)Object.assign(overlay,c);}
+ return {world:w,actorId:id};
+}
+function createRect(input,authored,host={}){
+ const w=JSON.parse(JSON.stringify(input));if(typeof host.materializeRectBeforeInitialize!=='function')throw Error('Native Rect actual prefab/materialization host required');
+ const supplied=host.materializeRectBeforeInitialize(w,authored);if(supplied&&typeof supplied.then==='function')throw Error('Native Rect materialization must be synchronous');if(!supplied?.actor||!supplied?.binding)throw Error('Native Rect initialized Actor and Add facts required');return finishRectCreation(w,authored,supplied.actor,supplied.binding);
+}
 function update(input,thresholdRaw,host={}){
  // ActorFactory.Update1816a2f50: count captured@2fe9, marked entry check@30a3
  // BEFORE threshold@30e4; population skip advances cursor without marking.
@@ -174,6 +226,8 @@ function update(input,thresholdRaw,host={}){
   let result;if(a.type===27){const out=createNextPlayer(w,a,host);w=out.world;result=out.result;}
   else if(a.type===17&&typeof host.createActorByType!=='function'){const out=createKey(w,a,host);w=out.world;result={actorId:out.actorId};}
   else if(a.type===14&&typeof host.createActorByType!=='function'){const out=createGoal(w,a,host);w=out.world;result={actorId:out.actorId};}
+  else if(a.type===9&&typeof host.createActorByType!=='function'){const out=createDamageRect(w,a,host);w=out.world;result={actorId:out.actorId};}
+  else if(a.type===30&&typeof host.createActorByType!=='function'){const out=createRect(w,a,host);w=out.world;result={actorId:out.actorId};}
   else {if(typeof host.createActorByType!=='function')throw Error('Native factory creator required: '+a.typeName+' ('+a.type+')');result=host.createActorByType(w,a,{authoredIndex:e.authoredIndex,convertedIndex:at});if(result&&typeof result.then==='function')throw Error('Native factory creator must be synchronous');}
   f=check();if(f.cursor>=f.createdEntries.length)throw Error('Native factory live created-list index out of range after creator');
   const markedIndex=f.cursor;f.createdEntries[markedIndex]=1;f.cursor=(f.cursor+1)&65535;
@@ -181,4 +235,4 @@ function update(input,thresholdRaw,host={}){
  }
  return {world:w,result:{trace,capturedPlayerIndexCount:count}};
 }
-module.exports={priority,orderCreationParams,materializeActorPrefab,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,initializePlayerIndices,createNextPlayer,finishKeyCreation,createKey,finishGoalCreation,createGoal,update,completePhysicsFidelity:false};
+module.exports={priority,orderCreationParams,materializeActorPrefab,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,initializePlayerIndices,createNextPlayer,finishKeyCreation,createKey,finishGoalCreation,createGoal,finishDamageRectCreation,createDamageRect,finishRectCreation,createRect,update,completePhysicsFidelity:false};

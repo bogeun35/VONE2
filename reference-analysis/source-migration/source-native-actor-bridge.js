@@ -217,6 +217,7 @@ function runPhaseInPlace(w,phase,frame,host){
     syncActors();
    }
    else if(name==='PlayerComponent.OnPost')componentPost(w,a,frame,host);
+   else if(name==='DamageRectComponent.OnStart'){if(a.damageRect?.entityId!==a.entityId)throw Error('Native DamageRect component identity required');Motion.setCollisionActive(v,a,false,a.damageRect.entityId);}
    else if(name==='KeyComponent.OnStart')Key.onStart(view(w),a,keyHost(w,host));
    else if(name==='KeyComponent.OnUpdate')Key.onUpdate(view(w),a,frame.dtRaw,keyHost(w,host));
    else if(name==='KeyComponent.OnPost')Key.onPost(view(w),a,keyHost(w,host));
@@ -256,5 +257,12 @@ function stepScene(input,frame,host={}){
  return {world:w,result:{update,collision:collision.result,post}};
 }
 function initializeKeyPost(input,id,host={}){return transaction(input,w=>{const a=actor(w,id);Key.initPost(w,a,keyHost(w,host));return null;});}
+function setActorActiveInPlace(w,a,active,owner,host={}){
+ // Actor.SetActive18169ed70 always acquires49 before owner gates.
+ if(typeof active!=='boolean')throw Error('Native Actor active boolean required');
+ const e=Pool.getEventParam(w.eventPool,a,49);if(e===null)throw Error('Native Actor activation event pool exhausted');
+ e.NotifiedActor=owner;e.IsActive=active;
+ return Pool.notifyEvent(a,e,(target,p)=>dispatch(w,target.entityId,{eventType:49,value:p.IsActive,sourceId:p.NotifiedActor===0?null:p.NotifiedActor},host));
+}
 function sortingEventInPlace(w,a,param,host={}){if(param.EventType!==54)throw Error('Native sorting event54 required');return dispatch(w,a.entityId,{eventType:54,value:param.SortingOrder,sourceId:param.NotifiedActor},host);}
-module.exports={sortingEventInPlace,initializeKeyPost,receive,post1,post2,applyInputs,stepPlayer,postPlayer,runPhase,collide,stepScene,allCollisions,completePhysicsFidelity:false};
+module.exports={setActorActiveInPlace,sortingEventInPlace,initializeKeyPost,receive,post1,post2,applyInputs,stepPlayer,postPlayer,runPhase,collide,stepScene,allCollisions,completePhysicsFidelity:false};

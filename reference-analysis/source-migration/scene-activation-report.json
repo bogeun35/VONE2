@@ -1,0 +1,78 @@
+{
+  "task": "SceneActivation",
+  "status": "verified physical dictionary activation traversal with mandatory common Actor host",
+  "readOnlyStatic": true,
+  "nativeCodeExecuted": false,
+  "verification": {
+    "ownTests": 48,
+    "ownPass": 48,
+    "ownFail": 0,
+    "fullSuiteTests": 2027,
+    "fullSuitePass": 2027,
+    "fullSuiteFail": 0,
+    "commands": ["node --test source-migration/source-scene-activation.test.cjs", "node --test source-migration/*.test.cjs"],
+    "instructionOracle": "Read-only installed DLL bytes verify Scene flag write, usedCount comparison, occupied state2, Frame.GetActor/Actor.SetActive calls, owner forwarding, Actor event49 acquisition/source write, native Add/Remove helper call chain and slot state2/1 writes. No original executable load/launch.",
+    "integrationFixture": "Frozen StagePreparation.prepare5 with new createStageHost adapter: Game owner reaches Scene then common Actor event49 before Map callback. Existing NativeEventPool+ActorLifecycle+ActorMotion used by explicit test Actor host.",
+    "actualStageSettings": "3-2/10-4 2..8 selected variant settings used in14 fixtures, with explicit verified physical roster descriptors. Test order is supplied, not inferred from authored Player names, sceneNames logical entries, factory indices or10-4 shuffle identity. No whole stageboot claim."
+  },
+  "nativeMethod": {
+    "name": "ActorSceneComponent.SetActive",
+    "va": "0x1816a74f0",
+    "signature": "Scene pointer,Frame pointer,active bool,owner EntityRef",
+    "flags": "Scene.m_Flags metadata0x34 minus16 ->native0x24 ushort; bit0 is inactive. active true clears bit0@75a6, false setsbit0@75ad, store@75b2. Other bits preserved.",
+    "noChangeGate": "No same-state or Scene-owner gate. Every call writes Scene flag and enumerates even if flag already matches. No IsVerified/ActorType/inactive/pause/player filter. Stage.SetActive's separate same-state early return is not copied here.",
+    "earlyFailure": "Flag written before Frame null check@7604/7607 and dictionary resolution. Implementation refuses missing Frame/host/snapshot after write, without synthetic rollback."
+  },
+  "enumeration": {
+    "dictionary": "Native Scene.m_ActorDicPtr metadata0x38 minus16 ->native0x28; this is QString32->EntityRef name dictionary. Resolve0x1801f5ee0 called once@1816a7619. Return contains heap/frame and header pointer, captured locally r14/rsi@76d8/76e2.",
+    "cursor": "Starts int32 -1@7661; increment@7716, compare cursor with LIVE header+0x0c bound@7725. No occupied-count based compact iteration, hash bucket traversal, name sorting or captured array of actors.",
+    "entry": "Native entry storage resolved using current header-derived entry handle@776f and stride@777b. entry.state int32+8==2@778b is only slot filter. header.ValueOffset native+0 read@7791; EntityRef value loaded at entry+ValueOffset@779b.",
+    "actor": "Always pass occupied slot's copied value to Frame.GetActor@77ba, including native zero/stale ref. Null Actor skips@77c5; nonnull pointer receives Actor.SetActive@77f2. No generation fallback or lookup by name/index provided by module; actual GetActor host owns generation validation.",
+    "capturedArguments": "active copied r13 and owner copied rdi at entry; exact values forwarded@77e0..77ef to all reached Actors. Nested calls may change Scene flag, but outer iteration continues original active/owner.",
+    "changes": "Header bound/slot contents/entry storage are live through captured header. Future deletion skips that slot, future reuse/append can be visited, past index never revisited. Replacing Scene's dictionary reference does not redirect outer call's captured header; a nested call resolves the replacement independently. No dictionary version guard, restart, deduplication or rollback in the verified native loop.",
+    "exceptions": "Host failure propagates immediately; earlier Scene flag/Actor effects remain, later slots untouched. A direct Scene same-state retry enumerates again. Caller transaction behavior is external."
+  },
+  "physicalContract": {
+    "schema": "SceneNameDictionaryPhysicalV1",
+    "shape": {
+      "schema": "SceneNameDictionaryPhysicalV1",
+      "completePhysicalSnapshotVerified": true,
+      "headerRef": "actual captured native header identity or stable host identity of that header",
+      "usedCount": "native signed int32 enumeration bound at full header+0x0c",
+      "slots": [{"physicalIndex": 0, "state": 2, "valueEntityRef": "actual full EntityRef, including version;0 means native none"}, {"physicalIndex": 1, "state": 1}]
+    },
+    "validation": "validatePhysicalSnapshot returns same descriptor, does not clone/sort/compact. Requires explicit physical provenance marker, nonempty headerRef, full prefix slots[0..usedCount), each physicalIndex exactly its array index, int32 state and explicit native ref for state2. Nonoccupied payload is ignored; beyond-usedCount slots are not required. Structural validation and provenance assertion do not independently prove that a fabricated JS array came from native memory; caller must supply actual verified branch/heap evidence.",
+    "liveView": "Although JSON-compatible, descriptor is a live view during setActive. Host must mutate captured descriptor's usedCount/slots to reflect changes to that same native header. Replacing slot buffer through descriptor.slots is observed. Replacing scene dictionary must return a different descriptor for later calls while old descriptor remains valid until outer returns.",
+    "refRepresentation": "valueEntityRef accepts complete nonempty host EntityRef string or exact safe signed raw integer, with0 for native none. owner additionally permits explicit canonical null used by existing ActorLifecycle. Owner is forwarded unchanged; native/common host performs explicit0<->null representation mapping. Undefined is not inferred as no owner.",
+    "logicalNames": "source-native-scene-names.actorNames.entries is a complete LOGICAL lookup projection, not physical enumeration evidence. Its completeSnapshotVerified marker is insufficient and is explicitly rejected. No helper converts logical array order to physical slots. Keys are unnecessary here because native activation reads state/value only."
+  },
+  "hostContract": {
+    "getNameDictionaryPhysical": "getNameDictionaryPhysical(frame,scene) ->verified physical descriptor for current Scene+28. Called exactly once per activation, after Scene flags written.",
+    "getActor": "getActor(frame,valueEntityRef) ->current Actor object or explicit null if native GetActor returns null. Resolve complete EntityRef versions; no authored index fallback. Undefined/async result refused.",
+    "setActorActive": "setActorActive(frame,actor,active,owner) ->synchronous native common activation. Callback is mandatory for each nonnull Actor, even same state/foreign owner/already inactive. Its native void result is not interpreted as permission to terminate Scene traversal.",
+    "commonActorEvidence": "Actor.SetActive0x18169ed70 ALWAYS obtains Actor event49@edd1, overwrites NotifiedActor with passed owner@edde and IsActive@ede5 then Actor.NotifyEvent@ee03. Actual registry receiver, owner gates, equipment visibility/pause/collision propagation and persistent event pool semantics are existing common Actor host responsibilities. This module does not duplicate them or substitute a generic silent receiver.",
+    "testReuse": "Explicit test host composes frozen Pool.getEventParam/notifyEvent + Lifecycle.receiveControl + Motion.setCollisionActive for ordinary Player with no equipment. Tests prove ownership denial, rightful reactivation, source0 override and collision flags in this supported fixture; custom device registry/equipment receivers still require real hosts."
+  },
+  "adapter": {
+    "createStageHost": "createStageHost(nativeHost) ->{setActorSceneActive(scene,frame,active,owner)} directly matches frozen StagePreparation host signature. It captures host functions, not a dictionary descriptor; descriptor resolves per actual call.",
+    "prepare5": "prepare5 initScroll/CheckDarkness ->GetGame ->Stage.SetActive(false,Game.entityRef). Stage changes bit0 then calls this Scene adapter, then Map. Test uses owner game:1 and proves Actor owner/collision changes visible before Map callback.",
+    "nativeStageDriverBoundary": "source-native-stage-driver forwards an extra world argument to external hooks. Lead wrapper should call SceneActivation.setActive(scene,frame,active,owner,{getNameDictionaryPhysical:(f,s)=>native.getPhysical(world,f,s),getActor:(f,r)=>native.getActor(world,f,r),setActorActive:(f,a,on,o)=>native.setActorActive(world,f,a,on,o)}). Resolve against current transaction/clone world, not a stale closure. No driver modification made here."
+  },
+  "dictionaryMutationEvidence": {
+    "initial": "ActorScene.Initialize0x1816a5b0e requests dictionary capacity0x80 via helper0x18001cbe0@b17 and stores pointer Scene+28@b93. This is evidence of initial capacity128, not proof of a complete actual stage insertion prefix.",
+    "add": "ActorScene.AddActor0x1816a733b ContainsKey; duplicate branch@7342 invokes OnExit/Destroy rather than overwrite. Successful Add@73b1 ->generic180024500 calls QString.GetHashCode@2455a, existing key find0x180033880@245bd, insert helper0x1807fb690@2463e, then writes EntityRef into entry+valueOffset@24661..24666.",
+    "insertFree": "Insert core pointer is full header+4. core+4 is freeHead. If nonzero@7fb709..710, resolve free entry, pop next@7fb76a/76f and decrement freeCount(core+c)@76c. Physical entry is reused, not appended in logical-name order.",
+    "insertAppend": "No available free slot ->compare usedCount(core+8) with capacity(core+14)@7fb783..789; equality invokes resize0x1807f9920@799. Entry pointer=index usedCount*stride@7fb7b3..7bf; increment usedCount@7c5. New slot state2@7fb825. Without resize/free slots, new entries append by actual successful native insertion sequence, not necessarily authored actor ordering.",
+    "remove": "ActorScene.exitActors calls QString hash@1816a6f0d then remove0x1807fc010@6f60. Remove walks hash/equality chain; successful branch unlink@7fc189..1c3, writes prior freeHead into removed entry.next@1c7..1ca, sets state1@1ce, increments freeCount@1d5, sets freeHead to removed entry handle@1d8. No usedCount decrement or dense swap shown in successful branch. Last removed slot becomes next insertion's free slot (LIFO free-list), making logical insertion ordering insufficient after removal/reuse.",
+    "limits": "No insert/remove API implemented. Capacity-growth rehash/entry preservation, heap handle resolution and full actual add/remove stream still require independent verified reconstruction. No guessed bucket mapping, stable compaction or hash-table substitute."
+  },
+  "unresolved": [
+    "Lead must obtain actual complete physical name dictionary snapshot or reconstruct it from verified native mutation/heap traces. Logical SceneNames projection alone cannot feed this module.",
+    "Hash buckets, allocator-relative handles, dictionary resize0x1807f9920, Clear/reinitialize and full insertion/deletion lifetime are not implemented. Evidence recorded for append/free-list/state transitions only.",
+    "Real Actor.SetActive registry receivers/equipment/collision/visibility/pause effects remain mandatory common host; existing Lifecycle helper's supported rows must not be generalized to unknown custom devices.",
+    "Captured header deallocation/reuse cannot be guessed from Scene ref replacement. Invalidated/unverified descriptors explicitly refuse; actual native dangling-pointer behavior not simulated.",
+    "No world transaction rollback policy, factory registration updates, runtime/bridge integration, actual10-4 shuffle order, complete boot or original-play equivalence claim."
+  ],
+  "nextIntegrationBoundary": "Provide world-owned physical dictionary descriptor alongside logical actorNames, maintain it from actual verified successful Add/Remove/resize outcomes, bind live native EntityRef lookup and common Actor activation to Stage driver hook, then use prepare5 adapter. Unverified physical ordering must remain a hard refusal.",
+  "filesPolicy": "Only source-scene-activation.js/.test.cjs, scene-activation-report.json, SceneActivation.result.md and claim marker created. Existing SceneNames/ActorLifecycle/StagePreparation/bridge/factory/runtime/play/HANDOFF/Git read-only."
+}

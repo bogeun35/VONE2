@@ -1,0 +1,29 @@
+{
+  "scope": "Static DamageRect9 and ordinary Rect30 factory completion using existing collision/parameter helpers",
+  "nativeCodeExecuted": false,
+  "verification": {
+    "factoryTests": 42,
+    "fullSuiteTests": 2088,
+    "fullSuitePass": 2088
+  },
+  "evidence": {
+    "DamageRectCreator": "0x18180dd70: CreateActorEntity de20, Add de44, Parse de58, Collision de69, flag18 deb1",
+    "DamageRectParse": "0x18180ded0: slots0/1 width/height, negative width shift df69 and signed48 narrowing df70..77",
+    "DamageRectStart": "0x18180e16c: self-owned SetCollisionActive(false); separate first lifecycle phase",
+    "RectCreator": "0x1816e66d0: CreateActorEntity677c, Add67a0, Parse67b4, Collision67d9",
+    "RectParse": "0x1816e69a0: slots0..5 population growth6b85..6bb3, packed6/7 downward search6be9..6c72, negative width6cc4..6ccf"
+  },
+  "reuse": [
+    "source-linepath-devices.decodeDamageRect for ordinary geometry, preserving explicit native signed-width narrowing",
+    "actor-runtime.decodePopulationOffsetTable for packed little-endian FP arrays",
+    "source-native-collision-factory createDamageRect/createSolidRect",
+    "existing name, Actor initialization/registration, bridge motion and allocator helpers"
+  ],
+  "unresolved": [
+    "Typed Actor/device Add facts and holder allocation remain explicit hosts.",
+    "DamageRect OnUpdate/checkDamage is not automatically implemented by this change; complete callback host still required.",
+    "Only ordinary Rect type30 supported here; DarknessRect/DummyRect creator behavior not inferred.",
+    "Full3-2 cursor with real View materialization and explicit typed Add fixture reaches Thunder38. Later Thorn93/LinePathLift103 and complete frame remain pending.",
+    "Current materializer supports prepared physical View blocks, not untouched fresh activeBlocks0."
+  ]
+}
