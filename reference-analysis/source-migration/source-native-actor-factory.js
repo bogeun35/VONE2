@@ -100,7 +100,7 @@ function finishKeyCreation(input,authored,actorAtKeyInitialize,binding){
  const parsed=Key.compileActor(authored,w.playerIndices?.indexList?.length),a=canonicalActor(JSON.parse(JSON.stringify(actorAtKeyInitialize)));
  a.key=parsed.key;w.actors.push(a);CollisionFactory.createKey(w,a);
  w=Bridge.initializeKeyPost(w,id).world;const live=w.actors.find(a=>a.entityId===id);
- Key.writePrimaryKey(w.manager,live);Names.addUnique(w,live);
+ Key.writePrimaryKey(w.actorManager,live);Names.addUnique(w,live);
  const registered=Init.register(live,Bridge.allCollisions(w),parsed.initPositionRaw,w.stage?.baseScaleRaw,{uniqueNameVerified:true});
  Object.assign(live,registered.actor);
  for(const c of registered.collisions){const target=Broad.getCollisionById(w.storage,c.id);Object.assign(target,c);if(w.collisions){const overlay=w.collisions.find(b=>b.id===c.id);if(overlay)Object.assign(overlay,c);}}

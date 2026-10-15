@@ -15,6 +15,7 @@ const Pool=require('./source-native-event-pool.js');
 const GoalQuery=require('./source-player-goal-query.js');
 const Effects=require('./source-player-effects.js');
 const StateDispatch=require('./source-player-state-dispatch.js');
+const StageInput=require('./source-stage-input-update.js');
 const Terminal=require('./source-player-terminal-states.js');
 const Key=require('./source-key-lifecycle.js'),CollisionFactory=require('./source-native-collision-factory.js'),Rect=require('./source-collision-rect.js');
 const PushBackQuery=require('./source-pushback-target-query.js');
@@ -102,6 +103,14 @@ function deliverEffect(w,a,c,e,p,flat,body,host){
  if(result&&typeof result.then==='function')throw Error('Native Player effects must be synchronous');
  refreshSnapshot(a,c,p,flat,body);
 }
+function playerStage(w){return w.stage?.inputType!==undefined?{...w.stage,scrollType:w.stage.scrollParam?.scrollType}:w.playerStage;}
+function playerButtons(w,p){
+ if(w.stage?.inputType===undefined)return Input.getButtons(w.inputs,p.playerIndex,w.operatingMenuMask);
+ return StageInput.createHost({getStage:()=>w.stage,getNativeInputState:()=>w.inputs,lookupInputSingleton:kind=>{
+  if(!w.singletons||!Object.hasOwn(w.singletons,kind))throw Error('Native bridge explicit input singleton snapshot required: '+kind);
+  return w.singletons[kind];
+ }}).buttonsForPlayer(p);
+}
 function updatePlayerInPlace(w,id,dtRaw,host){
  const a=actor(w,id);if(a.actorType!==27||!a.player)throw Error('Native ordinary Player required');
  const c=Broad.getCollisionById(w.storage,a.collisionHolders[0]?.collisionId);if(!c)throw Error('Native Player collision0 required');
@@ -118,9 +127,9 @@ function updatePlayerInPlace(w,id,dtRaw,host){
   refreshSnapshot(a,c,p,flat,body);
  };
  const snapshot={player:{...clone(a.player),playerState:a.player.state},actor:flatActor(a),collision:clone(c)};delete snapshot.player.state;
- const buttons=Input.getButtons(w.inputs,a.player.playerIndex,w.operatingMenuMask);
+ const buttons=playerButtons(w,a.player);
  const goal=GoalQuery.createHost({getManagerGoalRef:()=>w.actorManager?.goalEntityId,goalByEntity:id=>w.actors.find(a=>a.entityId===id)?.goal||null,actorByEntity:id=>w.actors.find(a=>a.entityId===id)||null,collisionById:q.collisionById});
- const out=Default.step(snapshot,w.playerStage,buttons,dtRaw,{...q,playerByEntity:id=>w.actors.find(a=>a.entityId===id)?.player||null,screenEndWalkVelocityX:boundary,openGoalOverlap:goal.openGoalOverlap,applyImmediate:immediate,onEffect:(e,p,flat,body)=>deliverEffect(w,a,c,e,p,flat,body,host)});
+ const out=Default.step(snapshot,playerStage(w),buttons,dtRaw,{...q,playerByEntity:id=>w.actors.find(a=>a.entityId===id)?.player||null,screenEndWalkVelocityX:boundary,openGoalOverlap:goal.openGoalOverlap,applyImmediate:immediate,onEffect:(e,p,flat,body)=>deliverEffect(w,a,c,e,p,flat,body,host)});
  storeSnapshot(a,c,out.player,out.actor,out.collision);
  return {effects:out.effects,earlyReturn:out.earlyReturn||null};
 }
@@ -162,7 +171,7 @@ function terminalCallbacks(w,frame,host){
    if(!field)throw Error('Native terminal control parameter unsupported: '+param.EventType);
    return dispatch(w,a.entityId,{eventType:param.EventType,sourceId:param.NotifiedActor,value:param[field]},host);
   },
-  isPressInput:(_,a,id)=>Default.input(a.player,w.playerStage,Input.getButtons(w.inputs,a.player.playerIndex,w.operatingMenuMask),id,'press'),
+  isPressInput:(_,a,id)=>Default.input(a.player,playerStage(w),playerButtons(w,a.player),id,'press'),
   getCollision:(_,a,index)=>Broad.getCollisionById(w.storage,a.collisionHolders[index]?.collisionId),
   isCollidedByPushBackTarget:(_,c,mask)=>PushBackQuery.isCollidedByPushBackTarget(view(w),c,mask)
  });
@@ -202,7 +211,7 @@ function runPhaseInPlace(w,phase,frame,host){
     StateDispatch.onUpdate(w,a,frame.dtRaw,{
      ...host.playerStateCallbacks,
      ...terminalCallbacks(w,frame,host),
-     isPressInput:(world,current,id)=>Default.input(current.player,world.playerStage,Input.getButtons(world.inputs,current.player.playerIndex,world.operatingMenuMask),id,'press'),
+     isPressInput:(world,current,id)=>Default.input(current.player,playerStage(world),playerButtons(world,current.player),id,'press'),
      OnUpdate_Default:(world,current)=>updatePlayerInPlace(world,current.entityId,frame.dtRaw,host)
     });
     syncActors();
