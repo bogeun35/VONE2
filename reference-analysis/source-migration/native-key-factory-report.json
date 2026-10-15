@@ -1,0 +1,30 @@
+{
+  "scope": "Static Key creator completion and default ActorFactory dispatch",
+  "nativeCodeExecuted": false,
+  "verification": {
+    "factoryTests": 32,
+    "fullSuiteTests": 1936,
+    "passed": 1936
+  },
+  "nativeOrder": [
+    "Frame.CreateActorEntity 0x18186b520",
+    "Add Key 0x18186b544",
+    "ParseParameter 0x18186b558",
+    "InitCollision 0x18186b569",
+    "InitPost 0x18186b57a",
+    "manager primary Key 0x18186b59c",
+    "outer Scene.AddActor 0x1816a3687"
+  ],
+  "contracts": [
+    "Requires actual initialized native Actor, allocated current EntityRef and absent Key Add/default facts.",
+    "Resolved creation name must be nonempty; name-only resolution is checked without accepting changes to authored fields.",
+    "Key InitPost uses existing bridge event pool, common owner gates and real collision storage.",
+    "Collision capacity null is a successful native Key creation with no holder, unlike Player collision initialization.",
+    "All creation effects, including manager and registration, are transactional."
+  ],
+  "unresolved": [
+    "Prefab/name resolution still supplied by explicit materializeKeyBeforeInitialize host; standard prefab materializer and unique-name helper are owned by separate workers.",
+    "Full actual3-2 cursor with explicit materialization/name fixture now reaches Goal(14), whose creator is not connected.",
+    "Typed pool Add, full native boot/first-frame and legacy R.create/R.step/carry remain incomplete."
+  ]
+}

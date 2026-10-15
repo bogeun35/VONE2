@@ -246,4 +246,5 @@ function stepScene(input,frame,host={}){
  const afterPost=required(host,'afterPost',w,frame);if(afterPost&&typeof afterPost.then==='function')throw Error('Native stage phase must be synchronous');
  return {world:w,result:{update,collision:collision.result,post}};
 }
-module.exports={receive,post1,post2,applyInputs,stepPlayer,postPlayer,runPhase,collide,stepScene,allCollisions,completePhysicsFidelity:false};
+function initializeKeyPost(input,id,host={}){return transaction(input,w=>{const a=actor(w,id);Key.initPost(w,a,keyHost(w,host));return null;});}
+module.exports={initializeKeyPost,receive,post1,post2,applyInputs,stepPlayer,postPlayer,runPhase,collide,stepScene,allCollisions,completePhysicsFidelity:false};

@@ -14,6 +14,7 @@ const Bootstrap=require('./source-player-bootstrap.js'),Broad=require('./source-
 const Names=require('./source-native-scene-names.js');
 const PlayerIndices=require('./source-player-index-list.js');
 const Population=require('./population-rules.cjs');
+const Key=require('./source-key-lifecycle.js'),CollisionFactory=require('./source-native-collision-factory.js'),Bridge=require('./source-native-actor-bridge.js');
 const ZERO=[27,59,26,107,21,24,19,132,133,144,145],ORDERED=[28,70,72,108,121,128,161,17,14,5,102,120,137,152,155,175,178];
 function priority(type){if(!Number.isInteger(type)||type<0||type>65535)throw Error('Native factory supported ushort ActorType required');if(type===0)return 100000;if(ZERO.includes(type))return 0;const i=ORDERED.indexOf(type);return i<0?type+10000:i+1;}
 function orderCreationParams(authored){
@@ -86,6 +87,37 @@ function createNextPlayer(input,authored,host){
  }});
  return {...out,result:{...selected,actorId:out.actorId}};
 }
+function finishKeyCreation(input,authored,actorAtKeyInitialize,binding){
+ // Static Creator18186b470: AddKey@b544 -> Parse@b558 -> collision@b569
+ // -> InitPost@b57a -> manager primary@b59c; outer AddActor1816a3687 follows.
+ let w=JSON.parse(JSON.stringify(input));
+ if(authored.type!==17||!authored.name)throw Error('Native Key resolved nonempty factory name required');
+ if(binding?.keyComponentAbsent!==true||binding.keyAddDefaultVerified!==true)throw Error('Native Key actual absent-component Add/default facts required');
+ const id=actorAtKeyInitialize.entityId,ref=Allocator.decodeRef(id);
+ if(ref.index===0||ref.rawVersion<0x80000000||!Allocator.isCurrent(w.entityAllocator,id))throw Error('Native Key allocated current EntityRef required');
+ if(!Array.isArray(w.actors)||w.actors.some(a=>a.entityId===id))throw Error('Native Key complete Actor table without duplicate identity required');
+ if(actorAtKeyInitialize.actorType!==17||!QString.equals(QString.fromBytes(actorAtKeyInitialize.nameQStringBytes),QString.fromString(authored.name)))throw Error('Native Key Actor type/resolved name mismatch');
+ const parsed=Key.compileActor(authored,w.playerIndices?.indexList?.length),a=canonicalActor(JSON.parse(JSON.stringify(actorAtKeyInitialize)));
+ a.key=parsed.key;w.actors.push(a);CollisionFactory.createKey(w,a);
+ w=Bridge.initializeKeyPost(w,id).world;const live=w.actors.find(a=>a.entityId===id);
+ Key.writePrimaryKey(w.manager,live);Names.addUnique(w,live);
+ const registered=Init.register(live,Bridge.allCollisions(w),parsed.initPositionRaw,w.stage?.baseScaleRaw,{uniqueNameVerified:true});
+ Object.assign(live,registered.actor);
+ for(const c of registered.collisions){const target=Broad.getCollisionById(w.storage,c.id);Object.assign(target,c);if(w.collisions){const overlay=w.collisions.find(b=>b.id===c.id);if(overlay)Object.assign(overlay,c);}}
+ return {world:w,actorId:id};
+}
+function createKey(input,authored,host={}){
+ const w=JSON.parse(JSON.stringify(input));
+ if(typeof host.materializeKeyBeforeInitialize!=='function')throw Error('Native Key actual prefab/materialization and resolved-name host required');
+ const supplied=host.materializeKeyBeforeInitialize(w,authored);
+ if(supplied&&typeof supplied.then==='function')throw Error('Native Key materialization must be synchronous');
+ if(!supplied?.actor||!supplied?.binding||!supplied?.resolvedAuthored)throw Error('Native Key initialized Actor, AddKey facts and resolved creation parameter required');
+ // The host resolves only the name; geometry and parsed data remain authored.
+ const expected={...authored,name:supplied.resolvedAuthored.name};
+ if(JSON.stringify(expected)!==JSON.stringify(supplied.resolvedAuthored))throw Error('Native Key name resolution changed authored fields');
+ if(authored.name&&authored.name!==expected.name)throw Error('Native Key authored name must be preserved');
+ return finishKeyCreation(w,expected,supplied.actor,supplied.binding);
+}
 function update(input,thresholdRaw,host={}){
  // ActorFactory.Update1816a2f50: count captured@2fe9, marked entry check@30a3
  // BEFORE threshold@30e4; population skip advances cursor without marking.
@@ -102,6 +134,7 @@ function update(input,thresholdRaw,host={}){
   const a=e.parameter;if(!Number.isInteger(a.playerCount)||a.playerCount< -2147483648||a.playerCount>2147483647||a.playerCount===-2147483648)throw Error('Native factory supported int32 population selector required');
   if(!Population.actorPopulationAllowed(a.playerCount,count)){trace.push({convertedIndex:at,action:'population-skip'});f.cursor=(f.cursor+1)&65535;continue;}
   let result;if(a.type===27){const out=createNextPlayer(w,a,host);w=out.world;result=out.result;}
+  else if(a.type===17&&typeof host.createActorByType!=='function'){const out=createKey(w,a,host);w=out.world;result={actorId:out.actorId};}
   else {if(typeof host.createActorByType!=='function')throw Error('Native factory creator required: '+a.typeName+' ('+a.type+')');result=host.createActorByType(w,a,{authoredIndex:e.authoredIndex,convertedIndex:at});if(result&&typeof result.then==='function')throw Error('Native factory creator must be synchronous');}
   f=check();if(f.cursor>=f.createdEntries.length)throw Error('Native factory live created-list index out of range after creator');
   const markedIndex=f.cursor;f.createdEntries[markedIndex]=1;f.cursor=(f.cursor+1)&65535;
@@ -109,4 +142,4 @@ function update(input,thresholdRaw,host={}){
  }
  return {world:w,result:{trace,capturedPlayerIndexCount:count}};
 }
-module.exports={priority,orderCreationParams,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,initializePlayerIndices,createNextPlayer,update,completePhysicsFidelity:false};
+module.exports={priority,orderCreationParams,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,initializePlayerIndices,createNextPlayer,finishKeyCreation,createKey,update,completePhysicsFidelity:false};
