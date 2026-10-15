@@ -16,7 +16,7 @@
   ],
   "verification": {
     "focused": "12/12 passed",
-    "wholeSuite": "1187/1187 passed before final lookup fallback refinement; see subsequent verification",
+    "wholeSuite": "1192/1192 passed after lookup refinement and basic initializer additions; includes concurrent auxiliary work",
     "realStageVariants": "3-2 and10-4, populations2..8: one downward Thorn and three leftward Thorns respectively; two rectangles per actor",
     "integration": "Native lateCollided pass with real layer matrix and callback registry dispatches event43 once per overlapping Thorn rectangle. Synthetic player geometry; not R.step."
   },

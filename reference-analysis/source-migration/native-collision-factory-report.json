@@ -1,0 +1,18 @@
+{
+  "scope": "Native collision allocation plus Key, Goal, DamageRect and solid Rect initializers; excludes Actor birth/position/scale phases",
+  "nativeCodeExecuted": false,
+  "registration": {"runtime": false, "browserPackage": false},
+  "evidence": [
+    {"va": "0x18169f4d0/0x1817f6370/0x181690a90/0x18169f790", "fact": "Shared zero-body allocation, unit scale history, registry callback flag, ordered Actor holders."},
+    {"va": "0x18186bdb0/0x18186d42e", "fact": "Key H56 W32 X-16 Y-28, push0 sync1 layer10."},
+    {"va": "0x18185f750/0x18185fd22", "fact": "Goal H32+extend, W48, X-24, Y-32-extend; push0 sync1 layer12."},
+    {"va": "0x18180dfc0", "fact": "DamageRect copies parsed rectangle, push2 sync1 layer6, fixed-size bit2 and static bit4. It is initially active; OnStart disables it separately."},
+    {"va": "0x1816e6d90", "fact": "Rect only mode0 allocates, copying parsed rectangle, push2 sync1 priority2 layer6 fixed-size/static flags20. Nonzero mode returns without allocation."}
+  ],
+  "verification": {"factory": "6/6 passed", "relatedThornThunderFactory": "28/28 passed", "wholeSuite": "1192/1192 passed; includes concurrent auxiliary work"},
+  "unresolved": [
+    "Caller must supply parsed component fields and apply native Actor position and base-scale phases later.",
+    "DamageRect OnStart and update activation/query are not implemented by these allocation helpers.",
+    "The actual stage runtime R.create/R.step remains on its prior collision implementation; no stage opening or carry fix claimed."
+  ]
+}
