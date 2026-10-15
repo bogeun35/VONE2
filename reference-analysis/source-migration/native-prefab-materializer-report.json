@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "status": "frozen — independent helper, not runtime integrated",
+  "module": "source-native-prefab-materializer.js",
+  "nativeCodeExecuted": false,
+  "dllSha256": "dc554e2008b23c7d52f0c063886ea19acf20369ac698c77be7c67cfb516edd71",
+  "metadataSha256": "a2b7b05e180d948652be00322bc11dba5f5942c2df2803f9a4e6ebbbdca4a7c1",
+  "resourcesSha256": "5e7353bf2ec3fbbca65fdf1495f77bc29d1230b669a274c04fb050da91c8206c",
+  "prefabs": [
+    {
+      "name": "ActionMapView",
+      "prototypeGuid": "1257990744906305402",
+      "viewGuid": "3355033736414840103"
+    },
+    {
+      "name": "StageNoticeView",
+      "prototypeGuid": "2891575766719436773",
+      "viewGuid": "1386697972899065526"
+    },
+    {
+      "name": "Thunder",
+      "prototypeGuid": "1049018996789292933",
+      "viewGuid": "2933314728053658705"
+    },
+    {
+      "name": "Thorn",
+      "prototypeGuid": "252681393109828677",
+      "viewGuid": "4476472674399718534"
+    },
+    {
+      "name": "Goal",
+      "prototypeGuid": "1358310291138607793",
+      "viewGuid": "1079557128620669170"
+    },
+    {
+      "name": "CameraView",
+      "prototypeGuid": "1919612526744727270",
+      "viewGuid": "3022050134220682569"
+    },
+    {
+      "name": "Player",
+      "prototypeGuid": "2433998748904079550",
+      "viewGuid": "1564762783781839546"
+    },
+    {
+      "name": "Key",
+      "prototypeGuid": "843619264496456878",
+      "viewGuid": "375727164598194221"
+    },
+    {
+      "name": "Switch",
+      "prototypeGuid": "2285946634289581638",
+      "viewGuid": "3141983589912665047"
+    },
+    {
+      "name": "WeightedLift",
+      "prototypeGuid": "923427608091847613",
+      "viewGuid": "1205460503593769082"
+    },
+    {
+      "name": "LinePathLift",
+      "prototypeGuid": "2991712624845831119",
+      "viewGuid": "2661946795749458213"
+    },
+    {
+      "name": "Bridge",
+      "prototypeGuid": "976754246210257603",
+      "viewGuid": "3510179913774032863"
+    },
+    {
+      "name": "DamageRect",
+      "prototypeGuid": "1028558524506428955",
+      "viewGuid": "4274183208278660933"
+    },
+    {
+      "name": "Rect",
+      "prototypeGuid": "3012907236034044674",
+      "viewGuid": "755869638787786741"
+    }
+  ],
+  "nativeEvidence": [
+    {
+      "va": "0x18078a73e",
+      "bytes": "3b5e2c0f8382010000",
+      "meaning": "capacity check"
+    },
+    {
+      "va": "0x18078a75b",
+      "bytes": "488bc348c1e8203942040f855e010000",
+      "meaning": "raw version equality"
+    },
+    {
+      "va": "0x18078a7ca",
+      "bytes": "e891231b01488938",
+      "meaning": "typed entry then payload write"
+    },
+    {
+      "va": "0x18078a7fb",
+      "bytes": "4985110f87be000000",
+      "meaning": "existing mask skips added callbacks"
+    },
+    {
+      "va": "0x18078a80b",
+      "bytes": "4c0fabc0498901",
+      "meaning": "mask bit set"
+    },
+    {
+      "va": "0x18078a8bb",
+      "bytes": "b802000000eb09b801000000eb0233c0",
+      "meaning": "new2 existing1 invalid0"
+    },
+    {
+      "va": "0x1819f8159",
+      "bytes": "83f802488b7424380f94c04883c4",
+      "meaning": "prototype AddToEntity returns Set equals2"
+    },
+    {
+      "va": "0x18193cb7c",
+      "bytes": "488b41380fb70c066685c97426",
+      "meaning": "ushort entity slot mapping lookup"
+    },
+    {
+      "va": "0x18193cbaf",
+      "bytes": "8b47240faf47283947047c0b4533c0488bcfe88a040000",
+      "meaning": "count compared to block capacity"
+    },
+    {
+      "va": "0x18193cbde",
+      "bytes": "448b4f04418d4101894704410fb7c199f77f28",
+      "meaning": "append count and ushort slot"
+    },
+    {
+      "va": "0x18193cc01",
+      "bytes": "488b004863ca48891cc8488b47386644890c06",
+      "meaning": "physical ref then reverse mapping write"
+    },
+    {
+      "va": "0x18193cc21",
+      "bytes": "0faf570c488b5c2430488b7424384863c249034008",
+      "meaning": "payload pointer uses element size"
+    }
+  ],
+  "setSemantics": {
+    "new": 2,
+    "replacement": "Writes payload before existing-mask branch; preserves physical slot and buffer version; no OnAdded dispatch. View_Prototype.AddToEntity returns false for Set result1 or0.",
+    "invalidRef": 0,
+    "order": [
+      "capacity/version validation",
+      "GetBufferEntry existing-or-append",
+      "write uint64 Current",
+      "test existing mask",
+      "set new bit18",
+      "standard null callbacks"
+    ]
+  },
+  "poolSemantics": {
+    "count": "slots.length including null reserved slot0",
+    "mapping": "explicit ushort entityToSlot indexed by entity index; 0 absent",
+    "append": "physical ref plus payload append, map update, count increment; version unchanged",
+    "generation": "native typed map indexes by index only; helper refuses inconsistent stale pool refs using authoritative allocator live/pending state",
+    "growth": "native GetBufferEntry calls block/heap growth when count reaches blockCount*blockSize. Module explicitly refuses this branch and allocator doubling; no capacity or heap state invented."
+  },
+  "hostBoundary": [
+    "Caller provides authoritative nonfresh allocator and complete existing View pool snapshot; no initialization default",
+    "Caller attests active loaded/unmodified resources and standard system/callback profile with exact DLL/metadata/resources hashes",
+    "createFromPrefab(snapshot,{prototypeGuid},profile) returns cloned state, entity, View result and ordered trace; caller atomically adopts state",
+    "setView(snapshot,entityRef,currentGuid,profile) models native existing/new/invalid branches; View prototype AddToEntity boolean equals setResult===2",
+    "No Actor/Key/Player initialization or stage factory integration included"
+  ],
+  "verification": {
+    "dedicated": {
+      "tests": 29,
+      "passed": 29,
+      "failed": 0
+    },
+    "full": {
+      "tests": 1965,
+      "passed": 1965,
+      "failed": 0
+    },
+    "command": "node --test source-migration/*.test.cjs",
+    "scope": "Static native byte verification plus synthetic nonfresh snapshot regressions; no original game execution."
+  },
+  "unresolved": [
+    "Allocator capacity growth and typed physical block/heap growth refused; upstream implementation must establish storage before this helper can cover exhaustion.",
+    "Actual activeDB load/mutation and initial allocator/pool state are explicit caller evidence; fixture snapshots are synthetic nonfresh regression inputs, not captured original frames.",
+    "Other prefab components, custom callback/system effects, forged low-version refs, singleton pools and stale/mask-inconsistent physical snapshots are refused."
+  ],
+  "corrections": [
+    "Follow-up confirms native Set<View> writes existing component payload before returning1; prototype AddToEntity returns Set==2. This helper preserves replacement behavior rather than treating an existing component as an error."
+  ],
+  "api": {
+    "stateSchema": {
+      "schemaVersion": 1,
+      "allocator": "NativeEntityAllocator schemaVersion1 complete snapshot, including allocated tail and pending dictionary order",
+      "viewPool": {
+        "componentId": 18,
+        "elementSize": 8,
+        "flags": 0,
+        "blockSize": "actual positive integer",
+        "blockCount": "actual allocated block count used by native count capacity check",
+        "version": "actual uint32 buffer version",
+        "slots": "[null, {ref: canonical uint64 decimal EntityRef, currentGuid: canonical uint64 decimal GUID}, ...] in actual physical order",
+        "entityToSlot": "actual ushort reverse map, length allocator.allocatedCapacity; absent=0"
+      }
+    },
+    "create": "createFromPrefab(snapshot,{prototypeGuid},verifiedStandardProfile) -> {state,entity,prefab,setResult:2,added:true,slot,trace}",
+    "set": "setView(snapshot,entityRef,currentGuid,verifiedStandardProfile) -> {state,setResult:0|1|2,added,slot}; arbitrary canonical uint64 Current payload supported only by typed primitive, not arbitrary prefab components",
+    "profile": "Pass every primitive field of module.requiredProfile after verifying those facts for the actual host. Template is not evidence of runtime DB state. No extra keys/custom components accepted.",
+    "ownership": "Input unchanged on success/failure; caller adopts returned state atomically and continues creator-specific Actor/Key/Player work only after createFromPrefab returns."
+  }
+}

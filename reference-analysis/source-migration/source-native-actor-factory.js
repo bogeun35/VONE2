@@ -14,6 +14,7 @@ const Bootstrap=require('./source-player-bootstrap.js'),Broad=require('./source-
 const Names=require('./source-native-scene-names.js');
 const PlayerIndices=require('./source-player-index-list.js');
 const Population=require('./population-rules.cjs');
+const Prefab=require('./source-native-prefab-materializer.js');
 const Key=require('./source-key-lifecycle.js'),CollisionFactory=require('./source-native-collision-factory.js'),Bridge=require('./source-native-actor-bridge.js');
 const ZERO=[27,59,26,107,21,24,19,132,133,144,145],ORDERED=[28,70,72,108,121,128,161,17,14,5,102,120,137,152,155,175,178];
 function priority(type){if(!Number.isInteger(type)||type<0||type>65535)throw Error('Native factory supported ushort ActorType required');if(type===0)return 100000;if(ZERO.includes(type))return 0;const i=ORDERED.indexOf(type);return i<0?type+10000:i+1;}
@@ -23,6 +24,15 @@ function orderCreationParams(authored){
  for(let i=0;i<entries.length;i++)for(let j=i+1;j<entries.length;j++)if(priority(entries[i].parameter.type)>priority(entries[j].parameter.type))[entries[i],entries[j]]=[entries[j],entries[i]];
  for(let i=0;i<entries.length;i++)for(let j=i+1;j<entries.length;j++)if(entries[i].createThresholdRaw>entries[j].createThresholdRaw)[entries[i],entries[j]]=[entries[j],entries[i]];
  return entries.map((e,convertedIndex)=>({...e,convertedIndex}));
+}
+function materializeActorPrefab(input,actorType){
+ // Exact uint64 GUIDs from audited installed ResourceContainer; never Number.
+ const guid={17:'843619264496456878',27:'2433998748904079550'}[actorType];
+ if(!guid)throw Error('Native factory audited prefab mapping required for ActorType '+actorType);
+ const w=JSON.parse(JSON.stringify(input));
+ const out=Prefab.createFromPrefab({schemaVersion:1,allocator:w.entityAllocator,viewPool:w.viewPool},{prototypeGuid:guid},w.materializationProfile);
+ w.entityAllocator=out.state.allocator;w.viewPool=out.state.viewPool;
+ return {world:w,entityId:out.entity.ref,prefab:out.prefab,trace:out.trace};
 }
 function initializeAbsentActor(facts){
  if(facts?.actorComponentAbsent!==true)throw Error('Native Actor AddComponent requires verified absence after materialization');
@@ -142,4 +152,4 @@ function update(input,thresholdRaw,host={}){
  }
  return {world:w,result:{trace,capturedPlayerIndexCount:count}};
 }
-module.exports={priority,orderCreationParams,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,initializePlayerIndices,createNextPlayer,finishKeyCreation,createKey,update,completePhysicsFidelity:false};
+module.exports={priority,orderCreationParams,materializeActorPrefab,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,initializePlayerIndices,createNextPlayer,finishKeyCreation,createKey,update,completePhysicsFidelity:false};
