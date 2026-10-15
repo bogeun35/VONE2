@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "module": "source-player-capture.js",
+  "status": "partial_receiver_core_complete_host_nested_dispatch_warp_integration_pending",
+  "settledOn": "2026-10-14",
+  "nativeCodeExecuted": false,
+  "events": [
+    30,
+    65,
+    66
+  ],
+  "owner": "보조세션3",
+  "native": {
+    "receiver": "PlayerComponent.OnRecvEvent0x1816c1080",
+    "defaultState": "m_PlayerState(+3)==1이면 OnRecvEvent_Default0x1816c6600 먼저호출. event30/65/66은 해당default내 비교36/27/48/16/57/20에걸리지않아0x1816c68d7에서return0,outerbranch계속. 다른state도outerbranch직접처리.",
+    "query30": "0x1816c181f movsx bytePlayer+0xe,inc ->signed m_PlayerIndex+1. Player+8=m_Index와다름.",
+    "capture65": [
+      "0x1816c1304 Player.m_EntityRef(+0x28)를owner로읽음",
+      "SetVisible(false,owner=self)0x1816c1327 -> nested55 via0x18169efcd, ownerEvent+18 at0x18169efde,visibleByte75 at0x18169efe5",
+      "SetPause(true,owner=self)0x1816c133f ->nested53 via0x18169f1bd,ownerEvent+18 at0x18169f1ce,pausedByte76 at0x18169f1d5",
+      "0x1816c1348 eventByte74!=0 setsActorflag24,elseclear@134e/54",
+      "eventByte79==0 calls notifyKeyReturn0x1816c1383 ->GetEventParam47@0x1816bfa0c ->Frame.NotifyEvent broadcastActorType17@bfa23/31",
+      "eventByte78!=0 setsPlayer.flagsbit10@0x1816c1395; zero leavesexistingbit unchanged; return0"
+    ],
+    "release66": [
+      "owner=self SetPause(false)0x1816c1298",
+      "Actor.WarpPos+100=eventvec+30@0x1816c12a6",
+      "Actor.WarpVelo+110=eventvec+40@0x1816c12b2",
+      "Actorflag17 set@0x1816c12be",
+      "ResetVeloAll0x1816c12c6 ->WorldVelo+f0/MoveVelo+60/JumpVelo+90 zero@0x18169da35/3c/40",
+      "Actorflag24 set@0x1816c12cf",
+      "Playerflagsbit10clear@0x1816c12da,return0"
+    ],
+    "negativeEvidence": "receiverbranches do not SetVisible(true), SetPosForce/Pos write, collision lookup/write, equipment/key reference clear, Player.state/requestedstate write or sender-self rejection. Nested55/53 handlers and Actor.warpProc own subsequenteffects."
+  },
+  "api": {
+    "plan": "plan(nativePlayerActorState,decodedEvent) ->JSONschema1 orderedoperations/returnValue. Capture decodedbytes74/78/79 explicitrequired; release position/velocityrawexplicitrequired.",
+    "execute": "execute(input,event,{transaction,dispatch}) -> clonedstate/trace/return. Hosttransaction synchronouslyruns suppliedclosure andreturns completedresult. Hostdispatch consumesnested53/55/47 operations synchronously, maymutate workingclone throughactual commonhandlers, returnsint32.",
+    "state": "{actor:{id,flags,...},player:{entityId,playerIndex,state,flags,...}} withsameactualEntityRef. QueryIndex signedbyte[-128,127]. No fictitiousactorindex mapping.",
+    "flags": "write/flagoperations execute in nativeorder, readingcurrentflags after nesteddispatch, not precomputedouter snapshot.",
+    "hostAtomicity": "Inputnevermutated. Hostmustrollback external nestedworld/eventpool/key/equipment/collisionstate onanyerror; pureclone alone cannotundohost. Directplan safe inspect. No rollback on native warpqueryblocked because no event66 should be sent in thatcase.",
+    "equipment": "CapturedPlayer equiplist untouched directly. NativeSetVisible/SetPause may forwardviaPlayer/common/equipmenthandlers. This helper does not duplicate their behavior.",
+    "key": "notifyKeyReturn broadcasts evenwhenhelperinput keyId null; Keyevent47 handlerfiltersactualownership andreturnskey. byte79nonzero skipsbroadcast. No directkeydelete/returnimplementedhere.",
+    "self": "No selfrejectioninreceiver. ExistingWarpGun collisionlayer excludesownplayer; callers ownfiltering. Receiver selfevent remainslegal.",
+    "warp": "Release queuesWarpPos/WarpVelo+flag17; currentvelocitiesreset, collisionVelocity/windnotreset. Currentposition and visibility preserved until sharedwarp lifecycle. No immediatevelocityassignmentfromevent.",
+    "ownership": "OnlyPlayerCapture newmodule/test/report/result/claim/nativeevidence file. FrozenPlayerWarpGun/SearchLight/DistanceConstraint/UpDownLift/ColorBox/PlayerBlock/ActorLifecycle/Player/runtime/Git unchanged."
+  },
+  "verification": {
+    "unitCommand": "node --test source-migration/source-player-capture.test.cjs",
+    "unitTests": {
+      "tests": 12,
+      "pass": 12,
+      "fail": 0
+    },
+    "fullCommand": "node --test source-migration/*.test.cjs",
+    "fullSuite": {
+      "tests": 1010,
+      "pass": 1010,
+      "fail": 0
+    },
+    "checks": [
+      "signedqueryvsactorindex",
+      "capture nested55->53->47 selfowner",
+      "Blockbyteflags/keepKey",
+      "ordinarybyte74clear/byte78preserve",
+      "nestedflagmutationorder",
+      "release warpreservation andthreevelzeros",
+      "collisionvelocity/currentPos/visibilitypreservation",
+      "equipment/key/state refs",
+      "receiver selfallowed",
+      "JSONroundtrip",
+      "malformedfacts/hostmissing",
+      "externaltransactionrollback",
+      "asyncdispatchreject"
+    ]
+  },
+  "unresolved": [
+    "Actualnesteddispatch integration throughActorLifecycle/Player/equipment/Key actorType17 event47 andwarpproc remainshostwork. Testdispatcher simulatesnestedflags only andisnotplayableproof.",
+    "Senderadaptermustsupplyactualeventdecodedbytes; no missingpayloadzero defaultassumed. ExistingWarpGun/BlockGun filesremainfrozen, leadconnectsnewhelper.",
+    "Fullscene/gameplay/paralleloriginalverification notperformed."
+  ],
+  "completePhysicsFidelity": false
+}

@@ -1,0 +1,32 @@
+{
+  "scope": "Transactional shared Actor schema adapter for Capture30/65/66, lifecycle control events49/51..55 and Motion Post1/Post2",
+  "registration": {"runtime": false, "browserPackage": false},
+  "nativeCodeExecuted": false,
+  "dependenciesReviewed": ["ActorLifecycle34", "PlayerCapture12", "ActorWarpJump40"],
+  "schema": {
+    "Actor+0xf0": "Capture.actor.worldVelocityRaw -> Actor.velocityRaw",
+    "Actor+0x60": "Capture.actor.moveVelocityRaw -> Actor.accelerationRaw",
+    "Actor+0x90": "jumpVelocityRaw",
+    "Actor+0x100": "warpPositionRaw",
+    "Actor+0x110": "warpVelocityRaw",
+    "Stage+0x91": "world.stageByte91 must reflect CURRENT ScrollParam.ScrollType",
+    "ActorType": "actor.actorType is adapted temporarily to Lifecycle.ordinal",
+    "Actor entity": "actor.entityId is adapted to Capture.actor.id; Player.entityId must match"
+  },
+  "behavior": [
+    "Whole world is JSON-cloned before operation; returned state commits only on success. Nested custom hooks mutate only supplied world, with external audio/network delivery deferred until success.",
+    "Capture plan executes nested visible/pause events and equipment calls synchronously before later flag/vector writes.",
+    "Common control uses exact Lifecycle registry and refuses unknown registered custom receivers unless host supplies handler; no unconditional common fallback.",
+    "Complete storage lookup includes disabled collision bodies, so warp restores collision flags and clears reciprocal contacts even while hidden.",
+    "Capture release zeros native Velo/Accel/Jump, schedules warp and does not change current position or visibility until Post1.",
+    "Post1 uses actual WarpJump.warpProc false return, then jump/outmap. Post2 is exposed separately to preserve intervening component Post callback order."
+  ],
+  "verification": {"focused": "95/95: bridge9 + Lifecycle34 + Capture12 + WarpJump40", "wholeSuite": "1209/1209; includes concurrent auxiliary work"},
+  "unresolved": [
+    "R.create/R.step still unconnected; this API requires a complete native world, not the legacy runtime schema.",
+    "Native typed broadcast query order, custom equipment/Key receivers and non-control events require explicit host implementations.",
+    "Actual Actor factory initialization, phase scheduling, Player state transitions, input/session timing and complete device updates remain separate integration work.",
+    "Equipment fixture uses SearchLight106 to exercise a proven common receiver; does not claim it is an authored equipment attachment.",
+    "No horizontal carry fix or live stage opening is claimed."
+  ]
+}

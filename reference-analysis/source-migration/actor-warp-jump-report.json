@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "module": "source-actor-warp-jump.js",
+  "status": "partial_native_warp_jump_core_complete_host_stage_visibility_integration_pending",
+  "settledOn": "2026-10-15",
+  "nativeCodeExecuted": false,
+  "native": {
+    "warp": "0x18169e460",
+    "jump": "0x18169e6c0",
+    "post1": "0x18169e260",
+    "setPosForce": "0x18169d4e0",
+    "clearActorContacts": "0x1816a0670",
+    "clearCollisionContacts": "0x1816914e0",
+    "removeReciprocalFirst": "0x1816914b3",
+    "jumpContactQuery": "0x181692a90 face1,map=true"
+  },
+  "verified": {
+    "warpActive": "absWarpX/Y>=4 inclusive, signed. Activeflag25 set; unlessactorflag20 andunlessactorType!=27, Stagebyte+91>0 clampsdestX toCameraViewStageArea.left. ClearALLholder actorcontacts+reciprocalfirstmatchingid, mapcontacts preserved. SetPosForce ActorPos/PrePos, sync-holdercollisioncurrent/prepos andclearbit6. WarpVelo copiedtoVelo andpendingvectorszero. Ifbit17SetVisible(true,owner=self)synchronous, then17clear. Returnsfalsealways.",
+    "warpIdle": "Bothabs<4: clearbit25only; preservependingvectors/bit17/positions/velocities. Originzero cannotrepresentactivewarp.",
+    "jump": "PendingJump abscomponent>=4 setsVelo thenzeroJump. GetCollision index0; exactDown(0,+1) cachedactorORmapnormal meansgrounded. Existingairborne addsrawFrame.Gravity(no dt). GroundedORnocollision clampspositiveVeloYzero,negativepreserved. bit19 notcleared.",
+    "history": "SetPosForce writes+0xb0/+0xc0; doesnotresetPreVelo. Contacts clearedfornonsync holders too butonlysync holderpositionsmove. Post2 thenCollisionVelo=Pos-PrePos=0 immediatelyafterwarp.",
+    "post1": "warpProc alwaysfalse so activewarpstilljump whenbit19,thenoutmapunlessbit18. Do nottreatflag25 asreturntrue.",
+    "capture66Bridge": "FrozenPlayerCapture fieldsworldVelocityRaw/warpPositionRaw/warpVelocityRaw/flags bridge toleadMotion.velocityRaw (same native+f0). Testadaptsalias withoutmodifyingfrozenhelper. Warp restoresvisibility onlybyhostSetVisible andconsumespendingvelocity exactly."
+  },
+  "integration": {
+    "api": "warpProc(world,a,host),jumpProc(world,a) fitexistingSourceActorMotion.post1 hostcallbacks. Existingmotion unchanged. Helpers mutateactor/world; hostwholeframetransactionrollbacks errors/nested effects.",
+    "cache": "world.collisions each contacts[{id,normal:{x,y}}],mapNormals[{x,y}], collisioncurrent/pre/flags; actualnativeorderedcacheonly. ActorcollisionHolders[{collisionId,syncPos}]. Missinglookups skipped. reciprocalRemoveContactInfo removesfirstmatchingid, notall.",
+    "visibility": "Read existing source-actor-lifecycle.js receiveControl/commonEvent/gate only. warp setVisible(world,a,true,a.entityId) -> receiveControl(a,{eventType:55,value:true,sourceId:a.entityId}). MatchingvisibleOwner clearsbit3/owner, displayOwner clearsbit5, callssetCollisionActive(true,self) andPlayer.equipmentIds two-slot notify55. ForeignvisibleOwner rejects, noequipment/collisioncalls; warpProc still clearsbit17 after synchronousreturn. Host must execute returnedcalls recursively and commoncollisionowner gates, not merelytoggle visible.",
+    "stage": "Stage raw+0x91 = m_ScrollParam.ScrollType: StageComponent.m_ScrollParam metadataoffset160-16=0x90; QScrollParam.ScrollType offset17-16=1. QStageInitParam.scrollType offset0x2c. authoredconverter0x180553d20/d25 copies sourcebyte+20 toQStageInitParam+2c; prepare3 0x18170ad22/ad29 copies toStage+91. ChangeScrollType0x18170d5fa overwrites currentbyte. New additive stageWarpFacts(selectedVariant) produces explicitinitialvalue only; host uses currentliveStageScrollType eachframe.",
+    "gravity": "Explicitworld.gravityRaw perframe; no inventedscale/dt. Contactnormalmustexact0,+1;65535/65536isnotgrounded.",
+    "overlap": "source-warpinit-devices.js andsource-gear-devices.js containolderconveniencepartialwarp/jump. Readonly, noownershipcollisionedits. Leadselectsonecommonconsumer; avoiddoublewarp/jump.",
+    "ownership": "OnlynewActorWarpJump module/test/report/nativeevidence/result/claim. FrozenPlayerCapture/WarpGun/UpDownLift/SearchLight/DistanceConstraint andleadmotion/runtime/HANDOFF/Git unchanged.",
+    "velocitySchemaAliases": {
+      "0xf0 m_Velo": "FrozenPlayerCapture.actor.worldVelocityRaw -> leadMotion.velocityRaw",
+      "0x60 m_Accel": "FrozenPlayerCapture.actor.moveVelocityRaw -> leadMotion.accelerationRaw (legacy name is misleading; not a second velocity)",
+      "0x90 m_JumpVelo": "jumpVelocityRaw -> jumpVelocityRaw",
+      "0x100 m_WarpPos": "warpPositionRaw -> warpPositionRaw",
+      "0x110 m_WarpVelo": "warpVelocityRaw -> warpVelocityRaw",
+      "rule": "Actor event66 ResetVeloAll zeroesVelo/Accel/Jump; activewarp consumes WarpVelo into Velo, not acceleration. Adapter must keep schemafields in sync, not duplicate stalealiases."
+    }
+  },
+  "verification": {
+    "unitCommand": "node --test source-migration/source-actor-warp-jump.test.cjs",
+    "unitTests": {
+      "tests": 40,
+      "pass": 40,
+      "fail": 0
+    },
+    "fullCommand": "node --test source-migration/*.test.cjs",
+    "fullSuite": {
+      "tests": 1125,
+      "pass": 1125,
+      "fail": 0
+    },
+    "checks": [
+      "active/idle epsilonboundaries/origin",
+      "signedpendingvelocityconsume",
+      "allholdercontactclear andreciprocal/mapcachepreserve",
+      "sync-onlycollisionhistory",
+      "cameraClamp/exemptions/missingfacts",
+      "visibilitycallorder/selfowner/bit17clear",
+      "jumpvector/gravity/no-dt",
+      "grounded/absentcollision/near-normal",
+      "Post1activewarpcontinuesjump/outmap",
+      "Post2historyzero",
+      "actualPlayerCapture66requestconsume",
+      "JSONreplay",
+      "hostfailuretransactionrollback",
+      "3-2/10-4/12-4 actual2..8 variant scrollType initialvalues",
+      "nestedStageScrollParam fieldoffsetmetadata",
+      "explicitliveChangeScrollTypeoverridesinitialvariant",
+      "actualLifecycle receiveControl55 selfowner/equipment/collisioncalls",
+      "foreignowner rejection withbit17consumed",
+      "Capture moveVelocityRaw actually m_Accel ->motion.accelerationRaw alias"
+    ]
+  },
+  "unresolved": [
+    "HostactualActorLifecycle visibility/commonnesteddispatch/cacheadapter/sceneconnection remainslead. Testcallbackdiagnostics are notfullplayable verification.",
+    "Originalgame execution/sidebysidesceneverification notperformed."
+  ],
+  "completePhysicsFidelity": false,
+  "followup": {
+    "date": "2026-10-15",
+    "status": "complete_and_frozen_for_lead_review",
+    "apiCompatibility": "Existing stageByte91/warpProc/jumpProc signatures preserved. stageWarpFacts is additive. Missingactualbyte/camera stillthrow, nozero fallback.",
+    "variants": [
+      {
+        "stageId": "st_w_03_02",
+        "counts": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "initialScrollType": 1,
+        "symbol": "Normal",
+        "warpCameraClampEligible": "ActorType27 &&!(flags&bit20), becauseScrollType>0"
+      },
+      {
+        "stageId": "st_w_10_04",
+        "counts": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "initialScrollType": 1,
+        "symbol": "Normal",
+        "warpCameraClampEligible": "ActorType27 &&!(flags&bit20), becauseScrollType>0"
+      },
+      {
+        "stageId": "st_w_12_04",
+        "counts": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "initialScrollType": 2,
+        "symbol": "Auto",
+        "warpCameraClampEligible": "ActorType27 &&!(flags&bit20), becauseScrollType>0"
+      }
+    ],
+    "correction": "PreviousStagebyte91symbolicfield unresolved entry resolved through nestedQScrollParam. Previousnotes calledCapture +60 MoveVelo; actualquantumfieldoffsets namesit m_Accel. FrozenCaptureAPI retained; ownedfollowup documents requiredalias. No frozenfilesmodified.",
+    "sourceEvidence": "Existing stage-autoscroll report andnativeaddresses corroborated; ownnativeevidence appended converter/prepare/ChangeScrollType disassembly. No original game executed."
+  }
+}
