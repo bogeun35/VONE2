@@ -335,3 +335,10 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - factory22+Index28=50/50,driver5+Preparation63+AutoScroll20=88/88,전체1825/1825통과(동시WIP포함). 실제3-2 2..8명부매핑/색상/인원제한/무RNG,중복명rollback,기존listprefix/10-4후속RNG검증. 명부/materialization은명시fixture이며전체boot검증아님.
 - Scene.SetActive1816a74f0도정적확인:Scene.flagsbit0먼저쓰고이름사전의물리occupied슬롯순회→Frame.GetActor→Actor.SetActive(owner). 현재logical actorNames.entries로물리순서를추정해구현하지않음. source-native-scene-names는lookup용logical projection임. lead-scene-set-active.local.txt근거.
 - StageInputUpdate/StageGameStatus/NativeMaterialization후속보고서는신규보조소유,미수정/미stage. 실제R.create/R.step/carry미완료;remote배포변경없음.
+
+### Factory.Update 커서 연결 (2026-10-15)
+
+- native ActorFactory.Update1816a2f50을 Factory.update로 연결하고 Stage driver prepare3 기본경로에서 호출한다. entry 시 PlayerIndexCount capture, marked check가 threshold보다 먼저, population skip은 bit를 쓰지 않고 cursor만 진행, creator null/Player limit 반환도 live cursor를 다시 읽어 mark1 후 ushort 증가한다. 명시 host override는 유지한다.
+- 집중 factory27+driver5=32/32, 전체1931/1931 통과(동시 보조 WIP 포함). 실제3-2 전체 parameter 순회/인원제외/Player limit 및 callback cursor 변경을 검증. device recording host는 순서 fixture이며 실제 생성 구현이 아니다. host 없는 실제 배열은 Key(17) 생성자에서 명시 실패하고 앞선 Player/allocator 변경도 rollback한다.
+- GetUniqueName1816a3710 정적 확인: factory+2 ushort 선증가, format literal slot1831c3e08은 A{0}_{1}, 인수는 counter와 ActorType.ToString, StringBuilder 결과 UTF16 length>31이면31에서 잘라낸다. resolve-string-literals CLI의 float 변환 오류는 문자열 자체를 성공적으로 디코딩한 뒤 발생한 것. 이 규칙은 아직 구현하지 않았으며 enum 이름/빈 이름 호출 경계와 QString30바이트 경계 확인이 필요하다.
+- NativeMaterialization은 delegate-registration 후속 WIP이므로 미수정/미stage. legacy R.create/R.step 및 실제carry는 아직 미완료. push 재시도 없음.

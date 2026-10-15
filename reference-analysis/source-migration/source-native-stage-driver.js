@@ -29,7 +29,10 @@ function update(input,frame,host={}){
    w.actorSceneFlags=scene.flags;const out=Factory.initializePlayerIndices(w,p);adopt(w,out.world);w.actorScene.flags=w.actorSceneFlags;
   },
   getPlayerIndexCount:()=>{if(!Array.isArray(w.playerIndices?.indexList))throw Error('Native Stage actual index list required');return w.playerIndices.indexList.length;},
-  updateActorFactory:(_factory,_f,threshold)=>need(host,'updateActorFactory',w,w.actorFactory,threshold,f),
+  updateActorFactory:(_factory,_f,threshold)=>{
+   if(typeof host.updateActorFactory==='function')return need(host,'updateActorFactory',w,w.actorFactory,threshold,f);
+   const out=Factory.update(w,threshold,host.factory);adopt(w,out.world);return out.result;
+  },
   getPlayerActorCount:()=>{if(!Array.isArray(w.scenePlayerRefs))throw Error('Native Stage actual PlayerInfoList required');return w.scenePlayerRefs.length;},
   calcPlayerRange:()=>playerRange(w),
   onUpdate:()=>need(host,'onActiveStageUpdate',w,f)

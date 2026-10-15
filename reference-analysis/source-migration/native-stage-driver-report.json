@@ -1,14 +1,21 @@
 {
   "scope": "Whole-world StagePreparation adapter and native PlayerIndexList/factory selection",
   "nativeCodeExecuted": false,
-  "verification": {"factoryAndIndexTests":50,"preparationAndDependenciesTests":88,"fullSuiteTests":1825,"fullSuitePass":1825},
+  "verification": {
+    "factoryAndIndexTests": 50,
+    "preparationAndDependenciesTests": 88,
+    "fullSuiteTests": 1931,
+    "fullSuitePass": 1931,
+    "factoryCursorAndDriverTests": 32
+  },
   "contracts": [
     "Caller supplies initialized Stage/Scene/Factory/Map/Camera snapshots, current GamePlayerInfo roster, existing index list, allocator and actual materialization hosts.",
     "Preparation uses one verified Update per phase; phase6 onActiveStageUpdate is still an explicit complete host, not replaced by Bridge.stepScene.",
     "initPlayerIndexList calls the verified native helper, preserves existing prefix, consumes no RNG for shuffle0 and commits exact post RNG for shuffle1.",
     "createNextPlayer uses current successful Scene PlayerInfoList count and raw roster lookup before materialization; limit/missing-info skips allocate nothing.",
     "PlayerInfoList append occurs after Player.CreateEntity succeeds and before Scene name/position/scale registration. All edits commit through a world clone.",
-    "Player range uses registered name dictionary values and actual Scene PlayerInfo refs, checking allocator generations. Unregistered materialized Actors do not contribute."
+    "Player range uses registered name dictionary values and actual Scene PlayerInfo refs, checking allocator generations. Unregistered materialized Actors do not contribute.",
+    "Default preparation factory hook executes ActorFactory.Update with captured player-index count, marked-before-threshold checks, population skips without marking and live cursor marking after synchronous creator return."
   ],
   "newStaticEvidence": {
     "createPlayerSub": "0x1816a3970",
@@ -25,6 +32,7 @@
     "Actual singleton/prototype/listener/add effects, scene/map activation and typed pools remain explicit hosts; tests use clearly scoped fixtures.",
     "Stage active-frame input/game-status/notice/time tail remain pending complete integration.",
     "Scene name logical snapshots do not establish the physical enumeration order required for SetActive.",
-    "No full R.create/R.step or horizontal carry repair claimed."
+    "No full R.create/R.step or horizontal carry repair claimed.",
+    "Actual full 3-2 parameters currently stop at missing Key (17) creator; the transaction discards earlier Player creation. Generic native generated names and device construction remain unconnected."
   ]
 }

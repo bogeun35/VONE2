@@ -13,6 +13,7 @@ const Init=require('./source-actor-initialization.js'),PlayerInit=require('./sou
 const Bootstrap=require('./source-player-bootstrap.js'),Broad=require('./source-collision-broadphase.js'),Callbacks=require('./source-collision-callbacks.js'),QString=require('./source-native-qstring.js'),Allocator=require('./source-native-entity-allocator.js');
 const Names=require('./source-native-scene-names.js');
 const PlayerIndices=require('./source-player-index-list.js');
+const Population=require('./population-rules.cjs');
 const ZERO=[27,59,26,107,21,24,19,132,133,144,145],ORDERED=[28,70,72,108,121,128,161,17,14,5,102,120,137,152,155,175,178];
 function priority(type){if(!Number.isInteger(type)||type<0||type>65535)throw Error('Native factory supported ushort ActorType required');if(type===0)return 100000;if(ZERO.includes(type))return 0;const i=ORDERED.indexOf(type);return i<0?type+10000:i+1;}
 function orderCreationParams(authored){
@@ -85,4 +86,27 @@ function createNextPlayer(input,authored,host){
  }});
  return {...out,result:{...selected,actorId:out.actorId}};
 }
-module.exports={priority,orderCreationParams,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,initializePlayerIndices,createNextPlayer,completePhysicsFidelity:false};
+function update(input,thresholdRaw,host={}){
+ // ActorFactory.Update1816a2f50: count captured@2fe9, marked entry check@30a3
+ // BEFORE threshold@30e4; population skip advances cursor without marking.
+ // After any returned CreateActor (including null/limit skip), reread LIVE
+ // cursor@315e, mark1@318e, then increment ushort@3193.
+ let w=JSON.parse(JSON.stringify(input));if(!Number.isSafeInteger(thresholdRaw))throw Error('Native factory exact threshold required');
+ const entries=orderCreationParams(w.stageInitParam?.stage?.actorCreateParamList),count=w.playerIndices?.indexList?.length;
+ if(!Number.isInteger(count))throw Error('Native factory actual PlayerIndexCount required');
+ const check=()=>{const f=w.actorFactory;if(!Number.isInteger(f?.cursor)||f.cursor<0||f.cursor>65535||!Array.isArray(f.createdEntries)||f.createdEntries.length>65535||f.createdEntries.some(v=>!Number.isInteger(v)||v< -2147483648||v>2147483647))throw Error('Native factory ushort cursor and actual QList FPBoolean entries required');return f;};
+ const trace=[];for(;;){let f=check();const at=f.cursor;if(at>=f.createdEntries.length)break;
+  if(f.createdEntries[at]!==0){trace.push({convertedIndex:at,action:'already-marked'});f.cursor=(f.cursor+1)&65535;continue;}
+  const e=entries[at];if(!e)throw Error('Native factory cursor exceeds converted stage parameters');
+  if(thresholdRaw<e.createThresholdRaw){trace.push({convertedIndex:at,action:'threshold-wait'});break;}
+  const a=e.parameter;if(!Number.isInteger(a.playerCount)||a.playerCount< -2147483648||a.playerCount>2147483647||a.playerCount===-2147483648)throw Error('Native factory supported int32 population selector required');
+  if(!Population.actorPopulationAllowed(a.playerCount,count)){trace.push({convertedIndex:at,action:'population-skip'});f.cursor=(f.cursor+1)&65535;continue;}
+  let result;if(a.type===27){const out=createNextPlayer(w,a,host);w=out.world;result=out.result;}
+  else {if(typeof host.createActorByType!=='function')throw Error('Native factory creator required: '+a.typeName+' ('+a.type+')');result=host.createActorByType(w,a,{authoredIndex:e.authoredIndex,convertedIndex:at});if(result&&typeof result.then==='function')throw Error('Native factory creator must be synchronous');}
+  f=check();if(f.cursor>=f.createdEntries.length)throw Error('Native factory live created-list index out of range after creator');
+  const markedIndex=f.cursor;f.createdEntries[markedIndex]=1;f.cursor=(f.cursor+1)&65535;
+  trace.push({convertedIndex:at,action:'creator-returned',markedIndex,result:result??null});
+ }
+ return {world:w,result:{trace,capturedPlayerIndexCount:count}};
+}
+module.exports={priority,orderCreationParams,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,initializePlayerIndices,createNextPlayer,update,completePhysicsFidelity:false};
