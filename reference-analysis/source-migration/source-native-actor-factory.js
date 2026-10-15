@@ -10,6 +10,7 @@
  */
 'use strict';
 const Init=require('./source-actor-initialization.js'),PlayerInit=require('./source-player-collision-init.js');
+const Bootstrap=require('./source-player-bootstrap.js'),Broad=require('./source-collision-broadphase.js'),Callbacks=require('./source-collision-callbacks.js'),QString=require('./source-native-qstring.js'),Allocator=require('./source-native-entity-allocator.js');
 const ZERO=[27,59,26,107,21,24,19,132,133,144,145],ORDERED=[28,70,72,108,121,128,161,17,14,5,102,120,137,152,155,175,178];
 function priority(type){if(!Number.isInteger(type)||type<0||type>65535)throw Error('Native factory supported ushort ActorType required');if(type===0)return 100000;if(ZERO.includes(type))return 0;const i=ORDERED.indexOf(type);return i<0?type+10000:i+1;}
 function orderCreationParams(authored){
@@ -24,7 +25,34 @@ function initializeAbsentActor(facts){
  const a=Init.initialize(Init.defaultMaterialized({actorComponentAbsent:true}),facts);
  // Convert native field names once at the factory boundary. No stale aliases
  // survive to bypass Lifecycle ownership writes.
- for(const [native,canonical] of Object.entries({inactiveEntity:'activeOwner',invisibleEntity:'visibleOwner',pauseEntity:'pauseOwner',disableDisplayEntity:'displayOwner',disableAnimationEntity:'animationOwner'})){a[canonical]=a[native];delete a[native];}
- return a;
+ return canonicalActor(a);
 }
-module.exports={priority,orderCreationParams,initializeAbsentActor,completePhysicsFidelity:false};
+function canonicalActor(a){for(const [native,canonical] of Object.entries({inactiveEntity:'activeOwner',invisibleEntity:'visibleOwner',pauseEntity:'pauseOwner',disableDisplayEntity:'displayOwner',disableAnimationEntity:'animationOwner'})){a[canonical]=a[native];delete a[native];}return a;}
+function canonicalPlayer(snapshot){
+ const a=canonicalActor(JSON.parse(JSON.stringify(snapshot.actor)));
+ const {playerState,cachedActorType,jumpVelocityRaw,equipActors,...p}=JSON.parse(JSON.stringify(snapshot.player));
+ a.player={...p,state:playerState,playerActorType:cachedActorType,forceJumpXRaw:jumpVelocityRaw.xRaw,forceJumpYRaw:jumpVelocityRaw.yRaw};
+ a.equipmentIds=equipActors;a.jumpReceiver='player-default';return a;
+}
+function finishPlayerCreation(input,authored,actorAtPlayerInitialize,binding,options){
+ // This boundary starts AFTER actual entity materialization, Actor.Initialize
+ // and DamageManage.Initialize. It does not invent that earlier event stream.
+ const w=JSON.parse(JSON.stringify(input));
+ if(!Array.isArray(w.actors)||!w.storage)throw Error('Native factory complete Actor table/collision storage required');
+ const ref=Allocator.decodeRef(binding.entityId);
+ if(ref.index===0||ref.rawVersion<0x80000000||!Allocator.isCurrent(w.entityAllocator,binding.entityId))throw Error('Native factory allocated current EntityRef required');
+ if(w.actors.some(a=>a.entityId===binding.entityId))throw Error('Native factory duplicate Actor identity');
+ const name=QString.fromBytes(actorAtPlayerInitialize.nameQStringBytes);
+ if(!QString.equals(name,QString.fromString(authored.name)))throw Error('Native factory resolved Actor name differs from authored name; unique-name conversion requires host');
+ if(binding.id!==undefined)throw Error('Native factory collision ID must come from live storage');
+ let allocated;
+ const initialized=Bootstrap.bootstrap(authored,actorAtPlayerInitialize,{...binding,hasOnCollided:Callbacks.has(27,'OnCollided')},{...options,allocateCollision:()=>{
+  allocated=Broad.createCollision(w.storage,{});if(!allocated)throw Error('Native Player initCollision capacity exhausted');return allocated.id;
+ }});
+ const registered=Bootstrap.register(initialized,options),a=canonicalPlayer(registered);
+ Object.assign(allocated,registered.collisions[0],{actorExists:true});w.actors.push(a);
+ // Scene dictionaries/player lists/typed pools are not synthesized. The caller
+ // must perform those registration effects using the returned actual identity.
+ return {world:w,actorId:a.entityId,snapshot:registered};
+}
+module.exports={priority,orderCreationParams,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,completePhysicsFidelity:false};

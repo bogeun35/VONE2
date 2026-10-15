@@ -1,0 +1,57 @@
+{
+  "task": "NativeQString",
+  "status": "partial",
+  "readOnlyStatic": true,
+  "nativeCodeExecuted": false,
+  "scope": "QStringUtf8_32 generation, byte-counted typed equality and hash, valid UTF8 decode/UTF16 length, Scene.FindActor key validation and explicit dictionary host adapter. No Scene registration or uniqueness policy.",
+  "layout": {
+    "structBytes": 32,
+    "byteCountOffset": 0,
+    "byteCountType": "little-endian uint16",
+    "payloadOffset": 2,
+    "payloadCapacityBytes": 30,
+    "actorNameNativeOffset": "0x130 (Actor.m_Name metadata0x140 minus16)",
+    "evidence": "QStringUtf8_32..ctor0x18168e770: capacity0x1e@e7c1, byte pointer+2@e806, word count@e83c."
+  },
+  "evidence": {
+    "capacity": "0x181939a90: UTF8.GetMaxByteCount shortcut, UTF16 length>capacity rejects, else actual UTF8.GetByteCount<=capacity. .ctor0x18168e7c6 false leads ArgumentException@e860..e8a9. No truncation.",
+    "initialization": "Implicit operator0x18168eae0 zeroes32 bytes before ctor. Empty/null ctor zeroes32@e854. Nonempty ctor writes payload and count only@e806..e83c; old tail survives constructInto.",
+    "encoding": "Encoding.get_UTF8@0x1812cc600 allocates zeroed UTF8EncodingSealed, sets codepage65001@c674, calls virtual slot5 SetDefaultFallbacks@c682 before word+38=1@c689; _isThrowException byte+39 remains0. UTF8Encoding.SetDefaultFallbacks@0x1812bfc30 branches on byte+39, false creates EncoderReplacementFallback@bfc64 and DecoderReplacementFallback@bfcd6 with same literal slot0x1831cb728. Metadata encoded literal0xa000d90d resolves EF BF BD (U+FFFD). Unpaired UTF16 input replaced; no encoding BOM emitted by GetBytes.",
+    "length": "0x18168e8d0: zero count returns0, otherwise UTF8.GetCharCount(pointer+2,ushort count)@e91c..e93a. Supplementary scalar is two UTF16 units.",
+    "decode": "ToString0x18168e950: empty returns managed empty; UTF8.GetString counted pointer@e9bd..e9e0. Embedded NUL is payload, not C terminator.",
+    "typedEquality": "Equals0x18168ec40 passes both payload pointers and ushort counts to0x181939ce0@ec98, tests result==0@eca2. Comparator invokes memory compare on min count@939d64..d91; if equal returns leftCount-rightCount@939d98..d9a. Tail ignored. No normalization or case folding.",
+    "hash": "GetHashCode0x18168ecc0: unsigned bytes@ed10, int32 multiply31/add@ed18..ed1c, final int32((byteCount+2201)*31+h)@ed29..ed32. Empty=68231; A=68327; abc=164678; Korean 한글=-1662274657; Japanese 日本語=622136408.",
+    "findActor": "ActorSceneComponent.FindActor(QString)0x1816a7b80: byteCount empty guard@7c47, GetCharCount and empty guard@7c53..7c87; actual Scene name dictionary+28 ContainsKey0x180033b30@7d07 then get_Item0x1800339f0@7d35 then Frame.GetActor@7d43. ContainsKey calls QString hash directly@0x180033b9b. Host retains dictionary ownership.",
+    "ordinalLimit": "IQStringUtf8.CompareOrdinal0x18168ea60 calls0x181939ce0; nonzero memory-compare return is preserved. QuantumUnityNativeUtility.Compare0x1818bd9e0 forwards to UnsafeUtility.MemCmp0x1824339f0, which resolves external internalcall dynamically. Exact unequal-byte integer magnitude is not inferred.",
+    "otherFindActorOverload": "0x1816a7d70 is actor-type ushort lookup, not a string overload: compares Actor+6 type with input@0x1816a7f95..7f9b. Not implemented here."
+  },
+  "api": {
+    "representation": "{bytes:[32 integer bytes]}, JSON roundtrip safe",
+    "fromString": "string|null -> zero-initialized QString; over30 UTF8 bytes throws before writes",
+    "constructInto": "writes existing validated32-byte QString; empty/null clears whole storage; nonempty retains unused tail",
+    "fromBytes": "copies raw32 bytes; byteCount>30 refused as corrupt/out-of-bounds",
+    "byteCount_payload": "native counted payload without decode",
+    "toString_length": "valid UTF8 only; malformed raw UTF8 decoding explicitly refused",
+    "equals_getHashCode": "typed byte equality/int32 hash including malformed payload bytes; ignores tail",
+    "compareOrdinal": "equal common prefix returns native byte-count difference; mismatch requires host.compareBytes(xPrefix,yPrefix,minCount) returning native nonzero int32",
+    "isFindActorKey_findActor": "empty rejects before host calls; otherwise host.containsKey(q), host.getValue(q), host.getActor(entityRef). Does not scan objects or implement registration."
+  },
+  "verification": {
+    "dedicated": "33/33 passing: ASCII, Korean, Japanese, supplementary scalars,30/31 byte boundaries, no truncation, unpaired UTF16 replacement, embedded NUL, padding, malformed input refusal, hash/equality, lookup callback order and exception propagation.",
+    "fullSuite": "1686/1686 passing: node --test source-migration/*.test.cjs",
+    "installedStageNames": "All variants of installed-stage-decoded.local.json:691 distinct nonempty names, all ASCII, all exact original bytes preserved. Longest EndlessDeadSwitchCreator1 is25 bytes. BlinkThunder10 hex426c696e6b5468756e6465723130.",
+    "stageCompilesAlone": false,
+    "integration": "Pure helper only. Lead owns ActorFactory/Scene registry bridge; no runtime/play/Git changes."
+  },
+  "unresolved": [
+    "Malformed raw UTF8 decoder replacement grouping: toString/length/FindActor refuse instead of assuming JS TextDecoder parity. Generated managed-string keys always produce valid UTF8.",
+    "Exact nonzero integer from external native memory comparator requires compareBytes host; equality and common-prefix length difference are implemented.",
+    "Equals(object) managed-string/boxed dispatch, serialization, QString64/128 are outside this typed32-byte API.",
+    "Scene native dictionary allocation, collision chains, add/remove/unique-name policy and actor lifecycle remain lead-owned; adapter requires explicit host."
+  ],
+  "correctionHistory": [
+    "32-byte QString is30-byte payload plus2-byte count, not32-byte payload. Overflow rejects rather than truncates.",
+    "Length is decoded UTF16 char count, not stored UTF8 byte count.",
+    "Initial test witness mistakenly counted EndlessDeadSwitchCreator1 as24; authored ASCII bytes establish25. Corrected fixture before final tests."
+  ]
+}

@@ -301,3 +301,12 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - 동결 PushBackTargetQuery30을 검토하고 Terminal host의 외부 isCollidedByPushBackTarget stub 요구를 제거했다. bridge는 현재 world/storage/overlay/map/layer table을 검증된 query에 직접 전달한다. Map우선,전체active물리저장순서,owner비활성허용,PRE먼저/current다음 규칙을 유지한다.
 - bridge34+query30=64/64,전체1630/1630(동시보조파일포함). Clear Post61틱 후 실제terrain 복귀,실제floor경계에서차단/1raw위허용,전체storage의PRE-only겹침차단 및candidateinactive제외를 프레임경로에서 검증했다. 맵/레이어정보 누락은 실제query오류로rollback.
 - PlayerBootstrap은 아직 동결확인전이며 NativeQString/NativeEntityAllocator는 신규보조범위. 해당파일 수정·stage하지않음. StageAutoScroll/Camera의순서/API를읽었으나nativeStage gate와현재Stage필드연결없이기존afterCollision/afterPost훅을임의제거하지않았다. 실제factory/R.create/R.step/carry미완료.
+
+### 실제 Player 초기화 → 첫 native frame 연결 (2026-10-15)
+
+- PlayerBootstrap23/NativeQString33/NativeEntityAllocator23 동결본 검토. 중요한 정정: Player.Initialize 중간0/request1이지만 tail initializeOnly 후 반환은1/request0. freshActor flags0x105ca80/weight6553600,requestAnim1/playing0. 이전 수동0→1테스트는 dispatcher검증으로만유효하며 factory최종상태로사용금지.
+- source-native-actor-factory.finishPlayerCreation 추가. 실제 materialization/Actor.Initialize/DamageManage.Initialize 이후 snapshot과실제binding이시작경계다. full entityAllocator의live high-version현재Ref 확인,QString32이름검증,현재collisionstorage에서할당,완료Bootstrap/register후canonicalActor/Player투영. nativeowner→Lifecycleowner,playerState→state,cachedActorType→playerActorType,jumpVelocityRaw→forceJumpXY,equipActors→Actor.equipmentIds. duplicate mutablealias남기지않음.
+- Bootstrap optional allocateCollision callback은 원작 initCollision 위치(정렬·flags·weight이후/state전이이전)에서만실행. 원래명시id API보존,두입력동시사용/비동기/용량부족거부. 전체worldclone에서collision할당/등록실패rollback. collideractorExists=true,PrePos0보존,current/precollision만등록위치로설정,expected0보존.
+- actual3-2 authored Player를fullBootstrap으로생성후 Bridge.stepScene첫frame통과. Player.OnStart는metadata0x180476130no-op이며Lifecycle가startedbit만기록. 첫verifiedUpdate1request1→playing1,PrePos스폰기록,Defaultgravity42598및collision위치동기검증. 이fixture는선택된실제terrain+1Player이고allocator는명시Frame.Initialize단위fixture;stage직전allocator/native명부캡처나전체stage생성주장아님. range/camera/exit hooks도여전히fixture이므로실제R.step완료아님.
+- 집중 factory10+Bootstrap24+QString33+Allocator23=90/90,전체1691/1691(동시보조파일포함). expiredgeneration,unique-name미검증,실제issueId8할당,180body용량부족rollback검증.
+- 다음구체적경계: StagePreparation/PlayerIndexList/NativeMaterialization 동결결과로실제초기singleton/allocator/player명부/typedpoolprefix를연결. finishPlayerCreation은ActorScene이름사전·playerlist·typedpool삽입을대행하지않는다. legacy source-stage-runtime R.create/R.step는그대로이며실제carry미해결.신규보조WIP보존/원격push재시도없음.

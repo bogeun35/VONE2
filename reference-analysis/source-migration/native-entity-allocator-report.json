@@ -1,0 +1,107 @@
+{
+  "device": "NativeEntityAllocator",
+  "status": "partial — pure allocator core complete and frozen; actual heap/component/factory integration pending",
+  "completePhysicsFidelity": false,
+  "originalGameExecuted": false,
+  "verification": {
+    "dedicatedTests": 23,
+    "dedicatedPassed": 23,
+    "fullSuiteTests": 1653,
+    "fullSuitePassed": 1653,
+    "nativeByteAssertions": 4,
+    "lifecycleQueryReusedReadOnly": true,
+    "factoryRuntimeBridgeModified": false,
+    "gitActions": false
+  },
+  "ownedFiles": [
+    "source-migration/source-native-entity-allocator.js",
+    "source-migration/source-native-entity-allocator.test.cjs",
+    "source-migration/native-entity-allocator-report.json",
+    "codex-briefs/NativeEntityAllocator.result.md",
+    "codex-briefs/작업중-NativeEntityAllocator.md"
+  ],
+  "snapshot": {
+    "required": [
+      "schemaVersion1",
+      "nextUnused",
+      "freeCount",
+      "freeHead",
+      "capacity(logical)",
+      "allocatedCapacity",
+      "allallocated16byteentries",
+      "allallocated512bitcomponentmasks",
+      "pendingCommitOrder(authoritativeactualdictionaryiteration)"
+    ],
+    "entry16Bytes": {
+      "indexOrNext": 0,
+      "rawVersion": 4,
+      "flags": 8,
+      "opaqueC": 12
+    },
+    "componentMask": "Frame+50 base, stride64bytes;8words ofuint64,512bits. Stored as8lowercase16hexstrings perentry, scanningascendingcomponentId0..511. No typedstorage orcomponentnames guessed.",
+    "ref": "Canonical unsigned64decimalstring only. Low32index,high32rawVersion includingactivehighbit. No Number/rawBigInt serialization; index/version individuallyuint32. 0x8000000100000001 =>9223372041149743105; UINT64_MAX18446744073709551615 roundtrips exactly.",
+    "invariants": "Checks fullentry/maskextent, logical/allocatedcapacity, sentinel, live/free/pendingclassification, freechaincycles/count, pendingrefgeneration relation andallmetadata integers. Supportsimportednonfreshlive/free/pendingstate; no implicitstagefreshallocation orauthoredindexIDs."
+  },
+  "initialize": {
+    "path": "FrameBase.Initialize0x18197739c..7593",
+    "counters": "qwordFrame+20=1 @0x1819773a2 meansnextUnused1/freeCount0;freeHead+28=0@3a6;capacity+2c=max(configInt32,32)@3ce..3d8;allocatedCapacity+30=same@3db.",
+    "storage": "Nativeheap alloc/clear entriesstride16@0x181977551..7586, initialallzero;entry0.rawVersion=0x7fffffff@0x181977593. Masksstride64 alloc/clear@0x1819773fd..7435.",
+    "API": "freshInitializedFrame({configuredCapacity}) modelsONLYverifiedpristineInitializepath. It isnotanassertionthatactualstagebeforeprepare1/newroundisfresh. Callerofstageworkmust supplyfromSnapshot fullactualstate."
+  },
+  "create": {
+    "path": "0x181979090..90fe",
+    "freeBranch": "ReadfreeHead+28@9096. Ifnonzero choosefreeHead, popentry.indexOrNext@90d9/de, decrementfreeCount@90db;nextUnusedunchanged.",
+    "unusedBranch": "Ifhead0 andnextUnused==capacity@90a4, doublecapacity andresize1819781c0@90a9..ae; chooseindexnextUnusedand++@90b3..c5.",
+    "version": "entry.indexOrNext=index@90e1; rawVersion=(((oldRawVersion+1)&0x7fffffff)|0x80000000)uint32 @90e3..ef;returncombineduint64@90f6. Doesnotclearmasks/flags/opaqueC ormaterializecomponents.",
+    "growth": "Logicalcapacity+2c distinctallocated+30. Native0x1819783bb..5da ifnewcapacity>allocated: allocclearbitset,resizecopyentriesoldlogicalextent@8475..848e andmasks@84ab..84d3,componentindex-table remap@8554; otherwisebackingentrytailretained withcomponentindex-tableallocation/remap@85da..866b. Pureprojectionpreservesexplicitallocatedtailonregrow, zeroextendsnewallocation,copiesoldlogicalextent. resizeDependentStorage synchronoushost mandatorywhenCreategrows; no physicalcomponents implemented."
+  },
+  "destroy": {
+    "entrypoint": "FrameBase.Destroy0x181977d10, pendingwrite0x181977de8",
+    "validation": "unsignedindex<capacity@7db4..db8,exactrawVersionmatch@7dd8..de2; nativefalsewhenstale/outofrange. Projectionrefusesforgedlowversion/nonissuedindex0Destroyratherthansimulatingundefinedcallerbehavior.",
+    "order": [
+      "entry.flags|=2 @0x181977de8",
+      "snapshot512bitmask@0x181977e0e..e34",
+      "iterateascendingcomponentbits; incrementnativecomponentcounter/possiblyresetsingletonref@0x181977ee6..ef6 thennotify0x181979110@0x181977f08",
+      "OnRemoved/listener callbacks0x181979110..9218; no poolphysicalremove yet",
+      "compareall8currentmaskwordsagainstsnapshot@0x181977f97..7fe3; mutationerrorpath7fe5..8028",
+      "insertoldactiveEntityRef intoactualpendingdictionary@0x181978075..8162, duplicatekeycheck/hash=lowindex*0xe749+rawVersion",
+      "clearrawVersionhighbit and incrementlow31 afterqueueinsert@0x181978167..817b; oldactiveRefinvalidimmediately"
+    ],
+    "importantCorrection": "NativeCreationOrder report notedpendingflags/commitfreelist butomitted immediateDestroyversionchange. Thisreport/moduleexplicitlycorrects thatincomplete account withouteditingoldreport. Normal firstCreate raw80000001 ->Destroyraw00000002 ->Commitraw00000002 ->reCreate raw80000003. Generationdoesnotwaitforcommit andincrementsatbothDestroyandCreate.",
+    "host": "componentRemoving mustexecute actualnativecomponentcounter/singleton-reference reset/OnRemoved/listener semantics. insertPendingDictionary mustreturncompleteauthoritativependingdictionaryiterationorder; noimplicitFIFO/listappendhashapproximation. Hooksreceiveworkingdraftandmustbesynchronous. Pureallocatorvalidatesreturnedordercontainsallpendingrefsandonlythose, andcomponentmaskunchanged."
+  },
+  "commit": {
+    "path": "FrameBase.CommitDestroys0x181979230..9682",
+    "ordering": "Nativegetsactualpendingdictionarypointer/array@0x1819792cf..9340 theniteratesdictionaryentriesstride32 andtheiractualvalues@0x181979380..9405. NoevidencethatthisequalsDestroyrequestorder; pendingCommitOrder snapshot/hostrequired. ReuseLIFOofACTUALcommititeration, notassumedrequestLIFO.",
+    "perEntity": [
+      "Readentrypointerindexlow32andLIVE512bitmask@0x181979411..9457",
+      "ascendingcomponentbitsremovephysicalbuffer0x18193cd10@0x181979514; noDestroyOnRemovedcallbacksreenacted",
+      "zeroall512maskbits@0x18197957e..958c",
+      "entry.indexOrNext=oldfreeHead@0x1819795a6..5a9",
+      "entry.flags=0@0x1819795ac; opaqueC/versionuntouched",
+      "freeHead=index@0x1819795b8;freeCount++@0x1819795c3"
+    ],
+    "last": "Actualpendingdictionaryclear0x18083c3b0@0x18197966b. Emptyprojectioncommitreturnsnoallocatorchanges withoutrequiringexternalemptycollectionnoop; nonemptyrequiresexplicitclearPendingDictionaryhost.",
+    "poolAdapter": "removeFromExistingPool(pools,{index,componentId}) reuses source-actor-lifecycle-query.poolRemove onEXPLICITexistingpool. Nativequerypoolslot0sentinel,swaplastintohole,generationandversion checksremainexistingcore. No newtypedpool creation/authoringindexidentity. Integrationtestprovesoldrefqueryinvalidbeforephysicalremove andcommittedremoveincrementsactualpoolversion/swapslastslot.",
+    "nestedLimit": "Projectionrefuseshostpendingdictionarymutationduringcommit; fullnativeiterator/heapreentrancyorderneedsseparatehostimplementation. No silentdiscard/newordering."
+  },
+  "hostContracts": {
+    "scope": "Pure allocatorprojection only. AllocatorJSON fields/masks/countersprojected fromauthoritativeinput; no materialization, AddComponent, sceneallocation, globalinitialstate, singletoncreation/OnAdded/listenernoop or gameplaycallbacks invented.",
+    "removal": "DestroyOnRemovedphase andCommitphysicalremove areseparate explicitnamedhooks. Componentpool/watcher/listener storage external; masksderiveactualIDs notcomponentname guesses.",
+    "query": "queryEntities requirescomponentId->actualname anduint64ref->actualactorid mappings; projectsrawgeneration/masks for read-onlyexistinglifecyclequery. No actorIDs derivedfromauthoringordinals.",
+    "atomicity": "Publicmutationscloneallocator andcommitonlyafterhooks/validation succeed. HosttransactionMUSTrollback externalcomponentcounters/singletonrefs/listeners/pools/heap/queue effects; puremodulecannotrollbackexternalobjects. HookdraftsrepresentintermediateNativeDestroy/Commitstate andmustnotbeassumedcompletedvalidatedsnapshots.",
+    "capacity": "resizeDependentStorage mustperformactualdependentbitset/componentindex-table remapping; hostcannotreplacewithunnamedno-op andclaimnativeframeintegration. Newcomponentstorage notownedhere."
+  },
+  "unresolved": [
+    "Actualprestageallocator/singleton/livecomponentstate unknown; noactualstageabsoluteEntityRef/indexclaims.",
+    "Pendingdictionaryhashing,heapentrytopology anddynamiciteratorreentrancy notimplemented; orderexplicitlyrequired.",
+    "Actualcomponentcounter/singleton/OnRemoved/listener/materialization/physicalpoolcleanup remainhost; onlyexistingpoolRemove adapterreused.",
+    "Nofactory/runtime/bridge/sharedfileintegration,originalgameexecution orhumanplaycomparison. completePhysicsFidelity=false.",
+    "Capacitydoublingbeyondsignedint32andforgednonliveDestroyrefsrefused."
+  ],
+  "corrections": [
+    "Destroyimmediatehighbitclear+versionincrement added beyondoldCreationOrder summary; pendingdoesnotpreserveoldrefvalidity.",
+    "Initialentry0 sentinelraw7fffffff andlogicalcapacitydistinctallocatedcapacity explicitlypreserved.",
+    "Staticbyteverificationtestfirstusedwrongsectionpropertynames virtualAddress/rawAddress;correctedtoexistingnative-loader-structure.rva/rawOffset. Expectednativebytesmatchedunchanged."
+  ]
+}
