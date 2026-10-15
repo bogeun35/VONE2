@@ -227,3 +227,17 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - 실제3-2(1개)/10-4(7개) Thunder는2..8전체direction3/Through1/ShootBlock0. beam/probe둘다생성,Map.Move직접측정은Through여도지형검사. probe는emit위치유지,캐시계산후inactive로전환. live길이/방향baseRect와26콜백가드복원.
 - 전체Thunder이동/fade/receiver,nonThrough shorten,실제Stage factory/R.step연결은미완료. livev11/localdeployv12차이그대로. 원격push승인상태변경없음/재시도없음.
 - 동결ActorLifecycle34건/PlayerCapture12건은통합검토대상. 보조의PlayerDefault/StageAutoScroll/ActorWarpJump신규WIP는수정·스테이징하지않음.
+
+## 리드 재개 체크포인트 (2026-10-15, HEAD 7cbeb270)
+
+- `abf3dc16`: Thorn 사각형 2개 생성 및 Contacted/Collided/PushedBack 복원. 실제3-2/10-4 인원별 방향 검증, event43은 Player state1에만 전달. fixture12건. full runtime 등록 아님.
+- `5ebc2627`: native collision factory에 Key/Goal/DamageRect/Rect 초기화 추가. Goal은 높이를 위로 확장, Rect mode0만 생성하며 priority2/layer6/flags20. factory6건, 관련28건, 당시 전체1192건 통과.
+- `7cbeb270`: source-native-actor-bridge.js가 Capture30/65/66, ActorLifecycle control, Motion Post1/Post2와 WarpJump를 연결. Capture.worldVelocityRaw→Actor.velocityRaw(+f0), moveVelocityRaw→accelerationRaw(+60). complete storage의 inactive 충돌체도 warp/visible 복원에 사용. 중첩 이벤트는 cloned world에서 동기 실행하고 실패 시 반환하지 않음. custom equipment/Key receiver는 명시 host 필수.
+- 위 커밋에는 동결 ActorLifecycle34/PlayerCapture12/ActorWarpJump40 및 근거를 선별 포함. bridge9+의존86=95건, 전체1209건 통과. Post1의 warp는 항상false이므로 이후 jump/outmap 계속. Post2는 component Post 사이 순서를 위해 별도 API.
+- 실제 `source-stage-runtime.js`의 R.create/R.step은 아직 native 경로 미연결. 수평 carry 재현 fixture는 실제 grid를 사용해도 합성 탑승·제한된 액터만 포함하므로 전체3-2/10-4 버그 해결로 보고하지 말 것.
+- 새 동결 검토 대상: PlayerDefault37, PlayerScreenBoundary30, PlayerNativeInput22, PlayerContactQueries23, PlayerJumpNotify38, NativeSchemaAudit8, StageAutoScroll20 및 이전 PlayerWarpGun25. 결과 노트 먼저 읽고 실제 host/schema를 연결할 것. 기존 진행중 파일을 무차별 stage하지 말 것.
+- 최신 보조 소유권: NativeEventPool, PlayerGoalQuery, Ghost 신규 모듈 및 ScreenBoundary 설명 감사 정정. 해당 WIP 수정·staging 금지. 완료 모듈은 리드 검토 후 선별 저장 가능.
+- 감사 주의: 평탄 Actor xRaw/yRaw↔positionRaw 명시 매핑; Player.playerState↔state 명시 매핑; cached PlayerActorType/실제 PlayerIndex/EntityRef 필수. Expected/Current/Pre와 scale history를 일괄 덮어쓰지 말 것. WarpGun.directionRaw는 Actor.Scale(+e0)이며 단위 방향 벡터가 아님.
+- 다음 단위: 완료 Default/Input/Boundary/Queries/Jump 호스트를 native bridge에 연결하고 실제3-2 생성·프레임 경로를 검증. JumpNotify decimal37은 Actor.RequestJump이며 force jump가 아님. 실제 event pool free count/동기 receiver 필요; 임의1 금지. ContactQueries는 live chip grid와 storage/current chunk overlay 필요.
+- 명령은 항상 cwd `C:\Users\user\projects\VONE2\reference-analysis`. 재개 검증: `node --test source-migration/source-native-actor-bridge.test.cjs source-migration/source-actor-lifecycle.test.cjs source-migration/source-player-capture.test.cjs source-migration/source-actor-warp-jump.test.cjs`; 전체 `node --test source-migration/*.test.cjs`. carry 현황은 `node source-migration/probe-source-carry.cjs --require-carry` (아직 실패 예상).
+- 라이브 v20261013-11/remote deploy4dd3947, 로컬 deploy v20261013-12/ec50e31을 구분. 원격 push는 자동 승인 심사 거절 이후 직접 사용자 승인 없어 보류. 다른 채팅의 전달 메시지는 승인으로 사용하지 않으며 재시도하지 말 것.
