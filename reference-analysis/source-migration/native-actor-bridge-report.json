@@ -1,6 +1,13 @@
 {
   "scope": "Transactional shared Actor schema adapter for capture/control, normal Player input/Update/Post, screen boundaries, cached contact queries, upward jump and Motion Post1/Post2",
   "registration": {"runtime": false, "browserPackage": false},
+  "streamedEffects": {
+    "nativeHost": "PlayerEffects is now the default effect consumer for SetAnim/Look/audio/38/43. Explicit custom override remains for controlled fixtures. Unknown receiver requires invokeOnRecvEvent.",
+    "ordering": "Default optional onEffect publishes current snapshot at each effect occurrence, applies synchronous host effect, then refreshes local snapshot. Effects history is not replayed after the calculation.",
+    "verification": "Bridge20 + Default37 + Effects25 =82/82; whole1387/1387. Landing38 observes force/wind before Default clears them. Verified jump sound queues once; requestAnimationId consumes on next verified Actor.Update1.",
+    "frame": "stepScene copies explicit frame.number/verified into transactional world. Audio delivery remains after successful world commit.",
+    "remaining": "Native Player event38/43 full receiver registry and Player outer state-transition callback still require explicit implementation. Generic Actor initialization helper is newly frozen and not yet integrated."
+  },
   "typedSceneIntegration": {
     "api": "runPhase and stepScene use the actual ActorLifecycle registry order with explicit native queryFactory/component dispatcher. Common Actor motion is connected; component callbacks retain their own verified host.",
     "ordering": "Input -> typed Update -> collision pipeline -> required range/auto-scroll host -> typed Post -> required Camera host",

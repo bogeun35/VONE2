@@ -145,6 +145,11 @@
     "ear": "Both actualstagesdefaultbit20false. Active helper restorespreEarScale onchanged collisionheight; savespre;heldenum9 rate48*dt;clamps1..20;release togglesshrinkbit21;current scaleonly updated; unequalcurrent/pre scale andnonzeroedge delta emitsmode6 transport.",
     "post": "Player initialbit3 enables pushBack addition; state1post dispatch0x1816c0f8d noextraaction; outmapevent43 setsisOutMaptrue."
   },
-  "sourceSha256": "ca50698d46ef00d0d861c3e37cf202fb6d14bcf285e6e0ed4d5e33b4b43c140c",
-  "testSha256": "b6e20020d6267c6dd9f361c6a82a3cdf45f81d15e0831726c0896ba20b639c7d"
+  "sourceSha256": "e3e9232b3a5e83e2a21cd3866093489bcf0deaa302de3d4a630ffbf7980765c4",
+  "testSha256": "b6e20020d6267c6dd9f361c6a82a3cdf45f81d15e0831726c0896ba20b639c7d",
+  "leadIntegration": {
+    "streaming": "Optional ctx.onEffect(effect,player,actor,collision) runs at each accepted effect push. Existing effects history retained for auditing; native bridge applies streamed effects once and refreshes mutable snapshot before Default resumes.",
+    "validation": "Bridge20 + Default37 + Effects25 =82/82; whole1387/1387",
+    "previousSourceSha256": "ca50698d46ef00d0d861c3e37cf202fb6d14bcf285e6e0ed4d5e33b4b43c140c"
+  }
 }

@@ -13,6 +13,7 @@ const Lifecycle=require('./source-actor-lifecycle.js'),Capture=require('./source
 const Default=require('./source-player-default.js'),Input=require('./source-player-native-input.js'),Boundary=require('./source-player-screen-boundary.js'),Queries=require('./source-player-contact-queries.js'),Jump=require('./source-player-jump-notify.js');
 const Pool=require('./source-native-event-pool.js');
 const GoalQuery=require('./source-player-goal-query.js');
+const Effects=require('./source-player-effects.js');
 const Pipeline=require('./source-collision-pipeline.js'),Callbacks=require('./source-collision-callbacks.js'),PlayerContact=require('./source-player-contact.js');
 const clone=x=>JSON.parse(JSON.stringify(x));
 function actor(world,id){const a=world.actors.find(a=>a.entityId===id);if(!a)throw Error('Native bridge Actor missing: '+id);return a;}
@@ -87,6 +88,14 @@ function storeSnapshot(a,c,p,flat,body){
  // the old nested reference inside a flat snapshot undo Player updates.
  a.player={...player,state:playerState};Object.assign(c,body);
 }
+function refreshSnapshot(a,c,p,flat,body){Object.assign(p,{...a.player,playerState:a.player.state});delete p.state;Object.assign(flat,flatActor(a));Object.assign(body,clone(c));}
+function deliverEffect(w,a,c,e,p,flat,body,host){
+ if(['SetPosForce','MoveContactActor','notifyJumpUpward'].includes(e.type))return;
+ storeSnapshot(a,c,p,flat,body);
+ const result=typeof host.applyPlayerEffect==='function'?host.applyPlayerEffect(w,a,e):Effects.applyPlayerEffect(w,a,e,{invokeOnRecvEvent:(world,target,param)=>required(host,'invokeOnRecvEvent',world,target,param)});
+ if(result&&typeof result.then==='function')throw Error('Native Player effects must be synchronous');
+ refreshSnapshot(a,c,p,flat,body);
+}
 function updatePlayerInPlace(w,id,dtRaw,host){
  const a=actor(w,id);if(a.actorType!==27||!a.player)throw Error('Native ordinary Player required');
  const c=Broad.getCollisionById(w.storage,a.collisionHolders[0]?.collisionId);if(!c)throw Error('Native Player collision0 required');
@@ -100,22 +109,19 @@ function updatePlayerInPlace(w,id,dtRaw,host){
   else if(action.type==='notifyJumpUpward'){
    Jump.applyDefaultAction(view(w),a,c,action,jumpHost(w,host));
   }else {const r=required(host,'applyImmediatePlayerAction',w,a,c,action);if(r&&typeof r.then==='function')throw Error('Native immediate Player action must be synchronous');}
-  Object.assign(p,{...a.player,playerState:a.player.state});delete p.state;
-  Object.assign(flat,flatActor(a));Object.assign(body,clone(c));
+  refreshSnapshot(a,c,p,flat,body);
  };
  const snapshot={player:{...clone(a.player),playerState:a.player.state},actor:flatActor(a),collision:clone(c)};delete snapshot.player.state;
  const buttons=Input.getButtons(w.inputs,a.player.playerIndex,w.operatingMenuMask);
  const goal=GoalQuery.createHost({getManagerGoalRef:()=>w.actorManager?.goalEntityId,goalByEntity:id=>w.actors.find(a=>a.entityId===id)?.goal||null,actorByEntity:id=>w.actors.find(a=>a.entityId===id)||null,collisionById:q.collisionById});
- const out=Default.step(snapshot,w.playerStage,buttons,dtRaw,{...q,playerByEntity:id=>w.actors.find(a=>a.entityId===id)?.player||null,screenEndWalkVelocityX:boundary,openGoalOverlap:goal.openGoalOverlap,applyImmediate:immediate});
+ const out=Default.step(snapshot,w.playerStage,buttons,dtRaw,{...q,playerByEntity:id=>w.actors.find(a=>a.entityId===id)?.player||null,screenEndWalkVelocityX:boundary,openGoalOverlap:goal.openGoalOverlap,applyImmediate:immediate,onEffect:(e,p,flat,body)=>deliverEffect(w,a,c,e,p,flat,body,host)});
  storeSnapshot(a,c,out.player,out.actor,out.collision);
- for(const effect of out.effects){if(['SetPosForce','MoveContactActor','notifyJumpUpward'].includes(effect.type))continue;const r=required(host,'applyPlayerEffect',w,a,effect);if(r&&typeof r.then==='function')throw Error('Native Player effects must be synchronous');}
  return {effects:out.effects,earlyReturn:out.earlyReturn||null};
 }
 function postPlayerInPlace(w,id,host){
  const a=actor(w,id),c=Broad.getCollisionById(w.storage,a.collisionHolders[0]?.collisionId);if(a.actorType!==27||!a.player||!c)throw Error('Native ordinary Player and collision0 required');
  const snapshot={player:{...clone(a.player),playerState:a.player.state},actor:flatActor(a),collision:clone(c)};delete snapshot.player.state;
- const out=Default.post(snapshot,{checkOutMap:flat=>Motion.checkOutMap(w,flat)});storeSnapshot(a,c,out.player,out.actor,out.collision);
- for(const effect of out.effects){const r=required(host,'applyPlayerEffect',w,a,effect);if(r&&typeof r.then==='function')throw Error('Native Player effects must be synchronous');}
+ const out=Default.post(snapshot,{checkOutMap:flat=>Motion.checkOutMap(w,flat),onEffect:(e,p,flat,body)=>deliverEffect(w,a,c,e,p,flat,body,host)});storeSnapshot(a,c,out.player,out.actor,out.collision);
  return {effects:out.effects};
 }
 function stepPlayer(input,id,dtRaw,host={}){return transaction(input,w=>updatePlayerInPlace(w,id,dtRaw,host));}
@@ -163,7 +169,7 @@ function collide(input,host={}){const w=clone(input);for(const c of allCollision
 function stepScene(input,frame,host={}){
  // A native stage host must supply the range/auto-scroll and camera phases.
  // Their placement is fixed; no silent omission or legacy per-player solver.
- let w=clone(input);Input.applySimulationInputs(w.inputs,frame.number,frame.packets);
+ let w=clone(input);w.frameNumber=frame.number;w.verified=frame.verified;Input.applySimulationInputs(w.inputs,frame.number,frame.packets);
  const update=runPhaseInPlace(w,'Update',frame,host),collision=collide(w,host);w=collision.world;
  const afterCollision=required(host,'afterCollisionBeforePost',w,frame);if(afterCollision&&typeof afterCollision.then==='function')throw Error('Native stage phase must be synchronous');
  const post=runPhaseInPlace(w,'Post',frame,host);

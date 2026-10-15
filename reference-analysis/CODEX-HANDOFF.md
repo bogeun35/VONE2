@@ -259,3 +259,10 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - Bridge18+Pipeline11+Goal18=47/47,전체1379/1379. 실제3-2 Player스폰+전체grid에서12연속프레임접지/중력정지검증. 나머지액터와Playerprelude/camera는제한fixture이므로전체R.step검증아님.
 - 구체적다음차단: Player.OnUpdate1816c0010은flag28이면battlePlaneDamageProc,항상invincibleProc1816c06c0→updatePlayerState1816c07c0,마지막Player+0xa8zero. requestedState/currentState/goalenterflag16소비와무적timer순서가Default바깥에있음. 정적자료lead-player-state-dispatch.local.txt. 별도미구현state를silentno-op하지말것.
 - PlayerEffects25 새동결완료: requestAnimationId(playing이아님),Lookbit14→10,Verified audio queue,38/43 pool. 다음연결대상. customreceiver의중간상태관찰을위해Default effect streaming필요성검토. ActorInitialization/Ghost는현재WIP로staging금지.
+
+### Player 효과 동기 연결 (2026-10-15)
+
+- PlayerEffects25를 bridge 기본효과구현으로연결. SetAnim→requestAnimationId,Lookflag14→10,Verified audio event7 큐,38/43 shared pool. 미구현receiver는invokeOnRecvEvent명시host필수.
+- Default에선택적onEffect 추가: effect발생시점의Player/Actor/Collision snapshot을canonical world에동기반영→host→local snapshot갱신. 반환effects는감사기록이며끝에서재실행안함. landing38이force/wind초기화전값을관찰하는회귀검증.
+- bridge20+Default37+Effects25=82/82,전체1387/1387. sound큐는실제frame.number/verified사용,Actor.Update1 다음verified에서animationrequest소비확인.
+- 다음독립단위: 새완료ActorInitialization16의결과노트검토와factory연결. Player바깥OnUpdate/초기state전환 및장치별nativecallbacks 여전히미완료; R.create/R.step/실제carry고침주장금지. Ghost진행중파일보존.

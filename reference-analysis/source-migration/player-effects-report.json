@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "status": "done-ordinary-effects-core-native-host-wiring-required",
+  "frozen": true,
+  "scope": "Frozen PlayerDefault.step/post accepted SetAnim/LookLeft/LookRight/PlaySe/NotifyEvent38/43 effects; ordinary ActorType27 state1; no original execution.",
+  "verification": {
+    "dedicated": {
+      "command": "node --test source-migration/source-player-effects.test.cjs",
+      "pass": 25,
+      "fail": 0
+    },
+    "fullSuite": {
+      "command": "node --test source-migration/*.test.cjs",
+      "pass": 1362,
+      "fail": 0
+    },
+    "actualStages": {
+      "ids": [
+        "st_w_03_02",
+        "st_w_10_04"
+      ],
+      "counts": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "online": [
+        false,
+        true
+      ],
+      "combinations": 28,
+      "note": "3-2 actualjump effects and10-4 noinput/default effects; no simulated unproven reversal orcustomreceiver."
+    },
+    "nativeExecution": false
+  },
+  "evidence": [
+    {
+      "va": "0x1816beac0/beb0a..5d",
+      "fact": "SetAnim sameid/nonstop skips. Ifcurrentnonzero andnostop, walk2 onlyfrom1/3, push3 onlyfrom1/2; current0/stop bypassgates."
+    },
+    {
+      "va": "0x1816beb5d/beb7c..bb0/bebca",
+      "fact": "Write Player.currentAnimationId requestedid; Playerflag14 maps Actor request1/2/4->10/12/11. Actor requestanimationbyte+2, notplaying+1."
+    },
+    {
+      "va": "0x18169de75..9a/0x18169df25..4a",
+      "fact": "Actorflag14 gates LookLeft/Right; set/clear Actorflag10. Playerflag14 unrelated."
+    },
+    {
+      "va": "0x1816a2306/231c/2334..23aa",
+      "fact": "PlaySe transforms Actor stageanchor toWorldPoint, compares camera view expanded2F inallfourdirs inclusiveboundaries."
+    },
+    {
+      "va": "0x1816a23be..2433",
+      "fact": "RelativeWorld=ActorWorld-CameraPos; FPdivide byActor.baseScale then signed64(left15)>>16 half. No guessed screenpixel coords."
+    },
+    {
+      "va": "0x1816c6107..611d;EventPlaySe metadata+60/+68/+70",
+      "fact": "Default effectparam9Raw isVolume(r9), startRaw isPitch(stackarg5). PassesSeId12, pitch1, volume1or.5 basedPlayerflags2bit1; disableBlankTime=false."
+    },
+    {
+      "va": "0x18174bda4..bdc5/bdda..be10",
+      "fact": "FrameEvents.PlaySe only ifnativeframeVerified; eventId7, currentFrameNumber, entity/source, position, volume,pitch,blanktimeflag."
+    },
+    {
+      "va": "0x1816c37af/c0",
+      "fact": "Landing NotifyEvent38: sourceActor.GetEventParam38 ->notifyself, noextra payload. Nulllease passedtogenericNotifyEvent returns0."
+    },
+    {
+      "va": "0x1816c0eef..f0d",
+      "fact": "Postoutmap GetEventParam43 checksnullandthrows; writesCauseDead1 at+6c, notifyself."
+    },
+    {
+      "va": "0x181780b80/0x18169ec02..22",
+      "fact": "Reuse native8slotpool, synchronousregistrydispatch; normalreturnleasesfree, exceptionskeepbusy."
+    },
+    {
+      "va": "0x18169e0b0;SourceActorMotion.update1",
+      "fact": "PlayingAnimationId consumes requestonlyduringverified ActorUpdate1; effectmustnotsetplayingearly."
+    }
+  ],
+  "api": {
+    "applyPlayerEffect": "(world,canonicalActor,effect,host={}) -> state/frame-event/receiver audit; fits nativebridge applyPlayerEffect(world,a,effect). Mutates providedtransactionclone only.",
+    "createHost": "(host)->applyPlayerEffect callback; pass {invokeOnRecvEvent(world,target,canonicalQEventParam)->int32}. Must be synchronous.",
+    "nativeSetAnim": "(player,actor,id,stop)->acceptedBoolean; exactpre-callstate primitive fornative invocation/tests. DO NOT useit to replayfrozenDefault acceptedrecords afterfinalsnapshot.",
+    "acceptedSetAnim": "FrozenDefault alreadywrotePlayer.currentAnimationId and flatActor.animationId; helper onlywrites canonicalActor.requestAnimationId=effect.actorAnimationId. DoesnotrewindfinalPlayer.currentAnimationId orrerungates/remapping.",
+    "look": "(actor,leftBool) mutatesActorflags only; noPlayerflagsmutation.",
+    "playSePlan": "(actor,effect,camera,verified,frameNumber)->{queued,reason}|{queued:true,event}; purecull/FPtransform/frameeventplanner.",
+    "world": "{camera,verified:boolean,frameNumber:int32,pendingFrameEvents:[],eventPool:SourceNativeEventPool.create()}; pool sharedatstaticnative lifetime. Actor.positionRaw,baseScaleRaw,entityId,flags,actorType27,player.state1 required.",
+    "notify": "OnlyDefault38/43; allocates poolselfsource.43 requires effect.isOutMap=true andwritescanonicalCauseDead1. Receiver registry remainsrequiredhost, notsubstitutednoop.",
+    "audioEvent": "{type:PlaySe,nativeEventId:7,frameNumber,entityId,seId,positionRaw,volumeRaw,pitchRaw,isDisableCheckBlankTime:false}; queuedonworldtransaction, physicalaudioonlyaftercommit.",
+    "phase": "Preserveeffectsarrayorder, skipimmediateSetPosForce/MoveContactActor/notifyJumpUpward alreadyexecutedbytheirhost. ReuseActorMotionverifiedUpdate1 forrequestconsumption; doNOTimmediatelysetplayingAnimationId."
+  },
+  "unresolved": [
+    "Existing bridge/default/pool/contact/lifecycle/motion unchanged; leadmustwire newcallback.",
+    "Receiverregistry invokeOnRecvEvent musthandle nativeordinaryPlayer38/43 andany nesteddeviceeventsexactly. No device-specific receiver guessed.",
+    "FrozenDefault returnsfinalsnapshot andaccepted effecthistory ratherthanstreamedphasecallbacks. This adapterdoesnotrewind finalPlayeranimation forhistoricalSetAnim. Generic/customreceivers inspectingintermediatePlayeranim/state requiretrueinterleavedphasehost; notclaimedrestored.",
+    "SupportedordinaryPlayer27 nativecachedtype27 andstate1 only. NativePlayer38 pathfortype24/MultiInput andotherPlayerstates areoutsidecontract.",
+    "Audioqueue commitsaftertransaction; emittingbrowseraudio ornetworkinsidereceiverwouldbreakrollbackandisnotimplemented.",
+    "Cameraunlimit/unreturn/unknownfunction refused ratherthanskipculling; noBGM/othersoundreceiverreconstruction.",
+    "frameVerified/frameNumber actualnativefactsrequired, noalways-true assumption.",
+    "Nativepooldiagnosticlogging andnativeaudioContext queueallocationremainexternal; semanticqueuedpayloadandgatesimplemented.",
+    "No whole-stage playability/nativeexecuteddifferentialtest orcompletephysicsfidelityclaim."
+  ],
+  "supportedTypes": [],
+  "completePhysicsFidelity": false,
+  "sourceSha256": {
+    "source-migration/source-player-effects.js": "c3e4d704b1d568b34e0444bd380c89b3794a5ad380c71ae95274bbb9791c0a8f",
+    "source-migration/source-player-effects.test.cjs": "4ac73e3cf5c31aeee8d5e0814fb4a5e71bb2beb1a6d18cce79db16a54548c4ea"
+  }
+}
