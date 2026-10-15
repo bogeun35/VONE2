@@ -80,7 +80,7 @@ function motionHost(world,host){return {
  warpProc:(w,a)=>Warp.warpProc(w,a,{setVisible:(_,a,value,sourceId)=>dispatch(world,a.entityId,{eventType:55,value,sourceId},host)}),
  // Scene mapNormals are FP raw vectors; the query adapter preserves their
  // representation instead of interpreting them as normalized actor contacts.
- jumpProc:(w,a)=>{const q=Queries.createHost({lookupMode:'scene',getWorld:()=>w});Jump.jumpProc(w,a,{getCollision:(_,a,index)=>w.collisions.find(c=>c.id===a.collisionHolders[index]?.collisionId)||null,isContacted:(_,c,face)=>q.contactProbe(c,face).contacted,getGravity:()=>w.gravityRaw});},checkOutMap:Motion.checkOutMap,setCollisionActive:Motion.setCollisionActive
+ jumpProc:(w,a)=>{const q=Queries.createHost({lookupMode:'scene',getWorld:()=>w});Jump.jumpProc(w,a,{getCollision:(_,a,index)=>w.collisions.find(c=>c.id===a.collisionHolders[index]?.collisionId)||null,isContacted:(_,c,face)=>q.contactProbe(c,face).contacted,getGravity:()=>w.stage?.gravityRaw??w.gravityRaw});},checkOutMap:Motion.checkOutMap,setCollisionActive:Motion.setCollisionActive
 };}
 function transaction(input,operation){const world=clone(input);if(!Array.isArray(world.actors))throw Error('Native bridge Actor table required');const result=operation(world);return {world,result};}
 function receive(input,id,event,host={}){return transaction(input,w=>dispatch(w,id,event,host));}
@@ -256,4 +256,5 @@ function stepScene(input,frame,host={}){
  return {world:w,result:{update,collision:collision.result,post}};
 }
 function initializeKeyPost(input,id,host={}){return transaction(input,w=>{const a=actor(w,id);Key.initPost(w,a,keyHost(w,host));return null;});}
-module.exports={initializeKeyPost,receive,post1,post2,applyInputs,stepPlayer,postPlayer,runPhase,collide,stepScene,allCollisions,completePhysicsFidelity:false};
+function sortingEventInPlace(w,a,param,host={}){if(param.EventType!==54)throw Error('Native sorting event54 required');return dispatch(w,a.entityId,{eventType:54,value:param.SortingOrder,sourceId:param.NotifiedActor},host);}
+module.exports={sortingEventInPlace,initializeKeyPost,receive,post1,post2,applyInputs,stepPlayer,postPlayer,runPhase,collide,stepScene,allCollisions,completePhysicsFidelity:false};

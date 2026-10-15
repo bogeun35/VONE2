@@ -1,21 +1,27 @@
 {
-  "scope": "Whole-world StagePreparation adapter and native PlayerIndexList/factory selection",
+  "scope": "Whole-world preparation and active Stage frame orchestration, with explicit remaining native hosts",
   "nativeCodeExecuted": false,
   "verification": {
-    "factoryAndIndexTests": 50,
-    "preparationAndDependenciesTests": 88,
-    "fullSuiteTests": 1931,
-    "fullSuitePass": 1931,
-    "factoryCursorAndDriverTests": 32
+    "factoryTests": 37,
+    "driverTests": 9,
+    "statusTests": 69,
+    "uniqueNameTests": 11,
+    "focusedPass": 126,
+    "fullSuiteTests": 2035,
+    "fullSuitePass": 2035
   },
   "contracts": [
     "Caller supplies initialized Stage/Scene/Factory/Map/Camera snapshots, current GamePlayerInfo roster, existing index list, allocator and actual materialization hosts.",
-    "Preparation uses one verified Update per phase; phase6 onActiveStageUpdate is still an explicit complete host, not replaced by Bridge.stepScene.",
+    "Preparation uses one verified Update per phase. Phase6 defaults to native active-frame orchestration; an explicit onActiveStageUpdate override remains supported.",
     "initPlayerIndexList calls the verified native helper, preserves existing prefix, consumes no RNG for shuffle0 and commits exact post RNG for shuffle1.",
     "createNextPlayer uses current successful Scene PlayerInfoList count and raw roster lookup before materialization; limit/missing-info skips allocate nothing.",
     "PlayerInfoList append occurs after Player.CreateEntity succeeds and before Scene name/position/scale registration. All edits commit through a world clone.",
     "Player range uses registered name dictionary values and actual Scene PlayerInfo refs, checking allocator generations. Unregistered materialized Actors do not contribute.",
-    "Default preparation factory hook executes ActorFactory.Update with captured player-index count, marked-before-threshold checks, population skips without marking and live cursor marking after synchronous creator return."
+    "Default preparation factory hook executes ActorFactory.Update with captured player-index count, marked-before-threshold checks, population skips without marking and live cursor marking after synchronous creator return.",
+    "Active frame captures flags14/0/1 at entry: factory/input then Actor.Update/collision/range/autoscroll/Actor.Post/camera/sort/status/Notice/time; inactive retains Actor/collision/Post and Notice/time, suspended retains verified time only.",
+    "Session Frame.SetPlayerInput must already be applied; Stage Normal update is a no-op and activeFrame does not stamp packets again.",
+    "Status sorting uses the actual shared event pool and synchronous bridge event54; timer wraps int64 and clamps to5662310400.",
+    "Factory resolves blank names lazily after marked/threshold/population gates and before creator/Player-limit branches. Exact generated names are passed to creators; QString encoding remains later."
   ],
   "newStaticEvidence": {
     "createPlayerSub": "0x1816a3970",
@@ -30,9 +36,10 @@
   "unresolved": [
     "Restored checkpoint and dummy Player creation tails explicitly refuse before materialization in createNextPlayer.",
     "Actual singleton/prototype/listener/add effects, scene/map activation and typed pools remain explicit hosts; tests use clearly scoped fixtures.",
-    "Stage active-frame input/game-status/notice/time tail remain pending complete integration.",
     "Scene name logical snapshots do not establish the physical enumeration order required for SetActive.",
     "No full R.create/R.step or horizontal carry repair claimed.",
-    "Actual full 3-2 parameters currently stop at missing Key (17) creator; the transaction discards earlier Player creation. Generic native generated names and device construction remain unconnected."
+    "Remaining native Notice/audio/global event behavior is an explicit host; TopView sort requires actual physical actorDictionary and >16 equal-Y native sort needs host.",
+    "Actual3-2 full parameter cursor with exact prefab View materialization and synthetic typed Actor/Add facts reaches missing DamageRect9 after Player/Key/Goal. Full device creation remains incomplete.",
+    "First active-frame regression uses real3-2 terrain and two fully initialized Players, with other devices deliberately absent and typed query/exit/activation fixture hosts. Not full stage boot or carry repair."
   ]
 }

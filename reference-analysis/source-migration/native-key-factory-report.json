@@ -23,8 +23,8 @@
     "All creation effects, including manager and registration, are transactional."
   ],
   "unresolved": [
-    "Prefab/name resolution still supplied by explicit materializeKeyBeforeInitialize host; standard prefab materializer and unique-name helper are owned by separate workers.",
-    "Full actual3-2 cursor with explicit materialization/name fixture now reaches Goal(14), whose creator is not connected.",
-    "Typed pool Add, full native boot/first-frame and legacy R.create/R.step/carry remain incomplete."
+    "Standard View-only materialization and native lazy name helper are now available in factory; actual Actor typed Add/holder and Key Add remain explicit upstream facts.",
+    "Actual3-2 full cursor now reaches DamageRect9 after Key and Goal with explicit typed Add fixtures.",
+    "Full stage boot, all typed devices, legacy R.create/R.step and carry remain incomplete."
   ]
 }

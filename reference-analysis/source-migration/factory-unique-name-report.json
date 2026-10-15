@@ -1,0 +1,1460 @@
+{
+  "task": "FactoryUniqueName",
+  "verification": {
+    "method": "read-only PE disassembly and installed IL2CPP metadata; original game never executed",
+    "enumTypeDef": 5073,
+    "enumUnderlying": "signed int32",
+    "enumMembers": [
+      {
+        "value": 0,
+        "name": "None",
+        "fieldIndex": 20980,
+        "defaultDataIndex": 201242
+      },
+      {
+        "value": 1,
+        "name": "BlinkBlock",
+        "fieldIndex": 20981,
+        "defaultDataIndex": 201243
+      },
+      {
+        "value": 2,
+        "name": "Bridge",
+        "fieldIndex": 20982,
+        "defaultDataIndex": 201244
+      },
+      {
+        "value": 3,
+        "name": "CheckPoint",
+        "fieldIndex": 20983,
+        "defaultDataIndex": 201245
+      },
+      {
+        "value": 4,
+        "name": "Coin",
+        "fieldIndex": 20984,
+        "defaultDataIndex": 201246
+      },
+      {
+        "value": 5,
+        "name": "CoinObserver",
+        "fieldIndex": 20985,
+        "defaultDataIndex": 201247
+      },
+      {
+        "value": 6,
+        "name": "CollisionConstraintMove",
+        "fieldIndex": 20986,
+        "defaultDataIndex": 201248
+      },
+      {
+        "value": 7,
+        "name": "ColorBox",
+        "fieldIndex": 20987,
+        "defaultDataIndex": 201249
+      },
+      {
+        "value": 8,
+        "name": "CoopStopWatch",
+        "fieldIndex": 20988,
+        "defaultDataIndex": 201250
+      },
+      {
+        "value": 9,
+        "name": "DamageRect",
+        "fieldIndex": 20989,
+        "defaultDataIndex": 201251
+      },
+      {
+        "value": 10,
+        "name": "DeadTimer",
+        "fieldIndex": 20990,
+        "defaultDataIndex": 201252
+      },
+      {
+        "value": 11,
+        "name": "DistanceConstraint",
+        "fieldIndex": 20991,
+        "defaultDataIndex": 201253
+      },
+      {
+        "value": 12,
+        "name": "FallBox",
+        "fieldIndex": 20992,
+        "defaultDataIndex": 201254
+      },
+      {
+        "value": 13,
+        "name": "Gate",
+        "fieldIndex": 20993,
+        "defaultDataIndex": 201255
+      },
+      {
+        "value": 14,
+        "name": "Goal",
+        "fieldIndex": 20994,
+        "defaultDataIndex": 201256
+      },
+      {
+        "value": 15,
+        "name": "JumpArea",
+        "fieldIndex": 20995,
+        "defaultDataIndex": 201257
+      },
+      {
+        "value": 16,
+        "name": "JumpStand",
+        "fieldIndex": 20996,
+        "defaultDataIndex": 201258
+      },
+      {
+        "value": 17,
+        "name": "Key",
+        "fieldIndex": 20997,
+        "defaultDataIndex": 201259
+      },
+      {
+        "value": 18,
+        "name": "PlayerWarpGunBullet",
+        "fieldIndex": 20998,
+        "defaultDataIndex": 201260
+      },
+      {
+        "value": 19,
+        "name": "MainMenuPlayer",
+        "fieldIndex": 20999,
+        "defaultDataIndex": 201261
+      },
+      {
+        "value": 20,
+        "name": "MajorityController",
+        "fieldIndex": 21000,
+        "defaultDataIndex": 201262
+      },
+      {
+        "value": 21,
+        "name": "MajorityPlayer",
+        "fieldIndex": 21001,
+        "defaultDataIndex": 201263
+      },
+      {
+        "value": 22,
+        "name": "MapRect",
+        "fieldIndex": 21002,
+        "defaultDataIndex": 201264
+      },
+      {
+        "value": 23,
+        "name": "MoveWall",
+        "fieldIndex": 21003,
+        "defaultDataIndex": 201265
+      },
+      {
+        "value": 24,
+        "name": "MultiPlayer",
+        "fieldIndex": 21004,
+        "defaultDataIndex": 201266
+      },
+      {
+        "value": 25,
+        "name": "PlaneObstacle",
+        "fieldIndex": 21005,
+        "defaultDataIndex": 201267
+      },
+      {
+        "value": 26,
+        "name": "PlanePlayer",
+        "fieldIndex": 21006,
+        "defaultDataIndex": 201268
+      },
+      {
+        "value": 27,
+        "name": "Player",
+        "fieldIndex": 21007,
+        "defaultDataIndex": 201269
+      },
+      {
+        "value": 28,
+        "name": "PlayerGuard",
+        "fieldIndex": 21008,
+        "defaultDataIndex": 201270
+      },
+      {
+        "value": 29,
+        "name": "PushBox",
+        "fieldIndex": 21009,
+        "defaultDataIndex": 201271
+      },
+      {
+        "value": 30,
+        "name": "Rect",
+        "fieldIndex": 21010,
+        "defaultDataIndex": 201272
+      },
+      {
+        "value": 31,
+        "name": "RetryTimer",
+        "fieldIndex": 21011,
+        "defaultDataIndex": 201273
+      },
+      {
+        "value": 32,
+        "name": "ScaleSwitch",
+        "fieldIndex": 21012,
+        "defaultDataIndex": 201274
+      },
+      {
+        "value": 33,
+        "name": "StepEnemy",
+        "fieldIndex": 21013,
+        "defaultDataIndex": 201275
+      },
+      {
+        "value": 34,
+        "name": "StopWatch",
+        "fieldIndex": 21014,
+        "defaultDataIndex": 201276
+      },
+      {
+        "value": 35,
+        "name": "Switch",
+        "fieldIndex": 21015,
+        "defaultDataIndex": 201277
+      },
+      {
+        "value": 36,
+        "name": "SwitchMediator",
+        "fieldIndex": 21016,
+        "defaultDataIndex": 201278
+      },
+      {
+        "value": 37,
+        "name": "SwitchTimer",
+        "fieldIndex": 21017,
+        "defaultDataIndex": 201279
+      },
+      {
+        "value": 38,
+        "name": "Thunder",
+        "fieldIndex": 21018,
+        "defaultDataIndex": 201280
+      },
+      {
+        "value": 39,
+        "name": "UpDownEnemy",
+        "fieldIndex": 21019,
+        "defaultDataIndex": 201281
+      },
+      {
+        "value": 40,
+        "name": "UpDownLift",
+        "fieldIndex": 21020,
+        "defaultDataIndex": 201282
+      },
+      {
+        "value": 41,
+        "name": "Warp",
+        "fieldIndex": 21021,
+        "defaultDataIndex": 201283
+      },
+      {
+        "value": 42,
+        "name": "WarpAll",
+        "fieldIndex": 21022,
+        "defaultDataIndex": 201284
+      },
+      {
+        "value": 43,
+        "name": "WarpAllInitPos",
+        "fieldIndex": 21023,
+        "defaultDataIndex": 201285
+      },
+      {
+        "value": 44,
+        "name": "WarpInitPos",
+        "fieldIndex": 21024,
+        "defaultDataIndex": 201286
+      },
+      {
+        "value": 45,
+        "name": "WeightedLift",
+        "fieldIndex": 21025,
+        "defaultDataIndex": 201287
+      },
+      {
+        "value": 46,
+        "name": "WeightedLiftEx",
+        "fieldIndex": 21026,
+        "defaultDataIndex": 201288
+      },
+      {
+        "value": 47,
+        "name": "WeightedLiftSingle",
+        "fieldIndex": 21027,
+        "defaultDataIndex": 201289
+      },
+      {
+        "value": 48,
+        "name": "DeadSwitch",
+        "fieldIndex": 21028,
+        "defaultDataIndex": 201290
+      },
+      {
+        "value": 49,
+        "name": "BowwowEnemy",
+        "fieldIndex": 21029,
+        "defaultDataIndex": 201291
+      },
+      {
+        "value": 50,
+        "name": "TrafficLight",
+        "fieldIndex": 21030,
+        "defaultDataIndex": 201292
+      },
+      {
+        "value": 51,
+        "name": "PushBoxBig",
+        "fieldIndex": 21031,
+        "defaultDataIndex": 201293
+      },
+      {
+        "value": 52,
+        "name": "PushBoxMiddle",
+        "fieldIndex": 21032,
+        "defaultDataIndex": 201294
+      },
+      {
+        "value": 53,
+        "name": "PushBoxSmall",
+        "fieldIndex": 21033,
+        "defaultDataIndex": 201295
+      },
+      {
+        "value": 54,
+        "name": "PushBoxTall",
+        "fieldIndex": 21034,
+        "defaultDataIndex": 201296
+      },
+      {
+        "value": 55,
+        "name": "Ghost",
+        "fieldIndex": 21035,
+        "defaultDataIndex": 201297
+      },
+      {
+        "value": 56,
+        "name": "MoveEnergy",
+        "fieldIndex": 21036,
+        "defaultDataIndex": 201298
+      },
+      {
+        "value": 57,
+        "name": "LaserBallPitcher",
+        "fieldIndex": 21037,
+        "defaultDataIndex": 201299
+      },
+      {
+        "value": 58,
+        "name": "LaserKeyBox",
+        "fieldIndex": 21038,
+        "defaultDataIndex": 201300
+      },
+      {
+        "value": 59,
+        "name": "BreakoutPlayer",
+        "fieldIndex": 21039,
+        "defaultDataIndex": 201301
+      },
+      {
+        "value": 60,
+        "name": "BreakoutBall",
+        "fieldIndex": 21040,
+        "defaultDataIndex": 201302
+      },
+      {
+        "value": 61,
+        "name": "BoundBallPitcher",
+        "fieldIndex": 21041,
+        "defaultDataIndex": 201303
+      },
+      {
+        "value": 62,
+        "name": "BallKeyBox",
+        "fieldIndex": 21042,
+        "defaultDataIndex": 201304
+      },
+      {
+        "value": 63,
+        "name": "SwitchRect",
+        "fieldIndex": 21043,
+        "defaultDataIndex": 201305
+      },
+      {
+        "value": 64,
+        "name": "CollisionChangePlayer",
+        "fieldIndex": 21044,
+        "defaultDataIndex": 201306
+      },
+      {
+        "value": 65,
+        "name": "RouletteLift",
+        "fieldIndex": 21045,
+        "defaultDataIndex": 201308
+      },
+      {
+        "value": 66,
+        "name": "DarknessWeightedLift",
+        "fieldIndex": 21046,
+        "defaultDataIndex": 201310
+      },
+      {
+        "value": 67,
+        "name": "InvisibleWeightedLift",
+        "fieldIndex": 21047,
+        "defaultDataIndex": 201312
+      },
+      {
+        "value": 68,
+        "name": "CollisionActorCreator",
+        "fieldIndex": 21048,
+        "defaultDataIndex": 201314
+      },
+      {
+        "value": 69,
+        "name": "DarknessRect",
+        "fieldIndex": 21049,
+        "defaultDataIndex": 201316
+      },
+      {
+        "value": 70,
+        "name": "PlayerWarpGun",
+        "fieldIndex": 21050,
+        "defaultDataIndex": 201318
+      },
+      {
+        "value": 71,
+        "name": "ForceColorBox",
+        "fieldIndex": 21051,
+        "defaultDataIndex": 201320
+      },
+      {
+        "value": 72,
+        "name": "PlayerMagnet",
+        "fieldIndex": 21052,
+        "defaultDataIndex": 201322
+      },
+      {
+        "value": 73,
+        "name": "Lift",
+        "fieldIndex": 21053,
+        "defaultDataIndex": 201324
+      },
+      {
+        "value": 74,
+        "name": "DelaySwitch",
+        "fieldIndex": 21054,
+        "defaultDataIndex": 201326
+      },
+      {
+        "value": 75,
+        "name": "JumpSwitch",
+        "fieldIndex": 21055,
+        "defaultDataIndex": 201328
+      },
+      {
+        "value": 76,
+        "name": "CollisionSwitch",
+        "fieldIndex": 21056,
+        "defaultDataIndex": 201330
+      },
+      {
+        "value": 77,
+        "name": "Wind",
+        "fieldIndex": 21057,
+        "defaultDataIndex": 201332
+      },
+      {
+        "value": 78,
+        "name": "CollisionScroll",
+        "fieldIndex": 21058,
+        "defaultDataIndex": 201334
+      },
+      {
+        "value": 79,
+        "name": "Text",
+        "fieldIndex": 21059,
+        "defaultDataIndex": 201336
+      },
+      {
+        "value": 80,
+        "name": "BallReceiver",
+        "fieldIndex": 21060,
+        "defaultDataIndex": 201338
+      },
+      {
+        "value": 81,
+        "name": "EndlessLaserBallPitcher",
+        "fieldIndex": 21061,
+        "defaultDataIndex": 201340
+      },
+      {
+        "value": 82,
+        "name": "EndlessJumpScore",
+        "fieldIndex": 21062,
+        "defaultDataIndex": 201342
+      },
+      {
+        "value": 83,
+        "name": "BestScore",
+        "fieldIndex": 21063,
+        "defaultDataIndex": 201344
+      },
+      {
+        "value": 84,
+        "name": "EndlessObstacle",
+        "fieldIndex": 21064,
+        "defaultDataIndex": 201346
+      },
+      {
+        "value": 85,
+        "name": "EndlessScrollScore",
+        "fieldIndex": 21065,
+        "defaultDataIndex": 201348
+      },
+      {
+        "value": 86,
+        "name": "EndlessPlaneObstacle",
+        "fieldIndex": 21066,
+        "defaultDataIndex": 201350
+      },
+      {
+        "value": 87,
+        "name": "HeightJudge",
+        "fieldIndex": 21067,
+        "defaultDataIndex": 201352
+      },
+      {
+        "value": 88,
+        "name": "DeadBallPitcher",
+        "fieldIndex": 21068,
+        "defaultDataIndex": 201354
+      },
+      {
+        "value": 89,
+        "name": "JumpJudge",
+        "fieldIndex": 21069,
+        "defaultDataIndex": 201356
+      },
+      {
+        "value": 90,
+        "name": "StopWatchJudge",
+        "fieldIndex": 21070,
+        "defaultDataIndex": 201358
+      },
+      {
+        "value": 91,
+        "name": "TerritoryBattleBall",
+        "fieldIndex": 21071,
+        "defaultDataIndex": 201360
+      },
+      {
+        "value": 92,
+        "name": "TerritoryBattleJudge",
+        "fieldIndex": 21072,
+        "defaultDataIndex": 201362
+      },
+      {
+        "value": 93,
+        "name": "Thorn",
+        "fieldIndex": 21073,
+        "defaultDataIndex": 201364
+      },
+      {
+        "value": 94,
+        "name": "Gear",
+        "fieldIndex": 21074,
+        "defaultDataIndex": 201366
+      },
+      {
+        "value": 95,
+        "name": "JumpStandMediator",
+        "fieldIndex": 21075,
+        "defaultDataIndex": 201368
+      },
+      {
+        "value": 96,
+        "name": "SpeedSwitch",
+        "fieldIndex": 21076,
+        "defaultDataIndex": 201370
+      },
+      {
+        "value": 97,
+        "name": "Blackout",
+        "fieldIndex": 21077,
+        "defaultDataIndex": 201372
+      },
+      {
+        "value": 98,
+        "name": "Arrangement",
+        "fieldIndex": 21078,
+        "defaultDataIndex": 201374
+      },
+      {
+        "value": 99,
+        "name": "DummyPlayer",
+        "fieldIndex": 21079,
+        "defaultDataIndex": 201376
+      },
+      {
+        "value": 100,
+        "name": "DummyColorBox",
+        "fieldIndex": 21080,
+        "defaultDataIndex": 201378
+      },
+      {
+        "value": 101,
+        "name": "DashBoard",
+        "fieldIndex": 21081,
+        "defaultDataIndex": 201380
+      },
+      {
+        "value": 102,
+        "name": "SwitchObserver",
+        "fieldIndex": 21082,
+        "defaultDataIndex": 201382
+      },
+      {
+        "value": 103,
+        "name": "LinePathLift",
+        "fieldIndex": 21083,
+        "defaultDataIndex": 201384
+      },
+      {
+        "value": 104,
+        "name": "FallingWall",
+        "fieldIndex": 21084,
+        "defaultDataIndex": 201386
+      },
+      {
+        "value": 105,
+        "name": "FallingWallBlock",
+        "fieldIndex": 21085,
+        "defaultDataIndex": 201388
+      },
+      {
+        "value": 106,
+        "name": "SearchLight",
+        "fieldIndex": 21086,
+        "defaultDataIndex": 201390
+      },
+      {
+        "value": 107,
+        "name": "BattlePlanePlayer",
+        "fieldIndex": 21087,
+        "defaultDataIndex": 201392
+      },
+      {
+        "value": 108,
+        "name": "PlayerGun",
+        "fieldIndex": 21088,
+        "defaultDataIndex": 201394
+      },
+      {
+        "value": 109,
+        "name": "ShootingEnemyBoss",
+        "fieldIndex": 21089,
+        "defaultDataIndex": 201396
+      },
+      {
+        "value": 110,
+        "name": "DummyGoal",
+        "fieldIndex": 21090,
+        "defaultDataIndex": 201398
+      },
+      {
+        "value": 111,
+        "name": "MapBlockReplacer",
+        "fieldIndex": 21091,
+        "defaultDataIndex": 201400
+      },
+      {
+        "value": 112,
+        "name": "ShootingEnemy",
+        "fieldIndex": 21092,
+        "defaultDataIndex": 201402
+      },
+      {
+        "value": 113,
+        "name": "ShootingEnemySpawner",
+        "fieldIndex": 21093,
+        "defaultDataIndex": 201404
+      },
+      {
+        "value": 114,
+        "name": "MapBreakBlockRect",
+        "fieldIndex": 21094,
+        "defaultDataIndex": 201406
+      },
+      {
+        "value": 115,
+        "name": "DummyRect",
+        "fieldIndex": 21095,
+        "defaultDataIndex": 201408
+      },
+      {
+        "value": 116,
+        "name": "ThornCeiling",
+        "fieldIndex": 21096,
+        "defaultDataIndex": 201410
+      },
+      {
+        "value": 117,
+        "name": "ShootingEnemyBossEx",
+        "fieldIndex": 21097,
+        "defaultDataIndex": 201412
+      },
+      {
+        "value": 118,
+        "name": "LaserBall",
+        "fieldIndex": 21098,
+        "defaultDataIndex": 201414
+      },
+      {
+        "value": 119,
+        "name": "BoundBall",
+        "fieldIndex": 21099,
+        "defaultDataIndex": 201416
+      },
+      {
+        "value": 120,
+        "name": "BreakoutBallObserver",
+        "fieldIndex": 21100,
+        "defaultDataIndex": 201418
+      },
+      {
+        "value": 121,
+        "name": "PlayerHeaddress",
+        "fieldIndex": 21101,
+        "defaultDataIndex": 201420
+      },
+      {
+        "value": 122,
+        "name": "ReusableThorn",
+        "fieldIndex": 21102,
+        "defaultDataIndex": 201422
+      },
+      {
+        "value": 123,
+        "name": "Bowwow2Enemy",
+        "fieldIndex": 21103,
+        "defaultDataIndex": 201424
+      },
+      {
+        "value": 124,
+        "name": "HalfOperator",
+        "fieldIndex": 21104,
+        "defaultDataIndex": 201426
+      },
+      {
+        "value": 125,
+        "name": "DummyEquipment",
+        "fieldIndex": 21105,
+        "defaultDataIndex": 201428
+      },
+      {
+        "value": 126,
+        "name": "FloatingThorn",
+        "fieldIndex": 21106,
+        "defaultDataIndex": 201430
+      },
+      {
+        "value": 127,
+        "name": "BlackoutController",
+        "fieldIndex": 21107,
+        "defaultDataIndex": 201432
+      },
+      {
+        "value": 128,
+        "name": "PlayerPunch",
+        "fieldIndex": 21108,
+        "defaultDataIndex": 201434
+      },
+      {
+        "value": 129,
+        "name": "PlayerGunBullet",
+        "fieldIndex": 21109,
+        "defaultDataIndex": 201436
+      },
+      {
+        "value": 130,
+        "name": "KillerEnemy",
+        "fieldIndex": 21110,
+        "defaultDataIndex": 201438
+      },
+      {
+        "value": 131,
+        "name": "ShootingSuperApple",
+        "fieldIndex": 21111,
+        "defaultDataIndex": 201440
+      },
+      {
+        "value": 132,
+        "name": "TargetPlayer",
+        "fieldIndex": 21112,
+        "defaultDataIndex": 201442
+      },
+      {
+        "value": 133,
+        "name": "BasketPlayer",
+        "fieldIndex": 21113,
+        "defaultDataIndex": 201444
+      },
+      {
+        "value": 134,
+        "name": "PlayerTarget",
+        "fieldIndex": 21114,
+        "defaultDataIndex": 201446
+      },
+      {
+        "value": 135,
+        "name": "PlayerBasket",
+        "fieldIndex": 21115,
+        "defaultDataIndex": 201448
+      },
+      {
+        "value": 136,
+        "name": "Apple",
+        "fieldIndex": 21116,
+        "defaultDataIndex": 201450
+      },
+      {
+        "value": 137,
+        "name": "AppleController",
+        "fieldIndex": 21117,
+        "defaultDataIndex": 201452
+      },
+      {
+        "value": 138,
+        "name": "ShootingEnemyBossParamSetter",
+        "fieldIndex": 21118,
+        "defaultDataIndex": 201454
+      },
+      {
+        "value": 139,
+        "name": "ShootingEnemyBossExParamSetter",
+        "fieldIndex": 21119,
+        "defaultDataIndex": 201456
+      },
+      {
+        "value": 140,
+        "name": "ShootingEnemyBullet",
+        "fieldIndex": 21120,
+        "defaultDataIndex": 201458
+      },
+      {
+        "value": 141,
+        "name": "ShootingEnemyMissile",
+        "fieldIndex": 21121,
+        "defaultDataIndex": 201460
+      },
+      {
+        "value": 142,
+        "name": "ThornPitcher",
+        "fieldIndex": 21122,
+        "defaultDataIndex": 201462
+      },
+      {
+        "value": 143,
+        "name": "ThornShell",
+        "fieldIndex": 21123,
+        "defaultDataIndex": 201464
+      },
+      {
+        "value": 144,
+        "name": "TopViewPlayer",
+        "fieldIndex": 21124,
+        "defaultDataIndex": 201466
+      },
+      {
+        "value": 145,
+        "name": "CannonPlayer",
+        "fieldIndex": 21125,
+        "defaultDataIndex": 201468
+      },
+      {
+        "value": 146,
+        "name": "PlayerCannon",
+        "fieldIndex": 21126,
+        "defaultDataIndex": 201470
+      },
+      {
+        "value": 147,
+        "name": "PlayerCannonBall",
+        "fieldIndex": 21127,
+        "defaultDataIndex": 201472
+      },
+      {
+        "value": 148,
+        "name": "ThrowBall",
+        "fieldIndex": 21128,
+        "defaultDataIndex": 201474
+      },
+      {
+        "value": 149,
+        "name": "ThrowBallBasket",
+        "fieldIndex": 21129,
+        "defaultDataIndex": 201476
+      },
+      {
+        "value": 150,
+        "name": "MoleNest",
+        "fieldIndex": 21130,
+        "defaultDataIndex": 201478
+      },
+      {
+        "value": 151,
+        "name": "Mole",
+        "fieldIndex": 21131,
+        "defaultDataIndex": 201480
+      },
+      {
+        "value": 152,
+        "name": "ScoreObserver",
+        "fieldIndex": 21132,
+        "defaultDataIndex": 201482
+      },
+      {
+        "value": 153,
+        "name": "LinePathGear",
+        "fieldIndex": 21133,
+        "defaultDataIndex": 201484
+      },
+      {
+        "value": 154,
+        "name": "Cardboard",
+        "fieldIndex": 21134,
+        "defaultDataIndex": 201486
+      },
+      {
+        "value": 155,
+        "name": "ThrowBallController",
+        "fieldIndex": 21135,
+        "defaultDataIndex": 201488
+      },
+      {
+        "value": 156,
+        "name": "BatEnemy",
+        "fieldIndex": 21136,
+        "defaultDataIndex": 201490
+      },
+      {
+        "value": 157,
+        "name": "Dossun",
+        "fieldIndex": 21137,
+        "defaultDataIndex": 201492
+      },
+      {
+        "value": 158,
+        "name": "PoleLadder",
+        "fieldIndex": 21138,
+        "defaultDataIndex": 201494
+      },
+      {
+        "value": 159,
+        "name": "ThornTrap",
+        "fieldIndex": 21139,
+        "defaultDataIndex": 201496
+      },
+      {
+        "value": 160,
+        "name": "ThornTracker",
+        "fieldIndex": 21140,
+        "defaultDataIndex": 201498
+      },
+      {
+        "value": 161,
+        "name": "PlayerBlockGun",
+        "fieldIndex": 21141,
+        "defaultDataIndex": 201500
+      },
+      {
+        "value": 162,
+        "name": "PlayerBlockGunBullet",
+        "fieldIndex": 21142,
+        "defaultDataIndex": 201502
+      },
+      {
+        "value": 163,
+        "name": "PlayerBlock",
+        "fieldIndex": 21143,
+        "defaultDataIndex": 201504
+      },
+      {
+        "value": 164,
+        "name": "MoleGroup",
+        "fieldIndex": 21144,
+        "defaultDataIndex": 201506
+      },
+      {
+        "value": 165,
+        "name": "CoopCountUpTimer",
+        "fieldIndex": 21145,
+        "defaultDataIndex": 201508
+      },
+      {
+        "value": 166,
+        "name": "CountUpTimer",
+        "fieldIndex": 21146,
+        "defaultDataIndex": 201510
+      },
+      {
+        "value": 167,
+        "name": "LandmineSwitch",
+        "fieldIndex": 21147,
+        "defaultDataIndex": 201512
+      },
+      {
+        "value": 168,
+        "name": "LandmineSwitchObserver",
+        "fieldIndex": 21148,
+        "defaultDataIndex": 201514
+      },
+      {
+        "value": 169,
+        "name": "WaveBallPitcher",
+        "fieldIndex": 21149,
+        "defaultDataIndex": 201516
+      },
+      {
+        "value": 170,
+        "name": "WaveBall",
+        "fieldIndex": 21150,
+        "defaultDataIndex": 201518
+      },
+      {
+        "value": 171,
+        "name": "WaveKeyBox",
+        "fieldIndex": 21151,
+        "defaultDataIndex": 201520
+      },
+      {
+        "value": 172,
+        "name": "BreakoutScaleController",
+        "fieldIndex": 21152,
+        "defaultDataIndex": 201522
+      },
+      {
+        "value": 173,
+        "name": "GoKart",
+        "fieldIndex": 21153,
+        "defaultDataIndex": 201524
+      },
+      {
+        "value": 174,
+        "name": "ColorMatchBox",
+        "fieldIndex": 21154,
+        "defaultDataIndex": 201526
+      },
+      {
+        "value": 175,
+        "name": "ColorMatchController",
+        "fieldIndex": 21155,
+        "defaultDataIndex": 201528
+      },
+      {
+        "value": 176,
+        "name": "FakePlayer",
+        "fieldIndex": 21156,
+        "defaultDataIndex": 201530
+      },
+      {
+        "value": 177,
+        "name": "FakeCage",
+        "fieldIndex": 21157,
+        "defaultDataIndex": 201532
+      },
+      {
+        "value": 178,
+        "name": "FakeTimer",
+        "fieldIndex": 21158,
+        "defaultDataIndex": 201534
+      },
+      {
+        "value": 179,
+        "name": "FakeCursor",
+        "fieldIndex": 21159,
+        "defaultDataIndex": 201536
+      },
+      {
+        "value": 180,
+        "name": "CapturingConstraint",
+        "fieldIndex": 21160,
+        "defaultDataIndex": 201538
+      },
+      {
+        "value": 181,
+        "name": "CapturingTarget",
+        "fieldIndex": 21161,
+        "defaultDataIndex": 201540
+      },
+      {
+        "value": 182,
+        "name": "FallingCage",
+        "fieldIndex": 21162,
+        "defaultDataIndex": 201542
+      },
+      {
+        "value": 183,
+        "name": "TopViewMapRect",
+        "fieldIndex": 21163,
+        "defaultDataIndex": 201544
+      },
+      {
+        "value": 184,
+        "name": "CircleGraphController",
+        "fieldIndex": 21164,
+        "defaultDataIndex": 201546
+      },
+      {
+        "value": 185,
+        "name": "CircleGraph",
+        "fieldIndex": 21165,
+        "defaultDataIndex": 201548
+      },
+      {
+        "value": 186,
+        "name": "BarGraphController",
+        "fieldIndex": 21166,
+        "defaultDataIndex": 201550
+      },
+      {
+        "value": 187,
+        "name": "BarGraph",
+        "fieldIndex": 21167,
+        "defaultDataIndex": 201552
+      },
+      {
+        "value": 188,
+        "name": "GraphController",
+        "fieldIndex": 21168,
+        "defaultDataIndex": 201554
+      },
+      {
+        "value": 189,
+        "name": "RallyMallet",
+        "fieldIndex": 21169,
+        "defaultDataIndex": 201556
+      },
+      {
+        "value": 190,
+        "name": "RallyMalletRail",
+        "fieldIndex": 21170,
+        "defaultDataIndex": 201558
+      },
+      {
+        "value": 191,
+        "name": "RallyBall",
+        "fieldIndex": 21171,
+        "defaultDataIndex": 201560
+      },
+      {
+        "value": 192,
+        "name": "RallyController",
+        "fieldIndex": 21172,
+        "defaultDataIndex": 201562
+      },
+      {
+        "value": 193,
+        "name": "WarningSign",
+        "fieldIndex": 21173,
+        "defaultDataIndex": 201564
+      },
+      {
+        "value": 194,
+        "name": "BreakableRect",
+        "fieldIndex": 21174,
+        "defaultDataIndex": 201566
+      },
+      {
+        "value": 195,
+        "name": "GiantEnemy",
+        "fieldIndex": 21175,
+        "defaultDataIndex": 201568
+      },
+      {
+        "value": 196,
+        "name": "GiantEnemyHand",
+        "fieldIndex": 21176,
+        "defaultDataIndex": 201570
+      },
+      {
+        "value": 197,
+        "name": "PlayerMoveObserver",
+        "fieldIndex": 21177,
+        "defaultDataIndex": 201572
+      },
+      {
+        "value": 198,
+        "name": "SwitchTimerActor",
+        "fieldIndex": 21178,
+        "defaultDataIndex": 201574
+      },
+      {
+        "value": 199,
+        "name": "SurvivalJudge",
+        "fieldIndex": 21179,
+        "defaultDataIndex": 201576
+      },
+      {
+        "value": 200,
+        "name": "DanmakuObserver",
+        "fieldIndex": 21180,
+        "defaultDataIndex": 201578
+      },
+      {
+        "value": 201,
+        "name": "DanmakuEmitter",
+        "fieldIndex": 21181,
+        "defaultDataIndex": 201580
+      },
+      {
+        "value": 202,
+        "name": "DanmakuModifier",
+        "fieldIndex": 21182,
+        "defaultDataIndex": 201582
+      },
+      {
+        "value": 203,
+        "name": "DanmakuLocator",
+        "fieldIndex": 21183,
+        "defaultDataIndex": 201584
+      },
+      {
+        "value": 204,
+        "name": "DanmakuBullet",
+        "fieldIndex": 21184,
+        "defaultDataIndex": 201586
+      },
+      {
+        "value": 205,
+        "name": "SwitchTargetGroup",
+        "fieldIndex": 21185,
+        "defaultDataIndex": 201588
+      },
+      {
+        "value": 206,
+        "name": "FrontSwitch",
+        "fieldIndex": 21186,
+        "defaultDataIndex": 201590
+      },
+      {
+        "value": 207,
+        "name": "CountUpJudge",
+        "fieldIndex": 21187,
+        "defaultDataIndex": 201592
+      },
+      {
+        "value": 208,
+        "name": "KeyGetJudge",
+        "fieldIndex": 21188,
+        "defaultDataIndex": 201594
+      },
+      {
+        "value": 209,
+        "name": "RallyJudge",
+        "fieldIndex": 21189,
+        "defaultDataIndex": 201596
+      },
+      {
+        "value": 210,
+        "name": "EndlessLandmineObserver",
+        "fieldIndex": 21190,
+        "defaultDataIndex": 201598
+      },
+      {
+        "value": 211,
+        "name": "EndlessDanmakuObserver",
+        "fieldIndex": 21191,
+        "defaultDataIndex": 201600
+      },
+      {
+        "value": 212,
+        "name": "EndlessPoleLadderObserver",
+        "fieldIndex": 21192,
+        "defaultDataIndex": 201602
+      },
+      {
+        "value": 213,
+        "name": "EndlessGraphScore",
+        "fieldIndex": 21193,
+        "defaultDataIndex": 201604
+      },
+      {
+        "value": 214,
+        "name": "EndlessCountUpScore",
+        "fieldIndex": 21194,
+        "defaultDataIndex": 201606
+      },
+      {
+        "value": 215,
+        "name": "EndlessRallyScore",
+        "fieldIndex": 21195,
+        "defaultDataIndex": 201608
+      },
+      {
+        "value": 216,
+        "name": "IceRect",
+        "fieldIndex": 21196,
+        "defaultDataIndex": 201610
+      },
+      {
+        "value": 217,
+        "name": "SwitchIceRect",
+        "fieldIndex": 21197,
+        "defaultDataIndex": 201612
+      },
+      {
+        "value": 218,
+        "name": "EndlessDeadSwitchCreator",
+        "fieldIndex": 21198,
+        "defaultDataIndex": 201614
+      },
+      {
+        "value": 219,
+        "name": "ArrowSign",
+        "fieldIndex": 21199,
+        "defaultDataIndex": 201616
+      },
+      {
+        "value": 220,
+        "name": "BlinkThunder",
+        "fieldIndex": 21200,
+        "defaultDataIndex": 201618
+      },
+      {
+        "value": 221,
+        "name": "TouchEnergy",
+        "fieldIndex": 21201,
+        "defaultDataIndex": 201620
+      },
+      {
+        "value": 222,
+        "name": "OptimizedBulletObserver",
+        "fieldIndex": 21202,
+        "defaultDataIndex": 201622
+      },
+      {
+        "value": 223,
+        "name": "DanmakuThunder",
+        "fieldIndex": 21203,
+        "defaultDataIndex": 201624
+      },
+      {
+        "value": 224,
+        "name": "Stick",
+        "fieldIndex": 21204,
+        "defaultDataIndex": 201626
+      },
+      {
+        "value": 225,
+        "name": "BgmChanger",
+        "fieldIndex": 21205,
+        "defaultDataIndex": 201628
+      },
+      {
+        "value": 226,
+        "name": "PileupBlock",
+        "fieldIndex": 21206,
+        "defaultDataIndex": 201630
+      },
+      {
+        "value": 227,
+        "name": "PileupController",
+        "fieldIndex": 21207,
+        "defaultDataIndex": 201632
+      },
+      {
+        "value": 228,
+        "name": "PileupObserver",
+        "fieldIndex": 21208,
+        "defaultDataIndex": 201634
+      },
+      {
+        "value": 229,
+        "name": "EndlessPileupObserver",
+        "fieldIndex": 21209,
+        "defaultDataIndex": 201636
+      },
+      {
+        "value": 230,
+        "name": "PinMatchController",
+        "fieldIndex": 21210,
+        "defaultDataIndex": 201638
+      },
+      {
+        "value": 231,
+        "name": "PinMatchBox",
+        "fieldIndex": 21211,
+        "defaultDataIndex": 201640
+      },
+      {
+        "value": 232,
+        "name": "PinMatchSwitch",
+        "fieldIndex": 21212,
+        "defaultDataIndex": 201642
+      },
+      {
+        "value": 233,
+        "name": "CameraWaypoint",
+        "fieldIndex": 21213,
+        "defaultDataIndex": 201644
+      },
+      {
+        "value": 234,
+        "name": "CameraWaypointObserver",
+        "fieldIndex": 21214,
+        "defaultDataIndex": 201646
+      },
+      {
+        "value": 235,
+        "name": "ThornCage",
+        "fieldIndex": 21215,
+        "defaultDataIndex": 201648
+      },
+      {
+        "value": 236,
+        "name": "GhostPlayer",
+        "fieldIndex": 21216,
+        "defaultDataIndex": 201650
+      },
+      {
+        "value": 237,
+        "name": "ShareHitPoint",
+        "fieldIndex": 21217,
+        "defaultDataIndex": 201652
+      }
+    ],
+    "native": {
+      "emptyPredicate": "0x1816a338c..0x1816a3396",
+      "call": "0x1816a33a1",
+      "preincrement": "0x1816a3791",
+      "enumToString": "0x1816a383e",
+      "formatLiteralSlot": "0x1831c3e08",
+      "appendFormat": "0x1816a38da",
+      "truncate": "0x1816a38ee..0x1816a3907",
+      "QStringLater": "0x18169ccae"
+    },
+    "installedFixture": {
+      "stageCount": 94,
+      "parameterCount": 3474,
+      "emptyNameCount": 464,
+      "encodingFailures": [],
+      "order": "authored fixture traversal only; runtime must consume in actual converted CreateActor entry order"
+    }
+  },
+  "unresolved": [
+    "Undefined int32 enum values require exact nativeEnumToString host; FlagsAttribute/numeric formatting not guessed.",
+    "Allocation/format/managed OOM are not simulated; an enum host exception occurs after increment.",
+    "Host must call resolver only on actual CreateActor entry and encode later at Actor.Initialize; runtime integration and outer transaction rollback remain lead-owned."
+  ]
+}

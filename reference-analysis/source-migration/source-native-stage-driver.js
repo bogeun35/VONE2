@@ -1,10 +1,12 @@
 'use strict';
-/* Whole-world Stage.Update preparation adapter. Native scheduler is the
+/* Whole-world Stage.Update adapter. Native preparation scheduler is the
  * independently verified StagePreparation core, one phase per verified Update.
- * Actor creation/materialization and phase6 onUpdate are explicit hosts until
- * all of their native side effects are implemented. Never infer a fresh boot.
+ * Phase6 orders factory/input/typed scene/collision/range/scroll/post/camera
+ * and status tail. Missing creator, typed query, Notice/audio and boot facts
+ * remain explicit host boundaries. Never infer a fresh boot.
  */
 const Preparation=require('./source-stage-preparation.js'),Factory=require('./source-native-actor-factory.js'),Camera=require('./source-camera-native.js'),Allocator=require('./source-native-entity-allocator.js');
+const Bridge=require('./source-native-actor-bridge.js'),Auto=require('./source-stage-autoscroll.js'),InputUpdate=require('./source-stage-input-update.js'),Status=require('./source-stage-game-status.js');
 const clone=x=>JSON.parse(JSON.stringify(x));
 function need(host,name,...args){if(typeof host?.[name]!=='function')throw Error('Native Stage driver '+name+' required');const result=host[name](...args);if(result&&typeof result.then==='function')throw Error('Native Stage driver synchronous host required: '+name);return result;}
 function adopt(w,next){const stage=w.stage;Object.assign(stage,next.stage);next.stage=stage;Object.assign(w,next);}
@@ -13,6 +15,38 @@ function playerRange(w){
  const actor=id=>Allocator.isCurrent(w.entityAllocator,id)?w.actors.find(a=>a.entityId===id)||null:null;
  return Camera.calculatePlayerRange({stageFlags:w.stage.flags,previousRange:w.stage.playerRange,players:w.scenePlayerRefs.map(id=>actor(id)?.player||null),actors:w.actorNames.entries.map(e=>actor(e.entityId))});
 }
+function activeFrameInPlace(w,f,host){
+ // Stage.onUpdate18170b3e0 captures entry flags. Inactive still runs scene
+ // Update/Collision/Post; bit14 skips those plus Notice, but not verified time.
+ const flags=w.stage.flags;if(!Number.isInteger(flags)||flags<0||flags>0xffffffff)throw Error('Native Stage flags required');
+ const gates={suspendedAtEntry:!!(flags&16384),phaseEligibleAtEntry:!(flags&0x4003)},result={};
+ w.frameNumber=f.number;w.verified=f.verified;
+ const actor=id=>id===0||id===null?null:Allocator.isCurrent(w.entityAllocator,id)?w.actors.find(a=>a.entityId===id)||null:null;
+ if(!gates.suspendedAtEntry){
+  if(gates.phaseEligibleAtEntry){
+   const out=Factory.update(w,w.stage.scrollPositionRaw.xRaw,host.factory);adopt(w,out.world);result.factory=out.result;
+   result.input=InputUpdate.updateInput(w.stage,{lookupInputSingleton:kind=>{if(!w.singletons||!Object.hasOwn(w.singletons,kind))throw Error('Native Stage actual input singleton snapshot required');return w.singletons[kind];}});
+  }
+  w.actorSceneFlags=w.actorScene.flags;let out=Bridge.runPhase(w,'Update',f,host.scene);adopt(w,out.world);result.update=out.result;
+  out=Bridge.collide(w,host.scene);adopt(w,out.world);result.collision=out.result;
+  if(gates.phaseEligibleAtEntry){
+   w.stage.playerRange=playerRange(w);
+   const scroll={...w.stage.scrollParam,scrollPositionRaw:w.stage.scrollPositionRaw};
+   result.autoScroll=Auto.updateAutoScroll(scroll,{dtRaw:f.dtRaw,stageFlags:w.stage.flags,cameraAreaRaw:Camera.stageAreaRaw(w.camera),players:w.scenePlayerRefs.map(id=>actor(id)?.player||null)});
+   w.stage.scrollParam.delayTimerRaw=scroll.delayTimerRaw;w.stage.scrollPositionRaw=scroll.scrollPositionRaw;
+  }
+  w.actorSceneFlags=w.actorScene.flags;out=Bridge.runPhase(w,'Post',f,host.scene);adopt(w,out.world);result.post=out.result;
+  if(gates.phaseEligibleAtEntry){const camera=Camera.update(w.camera,w.stage.playerRange,f.dtRaw,w.stage.scrollPositionRaw);w.cameraAreaRaw=camera.cameraAreaRaw;if(camera.scrollPositionRaw)w.stage.scrollPositionRaw=camera.scrollPositionRaw;result.camera=camera;}
+ }
+ const statusHost={getActorScene:()=>w.actorScene,getScenePlayerRefs:()=>w.scenePlayerRefs,getActor:(_f,id)=>actor(id),getPlayer:(_f,id)=>actor(id)?.player||null,
+  getActorDictionary:()=>{if(!w.actorDictionary)throw Error('Native Stage actual physical Actor dictionary required');return w.actorDictionary;},
+  getEquip:(_f,p,index)=>{const a=w.actors.find(a=>a.player===p);if(!Array.isArray(a?.equipmentIds)||!(index in a.equipmentIds))throw Error('Native Stage actual Player equipment required');return a.equipmentIds[index]===null?0:a.equipmentIds[index];},
+  getWarpGun:(_f,id)=>actor(id)?.warpGun||null,getMap:()=>w.map,getCamera:()=>w.camera,getStageNotice:()=>w.stageNotice,getDeltaTime:()=>f.dtRaw,
+  invokeOnRecvEvent:(_f,a,param)=>Bridge.sortingEventInPlace(w,a,param,host.scene)};
+ for(const name of ['sortEqualYInfos','notifyEvent','playSe','pollingNoticeCommands','updateNoticePhase'])statusHost[name]=(...args)=>need(host.status,name,w,...args);
+ result.tail=Status.finishFrame(w,w.stage,f,statusHost,gates);return result;
+}
+function activeFrame(input,frame,host={}){const w=clone(input);if(typeof frame?.verified!=='boolean')throw Error('Native Stage driver Frame.IsVerified required');const f={...frame,isVerified:frame.verified,world:w};return {world:w,result:activeFrameInPlace(w,f,host)};}
 function update(input,frame,host={}){
  const w=clone(input);if(typeof frame?.verified!=='boolean')throw Error('Native Stage driver Frame.IsVerified required');
  const f={...frame,isVerified:frame.verified,world:w},hooks={};
@@ -35,10 +69,10 @@ function update(input,frame,host={}){
   },
   getPlayerActorCount:()=>{if(!Array.isArray(w.scenePlayerRefs))throw Error('Native Stage actual PlayerInfoList required');return w.scenePlayerRefs.length;},
   calcPlayerRange:()=>playerRange(w),
-  onUpdate:()=>need(host,'onActiveStageUpdate',w,f)
+  onUpdate:()=>typeof host.onActiveStageUpdate==='function'?need(host,'onActiveStageUpdate',w,f):activeFrameInPlace(w,f,host)
  });
  const result=Preparation.update(w.stage,f,hooks);
  if(w.actorScene&&(result.prepared||result.onUpdate))w.actorSceneFlags=w.actorScene.flags;
  return {world:w,result};
 }
-module.exports={update,playerRange,completePhysicsFidelity:false};
+module.exports={update,activeFrame,playerRange,completePhysicsFidelity:false};

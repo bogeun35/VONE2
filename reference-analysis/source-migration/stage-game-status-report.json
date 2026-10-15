@@ -1,0 +1,94 @@
+{
+  "task": "StageGameStatus",
+  "status": "verified primitive post-camera tail with explicit native hosts; not whole stage boot",
+  "readOnlyStatic": true,
+  "nativeCodeExecuted": false,
+  "verification": {
+    "ownTests": 69,
+    "ownPass": 69,
+    "ownFail": 0,
+    "fullSuiteTests": 1919,
+    "fullSuitePass": 1919,
+    "fullSuiteFail": 0,
+    "commands": ["node --test source-migration/source-stage-game-status.test.cjs", "node --test source-migration/*.test.cjs"],
+    "instructionOracle": "DLL bytes only: tail sort/status/notice calls, ResetDarkness/PlaySe/Warp recursion/event54 calls, elapsed signed64 add/store, cap type-slot identity and immediate, sort delegate metadata tokens, insertion threshold16. Original executable never loaded.",
+    "actualStageCases": "28 fixtures:3-2/10-4,2..8,offline/online. Actual selected map height10, shuffle setting and authored Player positions100..450,432; primitive birthY offset-32768 from frozen Player birth evidence. Explicit Scene roster/EntityRefs supplied; no claimed native10-4 RNG identities, allocator/prototype stream or whole boot."
+  },
+  "api": {
+    "global": "SourceStageGameStatus",
+    "createGlobals": "Creates logical shared static SortInfoList {items:[],version:0}. Native cctor0x18170de00 allocates List capacity32; JS does not model managed capacity/allocation as game entity allocation.",
+    "sortActors": "sortActors(world,stage,frame,host): world.sortInfoList + persistent world.eventPool; Stage.flags; live complete Scene roster/dictionary and Actor/Player pointers supplied by explicit hosts.",
+    "sortInfos_compare": "Native signed64 comparator and exact small-list sorting branches. More than16 tied keys require host.sortEqualYInfos returning exact original SortInfo object permutation; no guessed stable tie sort.",
+    "status": "checkGameStatus(world,stage,frame,host), calcWarpGunPlayerCount, resetDarkness, isRequestedAny, getStageResult.",
+    "clock": "advancePlayTime(stage,frame,host): Stage.playTimeRaw corresponds native+58. Exact signed64 input uses safe JS integer or canonical decimal string. Normal results remain numbers, unsafe negative int64 results remain decimal strings for JSON safety.",
+    "tail": "finishFrame(world,stage,frame,host,{suspendedAtEntry,phaseEligibleAtEntry}) starts AFTER Camera phase. Captured boolean gates required; does not rerun Actor/Collision/Post/Camera or recompute eligibility from current flags."
+  },
+  "tailOrder": {
+    "active": "Stage.onUpdate0x18170b63e sortActors ->0x18170b64c checkGameStatus ->GetStageNotice0x18170b656 ->if Notice.phase native+2 !=0 pollingCommands0x18170b66d ->updatePhase0x18170b67b ->verified elapsed.",
+    "inactivePaused": "Captured phaseEligibleAtEntry=false skips sort/status, still gets Notice and conditionally polls/updates, then elapsed. Existing entry flags&3 gate is not recomputed after earlier callbacks.",
+    "suspended": "Entry Stage flag14 path0x18170b471->b682 skips sort/status/Notice but reaches verified elapsed@b68b. Caller supplies captured suspendedAtEntry.",
+    "notice": "Native UI command polling/phase transition not implemented as no-op. getStageNotice returns live {phase:byte}; phase0 skips both calls. Nonzero calls both, even if polling mutates phase0. Missing/async host or exception throws and prevents elapsed tail; no synthetic finally."
+  },
+  "sortActors": {
+    "va": "0x18170b960",
+    "gate": "Stage bit5(mask32)@bafe; disabled returns without even clearing static list.",
+    "staticList": "Clear shared s_SortInfoList@bb5b..bb77 before gather; list Sort increments version even count0/1@bfe9/c599; final Clear@c770..c78c. Exceptions preserve partial list and busy event. Reentrant sorting uses same list; nested final Clear can terminate outer live-count iteration.",
+    "normal": "Stage bit6 clear ->GetActorScene@c19c ->QList PlayerInfo refs from Scene native+30@c22c. Capture count. Native Player lookup for each ref then flags bit9 exclusion@c360 and state5 exclusion@c36d. Missing/zero Player leads native null dereference (implementation explicitly refuses); missing Actor likewise. No Actor inactive/visible/bit22 filter. Each accepted Actor pointer and Pos.Y native+b8 captured@c3df/c3e6.",
+    "topView": "Stage bit6 set ->GetActorScene@bb98 ->Scene actor dictionary native+28@bc1d. Iterate physical dictionary entries up to live usedCount@bd21; state==2@bd85. GetActor, skip null, require Actor flags bit22(mask0x400000)@bdda. No dead/Clear/inactive filter here. Capture current Pos.Y@be41. Host must supply full physical dictionary, not current collision chunk or arbitrary object iteration order.",
+    "comparators": "Normal ascending signed64 PosY: <>c.<sortActors>b__89_0@0x18170e010. TopView descending: b__89_1@0x18170e050. Delegate slots1831cd4e0 token6000f069->methoddef30772 and1831cd4d8 token6000f06b->30773 resolve exact lambdas.",
+    "nativeSmallSort": "List.Sort helper0x1811976a0 ->IntrospectiveSort0x1801179c0 ->IntroSort0x181197a20. Count<=16@a6a. Count2 SwapIfGreater(lo,hi)@e23..e92. Count3 SwapIfGreater(lo,hi-1), (lo,hi), (hi-1,hi)@d3c..e19. Comparison>0 swap in0x180117aa0@b2c. Count4..16 insertion shifts only comparer<0@c60..d14. Thus three elements[2a,2b,1c] become[1c,2b,2a], unlike JS stable sort. >16 unique keys have uniquely determined permutation; >16 any ties require actual host permutation.",
+    "notification": "For sorted list each live item gets Actor.GetEventParam54@c0e9/c699, writes int32 SortingOrder starting0 then subtract10 after each normal return@c193/c743. NotifyEvents.Invoke_OnRecvEvent sync@c173/c723 then clears InUse@c18d/c73d. Reuses frozen SourceNativeEventPool; mandatory invokeOnRecvEvent returns native int32. No direct Actor.sortingOrder assignment bypassing registry. Null pool slot explicitly throws."
+  },
+  "checkGameStatus": {
+    "va": "0x18170c840",
+    "entry": "IsRequestedAny@c8d4 ->return when Stage any bit10/11/12 (mask7168), proved by0x181709d50. No extra frame verified/active/dead gate inside status method.",
+    "roster": "GetActorScene@c91f ->complete Scene PlayerInfo ref QList native+30@c9b8. Capture signed count@c9da. Count<=0 returns without requesting Clear. Zero refs or missing Player skipped but remain in denominator. All existing Player.state5@cabb contribute1+calcWarpGunPlayerCount@caf3..cafa, with int32 accumulation. Player flags/dead bit are not checked here.",
+    "clear": "Nonempty count and sum>=count@cb12..cb15 ->ResetDarkness0x18170da70@cb34 ->set Stage bit11@cb3f ->FrameEvents.PlaySe@cb79. Does not call Scene.SetActive, change Player states or wait for verified frame.",
+    "sound": {"EntityRef": 0, "SeId": 15, "Position": {"xRaw": 0, "yRaw": 0}, "Volume": 65536, "Pitch": 65536, "IsDisableCheckBlankTime": false, "evidence": "0x18170cb46..cb79; global metadata FrameEvents.PlaySe token60014c2 confirms six parameter names/order."},
+    "repeat": "After bit11 written, normal repeated status returns immediately. Sound exception leaves bit11 set. ResetDarkness global event happens BEFORE bit11 is set: event reentry can request Clear and sound in nested call, followed by outer sound; no invented lock or second guard.",
+    "gameOver": "This method has no all-dead/GameOver aggregation. Ordinary Player.OnUpdate_Dead0x1816c2d89..ddf, after below-map completion, unless Stage bit8, calls Stage.CountGameOver@d2dcc then clears Stage bit9/setsbit10. Frozen SourcePlayerTerminalStates already implements this. Tests reuse it with one dead and another alive Player: Stage retry request already exists and checkGameStatus skips. Bit8 inverse retry-enable getter0x181709c60 returns true when mask256 clear. No new duplicate CountGameOver implementation."
+  },
+  "warpGunCount": {
+    "va": "0x18170cc20",
+    "chain": "Player.GetEquip(0)@ccc8 ->nonzero ref ->Frame.GetActor@cceb ->ActorType70@cd11 ->PlayerWarpGun pointer@cd29 ->targetRef native+20@cd4f ->target Actor@cd61 ->ActorType27@cd83 ->Frame.GetPlayer@cd93 ->recursive count+1@cdca..cdcf. Any absent/wrong branch returns0@cdd3. Target Player state/Scene membership not rechecked; no target deduplication across different Clear players.",
+    "host": "getEquip(frame,player,0), getActor(frame,entityRef), getWarpGun(frame,ref)->{targetRef}, getPlayer(frame,ref) mandatory when reached. Return explicit native EntityRef0 for none and null for missing component. No inferred empty equipment.",
+    "cycle": "Native recursion has no visited guard. Module explicitly refuses cyclic input rather than synthesizing count0 or hanging; acyclic primitive paths implemented."
+  },
+  "resetDarkness": {
+    "va": "0x18170da70",
+    "gateAndWrite": "Stage bit4 clear returns; set clears bit4@dae9..daed BEFORE external calls.",
+    "map": "GetMap@db08; Stage entityRef native+8. If Stage ref0 OR Map.invisibleEntity equals Stage ref, clear Map invisible owner and Map flag0@db29..db4b. Foreign nonzero owner preserves Map state.",
+    "cameraAndEvent": "GetCamera@db57 ->Camera flag5 clear@db65 ->Stage.GetEventParam(type18)@db77, source=Stage.entityRef ->IsDarkness=false@db8e ->Frame.NotifyEvent@db98. Null event throws after earlier writes. Frozen shared pool used; mandatory host.notifyEvent owns actual synchronous global dispatch/release and must not be a no-op."
+  },
+  "elapsed": {
+    "nativeField": "StageComponent.m_PlayTime metadata0x68 minus16 ->native0x58",
+    "type": "Photon.Deterministic.FP signed64 raw,16 fractional bits; not float or uint32",
+    "verified": "Frame.IsVerified native+18 checked live after Notice@0x18170b68b. False leaves clock unchanged even if above cap and does not call DeltaTime.",
+    "addition": "Capture old Stage+58@b697 BEFORE virtual Frame.DeltaTime call@b6a9. signed64 low64 wrapped sum@b6ab stored@b6ae. Then signed comparison >=cap@b6d5/b6d9 and clamp@b6fb. No lower clamp. Decimal strings preserve rare unsafe int64 overflow results without number precision loss.",
+    "cap": {"declaringType": "QGameDefine", "field": "PLAY_TIME_MAX", "staticOffset": 24, "rawHex": "0x151800000", "raw": 5662310400, "seconds": 86400, "evidence": "Elapsed load RIP type slot0x1831c3b18@0x18170b6b2 equals QGameDefine.cctor type slot@0x181780799; cctor movabs@0x1817807a7 stores static+18@0x1817807b1. quantum-field-offsets.json identifies PLAY_TIME_MAX offset24. No inferred generic day-length cap."}
+  },
+  "hostSummary": [
+    "getActorScene/getScenePlayerRefs: actual live complete Scene list and pointer; no guessed player-name or authored-index identities",
+    "getActorDictionary: complete physical entries[{state,entityRef}],usedCount for TopView; getActor/getPlayer resolve current components",
+    "invokeOnRecvEvent: exact Actor registry dispatcher and native int32 return; frozen pool handles reset/release on normal return",
+    "getEquip/getWarpGun for actual Clear players' slot0 chain; zero equipment must be explicitly supplied",
+    "getMap/getCamera/notifyEvent: ResetDarkness actual ownership/UI propagation; playSe records native FrameEvents request",
+    "getStageNotice/pollingNoticeCommands/updateNoticePhase: native UI phase behavior, mandatory when nonzero phase",
+    "getDeltaTime: actual native FP dt, only read when verified",
+    "sortEqualYInfos: required only for lists>16 containing tied PosY; exact native unstable permutation must be supplied"
+  ],
+  "unresolved": [
+    "Large equal-key CLR introsort permutation (>16 items) remains explicit required native host. Small-list special cases/insertion and unique-key large ordering verified.",
+    "Scene physical dictionary/QList materialization, allocator/prototype/factory, actual shuffle RNG/identities, player equipment storage and lifecycle registry are upstream host responsibilities. No whole game boot claim.",
+    "StageNotice pollingCommands/updatePhase UI internals, FrameEvents sound emission and global darkness event dispatch remain mandatory host operations. No silently successful default callbacks.",
+    "Cyclic WarpGun recursion is explicitly refused; native itself has no termination guard. Acyclic branch sequence is implemented.",
+    "Shared SortInfoList is a logical live pointer list; not an online serialized native pointer graph. Caller must retain actual live Actor references; JSON copies of world actors and scratch pointers are not automatically relinked.",
+    "finishFrame begins after earlier Camera phase and requires captured eligibility/suspend gates. Actor/Collision/Post/Camera and Game processing of GetStageResult remain lead-owned."
+  ],
+  "corrections": [
+    "checkGameStatus is Clear aggregation, not all-dead GameOver aggregation; ordinary retry request is already produced in Player.OnUpdate_Dead.",
+    "Same-Y sort cannot generally be replaced by JS stable sort: native count3 SwapIfGreater sequence can reverse equal-key relative order.",
+    "Stage fixture expected zero initially used JS negative-zero expression -10*0. Corrected expected native int32 zero before final verification."
+  ],
+  "filesPolicy": "Only new source-stage-game-status.js/.test.cjs, stage-game-status-report.json, StageGameStatus.result.md and claim marker created. Existing StagePreparation/Camera/bridge/factory/runtime/play/HANDOFF/Git unchanged."
+}
