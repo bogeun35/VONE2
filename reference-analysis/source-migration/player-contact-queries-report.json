@@ -1,0 +1,1458 @@
+{
+  "schemaVersion": 1,
+  "status": "verified_read_only_adapter",
+  "nativeCodeExecuted": false,
+  "scope": "PlayerDefault contactIds/contactInfos/mapContact/contactProbe/iceMapAttributesAtRaw plus collisionById; no cache generation or mutation.",
+  "evidence": [
+    {
+      "name": "idListExactNormalAndLookup",
+      "startVA": "0x181691a55",
+      "instructions": [
+        {
+          "va": "0x181691a55",
+          "instruction": "movups xmm1, xmmword ptr [r13]"
+        },
+        {
+          "va": "0x181691a5a",
+          "instruction": "movups xmm0, xmmword ptr [rdi + 8]"
+        },
+        {
+          "va": "0x181691a5e",
+          "instruction": "movups xmmword ptr [rsp + 0x48], xmm1"
+        },
+        {
+          "va": "0x181691a63",
+          "instruction": "mov rax, qword ptr [rsp + 0x48]"
+        },
+        {
+          "va": "0x181691a68",
+          "instruction": "movups xmmword ptr [rsp + 0x58], xmm0"
+        },
+        {
+          "va": "0x181691a6d",
+          "instruction": "cmp qword ptr [rsp + 0x58], rax"
+        },
+        {
+          "va": "0x181691a72",
+          "instruction": "jne 0x181691ad7"
+        },
+        {
+          "va": "0x181691a74",
+          "instruction": "movups xmmword ptr [rsp + 0x58], xmm1"
+        },
+        {
+          "va": "0x181691a79",
+          "instruction": "mov rax, qword ptr [rsp + 0x60]"
+        },
+        {
+          "va": "0x181691a7e",
+          "instruction": "movups xmmword ptr [rsp + 0x48], xmm0"
+        },
+        {
+          "va": "0x181691a83",
+          "instruction": "cmp qword ptr [rsp + 0x50], rax"
+        },
+        {
+          "va": "0x181691a88",
+          "instruction": "jne 0x181691ad7"
+        },
+        {
+          "va": "0x181691a8a",
+          "instruction": "mov rcx, qword ptr [rip + 0x1b30cff]"
+        },
+        {
+          "va": "0x181691a91",
+          "instruction": "mov r15d, dword ptr [rdi + 4]"
+        },
+        {
+          "va": "0x181691a95",
+          "instruction": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x181691a9c",
+          "instruction": "jne 0x181691aa3"
+        },
+        {
+          "va": "0x181691a9e",
+          "instruction": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181691aa3",
+          "instruction": "mov rdx, qword ptr [rsp + 0xb8]"
+        },
+        {
+          "va": "0x181691aab",
+          "instruction": "xor r9d, r9d"
+        },
+        {
+          "va": "0x181691aae",
+          "instruction": "mov rcx, qword ptr [rsp + 0x20]"
+        },
+        {
+          "va": "0x181691ab3",
+          "instruction": "mov r8d, r15d"
+        },
+        {
+          "va": "0x181691ab6",
+          "instruction": "call 0x1817f6940"
+        },
+        {
+          "va": "0x181691abb",
+          "instruction": "test rax, rax"
+        },
+        {
+          "va": "0x181691abe",
+          "instruction": "je 0x181691ad7"
+        },
+        {
+          "va": "0x181691ac0",
+          "instruction": "test r14, r14"
+        },
+        {
+          "va": "0x181691ac3",
+          "instruction": "je 0x181691b13"
+        },
+        {
+          "va": "0x181691ac5",
+          "instruction": "mov r8, qword ptr [rip + 0x1b30a5c]"
+        },
+        {
+          "va": "0x181691acc",
+          "instruction": "mov rcx, r14"
+        },
+        {
+          "va": "0x181691acf",
+          "instruction": "mov edx, dword ptr [rdi + 4]"
+        },
+        {
+          "va": "0x181691ad2",
+          "instruction": "call 0x180003970"
+        },
+        {
+          "va": "0x181691ad7",
+          "instruction": "inc ebx"
+        },
+        {
+          "va": "0x181691ad9",
+          "instruction": "cmp ebx, r12d"
+        }
+      ]
+    },
+    {
+      "name": "contactedBeforeTargetLookup",
+      "startVA": "0x1816928df",
+      "instructions": [
+        {
+          "va": "0x1816928df",
+          "instruction": "movups xmm1, xmmword ptr [r12]"
+        },
+        {
+          "va": "0x1816928e4",
+          "instruction": "movups xmm0, xmmword ptr [rax + 8]"
+        },
+        {
+          "va": "0x1816928e8",
+          "instruction": "movups xmmword ptr [rsp + 0x30], xmm1"
+        },
+        {
+          "va": "0x1816928ed",
+          "instruction": "mov rcx, qword ptr [rsp + 0x30]"
+        },
+        {
+          "va": "0x1816928f2",
+          "instruction": "movups xmmword ptr [rsp + 0x40], xmm0"
+        },
+        {
+          "va": "0x1816928f7",
+          "instruction": "cmp qword ptr [rsp + 0x40], rcx"
+        },
+        {
+          "va": "0x1816928fc",
+          "instruction": "jne 0x181692954"
+        },
+        {
+          "va": "0x1816928fe",
+          "instruction": "movups xmmword ptr [rsp + 0x40], xmm1"
+        },
+        {
+          "va": "0x181692903",
+          "instruction": "mov rax, qword ptr [rsp + 0x48]"
+        },
+        {
+          "va": "0x181692908",
+          "instruction": "movups xmmword ptr [rsp + 0x30], xmm0"
+        },
+        {
+          "va": "0x18169290d",
+          "instruction": "cmp qword ptr [rsp + 0x38], rax"
+        },
+        {
+          "va": "0x181692912",
+          "instruction": "jne 0x181692954"
+        },
+        {
+          "va": "0x181692914",
+          "instruction": "mov r15b, 1"
+        },
+        {
+          "va": "0x181692917",
+          "instruction": "test r13b, r13b"
+        },
+        {
+          "va": "0x18169291a",
+          "instruction": "je 0x181692997"
+        },
+        {
+          "va": "0x18169291c",
+          "instruction": "mov rcx, qword ptr [rip + 0x1b2fe6d]"
+        },
+        {
+          "va": "0x181692923",
+          "instruction": "mov edi, dword ptr [rdx + 4]"
+        },
+        {
+          "va": "0x181692926",
+          "instruction": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18169292d",
+          "instruction": "jne 0x181692934"
+        },
+        {
+          "va": "0x18169292f",
+          "instruction": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181692934",
+          "instruction": "mov rcx, qword ptr [rsp + 0x98]"
+        },
+        {
+          "va": "0x18169293c",
+          "instruction": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18169293f",
+          "instruction": "mov r8d, edi"
+        },
+        {
+          "va": "0x181692942",
+          "instruction": "mov rdx, rbp"
+        },
+        {
+          "va": "0x181692945",
+          "instruction": "call 0x1817f6940"
+        },
+        {
+          "va": "0x18169294a",
+          "instruction": "test rax, rax"
+        },
+        {
+          "va": "0x18169294d",
+          "instruction": "je 0x181692954"
+        },
+        {
+          "va": "0x18169294f",
+          "instruction": "movzx eax, byte ptr [rax]"
+        },
+        {
+          "va": "0x181692952",
+          "instruction": "or byte ptr [rsi], al"
+        },
+        {
+          "va": "0x181692954",
+          "instruction": "inc ebx"
+        }
+      ]
+    },
+    {
+      "name": "mapFallback",
+      "startVA": "0x18169295f",
+      "instructions": [
+        {
+          "va": "0x18169295f",
+          "instruction": "test r15b, r15b"
+        },
+        {
+          "va": "0x181692962",
+          "instruction": "jne 0x181692997"
+        },
+        {
+          "va": "0x181692964",
+          "instruction": "mov rdi, qword ptr [rsp + 0x90]"
+        },
+        {
+          "va": "0x18169296c",
+          "instruction": "cmp byte ptr [rsp + 0xa8], 0"
+        },
+        {
+          "va": "0x181692974",
+          "instruction": "je 0x1816929bb"
+        },
+        {
+          "va": "0x181692976",
+          "instruction": "movups xmm0, xmmword ptr [r12]"
+        },
+        {
+          "va": "0x18169297b",
+          "instruction": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18169297e",
+          "instruction": "lea r8, [rsp + 0x40]"
+        },
+        {
+          "va": "0x181692983",
+          "instruction": "mov rdx, rbp"
+        },
+        {
+          "va": "0x181692986",
+          "instruction": "mov rcx, rdi"
+        },
+        {
+          "va": "0x181692989",
+          "instruction": "movaps xmmword ptr [rsp + 0x40], xmm0"
+        },
+        {
+          "va": "0x18169298e",
+          "instruction": "call 0x181692b70"
+        },
+        {
+          "va": "0x181692993",
+          "instruction": "test al, al"
+        },
+        {
+          "va": "0x181692995",
+          "instruction": "je 0x1816929bb"
+        }
+      ]
+    },
+    {
+      "name": "mapNormalCache",
+      "startVA": "0x181692bf5",
+      "instructions": [
+        {
+          "va": "0x181692bf5",
+          "instruction": "mov r9, qword ptr [rip + 0x1b2f954]"
+        },
+        {
+          "va": "0x181692bfc",
+          "instruction": "lea rcx, [rsp + 0x40]"
+        },
+        {
+          "va": "0x181692c01",
+          "instruction": "mov r8d, dword ptr [rsi + 0xc]"
+        },
+        {
+          "va": "0x181692c05",
+          "instruction": "mov rdx, rbx"
+        },
+        {
+          "va": "0x181692c08",
+          "instruction": "call 0x180005a50"
+        },
+        {
+          "va": "0x181692c0d",
+          "instruction": "xor ebx, ebx"
+        },
+        {
+          "va": "0x181692c0f",
+          "instruction": "movups xmm0, xmmword ptr [rax]"
+        },
+        {
+          "va": "0x181692c12",
+          "instruction": "movq rax, xmm0"
+        },
+        {
+          "va": "0x181692c17",
+          "instruction": "movups xmmword ptr [rsp + 0x20], xmm0"
+        },
+        {
+          "va": "0x181692c1c",
+          "instruction": "test rax, rax"
+        },
+        {
+          "va": "0x181692c1f",
+          "instruction": "je 0x181692ca4"
+        },
+        {
+          "va": "0x181692c25",
+          "instruction": "mov esi, dword ptr [rax]"
+        },
+        {
+          "va": "0x181692c27",
+          "instruction": "test esi, esi"
+        },
+        {
+          "va": "0x181692c29",
+          "instruction": "jle 0x181692c80"
+        },
+        {
+          "va": "0x181692c2b",
+          "instruction": "nop dword ptr [rax + rax]"
+        },
+        {
+          "va": "0x181692c30",
+          "instruction": "mov r8, qword ptr [rip + 0x1b2f9e9]"
+        },
+        {
+          "va": "0x181692c37",
+          "instruction": "lea rcx, [rsp + 0x20]"
+        },
+        {
+          "va": "0x181692c3c",
+          "instruction": "mov edx, ebx"
+        },
+        {
+          "va": "0x181692c3e",
+          "instruction": "call 0x180035e90"
+        },
+        {
+          "va": "0x181692c43",
+          "instruction": "test rax, rax"
+        },
+        {
+          "va": "0x181692c46",
+          "instruction": "je 0x181692ca4"
+        },
+        {
+          "va": "0x181692c48",
+          "instruction": "movups xmm1, xmmword ptr [rdi]"
+        },
+        {
+          "va": "0x181692c4b",
+          "instruction": "movups xmm0, xmmword ptr [rax]"
+        },
+        {
+          "va": "0x181692c4e",
+          "instruction": "movups xmmword ptr [rsp + 0x30], xmm1"
+        },
+        {
+          "va": "0x181692c53",
+          "instruction": "mov rcx, qword ptr [rsp + 0x30]"
+        },
+        {
+          "va": "0x181692c58",
+          "instruction": "movups xmmword ptr [rsp + 0x40], xmm0"
+        },
+        {
+          "va": "0x181692c5d",
+          "instruction": "cmp qword ptr [rsp + 0x40], rcx"
+        },
+        {
+          "va": "0x181692c62",
+          "instruction": "jne 0x181692c7a"
+        },
+        {
+          "va": "0x181692c64",
+          "instruction": "movups xmmword ptr [rsp + 0x40], xmm1"
+        },
+        {
+          "va": "0x181692c69",
+          "instruction": "mov rax, qword ptr [rsp + 0x48]"
+        },
+        {
+          "va": "0x181692c6e",
+          "instruction": "movups xmmword ptr [rsp + 0x30], xmm0"
+        },
+        {
+          "va": "0x181692c73",
+          "instruction": "cmp qword ptr [rsp + 0x38], rax"
+        },
+        {
+          "va": "0x181692c78",
+          "instruction": "je 0x181692c92"
+        },
+        {
+          "va": "0x181692c7a",
+          "instruction": "inc ebx"
+        },
+        {
+          "va": "0x181692c7c",
+          "instruction": "cmp ebx, esi"
+        },
+        {
+          "va": "0x181692c7e",
+          "instruction": "jl 0x181692c30"
+        },
+        {
+          "va": "0x181692c80",
+          "instruction": "xor al, al"
+        },
+        {
+          "va": "0x181692c82",
+          "instruction": "mov rbx, qword ptr [rsp + 0x60]"
+        },
+        {
+          "va": "0x181692c87",
+          "instruction": "mov rsi, qword ptr [rsp + 0x68]"
+        },
+        {
+          "va": "0x181692c8c",
+          "instruction": "add rsp, 0x50"
+        },
+        {
+          "va": "0x181692c90",
+          "instruction": "pop rdi"
+        },
+        {
+          "va": "0x181692c91",
+          "instruction": "ret "
+        }
+      ]
+    },
+    {
+      "name": "iceAnchorOffsetAndCells",
+      "startVA": "0x1816c4cf4",
+      "instructions": [
+        {
+          "va": "0x1816c4cf4",
+          "instruction": "mov rcx, qword ptr [rip + 0x1afee1d]"
+        },
+        {
+          "va": "0x1816c4cfb",
+          "instruction": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x1816c4d02",
+          "instruction": "jne 0x1816c4d10"
+        },
+        {
+          "va": "0x1816c4d04",
+          "instruction": "call 0x1802ec040"
+        },
+        {
+          "va": "0x1816c4d09",
+          "instruction": "mov rcx, qword ptr [rip + 0x1afee08]"
+        },
+        {
+          "va": "0x1816c4d10",
+          "instruction": "mov rcx, qword ptr [rcx + 0xb8]"
+        },
+        {
+          "va": "0x1816c4d17",
+          "instruction": "mov rcx, qword ptr [rcx]"
+        },
+        {
+          "va": "0x1816c4d1a",
+          "instruction": "mov rax, rcx"
+        },
+        {
+          "va": "0x1816c4d1d",
+          "instruction": "shl rax, 0x10"
+        },
+        {
+          "va": "0x1816c4d21",
+          "instruction": "cqo "
+        },
+        {
+          "va": "0x1816c4d23",
+          "instruction": "and edx, 0x3ffff"
+        },
+        {
+          "va": "0x1816c4d29",
+          "instruction": "lea r8, [rdx + rax]"
+        },
+        {
+          "va": "0x1816c4d2d",
+          "instruction": "sar r8, 0x12"
+        },
+        {
+          "va": "0x1816c4d31",
+          "instruction": "mov rax, qword ptr [rsp + 0x28]"
+        },
+        {
+          "va": "0x1816c4d36",
+          "instruction": "test edi, edi"
+        },
+        {
+          "va": "0x1816c4d38",
+          "instruction": "jne 0x1816c4d7d"
+        },
+        {
+          "va": "0x1816c4d3a",
+          "instruction": "add rax, r8"
+        },
+        {
+          "va": "0x1816c4d3d",
+          "instruction": "jmp 0x1816c4d80"
+        },
+        {
+          "va": "0x1816c4d3f",
+          "instruction": "mov rcx, qword ptr [rip + 0x1af634a]"
+        },
+        {
+          "va": "0x1816c4d46",
+          "instruction": "movzx edi, byte ptr [rax]"
+        },
+        {
+          "va": "0x1816c4d49",
+          "instruction": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x1816c4d50",
+          "instruction": "jne 0x1816c4d57"
+        },
+        {
+          "va": "0x1816c4d52",
+          "instruction": "call 0x1802ec040"
+        },
+        {
+          "va": "0x1816c4d57",
+          "instruction": "mov eax, dword ptr [r13 + 0xc]"
+        },
+        {
+          "va": "0x1816c4d5b",
+          "instruction": "lea rbx, [r13 + 0xc]"
+        },
+        {
+          "va": "0x1816c4d5f",
+          "instruction": "test dil, 4"
+        },
+        {
+          "va": "0x1816c4d63",
+          "instruction": "ja 0x1816c4d71"
+        },
+        {
+          "va": "0x1816c4d65",
+          "instruction": "btr eax, 0x17"
+        },
+        {
+          "va": "0x1816c4d69",
+          "instruction": "mov rcx, rbx"
+        },
+        {
+          "va": "0x1816c4d6c",
+          "instruction": "jmp 0x1816c4ea1"
+        },
+        {
+          "va": "0x1816c4d71",
+          "instruction": "bts eax, 0x17"
+        },
+        {
+          "va": "0x1816c4d75",
+          "instruction": "mov rcx, rbx"
+        },
+        {
+          "va": "0x1816c4d78",
+          "instruction": "jmp 0x1816c4ea1"
+        },
+        {
+          "va": "0x1816c4d7d",
+          "instruction": "sub rax, r8"
+        },
+        {
+          "va": "0x1816c4d80",
+          "instruction": "mov qword ptr [rsp + 0x28], rax"
+        },
+        {
+          "va": "0x1816c4d85",
+          "instruction": "mov rax, qword ptr [rsp + 0x20]"
+        },
+        {
+          "va": "0x1816c4d8a",
+          "instruction": "movaps xmm0, xmmword ptr [rsp + 0x20]"
+        },
+        {
+          "va": "0x1816c4d8f",
+          "instruction": "shl rax, 0x10"
+        },
+        {
+          "va": "0x1816c4d93",
+          "instruction": "cqo "
+        },
+        {
+          "va": "0x1816c4d95",
+          "instruction": "movdqa xmmword ptr [rsp + 0x60], xmm0"
+        },
+        {
+          "va": "0x1816c4d9b",
+          "instruction": "idiv rcx"
+        },
+        {
+          "va": "0x1816c4d9e",
+          "instruction": "mov rbx, rax"
+        },
+        {
+          "va": "0x1816c4da1",
+          "instruction": "mov rax, qword ptr [rsp + 0x68]"
+        },
+        {
+          "va": "0x1816c4da6",
+          "instruction": "shl rax, 0x10"
+        },
+        {
+          "va": "0x1816c4daa",
+          "instruction": "cqo "
+        },
+        {
+          "va": "0x1816c4dac",
+          "instruction": "idiv rcx"
+        },
+        {
+          "va": "0x1816c4daf",
+          "instruction": "xor edx, edx"
+        },
+        {
+          "va": "0x1816c4db1",
+          "instruction": "mov rcx, r14"
+        },
+        {
+          "va": "0x1816c4db4",
+          "instruction": "mov rdi, rax"
+        },
+        {
+          "va": "0x1816c4db7",
+          "instruction": "call 0x18174aab0"
+        },
+        {
+          "va": "0x1816c4dbc",
+          "instruction": "mov rcx, qword ptr [rip + 0x1b04145]"
+        },
+        {
+          "va": "0x1816c4dc3",
+          "instruction": "mov rsi, rax"
+        },
+        {
+          "va": "0x1816c4dc6",
+          "instruction": "sar rbx, 0x10"
+        },
+        {
+          "va": "0x1816c4dca",
+          "instruction": "sar rdi, 0x10"
+        },
+        {
+          "va": "0x1816c4dce",
+          "instruction": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x1816c4dd5",
+          "instruction": "jne 0x1816c4ddc"
+        },
+        {
+          "va": "0x1816c4dd7",
+          "instruction": "call 0x1802ec040"
+        },
+        {
+          "va": "0x1816c4ddc",
+          "instruction": "test ebx, ebx"
+        },
+        {
+          "va": "0x1816c4dde",
+          "instruction": "js 0x1816c4f40"
+        },
+        {
+          "va": "0x1816c4de4",
+          "instruction": "movzx ecx, word ptr [rsi + 0x1004]"
+        },
+        {
+          "va": "0x1816c4deb",
+          "instruction": "cmp ebx, ecx"
+        },
+        {
+          "va": "0x1816c4ded",
+          "instruction": "jge 0x1816c4f40"
+        },
+        {
+          "va": "0x1816c4df3",
+          "instruction": "test edi, edi"
+        },
+        {
+          "va": "0x1816c4df5",
+          "instruction": "js 0x1816c4f40"
+        },
+        {
+          "va": "0x1816c4dfb",
+          "instruction": "movzx eax, word ptr [rsi + 0x1002]"
+        },
+        {
+          "va": "0x1816c4e02",
+          "instruction": "cmp edi, eax"
+        },
+        {
+          "va": "0x1816c4e04",
+          "instruction": "jge 0x1816c4f40"
+        },
+        {
+          "va": "0x1816c4e0a",
+          "instruction": "imul ecx, edi"
+        },
+        {
+          "va": "0x1816c4e0d",
+          "instruction": "add ecx, ebx"
+        },
+        {
+          "va": "0x1816c4e0f",
+          "instruction": "cmp ecx, 0x1000"
+        },
+        {
+          "va": "0x1816c4e15",
+          "instruction": "jge 0x1816c4f40"
+        },
+        {
+          "va": "0x1816c4e1b",
+          "instruction": "movsxd rax, ecx"
+        },
+        {
+          "va": "0x1816c4e1e",
+          "instruction": "movzx ebx, byte ptr [rax + rsi]"
+        },
+        {
+          "va": "0x1816c4e22",
+          "instruction": "cmp bl, 2"
+        },
+        {
+          "va": "0x1816c4e25",
+          "instruction": "jb 0x1816c4f40"
+        }
+      ]
+    },
+    {
+      "name": "chipAndAttributeBounds",
+      "startVA": "0x1816c4ddc",
+      "instructions": [
+        {
+          "va": "0x1816c4ddc",
+          "instruction": "test ebx, ebx"
+        },
+        {
+          "va": "0x1816c4dde",
+          "instruction": "js 0x1816c4f40"
+        },
+        {
+          "va": "0x1816c4de4",
+          "instruction": "movzx ecx, word ptr [rsi + 0x1004]"
+        },
+        {
+          "va": "0x1816c4deb",
+          "instruction": "cmp ebx, ecx"
+        },
+        {
+          "va": "0x1816c4ded",
+          "instruction": "jge 0x1816c4f40"
+        },
+        {
+          "va": "0x1816c4df3",
+          "instruction": "test edi, edi"
+        },
+        {
+          "va": "0x1816c4df5",
+          "instruction": "js 0x1816c4f40"
+        },
+        {
+          "va": "0x1816c4dfb",
+          "instruction": "movzx eax, word ptr [rsi + 0x1002]"
+        },
+        {
+          "va": "0x1816c4e02",
+          "instruction": "cmp edi, eax"
+        },
+        {
+          "va": "0x1816c4e04",
+          "instruction": "jge 0x1816c4f40"
+        },
+        {
+          "va": "0x1816c4e0a",
+          "instruction": "imul ecx, edi"
+        },
+        {
+          "va": "0x1816c4e0d",
+          "instruction": "add ecx, ebx"
+        },
+        {
+          "va": "0x1816c4e0f",
+          "instruction": "cmp ecx, 0x1000"
+        },
+        {
+          "va": "0x1816c4e15",
+          "instruction": "jge 0x1816c4f40"
+        },
+        {
+          "va": "0x1816c4e1b",
+          "instruction": "movsxd rax, ecx"
+        },
+        {
+          "va": "0x1816c4e1e",
+          "instruction": "movzx ebx, byte ptr [rax + rsi]"
+        },
+        {
+          "va": "0x1816c4e22",
+          "instruction": "cmp bl, 2"
+        },
+        {
+          "va": "0x1816c4e25",
+          "instruction": "jb 0x1816c4f40"
+        },
+        {
+          "va": "0x1816c4e2b",
+          "instruction": "cmp byte ptr [rip + 0x1c95e15], 0"
+        },
+        {
+          "va": "0x1816c4e32",
+          "instruction": "jne 0x1816c4e4c"
+        },
+        {
+          "va": "0x1816c4e34",
+          "instruction": "lea rcx, [rip + 0x1aa0125]"
+        },
+        {
+          "va": "0x1816c4e3b",
+          "instruction": "call 0x1802c5dc0"
+        },
+        {
+          "va": "0x1816c4e40",
+          "instruction": "lock or dword ptr [rsp], 0"
+        },
+        {
+          "va": "0x1816c4e45",
+          "instruction": "mov byte ptr [rip + 0x1c95dfb], 1"
+        },
+        {
+          "va": "0x1816c4e4c",
+          "instruction": "mov rcx, qword ptr [rip + 0x1aa010d]"
+        },
+        {
+          "va": "0x1816c4e53",
+          "instruction": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x1816c4e5a",
+          "instruction": "jne 0x1816c4e61"
+        },
+        {
+          "va": "0x1816c4e5c",
+          "instruction": "call 0x1802ec040"
+        },
+        {
+          "va": "0x1816c4e61",
+          "instruction": "xor edx, edx"
+        },
+        {
+          "va": "0x1816c4e63",
+          "instruction": "movzx ecx, bl"
+        },
+        {
+          "va": "0x1816c4e66",
+          "instruction": "call 0x181781820"
+        }
+      ]
+    },
+    {
+      "name": "attributeGetBound",
+      "startVA": "0x18178184a",
+      "instructions": [
+        {
+          "va": "0x18178184a",
+          "instruction": "cmp bl, 0x4f"
+        },
+        {
+          "va": "0x18178184d",
+          "instruction": "jae 0x18178188d"
+        },
+        {
+          "va": "0x18178184f",
+          "instruction": "mov rax, qword ptr [rip + 0x19e370a]"
+        },
+        {
+          "va": "0x181781856",
+          "instruction": "cmp dword ptr [rax + 0xe0], 0"
+        },
+        {
+          "va": "0x18178185d",
+          "instruction": "jne 0x18178186e"
+        },
+        {
+          "va": "0x18178185f",
+          "instruction": "mov rcx, rax"
+        },
+        {
+          "va": "0x181781862",
+          "instruction": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181781867",
+          "instruction": "mov rax, qword ptr [rip + 0x19e36f2]"
+        },
+        {
+          "va": "0x18178186e",
+          "instruction": "mov rax, qword ptr [rax + 0xb8]"
+        },
+        {
+          "va": "0x181781875",
+          "instruction": "mov rcx, qword ptr [rax]"
+        },
+        {
+          "va": "0x181781878",
+          "instruction": "test rcx, rcx"
+        },
+        {
+          "va": "0x18178187b",
+          "instruction": "je 0x18178189b"
+        },
+        {
+          "va": "0x18178187d",
+          "instruction": "cmp ebx, dword ptr [rcx + 0x18]"
+        },
+        {
+          "va": "0x181781880",
+          "instruction": "jae 0x181781895"
+        },
+        {
+          "va": "0x181781882",
+          "instruction": "movzx eax, byte ptr [rbx + rcx + 0x20]"
+        },
+        {
+          "va": "0x181781887",
+          "instruction": "add rsp, 0x20"
+        },
+        {
+          "va": "0x18178188b",
+          "instruction": "pop rbx"
+        },
+        {
+          "va": "0x18178188c",
+          "instruction": "ret "
+        },
+        {
+          "va": "0x18178188d",
+          "instruction": "xor al, al"
+        },
+        {
+          "va": "0x18178188f",
+          "instruction": "add rsp, 0x20"
+        }
+      ]
+    },
+    {
+      "name": "littleStepRawIndex",
+      "startVA": "0x1816c5545",
+      "instructions": [
+        {
+          "va": "0x1816c5545",
+          "instruction": "movups xmm0, xmmword ptr [rdx + 8]"
+        },
+        {
+          "va": "0x1816c5549",
+          "instruction": "mov rcx, qword ptr [rsp + 0x50]"
+        },
+        {
+          "va": "0x1816c554e",
+          "instruction": "movups xmmword ptr [rsp + 0x30], xmm0"
+        },
+        {
+          "va": "0x1816c5553",
+          "instruction": "cmp qword ptr [rsp + 0x30], rcx"
+        },
+        {
+          "va": "0x1816c5558",
+          "instruction": "jne 0x1816c55fc"
+        },
+        {
+          "va": "0x1816c555e",
+          "instruction": "mov rax, qword ptr [rsp + 0x58]"
+        },
+        {
+          "va": "0x1816c5563",
+          "instruction": "movups xmmword ptr [rsp + 0x30], xmm0"
+        },
+        {
+          "va": "0x1816c5568",
+          "instruction": "cmp qword ptr [rsp + 0x38], rax"
+        },
+        {
+          "va": "0x1816c556d",
+          "instruction": "jne 0x1816c55fc"
+        },
+        {
+          "va": "0x1816c5573",
+          "instruction": "mov rcx, qword ptr [rip + 0x1afd216]"
+        },
+        {
+          "va": "0x1816c557a",
+          "instruction": "mov r14d, dword ptr [rdx + 4]"
+        },
+        {
+          "va": "0x1816c557e",
+          "instruction": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x1816c5585",
+          "instruction": "jne 0x1816c558c"
+        },
+        {
+          "va": "0x1816c5587",
+          "instruction": "call 0x1802ec040"
+        },
+        {
+          "va": "0x1816c558c",
+          "instruction": "mov rcx, qword ptr [rbp - 0x80]"
+        },
+        {
+          "va": "0x1816c5590",
+          "instruction": "xor r9d, r9d"
+        },
+        {
+          "va": "0x1816c5593",
+          "instruction": "mov r8d, r14d"
+        },
+        {
+          "va": "0x1816c5596",
+          "instruction": "mov rdx, r12"
+        },
+        {
+          "va": "0x1816c5599",
+          "instruction": "call 0x1817f6940"
+        },
+        {
+          "va": "0x1816c559e",
+          "instruction": "mov r14, rax"
+        },
+        {
+          "va": "0x1816c55a1",
+          "instruction": "test rax, rax"
+        },
+        {
+          "va": "0x1816c55a4",
+          "instruction": "je 0x1816c55fc"
+        },
+        {
+          "va": "0x1816c55a6",
+          "instruction": "xor r8d, r8d"
+        },
+        {
+          "va": "0x1816c55a9",
+          "instruction": "lea rcx, [rbp + 0x20]"
+        },
+        {
+          "va": "0x1816c55ad",
+          "instruction": "mov rdx, rax"
+        },
+        {
+          "va": "0x1816c55b0",
+          "instruction": "call 0x181690610"
+        },
+        {
+          "va": "0x1816c55b5",
+          "instruction": "movups xmm1, xmmword ptr [rax + 0x10]"
+        },
+        {
+          "va": "0x1816c55b9",
+          "instruction": "movups xmm0, xmmword ptr [rax]"
+        },
+        {
+          "va": "0x1816c55bc",
+          "instruction": "movups xmmword ptr [rbp - 0x30], xmm1"
+        },
+        {
+          "va": "0x1816c55c0",
+          "instruction": "psrldq xmm1, 8"
+        },
+        {
+          "va": "0x1816c55c5",
+          "instruction": "movq rcx, xmm1"
+        },
+        {
+          "va": "0x1816c55ca",
+          "instruction": "add rcx, qword ptr [r14 + 0x48]"
+        },
+        {
+          "va": "0x1816c55ce",
+          "instruction": "mov qword ptr [rbp - 0x28], rcx"
+        },
+        {
+          "va": "0x1816c55d2",
+          "instruction": "movups xmmword ptr [rbp - 0x40], xmm0"
+        },
+        {
+          "va": "0x1816c55d6",
+          "instruction": "test r13d, r13d"
+        },
+        {
+          "va": "0x1816c55d9",
+          "instruction": "je 0x1816c55f0"
+        },
+        {
+          "va": "0x1816c55db",
+          "instruction": "mov rax, qword ptr [rbp - 0x40]"
+        },
+        {
+          "va": "0x1816c55df",
+          "instruction": "add rax, rcx"
+        },
+        {
+          "va": "0x1816c55e2",
+          "instruction": "test edi, edi"
+        },
+        {
+          "va": "0x1816c55e4",
+          "instruction": "je 0x1816c55eb"
+        },
+        {
+          "va": "0x1816c55e6",
+          "instruction": "cmp rax, rbx"
+        },
+        {
+          "va": "0x1816c55e9",
+          "instruction": "jle 0x1816c55fc"
+        },
+        {
+          "va": "0x1816c55eb",
+          "instruction": "mov rbx, rax"
+        },
+        {
+          "va": "0x1816c55ee",
+          "instruction": "jmp 0x1816c55fc"
+        },
+        {
+          "va": "0x1816c55f0",
+          "instruction": "test edi, edi"
+        },
+        {
+          "va": "0x1816c55f2",
+          "instruction": "je 0x1816c55f9"
+        },
+        {
+          "va": "0x1816c55f4",
+          "instruction": "cmp rcx, rbx"
+        },
+        {
+          "va": "0x1816c55f7",
+          "instruction": "jge 0x1816c55fc"
+        },
+        {
+          "va": "0x1816c55f9",
+          "instruction": "mov rbx, rcx"
+        },
+        {
+          "va": "0x1816c55fc",
+          "instruction": "inc edi"
+        },
+        {
+          "va": "0x1816c55fe",
+          "instruction": "cmp edi, dword ptr [rbp + 0xa0]"
+        }
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "typeIndex": 4345,
+      "type": "ContactFace",
+      "fields": [
+        {
+          "name": "value__",
+          "offset": 16,
+          "typeIndex": 25584
+        },
+        {
+          "name": "Invalid",
+          "offset": 0,
+          "typeIndex": 16637
+        },
+        {
+          "name": "Up",
+          "offset": 0,
+          "typeIndex": 16637
+        },
+        {
+          "name": "Down",
+          "offset": 0,
+          "typeIndex": 16637
+        },
+        {
+          "name": "Left",
+          "offset": 0,
+          "typeIndex": 16637
+        },
+        {
+          "name": "Right",
+          "offset": 0,
+          "typeIndex": 16637
+        }
+      ]
+    },
+    {
+      "typeIndex": 4436,
+      "type": "Collision",
+      "fields": [
+        {
+          "name": "m_Attribute",
+          "offset": 16,
+          "typeIndex": 16179
+        },
+        {
+          "name": "m_Circle",
+          "offset": 160,
+          "typeIndex": 16029
+        },
+        {
+          "name": "m_CollisionType",
+          "offset": 18,
+          "typeIndex": 16241
+        },
+        {
+          "name": "m_ContactInfoListPtr",
+          "offset": 24,
+          "typeIndex": 24456
+        },
+        {
+          "name": "m_ContactMapInfoListPtr",
+          "offset": 28,
+          "typeIndex": 24456
+        },
+        {
+          "name": "m_EntityRef",
+          "offset": 40,
+          "typeIndex": 18961
+        },
+        {
+          "name": "m_ExpectedPos",
+          "offset": 48,
+          "typeIndex": 19351
+        },
+        {
+          "name": "m_ExpectedScale",
+          "offset": 64,
+          "typeIndex": 19351
+        },
+        {
+          "name": "m_Flags",
+          "offset": 22,
+          "typeIndex": 28513
+        },
+        {
+          "name": "m_Id",
+          "offset": 36,
+          "typeIndex": 28530
+        },
+        {
+          "name": "m_Index",
+          "offset": 20,
+          "typeIndex": 25582
+        },
+        {
+          "name": "m_Layer",
+          "offset": 17,
+          "typeIndex": 16202
+        },
+        {
+          "name": "m_Pos",
+          "offset": 80,
+          "typeIndex": 19351
+        },
+        {
+          "name": "m_PrePos",
+          "offset": 96,
+          "typeIndex": 19351
+        },
+        {
+          "name": "m_PreScale",
+          "offset": 112,
+          "typeIndex": 19351
+        },
+        {
+          "name": "m_Priority",
+          "offset": 21,
+          "typeIndex": 25582
+        },
+        {
+          "name": "m_PushBackTarget",
+          "offset": 19,
+          "typeIndex": 24469
+        },
+        {
+          "name": "m_Rect",
+          "offset": 184,
+          "typeIndex": 24984
+        },
+        {
+          "name": "m_RequestContactMapInfoListPtr",
+          "offset": 32,
+          "typeIndex": 24456
+        },
+        {
+          "name": "m_Scale",
+          "offset": 128,
+          "typeIndex": 19351
+        },
+        {
+          "name": "m_ScalePivot",
+          "offset": 144,
+          "typeIndex": 19351
+        },
+        {
+          "name": "s_CollisionAttribute",
+          "offset": 0,
+          "typeIndex": 16180
+        }
+      ]
+    },
+    {
+      "typeIndex": 4439,
+      "type": "ContactInfo",
+      "fields": [
+        {
+          "name": "Id",
+          "offset": 20,
+          "typeIndex": 28530
+        },
+        {
+          "name": "Normal",
+          "offset": 24,
+          "typeIndex": 19351
+        },
+        {
+          "name": "State",
+          "offset": 16,
+          "typeIndex": 16642
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "source-move-contact.js": "Reuse frozen cardinal NORMALS; read existing Scene/MoveContact contacts[{id,normal:{x,y},state}] without regenerate/sort/normalize.",
+    "source-collision-map.js": "Reuse frozen cell(raw) signed FP divide-truncate/sar16. Reject raw shift overflow requiring additional shared-core branch.",
+    "source-collision-broadphase.js": "Reuse getCollisionById(storage,id) actual primary/secondary hash-chain lookup, includes inactive collisions. Never use active() chunk filter for lookup.",
+    "source-collision-scene.js": "Read exact contacts/mapNormals caches produced by refreshContacts/refreshMapContacts. Core invoked only in tests to generate genuine canonical cache; adapter never calls generation.",
+    "source-collision-rect.js": "Existing PlayerDefault.littleStep reuses GetRect itself; adapter preserves raw list indices and resolved collision fields instead of duplicating geometry.",
+    "source-geometry.local.json": "Tests reuse existing extracted chip grids/attribute records. Runtime must provide live modified native grid, not assume authored grid remains current."
+  },
+  "findings": {
+    "faceOrder": "0Up/1Down/2Left/3Right, exact raw (0,-65536)/(0,65536)/(-65536,0)/(65536,0).",
+    "unfilteredInfos": "Every stored contact retained in original order, including missing target/wrong/near/zero normal. Returns [{collisionId,normalRaw}].",
+    "idList": "Only exact-normal entries with current non-null collision lookup are returned, preserving duplicates/order. Native GetContactCollisionList omits stale IDs.",
+    "probe": "Matching normal sets contacted before target lookup. OR all matching resolved target attribute bytes; no layer/static/inactive filter. Matching stale record =>true/0. If any matching actor record, map cache is not read.",
+    "map": "mapNormals is committed raw normal cache; requestMapNormals not included. No Map.IsContacted geometry or terrain AABB probe is used by query. map match contributes no actor attribute bits.",
+    "ice": "Caller PlayerDefault.checkIce adds Actor anchor +/-12px exactly once. Hook uses already sampled point, not collision rect edge. cell uses 48FP with first signed truncation; raw -1..-47 maps to cell0, raw-48 maps-1.",
+    "mapBounds": "Dimensions tested before linear index, row-major y*width+x must be<4096. Out of bounds/chip0/1=>null, meaning preserve old ice. valid chip70 has attribute0 and clears ice. chip>=79 returns0 by native Get branch.",
+    "lookupSources": "Explicit scene/full lookup rows, storage/native dictionary, or scene+storage/current callback chunk overlay. Hybrid first requires dictionary existence then uses current in-chunk row or stored nonchunk row. Removed IDs are not resurrected from stale chunk and inactive nonchunk entries remain queryable.",
+    "readOnly": "Output infos/ID arrays and collisionById snapshots detached; no changes to cache, normals, collision, map or attribute records. Live getWorld provider rebinding follows host synchronous updates."
+  },
+  "verification": {
+    "dedicatedTests": 23,
+    "fullSuite": {
+      "command": "node --test source-migration/*.test.cjs",
+      "tests": 1270,
+      "pass": 1270,
+      "fail": 0,
+      "includesConcurrentAuxiliaryWork": true
+    },
+    "nativeByteOracle": "Direct actual DLL E8 target checks, attribute OR bytes, chip<2 bound, attr>=79 bound, and4096 guard.",
+    "consumer": "Existing PlayerDefault.checkIce and littleStep exercised with generated adapter; 짹12 offset not duplicated and unfiltered index order retained.",
+    "actualMapFixtures": "st_w_03_02 width62/height10 and st_w_10_04 width68/height10, offline/online2..8 selections: original extracted tile cells/attrs checked. Does not claim dynamic actor map overlays are applied."
+  },
+  "unresolved": [
+    "Actual live map chip IDs and current extracted attribute table are mandatory for ice lookup. tileFlags alone is insufficient; no reverse inference.",
+    "Scene lookupMode=scene requires complete resolved lookup rows, not active-only broadphase chunk. Use storage outside callbacks or scene+storage for callback chunk overlays with actual storage.",
+    "Remaining PlayerDefault hooks playerByEntity/goal overlap/screen bounds/warp/transport/event recursion remain other host helpers.",
+    "Snapshot source phase/current caches/normal invalidation are host responsibility; adapter does not manufacture empty caches, discover AABB contacts or refresh map contacts.",
+    "raw<<16 signed64 overflow and overflowing linear signed32 indices are explicitly refused rather than approximated by shared-core cell semantics.",
+    "Actor/collision structs must retain actual shape/flags/attribute fields; schema completion belongs to separate audit task.",
+    "No full-stage runtime registration, original game execution, gameplay completion, deployment or Git changes."
+  ],
+  "corrections": [
+    "contactIds filters stale IDs, while raw contactInfos retains them and matching-stale contactProbe remains true/0. These native contracts must not be conflated.",
+    "A synthetic test first used chip69 as attribute0; actual extracted table says16. Corrected test to actual zero-attribute chip70 without changing production lookup."
+  ],
+  "sourceSha256": "71bd1565513b7ab5184b16ee33bc336dfca94c0dd185d3cac6d63bd64865eca0",
+  "testSha256": "3a73eca8ef9948ffcd95fb661ff8d457160b7874943bf8ddbf3c9ec3ed6f7dfc"
+}

@@ -1,0 +1,2798 @@
+{
+  "schemaVersion": 1,
+  "status": "verified_scoped_helper",
+  "nativeCodeExecuted": false,
+  "engineSymbols": [
+    {
+      "assembly": "PhotonQuantumCode.dll",
+      "type": "Input",
+      "method": "GetHashCode",
+      "va": "0x181698930"
+    },
+    {
+      "assembly": "PhotonQuantumCode.dll",
+      "type": "Input",
+      "method": "Read",
+      "va": "0x181698a50"
+    },
+    {
+      "assembly": "PhotonQuantumCode.dll",
+      "type": "Input",
+      "method": "Write",
+      "va": "0x181698a90"
+    },
+    {
+      "assembly": "PhotonQuantumCode.dll",
+      "type": "Input",
+      "method": "Serialize",
+      "va": "0x181698ab0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "Button",
+      "method": "get_IsDown",
+      "va": "0x181933e30"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "Button",
+      "method": "get_WasPressed",
+      "va": "0x181933e40"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "Button",
+      "method": "get_WasReleased",
+      "va": "0x181933e60"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "Button",
+      "method": "Update",
+      "va": "0x181933e80"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "Button",
+      "method": "op_Implicit",
+      "va": "0x181933e30"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "Button",
+      "method": "op_Implicit",
+      "va": "0x181933ed0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "Button",
+      "method": "Serialize",
+      "va": "0x181933f00"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "Button",
+      "method": "ToString",
+      "va": "0x181934160"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "Button",
+      "method": "GetHashCode",
+      "va": "0x181934460"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "GetSingletonEntityRefIndexUnchecked",
+      "va": "0x1819756e0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "Print",
+      "va": "0x1819757b0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "Serialize",
+      "va": "0x181975cf0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "Copy",
+      "va": "0x181976e40"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "Initialize",
+      "va": "0x1819772f0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "ClearCulledState",
+      "va": "0x181977900"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "IsCulled",
+      "va": "0x181977980"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "Exists",
+      "va": "0x180585960"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "Has",
+      "va": "0x1819779f0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "RemoveComponentIndexUnchecked",
+      "va": "0x181977a70"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "CommitAllCommands",
+      "va": "0x181977cf0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "Destroy",
+      "va": "0x181977d10"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "ChangeCapacity",
+      "va": "0x1819781c0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "Create",
+      "va": "0x1819786c0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "Create",
+      "va": "0x1819787b0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "MaterializePrototypeInternal",
+      "va": "0x181978c20"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "InvokeEntityPrototypeMaterializedListeners",
+      "va": "0x181978ec0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "Create",
+      "va": "0x181979090"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "ComponentRemoveSignals",
+      "va": "0x181979110"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "CommitDestroys",
+      "va": "0x181979230"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "CommitRemoves",
+      "va": "0x1819796b0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "CheckExistsAndThrowIfNot",
+      "va": "0x181979a50"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "RoundToCulledByteSize",
+      "va": "0x181979b10"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "RoundToCulledWordCount",
+      "va": "0x181979b20"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "get__physicsStateInternal2D",
+      "va": "0x181979b30"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "get__physicsStateInternal3D",
+      "va": "0x1813986c0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "get_Navigation",
+      "va": "0x181979b50"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "get_Context",
+      "va": "0x1804ae580"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "get_TrackedHeap",
+      "va": "0x1804ace30"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": ".ctor",
+      "va": "0x181979b70"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "Free",
+      "va": "0x181979dd0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "GetMemoryStats",
+      "va": "0x18197a0a0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "ResolveList",
+      "va": "0x18197a240"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "ResolveDictionary",
+      "va": "0x18197a240"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "ResolveHashCollection",
+      "va": "0x18197a240"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "OnFrameSimulateBegin",
+      "va": "0x18197a270"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "OnFrameSimulateEnd",
+      "va": "0x18197a340"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "AddAsset",
+      "va": "0x18197a380"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "DisposeAsset",
+      "va": "0x18197a4d0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "DisposeAsset",
+      "va": "0x18197a4e0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "ClearAllNavMeshRegions",
+      "va": "0x18197a590"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "LogAssetNotFound",
+      "va": "0x18197a5e0"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "LogAssetNotFound",
+      "va": "0x18197a700"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "LogAssetTypeMismatch",
+      "va": "0x18197a830"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "LogAssetTypeMismatch",
+      "va": "0x18197a990"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "DisposeAssetInternal",
+      "va": "0x18197ac00"
+    },
+    {
+      "assembly": "quantum.core.dll",
+      "type": "FrameBase",
+      "method": "InitTrackedHeap",
+      "va": "0x18197ad70"
+    },
+    {
+      "assembly": "PhotonDeterministic.dll",
+      "type": "DeterministicFrame",
+      "method": "get_IsVerified",
+      "va": "0x18050ac60"
+    },
+    {
+      "assembly": "PhotonDeterministic.dll",
+      "type": "DeterministicFrame",
+      "method": "get_IsPredicted",
+      "va": "0x18165b630"
+    },
+    {
+      "assembly": "PhotonDeterministic.dll",
+      "type": "DeterministicFrame",
+      "method": "Init",
+      "va": "0x18165b640"
+    },
+    {
+      "assembly": "PhotonDeterministic.dll",
+      "type": "DeterministicFrame",
+      "method": "GetPlayerInputFlagsInternal",
+      "va": "0x18165b730"
+    },
+    {
+      "assembly": "PhotonDeterministic.dll",
+      "type": "DeterministicFrame",
+      "method": "GetRawRpc",
+      "va": "0x18165b780"
+    },
+    {
+      "assembly": "PhotonDeterministic.dll",
+      "type": "DeterministicFrame",
+      "method": "GetRawInput",
+      "va": "0x18165b7d0"
+    },
+    {
+      "assembly": "PhotonDeterministic.dll",
+      "type": "DeterministicFrame",
+      "method": "GetPlayerInputFlags",
+      "va": "0x18165b810"
+    },
+    {
+      "assembly": "PhotonDeterministic.dll",
+      "type": "DeterministicFrame",
+      "method": "GetPlayerCommand",
+      "va": "0x18165b860"
+    },
+    {
+      "assembly": "PhotonDeterministic.dll",
+      "type": "DeterministicFrame",
+      "method": "CopyFrom",
+      "va": "0x18165b8b0"
+    },
+    {
+      "assembly": "PhotonDeterministic.dll",
+      "type": "DeterministicFrame",
+      "method": ".ctor",
+      "va": "0x180476130"
+    }
+  ],
+  "layouts": [
+    {
+      "type": "Input",
+      "namespace": "Quantum",
+      "typeIndex": 4464,
+      "fields": [
+        {
+          "name": "SIZE",
+          "offset": 0
+        },
+        {
+          "name": "ALIGNMENT",
+          "offset": 0
+        },
+        {
+          "name": "Action1",
+          "offset": 16
+        },
+        {
+          "name": "Action2",
+          "offset": 28
+        },
+        {
+          "name": "Cancel",
+          "offset": 40
+        },
+        {
+          "name": "Decision",
+          "offset": 52
+        },
+        {
+          "name": "Down",
+          "offset": 64
+        },
+        {
+          "name": "Jump",
+          "offset": 76
+        },
+        {
+          "name": "Left",
+          "offset": 88
+        },
+        {
+          "name": "LeftStick",
+          "offset": 160
+        },
+        {
+          "name": "Menu1",
+          "offset": 100
+        },
+        {
+          "name": "Menu2",
+          "offset": 112
+        },
+        {
+          "name": "Right",
+          "offset": 124
+        },
+        {
+          "name": "Shot",
+          "offset": 136
+        },
+        {
+          "name": "Up",
+          "offset": 148
+        },
+        {
+          "name": "MAX_COUNT",
+          "offset": 0
+        }
+      ]
+    },
+    {
+      "type": "Frame",
+      "namespace": "Quantum",
+      "typeIndex": 4921,
+      "fields": [
+        {
+          "name": "DumpFlag_NoSimulationConfig",
+          "offset": 0
+        },
+        {
+          "name": "DumpFlag_NoRuntimeConfig",
+          "offset": 0
+        },
+        {
+          "name": "DumpFlag_NoDeterministicSessionConfig",
+          "offset": 0
+        },
+        {
+          "name": "DumpFlag_NoRuntimePlayers",
+          "offset": 0
+        },
+        {
+          "name": "DumpFlag_NoDynamicDB",
+          "offset": 0
+        },
+        {
+          "name": "DumpFlag_ReadableDynamicDB",
+          "offset": 0
+        },
+        {
+          "name": "DumpFlag_PrintRawValues",
+          "offset": 0
+        },
+        {
+          "name": "DumpFlag_ComponentChecksums",
+          "offset": 0
+        },
+        {
+          "name": "DumpFlag_AssetDBCheckums",
+          "offset": 0
+        },
+        {
+          "name": "DumpFlag_NoIsVerified",
+          "offset": 0
+        },
+        {
+          "name": "DumpFlag_PrintComponentChecksums",
+          "offset": 0
+        },
+        {
+          "name": "DumpFlag_PrintReadableDynamicDB",
+          "offset": 0
+        },
+        {
+          "name": "_globals",
+          "offset": 200
+        },
+        {
+          "name": "_runtimeConfig",
+          "offset": 208
+        },
+        {
+          "name": "_simulationConfig",
+          "offset": 216
+        },
+        {
+          "name": "_sessionConfig",
+          "offset": 224
+        },
+        {
+          "name": "_systemsAll",
+          "offset": 232
+        },
+        {
+          "name": "_systemsRoots",
+          "offset": 240
+        },
+        {
+          "name": "_systemIndexByType",
+          "offset": 248
+        },
+        {
+          "name": "_playerData",
+          "offset": 256
+        },
+        {
+          "name": "_oldPlayerData",
+          "offset": 264
+        },
+        {
+          "name": "_ISignalOnPlayerDataSet",
+          "offset": 272
+        },
+        {
+          "name": "_ISignalOnCollision2DSystems",
+          "offset": 280
+        },
+        {
+          "name": "_ISignalOnCollisionEnter2DSystems",
+          "offset": 288
+        },
+        {
+          "name": "_ISignalOnCollisionExit2DSystems",
+          "offset": 296
+        },
+        {
+          "name": "_ISignalOnTrigger2DSystems",
+          "offset": 304
+        },
+        {
+          "name": "_ISignalOnTriggerEnter2DSystems",
+          "offset": 312
+        },
+        {
+          "name": "_ISignalOnTriggerExit2DSystems",
+          "offset": 320
+        },
+        {
+          "name": "_ISignalOnCollision3DSystems",
+          "offset": 328
+        },
+        {
+          "name": "_ISignalOnCollisionEnter3DSystems",
+          "offset": 336
+        },
+        {
+          "name": "_ISignalOnCollisionExit3DSystems",
+          "offset": 344
+        },
+        {
+          "name": "_ISignalOnTrigger3DSystems",
+          "offset": 352
+        },
+        {
+          "name": "_ISignalOnTriggerEnter3DSystems",
+          "offset": 360
+        },
+        {
+          "name": "_ISignalOnTriggerExit3DSystems",
+          "offset": 368
+        },
+        {
+          "name": "_ISignalOnNavMeshWaypointReachedSystems",
+          "offset": 376
+        },
+        {
+          "name": "_ISignalOnNavMeshSearchFailedSystems",
+          "offset": 384
+        },
+        {
+          "name": "_ISignalOnNavMeshMoveAgentSystems",
+          "offset": 392
+        },
+        {
+          "name": "_ISignalOnMapChangedSystems",
+          "offset": 400
+        },
+        {
+          "name": "_ISignalOnEntityPrototypeMaterializedSystems",
+          "offset": 408
+        },
+        {
+          "name": "_ISignalOnPlayerConnectedSystems",
+          "offset": 416
+        },
+        {
+          "name": "_ISignalOnPlayerDisconnectedSystems",
+          "offset": 424
+        },
+        {
+          "name": "Signals",
+          "offset": 432
+        },
+        {
+          "name": "Events",
+          "offset": 440
+        },
+        {
+          "name": "Assets",
+          "offset": 448
+        }
+      ]
+    },
+    {
+      "type": "Button",
+      "namespace": "Quantum",
+      "typeIndex": 8255,
+      "fields": [
+        {
+          "name": "SIZE",
+          "offset": 0
+        },
+        {
+          "name": "_frameUp",
+          "offset": 16
+        },
+        {
+          "name": "_frameDown",
+          "offset": 20
+        },
+        {
+          "name": "_frameCurrent",
+          "offset": 24
+        }
+      ]
+    },
+    {
+      "type": "DeterministicFrame",
+      "namespace": "Photon.Deterministic",
+      "typeIndex": 13048,
+      "fields": [
+        {
+          "name": "DumpFlag_NoHeap",
+          "offset": 0
+        },
+        {
+          "name": "Input",
+          "offset": 16
+        },
+        {
+          "name": "Verified",
+          "offset": 24
+        },
+        {
+          "name": "Number",
+          "offset": 28
+        }
+      ]
+    }
+  ],
+  "routingLayouts": [
+    {
+      "type": "Global",
+      "typeIndex": 1898,
+      "fields": [
+        {
+          "name": "systemDeltaTime",
+          "offset": 0
+        },
+        {
+          "name": "deltaTime",
+          "offset": 4
+        },
+        {
+          "name": "gameSpeed",
+          "offset": 8
+        },
+        {
+          "name": "stickThreshold",
+          "offset": 12
+        },
+        {
+          "name": "vibrationLimitTime",
+          "offset": 16
+        },
+        {
+          "name": "keyRepeatWaitTime",
+          "offset": 20
+        },
+        {
+          "name": "keyRepeatTime",
+          "offset": 24
+        }
+      ]
+    },
+    {
+      "type": "Global",
+      "typeIndex": 2017,
+      "fields": []
+    },
+    {
+      "type": "GameInputManager",
+      "typeIndex": 2036,
+      "fields": [
+        {
+          "name": "PLAYER_INPUT_INFO_MAX",
+          "offset": 0
+        },
+        {
+          "name": "MenuKeyTable",
+          "offset": 0
+        },
+        {
+          "name": "m_PlayerInputInfos",
+          "offset": 32
+        },
+        {
+          "name": "m_PlayerInputMode",
+          "offset": 40
+        },
+        {
+          "name": "m_LastInputPlayerIndex",
+          "offset": 44
+        },
+        {
+          "name": "m_LastInputDevice",
+          "offset": 48
+        },
+        {
+          "name": "m_KeyboardZoom",
+          "offset": 52
+        },
+        {
+          "name": "m_KeyboardDir",
+          "offset": 56
+        },
+        {
+          "name": "m_InputSubModule",
+          "offset": 64
+        },
+        {
+          "name": "m_KeyboardConfigModule",
+          "offset": 72
+        },
+        {
+          "name": "m_SavedInputIndex",
+          "offset": 80
+        },
+        {
+          "name": "m_SavedInputDevice",
+          "offset": 84
+        },
+        {
+          "name": "m_IsLimitLocalPlayers",
+          "offset": 88
+        },
+        {
+          "name": "m_IsDisableQuantumInput",
+          "offset": 89
+        },
+        {
+          "name": "m_IsNXControllerConfigDecided",
+          "offset": 90
+        },
+        {
+          "name": "m_IsAnyButtonPressed",
+          "offset": 91
+        }
+      ]
+    },
+    {
+      "type": "QuantumGame",
+      "typeIndex": 4995,
+      "fields": [
+        {
+          "name": "_checksumSnapshotBuffer",
+          "offset": 16
+        },
+        {
+          "name": "_instantReplaySnapshotBuffer",
+          "offset": 24
+        },
+        {
+          "name": "_instantReplaySnapshotsRecording",
+          "offset": 32
+        },
+        {
+          "name": "_commonSnapshotInterval",
+          "offset": 36
+        },
+        {
+          "name": "_instantReplaySnapshotInterval",
+          "offset": 40
+        },
+        {
+          "name": "ProfilerSampleGenerated",
+          "offset": 48
+        },
+        {
+          "name": "<Frames>k__BackingField",
+          "offset": 56
+        },
+        {
+          "name": "<Configurations>k__BackingField",
+          "offset": 64
+        },
+        {
+          "name": "<Session>k__BackingField",
+          "offset": 72
+        },
+        {
+          "name": "<InterpolationFactor>k__BackingField",
+          "offset": 80
+        },
+        {
+          "name": "<InstantReplayConfig>k__BackingField",
+          "offset": 88
+        },
+        {
+          "name": "<AssetSerializer>k__BackingField",
+          "offset": 104
+        },
+        {
+          "name": "<HeapExtraCount>k__BackingField",
+          "offset": 112
+        },
+        {
+          "name": "_inputStreamReadZeroArray",
+          "offset": 120
+        },
+        {
+          "name": "_resourceManager",
+          "offset": 128
+        },
+        {
+          "name": "_callbackDispatcher",
+          "offset": 136
+        },
+        {
+          "name": "_eventDispatcher",
+          "offset": 144
+        },
+        {
+          "name": "_inputSerializerRead",
+          "offset": 152
+        },
+        {
+          "name": "_inputSerializerWrite",
+          "offset": 160
+        },
+        {
+          "name": "_systemsRoot",
+          "offset": 168
+        },
+        {
+          "name": "_systemsAll",
+          "offset": 176
+        },
+        {
+          "name": "_context",
+          "offset": 184
+        },
+        {
+          "name": "_typeRegistry",
+          "offset": 192
+        },
+        {
+          "name": "_polledInputInThisSimulation",
+          "offset": 200
+        },
+        {
+          "name": "_initialDynamicAssets",
+          "offset": 208
+        },
+        {
+          "name": "_flags",
+          "offset": 216
+        },
+        {
+          "name": "<RecordedInputs>k__BackingField",
+          "offset": 224
+        },
+        {
+          "name": "<RecordedChecksums>k__BackingField",
+          "offset": 232
+        },
+        {
+          "name": "_checksumsToVerify",
+          "offset": 240
+        },
+        {
+          "name": "_eventsTriggered",
+          "offset": 248
+        },
+        {
+          "name": "_eventsConfirmationQueue",
+          "offset": 256
+        },
+        {
+          "name": "_callbackChecksumComputed",
+          "offset": 264
+        },
+        {
+          "name": "_callbackChecksumError",
+          "offset": 272
+        },
+        {
+          "name": "_callbackChecksumErrorFrameDump",
+          "offset": 280
+        },
+        {
+          "name": "_callbackEventCanceled",
+          "offset": 288
+        },
+        {
+          "name": "_callbackEventConfirmed",
+          "offset": 296
+        },
+        {
+          "name": "_callbackGameDestroyed",
+          "offset": 304
+        },
+        {
+          "name": "_callbackGameStarted",
+          "offset": 312
+        },
+        {
+          "name": "_callbackGameResynced",
+          "offset": 320
+        },
+        {
+          "name": "_callbackInputConfirmed",
+          "offset": 328
+        },
+        {
+          "name": "_callbackPollInput",
+          "offset": 336
+        },
+        {
+          "name": "_callbackSimulateFinished",
+          "offset": 344
+        },
+        {
+          "name": "_callbackUpdateView",
+          "offset": 352
+        },
+        {
+          "name": "_callbackPluginDisconnect",
+          "offset": 360
+        }
+      ]
+    },
+    {
+      "type": "CallbackPollInput",
+      "typeIndex": 4996,
+      "fields": [
+        {
+          "name": "ID",
+          "offset": 0
+        },
+        {
+          "name": "Frame",
+          "offset": 32
+        },
+        {
+          "name": "Player",
+          "offset": 36
+        },
+        {
+          "name": "<IsFirstInThisUpdate>k__BackingField",
+          "offset": 40
+        },
+        {
+          "name": "<IsInputSet>k__BackingField",
+          "offset": 41
+        },
+        {
+          "name": "<Input>k__BackingField",
+          "offset": 48
+        },
+        {
+          "name": "<Flags>k__BackingField",
+          "offset": 208
+        }
+      ]
+    },
+    {
+      "type": "Button",
+      "typeIndex": 8255,
+      "fields": [
+        {
+          "name": "SIZE",
+          "offset": 0
+        },
+        {
+          "name": "_frameUp",
+          "offset": 16
+        },
+        {
+          "name": "_frameDown",
+          "offset": 20
+        },
+        {
+          "name": "_frameCurrent",
+          "offset": 24
+        }
+      ]
+    },
+    {
+      "type": "DeterministicSession",
+      "typeIndex": 13010,
+      "fields": [
+        {
+          "name": "_snapshots",
+          "offset": 16
+        },
+        {
+          "name": "_frameData",
+          "offset": 24
+        },
+        {
+          "name": "_initialTick",
+          "offset": 32
+        },
+        {
+          "name": "_runtimeConfig",
+          "offset": 40
+        },
+        {
+          "name": "_runtimeConfigLocal",
+          "offset": 48
+        },
+        {
+          "name": "_sessionConfig",
+          "offset": 56
+        },
+        {
+          "name": "_sessionConfigLocal",
+          "offset": 64
+        },
+        {
+          "name": "_localPlayersSet",
+          "offset": 72
+        },
+        {
+          "name": "_frameContext",
+          "offset": 80
+        },
+        {
+          "name": "_network",
+          "offset": 88
+        },
+        {
+          "name": "_rpcProvider",
+          "offset": 96
+        },
+        {
+          "name": "_inputProvider",
+          "offset": 104
+        },
+        {
+          "name": "_simulatorInputOffset",
+          "offset": 112
+        },
+        {
+          "name": "_simulatorInputOffsetPrevious",
+          "offset": 116
+        },
+        {
+          "name": "_simulator",
+          "offset": 120
+        },
+        {
+          "name": "_checksumError",
+          "offset": 128
+        },
+        {
+          "name": "_commandSerializer",
+          "offset": 136
+        },
+        {
+          "name": "_mode",
+          "offset": 144
+        },
+        {
+          "name": "_state",
+          "offset": 148
+        },
+        {
+          "name": "_deltaClock",
+          "offset": 152
+        },
+        {
+          "name": "_syncClockTimer",
+          "offset": 160
+        },
+        {
+          "name": "_statsUpdateTimer",
+          "offset": 168
+        },
+        {
+          "name": "_rttSyncTimer",
+          "offset": 176
+        },
+        {
+          "name": "_lockstep",
+          "offset": 184
+        },
+        {
+          "name": "_disableInterpolatableStates",
+          "offset": 185
+        },
+        {
+          "name": "_reconnect",
+          "offset": 186
+        },
+        {
+          "name": "_serverTimeReceived",
+          "offset": 192
+        },
+        {
+          "name": "_serverTimeAdjusted",
+          "offset": 200
+        },
+        {
+          "name": "_lastRttSync",
+          "offset": 208
+        },
+        {
+          "name": "_timeScale",
+          "offset": 216
+        },
+        {
+          "name": "_clientRttAvg",
+          "offset": 224
+        },
+        {
+          "name": "_serverTimeAvgDiff",
+          "offset": 232
+        },
+        {
+          "name": "_maxClientRtt",
+          "offset": 240
+        },
+        {
+          "name": "_localPlayerIndices",
+          "offset": 248
+        },
+        {
+          "name": "_stats",
+          "offset": 256
+        },
+        {
+          "name": "_game",
+          "offset": 264
+        },
+        {
+          "name": "_replayProvider",
+          "offset": 272
+        },
+        {
+          "name": "_platformInfo",
+          "offset": 280
+        },
+        {
+          "name": "_inputPool",
+          "offset": 288
+        },
+        {
+          "name": "_checksumErrorFrameDumps",
+          "offset": 296
+        },
+        {
+          "name": "_maxVerifiedTicksPerUpdate",
+          "offset": 304
+        },
+        {
+          "name": "_spectatingOffsetSec",
+          "offset": 312
+        },
+        {
+          "name": "<Runner>k__BackingField",
+          "offset": 320
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "name": "buttonPredicates",
+      "startVA": "0x181933e30",
+      "instructions": [
+        {
+          "va": "0x181933e30",
+          "instruction": "mov eax, dword ptr [rcx]"
+        },
+        {
+          "va": "0x181933e32",
+          "instruction": "cmp dword ptr [rcx + 4], eax"
+        },
+        {
+          "va": "0x181933e35",
+          "instruction": "setg al"
+        },
+        {
+          "va": "0x181933e38",
+          "instruction": "ret "
+        },
+        {
+          "va": "0x181933e39",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e3a",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e3b",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e3c",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e3d",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e3e",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e3f",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e40",
+          "instruction": "mov eax, dword ptr [rcx + 4]"
+        },
+        {
+          "va": "0x181933e43",
+          "instruction": "cmp eax, dword ptr [rcx + 8]"
+        },
+        {
+          "va": "0x181933e46",
+          "instruction": "je 0x181933e4b"
+        },
+        {
+          "va": "0x181933e48",
+          "instruction": "xor al, al"
+        },
+        {
+          "va": "0x181933e4a",
+          "instruction": "ret "
+        },
+        {
+          "va": "0x181933e4b",
+          "instruction": "test eax, eax"
+        },
+        {
+          "va": "0x181933e4d",
+          "instruction": "setg al"
+        },
+        {
+          "va": "0x181933e50",
+          "instruction": "ret "
+        },
+        {
+          "va": "0x181933e51",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e52",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e53",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e54",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e55",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e56",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e57",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e58",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e59",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e5a",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e5b",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e5c",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e5d",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e5e",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e5f",
+          "instruction": "int3 "
+        },
+        {
+          "va": "0x181933e60",
+          "instruction": "mov eax, dword ptr [rcx]"
+        },
+        {
+          "va": "0x181933e62",
+          "instruction": "cmp eax, dword ptr [rcx + 8]"
+        },
+        {
+          "va": "0x181933e65",
+          "instruction": "je 0x181933e6a"
+        },
+        {
+          "va": "0x181933e67",
+          "instruction": "xor al, al"
+        },
+        {
+          "va": "0x181933e69",
+          "instruction": "ret "
+        },
+        {
+          "va": "0x181933e6a",
+          "instruction": "cmp eax, dword ptr [rcx + 4]"
+        },
+        {
+          "va": "0x181933e6d",
+          "instruction": "setg al"
+        },
+        {
+          "va": "0x181933e70",
+          "instruction": "ret "
+        }
+      ]
+    },
+    {
+      "name": "buttonUpdate",
+      "startVA": "0x181933e80",
+      "instructions": [
+        {
+          "va": "0x181933e80",
+          "instruction": "mov eax, dword ptr [rdx]"
+        },
+        {
+          "va": "0x181933e82",
+          "instruction": "mov r10d, dword ptr [rdx + 4]"
+        },
+        {
+          "va": "0x181933e86",
+          "instruction": "mov dword ptr [rdx + 8], r8d"
+        },
+        {
+          "va": "0x181933e8a",
+          "instruction": "test r9b, r9b"
+        },
+        {
+          "va": "0x181933e8d",
+          "instruction": "jne 0x181933ea7"
+        },
+        {
+          "va": "0x181933e8f",
+          "instruction": "cmp r10d, eax"
+        },
+        {
+          "va": "0x181933e92",
+          "instruction": "jle 0x181933eb9"
+        },
+        {
+          "va": "0x181933e94",
+          "instruction": "mov dword ptr [rdx], r8d"
+        },
+        {
+          "va": "0x181933e97",
+          "instruction": "mov rax, rcx"
+        },
+        {
+          "va": "0x181933e9a",
+          "instruction": "movsd xmm0, qword ptr [rdx]"
+        },
+        {
+          "va": "0x181933e9e",
+          "instruction": "movsd qword ptr [rcx], xmm0"
+        },
+        {
+          "va": "0x181933ea2",
+          "instruction": "mov dword ptr [rcx + 8], r8d"
+        },
+        {
+          "va": "0x181933ea6",
+          "instruction": "ret "
+        },
+        {
+          "va": "0x181933ea7",
+          "instruction": "cmp eax, r10d"
+        },
+        {
+          "va": "0x181933eaa",
+          "instruction": "jg 0x181933eb5"
+        },
+        {
+          "va": "0x181933eac",
+          "instruction": "test r10d, r10d"
+        },
+        {
+          "va": "0x181933eaf",
+          "instruction": "jne 0x181933eb9"
+        },
+        {
+          "va": "0x181933eb1",
+          "instruction": "test eax, eax"
+        },
+        {
+          "va": "0x181933eb3",
+          "instruction": "jne 0x181933eb9"
+        },
+        {
+          "va": "0x181933eb5",
+          "instruction": "mov dword ptr [rdx + 4], r8d"
+        },
+        {
+          "va": "0x181933eb9",
+          "instruction": "movsd xmm0, qword ptr [rdx]"
+        },
+        {
+          "va": "0x181933ebd",
+          "instruction": "mov rax, rcx"
+        },
+        {
+          "va": "0x181933ec0",
+          "instruction": "movsd qword ptr [rcx], xmm0"
+        },
+        {
+          "va": "0x181933ec4",
+          "instruction": "mov dword ptr [rcx + 8], r8d"
+        },
+        {
+          "va": "0x181933ec8",
+          "instruction": "ret "
+        }
+      ]
+    },
+    {
+      "name": "boolConstructor",
+      "startVA": "0x181933ed0",
+      "instructions": [
+        {
+          "va": "0x181933ed0",
+          "instruction": "nop "
+        },
+        {
+          "va": "0x181933ed2",
+          "instruction": "mov dword ptr [rcx + 8], 1"
+        },
+        {
+          "va": "0x181933ed9",
+          "instruction": "mov rax, rcx"
+        },
+        {
+          "va": "0x181933edc",
+          "instruction": "test dl, dl"
+        },
+        {
+          "va": "0x181933ede",
+          "instruction": "jne 0x181933ee8"
+        },
+        {
+          "va": "0x181933ee0",
+          "instruction": "mov qword ptr [rcx], 1"
+        },
+        {
+          "va": "0x181933ee7",
+          "instruction": "ret "
+        },
+        {
+          "va": "0x181933ee8",
+          "instruction": "mov dword ptr [rcx + 4], 1"
+        },
+        {
+          "va": "0x181933eef",
+          "instruction": "mov dword ptr [rcx], 0"
+        },
+        {
+          "va": "0x181933ef5",
+          "instruction": "ret "
+        }
+      ]
+    },
+    {
+      "name": "frameGlobalAllocateClear",
+      "startVA": "0x18173a67c",
+      "instructions": [
+        {
+          "va": "0x18173a67c",
+          "instruction": "mov rdi, qword ptr [rax + 0xd8]"
+        },
+        {
+          "va": "0x18173a683",
+          "instruction": "test rdi, rdi"
+        },
+        {
+          "va": "0x18173a686",
+          "instruction": "je 0x18173b708"
+        },
+        {
+          "va": "0x18173a68c",
+          "instruction": "mov r8, qword ptr [rdi]"
+        },
+        {
+          "va": "0x18173a68f",
+          "instruction": "mov edx, 0x7e8"
+        },
+        {
+          "va": "0x18173a694",
+          "instruction": "mov rcx, rdi"
+        },
+        {
+          "va": "0x18173a697",
+          "instruction": "mov rax, qword ptr [r8 + 0x188]"
+        },
+        {
+          "va": "0x18173a69e",
+          "instruction": "mov r8, qword ptr [r8 + 0x190]"
+        },
+        {
+          "va": "0x18173a6a5",
+          "instruction": "call rax"
+        },
+        {
+          "va": "0x18173a6a7",
+          "instruction": "mov r10, qword ptr [rdi]"
+        },
+        {
+          "va": "0x18173a6aa",
+          "instruction": "mov r8d, 0x7e8"
+        },
+        {
+          "va": "0x18173a6b0",
+          "instruction": "mov rdx, rax"
+        },
+        {
+          "va": "0x18173a6b3",
+          "instruction": "mov rcx, rdi"
+        },
+        {
+          "va": "0x18173a6b6",
+          "instruction": "mov rbx, rax"
+        },
+        {
+          "va": "0x18173a6b9",
+          "instruction": "mov r9, qword ptr [r10 + 0x1b0]"
+        },
+        {
+          "va": "0x18173a6c0",
+          "instruction": "call qword ptr [r10 + 0x1a8]"
+        },
+        {
+          "va": "0x18173a6c7",
+          "instruction": "xor ecx, ecx"
+        },
+        {
+          "va": "0x18173a6c9",
+          "instruction": "mov qword ptr [rsi + 0xc8], rbx"
+        }
+      ]
+    },
+    {
+      "name": "setPlayerInputFirst",
+      "startVA": "0x1817393b9",
+      "instructions": [
+        {
+          "va": "0x1817393b9",
+          "instruction": "cmp edi, 8"
+        },
+        {
+          "va": "0x1817393bc",
+          "instruction": "jae 0x181739ca6"
+        },
+        {
+          "va": "0x1817393c2",
+          "instruction": "mov qword ptr [rsp + 0xd0], rsi"
+        },
+        {
+          "va": "0x1817393ca",
+          "instruction": "mov rsi, qword ptr [r14 + 0xc8]"
+        },
+        {
+          "va": "0x1817393d1",
+          "instruction": "test al, al"
+        },
+        {
+          "va": "0x1817393d3",
+          "instruction": "jne 0x1817393ed"
+        },
+        {
+          "va": "0x1817393d5",
+          "instruction": "lea rcx, [rip + 0x1a88bdc]"
+        },
+        {
+          "va": "0x1817393dc",
+          "instruction": "call 0x1802c5dc0"
+        },
+        {
+          "va": "0x1817393e1",
+          "instruction": "lock or dword ptr [rsp], 0"
+        },
+        {
+          "va": "0x1817393e6",
+          "instruction": "mov byte ptr [rip + 0x1c21242], 1"
+        },
+        {
+          "va": "0x1817393ed",
+          "instruction": "lea rcx, [rsi + 0x1c0]"
+        },
+        {
+          "va": "0x1817393f4",
+          "instruction": "mov rsi, qword ptr [rip + 0x1a9dc8d]"
+        },
+        {
+          "va": "0x1817393fb",
+          "instruction": "test rcx, rcx"
+        },
+        {
+          "va": "0x1817393fe",
+          "instruction": "je 0x181739cf5"
+        },
+        {
+          "va": "0x181739404",
+          "instruction": "lea eax, [rdi + rdi*4]"
+        },
+        {
+          "va": "0x181739407",
+          "instruction": "shl eax, 5"
+        },
+        {
+          "va": "0x18173940a",
+          "instruction": "movsxd rdx, eax"
+        },
+        {
+          "va": "0x18173940d",
+          "instruction": "add rdx, rcx"
+        },
+        {
+          "va": "0x181739410",
+          "instruction": "je 0x181739cef"
+        },
+        {
+          "va": "0x181739416",
+          "instruction": "movups xmm0, xmmword ptr [rbx]"
+        },
+        {
+          "va": "0x181739419",
+          "instruction": "mov r10d, dword ptr [r14 + 0x1c]"
+        },
+        {
+          "va": "0x18173941d",
+          "instruction": "lea rcx, [rbp - 0x49]"
+        },
+        {
+          "va": "0x181739421",
+          "instruction": "movups xmm1, xmmword ptr [rbx + 0x10]"
+        },
+        {
+          "va": "0x181739425",
+          "instruction": "mov r9d, dword ptr [rdx + 0x24]"
+        },
+        {
+          "va": "0x181739429",
+          "instruction": "mov r8d, dword ptr [rdx + 0x28]"
+        },
+        {
+          "va": "0x18173942d",
+          "instruction": "movups xmmword ptr [rcx], xmm0"
+        },
+        {
+          "va": "0x181739430",
+          "instruction": "mov dword ptr [rdx + 0x2c], r10d"
+        },
+        {
+          "va": "0x181739434",
+          "instruction": "movups xmm0, xmmword ptr [rbx + 0x20]"
+        },
+        {
+          "va": "0x181739438",
+          "instruction": "movups xmmword ptr [rcx + 0x10], xmm1"
+        },
+        {
+          "va": "0x18173943c",
+          "instruction": "movups xmm1, xmmword ptr [rbx + 0x30]"
+        },
+        {
+          "va": "0x181739440",
+          "instruction": "movups xmmword ptr [rcx + 0x20], xmm0"
+        },
+        {
+          "va": "0x181739444",
+          "instruction": "movups xmm0, xmmword ptr [rbx + 0x40]"
+        },
+        {
+          "va": "0x181739448",
+          "instruction": "movups xmmword ptr [rcx + 0x30], xmm1"
+        },
+        {
+          "va": "0x18173944c",
+          "instruction": "movups xmm1, xmmword ptr [rbx + 0x50]"
+        },
+        {
+          "va": "0x181739450",
+          "instruction": "movups xmmword ptr [rcx + 0x40], xmm0"
+        },
+        {
+          "va": "0x181739454",
+          "instruction": "movups xmm0, xmmword ptr [rbx + 0x60]"
+        },
+        {
+          "va": "0x181739458",
+          "instruction": "movups xmmword ptr [rcx + 0x50], xmm1"
+        },
+        {
+          "va": "0x18173945c",
+          "instruction": "movups xmm1, xmmword ptr [rbx + 0x80]"
+        },
+        {
+          "va": "0x181739463",
+          "instruction": "movups xmmword ptr [rcx + 0x60], xmm0"
+        },
+        {
+          "va": "0x181739467",
+          "instruction": "movups xmm0, xmmword ptr [rbx + 0x70]"
+        },
+        {
+          "va": "0x18173946b",
+          "instruction": "movups xmmword ptr [rcx + 0x70], xmm0"
+        },
+        {
+          "va": "0x18173946f",
+          "instruction": "movups xmm0, xmmword ptr [rbx + 0x90]"
+        },
+        {
+          "va": "0x181739476",
+          "instruction": "movups xmmword ptr [rcx + 0x80], xmm1"
+        },
+        {
+          "va": "0x18173947d",
+          "instruction": "movups xmmword ptr [rcx + 0x90], xmm0"
+        },
+        {
+          "va": "0x181739484",
+          "instruction": "mov rcx, qword ptr [rbp - 0x25]"
+        },
+        {
+          "va": "0x181739488",
+          "instruction": "mov rax, rcx"
+        },
+        {
+          "va": "0x18173948b",
+          "instruction": "shr rax, 0x20"
+        },
+        {
+          "va": "0x18173948f",
+          "instruction": "cmp eax, ecx"
+        },
+        {
+          "va": "0x181739491",
+          "instruction": "jg 0x18173949e"
+        },
+        {
+          "va": "0x181739493",
+          "instruction": "cmp r8d, r9d"
+        },
+        {
+          "va": "0x181739496",
+          "instruction": "jle 0x1817394b1"
+        },
+        {
+          "va": "0x181739498",
+          "instruction": "mov dword ptr [rdx + 0x24], r10d"
+        },
+        {
+          "va": "0x18173949c",
+          "instruction": "jmp 0x1817394b1"
+        },
+        {
+          "va": "0x18173949e",
+          "instruction": "cmp r9d, r8d"
+        },
+        {
+          "va": "0x1817394a1",
+          "instruction": "jg 0x1817394ad"
+        },
+        {
+          "va": "0x1817394a3",
+          "instruction": "test r8d, r8d"
+        },
+        {
+          "va": "0x1817394a6",
+          "instruction": "jne 0x1817394b1"
+        },
+        {
+          "va": "0x1817394a8",
+          "instruction": "test r9d, r9d"
+        },
+        {
+          "va": "0x1817394ab",
+          "instruction": "jne 0x1817394b1"
+        },
+        {
+          "va": "0x1817394ad",
+          "instruction": "mov dword ptr [rdx + 0x28], r10d"
+        }
+      ]
+    },
+    {
+      "name": "simulationInputLoop",
+      "startVA": "0x181765965",
+      "instructions": [
+        {
+          "va": "0x181765965",
+          "instruction": "mov ebx, esi"
+        },
+        {
+          "va": "0x181765967",
+          "instruction": "nop word ptr [rax + rax]"
+        },
+        {
+          "va": "0x181765970",
+          "instruction": "mov rax, qword ptr [r12 + 0x48]"
+        },
+        {
+          "va": "0x181765975",
+          "instruction": "test rax, rax"
+        },
+        {
+          "va": "0x181765978",
+          "instruction": "je 0x181766984"
+        },
+        {
+          "va": "0x18176597e",
+          "instruction": "mov rcx, qword ptr [rax + 0x38]"
+        },
+        {
+          "va": "0x181765982",
+          "instruction": "test rcx, rcx"
+        },
+        {
+          "va": "0x181765985",
+          "instruction": "je 0x18176598c"
+        },
+        {
+          "va": "0x181765987",
+          "instruction": "mov eax, dword ptr [rcx + 0x20]"
+        },
+        {
+          "va": "0x18176598a",
+          "instruction": "jmp 0x18176598e"
+        },
+        {
+          "va": "0x18176598c",
+          "instruction": "mov eax, esi"
+        },
+        {
+          "va": "0x18176598e",
+          "instruction": "cmp ebx, eax"
+        },
+        {
+          "va": "0x181765990",
+          "instruction": "jge 0x181765a92"
+        },
+        {
+          "va": "0x181765996",
+          "instruction": "test ebx, ebx"
+        },
+        {
+          "va": "0x181765998",
+          "instruction": "js 0x181765a41"
+        },
+        {
+          "va": "0x18176599e",
+          "instruction": "mov rdx, qword ptr [rdi + 0x10]"
+        },
+        {
+          "va": "0x1817659a2",
+          "instruction": "test rdx, rdx"
+        },
+        {
+          "va": "0x1817659a5",
+          "instruction": "je 0x1817668b7"
+        },
+        {
+          "va": "0x1817659ab",
+          "instruction": "cmp ebx, dword ptr [rdx + 0x10]"
+        },
+        {
+          "va": "0x1817659ae",
+          "instruction": "jge 0x181765a41"
+        },
+        {
+          "va": "0x1817659b4",
+          "instruction": "mov eax, dword ptr [rdx + 0x14]"
+        },
+        {
+          "va": "0x1817659b7",
+          "instruction": "imul eax, ebx"
+        },
+        {
+          "va": "0x1817659ba",
+          "instruction": "movsxd rcx, eax"
+        },
+        {
+          "va": "0x1817659bd",
+          "instruction": "add rcx, qword ptr [rdx + 0x30]"
+        },
+        {
+          "va": "0x1817659c1",
+          "instruction": "je 0x181765a41"
+        },
+        {
+          "va": "0x1817659c3",
+          "instruction": "lea rax, [rsp + 0x250]"
+        },
+        {
+          "va": "0x1817659cb",
+          "instruction": "movups xmm0, xmmword ptr [rcx]"
+        },
+        {
+          "va": "0x1817659ce",
+          "instruction": "movups xmmword ptr [rax], xmm0"
+        },
+        {
+          "va": "0x1817659d1",
+          "instruction": "movups xmm1, xmmword ptr [rcx + 0x10]"
+        },
+        {
+          "va": "0x1817659d5",
+          "instruction": "movups xmmword ptr [rax + 0x10], xmm1"
+        },
+        {
+          "va": "0x1817659d9",
+          "instruction": "movups xmm0, xmmword ptr [rcx + 0x20]"
+        },
+        {
+          "va": "0x1817659dd",
+          "instruction": "movups xmmword ptr [rax + 0x20], xmm0"
+        },
+        {
+          "va": "0x1817659e1",
+          "instruction": "movups xmm1, xmmword ptr [rcx + 0x30]"
+        },
+        {
+          "va": "0x1817659e5",
+          "instruction": "movups xmmword ptr [rax + 0x30], xmm1"
+        },
+        {
+          "va": "0x1817659e9",
+          "instruction": "movups xmm0, xmmword ptr [rcx + 0x40]"
+        },
+        {
+          "va": "0x1817659ed",
+          "instruction": "movups xmmword ptr [rax + 0x40], xmm0"
+        },
+        {
+          "va": "0x1817659f1",
+          "instruction": "movups xmm1, xmmword ptr [rcx + 0x50]"
+        },
+        {
+          "va": "0x1817659f5",
+          "instruction": "movups xmmword ptr [rax + 0x50], xmm1"
+        },
+        {
+          "va": "0x1817659f9",
+          "instruction": "movups xmm0, xmmword ptr [rcx + 0x60]"
+        },
+        {
+          "va": "0x1817659fd",
+          "instruction": "movups xmmword ptr [rax + 0x60], xmm0"
+        },
+        {
+          "va": "0x181765a01",
+          "instruction": "movups xmm1, xmmword ptr [rcx + 0x70]"
+        },
+        {
+          "va": "0x181765a05",
+          "instruction": "movups xmmword ptr [rax + 0x70], xmm1"
+        },
+        {
+          "va": "0x181765a09",
+          "instruction": "movups xmm0, xmmword ptr [rcx + 0x80]"
+        },
+        {
+          "va": "0x181765a10",
+          "instruction": "movups xmmword ptr [rax + 0x80], xmm0"
+        },
+        {
+          "va": "0x181765a17",
+          "instruction": "movups xmm1, xmmword ptr [rcx + 0x90]"
+        },
+        {
+          "va": "0x181765a1e",
+          "instruction": "movups xmmword ptr [rax + 0x90], xmm1"
+        },
+        {
+          "va": "0x181765a25",
+          "instruction": "xor r9d, r9d"
+        },
+        {
+          "va": "0x181765a28",
+          "instruction": "lea r8, [rsp + 0x250]"
+        },
+        {
+          "va": "0x181765a30",
+          "instruction": "mov edx, ebx"
+        },
+        {
+          "va": "0x181765a32",
+          "instruction": "mov rcx, rdi"
+        },
+        {
+          "va": "0x181765a35",
+          "instruction": "call 0x181739350"
+        }
+      ]
+    },
+    {
+      "name": "normalInputReadMenu",
+      "startVA": "0x18174a675",
+      "instructions": [
+        {
+          "va": "0x18174a675",
+          "instruction": "xor edx, edx"
+        },
+        {
+          "va": "0x18174a677",
+          "instruction": "mov rcx, rdi"
+        },
+        {
+          "va": "0x18174a67a",
+          "instruction": "call 0x18174ab40"
+        },
+        {
+          "va": "0x18174a67f",
+          "instruction": "mov rsi, rax"
+        },
+        {
+          "va": "0x18174a682",
+          "instruction": "test rax, rax"
+        },
+        {
+          "va": "0x18174a685",
+          "instruction": "je 0x18174a6c1"
+        },
+        {
+          "va": "0x18174a687",
+          "instruction": "mov rcx, qword ptr [rip + 0x1a8687a]"
+        },
+        {
+          "va": "0x18174a68e",
+          "instruction": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18174a695",
+          "instruction": "jne 0x18174a69c"
+        },
+        {
+          "va": "0x18174a697",
+          "instruction": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18174a69c",
+          "instruction": "movzx eax, byte ptr [rsi]"
+        },
+        {
+          "va": "0x18174a69f",
+          "instruction": "mov ecx, ebx"
+        },
+        {
+          "va": "0x18174a6a1",
+          "instruction": "and ecx, 0x1f"
+        },
+        {
+          "va": "0x18174a6a4",
+          "instruction": "mov edx, 1"
+        },
+        {
+          "va": "0x18174a6a9",
+          "instruction": "shl edx, cl"
+        },
+        {
+          "va": "0x18174a6ab",
+          "instruction": "test eax, edx"
+        },
+        {
+          "va": "0x18174a6ad",
+          "instruction": "jbe 0x18174a6c1"
+        },
+        {
+          "va": "0x18174a6af",
+          "instruction": "xor eax, eax"
+        },
+        {
+          "va": "0x18174a6b1",
+          "instruction": "mov rbx, qword ptr [rsp + 0x30]"
+        },
+        {
+          "va": "0x18174a6b6",
+          "instruction": "mov rsi, qword ptr [rsp + 0x38]"
+        },
+        {
+          "va": "0x18174a6bb",
+          "instruction": "add rsp, 0x20"
+        },
+        {
+          "va": "0x18174a6bf",
+          "instruction": "pop rdi"
+        },
+        {
+          "va": "0x18174a6c0",
+          "instruction": "ret "
+        }
+      ]
+    },
+    {
+      "name": "inputEnumSwitch",
+      "startVA": "0x18174a815",
+      "instructions": [
+        {
+          "va": "0x18174a815",
+          "instruction": "cmp edi, 0xb"
+        },
+        {
+          "va": "0x18174a818",
+          "instruction": "ja 0x18174a8b7"
+        },
+        {
+          "va": "0x18174a81e",
+          "instruction": "lea r8, [rip - 0x174a825]"
+        },
+        {
+          "va": "0x18174a825",
+          "instruction": "mov edx, dword ptr [r8 + rdi*4 + 0x174a8c8]"
+        },
+        {
+          "va": "0x18174a82d",
+          "instruction": "add rdx, r8"
+        },
+        {
+          "va": "0x18174a830",
+          "instruction": "jmp rdx"
+        },
+        {
+          "va": "0x18174a832",
+          "instruction": "movsd xmm0, qword ptr [rax + 0x24]"
+        },
+        {
+          "va": "0x18174a837",
+          "instruction": "mov eax, dword ptr [rax + 0x2c]"
+        },
+        {
+          "va": "0x18174a83a",
+          "instruction": "jmp 0x18174a8b0"
+        },
+        {
+          "va": "0x18174a83c",
+          "instruction": "movsd xmm0, qword ptr [rax + 0x18]"
+        },
+        {
+          "va": "0x18174a841",
+          "instruction": "mov eax, dword ptr [rax + 0x20]"
+        },
+        {
+          "va": "0x18174a844",
+          "instruction": "jmp 0x18174a8b0"
+        },
+        {
+          "va": "0x18174a846",
+          "instruction": "movsd xmm0, qword ptr [rax + 0x54]"
+        },
+        {
+          "va": "0x18174a84b",
+          "instruction": "mov eax, dword ptr [rax + 0x5c]"
+        },
+        {
+          "va": "0x18174a84e",
+          "instruction": "jmp 0x18174a8b0"
+        },
+        {
+          "va": "0x18174a850",
+          "instruction": "movsd xmm0, qword ptr [rax + 0x60]"
+        },
+        {
+          "va": "0x18174a855",
+          "instruction": "mov eax, dword ptr [rax + 0x68]"
+        },
+        {
+          "va": "0x18174a858",
+          "instruction": "jmp 0x18174a8b0"
+        },
+        {
+          "va": "0x18174a85a",
+          "instruction": "movsd xmm0, qword ptr [rax + 0x84]"
+        },
+        {
+          "va": "0x18174a862",
+          "instruction": "mov eax, dword ptr [rax + 0x8c]"
+        },
+        {
+          "va": "0x18174a868",
+          "instruction": "jmp 0x18174a8b0"
+        },
+        {
+          "va": "0x18174a86a",
+          "instruction": "movsd xmm0, qword ptr [rax + 0x30]"
+        },
+        {
+          "va": "0x18174a86f",
+          "instruction": "mov eax, dword ptr [rax + 0x38]"
+        },
+        {
+          "va": "0x18174a872",
+          "instruction": "jmp 0x18174a8b0"
+        },
+        {
+          "va": "0x18174a874",
+          "instruction": "movsd xmm0, qword ptr [rax + 0x48]"
+        },
+        {
+          "va": "0x18174a879",
+          "instruction": "mov eax, dword ptr [rax + 0x50]"
+        },
+        {
+          "va": "0x18174a87c",
+          "instruction": "jmp 0x18174a8b0"
+        },
+        {
+          "va": "0x18174a87e",
+          "instruction": "movsd xmm0, qword ptr [rax + 0x6c]"
+        },
+        {
+          "va": "0x18174a883",
+          "instruction": "mov eax, dword ptr [rax + 0x74]"
+        },
+        {
+          "va": "0x18174a886",
+          "instruction": "jmp 0x18174a8b0"
+        },
+        {
+          "va": "0x18174a888",
+          "instruction": "movsd xmm0, qword ptr [rax + 0x3c]"
+        },
+        {
+          "va": "0x18174a88d",
+          "instruction": "mov eax, dword ptr [rax + 0x44]"
+        },
+        {
+          "va": "0x18174a890",
+          "instruction": "jmp 0x18174a8b0"
+        },
+        {
+          "va": "0x18174a892",
+          "instruction": "movsd xmm0, qword ptr [rax + 0x78]"
+        },
+        {
+          "va": "0x18174a897",
+          "instruction": "mov eax, dword ptr [rax + 0x80]"
+        },
+        {
+          "va": "0x18174a89d",
+          "instruction": "jmp 0x18174a8b0"
+        },
+        {
+          "va": "0x18174a89f",
+          "instruction": "movsd xmm0, qword ptr [rax]"
+        },
+        {
+          "va": "0x18174a8a3",
+          "instruction": "mov eax, dword ptr [rax + 8]"
+        },
+        {
+          "va": "0x18174a8a6",
+          "instruction": "jmp 0x18174a8b0"
+        },
+        {
+          "va": "0x18174a8a8",
+          "instruction": "movsd xmm0, qword ptr [rax + 0xc]"
+        },
+        {
+          "va": "0x18174a8ad",
+          "instruction": "mov eax, dword ptr [rax + 0x14]"
+        },
+        {
+          "va": "0x18174a8b0",
+          "instruction": "movsd qword ptr [rbx], xmm0"
+        },
+        {
+          "va": "0x18174a8b4",
+          "instruction": "mov dword ptr [rbx + 8], eax"
+        },
+        {
+          "va": "0x18174a8b7",
+          "instruction": "mov rax, rbx"
+        },
+        {
+          "va": "0x18174a8ba",
+          "instruction": "mov rbx, qword ptr [rsp + 0x30]"
+        },
+        {
+          "va": "0x18174a8bf",
+          "instruction": "add rsp, 0x20"
+        },
+        {
+          "va": "0x18174a8c3",
+          "instruction": "pop rdi"
+        },
+        {
+          "va": "0x18174a8c4",
+          "instruction": "ret "
+        }
+      ]
+    },
+    {
+      "name": "localPollRouting",
+      "startVA": "0x18052c1cb",
+      "instructions": [
+        {
+          "va": "0x18052c1cb",
+          "instruction": "xor edx, edx"
+        },
+        {
+          "va": "0x18052c1cd",
+          "instruction": "mov rcx, rsi"
+        },
+        {
+          "va": "0x18052c1d0",
+          "instruction": "call 0x18176cb70"
+        },
+        {
+          "va": "0x18052c1d5",
+          "instruction": "test rax, rax"
+        },
+        {
+          "va": "0x18052c1d8",
+          "instruction": "je 0x18052c899"
+        },
+        {
+          "va": "0x18052c1de",
+          "instruction": "mov rdx, qword ptr [rax + 0x48]"
+        },
+        {
+          "va": "0x18052c1e2",
+          "instruction": "test rdx, rdx"
+        },
+        {
+          "va": "0x18052c1e5",
+          "instruction": "je 0x18052c899"
+        },
+        {
+          "va": "0x18052c1eb",
+          "instruction": "mov rdx, qword ptr [rdx + 0xf8]"
+        },
+        {
+          "va": "0x18052c1f2",
+          "instruction": "mov ebx, r14d"
+        },
+        {
+          "va": "0x18052c1f5",
+          "instruction": "mov eax, r14d"
+        },
+        {
+          "va": "0x18052c1f8",
+          "instruction": "test rdx, rdx"
+        },
+        {
+          "va": "0x18052c1fb",
+          "instruction": "je 0x18052c899"
+        },
+        {
+          "va": "0x18052c201",
+          "instruction": "mov r8d, dword ptr [rdx + 0x18]"
+        },
+        {
+          "va": "0x18052c205",
+          "instruction": "cmp eax, r8d"
+        },
+        {
+          "va": "0x18052c208",
+          "instruction": "jge 0x18052c22a"
+        },
+        {
+          "va": "0x18052c20a",
+          "instruction": "cmp ebx, r8d"
+        },
+        {
+          "va": "0x18052c20d",
+          "instruction": "jae 0x18052c89f"
+        },
+        {
+          "va": "0x18052c213",
+          "instruction": "mov eax, dword ptr [rsi + 0x24]"
+        },
+        {
+          "va": "0x18052c216",
+          "instruction": "movsxd rcx, ebx"
+        },
+        {
+          "va": "0x18052c219",
+          "instruction": "cmp dword ptr [rdx + rcx*4 + 0x20], eax"
+        },
+        {
+          "va": "0x18052c21d",
+          "instruction": "je 0x18052c225"
+        },
+        {
+          "va": "0x18052c21f",
+          "instruction": "inc ebx"
+        },
+        {
+          "va": "0x18052c221",
+          "instruction": "mov eax, ebx"
+        },
+        {
+          "va": "0x18052c223",
+          "instruction": "jmp 0x18052c205"
+        },
+        {
+          "va": "0x18052c225",
+          "instruction": "mov dword ptr [rbp - 0x18], ebx"
+        },
+        {
+          "va": "0x18052c228",
+          "instruction": "jmp 0x18052c22d"
+        },
+        {
+          "va": "0x18052c22a",
+          "instruction": "mov ebx, dword ptr [rbp - 0x18]"
+        },
+        {
+          "va": "0x18052c22d",
+          "instruction": "test ebx, ebx"
+        },
+        {
+          "va": "0x18052c22f",
+          "instruction": "js 0x18052c878"
+        },
+        {
+          "va": "0x18052c235",
+          "instruction": "xor edx, edx"
+        },
+        {
+          "va": "0x18052c237",
+          "instruction": "lea rcx, [rbp - 0x10]"
+        },
+        {
+          "va": "0x18052c23b",
+          "instruction": "mov r8d, 0xa0"
+        },
+        {
+          "va": "0x18052c241",
+          "instruction": "call 0x18037b8e0"
+        },
+        {
+          "va": "0x18052c246",
+          "instruction": "cmp byte ptr [rdi + 0x59], r14b"
+        }
+      ]
+    },
+    {
+      "name": "disabledPollInput",
+      "startVA": "0x18052c235",
+      "instructions": [
+        {
+          "va": "0x18052c235",
+          "instruction": "xor edx, edx"
+        },
+        {
+          "va": "0x18052c237",
+          "instruction": "lea rcx, [rbp - 0x10]"
+        },
+        {
+          "va": "0x18052c23b",
+          "instruction": "mov r8d, 0xa0"
+        },
+        {
+          "va": "0x18052c241",
+          "instruction": "call 0x18037b8e0"
+        },
+        {
+          "va": "0x18052c246",
+          "instruction": "cmp byte ptr [rdi + 0x59], r14b"
+        },
+        {
+          "va": "0x18052c24a",
+          "instruction": "jne 0x18052c805"
+        }
+      ]
+    },
+    {
+      "name": "localPressedToWire",
+      "startVA": "0x18052c286",
+      "instructions": [
+        {
+          "va": "0x18052c286",
+          "instruction": "cmp dword ptr [rax + 0x18], r14d"
+        },
+        {
+          "va": "0x18052c28a",
+          "instruction": "jbe 0x18052c89f"
+        },
+        {
+          "va": "0x18052c290",
+          "instruction": "mov rdx, qword ptr [rax + 0x20]"
+        },
+        {
+          "va": "0x18052c294",
+          "instruction": "test rdx, rdx"
+        },
+        {
+          "va": "0x18052c297",
+          "instruction": "je 0x18052c2ae"
+        },
+        {
+          "va": "0x18052c299",
+          "instruction": "cmp byte ptr [rdx + 0x1c], r14b"
+        },
+        {
+          "va": "0x18052c29d",
+          "instruction": "je 0x18052c2ae"
+        },
+        {
+          "va": "0x18052c29f",
+          "instruction": "mov dword ptr [rsp + 0x24], 1"
+        },
+        {
+          "va": "0x18052c2a7",
+          "instruction": "mov dword ptr [rsp + 0x20], r14d"
+        },
+        {
+          "va": "0x18052c2ac",
+          "instruction": "jmp 0x18052c2b7"
+        },
+        {
+          "va": "0x18052c2ae",
+          "instruction": "mov qword ptr [rsp + 0x20], 1"
+        },
+        {
+          "va": "0x18052c2b7",
+          "instruction": "mov rax, rcx"
+        },
+        {
+          "va": "0x18052c2ba",
+          "instruction": "movsd xmm0, qword ptr [rsp + 0x20]"
+        },
+        {
+          "va": "0x18052c2c0",
+          "instruction": "movsd qword ptr [rbp + 0x14], xmm0"
+        }
+      ]
+    },
+    {
+      "name": "callbackSetFlags",
+      "startVA": "0x18052c805",
+      "instructions": [
+        {
+          "va": "0x18052c805",
+          "instruction": "lea rax, [rbp - 0x10]"
+        },
+        {
+          "va": "0x18052c809",
+          "instruction": "mov byte ptr [rsi + 0x29], 1"
+        },
+        {
+          "va": "0x18052c80d",
+          "instruction": "movups xmm0, xmmword ptr [rax]"
+        },
+        {
+          "va": "0x18052c810",
+          "instruction": "mov byte ptr [rsi + 0xd0], 1"
+        }
+      ]
+    }
+  ],
+  "scope": "NormalInput button timestamp producer;12 mapped enums including PlayerDefault4/6/7/8/9. Does not own PlayerDefault/runtime/network/device mapping.",
+  "buttonLayout": {
+    "namespace": "Quantum",
+    "sizeBytes": 12,
+    "signedInt32Words": [
+      "_frameUp",
+      "_frameDown",
+      "_frameCurrent"
+    ],
+    "rawOffsets": [
+      0,
+      4,
+      8
+    ]
+  },
+  "inputEnumMapping": [
+    {
+      "enum": 0,
+      "field": "Decision",
+      "rawInputOffset": 36
+    },
+    {
+      "enum": 1,
+      "field": "Cancel",
+      "rawInputOffset": 24
+    },
+    {
+      "enum": 2,
+      "field": "Menu1",
+      "rawInputOffset": 84
+    },
+    {
+      "enum": 3,
+      "field": "Menu2",
+      "rawInputOffset": 96
+    },
+    {
+      "enum": 4,
+      "field": "Up",
+      "rawInputOffset": 132
+    },
+    {
+      "enum": 5,
+      "field": "Down",
+      "rawInputOffset": 48
+    },
+    {
+      "enum": 6,
+      "field": "Left",
+      "rawInputOffset": 72
+    },
+    {
+      "enum": 7,
+      "field": "Right",
+      "rawInputOffset": 108
+    },
+    {
+      "enum": 8,
+      "field": "Jump",
+      "rawInputOffset": 60
+    },
+    {
+      "enum": 9,
+      "field": "Shot",
+      "rawInputOffset": 120
+    },
+    {
+      "enum": 10,
+      "field": "Action1",
+      "rawInputOffset": 0
+    },
+    {
+      "enum": 11,
+      "field": "Action2",
+      "rawInputOffset": 12
+    }
+  ],
+  "allocatorProof": {
+    "contextField": "FrameContext._allocator, class offset216 (0xd8), actual Il2CppType reference -> Allocator",
+    "metadataMethods": [
+      {
+        "method": "Alloc",
+        "vtableSlot": 5
+      },
+      {
+        "method": "Clear",
+        "vtableSlot": 7
+      }
+    ],
+    "nativeCalls": "Frame ctor Alloc0x7e8 at0x18173a68f..6a5 via vtable0x188, Clear at0x18173a6aa..6c0 via0x1a8, then stores globals pointer0xc8. Vtable array base0x138; slots5 and7 match metadata."
+  },
+  "findings": {
+    "timestamps": "Button.Update changes only transition timestamp; every update stamps actual frameNumber. On iff down>up signed, press iff down==current&&down>0, release iff up==current&&up>down.",
+    "initialization": "Explicit fresh zeroed Globals -> eight slots of12 zero Buttons. Raw bool false constructor is[1,0,1], not zero. Do not use wire constructor as persistent-global initial state.",
+    "frameNumber": "DeterministicFrame.Number class field offset28; Frame.SetPlayerInput loads [r14+0x1c]. Helper requires actual number; never infers render/network/poll count.",
+    "globalInput": "Frame.Globals+0x1c0+160*playerSlot; all8 slots allocated; Input has12 Buttons then FPVector2 LeftStick, which helper does not model.",
+    "uniformSimulation": "QuantumGame.OnSimulate loop0x181765970..a35 uses deterministic frame.Input payload per player and Frame.SetPlayerInput for all supplied peers before systems. No online/offline branch in timestamp conversion. Incoming Button.current is ignored; only signed down>up is sampled.",
+    "localPolling": "GameInputManager.pollInput matches CallbackPollInput.Player against Session.localPlayerIndices; matching position indexes m_PlayerInputInfos. Remote/nonlocal poll leaves callback unset. Explicit disable submits zeroed Input. Otherwise resolved IsPressed bools become constant raw Button constructor values; callback raw flags1 and InputSet=true.",
+    "deviceBoundary": "Resolved logical bools required. Physical keyboard/controller/Steam, UI merge, player restriction and sampling policy are not invented.",
+    "menu": "Frame.GetGamePlayerInput consults Stage operating-menu byte; masked player returns null. This does not stop Frame.SetPlayerInput updating storage.",
+    "boundaries": "Frame0/signed-negative/equal-nonzero/same-frame press-release follow native comparisons exactly, even counterintuitive transient predicate combinations."
+  },
+  "verification": {
+    "dedicatedTests": 22,
+    "fullSuite": {
+      "command": "node --test source-migration/*.test.cjs",
+      "tests": 1189,
+      "pass": 1189,
+      "fail": 0,
+      "includesConcurrentAuxiliaryWork": true
+    },
+    "nativeOracle": "Actual DLL bytes check Frame.SetPlayerInput call, Number offset load, Button.Update stores, and5 enum jump-table targets.",
+    "consumer": "Existing source-player-default.js.input consumes generated enum4/6/7/8/9 arrays directly, including held vs press vs release and Stage menu null."
+  },
+  "unresolved": [
+    "Actual DeterministicFrame.Number scheduling/starting frame must come from native-session host. No auto increment or manufactured frame1 default.",
+    "No device/keyboard/Steam boolean acquisition or merge, no unverified input restriction policy.",
+    "No network packet prediction/repetition/drop fallback, rollback scheduler or bitstream serialization implementation. Remote/session packet must be supplied explicitly.",
+    "Only button subset of160-byte Input is modeled. LeftStick FP vector and command/RPC flags remain host-owned.",
+    "Other input modes Half/Majority/Multi are excluded.",
+    "Runtime/play/network files and PlayerDefault remain unchanged; no whole-round gameplay claim."
+  ],
+  "sourceSha256": "0501581dbeaabb9030506a848ba5b8eeca926d391e9f2cc0abf8f13ff8b25b8a",
+  "testSha256": "6290a5cc7eee59c3972b99c61cfa5b8491a8a13abf18f305dca24596a58482ff"
+}

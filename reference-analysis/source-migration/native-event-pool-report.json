@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "status": "done-static-core-host-wiring-required",
+  "frozen": true,
+  "scope": "QEventParamManager fixed singleton allocation/Get/Initialize/Return; Actor.GetEventParam and NotifyEvent lifetime; no original execution.",
+  "nativeCapacity": 8,
+  "capacityEvidence": "0x1817808b2 mov edx,8 ->0x180319260 array allocation; cctor iteratesarraylength andallocatesQEventParam@0x181780977..a23",
+  "verification": {
+    "dedicated": {
+      "command": "node --test source-migration/source-native-event-pool.test.cjs",
+      "pass": 21,
+      "fail": 0
+    },
+    "fullSuite": {
+      "command": "node --test source-migration/*.test.cjs",
+      "pass": 1291,
+      "fail": 0
+    },
+    "nativeExecution": false,
+    "nativeDifferentialTest": false
+  },
+  "evidence": [
+    {
+      "va": "0x1817808b2..8d1",
+      "fact": "Static s_EventParams ref initialized toarrayof8; no authoredoption."
+    },
+    {
+      "va": "0x181780955..a23",
+      "fact": "Each arrayelement instantiated QEventParam; ctor0x180476130 bare ret; managednewobjectstartszerofilled."
+    },
+    {
+      "va": "0x181780b58",
+      "fact": "Manager.Initialize only writes InUse=false; payload and object identity retained."
+    },
+    {
+      "va": "0x181780810..851",
+      "fact": "QEventParam.Reset zeros full payload but doesnotwrite InUse@+14."
+    },
+    {
+      "va": "0x181780bdc..c49",
+      "fact": "Get scansfromindex0 toarraylength-1; firstfree payloadreset inline, setsInUse1, returns same object."
+    },
+    {
+      "va": "0x181780c52..58",
+      "fact": "All8busy ->null, no grow/replacement/queue."
+    },
+    {
+      "va": "0x181780c70..79",
+      "fact": "Return acceptsnull; otherwise writesInUse0 withoutpoolmembership check, payload unchanged."
+    },
+    {
+      "va": "0x18169dc37..4a",
+      "fact": "Actor.GetEventParam managerGet thensetsEventType andNotifiedActor=SOURCE.entityref; exhaustednull diagnostic path@dc59..7e."
+    },
+    {
+      "va": "0x18169ec02..22",
+      "fact": "Actor.NotifyEvent synchronously Invoke_OnRecvEvent, preserves int return, releasesInUse onlyafter normalreturn; nofinally."
+    },
+    {
+      "va": "0x18177b7ec..802",
+      "fact": "Invoke_OnRecvEvent null Actor returns0; nonnullregistry exacthostrequirement."
+    },
+    {
+      "va": "0x18169ec34..57",
+      "fact": "Null event logs diagnostic thenreturns0 withoutregistryinvoke."
+    }
+  ],
+  "screenBoundaryAudit": {
+    "status": "explanation-only-no-api-change",
+    "currentPrimaryCollision": "0x1816c6404 returns current Actor.GetCollision0, passedunchecked at0x1816c6412/6415 to0x181691b80 wrapper ->0x181691880; dereferencecurrentCollision+8 at0x1816919a5. Missing primary collision cannot be skipped; existingthrow iscorrect.",
+    "neighborCollision": "0x1816c6489/648c skips missing CollisionScene.GetCollisionById neighbor to0x1816c65ad. Header missingcollision skip refers tothisneighbor.",
+    "depth64": "0x1816c63b7..65d5 returns ownanchor beforeprimarylookup; retained.",
+    "filesModified": [],
+    "verification": "New EventPool test reads frozen ScreenBoundary: primarymissing throws, missingneighbor skips, depth64 noquery returnsanchor."
+  },
+  "api": {
+    "create": "()->{schemaVersion:1,slots:[8 distinct persistent QEventParam objects]}; create once for native static-manager lifetime, not perActor/frame.",
+    "initialize": "(pool)->samepool; only free allslots preservingpayload; explicit caller only. No proved per-frame autoInitialize scheduling.",
+    "reset": "(event)->sameobject; exact nativepayloadzeros, InUse unchanged.",
+    "get": "(pool)->firstfree persistent slotobject withclearedpayload/InUse=true, ornull.",
+    "release": "(eventOrNull)->InUse=false only; native uncheckedReturn permitsforeignobject; no clear payload.",
+    "getEventParam": "(pool,sourceActor,eventType:int32)->slot ornull; writesNotifiedActor=sourceActor.entityId, EventType. Sourceproof required.",
+    "notifyEvent": "(targetActor,event,invokeOnRecvEvent)->nativeint32; callback synchronous(target,event); nullparamreturns0, nulltargetreturns0andfreesnonnullparam. Exception leavesbusy; async/nonintreturnrefused beforefree.",
+    "freeCount": "(pool)->currentlyunusedslotcount derivedfrom8realInUse bits. Neverinfer1fromrecursiondepth.",
+    "slotIndex": "(pool,event)->identityindexor-1; inspection only.",
+    "capture": "(pool)->JSONdeepcopy forinspection/resume, external stale references intentionally notcarried.",
+    "payload": "Native QEventParam PascalCase fields retained: EventType,InUse,NotifiedActor,Index,ColorIndex,Id,Position,Velo,Scale,Speed,Time,SortingOrder,CauseDead,Value,IsActive,IsVisible,IsPause,IsEnableAnimation,IsEnableDisplay,IsCatched,IsDarkness,IsImmortal,IsDisableCorrentWarpPos,IsDisablePlaySe,CollisionId. NotifiedActor reset0 representszeroEntityRef; populated entityId opaquehostreference.",
+    "bridgeNote": "Do not JSONclone event atdispatch ifnativepool identity/reuse isneeded. Native bridge fieldname translation/registry remainexternal. Eventpayload mayaliasfutureGet afterrelease.",
+    "jumpNotifyNote": "Frozen JumpNotify freecount mirror isnot thepool; deriveavailability fromfreeCount atcorrectphase andwire actualGetEventParam/NotifyEvent as authoritative nativelease path. Do not decrementactualpool twice. On any failedtransaction discardclone; frozen JumpNotify finally-based syntheticcounter isnotnativeexceptionleasebehavior."
+  },
+  "unresolved": [
+    "Existing JumpNotify/lifecycle/bridge notmodified or registered; sharedpool must be wiredbyhost foractualnested registrycalls. Freecount alone doesnot emulate slotidentity/payload lifetime.",
+    "No direct E8xref toManager.Initialize found scanning.text andil2cpp; its automaticcall timing/indirectregistration isnotestablished. Do not autoInitialize perframe/Actor orwhilecallbacksactive.",
+    "Native debuglogging onGetEventParam/NotifyEvent null branches isnotreproduced; return/null andleasebehavior areimplemented.",
+    "Native registrylookup/type-specific callbackdispatch isexplicit host and mustreturn int32 synchronously.",
+    "Canonical nestedvectors are JS values; nativeinline-memory pointeraliasing beyond eventobject identity isoutside supportedhostcontract.",
+    "Native exception propagation outside purehelper ishosttransaction responsibility; no always-finallyrelease workaround.",
+    "No whole-stage playability/physics fidelity/original-game execution claim."
+  ],
+  "supportedTypes": [],
+  "completePhysicsFidelity": false,
+  "sourceSha256": {
+    "source-migration/source-native-event-pool.js": "1cf6906c34dc35a41866b71fa16b474d9f729a89c58facf9f750bea9ccc55c60",
+    "source-migration/source-native-event-pool.test.cjs": "b842c19cc6398a761a66e8666994ed36adf8c4a2497a879f01924d2092af4492"
+  }
+}

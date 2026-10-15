@@ -1,0 +1,150 @@
+{
+  "status": "partial-host-integration-required",
+  "scope": {
+    "stages": [
+      "st_w_03_02",
+      "st_w_10_04"
+    ],
+    "populations": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "online": [
+      false,
+      true
+    ],
+    "playerState": 1,
+    "inputType": 0,
+    "scrollType": 1,
+    "supportedTypes": [],
+    "completePhysicsFidelity": false
+  },
+  "nativeMethod": "0x1816c3060",
+  "constants": {
+    "walkSpeedRaw": 196608,
+    "gravityRaw": 42598,
+    "terminalRaw": 1277952,
+    "jumpRaw": -334234,
+    "airDragRaw": 64225,
+    "coyoteRaw": 4588,
+    "jumpHoldFrames": 13
+  },
+  "order": [
+    "clear input and ice animation flags",
+    "warp/suppression guard",
+    "reverse gravity",
+    "ear expansion",
+    "ice floor",
+    "horizontal drag/input",
+    "auto scroll",
+    "floating/ground check",
+    "gravity or little step",
+    "jump permission/press/hold/forced jump",
+    "forced horizontal velocity",
+    "consume wind",
+    "screen edge adjustment",
+    "write velocity"
+  ],
+  "limitations": [
+    "Pure snapshot planner; not registered in shared runtime/play.",
+    "Native Actor integration, Scene refresh and velocity integration are host responsibilities."
+  ],
+  "evidence": [
+    "0x1816c3060",
+    "0x1816bf440",
+    "0x1816c5890",
+    "0x1816c4a50",
+    "0x1816c4380",
+    "0x1816be740 release a==t &&a>b signed",
+    "0x1816c5300 littleStep; 0x1816cbf8b stepHeight2",
+    "0x1816c45c0 ear; 0x1816cbc53 earSpeed48",
+    "0x1816c3ed0 reverse order/opposite-face blocker",
+    "0x1816c0dd0 Post; 0x1816c1058 state1 jump table",
+    "0x1816beac0 SetAnim conditional writes",
+    "0x1816bd663 initial Player bit3"
+  ],
+  "frozen": true,
+  "verification": {
+    "dedicated": {
+      "command": "node --test source-migration/source-player-default.test.cjs",
+      "pass": 37,
+      "fail": 0
+    },
+    "fullSuite": {
+      "command": "node --test source-migration/*.test.cjs",
+      "pass": 1054,
+      "fail": 0
+    },
+    "originalGameExecuted": false,
+    "method": "DLL byte disassembly + decoded source fixtures + independent boundary cases; no native runtime differential test"
+  },
+  "unresolved": [
+    "Input types1..4 and auto-scroll are refused.",
+    "changeNextPlayerIndex on active jump is refused (not actual target defaults).",
+    "Native floating contact cycles are refused.",
+    "Camera screenEndWalkVelocityX, map decoding, CheckOutMap and upward event37 recursion are host requirements, never silent no-ops.",
+    "Immediate reverse/ear transport must update native actor/collision/contact snapshots synchronously. General MoveContactActor recursion is not reproduced here.",
+    "Only state1; no complete twelve-state Player runtime or stage completion claim."
+  ],
+  "correctionHistory": [
+    {
+      "finding": "Frame14 does not automatically become0 when jump permission is false; false permission path jumps tofinal @0x1816c39e0/3d71. Updated failing test expectation; planner already retained14."
+    },
+    {
+      "finding": "Max ear transport delta=-9961438raw rather than ideal -9961440 due dynamicScale integer height normalization and GetRect. Updated test expectation; retained frozen collision-init math."
+    },
+    {
+      "finding": "Reverse-trigger blocking collision list is OPPOSITE gravity face @0x1816c423e, while contact eligibility is gravity face @0x1816c41f0. Preserved both distinct lookups."
+    },
+    {
+      "finding": "Little step raw ContactInfo index includes wrong-normal/missing entries @0x1816c5545..5604; requires unfiltered contactInfos hook, not cached contactIds."
+    }
+  ],
+  "api": {
+    "compile": "compile(actors,count,{actorSceneFlags:4,stageScaleRaw,iceSpeedUpRaw,actorFlags,bindings:[{id,entityId,hasOnCollided}]}) returns {players:[{player,actor,collision}]}; actorFlags is explicit host post-initialization flags; compiler adds Player initial bit3 and source slot5 bit22.",
+    "step": "step(snapshot,stage,buttons,dtRaw,ctx) -> cloned player/actor/collision/effects; stage={inputType:0,scrollType:1,flags,iceResistivityRaw,iceFrictionRaw}; buttons={4:[a,b,t],6:...,7:...,8:...,9:...} or null if native NormalInput absent.",
+    "post": "post(snapshot,ctx) adds Player pushBack whenbit3 then explicit CheckOutMap, event43; state1 postPlayerState table has no extra action.",
+    "numericHelpers": [
+      "button",
+      "input",
+      "floating",
+      "gravityDelta",
+      "jumpVelocity",
+      "littleStep",
+      "checkIce",
+      "reverseGeometry",
+      "earPlan",
+      "jumpPermission"
+    ],
+    "host": {
+      "contactIds": "(collision,face)->native ordered cached collision IDs; face0up,1down,2left,3right. Preserve order/missing lookup behavior.",
+      "contactInfos": "(collision)->UNFILTERED native ContactInfo sequence [{collisionId,normalRaw:{xRaw,yRaw}}]; littleStep uses actual index.",
+      "collisionById": "id -> live collision snapshot or null; baseRectRaw/scaleRaw/pivotRaw and current positions required for geometry.",
+      "playerByEntity": "entityId -> Player flags snapshot or null; floating recurses with original owner gravity.",
+      "mapContact": "(collision,face)->native current map contact boolean.",
+      "contactProbe": "(collision,face)->{contacted:boolean,attribute:int}; include map contact; attribute OR belongs to matching actor contacts, map contributes0.",
+      "iceMapAttributesAtRaw": "(actorXRaw,actorYRaw +/-12px)->native tile attribute or null when out-of-bounds/chip<2. Must perform native map FP cell lookup; bit1 sets ice.",
+      "openGoalOverlap": "(player,actor,collision)->actual open Goal collision overlap; queried only simultaneous Press8 and Press4.",
+      "applyImmediate": "(action,player,actor,collision) must perform/resolve synchronous native action and refresh mutable cloned snapshots/contacts: SetPosForce with warp; MoveContactActor mode6 with reverse boolean; notifyJumpUpward event37. Missing required callback throws. Pure numeric reverseGeometry/earPlan separately usable without this dispatch.",
+      "screenEndWalkVelocityX": "(player,actor,vxRaw)->native camera-clamped vx; REQUIRED even manual-scroll target stages. Identity is only valid if host proves no edge correction for that tick.",
+      "checkOutMap": "actor -> native Actor.CheckOutMap result.",
+      "effects": "SetAnim reflected in snapshot (Actor animationId); LookLeft/LookRight, PlaySe, NotifyEvent remain native host actions. Effects emitted after applyImmediate are audit records: DO NOT execute immediate actions twice."
+    }
+  },
+  "findings": {
+    "walk": "Previous groundbit gates direct walk; airborne no new walk,drag. Left wins. Ground nonicezeroesvx; ice resistance thenfriction/clamp. No dt factor.",
+    "jump": "Coyote4588 accepts lastpositive timer tick after crossing0; variableholdframes1..13, frame14 has nohold. Higher upwardvy retained/frame14. Forced flags4/5 follow separate permission branches.",
+    "floating": "Map supports first; layer!=1/oppositegravity/nonPlayer/Playerflag12 supports; samegravityPlayer recursively searches native ground contacts.",
+    "ice": "First valid ordered actor contact decides ice; with no actor/map contact previous Actor ice persists. Map invalid leaves flags; animationbit31 threshold55705oldvx.",
+    "reverse": "10-4 slot5 bit22 disables directjump and forcesfloatingvx0; Press8 ongravity-contact mayflip. Automatic reversed-player contact with normalgravityPlayer face0 flipsback and resetslocalvy0. Reverse geometry changesrectY,Actorflags21/12,collisionflag8,currentY +/-48*Actor.scaleY,SetPosForce,warpflag25.",
+    "ear": "Both actualstagesdefaultbit20false. Active helper restorespreEarScale onchanged collisionheight; savespre;heldenum9 rate48*dt;clamps1..20;release togglesshrinkbit21;current scaleonly updated; unequalcurrent/pre scale andnonzeroedge delta emitsmode6 transport.",
+    "post": "Player initialbit3 enables pushBack addition; state1post dispatch0x1816c0f8d noextraaction; outmapevent43 setsisOutMaptrue."
+  },
+  "sourceSha256": "ca50698d46ef00d0d861c3e37cf202fb6d14bcf285e6e0ed4d5e33b4b43c140c",
+  "testSha256": "b6e20020d6267c6dd9f361c6a82a3cdf45f81d15e0831726c0896ba20b639c7d"
+}

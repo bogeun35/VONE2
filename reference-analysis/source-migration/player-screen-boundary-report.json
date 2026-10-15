@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "status": "done-pure-helper-host-wiring-required",
+  "frozen": true,
+  "scope": "Player.calcScreenEndWalkVeloX + getUpperPlayerEdgeX, source-only static DLL reconstruction. Existing PlayerDefault/Camera read-only.",
+  "registration": {
+    "runtime": false,
+    "play": false,
+    "supportedTypes": [],
+    "completePhysicsFidelity": false
+  },
+  "verification": {
+    "dedicated": {
+      "command": "node --test source-migration/source-player-screen-boundary.test.cjs",
+      "pass": 30,
+      "fail": 0
+    },
+    "fullSuite": {
+      "command": "node --test source-migration/*.test.cjs",
+      "pass": 1155,
+      "fail": 0
+    },
+    "stageSelections": {
+      "ids": [
+        "st_w_03_02",
+        "st_w_10_04"
+      ],
+      "counts": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "online": [
+        false,
+        true
+      ],
+      "combinations": 28,
+      "initialStageAreaRaw": {
+        "height": 31457280,
+        "width": 55924032,
+        "x": 0,
+        "y": 0
+      }
+    },
+    "originalGameExecuted": false,
+    "nativeDifferentialExecution": false
+  },
+  "evidence": [
+    {
+      "va": "0x1816c6202..6207",
+      "fact": "Player cached m_PlayerActorType uint16==19 bypasses camera and scene queries; return input vx."
+    },
+    {
+      "va": "0x1816bd5d3..5d7",
+      "fact": "Player.Initialize copies native Actor actorType word into Player cached actorType. Actual target Player27 differs from bypass19."
+    },
+    {
+      "va": "0x1816c621b..622b",
+      "fact": "Read Frame.GetCamera then Camera.CalcCameraViewStageArea; no scrollType test here."
+    },
+    {
+      "va": "0x1816c626a..6279",
+      "fact": "Call upperEdge with depth0, predictedX=signed64(edgeX+vxRaw). No dt multiplication."
+    },
+    {
+      "va": "0x1816c6295..62ae",
+      "fact": "vx>=QFP0 uses strict predicted > camera.x+camera.width; equality returns input vx."
+    },
+    {
+      "va": "0x1816c62c9..62ef",
+      "fact": "vx<0 uses strict predicted < camera.x; crossed bound returns QFP0. No partial clamp to remaining distance."
+    },
+    {
+      "va": "0x1816c63a8..63bb/65d5",
+      "fact": "Start with current Actor.posX; depth>=64 returns it before scene or collision lookup."
+    },
+    {
+      "va": "0x1816c63f8..6415",
+      "fact": "Actor.GetCollision index0 then cached Collision.GetContactCollisionList UP face0. Gravity does not change this face."
+    },
+    {
+      "va": "0x1816c6489..64b1",
+      "fact": "Skip missing collision, layer!=1, missing Actor. No Player-component or actorType check for upper entries."
+    },
+    {
+      "va": "0x1816c64e4..6542",
+      "fact": "Nonnegativevx max of current edge, neighbor Actor.posX and recursively computed neighbor edge."
+    },
+    {
+      "va": "0x1816c6550..65a9",
+      "fact": "Negativevx min of current edge, neighbor Actor.posX and recursive edge."
+    },
+    {
+      "va": "0x1817dfd10..dfef4",
+      "fact": "Camera stage area transforms both FP view corners separately. Reuse SourceCameraNative.stageAreaRaw; not idealized 16:9."
+    }
+  ],
+  "findings": {
+    "geometry": "Only Actor current anchorX and upper layer1 graph. Collision widths, body/ear scales, gravity flags and Player bounding rects are not inspected.",
+    "direction": "Reject outward crossing but allow inward movement even while already outside view. Zero velocity follows nonnegative branch (audit blocked can true, result still0).",
+    "recursion": "Depth starts0. Node at depth64 contributes own anchor but its UP children are not traversed. Cycles are bounded natively; helper does not reject cycles.",
+    "scroll": "No scroll-specific branch in native Player method. Current camera views from mode0/1/2 are supported; camera update stays separate.",
+    "memo": "Per-query identity/depth memo preserves pure snapshot graph result; no persistent memo. Host callbacks MUST be stable and read-only during one call; native lookup side effects or graph mutation are outside contract."
+  },
+  "api": {
+    "screenEndWalkVelocityX": "(player,actor,vxRaw,{camera,scene})->integer vxRaw or0. player.playerActorType is explicit native cached uint16. actor.xRaw is current native anchor.",
+    "evaluate": "same args -> {velocityRaw,bypassed,edgeRaw,predictedRaw,leftRaw,rightRaw,cameraAreaRaw,blocked}; type19 result only velocityRaw/bypassed.",
+    "upperEdgeX": "(actor,vxRaw,scene,depth=0)->anchor extremum; supported depth nonnegative, >=64 direct return.",
+    "cameraAreaRaw": "(camera)->SourceCameraNative.stageAreaRaw current native view; source helper does not update camera.",
+    "createHost": "({getCamera,getScene,getPlayerActorType})->(player,actor,vxRaw)=>vxRaw. Direct assignment to frozen Default ctx.screenEndWalkVelocityX. Providers read current phase snapshots on every call. Type19 does not call getCamera/getScene.",
+    "scene": {
+      "getCollision": "(actor,0)->native primary collision; missing root/nonterminal collision refuses (native would null-fail).",
+      "contactIds": "(collision,0)->ordered cached UP collision ID array. Native UP face0 regardless gravity.",
+      "collisionById": "id -> collision {layer,entityId} ornull.",
+      "actorByEntity": "entityId -> current native Actor {xRaw,...} ornull. Return stable Actor object identity during query for efficient bounded memo."
+    },
+    "adapterNote": "Frozen PlayerDefault compiler lacks cached playerActorType field; provider must supply actual cached native value. Using actor.actorType is valid only when host verifies it still equals the Player.Initialize-cached type. Do not guess default19 or substitute rendered-box X."
+  },
+  "unresolved": [
+    "Host must wire fresh actual Camera and CollisionScene snapshots at the final Player Update phase, after forceX/wind and after immediate reverse/ear/contact operations. This helper does not register runtime/play.",
+    "SourceCameraNative unlimit/unreturn snapshots (flags lowbits1/2) and unknown modes are explicitly refused; these camera branches are unimplemented in existing helper.",
+    "Host must implement primary collision lookup and cached UP contact graph accurately; no AABB or fake empty-list fallback.",
+    "Input counters are another assigned task; no Button conversion included.",
+    "No original-game execution or native-vs-browser differential verification. Exact-safe JSON raw representation refuses unrepresentable results."
+  ],
+  "sourceSha256": {
+    "source-migration/source-player-screen-boundary.js": "0c34936c000c33e55e7ecc2df47100f16bc1e4c89a20bd56909feee7c99dfc37",
+    "source-migration/source-player-screen-boundary.test.cjs": "ed8901bd6b5a43d6bbd4da4c4c7f380bfecd124e23b141b27fae20dbdb0cbbd4"
+  }
+}

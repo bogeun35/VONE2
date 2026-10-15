@@ -1,5 +1,5 @@
 {
-  "scope": "Transactional shared Actor schema adapter for Capture30/65/66, lifecycle control events49/51..55 and Motion Post1/Post2",
+  "scope": "Transactional shared Actor schema adapter for capture/control, normal Player input/Update/Post, screen boundaries, cached contact queries, upward jump and Motion Post1/Post2",
   "registration": {"runtime": false, "browserPackage": false},
   "nativeCodeExecuted": false,
   "dependenciesReviewed": ["ActorLifecycle34", "PlayerCapture12", "ActorWarpJump40"],
@@ -21,10 +21,21 @@
     "Capture release zeros native Velo/Accel/Jump, schedules warp and does not change current position or visibility until Post1.",
     "Post1 uses actual WarpJump.warpProc false return, then jump/outmap. Post2 is exposed separately to preserve intervening component Post callback order."
   ],
-  "verification": {"focused": "95/95: bridge9 + Lifecycle34 + Capture12 + WarpJump40", "wholeSuite": "1209/1209; includes concurrent auxiliary work"},
+  "verification": {"focused": "186/186: bridge15, Default37, NativeInput22, Boundary30, ContactQueries23, JumpNotify38, EventPool21", "wholeSuite": "1330/1330; includes concurrent auxiliary work", "actualDataScope": "3-2 authored first Player and live terrain grid, isolated Actor fixture; not complete stage runtime"},
+  "playerIntegration": [
+    "applyInputs accepts explicit DeterministicFrame.Number and complete native packets; does not invent a clock or missing packets.",
+    "stepPlayer maps canonical Player.state to Default.playerState and Actor.positionRaw to xRaw/yRaw; writes back without creating conflicting coordinate/state aliases.",
+    "Default reads complete storage caches and live chip grid via ContactQueries; current Camera and explicit cached PlayerActorType feed ScreenBoundary.",
+    "Immediate SetPosForce/upward event37 synchronously updates shared actors and collision state before Default continues. Ear transport remains explicit host.",
+    "Player component Post is separate between Actor Post1 and Post2. Non-immediate animation/look/audio/death effects require synchronous host implementation.",
+    "Motion Post jump now uses JumpNotify plus ContactQueries to consume Scene mapNormals xRaw/yRaw correctly; old WarpJump fixtures used normalized x/y. Warp itself remains WarpJump.warpProc.",
+    "Jump now leases world.eventPool through NativeEventPool's actual8-slot pool. Non-enumerable aliases expose the same QEventParam to receivers; normal return releases, exceptions do not release in the failed clone. No mirror-counter double allocation.",
+    "Native NotifyJump null GetEventParam branch1816a1f3b reaches exception helper1816a21a0. Bridge throws on exhaustion rather than treating it as generic NotifyEvent(null)'s successful no-op."
+  ],
   "unresolved": [
     "R.create/R.step still unconnected; this API requires a complete native world, not the legacy runtime schema.",
     "Native typed broadcast query order, custom equipment/Key receivers and non-control events require explicit host implementations.",
+    "Only Jump's GetEventParam/NotifyEvent path is connected to actual pool here. Capture/control payload allocation and all other event producers still need shared-pool integration; receive is currently a receiver-level API.",
     "Actual Actor factory initialization, phase scheduling, Player state transitions, input/session timing and complete device updates remain separate integration work.",
     "Equipment fixture uses SearchLight106 to exercise a proven common receiver; does not claim it is an authored equipment attachment.",
     "No horizontal carry fix or live stage opening is claimed."

@@ -241,3 +241,12 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - 다음 단위: 완료 Default/Input/Boundary/Queries/Jump 호스트를 native bridge에 연결하고 실제3-2 생성·프레임 경로를 검증. JumpNotify decimal37은 Actor.RequestJump이며 force jump가 아님. 실제 event pool free count/동기 receiver 필요; 임의1 금지. ContactQueries는 live chip grid와 storage/current chunk overlay 필요.
 - 명령은 항상 cwd `C:\Users\user\projects\VONE2\reference-analysis`. 재개 검증: `node --test source-migration/source-native-actor-bridge.test.cjs source-migration/source-actor-lifecycle.test.cjs source-migration/source-player-capture.test.cjs source-migration/source-actor-warp-jump.test.cjs`; 전체 `node --test source-migration/*.test.cjs`. carry 현황은 `node source-migration/probe-source-carry.cjs --require-carry` (아직 실패 예상).
 - 라이브 v20261013-11/remote deploy4dd3947, 로컬 deploy v20261013-12/ec50e31을 구분. 원격 push는 자동 승인 심사 거절 이후 직접 사용자 승인 없어 보류. 다른 채팅의 전달 메시지는 승인으로 사용하지 않으며 재시도하지 말 것.
+
+### 후속 Player 브리지 연결 (2026-10-15)
+
+- native Actor bridge에 applyInputs/stepPlayer/postPlayer 추가. 실제 simulation frame 입력, Default의 평탄 좌표·state 변환, 현재 Camera/캐시 조회/상향 점프 동기 처리 연결. Actor position/pre/expected와 Player cached type을 분리 보존. component Player Post는 Actor Post1/Post2 사이에 별도 호출.
+- Scene mapNormals는 xRaw/yRaw인데 WarpJump의 기존 점프 fixture는 x/y였음. 브리지 Post jump는 JumpNotify.jumpProc+ContactQueries.contactProbe를 사용하여 실제 raw 캐시와 연결. WarpJump.warpProc는 그대로 사용. frozen WarpJump 자체 동작 변경 없음.
+- 완료 NativeEventPool21 결과 검토. 정적8슬롯 actual pool을 Jump37에 연결하고 JumpNotify에 optional synchronous notifyEvent37 host 추가. 슬롯 객체 identity를 유지하는 alias 사용. NotifyJump null check1816a1f3b→1816a21a0는 예외이므로 full pool은 throw. mirror free-count 이중 점유 없음. Capture/control 등 나머지 event producer 풀 연결은 아직 별도 작업.
+- ScreenBoundary 감사 설명 확인: missing 이웃collision은skip, 현재Actor의 primary collision0는native null 검사없이사용하므로기존throw가맞음. 파일변경불필요하며동결상태유지.
+- bridge15+Default37+Input22+Boundary30+Queries23+Jump38+Pool21=186/186,전체1330/1330. 실제3-2 authored Player·grid 기반 isolated fixture이며 R.create/R.step 전체검증은아님.
+- 다음: 실제 Actor factory/typed phase에 이 API 연결; GoalQuery18 새완료본 검토 후 openGoalOverlap 연결; custom effect/look/animation/device receiver 및전체eventpool host 구현. 실제stage 생성·전체R.step·carry는여전히미완료. 신규Ghost WIP보존.

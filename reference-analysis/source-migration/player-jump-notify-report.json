@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "status": "done-core-host-registry-wiring-required",
+  "frozen": true,
+  "scope": "Native event37 Actor.NotifyJump, Player.notifyJumpUpward, UP RecursiveMax, ordinary Player/base Actor receiver and delayed Actor.jumpProc; no original execution.",
+  "supportedTypes": [],
+  "completePhysicsFidelity": false,
+  "registration": {
+    "runtime": false,
+    "play": false
+  },
+  "verification": {
+    "dedicated": {
+      "command": "node --test source-migration/source-player-jump-notify.test.cjs",
+      "pass": 38,
+      "fail": 0
+    },
+    "fullSuite": {
+      "command": "node --test source-migration/*.test.cjs",
+      "pass": 1247,
+      "fail": 0
+    },
+    "stageSelections": {
+      "ids": [
+        "st_w_03_02",
+        "st_w_10_04"
+      ],
+      "counts": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "online": [
+        false,
+        true
+      ],
+      "combinations": 28
+    },
+    "nativeExecution": false
+  },
+  "evidence": [
+    {
+      "va": "0x1816c59a0/5a69",
+      "fact": "Player reverse flag23 skips entire notifyJumpUpward."
+    },
+    {
+      "va": "0x1816c5a8d..5ab3",
+      "fact": "UP RecursiveMax mask-1; ifdepth>0 divide original raw jumpVelo bydepth via signed idiv, otherwise keeporiginal."
+    },
+    {
+      "va": "0x1816c5ae7/5c3b..56",
+      "fact": "GetContactCount UP,recursive=false,mask-1, freshlist; each target Actor.NotifyJump with velocity=amount andincrement=amount event37."
+    },
+    {
+      "va": "0x181695110/2ee..3ba",
+      "fact": "RecursiveMax uses native ContactInfo order, exactnormal, layerbitmask; returns maxchilddepth+1 iffvalid edge exists. No fixed recursion depth guard."
+    },
+    {
+      "va": "0x181694c70/4f17..59",
+      "fact": "UP direct list keeps first native collision.id, deduplicates within fresh list; nonrecursive false at4f5e."
+    },
+    {
+      "va": "0x1816a1eff..1f54",
+      "fact": "Actor.NotifyJump target Actor lookup; missingActor returns. GetEventParam from SOURCE Actor; eventVelo.Y assigned; synchronous NotifyEvent on target."
+    },
+    {
+      "va": "0x18169dbd0/dc43..4a;0x181780b80/c03..49",
+      "fact": "GetEventParam setsEventType/sourceEntity; poolGet resetsVelo=(0,0), InUse=true. Explicit free-slot requirement retained."
+    },
+    {
+      "va": "0x18169ec1e;0x1816a1f59",
+      "fact": "NotifyEvent releases InUse before Actor.NotifyJump checks receiver current flag15 for recursion."
+    },
+    {
+      "va": "0x1816a20de..2116",
+      "fact": "UP children use newsource=receiver, childV=parentV+increment signed64, increment unchanged. No global duplicate suppression or depth cap."
+    },
+    {
+      "va": "0x1816c66a6..66d9;0x1816c112c..1139;0x1816c124f",
+      "fact": "Ordinary Player state1Default doesNOT handle decimal37 (0x25), so Player wrapper falls through generic Actor.OnRecvEvent."
+    },
+    {
+      "va": "0x18169e8d7..941",
+      "fact": "Generic event37 handled1 even declined. Request only Actorflag19 &&(jumpEventType==0 ||event37). No pause check in this receive path."
+    },
+    {
+      "va": "0x1816a21e1..2250",
+      "fact": "RequestJump both abs components<4 writes ONLY jumpVelocityY=-334234 (existingX unchanged); otherwise replaces requestXY; sets Actorbit19. Does not changevelocity/acceleration/Playerforcedjump."
+    },
+    {
+      "va": "0x18169e6f1..75d",
+      "fact": "Later jumpProc >=4 request replaces Actorvelocity and clearsrequestXY; subepsilon request remains. Actorbit19 notcleared."
+    },
+    {
+      "va": "0x18169e785..826",
+      "fact": "jumpProc collision0 downface1 includeMap=true; ifair addFrame.GetGravity tovelocityY, else/missingcollision clamp positiveYto0. Accel unchanged."
+    }
+  ],
+  "api": {
+    "world": "Mutable shared pipeline clone {actors,collisions,eventPoolFreeCount}; actors looked up by entityId, collisions by id. Actor/player objects must be same live phase objects as other helpers. eventPoolFreeCount must be actual currently unused pool slots, not a guessed capacity.",
+    "actor": "{entityId,flags:uint32,jumpEventType:uint8,jumpReceiver,jumpVelocityRaw:{xRaw,yRaw},velocityRaw,accelerationRaw,player?}. player-default receiver requires player.state==1 orplayer.playerState==1.",
+    "collision": "{id,entityId,layer:uint8,contacts:[{id,normal:{x:int,y:int}}]}; native raw-normal variant {collisionId,normalRaw:{xRaw,yRaw}} supported. Contacts are true native ordered ContactInfo; map contacts do not participate.",
+    "notifyJump": "(world,sourceActor,targetCollision,{eventType:37,velocityRaw,incrementRaw},host={}) mutates receivers and returns ordered audit deliveries.",
+    "notifyJumpUpward": "(world,sourceActor,ownerCollision,jumpVelocityRaw,host={}) -> {depth,amountRaw,deliveries,reverseSuppressed}. SourceActor.player.flags required.",
+    "recursiveMax": "(world,collision,mask=-1)->UP exact-normal maximumedge depth. Unbounded native cycles refused.",
+    "createContactHost": "(host={}) -> {notifyJump:(world,sourceActor,targetCollision,event)=>...}; pass directly to frozen SourcePlayerContact.onContact. Contact helper has already divided by target depth+1, so this adapter does NOT divide again.",
+    "applyDefaultAction": "(world,sourceActor,ownerCollision,{type:notifyJumpUpward,eventId:37,velocityRaw},host={}); use synchronously in frozen Default applyImmediate. It performs division ONCE.",
+    "receive37": "(targetActor,event)->{handled:1,requested:boolean}; only generic baseActor/ordinary Player event37.",
+    "requestJump": "(actor,{xRaw,yRaw}) explicit native request operation; records request not motion.",
+    "jumpProc": "(world,actor,{getCollision(world,actor,0),isContacted(world,collision,1,true),getGravity(world)}) compatible Motion.post1 jumpProc hook. Caller owns native warp-first/Actor flags/pause pipeline order.",
+    "receiverRegistry": "jumpReceiver=player-default oractor-base uses proven receiver; all others REQUIRE synchronous host.dispatchEvent37(world,source,target,event). Do not mark custom components actor-base without native registry evidence. Custom callback may change flags/contact graph before propagation; callbacks must obey native event pool accounting.",
+    "eventLifetime": "Per delivery consume1 actual freepoolslot; restore when synchronous dispatcher completes, then recurse. event.inUse false aftercallback. Event objects are scoped payloads, not pool pointer identity emulation; do not retain them or re-dispatch audit records.",
+    "pause": "Event37 delivery/receive is not suppressed by Actor pausebit4. Whether Motion Post runs while paused is outer pipeline responsibility.",
+    "failure": "Unsupported receiver/state/other event/cycle/missing raw/pool availability throw. Mutating world may be partially changed before throw; caller must discard the pipeline clone on failure."
+  },
+  "unresolved": [
+    "No general device-specific event37 receiver registry; explicit dispatchEvent37 host required for those actor types.",
+    "No runtime/play wiring or native actor-type registration. Only set known receiver kind after registry proof.",
+    "Unbounded native RecursiveMax or NotifyJump cycles refused; no invented64 cap. Callback-terminated cycles also outside supported domain.",
+    "Actual native event pool identity/storage and nested custom receiver dispatch require host accounting. Pure helper checks current available count, but does not recreate native pool pointer aliasing.",
+    "No broad Player states or Player forcejump event36/27 implementation; event37 is genericActor path.",
+    "Callers must map frozenDefault cloned {player,actor,collision} into live world before dispatch; no stale world copy or secondary deferred event execution.",
+    "GetGravity is native Frame.GetGravity, not Player.calcGravity or dt-based inferred gravity.",
+    "No native executable differential testing; whole-stage playability not claimed."
+  ],
+  "sourceSha256": {
+    "source-migration/source-player-jump-notify.js": "64912f9986b5a7265d42c6e6f6652fc42e218109fc551665dbee8d5d80c4ffc5",
+    "source-migration/source-player-jump-notify.test.cjs": "1f21e026e5fb8ff6ee138b84eb644678d007a4d7f5106e35ebdff91225ffe09c"
+  },
+  "leadIntegration": {
+    "change": "Optional synchronous host.notifyEvent37 allows the native Actor bridge to allocate/return actual shared QEventParam slots; prior explicit free-count mode retained for standalone fixtures.",
+    "nativeNullCheck": "0x1816a1f3b -> 0x1816a21a0 raises on missing event; bridge refuses full pool.",
+    "validation": "Related bridge/default/input/boundary/queries/jump/pool186/186; whole1330/1330",
+    "previousSourceSha256": {
+      "source-migration/source-player-jump-notify.js": "56bbe4fdf599355a0f18c8283aa662c5601b195de2a6ee4a9f8d44c6bf4202e0",
+      "source-migration/source-player-jump-notify.test.cjs": "1f21e026e5fb8ff6ee138b84eb644678d007a4d7f5106e35ebdff91225ffe09c"
+    }
+  }
+}
