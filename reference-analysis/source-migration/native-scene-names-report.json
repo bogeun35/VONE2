@@ -1,0 +1,27 @@
+{
+  "scope": "ActorScene successful name/type registration and lookup over a complete logical dictionary snapshot",
+  "nativeCodeExecuted": false,
+  "verification": {
+    "focusedTests": 17,
+    "focusedPass": 17,
+    "fullSuiteBeforeFinalIntegrationTest": 1760,
+    "fullSuitePass": 1760,
+    "command": "node --test source-migration/source-native-scene-names.test.cjs source-migration/source-native-actor-factory.test.cjs"
+  },
+  "evidence": {
+    "addActor": "0x1816a71d0",
+    "containsKey": "0x1816a733b",
+    "dictionaryAdd": "0x1816a73b1",
+    "presentTypeBit": "0x1816a73be..0x1816a73e7",
+    "setInitPos": "0x1816a73ee",
+    "setBaseScale": "0x1816a7422",
+    "duplicate": "0x1816a7342 -> Invoke_OnExit0x1816a7467 then Frame.Destroy0x1816a7475",
+    "findActor": "0x1816a7b80 via frozen NativeQString"
+  },
+  "unresolved": [
+    "Dictionary snapshot must be complete. Logical entries do not model native heap slots, capacity allocation, or enumeration order.",
+    "Duplicate name requires actual OnExit and Destroy; this integration refuses it transactionally without overwriting existing names.",
+    "Player lists, typed component buffers and materialization listeners remain separate creation phases.",
+    "No actual full stage factory or legacy R.create/R.step registration is claimed."
+  ]
+}

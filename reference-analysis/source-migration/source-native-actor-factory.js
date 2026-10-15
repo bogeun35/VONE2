@@ -11,6 +11,7 @@
 'use strict';
 const Init=require('./source-actor-initialization.js'),PlayerInit=require('./source-player-collision-init.js');
 const Bootstrap=require('./source-player-bootstrap.js'),Broad=require('./source-collision-broadphase.js'),Callbacks=require('./source-collision-callbacks.js'),QString=require('./source-native-qstring.js'),Allocator=require('./source-native-entity-allocator.js');
+const Names=require('./source-native-scene-names.js');
 const ZERO=[27,59,26,107,21,24,19,132,133,144,145],ORDERED=[28,70,72,108,121,128,161,17,14,5,102,120,137,152,155,175,178];
 function priority(type){if(!Number.isInteger(type)||type<0||type>65535)throw Error('Native factory supported ushort ActorType required');if(type===0)return 100000;if(ZERO.includes(type))return 0;const i=ORDERED.indexOf(type);return i<0?type+10000:i+1;}
 function orderCreationParams(authored){
@@ -49,10 +50,11 @@ function finishPlayerCreation(input,authored,actorAtPlayerInitialize,binding,opt
  const initialized=Bootstrap.bootstrap(authored,actorAtPlayerInitialize,{...binding,hasOnCollided:Callbacks.has(27,'OnCollided')},{...options,allocateCollision:()=>{
   allocated=Broad.createCollision(w.storage,{});if(!allocated)throw Error('Native Player initCollision capacity exhausted');return allocated.id;
  }});
- const registered=Bootstrap.register(initialized,options),a=canonicalPlayer(registered);
+ Names.addUnique(w,initialized.actor);
+ const registered=Bootstrap.register(initialized,{...options,uniqueNameVerified:true}),a=canonicalPlayer(registered);
  Object.assign(allocated,registered.collisions[0],{actorExists:true});w.actors.push(a);
- // Scene dictionaries/player lists/typed pools are not synthesized. The caller
- // must perform those registration effects using the returned actual identity.
+ // Name registration consumes an explicit complete snapshot. Player lists and
+ // typed pools still belong to their actual creation/materialization phases.
  return {world:w,actorId:a.entityId,snapshot:registered};
 }
 module.exports={priority,orderCreationParams,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,completePhysicsFidelity:false};

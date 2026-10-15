@@ -18,6 +18,7 @@ const StateDispatch=require('./source-player-state-dispatch.js');
 const Terminal=require('./source-player-terminal-states.js');
 const Key=require('./source-key-lifecycle.js'),CollisionFactory=require('./source-native-collision-factory.js'),Rect=require('./source-collision-rect.js');
 const PushBackQuery=require('./source-pushback-target-query.js');
+const SceneNames=require('./source-native-scene-names.js'),QString=require('./source-native-qstring.js');
 const Pipeline=require('./source-collision-pipeline.js'),Callbacks=require('./source-collision-callbacks.js'),PlayerContact=require('./source-player-contact.js');
 const clone=x=>JSON.parse(JSON.stringify(x));
 function actor(world,id){const a=world.actors.find(a=>a.entityId===id);if(!a)throw Error('Native bridge Actor missing: '+id);return a;}
@@ -136,8 +137,8 @@ function keyHost(w,host){return {
  collision0:(_,a)=>Broad.getCollisionById(w.storage,a.collisionHolders[0]?.collisionId),
  getRect:(_,c)=>Rect.getRect(c.baseRectRaw,c.scaleRaw,c.pivotRaw),
  createAttachmentCollision:(_,a,rect,push,sync)=>CollisionFactory.createRect(w,a,rect,push,sync),
- findActor:(_,name)=>required(host,'findActorByNativeName',w,name),
- isValidAttachTargetName:(_,name)=>required(host,'isValidNativeName',w,name),
+ findActor:(_,name)=>typeof host.findActorByNativeName==='function'?host.findActorByNativeName(w,name):SceneNames.findActor(w,name),
+ isValidAttachTargetName:(_,name)=>QString.isFindActorKey(QString.fromString(name)),
  mapHeight:()=>w.map?.tileHeight,
  outMapDiagnostic:(_,a)=>required(host,'keyOutMapDiagnostic',w,a),
  framePlaySe:(_,id)=>required(host,'keyFramePlaySe',w,id),

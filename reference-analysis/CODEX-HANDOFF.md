@@ -310,3 +310,11 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 - actual3-2 authored Player를fullBootstrap으로생성후 Bridge.stepScene첫frame통과. Player.OnStart는metadata0x180476130no-op이며Lifecycle가startedbit만기록. 첫verifiedUpdate1request1→playing1,PrePos스폰기록,Defaultgravity42598및collision위치동기검증. 이fixture는선택된실제terrain+1Player이고allocator는명시Frame.Initialize단위fixture;stage직전allocator/native명부캡처나전체stage생성주장아님. range/camera/exit hooks도여전히fixture이므로실제R.step완료아님.
 - 집중 factory10+Bootstrap24+QString33+Allocator23=90/90,전체1691/1691(동시보조파일포함). expiredgeneration,unique-name미검증,실제issueId8할당,180body용량부족rollback검증.
 - 다음구체적경계: StagePreparation/PlayerIndexList/NativeMaterialization 동결결과로실제초기singleton/allocator/player명부/typedpoolprefix를연결. finishPlayerCreation은ActorScene이름사전·playerlist·typedpool삽입을대행하지않는다. legacy source-stage-runtime R.create/R.step는그대로이며실제carry미해결.신규보조WIP보존/원격push재시도없음.
+
+### ActorScene 이름·타입 등록 후속 (2026-10-15)
+
+- AddActor1816a71d0 직접 정적확인: ContainsKey733b→Add73b1→ActorTypebit73be..e7→SetInitPos73ee→SetBaseScale7422. Player list삽입은 이 함수에 없음. 중복은Invoke_OnExit7467→Frame.Destroy7475이며자동rename/덮어쓰기아님.
+- source-native-scene-names.js는명시complete logical dictionary snapshot을사용해QStringhash/equality등록과현재generation조회구현. 물리dictionaryheap/열거순서모델아님. 빈이름등록가능하지만FindActor빈이름은null. staleRef를이름으로다른Actor찾아보정하지않음.
+- finishPlayerCreation이 실제이름중복검사/등록과presentOrdinals갱신후위치/scale등록을수행. caller uniqueNameVerified플래그대신실제complete사전필수로강화. 중복OnExit/Destroy는아직명시거부하며worldrollback. actorNames/presentOrdinals초기상태를임의생성하지않음.
+- Key OnStart이기본QString/SceneNames경로로factory등록Player를찾아실제targetholder에layer11추가하는통합검증추가. 외부findActor호스트는기존호환용으로유지. 이름validity는nativeQString사용.
+- 집중 sceneNames5+factory12=17/17. 전체1760/1760이후마지막Key통합테스트1건추가해집중재검증. 전체수치에는보조WIP포함;신규보조파일미stage. 실제Stage준비/PlayerIndexList/materialization/typedpool/전체R.step/carry는남아있음.
