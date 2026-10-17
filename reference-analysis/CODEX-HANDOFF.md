@@ -5,8 +5,8 @@
 
 ## 현재 상태
 
-> **2026-10-17 심야 (Claude)**: 로컬 **41라운드**(라이브는 22라운드 v=20261017-05 그대로 — 사용자 지시: *다 만들고 한 번에 테스트*).
-> 추가: 3-1, 15-1, 5-4, 14-1, 5-3, 3-3, 12-2, 15-2, 12-4, 2-4, 4-2, 7-4, 9-4, 9-1, 9-3, 9-2, 2-1, 7-1, 15-4. 테스트 2422 통과.
+> **2026-10-17 심야 (Claude)**: 로컬 **42라운드**(라이브는 22라운드 v=20261017-05 그대로 — 사용자 지시: *다 만들고 한 번에 테스트*).
+> 추가: 3-1, 15-1, 5-4, 14-1, 5-3, 3-3, 12-2, 15-2, 12-4, 2-4, 4-2, 7-4, 9-4, 9-1, 9-3, 9-2, 2-1, 7-1, 15-4, 2-3. 테스트 2424 통과.
 > **모든 라운드에 영향 주는 원작 일치 수정 2건** (라이브에도 아직 미반영):
 > - 가로 이동 발판 탑승자 운반(`inertiaCarry`, updateInertia 0x1817fc480) — 예전엔 가로 리프트/선로 발판에서 미끄러졌음.
 > - 열쇠는 플레이어를 따라다니고 **문에 닿아야** 문이 열림(`keyTick/keyCollide`, Key 0x18186cc20 / Goal 0x18185f970), 빼앗기 가능.
@@ -37,7 +37,9 @@
 > 밀리는 플레이어 앞 동료는 MoveContactActor 근사(걷기 이동 연쇄)로 함께 밀림. 렌더러는 rebuild/camera.js `fromAutoScroll`(⚠️ play/camera.js 는 패키징 때 덮어써짐).
 > 15-4: `source-frontswitch-devices.js`(FrontSwitch·SwitchRect·SwitchIceRect·IceRect) + 플레이어 **얼음 물리**(checkIceFloor/OnUpdate_Default):
 > 이미 연결된 **2-2 에도 얼음 타일이 있어 이제 미끄러짐**(예전엔 없었음). SwitchObserver 의 신호도 이름으로 사각형에 전달.
-> 다음 작업: 2-3(점프대 switchType 2 분석 + CollisionConstraintMove→DistanceConstraint 이벤트24 다음 프레임 전달), 12-1(GoKart, 자동스크롤 위), 13-3, 13-4 …
+> 2-3: 점프대 스위치 유형(spring-switch-runtime.js, switchProc 0x1818691a0: 1 신호중 나타남/2 신호중 사라짐/3 깜빡임, 지연 후 복귀,
+> 부모 중재기 외의 61/60 은 카운트) + CollisionConstraintMove(영역 안 플레이어 → 밧줄에 이벤트24, 다음 프레임 업데이트가 소비).
+> 다음 작업: 12-1(GoKart, 자동스크롤 위 — 원작 분석 상당 부분 gokart-device-report.json), 13-3(Rally), 13-4(Fake) …
 > FrontSwitch 메모: 감지 20x20, 고체(byte3&2)+층1~3/8 접촉 시 켜짐(61/60 to 대상·보조대상), 슬롯2≠0 순간형(매 프레임 접촉 해제), 슬롯3/4 인원별 위치 오프셋.
 > 얼음 메모: IceRect 고체(우선순위6/층6). 얼음 위 걷기 = 속도×IceResistivity(감속) + 입력×walk×IceFriction(가속), ±walk×IceSpeedUp 상한(OnUpdate_Default).
 > 새 도구: `tools/xref_static.py 0x<전역주소>` — RIP 상대 참조 스캔으로 TypeInfo 슬롯의 주인(.cctor) 찾기 (0.6초).

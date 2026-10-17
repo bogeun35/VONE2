@@ -108,8 +108,14 @@ function create(actors,count){
   const d=i=>number(a,i),s=i=>string(a,i);
   const r={id:a.id,name:a.name||'',type:a.typeName,sourceIndex:a.sourceIndex,x:a.posX,y:a.posY};
   if(a.typeName==='JumpStand'){
-   if(d(4)!==0)throw new Error('Runtime scope supports original world01-01 switchType 0 only');
-   Object.assign(r,{velocity:{x:d(0),y:d(1)},affectAll:(nativeInteger(d(2))>>>0)>0,parent:s(3),keepVelocityX:nativeInteger(d(8))!==0,phase:0,timer:0,visible:true});
+   // JumpStandComponent.ParseParameter 0x181868400: slot4 switch type byte,
+   // slot5 delay, slot6 appear and slot7 disappear seconds (each kept only when
+   // > 0); InitPost 0x181868920: a switch type other than 0 starts visible unless
+   // it is type 1. The switch timer runs on FP raws like the native.
+   const raw=i=>Math.trunc(Math.fround(Math.fround(d(i))*65536)),switchType=((raw(4)>>>0)>>>16)&0xff;
+   if(switchType>3)throw new Error('JumpStand switch type outside 0..3');
+   Object.assign(r,{velocity:{x:d(0),y:d(1)},affectAll:(nativeInteger(d(2))>>>0)>0,parent:s(3),keepVelocityX:nativeInteger(d(8))!==0,phase:0,timer:0,
+    switchType,count:0,delayRaw:Math.max(0,raw(5)),appearRaw:Math.max(0,raw(6)),disappearRaw:Math.max(0,raw(7)),switchTimerRaw:0,visible:switchType!==1});
   }else if(a.typeName==='Switch'){
    zeroOffsets(a,6,7);
    const direction=switchDirection(d(5));
@@ -170,6 +176,7 @@ function step(state,dt,facts={}){
   if(r.type==='JumpStandMediator'&&on){
    for(const spring of state.relays.filter(x=>x.type==='JumpStand'))deliver(spring,true,r);
   }else if(r.type==='JumpStand'&&on&&sender.type==='JumpStandMediator'&&sender.name===r.parent&&r.visible&&r.phase===0)r.phase=1;
+  else if(r.type==='JumpStand'&&sender.type!=='JumpStandMediator')jumpStandSignal(r,on?61:60);
  };
  // NormalSwitchComponent.ParseParameter 0x181888a15 reads datas[4] and stores
  // its raw FP value at component+0x20 (m_TimerAddSecond, il2cpp 48) without a
@@ -211,9 +218,24 @@ function step(state,dt,facts={}){
    impulses.push({relayId:r.id,actorId:c.actorId,eventType:36,velocity:{x:r.keepVelocityX?c.velocityX:(!r.affectAll&&c.layer===1?0:r.velocity.x),y:r.velocity.y},keepVelocityX:r.keepVelocityX});
   }
  }
+ // JumpStandComponent.switchProc 0x1818691a0, after the phase update: type 1
+ // appears while signalled and disappears a delay after release (not during a
+ // jump), type 2 the mirror, type 3 blinks by its appear/disappear seconds.
+ const dtRaw=Math.trunc(dt*65536);
+ for(const r of state.relays.filter(x=>x.type==='JumpStand'&&x.switchType)){
+  if(r.switchType===1){if(r.count>0){r.switchTimerRaw=r.delayRaw;if(!r.visible)r.visible=true;}
+   else if(r.visible){r.switchTimerRaw-=dtRaw;if(r.switchTimerRaw<=0&&r.phase===0)r.visible=false;}}
+  else if(r.switchType===2){if(r.count>0){r.switchTimerRaw=r.delayRaw;if(r.visible&&r.phase===0)r.visible=false;}
+   else if(!r.visible){r.switchTimerRaw-=dtRaw;if(r.switchTimerRaw<=0)r.visible=true;}}
+  else{r.switchTimerRaw-=dtRaw;if(r.switchTimerRaw<=0){if(!r.visible){r.visible=true;r.switchTimerRaw=r.appearRaw;}else if(r.phase===0){r.visible=false;r.switchTimerRaw=r.disappearRaw;}}}
+ }
  return {events,impulses};
 }
-const api={create,step,WINDUP,RECOVERY,SWITCH_RECTS,SWITCH_RECT_FOR_TOPVIEW,switchRect,switchDirection};
+// JumpStandComponent.OnRecvEvent 0x181869620: 61 from anything but its parent
+// JumpStandMediator (checkParentMediator 0x181869740 returns -1) counts up,
+// 60 counts down (not below 0).
+function jumpStandSignal(r,type){if(type===61){r.count=(r.count+1)<<24>>24;return true;}if(type===60){if(r.count>0)r.count--;return true;}return false;}
+const api={create,step,jumpStandSignal,WINDUP,RECOVERY,SWITCH_RECTS,SWITCH_RECT_FOR_TOPVIEW,switchRect,switchDirection};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;
 root.SourceSpringSwitch=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

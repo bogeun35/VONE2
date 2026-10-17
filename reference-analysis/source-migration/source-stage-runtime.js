@@ -61,7 +61,7 @@
  const box=r=>({x:r.x,y:r.y,w:r.width,h:r.height});
  const NATIVE=Object.freeze({walk:3,jump:-334234/65536,gravity:42598/65536,terminal:19.5,holdFactor:13107/65536,holdFrames:14});
  function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}={}){
-  if(!['st_w_01_01','st_w_01_02','st_w_01_03','st_w_01_04','st_w_04_01','st_w_04_03','st_w_04_04','st_w_05_02','st_w_10_02','st_w_11_04','st_w_07_02','st_w_10_01','st_w_10_04','st_w_13_01','st_w_11_02','st_w_12_03','st_w_03_02','st_w_10_03','st_w_05_01','st_w_02_02','st_w_07_03','st_w_14_03','st_w_03_01','st_w_15_01','st_w_05_04','st_w_14_01','st_w_03_03','st_w_12_02','st_w_15_02','st_w_12_04','st_w_02_04','st_w_04_02','st_w_07_04','st_w_09_04','st_w_09_01','st_w_09_03','st_w_09_02','st_w_02_01','st_w_07_01','st_w_15_04','st_w_05_03'].includes(stageId))throw new Error('Source stage runtime does not support this stage yet');
+  if(!['st_w_01_01','st_w_01_02','st_w_01_03','st_w_01_04','st_w_04_01','st_w_04_03','st_w_04_04','st_w_05_02','st_w_10_02','st_w_11_04','st_w_07_02','st_w_10_01','st_w_10_04','st_w_13_01','st_w_11_02','st_w_12_03','st_w_03_02','st_w_10_03','st_w_05_01','st_w_02_02','st_w_07_03','st_w_14_03','st_w_03_01','st_w_15_01','st_w_05_04','st_w_14_01','st_w_03_03','st_w_12_02','st_w_15_02','st_w_12_04','st_w_02_04','st_w_04_02','st_w_07_04','st_w_09_04','st_w_09_01','st_w_09_03','st_w_09_02','st_w_02_01','st_w_07_01','st_w_15_04','st_w_02_03','st_w_05_03'].includes(stageId))throw new Error('Source stage runtime does not support this stage yet');
   if(!Number.isFinite(nativeTickRate)||nativeTickRate<1||nativeTickRate>240)throw new Error('Invalid calibration tick rate');
   const t=Terrain.createTerrain({source,geometry,count,stageId});
   // The original frames a fixed window, not the whole map: mapInitParam carries
@@ -147,13 +147,15 @@
   // WarpComponent.ParseParameter 0x181734390 + OnCollided 0x181734a00:
   // slots width,height,destX,destY,ordinalOffsetX,ordinalOffsetY. Event63
   // ActorComponent handler/warpProc resets velocity and collision contacts.
+  const constraintMoves=t.actors.filter(a=>a.typeName==='CollisionConstraintMove'&&Actor.actorPopulationAllowed(a.playerCount||0,count)).map((a,i)=>{const n=j=>a.datas[j]?.t===1?a.datas[j].f:0;
+   return {id:'ccm:'+i,x:a.x,y:a.y,w:n(0),h:n(1),target:a.datas[2]?.t===2?a.datas[2].s||'':''};});
   const warps=t.actors.filter(a=>a.typeName==='Warp'||a.typeName==='WarpAll').map((a,i)=>{
    const n=j=>a.datas[j]?.t===1?a.datas[j].f:0;
    if(n(0)<=0||n(1)<=0)throw new Error('Unsupported Warp dimensions');
    return {id:'warp:'+i,type:a.typeName,x:a.x,y:a.y,w:n(0),h:n(1),targetAll:a.typeName==='WarpAll',
     destination:{x:n(2),y:n(3)},ordinalOffset:{x:n(4),y:n(5)},counter:0};
   });
-  const supported=new Set(['Player','Key','Goal','Warp','WarpAll','MapRect','TopViewMapRect','JumpStand','JumpStandMediator','Switch','DelaySwitch','DeadSwitch','Rect','DashBoard','FallingWall',...Devices.supportedTypes,...Gates.supportedTypes,...Bridges.supportedTypes,...Blink.supportedTypes,...BlinkThunders.supportedTypes,...WarpInit.supportedTypes,...SwitchTimers.supportedTypes,...Enemies.supportedTypes,...ThornCeilings.supportedTypes,...CountUps.supportedTypes,...Lifts.supportedTypes,...Landmines.supportedTypes,...Poles.supportedTypes,...Winds.supportedTypes,'SpeedSwitch','MoveWall',...LinePaths.supportedTypes,...Texts.supportedTypes,...Coins.supportedTypes,...Checkpoints.supportedTypes,...TouchEnergies.supportedTypes,'BoundBallPitcher',...KeyBoxes.supportedTypes,...Blackouts.supportedTypes,...Dossuns.supportedTypes,...SearchLights.supportedTypes,...LinePathGears.supportedTypes,...UpDownLifts.supportedTypes,...WarpGuns.supportedTypes,...BreakableRects.supportedTypes,...PlayerMagnets.supportedTypes,...ColorBoxes.supportedTypes,...Gears.supportedTypes,...TargetGroups.supportedTypes,...SineLifts.supportedTypes,...Ghosts.supportedTypes,...TopViews.supportedTypes,...Constraints.supportedTypes,...BatEnemies.supportedTypes,...Capturings.supportedTypes,...StepEnemies.supportedTypes,...HalfInputs.supportedTypes,...FrontSwitches.supportedTypes]);
+  const supported=new Set(['Player','Key','Goal','Warp','WarpAll','CollisionConstraintMove','MapRect','TopViewMapRect','JumpStand','JumpStandMediator','Switch','DelaySwitch','DeadSwitch','Rect','DashBoard','FallingWall',...Devices.supportedTypes,...Gates.supportedTypes,...Bridges.supportedTypes,...Blink.supportedTypes,...BlinkThunders.supportedTypes,...WarpInit.supportedTypes,...SwitchTimers.supportedTypes,...Enemies.supportedTypes,...ThornCeilings.supportedTypes,...CountUps.supportedTypes,...Lifts.supportedTypes,...Landmines.supportedTypes,...Poles.supportedTypes,...Winds.supportedTypes,'SpeedSwitch','MoveWall',...LinePaths.supportedTypes,...Texts.supportedTypes,...Coins.supportedTypes,...Checkpoints.supportedTypes,...TouchEnergies.supportedTypes,'BoundBallPitcher',...KeyBoxes.supportedTypes,...Blackouts.supportedTypes,...Dossuns.supportedTypes,...SearchLights.supportedTypes,...LinePathGears.supportedTypes,...UpDownLifts.supportedTypes,...WarpGuns.supportedTypes,...BreakableRects.supportedTypes,...PlayerMagnets.supportedTypes,...ColorBoxes.supportedTypes,...Gears.supportedTypes,...TargetGroups.supportedTypes,...SineLifts.supportedTypes,...Ghosts.supportedTypes,...TopViews.supportedTypes,...Constraints.supportedTypes,...BatEnemies.supportedTypes,...Capturings.supportedTypes,...StepEnemies.supportedTypes,...HalfInputs.supportedTypes,...FrontSwitches.supportedTypes]);
   const unsupported=[...new Set(t.actors.filter(a=>!supported.has(a.typeName)).map(a=>a.typeName))];
   const missingMechanics=['Native tick frequency (60 Hz explicit prototype calibration)',
    'Native collision pushback and update ordering equivalence',
@@ -164,7 +166,7 @@
   if(unsupported.length||devices.warnings.length)throw Error('Unsupported source devices: '+[...unsupported,...devices.warnings].join(', '));
   if(t.cells.some(c=>(c.flags&~1)!==0))missingMechanics.push('Dynamic tile attributes');
   const map={id:stageId,count,width:t.width,height:t.height,tileSize:t.tileSize,variant:t.variant,
-   platforms:t.platforms.map((p,i)=>({...p,id:'terrain:'+i})),springs,switches,warps,
+   platforms:t.platforms.map((p,i)=>({...p,id:'terrain:'+i})),springs,switches,warps,constraintMoves,
    spawns:topViews.players.length?t.actors.filter(a=>a.typeName==='TopViewPlayer'&&Actor.actorPopulationAllowed(a.playerCount||0,count)).slice(0,count).map(a=>({x:a.posX-16,y:a.posY-47-0.5}))
     :Actor.playerSpawns(t.actors,count).map(p=>({x:p.collision.x,y:p.collision.y-0.5})),
    // top view: TopViewPlayer.initialize 0x1816c9d20 and the stage's raw map chips (fall attribute 16)
@@ -438,7 +440,8 @@
    return {index:i,xRaw:Math.round((p.x+16)*F),yRaw:Math.round((p.y+47)*F),vxRaw:Math.round((p.vx||0)/hz*F),vyRaw:Math.round((p.vy||0)/hz*F),
     state:p.exit?5:1,flags:(p.asBlock||p.catchLevel)?0x200:0,floating:!faces[1],hasCollision:!p.exit,hasActor:!p.exit,
     contactCount0:s.players.filter(q=>q!==p&&!q.exit&&SIDE_TOUCH[0](b,bodyOf(q))).length,contacted1:faces[1],mapFaces:faces};});
-  Constraints.beforeStep(st,{constraintPlayers:facts,applyConstraintUpdate:u=>{
+  const pending=s.pendingConstraintEvents||[];s.pendingConstraintEvents=[];
+  Constraints.beforeStep(st,{events:pending,constraintPlayers:facts,applyConstraintUpdate:u=>{
    for(const m of u.moves){const p=s.players[m.playerIndex];if(!p||p.exit)continue;const dx=m.deltaRaw.xRaw/F,dy=m.deltaRaw.yRaw/F;
     const obstacles=[...solidsNow,...s.players.filter(q=>q!==p&&!q.exit).map(bodyOf)];
     if(s.map.topView){const b=tvBody(p);let nx=b.x+dx;for(const o of obstacles)if(b.y<o.y+o.h-0.001&&b.y+b.h>o.y+0.001){if(dx>0&&b.x+b.w<=o.x+0.001)nx=Math.min(nx,o.x-b.w);if(dx<0&&b.x>=o.x+o.w-0.001)nx=Math.max(nx,o.x+o.w);}
@@ -832,6 +835,7 @@
   if(s.rollGearState&&s.rollGearState.gears.some(g=>g.name===name))Gears.signal(s.rollGearState,{targetName:name,eventType});
   if(s.batState)for(const c of s.batState.cages)if(c.name===name)BatEnemies.cageReceiveEvent(c,eventType);
   if(s.frontSwitchState)for(const r of [...s.frontSwitchState.rects,...s.frontSwitchState.switches])if(r.name===name)FrontSwitches.receiveEvent(r,eventType);
+  for(const r of s.relayState.relays)if(r.type==='JumpStand'&&r.name===name)Relay.jumpStandSignal(r,eventType);
  }
  function rollGearSolids(s){return [];}
  // ---- MoveWall host (12-4, 2-4) -------------------------------------------
@@ -1327,6 +1331,7 @@
   const ghostDeaths=ghostTick(s,hz);
   switchRectUpdate(s,hz);
   frontSwitchTouches(s);
+  for(const z of s.map.constraintMoves||[])s.players.forEach((p,i)=>{if(!p.exit&&!p.asBlock&&overlap(p,z)){(s.pendingConstraintEvents||(s.pendingConstraintEvents=[])).push({eventType:24,targetName:z.target,playerIndex:i});}});
   const stepDeaths=stepEnemyContacts(s,hz);
   if(stepDeaths.length){s.status='dead';s.deaths++;s.failure={playerId:stepDeaths[0],reason:'적에게 닿았어요'};return;}
   const batDeaths=batTick(s,hz,inputs);

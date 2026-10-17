@@ -30,3 +30,18 @@ test('ice: walking builds up to walk*IceSpeedUp and coasts by IceResistivity',()
  assert.ok(v[70]<v[61]&&v[70]>2);// coasting, not stopping at once
  const t=mk('st_w_02_02',2);assert.ok(t.map.ice&&t.map.ice.cells.length>0);// connected 2-2 has ice chips too
 });
+test('2-3: the momentary FrontSwitch hides the group (JumpStand type 2, SwitchRect type 1) until 3 s after release',()=>{
+ const s=mk('st_w_02_03',2),sw=s.frontSwitchState.switches[0],[p,q]=s.players;
+ const stands=()=>s.relayState.relays.filter(r=>r.type==='JumpStand');
+ for(let i=0;i<5;i++){p.x=sw.xRaw/F-16;p.y=sw.yRaw/F-30;p.vy=0;q.x=p.x-40;q.y=p.y;q.vy=0;R.step(s,{});}
+ assert.equal(sw.isOn,1);assert.ok(stands().every(r=>r.count===1&&!r.visible));assert.ok(s.frontSwitchState.rects.every(r=>!r.visible));
+ p.x=1500;p.y=150;q.x=1460;q.y=150;for(let i=0;i<120;i++)R.step(s,{});
+ assert.equal(sw.isOn,0);assert.ok(stands().every(r=>r.count===0&&!r.visible));// still inside the 3 s delay
+ for(let i=0;i<90;i++)R.step(s,{});assert.ok(stands().every(r=>r.visible));assert.ok(s.frontSwitchState.rects.every(r=>r.visible));
+});
+test('2-3: CollisionConstraintMove marks the DistanceConstraint force move of a player inside (event 24)',()=>{
+ const s=mk('st_w_02_03',2),z=s.map.constraintMoves[0],[p,q]=s.players;
+ p.x=z.x+40;p.y=z.y;q.x=z.x+80;q.y=z.y;R.step(s,{});
+ assert.deepEqual((s.pendingConstraintEvents||[]).map(e=>[e.eventType,e.targetName,e.playerIndex]),[[24,'DistanceConstraint',0],[24,'DistanceConstraint',1]]);
+ R.step(s,{});// consumed by the next constraint update
+});
