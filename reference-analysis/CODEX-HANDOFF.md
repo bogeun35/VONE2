@@ -91,6 +91,11 @@
 > 배율 미반영, 워프건 총알은 둘 다 미반영(현재 배율 1이라 무해).
 > ⚠️ **스테이지 배율 ≠ 1 인 연결 라운드: 8-1·8-3·10-1·10-2·10-3(1.5배), 9-4(3배)** — 런타임은 플레이어 몸(32x46)·걷기·중력·점프에 스테이지 배율을
 > 아직 안 씀(s.map.stageScaleRaw 미설정). 원작은 플레이어도 AddActor 로 판정 1.5배가 됨. 다음 정리 대상.
+>   원작 공식(배율 s): 플레이어 몸 X=-16s W=32s, **피벗 (0,-1)** 이라 Y=-46s-1 H=46s(발밑 -1 은 그대로, source-player-collision-init.js 머리주석),
+>   걷기 3s(SpeedSwitch 식과 같음), 점프 초기 mul(s,-334234)·누르기 가속도 jumpVelocity 기준, 중력 증분 mul(min(42598, 1277952-vy), s)
+>   (source-player-default.js gravityDelta/jumpVelocity), 열쇠·골·스위치 등 모든 액터 판정 × s. 런타임엔 +16/+47 하드코딩이 48곳 이상 —
+>   AX(p)=p.x+p.w/2, AY(p)=p.y+p.h+1 같은 도우미로 먼저 바꾸고(배율 1 에선 동작 동일) 그다음 s 를 켤 것. 영향 장치: 사과/바구니(8-1/8-3),
+>   JumpStand·Switch·CountUpTimer(10-1), DashBoard·PushBox·WarpInitPos·Rect(10-2), BoundBallPitcher·BallKeyBox(10-3), 탑뷰·Wind·DistanceConstraint(9-4).
 > 새 도구: `tools/xref_call.py 0x<함수주소>` — 직접 호출(E8/E9) 역참조.
 > 사격 계열 분석 메모: `notes/plane-family.md`(6-3 생성기·총·비행 상태 정리, 미구현).
 > 리소스 읽기: UnityPy 는 cp312 빌드라 3.13 에선 lz4/brotli 스텁 + 시스템 PIL 로 띄움(스크래치 probe.py 방식, resources.assets 무압축).
