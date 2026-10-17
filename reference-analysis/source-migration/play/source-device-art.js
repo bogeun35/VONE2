@@ -215,6 +215,15 @@ function deadSwitches(c,s){
   const cx=b.x+b.w/2,cy=b.y-12;c.beginPath();c.arc(cx,cy,8,0,Math.PI*2);fillStroke(c,'#fffdf6',INK,1.5);
   c.fillStyle=INK;c.fillRect(cx-4,cy-2,3,3);c.fillRect(cx+1,cy-2,3,3);c.fillRect(cx-3,cy+3,6,2);}
 }
+function rollGears(c,s){
+ const G=root.SourceGearDevices;if(!G||!s.rollGearState||!s.rollGearState.gears.length||!s.rollGearActors)return;
+ for(const g of s.rollGearState.gears){const a=s.rollGearActors[g.id];if(!a)continue;
+  // Gear collision circle: radius 45 at (-2,-48) from the actor
+  const cx=a.xRaw/F-2,cy=a.yRaw/F-48,R=45;c.save();c.translate(cx,cy);c.rotate(-g.angleRaw/F*Math.PI/180);
+  c.beginPath();const n=10;for(let i=0;i<n*4;i++){const ang=i*Math.PI*2/(n*4),tooth=(i%4)<2;const d=tooth?R+1:R-8;c.lineTo(Math.cos(ang)*d,Math.sin(ang)*d);}c.closePath();
+  fillStroke(c,g.standby?'#cfc9e0':'#f0c27a',INK,2);c.beginPath();c.arc(0,0,R*.5,0,Math.PI*2);fillStroke(c,'#fff1c9',INK,1.5);
+  c.beginPath();c.arc(0,0,7,0,Math.PI*2);fillStroke(c,INK,null);c.restore();}
+}
 function blackoutLabels(c,s){
  const bc=s.blackoutState&&s.blackoutState.controllers&&s.blackoutState.controllers[0];
  if(!bc||!bc.visibleUI)return;const p=s.players[bc.playerIndex];if(!p||p.exit)return;
@@ -223,7 +232,7 @@ function blackoutLabels(c,s){
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{moveWalls(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
+ try{moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).

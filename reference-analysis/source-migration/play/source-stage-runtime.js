@@ -38,9 +38,11 @@
   common?require('./source-breakablerect-devices.js'):root.SourceBreakableRectDevices,
   common?require('./source-playermagnet-devices.js'):root.SourcePlayerMagnetDevices,
   common?require('./source-colorbox-devices.js'):root.SourceColorBoxDevices,
-  common?require('./source-move-contact.js'):root.SourceMoveContact);
+  common?require('./source-move-contact.js'):root.SourceMoveContact,
+  common?require('./source-gear-devices.js'):root.SourceGearDevices,
+  common?require('./source-switchtargetgroup-devices.js'):root.SourceSwitchTargetGroupDevices);
  if(common)module.exports=api;root.SourceStageRuntime=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges,Blink,BlinkThunders,WarpInit,SwitchTimers,Enemies,ThornCeilings,CountUps,Lifts,Landmines,Poles,Winds,SpeedSwitches,LinePaths,Texts,Coins,Checkpoints,TouchEnergies,Pitchers,Balls,KeyBoxes,Blackouts,Players,Dossuns,SearchLights,LinePathGears,UpDownLifts,WarpGuns,BreakableRects,PlayerMagnets,ColorBoxes,MoveContact){
+})(typeof globalThis!=='undefined'?globalThis:this,function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges,Blink,BlinkThunders,WarpInit,SwitchTimers,Enemies,ThornCeilings,CountUps,Lifts,Landmines,Poles,Winds,SpeedSwitches,LinePaths,Texts,Coins,Checkpoints,TouchEnergies,Pitchers,Balls,KeyBoxes,Blackouts,Players,Dossuns,SearchLights,LinePathGears,UpDownLifts,WarpGuns,BreakableRects,PlayerMagnets,ColorBoxes,MoveContact,Gears,TargetGroups){
  'use strict';
  const clone=x=>JSON.parse(JSON.stringify(x));
  const overlap=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
@@ -48,7 +50,7 @@
  const box=r=>({x:r.x,y:r.y,w:r.width,h:r.height});
  const NATIVE=Object.freeze({walk:3,jump:-334234/65536,gravity:42598/65536,terminal:19.5,holdFactor:13107/65536,holdFrames:14});
  function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}={}){
-  if(!['st_w_01_01','st_w_01_02','st_w_01_03','st_w_01_04','st_w_04_01','st_w_04_03','st_w_04_04','st_w_05_02','st_w_10_02','st_w_11_04','st_w_07_02','st_w_10_01','st_w_10_04','st_w_13_01','st_w_11_02','st_w_12_03','st_w_03_02','st_w_10_03','st_w_05_01','st_w_02_02','st_w_07_03','st_w_14_03','st_w_03_01','st_w_15_01','st_w_05_04','st_w_14_01','st_w_03_03','st_w_12_02','st_w_15_02','st_w_12_04','st_w_02_04','st_w_05_03'].includes(stageId))throw new Error('Source stage runtime does not support this stage yet');
+  if(!['st_w_01_01','st_w_01_02','st_w_01_03','st_w_01_04','st_w_04_01','st_w_04_03','st_w_04_04','st_w_05_02','st_w_10_02','st_w_11_04','st_w_07_02','st_w_10_01','st_w_10_04','st_w_13_01','st_w_11_02','st_w_12_03','st_w_03_02','st_w_10_03','st_w_05_01','st_w_02_02','st_w_07_03','st_w_14_03','st_w_03_01','st_w_15_01','st_w_05_04','st_w_14_01','st_w_03_03','st_w_12_02','st_w_15_02','st_w_12_04','st_w_02_04','st_w_04_02','st_w_05_03'].includes(stageId))throw new Error('Source stage runtime does not support this stage yet');
   if(!Number.isFinite(nativeTickRate)||nativeTickRate<1||nativeTickRate>240)throw new Error('Invalid calibration tick rate');
   const t=Terrain.createTerrain({source,geometry,count,stageId});
   // The original frames a fixed window, not the whole map: mapInitParam carries
@@ -102,6 +104,8 @@
   const breakableRects=BreakableRects.compile(t.actors,count);
   const playerMagnets=PlayerMagnets.compile(t.actors,count);
   const colorBoxes=ColorBoxes.compile(t.actors,count,{nativeActorBridge:true,framePlayerIndexList:Array.from({length:count},(_,i)=>i),gamePlayerInfo:Array.from({length:count},(_,i)=>({playerRef:i+1,colorIndex:i}))});
+  const gears=Gears.compile(t.actors,count,{nativeActorBridge:true});
+  const targetGroups=TargetGroups.compile(t.actors,count);
   const dossuns=Dossuns.compile(t.actors,count,stageScaleRaw===null?{}:{actorScaleRaw:stageScaleRaw});
   const springs=relays.relays.filter(r=>r.type==='JumpStand').map(r=>({...r,x:r.x-16,y:r.y-(r.parent?38:34),w:32,h:r.parent?38:34}));
   // The sensor rectangle is the one SwitchComponent.GetCollisionByDirection
@@ -121,13 +125,13 @@
    return {id:'warp:'+i,type:'Warp',x:a.x,y:a.y,w:n(0),h:n(1),
     destination:{x:n(2),y:n(3)},ordinalOffset:{x:n(4),y:n(5)},counter:0};
   });
-  const supported=new Set(['Player','Key','Goal','Warp','MapRect','TopViewMapRect','JumpStand','JumpStandMediator','Switch','DelaySwitch','DeadSwitch','Rect','DashBoard','FallingWall',...Devices.supportedTypes,...Gates.supportedTypes,...Bridges.supportedTypes,...Blink.supportedTypes,...BlinkThunders.supportedTypes,...WarpInit.supportedTypes,...SwitchTimers.supportedTypes,...Enemies.supportedTypes,...ThornCeilings.supportedTypes,...CountUps.supportedTypes,...Lifts.supportedTypes,...Landmines.supportedTypes,...Poles.supportedTypes,...Winds.supportedTypes,'SpeedSwitch','MoveWall',...LinePaths.supportedTypes,...Texts.supportedTypes,...Coins.supportedTypes,...Checkpoints.supportedTypes,...TouchEnergies.supportedTypes,'BoundBallPitcher',...KeyBoxes.supportedTypes,...Blackouts.supportedTypes,...Dossuns.supportedTypes,...SearchLights.supportedTypes,...LinePathGears.supportedTypes,...UpDownLifts.supportedTypes,...WarpGuns.supportedTypes,...BreakableRects.supportedTypes,...PlayerMagnets.supportedTypes,...ColorBoxes.supportedTypes]);
+  const supported=new Set(['Player','Key','Goal','Warp','MapRect','TopViewMapRect','JumpStand','JumpStandMediator','Switch','DelaySwitch','DeadSwitch','Rect','DashBoard','FallingWall',...Devices.supportedTypes,...Gates.supportedTypes,...Bridges.supportedTypes,...Blink.supportedTypes,...BlinkThunders.supportedTypes,...WarpInit.supportedTypes,...SwitchTimers.supportedTypes,...Enemies.supportedTypes,...ThornCeilings.supportedTypes,...CountUps.supportedTypes,...Lifts.supportedTypes,...Landmines.supportedTypes,...Poles.supportedTypes,...Winds.supportedTypes,'SpeedSwitch','MoveWall',...LinePaths.supportedTypes,...Texts.supportedTypes,...Coins.supportedTypes,...Checkpoints.supportedTypes,...TouchEnergies.supportedTypes,'BoundBallPitcher',...KeyBoxes.supportedTypes,...Blackouts.supportedTypes,...Dossuns.supportedTypes,...SearchLights.supportedTypes,...LinePathGears.supportedTypes,...UpDownLifts.supportedTypes,...WarpGuns.supportedTypes,...BreakableRects.supportedTypes,...PlayerMagnets.supportedTypes,...ColorBoxes.supportedTypes,...Gears.supportedTypes,...TargetGroups.supportedTypes]);
   const unsupported=[...new Set(t.actors.filter(a=>!supported.has(a.typeName)).map(a=>a.typeName))];
   const missingMechanics=['Native tick frequency (60 Hz explicit prototype calibration)',
    'Native collision pushback and update ordering equivalence',
    'Key attach, transfer and goal-opening state machine (overlap pickup used)'];
   for(const type of unsupported)missingMechanics.push(type+' handler ('+t.actors.filter(a=>a.typeName===type).length+' source actor)');
-  missingMechanics.push(...devices.warnings,...(blink.warnings||[]),...(blinkThunders.warnings||[]),...(warpInit.warnings||[]),...(switchTimers.warnings||[]),...(enemies.warnings||[]),...(thornCeilings.warnings||[]),...(countUps.warnings||[]),...(lifts.warnings||[]),...(landmines.warnings||[]),...(poles.warnings||[]),...(winds.warnings||[]),...(speedSwitches.warnings||[]),...(linePaths.warnings||[]),...(texts.warnings||[]),...(coins.warnings||[]),...(checkpoints.warnings||[]),...(touchEnergies.warnings||[]),...(searchLights.warnings||[]),...(linePathGears.warnings||[]),...(upDownLifts.warnings||[]),...(warpGuns.warnings||[]),...(breakableRects.warnings||[]),...(playerMagnets.warnings||[]),...(colorBoxes.warnings||[]));
+  missingMechanics.push(...devices.warnings,...(blink.warnings||[]),...(blinkThunders.warnings||[]),...(warpInit.warnings||[]),...(switchTimers.warnings||[]),...(enemies.warnings||[]),...(thornCeilings.warnings||[]),...(countUps.warnings||[]),...(lifts.warnings||[]),...(landmines.warnings||[]),...(poles.warnings||[]),...(winds.warnings||[]),...(speedSwitches.warnings||[]),...(linePaths.warnings||[]),...(texts.warnings||[]),...(coins.warnings||[]),...(checkpoints.warnings||[]),...(touchEnergies.warnings||[]),...(searchLights.warnings||[]),...(linePathGears.warnings||[]),...(upDownLifts.warnings||[]),...(warpGuns.warnings||[]),...(breakableRects.warnings||[]),...(playerMagnets.warnings||[]),...(colorBoxes.warnings||[]),...(gears.warnings||[]),...(targetGroups.warnings||[]));
   if(texts.texts.some(t=>t.textId))missingMechanics.push('Text localization asset unresolved; authored textId retained without invented display string');
   if(unsupported.length||devices.warnings.length)throw Error('Unsupported source devices: '+[...unsupported,...devices.warnings].join(', '));
   if(t.cells.some(c=>(c.flags&~1)!==0))missingMechanics.push('Dynamic tile attributes');
@@ -143,6 +147,8 @@
    // map, so no player could overlap it. See actor-runtime.js keySpawnOffset
    // and key-reach-report.json.
    key:key?{...box(Actor.collisionRect(key,1,count)),id:'key'}:null,
+   // Key slot 3: the name KeyComponent notifies with event 61 on first pickup
+   keyTarget:key&&key.datas&&key.datas[3]&&key.datas[3].t===2&&key.datas[3].s?key.datas[3].s:null,
    exit:{...box(Actor.collisionRect(goal)),id:'goal'},
    // StageComponent.prepare3 0x18170aad0 writes FailFallY = mapHeight*chipSize +
    // stageInitParam.failDownY. failDownY is 0.0 for every World stage, so the
@@ -156,7 +162,7 @@
    physics:{playerWidth:32,playerHeight:46,nativeTickRate,status:'calibration_pending'},
    unsupportedActors:t.actors.filter(a=>!supported.has(a.typeName)).map(a=>({type:a.typeName,x:a.x,y:a.y})),
    view,coordinateSystem:'Y-down'};
-  return {schemaVersion:1,count,map,relays,devices,motion,gates,bridges,blink,blinkThunders,warpInit,switchTimers,enemies,thornCeilings,countUps,lifts,landmines,poles,winds,speedSwitches,linePaths,texts,coins,checkpoints,touchEnergies,pitchers,keyBoxes,blackouts,dossuns,colorBoxes,playerMagnets,breakableRects,warpGuns,upDownLifts,linePathGears,searchLights,status:{state:'calibration_pending',missingMechanics,
+  return {schemaVersion:1,count,map,relays,devices,motion,gates,bridges,blink,blinkThunders,warpInit,switchTimers,enemies,thornCeilings,countUps,lifts,landmines,poles,winds,speedSwitches,linePaths,texts,coins,checkpoints,touchEnergies,pitchers,keyBoxes,blackouts,dossuns,targetGroups,gears,colorBoxes,playerMagnets,breakableRects,warpGuns,upDownLifts,linePathGears,searchLights,status:{state:'calibration_pending',missingMechanics,
    unsupportedActorTypes:unsupported,sourceStage:stageId,sourceY:'down',completePhysicsFidelity:false}};
  }
  function create(compiled,options={}){
@@ -166,7 +172,7 @@
   const initPositions=(compiled.warpInit&&compiled.warpInit.initPositions)||[];
   const state={map,players:ids.map((id,i)=>({id,...map.spawns[i],initPos:initPositions[i]||{x:map.spawns[i].x+16,y:map.spawns[i].y+47.5},onPole:!!(compiled.poles&&compiled.poles.poles&&compiled.poles.poles.length),lookingRight:true,w:32,h:46,vx:0,vy:0,grounded:false,ground:false,
    supportId:null,jump:false,jumpFrame:0,exit:false,visible:true,playerState:1})),
-   relayState:clone(compiled.relays),deviceState:Devices.create(compiled.devices||{schemaVersion:1,count,devices:[],warnings:[]}),motionState:Motion.create(compiled.motion||{count,rects:[],dashBoards:[],walls:[]}),gateState:Gates.create(compiled.gates||{count,gates:[],observers:[],keys:[]}),bridgeState:Bridges.create(compiled.bridges||{count,bridges:[],thunders:[],keyTargets:[],keyTaken:false}),blinkState:Blink.create(compiled.blink||Blink.compile([],count)),blinkThunderState:BlinkThunders.create(compiled.blinkThunders||BlinkThunders.compile([],count)),warpInitState:WarpInit.create(compiled.warpInit||WarpInit.compile([],count)),switchTimerState:SwitchTimers.create(compiled.switchTimers||SwitchTimers.compile([],count)),enemyState:Enemies.create(compiled.enemies||Enemies.compile([],count)),thornCeilingState:ThornCeilings.create(compiled.thornCeilings||ThornCeilings.compile([],count)),countUpState:CountUps.create(compiled.countUps||CountUps.compile([],count)),liftState:Lifts.create(compiled.lifts||Lifts.compile([],count)),landmineState:Landmines.create(compiled.landmines||Landmines.compile([],count)),poleState:Poles.create(compiled.poles||Poles.compile([],count,{})),windState:Winds.create(compiled.winds||Winds.compile([],count,{})),speedSwitchState:SpeedSwitches.create(compiled.speedSwitches||SpeedSwitches.compile([],count,{})),linePathState:LinePaths.create(compiled.linePaths||LinePaths.compile([],count,{})),textsState:Texts.create(compiled.texts||Texts.compile([],count,{})),coinsState:Coins.create(compiled.coins||Coins.compile([],count,{})),checkpointsState:Checkpoints.create(compiled.checkpoints||Checkpoints.compile([],count,{})),touchEnergiesState:TouchEnergies.create(compiled.touchEnergies||TouchEnergies.compile([],count,{})),pitcherState:Pitchers.create(compiled.pitchers||Pitchers.compile([],count)),keyBoxState:KeyBoxes.create(compiled.keyBoxes||KeyBoxes.compile([],count)),blackoutState:Blackouts.create(compiled.blackouts||Blackouts.compile([],count,{})),dossunState:Dossuns.create(compiled.dossuns||Dossuns.compile([],count,{})),colorBoxState:ColorBoxes.create(compiled.colorBoxes||ColorBoxes.compile([],count,{})),magnetState:PlayerMagnets.create(compiled.playerMagnets||PlayerMagnets.compile([],count)),breakableState:BreakableRects.create(compiled.breakableRects||BreakableRects.compile([],count)),warpGunState:WarpGuns.create(compiled.warpGuns||WarpGuns.compile([],count)),upDownLiftState:UpDownLifts.create(compiled.upDownLifts||UpDownLifts.compile([],count)),gearState:LinePathGears.create(compiled.linePathGears||LinePathGears.compile([],count,{})),searchLightState:SearchLights.create(compiled.searchLights||SearchLights.compile([],count,{})),ballActors:{},boxActors:{},ballMeta:{serial:0,gone:{},key:null},playTimeRaw:0,keyActive:!compiled.gates||compiled.gates.keys.every(k=>k.active),sourceStatus:clone(compiled.status),physics:clone(map.physics),
+   relayState:clone(compiled.relays),deviceState:Devices.create(compiled.devices||{schemaVersion:1,count,devices:[],warnings:[]}),motionState:Motion.create(compiled.motion||{count,rects:[],dashBoards:[],walls:[]}),gateState:Gates.create(compiled.gates||{count,gates:[],observers:[],keys:[]}),bridgeState:Bridges.create(compiled.bridges||{count,bridges:[],thunders:[],keyTargets:[],keyTaken:false}),blinkState:Blink.create(compiled.blink||Blink.compile([],count)),blinkThunderState:BlinkThunders.create(compiled.blinkThunders||BlinkThunders.compile([],count)),warpInitState:WarpInit.create(compiled.warpInit||WarpInit.compile([],count)),switchTimerState:SwitchTimers.create(compiled.switchTimers||SwitchTimers.compile([],count)),enemyState:Enemies.create(compiled.enemies||Enemies.compile([],count)),thornCeilingState:ThornCeilings.create(compiled.thornCeilings||ThornCeilings.compile([],count)),countUpState:CountUps.create(compiled.countUps||CountUps.compile([],count)),liftState:Lifts.create(compiled.lifts||Lifts.compile([],count)),landmineState:Landmines.create(compiled.landmines||Landmines.compile([],count)),poleState:Poles.create(compiled.poles||Poles.compile([],count,{})),windState:Winds.create(compiled.winds||Winds.compile([],count,{})),speedSwitchState:SpeedSwitches.create(compiled.speedSwitches||SpeedSwitches.compile([],count,{})),linePathState:LinePaths.create(compiled.linePaths||LinePaths.compile([],count,{})),textsState:Texts.create(compiled.texts||Texts.compile([],count,{})),coinsState:Coins.create(compiled.coins||Coins.compile([],count,{})),checkpointsState:Checkpoints.create(compiled.checkpoints||Checkpoints.compile([],count,{})),touchEnergiesState:TouchEnergies.create(compiled.touchEnergies||TouchEnergies.compile([],count,{})),pitcherState:Pitchers.create(compiled.pitchers||Pitchers.compile([],count)),keyBoxState:KeyBoxes.create(compiled.keyBoxes||KeyBoxes.compile([],count)),blackoutState:Blackouts.create(compiled.blackouts||Blackouts.compile([],count,{})),dossunState:Dossuns.create(compiled.dossuns||Dossuns.compile([],count,{})),targetGroupState:TargetGroups.create(compiled.targetGroups||TargetGroups.compile([],count)),rollGearState:Gears.create(compiled.gears||Gears.compile([],count,{})),colorBoxState:ColorBoxes.create(compiled.colorBoxes||ColorBoxes.compile([],count,{})),magnetState:PlayerMagnets.create(compiled.playerMagnets||PlayerMagnets.compile([],count)),breakableState:BreakableRects.create(compiled.breakableRects||BreakableRects.compile([],count)),warpGunState:WarpGuns.create(compiled.warpGuns||WarpGuns.compile([],count)),upDownLiftState:UpDownLifts.create(compiled.upDownLifts||UpDownLifts.compile([],count)),gearState:LinePathGears.create(compiled.linePathGears||LinePathGears.compile([],count,{})),searchLightState:SearchLights.create(compiled.searchLights||SearchLights.compile([],count,{})),ballActors:{},boxActors:{},ballMeta:{serial:0,gone:{},key:null},playTimeRaw:0,keyActive:!compiled.gates||compiled.gates.keys.every(k=>k.active),sourceStatus:clone(compiled.status),physics:clone(map.physics),
    status:'play',elapsed:0,ticks:0,accumulator:0,// A BallKeyBox creates the key later (createKeyAt), so its round starts locked.
    keyTaken:!map.key&&!((compiled.keyBoxes&&compiled.keyBoxes.boxes)||[]).length,coinsTaken:0,deaths:0,failure:null,
    lastRelayEvents:[],lastImpulses:[],lastContacts:{switchContacts:[],springContacts:[]}};
@@ -374,6 +380,58 @@
   for(const [id,a] of Object.entries(s.boxActors))if(a.flags&8192){delete s.boxActors[id];s.ballMeta.gone[id]=true;}
  }
  function keyBoxSolids(s){return s.boxActors?boxRects(s).filter(r=>r.index===0).map(r=>({id:'keybox:'+r.boxId,x:r.x,y:r.y,w:r.w,h:r.h})):[];}
+ // ---- 4-2: Gear (rolling) host ---------------------------------------------
+ // source-gear-devices.js: update (velocity), contact (flip / bounce / event 43),
+ // integrateActorMotion (OnUpdate2), actorJumpPost (Post1: pending jump,
+ // gravity), rotate. This keeps the gear actors and finds their contacts with
+ // the native circle (radius 45 at -2,-48). Named approximations:
+ //  - collision: the circle is pushed out of terrain / solids along the
+ //    centre-to-nearest-point normal (as the ball host), contacts are reported
+ //    with that normal; face1 (standing) = a contact whose normal is straight down;
+ //  - players are killed through event 43 (immortality survives), other solid
+ //    actors (PushBox) only give the flip contact.
+ const RG_R=45,RG_DX=-2,RG_DY=-48;
+ function rollGearTick(s,hz){
+  const st=s.rollGearState;if(!st||!st.gears.length)return [];
+  const F=65536;
+  if(!s.rollGearActors){s.rollGearActors={};for(const g of st.gears){const p0=Gears.initialPositionRaw(g);s.rollGearActors[g.id]={actorId:g.id,xRaw:p0.xRaw,yRaw:p0.yRaw,vxRaw:0,vyRaw:0,accelXRaw:0,accelYRaw:0,enableJump:true,pendingJumpXRaw:0,pendingJumpYRaw:0,face1:false};
+   g.preXRaw=p0.xRaw;g.preYRaw=p0.yRaw;}}
+  const snaps=()=>st.gears.map(g=>({...s.rollGearActors[g.id],collisionExists:true,face1Contact:s.rollGearActors[g.id].face1}));
+  // Gear.OnUpdate
+  const before=Gears.beforeStep(st,{actorSnapshots:snaps()});
+  for(const v of before.actorVelocities){const a=s.rollGearActors[v.actorId];a.vxRaw=v.vxRaw;a.vyRaw=v.vyRaw;}
+  // Actor.OnUpdate2
+  for(const g of st.gears){const a=s.rollGearActors[g.id];Object.assign(a,Gears.integrateActorMotion(a));}
+  // collision phase
+  const contacts=[],dead=[],solidsNow=baseSolids(s),live=s.players.filter(p=>!p.exit&&!p.asBlock);
+  for(const g of st.gears){const a=s.rollGearActors[g.id];let cx=a.xRaw/F+RG_DX,cy=a.yRaw/F+RG_DY,down=false;
+   for(const b of solidsNow){const c=circleRectContact(cx,cy,RG_R,b);if(!c)continue;cx-=c.nx*c.depth;cy-=c.ny*c.depth;if(c.ny>0.99)down=true;
+    const box=Devices.solids(s.deviceState).find(d=>d.id===b.id);
+    contacts.push(box?{actorId:g.id,contactType:1,otherActorExists:true,otherLayer:2,otherId:b.id,otherVxRaw:Math.round((box.vx||0)*F),normalXRaw:Math.round(c.nx*F),normalYRaw:Math.round(c.ny*F)}
+     :{actorId:g.id,contactType:0,normalXRaw:Math.round(c.nx*F),normalYRaw:Math.round(c.ny*F)});}
+   for(const p of live){const c=circleRectContact(cx,cy,RG_R,p);if(!c)continue;
+    contacts.push({actorId:g.id,contactType:1,otherActorExists:true,otherLayer:1,otherId:p.id,otherVxRaw:Math.round((p.vx||0)/hz*F),normalXRaw:Math.round(c.nx*F),normalYRaw:Math.round(c.ny*F)});}
+   for(const h of st.gears){if(h===g)continue;const b=s.rollGearActors[h.id],ox=b.xRaw/F+RG_DX,oy=b.yRaw/F+RG_DY,dx=ox-cx,dy=oy-cy,d=Math.hypot(dx,dy);
+    if(d<2*RG_R&&d>0)contacts.push({actorId:g.id,contactType:1,otherActorExists:true,otherLayer:8,otherId:h.id,otherVxRaw:b.vxRaw,normalXRaw:Math.round(dx/d*F),normalYRaw:Math.round(dy/d*F)});}
+   // resting exactly on a top face (within half a pixel) is the face-1 contact too
+   if(!down)down=solidsNow.some(b=>cx>=b.x&&cx<=b.x+b.w&&Math.abs(cy+RG_R-b.y)<0.5);
+   a.xRaw=Math.round((cx-RG_DX)*F);a.yRaw=Math.round((cy-RG_DY)*F);a.face1=down;}
+  const out=Gears.afterStep(st,{actorSnapshots:snaps(),contacts});
+  for(const e of out.events)if(e.eventType===43){const p=s.players.find(q=>q.id===e.targetId);if(p&&!p.immortal)dead.push(p.id);}
+  for(const j of out.jumps){const a=s.rollGearActors[j.actorId];Object.assign(a,Gears.requestGearJump(a,j));}
+  // Actor.Post1
+  for(const g of st.gears){const a=s.rollGearActors[g.id];Object.assign(a,Gears.actorJumpPost(a,{warpTaken:false,collisionExists:true,face1Contact:a.face1,gravityRaw:Gears.stageGravityRaw(s.map.stageScaleRaw||F)}));}
+  return dead;
+ }
+ // Event 61 / 60 to a named actor, delivered at once (Frame.NotifyEvent by name):
+ // SwitchTargetGroup re-sends to its targets, Gear toggles standby.
+ function notifyByName(s,name,eventType,depth=0){
+  if(!name||depth>8)return;
+  if(s.targetGroupState&&s.targetGroupState.groups.some(g=>g.name===name)){
+   const r=TargetGroups.signal(s.targetGroupState,{targetName:name,eventType});for(const e of r.events||[])notifyByName(s,e.targetName??e.target,e.eventType??e.event,depth+1);}
+  if(s.rollGearState&&s.rollGearState.gears.some(g=>g.name===name))Gears.signal(s.rollGearState,{targetName:name,eventType});
+ }
+ function rollGearSolids(s){return [];}
  // ---- MoveWall host (12-4, 2-4) -------------------------------------------
  // source-movewall-devices.js runs the native wall states (idle, wait, outward
  // 2 px per update, return 1.5); its preflight and push go through the shared
@@ -835,6 +893,8 @@
   const dossunDeaths=dossunTick(s,inputs,hz);
   if(dossunDeaths.length){s.status='dead';s.deaths++;s.failure={playerId:dossunDeaths[0],reason:'쿵쿵 블록에 당했어요'};return;}
   warpGunTick(s,inputs,hz);
+  const rollDeaths=rollGearTick(s,hz);
+  if(rollDeaths.length){s.status='dead';s.deaths++;s.failure={playerId:rollDeaths[0],reason:'톱니바퀴에 닿았어요'};return;}
   const gearDeaths=gearTick(s,hz);
   if(gearDeaths.length){s.status='dead';s.deaths++;s.failure={playerId:gearDeaths[0],reason:'톱니에 닿았어요'};return;}
   // SearchLight (3-1): FATAL seconds inside a lit cone send event 26, which
@@ -967,7 +1027,9 @@
    // then runs CheckOutMap 0x1816a1cb0, which additionally early-outs while a
    // warp is pending. A warped player is therefore never out of the map.
    if(p.y>s.map.killY){s.status='dead';s.failure={playerId:p.id,reason:'fall'};s.deaths++;return;}
-   if(!s.keyTaken&&s.keyActive&&s.map.key&&overlap(p,s.map.key)){s.keyTaken=true;s.map.key.taken=true;}
+   if(!s.keyTaken&&s.keyActive&&s.map.key&&overlap(p,s.map.key)){s.keyTaken=true;s.map.key.taken=true;
+    // KeyComponent.OnCollided 0x18186cc20: the first pickup sends event 61 to the key's target name
+    if(s.map.keyTarget)notifyByName(s,s.map.keyTarget,61);}
    if(Actor.canEnterGoal({open:s.keyTaken,overlapping:overlap(p,s.map.exit),upPressed:!p.inputLocked&&!!inputs[p.id]?.up,cleared:p.exit,playerState:p.playerState})){
     p.exit=true;p.visible=false;p.playerState=5;p.vx=0;p.vy=0;p.grounded=false;p.ground=false;p.supportId=null;
     for(const q of players)if(q.supportId===p.id){q.supportId=null;q.grounded=false;q.ground=false;}
