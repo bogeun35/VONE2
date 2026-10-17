@@ -83,6 +83,11 @@ function winds(c,s,time){
    c.beginPath();c.moveTo(x,yy);c.lineTo(x-sign*24,yy);c.stroke();}
   c.restore();void x0;}
 }
+function moveWalls(c,s){
+ const M=root.SourceMoveWallDevices;if(!M||!s.speedSwitchState||!(s.speedSwitchState.walls||[]).length)return;
+ for(const w of M.displays(s.speedSwitchState).walls){rr(c,w.x,w.y,w.w,w.h,5);fillStroke(c,w.state===2?'#ffb38a':'#c7b8e8',INK,2);
+  c.strokeStyle='rgba(70,58,98,.35)';c.lineWidth=2;for(let y=w.y+20;y<w.y+w.h-10;y+=26){c.beginPath();c.moveTo(w.x+4,y);c.lineTo(w.x+w.w-4,y);c.stroke();}}
+}
 function speedSwitches(c,s){
  const M=root.SourceMoveWallDevices;if(!M||!s.speedSwitchState)return;
  for(const sw of M.displays(s.speedSwitchState).switches||[]){const r={x:sw.x+sw.rect.x,y:sw.y+sw.rect.y,w:sw.rect.w,h:sw.rect.h};
@@ -218,7 +223,7 @@ function blackoutLabels(c,s){
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
+ try{moveWalls(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).

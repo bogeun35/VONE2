@@ -37,9 +37,10 @@
   common?require('./source-playerwarpgun-devices.js'):root.SourcePlayerWarpGunDevices,
   common?require('./source-breakablerect-devices.js'):root.SourceBreakableRectDevices,
   common?require('./source-playermagnet-devices.js'):root.SourcePlayerMagnetDevices,
-  common?require('./source-colorbox-devices.js'):root.SourceColorBoxDevices);
+  common?require('./source-colorbox-devices.js'):root.SourceColorBoxDevices,
+  common?require('./source-move-contact.js'):root.SourceMoveContact);
  if(common)module.exports=api;root.SourceStageRuntime=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges,Blink,BlinkThunders,WarpInit,SwitchTimers,Enemies,ThornCeilings,CountUps,Lifts,Landmines,Poles,Winds,SpeedSwitches,LinePaths,Texts,Coins,Checkpoints,TouchEnergies,Pitchers,Balls,KeyBoxes,Blackouts,Players,Dossuns,SearchLights,LinePathGears,UpDownLifts,WarpGuns,BreakableRects,PlayerMagnets,ColorBoxes){
+})(typeof globalThis!=='undefined'?globalThis:this,function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges,Blink,BlinkThunders,WarpInit,SwitchTimers,Enemies,ThornCeilings,CountUps,Lifts,Landmines,Poles,Winds,SpeedSwitches,LinePaths,Texts,Coins,Checkpoints,TouchEnergies,Pitchers,Balls,KeyBoxes,Blackouts,Players,Dossuns,SearchLights,LinePathGears,UpDownLifts,WarpGuns,BreakableRects,PlayerMagnets,ColorBoxes,MoveContact){
  'use strict';
  const clone=x=>JSON.parse(JSON.stringify(x));
  const overlap=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
@@ -47,7 +48,7 @@
  const box=r=>({x:r.x,y:r.y,w:r.width,h:r.height});
  const NATIVE=Object.freeze({walk:3,jump:-334234/65536,gravity:42598/65536,terminal:19.5,holdFactor:13107/65536,holdFrames:14});
  function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}={}){
-  if(!['st_w_01_01','st_w_01_02','st_w_01_03','st_w_01_04','st_w_04_01','st_w_04_03','st_w_04_04','st_w_05_02','st_w_10_02','st_w_11_04','st_w_07_02','st_w_10_01','st_w_10_04','st_w_13_01','st_w_11_02','st_w_12_03','st_w_03_02','st_w_10_03','st_w_05_01','st_w_02_02','st_w_07_03','st_w_14_03','st_w_03_01','st_w_15_01','st_w_05_04','st_w_14_01','st_w_03_03','st_w_12_02','st_w_15_02','st_w_05_03'].includes(stageId))throw new Error('Source stage runtime does not support this stage yet');
+  if(!['st_w_01_01','st_w_01_02','st_w_01_03','st_w_01_04','st_w_04_01','st_w_04_03','st_w_04_04','st_w_05_02','st_w_10_02','st_w_11_04','st_w_07_02','st_w_10_01','st_w_10_04','st_w_13_01','st_w_11_02','st_w_12_03','st_w_03_02','st_w_10_03','st_w_05_01','st_w_02_02','st_w_07_03','st_w_14_03','st_w_03_01','st_w_15_01','st_w_05_04','st_w_14_01','st_w_03_03','st_w_12_02','st_w_15_02','st_w_12_04','st_w_02_04','st_w_05_03'].includes(stageId))throw new Error('Source stage runtime does not support this stage yet');
   if(!Number.isFinite(nativeTickRate)||nativeTickRate<1||nativeTickRate>240)throw new Error('Invalid calibration tick rate');
   const t=Terrain.createTerrain({source,geometry,count,stageId});
   // The original frames a fixed window, not the whole map: mapInitParam carries
@@ -79,7 +80,7 @@
   const landmines=Landmines.compile(t.actors,count);
   const poles=Poles.compile(t.actors,count,{});
   const winds=Winds.compile(t.actors,count,{});
-  const speedSwitches=SpeedSwitches.compile(t.actors,count,{});
+  const speedSwitches=SpeedSwitches.compile(t.actors,count,{nativeContactFacts:true});
   const linePaths=LinePaths.compile(t.actors,count,{});
   const texts=Texts.compile(t.actors,count,{});
   const coins=Coins.compile(t.actors,count,{});
@@ -120,7 +121,7 @@
    return {id:'warp:'+i,type:'Warp',x:a.x,y:a.y,w:n(0),h:n(1),
     destination:{x:n(2),y:n(3)},ordinalOffset:{x:n(4),y:n(5)},counter:0};
   });
-  const supported=new Set(['Player','Key','Goal','Warp','MapRect','TopViewMapRect','JumpStand','JumpStandMediator','Switch','DelaySwitch','DeadSwitch','Rect','DashBoard','FallingWall',...Devices.supportedTypes,...Gates.supportedTypes,...Bridges.supportedTypes,...Blink.supportedTypes,...BlinkThunders.supportedTypes,...WarpInit.supportedTypes,...SwitchTimers.supportedTypes,...Enemies.supportedTypes,...ThornCeilings.supportedTypes,...CountUps.supportedTypes,...Lifts.supportedTypes,...Landmines.supportedTypes,...Poles.supportedTypes,...Winds.supportedTypes,'SpeedSwitch',...LinePaths.supportedTypes,...Texts.supportedTypes,...Coins.supportedTypes,...Checkpoints.supportedTypes,...TouchEnergies.supportedTypes,'BoundBallPitcher',...KeyBoxes.supportedTypes,...Blackouts.supportedTypes,...Dossuns.supportedTypes,...SearchLights.supportedTypes,...LinePathGears.supportedTypes,...UpDownLifts.supportedTypes,...WarpGuns.supportedTypes,...BreakableRects.supportedTypes,...PlayerMagnets.supportedTypes,...ColorBoxes.supportedTypes]);
+  const supported=new Set(['Player','Key','Goal','Warp','MapRect','TopViewMapRect','JumpStand','JumpStandMediator','Switch','DelaySwitch','DeadSwitch','Rect','DashBoard','FallingWall',...Devices.supportedTypes,...Gates.supportedTypes,...Bridges.supportedTypes,...Blink.supportedTypes,...BlinkThunders.supportedTypes,...WarpInit.supportedTypes,...SwitchTimers.supportedTypes,...Enemies.supportedTypes,...ThornCeilings.supportedTypes,...CountUps.supportedTypes,...Lifts.supportedTypes,...Landmines.supportedTypes,...Poles.supportedTypes,...Winds.supportedTypes,'SpeedSwitch','MoveWall',...LinePaths.supportedTypes,...Texts.supportedTypes,...Coins.supportedTypes,...Checkpoints.supportedTypes,...TouchEnergies.supportedTypes,'BoundBallPitcher',...KeyBoxes.supportedTypes,...Blackouts.supportedTypes,...Dossuns.supportedTypes,...SearchLights.supportedTypes,...LinePathGears.supportedTypes,...UpDownLifts.supportedTypes,...WarpGuns.supportedTypes,...BreakableRects.supportedTypes,...PlayerMagnets.supportedTypes,...ColorBoxes.supportedTypes]);
   const unsupported=[...new Set(t.actors.filter(a=>!supported.has(a.typeName)).map(a=>a.typeName))];
   const missingMechanics=['Native tick frequency (60 Hz explicit prototype calibration)',
    'Native collision pushback and update ordering equivalence',
@@ -373,6 +374,48 @@
   for(const [id,a] of Object.entries(s.boxActors))if(a.flags&8192){delete s.boxActors[id];s.ballMeta.gone[id]=true;}
  }
  function keyBoxSolids(s){return s.boxActors?boxRects(s).filter(r=>r.index===0).map(r=>({id:'keybox:'+r.boxId,x:r.x,y:r.y,w:r.w,h:r.h})):[];}
+ // ---- MoveWall host (12-4, 2-4) -------------------------------------------
+ // source-movewall-devices.js runs the native wall states (idle, wait, outward
+ // 2 px per update, return 1.5); its preflight and push go through the shared
+ // native contact transport (source-move-contact.js) over a contact world
+ // built from bodies touching this update (within half a pixel) - the same
+ // named approximation as the UpDownLift host, on all four faces:
+ //  - b touching a's face F is in a's contacts with F's normal;
+ //  - a player's mapNormals are the faces where terrain touches it.
+ // Players and ColorBoxes are transported: ActorComponent's MoveByContact
+ // callback dictionary registers only PlayerMagnet (ordinal 72, initCallbacks
+ // 0x18177c2ff), so neither has a callback and both just take the delta.
+ const SIDE_NORMALS=[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}];
+ const SIDE_TOUCH=[(a,b)=>Math.abs(b.y+b.h-a.y)<0.5&&b.x<a.x+a.w&&b.x+b.w>a.x,(a,b)=>Math.abs(a.y+a.h-b.y)<0.5&&b.x<a.x+a.w&&b.x+b.w>a.x,
+  (a,b)=>Math.abs(b.x+b.w-a.x)<0.5&&b.y<a.y+a.h&&b.y+b.h>a.y,(a,b)=>Math.abs(a.x+a.w-b.x)<0.5&&b.y<a.y+a.h&&b.y+b.h>a.y];
+ function sideContactWorld(s,roots,hz){
+  const F=65536,snap=v=>Math.round(v*F)/F,live=s.players.filter(p=>!p.exit&&!p.asBlock),terrain=s.map.platforms;
+  const cboxes=colorBoxSolids(s).map(b=>({...b,actorType:7,contactResponse:'none',vx:(s.colorBoxActors[b.id].vxRaw||0)/F,vy:(s.colorBoxActors[b.id].vyRaw||0)/F}));
+  const boxes=[...roots,...live.map(p=>({id:p.id,x:p.x,y:p.y,w:p.w,h:p.h,actorType:27,vx:(p.vx||0)/hz,vy:(p.vy||0)/hz})),...cboxes];
+  const movable=b=>b.actorType===27||b.actorType===7;
+  return {bodies:boxes.map(a=>({id:a.id,entityId:a.id,actorType:a.actorType,contactResponse:a.contactResponse,x:snap(a.x),y:snap(a.y),hasCollision:true,flags:0,actor:true,
+   velocity:{x:snap(a.vx||0),y:snap(a.vy||0)},
+   mapNormals:movable(a)?SIDE_NORMALS.filter((n,f)=>terrain.some(t=>SIDE_TOUCH[f](a,t))):[],
+   contacts:boxes.flatMap(b=>b===a||!movable(b)?[]:SIDE_NORMALS.map((n,f)=>SIDE_TOUCH[f](a,b)?{id:b.id,normal:n}:null).filter(Boolean))}))};
+ }
+ // After a wall step, a body it now overlaps (it was not touching, so not in
+ // the contact world) is pushed out along the wall's motion - the collision
+ // phase's pushback (named approximation, same as the magnet host's).
+ function moveWallPushOut(s,before){
+  const F=65536;
+  for(const w of SpeedSwitches.solids(s.speedSwitchState)){const b0=before.find(x=>x.id===w.id);if(!b0||b0.x===w.x)continue;const dir=Math.sign(w.x-b0.x);
+   for(const p of s.players)if(!p.exit&&!p.asBlock&&overlap(p,w))p.x=dir>0?w.x+w.w:w.x-p.w;
+   for(const cb of colorBoxSolids(s))if(overlap(cb,w)){const a=s.colorBoxActors[cb.id],nx=dir>0?w.x+w.w:w.x-cb.w;a.xRaw+=Math.round((nx-cb.x)*F);}}
+ }
+ function moveWallCallbacks(s,hz){
+  const st=s.speedSwitchState,worlds={};
+  const worldFor=id=>{if(!worlds[id]){const w=SpeedSwitches.solids(st).find(x=>x.id===id);worlds[id]=sideContactWorld(s,[{...w,actorType:23}],hz);}return worlds[id];};
+  return {
+   isEnableMoveContactActor:req=>MoveContact.isEnableMoveContactActor(worldFor(req.wallId),req.wallId,req.delta,{face:req.face||0}),
+   moveContactActor:req=>{const r=MoveContact.moveContactActor(worldFor(req.wallId),req.wallId,req.delta,{face:req.face,isEnableIgnoreTargetVelo:true,isEnableRecursive:true});
+    for(const m of r.moved){const p=s.players.find(q=>q.id===m.id);if(p){p.x+=m.xRaw/65536;p.y+=m.yRaw/65536;continue;}
+     const cb=s.colorBoxActors&&s.colorBoxActors[m.id];if(cb){cb.xRaw+=m.xRaw;cb.yRaw+=m.yRaw;}}return r;}};
+ }
  // ---- ColorBox host (12-2, 15-2, 2-4) --------------------------------------
  // source-colorbox-devices.js decides the box's velocity (only its own player's
  // push moves it, 1 px per update; jump / gravity / forces); this keeps the
@@ -646,7 +689,7 @@
   try{return Dossuns.solids(s.dossunState).filter(d=>(d.actorType===157&&d.collisionIndex===0)||d.actorType===163).map(d=>({id:d.id,...rawBox(d)}));}
   catch(e){return [];}
  }
- function baseSolids(s){return [...s.map.platforms,...s.map.springs.filter(b=>s.relayState.relays.find(r=>r.id===b.id)?.visible),...Motion.solids(s.motionState),...Gates.solids(s.gateState),...Bridges.solids(s.bridgeState),...Blink.solids(s.blinkState),...BlinkThunders.solids(s.blinkThunderState),...Lifts.solids(s.liftState),...Winds.solids(s.windState),...LinePaths.solids(s.linePathState),...keyBoxSolids(s),...dossunSolids(s),...UpDownLifts.solids(s.upDownLiftState),...BreakableRects.solids(s.breakableState),...colorBoxSolids(s)];}
+ function baseSolids(s){return [...s.map.platforms,...s.map.springs.filter(b=>s.relayState.relays.find(r=>r.id===b.id)?.visible),...Motion.solids(s.motionState),...Gates.solids(s.gateState),...Bridges.solids(s.bridgeState),...Blink.solids(s.blinkState),...BlinkThunders.solids(s.blinkThunderState),...Lifts.solids(s.liftState),...Winds.solids(s.windState),...LinePaths.solids(s.linePathState),...keyBoxSolids(s),...dossunSolids(s),...UpDownLifts.solids(s.upDownLiftState),...BreakableRects.solids(s.breakableState),...colorBoxSolids(s),...SpeedSwitches.solids(s.speedSwitchState)];}
  function solids(s){return [...baseSolids(s),...Devices.solids(s.deviceState)];}
  function ridersOf(p,players){
   const ids=new Set([p.id]);let added=true;
@@ -747,7 +790,8 @@
   // SpeedSwitch: event 57 to every Player (actor type 27). The receiver replaces
   // the walk speed, never compounds it; at scale 1 the formula gives exactly the
   // 3 px/tick this runtime has always used, which is the cross-check.
-  for(const e of SpeedSwitches.beforeStep(s.speedSwitchState,{}).events||[])if(e.eventType===57&&e.broadcastActorType===27)
+  const wallsBefore=SpeedSwitches.solids(s.speedSwitchState);const speedResult=SpeedSwitches.beforeStep(s.speedSwitchState,{dt:h,...moveWallCallbacks(s,hz)});moveWallPushOut(s,wallsBefore);
+  for(const e of speedResult.events||[])if(e.eventType===57&&e.broadcastActorType===27)
    for(const p of players){const next=SpeedSwitches.applyPlayerSpeedEvent({stageBaseScaleRaw:s.map.stageScaleRaw||65536,iceSpeedUpRaw:s.map.iceSpeedUpRaw||65536},e);p.walkSpeed=next.walkSpeedRaw/65536;}
   for(const p of [...players].sort((a,b)=>b.y-a.y||a.id.localeCompare(b.id))){
    if(paused)continue;
@@ -833,7 +877,9 @@
   const speedContacts=[];
   for(const sw of SpeedSwitches.displays(s.speedSwitchState).switches){const box={x:sw.x+sw.rect.x,y:sw.y+sw.rect.y,w:sw.rect.w,h:sw.rect.h,direction:0};
    for(const p of players)if(!p.exit&&!p.dead&&playerPressesSwitch(p,box))speedContacts.push({switchId:sw.id,actorId:p.id,layer:1,attributeFlags:3});}
-  SpeedSwitches.afterStep(s.speedSwitchState,{switchContacts:speedContacts});
+  // MoveWall trigger: layer-1 bodies inside the widened sensor rect
+  const wallContacts=[];for(const w of SpeedSwitches.displays(s.speedSwitchState).walls)for(const p of players)if(!p.exit&&!p.dead&&overlap(p,w.trigger))wallContacts.push({wallId:w.id,layer:1});
+  SpeedSwitches.afterStep(s.speedSwitchState,{switchContacts:speedContacts,wallContacts});
   const windContacts=[];
   for(const v of Winds.volumes(s.windState))for(const p of players)if(!p.exit&&!p.dead&&overlap(p,v))windContacts.push({windId:v.windId,actorId:p.id});
   const relay=Relay.step(s.relayState,h,facts);
