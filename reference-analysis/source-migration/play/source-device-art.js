@@ -410,17 +410,37 @@ function fakeOverlay(c,s,view){
  if(d.timer&&d.timer.phase<=4)label(c,String(d.timer.seconds),view.width/2,64,'#fffdf6',56);
  if(d.notice){const k=Math.min(1,d.notice.t),x=view.width*(1.2-1.4*k);label(c,'WHO ARE YOU?',Math.max(view.width/2,x),view.height/2,'#ffd84d',64);}
 }
+// 8-1 / 8-3 Apple: hanging apples sway (rect 24x24), bombs alternate with them, a
+// shot apple spins as it falls; the blast is a growing ring (to 250 px). The
+// crosshair is a ring (circle 16) in its player's colour; each BasketPlayer carries
+// a basket (44x26) on its head.
+function appleArt(c,s,time){
+ const A=root.SourceAppleRuntime;if(!A||!s.appleState||!s.appleState.controller)return;const d=A.displays(s.appleState);
+ for(const a of d.apples){c.save();c.translate(a.x,a.y);c.rotate(a.angle*Math.PI/180);
+  if(a.bomb){c.beginPath();c.arc(0,1,11,0,Math.PI*2);fillStroke(c,'#3b3550',INK,2);c.strokeStyle='#c8a26a';c.lineWidth=2;c.beginPath();c.moveTo(4,-8);c.quadraticCurveTo(8,-14,12,-12);c.stroke();
+   c.fillStyle=(Math.floor(time*8)%2)?'#ffd84d':'#ff7a3d';c.beginPath();c.arc(12,-12,2.5,0,Math.PI*2);c.fill();}
+  else{c.beginPath();c.arc(0,1,11,0,Math.PI*2);fillStroke(c,'#ff6b6b',INK,2);c.fillStyle='rgba(255,255,255,.5)';c.beginPath();c.arc(-4,-3,3,0,Math.PI*2);c.fill();
+   c.fillStyle='#6dbf5b';c.beginPath();c.ellipse(4,-10,5,2.5,-.5,0,Math.PI*2);c.fill();}
+  c.restore();}
+ for(const b of d.blasts){c.save();c.globalAlpha=Math.max(0,1-b.r/250);c.strokeStyle='#ffb04d';c.lineWidth=6;c.beginPath();c.arc(b.x,b.y,Math.max(1,b.r),0,Math.PI*2);c.stroke();c.restore();}
+ for(const k of d.baskets){c.save();c.translate(k.x,k.y);rr(c,-22,-30,44,26,6);fillStroke(c,'#c98d52',INK,2);c.strokeStyle='rgba(90,55,30,.6)';c.lineWidth=1.5;
+  for(let x=-14;x<=14;x+=7){c.beginPath();c.moveTo(x,-28);c.lineTo(x,-6);c.stroke();}if(k.count)label(c,String(k.count),0,-40,'#fffdf6',14);c.restore();}
+ for(const t of d.targets){const col=FRIEND_COLORS[t.playerIndex%8];c.save();c.globalAlpha=t.cooling?.55:1;c.lineWidth=4;c.strokeStyle=col;c.beginPath();c.arc(t.x,t.y,16,0,Math.PI*2);c.stroke();
+  c.lineWidth=2;c.strokeStyle=INK;c.beginPath();c.moveTo(t.x-24,t.y);c.lineTo(t.x-8,t.y);c.moveTo(t.x+8,t.y);c.lineTo(t.x+24,t.y);c.moveTo(t.x,t.y-24);c.lineTo(t.x,t.y-8);c.moveTo(t.x,t.y+8);c.lineTo(t.x,t.y+24);c.stroke();c.restore();}
+}
+function appleOverlay(c,s,view){const A=root.SourceAppleRuntime;if(!A||!s.appleState||!s.appleState.controller)return;const d=A.displays(s.appleState);
+ if(d.counter)label(c,'🍎 '+d.counter.caught+' / '+d.counter.needed,view.width/2,40,'#fffdf6',30);}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);}
+ try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
 function drawAbove(c,s){if(!s)return;const time=performance.now()/1000;c.save();try{cardboards(c,s);bats(c,s,time);fallingCages(c,s);halfInputMarks(c,s);blackoutLabels(c,s);}finally{c.restore();}}
 // Screen pass: the blackout darkness covers the whole view.
 function overlay(c,s,view){
- if(s){capturingCounter(c,s,view);fakeOverlay(c,s,view);}
+ if(s){capturingCounter(c,s,view);fakeOverlay(c,s,view);appleOverlay(c,s,view);}
  const B=root.SourceBlackoutDevices;if(!B||!s||!s.blackoutState||!s.blackoutState.blackouts.length)return;
  for(const b of B.displays(s.blackoutState).blackouts){const a=Math.max(0,Math.min(1,b.alpha*(b.darknessRaw/F)));
   if(a>0){c.fillStyle='rgba(0,0,0,'+a+')';c.fillRect(0,0,view.width,view.height);}}

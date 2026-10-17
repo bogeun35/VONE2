@@ -48,11 +48,13 @@
   "st_w_02_03",
   "st_w_12_01",
   "st_w_13_03",
-  "st_w_13_04"
+  "st_w_13_04",
+  "st_w_08_01",
+  "st_w_08_03"
  ],
  "worldStages": 60,
- "remainingStages": 15,
- "remainingDistinctBlockers": 40,
+ "remainingStages": 13,
+ "remainingDistinctBlockers": 36,
  "nearest": [
   {
    "id": "st_w_06_03",
@@ -102,28 +104,6 @@
     "DummyColorBox",
     "DummyGoal",
     "DummyPlayer"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_08_01",
-   "blockerCount": 4,
-   "blockers": [
-    "Apple",
-    "AppleController",
-    "BasketPlayer",
-    "TargetPlayer"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_08_03",
-   "blockerCount": 4,
-   "blockers": [
-    "Apple",
-    "AppleController",
-    "BasketPlayer",
-    "TargetPlayer"
    ],
    "guardsAfterTypes": []
   },
@@ -185,6 +165,35 @@
     "DanmakuObserver",
     "DanmakuThunder",
     "OptimizedBulletObserver"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_11_03",
+   "blockerCount": 6,
+   "blockers": [
+    "DanmakuEmitter",
+    "DanmakuLocator",
+    "DanmakuModifier",
+    "DanmakuObserver",
+    "DanmakuThunder",
+    "OptimizedBulletObserver"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_06_04",
+   "blockerCount": 9,
+   "blockers": [
+    "BattlePlanePlayer",
+    "BgmChanger",
+    "MapBlockReplacer",
+    "OptimizedBulletObserver",
+    "PlayerGuard",
+    "PlayerGun",
+    "ShootingEnemyBoss",
+    "ShootingEnemySpawner",
+    "ShootingSuperApple"
    ],
    "guardsAfterTypes": []
   }
@@ -325,42 +334,6 @@
    "stages": [
     "st_w_14_04",
     "st_w_14_02"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "Apple",
-   "stages": [
-    "st_w_08_03",
-    "st_w_08_01"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "AppleController",
-   "stages": [
-    "st_w_08_03",
-    "st_w_08_01"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "BasketPlayer",
-   "stages": [
-    "st_w_08_03",
-    "st_w_08_01"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "TargetPlayer",
-   "stages": [
-    "st_w_08_03",
-    "st_w_08_01"
    ],
    "appearsIn": 2,
    "opensAlone": []
@@ -1902,78 +1875,38 @@
   },
   {
    "id": "st_w_08_03",
-   "connected": false,
-   "distinctBlockers": [
-    "Apple",
-    "AppleController",
-    "BasketPlayer",
-    "TargetPlayer"
-   ],
-   "blockerCount": 4,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "TargetPlayer",
-      "BasketPlayer",
-      "AppleController",
-      "Apple"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "TargetPlayer",
-      "BasketPlayer",
-      "AppleController",
-      "Apple"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "TargetPlayer",
-      "BasketPlayer",
-      "AppleController",
-      "Apple"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "TargetPlayer",
-      "BasketPlayer",
-      "AppleController",
-      "Apple"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "TargetPlayer",
-      "BasketPlayer",
-      "AppleController",
-      "Apple"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "TargetPlayer",
-      "BasketPlayer",
-      "AppleController",
-      "Apple"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "TargetPlayer",
-      "BasketPlayer",
-      "AppleController",
-      "Apple"
-     ]
+     "missing": []
     }
    }
   },
@@ -2674,78 +2607,38 @@
   },
   {
    "id": "st_w_08_01",
-   "connected": false,
-   "distinctBlockers": [
-    "Apple",
-    "AppleController",
-    "BasketPlayer",
-    "TargetPlayer"
-   ],
-   "blockerCount": 4,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "TargetPlayer",
-      "BasketPlayer",
-      "AppleController",
-      "Apple"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "TargetPlayer",
-      "BasketPlayer",
-      "AppleController",
-      "Apple"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "TargetPlayer",
-      "BasketPlayer",
-      "AppleController",
-      "Apple"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "TargetPlayer",
-      "BasketPlayer",
-      "AppleController",
-      "Apple"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "TargetPlayer",
-      "BasketPlayer",
-      "AppleController",
-      "Apple"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "TargetPlayer",
-      "BasketPlayer",
-      "AppleController",
-      "Apple"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "TargetPlayer",
-      "BasketPlayer",
-      "AppleController",
-      "Apple"
-     ]
+     "missing": []
     }
    }
   },
