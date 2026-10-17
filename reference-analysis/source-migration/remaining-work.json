@@ -1,6 +1,6 @@
 {
  "schemaVersion": 2,
- "generated": "2026-10-13",
+ "generated": "2026-10-17",
  "generator": "reference-analysis/source-migration/scan-remaining-work.cjs",
  "note": "Per player count, using the same variant selection the runtime uses. blockerCount is the number of distinct unsupported actor types across counts 2..8; guardsAfterTypes lists module guards that still refuse a stage whose types are all handled.",
  "connectedRounds": [
@@ -20,11 +20,12 @@
   "st_w_13_01",
   "st_w_11_02",
   "st_w_12_03",
-  "st_w_03_02"
+  "st_w_03_02",
+  "st_w_10_03"
  ],
  "worldStages": 60,
- "remainingStages": 43,
- "remainingDistinctBlockers": 83,
+ "remainingStages": 42,
+ "remainingDistinctBlockers": 81,
  "nearest": [
   {
    "id": "st_w_02_02",
@@ -121,11 +122,11 @@
    "guardsAfterTypes": []
   },
   {
-   "id": "st_w_10_03",
+   "id": "st_w_12_01",
    "blockerCount": 2,
    "blockers": [
-    "BallKeyBox",
-    "BoundBallPitcher"
+    "GoKart",
+    "Stick"
    ],
    "guardsAfterTypes": []
   }
@@ -560,22 +561,6 @@
    "type": "GraphController",
    "stages": [
     "st_w_13_02"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "BallKeyBox",
-   "stages": [
-    "st_w_10_03"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "BoundBallPitcher",
-   "stages": [
-    "st_w_10_03"
    ],
    "appearsIn": 1,
    "opensAlone": []
@@ -1270,7 +1255,7 @@
   },
   {
    "id": "st_w_10_03",
-   "connected": false,
+   "connected": true,
    "distinctBlockers": [
     "BallKeyBox",
     "BoundBallPitcher"
