@@ -90,8 +90,32 @@ test('03-02 compiles at2..8 with native segment lengths and inactive DamageRects
   assert.equal(s.devices.filter(d=>d.collisionInactive).length,c===2?6:4);
   assert.deepEqual(api.solids(s)[0],{id:d.id,type:'LinePathLift',x:656-(c-2)*15,y:401,w:118+(c-2)*30,h:18,collisionType:13});
  }
- assert.throws(()=>api.compile(actors('st_w_03_03',2),2),/external-start fake path/);
- assert.throws(()=>api.nativeSqrtRaw(1),/FPSqrt table index 1/);
+ // indexes outside the sparse subset now read the full FPSqrt table
+ assert.equal(api.nativeSqrtRaw(1),require('./source-distanceconstraint-math.js').sqrtRaw(1));
+});
+test('03-03 external start: event 61 with nobody aboard runs the 20px fake path and back',()=>{
+ const s=api.create(api.compile(actors('st_w_03_03',2),2)),d=s.devices.find(d=>d.type==='LinePathLift');
+ assert.equal(d.externalStart,true);assert.equal(d.moving,false);
+ for(let i=0;i<30;i++)api.advanceLift(d,1092,0,true);
+ assert.equal(d.moving,false,'riders alone never start an external-start lift');
+ assert.equal(api.receiveEvent(d,61,0),true);
+ assert.equal(d.fake,true);assert.deepEqual(d.fakePoints[0],{xRaw:0,yRaw:0});
+ const len=Math.hypot(d.fakePoints[1].xRaw,d.fakePoints[1].yRaw)/65536;
+ assert.ok(Math.abs(len-20)<0.01,'QFP._20 along the first segment: '+len);
+ let ticks=0;while(d.moving&&ticks<2000){api.advanceLift(d,1092,0,true);ticks++;}
+ assert.equal(d.moving,false);assert.equal(d.fake,false);assert.equal(d.reversed,false,'a fake trip does not reverse the lift');
+ assert.ok(Math.abs(d.offsetRaw.xRaw)<=4&&Math.abs(d.offsetRaw.yRaw)<=4,'back at the start');
+ assert.equal(api.receiveEvent(d,60,0),false,'only event 61');
+});
+test('03-03 external start with a rider runs the whole path, then waits reversed for the next event',()=>{
+ const s=api.create(api.compile(actors('st_w_03_03',2),2)),d=s.devices.find(d=>d.type==='LinePathLift');
+ api.receiveEvent(d,61,1);assert.equal(d.fake,false);
+ let ticks=0;while(d.moving&&ticks<20000){api.advanceLift(d,1092,1,true);ticks++;}
+ const last=d.paths[d.paths.length-1];
+ assert.equal(d.reversed,true);assert.equal(d.finished,false);assert.deepEqual(d.offsetRaw,last);
+ assert.equal(api.receiveEvent(d,61,1),true);
+ ticks=0;while(d.moving&&ticks<20000){api.advanceLift(d,1092,1,true);ticks++;}
+ assert.equal(d.reversed,false);assert.deepEqual(d.offsetRaw,{xRaw:0,yRaw:0});
 });
 test('compile ignores actors excluded by population, preserves required interface and JSON state',()=>{
  const a={typeName:'LinePathLift',playerCount:4};

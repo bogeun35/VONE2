@@ -772,6 +772,11 @@
   const windContacts=[];
   for(const v of Winds.volumes(s.windState))for(const p of players)if(!p.exit&&!p.dead&&overlap(p,v))windContacts.push({windId:v.windId,actorId:p.id});
   const relay=Relay.step(s.relayState,h,facts);
+  // LinePathLift.OnRecvEvent receives a DelaySwitch's event 61 the moment it is
+  // sent (SendEvent is synchronous), not on the lift's next update.
+  if(s.linePathState.devices.some(d=>d.externalStart)){const host=linePathHost(s,players,h);
+   for(const e of relay.events)if((e.eventType??e.event)===61)for(const d of s.linePathState.devices)
+    if(d.type==='LinePathLift'&&(e.targetName===d.name||e.targetId===d.id))LinePaths.receiveEvent(d,61,host.getRideCount(d.id));}
   Winds.afterStep(s.windState,{events:relay.events,windContacts});
   // The coop count-up machine takes only its own players' switch events and
   // answers with an event 1 to every Key, so it runs before the gate layer
