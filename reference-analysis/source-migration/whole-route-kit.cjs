@@ -16,7 +16,7 @@ function clean(inputs){
  const out={};
  for(const id of Object.keys(inputs).sort()){
   const v=inputs[id]||{},o={};
-  for(const k of ['left','right','jump','up','down'])if(v[k])o[k]=true;
+  for(const k of ['left','right','jump','up','down','shot'])if(v[k])o[k]=true;
   if(Object.keys(o).length)out[id]=o;
  }
  return out;

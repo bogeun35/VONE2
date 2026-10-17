@@ -23,10 +23,11 @@
   "st_w_03_02",
   "st_w_10_03",
   "st_w_05_01",
-  "st_w_02_02"
+  "st_w_02_02",
+  "st_w_07_03"
  ],
  "worldStages": 60,
- "remainingStages": 40,
+ "remainingStages": 39,
  "remainingDistinctBlockers": 79,
  "nearest": [
   {
@@ -90,15 +91,6 @@
    "guardsAfterTypes": []
   },
   {
-   "id": "st_w_07_03",
-   "blockerCount": 2,
-   "blockers": [
-    "Blackout",
-    "BlackoutController"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
    "id": "st_w_07_04",
    "blockerCount": 2,
    "blockers": [
@@ -131,6 +123,15 @@
    "blockers": [
     "ColorBox",
     "DeadSwitch"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_12_04",
+   "blockerCount": 2,
+   "blockers": [
+    "MoveWall",
+    "SpeedSwitch"
    ],
    "guardsAfterTypes": []
   }
@@ -186,18 +187,6 @@
    "opensAlone": []
   },
   {
-   "type": "Blackout",
-   "stages": [
-    "st_w_09_01",
-    "st_w_07_03",
-    "st_w_03_01",
-    "st_w_09_03",
-    "st_w_15_02"
-   ],
-   "appearsIn": 5,
-   "opensAlone": []
-  },
-  {
    "type": "BattlePlanePlayer",
    "stages": [
     "st_w_06_01",
@@ -219,6 +208,17 @@
     "st_w_15_03"
    ],
    "appearsIn": 5,
+   "opensAlone": []
+  },
+  {
+   "type": "Blackout",
+   "stages": [
+    "st_w_09_01",
+    "st_w_03_01",
+    "st_w_09_03",
+    "st_w_15_02"
+   ],
+   "appearsIn": 4,
    "opensAlone": []
   },
   {
@@ -333,15 +333,6 @@
    "stages": [
     "st_w_02_04",
     "st_w_12_04"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "BlackoutController",
-   "stages": [
-    "st_w_07_03",
-    "st_w_15_02"
    ],
    "appearsIn": 2,
    "opensAlone": []
@@ -655,6 +646,14 @@
    "type": "PlaneObstacle",
    "stages": [
     "st_w_06_03"
+   ],
+   "appearsIn": 1,
+   "opensAlone": []
+  },
+  {
+   "type": "BlackoutController",
+   "stages": [
+    "st_w_15_02"
    ],
    "appearsIn": 1,
    "opensAlone": []
@@ -1393,7 +1392,7 @@
   },
   {
    "id": "st_w_07_03",
-   "connected": false,
+   "connected": true,
    "distinctBlockers": [
     "Blackout",
     "BlackoutController"
