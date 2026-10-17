@@ -27,7 +27,7 @@ const MODULES=['source-devices-runtime.js','source-gate-devices.js','source-brid
  'source-blink-devices.js','source-blinkthunder-devices.js','source-warpinit-devices.js',
  'source-switchtimer-devices.js','source-enemy-devices.js','source-thorn-ceiling-devices.js',
  'source-countup-devices.js','source-lift-devices.js','source-landmine-devices.js','source-pole-devices.js','source-wind-devices.js','source-linepath-devices.js','source-text-devices.js','source-coin-devices.js','source-checkpoint-devices.js','source-touchenergy-devices.js',
- 'source-boundballpitcher-devices.js','source-ballkeybox-devices.js','source-blackout-devices.js','source-dossun-devices.js','source-searchlight-devices.js','source-linepathgear-devices.js'];
+ 'source-boundballpitcher-devices.js','source-ballkeybox-devices.js','source-blackout-devices.js','source-dossun-devices.js','source-searchlight-devices.js','source-linepathgear-devices.js','source-updownlift-devices.js','source-playerwarpgun-devices.js'];
 
 const supported=new Set(BUILT_IN);
 for(const file of MODULES)for(const type of require(path.join(base,file)).supportedTypes||[])supported.add(type);

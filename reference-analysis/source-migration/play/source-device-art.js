@@ -157,6 +157,21 @@ function gears(c,s){
   c.beginPath();c.arc(0,0,8,0,Math.PI*2);fillStroke(c,'#6d6a86',null);c.restore();
  }
 }
+function upDownLifts(c,s){
+ const U=root.SourceUpDownLiftDevices;if(!U||!s.upDownLiftState||!s.upDownLiftState.lifts.length)return;
+ for(const b of U.solids(s.upDownLiftState))plank(c,b,'#f7b7d2','#ffe3ef');
+}
+function warpGuns(c,s){
+ const W=root.SourcePlayerWarpGunDevices;if(!W||!s.warpGunState||!s.warpGunState.guns.length)return;
+ const v=W.displays(s.warpGunState);
+ for(const g of v.guns){if(!g.playerId)continue;const p=s.players.find(q=>q.id===g.playerId);if(!p||p.exit||p.asBlock)continue;
+  // the gun sits at the player's anchor + direction*(20,-10); its colour turns
+  // into the captured friend's while it holds one (SetTarget)
+  const x=g.xRaw/F,y=g.yRaw/F,left=!!p.facingLeft;c.save();c.translate(x,y);if(left)c.scale(-1,1);
+  rr(c,-8,-5,18,9,3);fillStroke(c,FRIEND_COLORS[(g.colorIndex||0)%8],INK,1.5);rr(c,-6,2,6,7,2);fillStroke(c,'#8a84a6',INK,1);c.restore();
+  if(g.targetId){label(c,'●',x,y-14,FRIEND_COLORS[(g.colorIndex||0)%8],12);}}
+ for(const b of v.bullets){c.save();c.globalAlpha=b.disappearing?.4:1;c.beginPath();c.arc(b.xRaw/F,b.yRaw/F,6,0,Math.PI*2);fillStroke(c,FRIEND_COLORS[(b.colorIndex||0)%8],INK,1.5);c.restore();}
+}
 function blackoutLabels(c,s){
  const bc=s.blackoutState&&s.blackoutState.controllers&&s.blackoutState.controllers[0];
  if(!bc||!bc.visibleUI)return;const p=s.players[bc.playerIndex];if(!p||p.exit)return;
@@ -165,7 +180,7 @@ function blackoutLabels(c,s){
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{searchLights(c,s);gears(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
+ try{searchLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
