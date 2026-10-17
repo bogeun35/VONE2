@@ -7,14 +7,14 @@ const boxActor=actors.find(a=>a.typeName==='PushBox');
 test('source 01-02 imports all 25 triggers and thorns plus box, preserving links',()=>{
  const c=D.compile(actors,8);assert.equal(c.devices.length,51);assert.deepEqual(c.warnings,[]);
  for(const trigger of c.devices.filter(d=>d.type==='CollisionSwitch')){assert.equal(trigger.w,12);assert.equal(trigger.h,480);assert.ok(c.devices.some(d=>d.type==='Thorn'&&d.name===trigger.targets[0]));}
- const b=c.devices.find(d=>d.type==='PushBox');assert.deepEqual([b.x,b.y,b.w,b.h],[424,102,48,40]);assert.equal(b.requiredPushers,7);
+ const b=c.devices.find(d=>d.type==='PushBox');assert.deepEqual([b.x,b.y,b.w,b.h],[425,103,46,38]);// m_Rect 48 x 40 inset 1 px (InitCollision 0x1816db580)assert.equal(b.requiredPushers,7);
 });
 test('native push threshold scales from one of two to seven of eight players',()=>{
  for(let count=2;count<=8;count++)assert.equal(D.compile([boxActor],count).devices[0].requiredPushers,count-1);
  const s=D.create(D.compile([boxActor],4)),b=s.devices[0],inputs={a:{right:true},b:{right:true},c:{right:true}};
  const people=['a','b','c'].map((id,i)=>({id,x:b.x-32*(i+1),y:b.y,w:32,h:40}));
- D.step(s,{players:people.slice(0,2),inputs,gravity:0});assert.equal(b.x,424);
- D.step(s,{players:people,inputs,gravity:0});assert.equal(b.x,425);assert.equal(b.pushCount,3);
+ D.step(s,{players:people.slice(0,2),inputs,gravity:0});assert.equal(b.x,425);
+ D.step(s,{players:people,inputs,gravity:0});assert.equal(b.x,426);assert.equal(b.pushCount,3);
 });
 // st_w_01_02 mapInitParam is 56 x 11 chips of 48 px, and calcMoveDistance
 // 0x1817219ce/0x1817219fc read exactly those chip counts (`n*3 << 20` = n*48).
@@ -66,7 +66,7 @@ test('falling box lands on terrain and moving thorn disappears on terrain contac
 });
 test('a player on the opposite side blocks a pushed crate',()=>{
  const s=D.create(D.compile([boxActor],2)),b=s.devices[0],left={id:'left',x:b.x-32,y:b.y,w:32,h:40},right={id:'right',x:b.x+b.w,y:b.y,w:32,h:40};
- D.beforeStep(s,{players:[left,right],inputs:{left:{right:true}},gravity:0});assert.equal(b.x,424);assert.equal(b.x+b.w,right.x);
+ D.beforeStep(s,{players:[left,right],inputs:{left:{right:true}},gravity:0});assert.equal(b.x,425);assert.equal(b.x+b.w,right.x);
 });
 test('swept thorn hits player before terrain, and does not hit behind terrain',()=>{
  const s=D.create(D.compile(actors.filter(a=>a.name==='Thorn1'),2));D.signal(s,{event:61,target:'Thorn1'});

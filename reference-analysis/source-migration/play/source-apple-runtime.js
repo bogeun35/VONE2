@@ -65,7 +65,7 @@ function nextFP(rng,min,max){let lo=min,hi=max;if(max<min){lo=max;hi=min;}return
 // Frame.Random 0x181747ad0: PCG32 without 0, % 0xffffffff, - 2^31.
 function frameRandom(rng){let x;do x=pcg32(rng);while(x<1);return ((x%0xffffffff)-0x80000000)|0;}
 // ---- compile ----------------------------------------------------------------------------
-function compile(actors,count){
+function compile(actors,count,options={}){
  if(!Number.isInteger(count)||count<2||count>8)throw Error('Apple count 2..8 required');
  const apples=[],targets=[],baskets=[];let controller=null,playerOrdinal=0;
  actors.forEach((raw,i)=>{const a=raw.properties||raw;if(!allowed(a.playerCount,count))return;const id=raw.id||'source:a'+i,xRaw=fp(a.posX??raw.x),yRaw=fp(a.posY??raw.y);
@@ -87,7 +87,7 @@ function compile(actors,count){
   apples.push(ap);
  });
  if(apples.length&&!controller)throw Error('Apple without AppleController');
- return {schemaVersion:1,count,apples,controller,targets,baskets,shared:null,rng:{...DEFAULT_RNG},completePhysicsFidelity:false};
+ return {schemaVersion:1,count,scaleRaw:options.scaleRaw||F,apples,controller,targets,baskets,shared:null,rng:{...DEFAULT_RNG},completePhysicsFidelity:false};
 }
 const create=clone;
 // ---- apples -----------------------------------------------------------------------------------
@@ -127,7 +127,9 @@ function appleEvent(ap,type,pos){
 // AppleController.CheckDead 0x1816ac800: the native distance is FPMath.Sqrt.
 function checkDead(st,src){for(const ap of st.apples){if(ap===src||!(ap.flags&0x40)||(ap.state!==1&&ap.state!==2))continue;
  const dx=ap.xRaw-src.xRaw,dy=ap.yRaw-src.yRaw;if(N.sqrtRaw(B(mul(dy,dy)+mul(dx,dx)))<=src.blastRaw)appleEvent(ap,EV.DEAD,{xRaw:src.xRaw,yRaw:src.yRaw});}}
-const appleRect=ap=>({x:(ap.xRaw+APPLE_RECT.x)/F,y:(ap.yRaw+APPLE_RECT.y)/F,w:APPLE_RECT.w/F,h:APPLE_RECT.h/F});
+// every collider x the stage scale (AddActor -> SetBaseScale, pivot 0); a circle radius x the scale
+const sc=(st,v)=>st.scaleRaw&&st.scaleRaw!==F?mul(v,st.scaleRaw):v;
+const appleRect=(ap,st)=>({x:(ap.xRaw+sc(st,APPLE_RECT.x))/F,y:(ap.yRaw+sc(st,APPLE_RECT.y))/F,w:sc(st,APPLE_RECT.w)/F,h:sc(st,APPLE_RECT.h)/F});
 // ---- controller ---------------------------------------------------------------------------------
 function controllerUpdate(st,dt){const c=st.controller;if(!c||(c.flags&2)||c.caught>=c.needed)return;
  c.timerRaw-=dt;if(c.timerRaw>0)return;
@@ -163,18 +165,18 @@ function step(st,host){
  for(const t of st.targets)if(!t.started)targetStart(st,t,host);
  // OnUpdate: Apple (79), players (97), PlayerBasket (142), PlayerTarget (143), AppleController (160)
  for(const ap of st.apples)appleUpdate(st,ap,dt,out);
- for(const b of st.baskets){const p=host.players[b.playerIndex];if(!p)continue;b.xRaw=p.xRaw;b.yRaw=p.yRaw+BASKET_Y;b.visible=p.visible!==false;}
+ for(const b of st.baskets){const p=host.players[b.playerIndex];if(!p)continue;b.xRaw=p.xRaw;b.yRaw=p.yRaw+sc(st,BASKET_Y);b.visible=p.visible!==false;}
  for(const t of st.targets)targetUpdate(st,t,host,dt,out);
  controllerUpdate(st,dt);
  // OnUpdate2: Pos += Velo
  for(const ap of st.apples){ap.xRaw+=ap.veloRaw.xRaw;ap.yRaw+=ap.veloRaw.yRaw;}
  // collision
  for(const t of st.targets){if(!(t.flags&8)||!t.visible)continue;
-  for(const ap of st.apples){if(!ap.visible||!(ap.flags&0x40))continue;const r=appleRect(ap),cx=t.xRaw/F,cy=t.yRaw/F,qx=Math.max(r.x,Math.min(cx,r.x+r.w)),qy=Math.max(r.y,Math.min(cy,r.y+r.h));
-   if((qx-cx)**2+(qy-cy)**2<(CROSS_R/F)**2)appleEvent(ap,EV.HIT,{xRaw:t.xRaw,yRaw:t.yRaw});}}
- for(const ap of st.apples){if(!ap.visible||!(ap.flags&0x40))continue;const r=appleRect(ap);
+  for(const ap of st.apples){if(!ap.visible||!(ap.flags&0x40))continue;const r=appleRect(ap,st),cx=t.xRaw/F,cy=t.yRaw/F,qx=Math.max(r.x,Math.min(cx,r.x+r.w)),qy=Math.max(r.y,Math.min(cy,r.y+r.h));
+   if((qx-cx)**2+(qy-cy)**2<(sc(st,CROSS_R)/F)**2)appleEvent(ap,EV.HIT,{xRaw:t.xRaw,yRaw:t.yRaw});}}
+ for(const ap of st.apples){if(!ap.visible||!(ap.flags&0x40))continue;const r=appleRect(ap,st);
   const hit=o=>r.x<o.x+o.w&&r.x+r.w>o.x&&r.y<o.y+o.h&&r.y+r.h>o.y;
-  if(ap.state===3){const b=st.baskets.find(q=>q.visible&&hit({x:(q.xRaw+BASKET_RECT.x)/F,y:(q.yRaw+BASKET_RECT.y)/F,w:BASKET_RECT.w/F,h:BASKET_RECT.h/F}));
+  if(ap.state===3){const b=st.baskets.find(q=>q.visible&&hit({x:(q.xRaw+sc(st,BASKET_RECT.x))/F,y:(q.yRaw+sc(st,BASKET_RECT.y))/F,w:sc(st,BASKET_RECT.w)/F,h:sc(st,BASKET_RECT.h)/F}));
    if(b){out.sounds.push({se:8});b.count++;b.stack+=nextInt(st.rng,1,4);notifyCatch(st,out);inactivate(ap);}}
   else if(ap.state===4){const i=host.players.findIndex(p=>p&&p.layer1Rect&&hit(p.layer1Rect));
    if(i>=0){const p=host.players[i],dx=p.xRaw-ap.xRaw,dy=(p.yRaw)-ap.yRaw,u=(dx===0&&dy===0)?{xRaw:0,yRaw:0}:N.normalizeRaw({xRaw:dx,yRaw:dy});
@@ -182,7 +184,7 @@ function step(st,host){
  // OnPost: Apple CheckOutMap; Post1 jumpProc (Velo = jump; airborne: + Frame.Gravity)
  const bd=host.mapBoundsRaw;
  for(const ap of st.apples){if(!(ap.flags&0x40))continue;
-  if(ap.jumping){if(Math.abs(ap.jumpRaw.xRaw)>=4||Math.abs(ap.jumpRaw.yRaw)>=4){ap.veloRaw={...ap.jumpRaw};ap.jumpRaw={xRaw:0,yRaw:0};}ap.veloRaw.yRaw+=GRAVITY;}
+  if(ap.jumping){if(Math.abs(ap.jumpRaw.xRaw)>=4||Math.abs(ap.jumpRaw.yRaw)>=4){ap.veloRaw={...ap.jumpRaw};ap.jumpRaw={xRaw:0,yRaw:0};}ap.veloRaw.yRaw+=sc(st,GRAVITY);}// Frame.Gravity = stage scale x 0xa666
   if(bd&&(ap.yRaw>bd.fall||ap.yRaw<bd.up||ap.xRaw<bd.left||(bd.right>0&&ap.xRaw>bd.right)))inactivate(ap);}
  return out;
 }

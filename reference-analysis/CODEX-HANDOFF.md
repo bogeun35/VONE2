@@ -93,9 +93,12 @@
 > **1단계 완료(2026-10-17)**: map.stageScaleRaw 설정, 플레이어 몸 32s×46s(기준점 (posX, posY−0.5) 유지), 걷기 3s, 점프 mul(s,−334234)·누르기 가속,
 > 중력 증분 mul(min(42598, 1277952−vy), s), 열쇠(32×56 @(−16,−28))·골 판정 × s(Scene.CreateCollision 기본 pivot 0), 열쇠 따라가기 = 들고 있는 사람 판정 모서리,
 > 탑뷰 몸통 28×32 @(−16,−29) 을 pivot (0,−1) 로 × s, TopView 의 baseScaleRaw = 스테이지 배율(낙하 탐침 7×2 도 배율). s = 1 이면 계산이 예전과 같음.
-> **남은 2단계**: 장치마다 InitCollision 의 고정 크기 비트(flags&4: Rect·DamageRect 는 배율 안 받음)를 확인하고 판정 × s —
-> Switch·JumpStand(10-1), DashBoard·PushBox·WarpInitPos(10-2), BoundBallPitcher·BallKeyBox(10-3), Wind·TopViewMapRect·Switch·DistanceConstraint(9-4),
-> 사과·바구니·과녁(8-1/8-3; 사과 중력은 이미 × s). 동작 값(점프대 세기 등)이 배율을 곱하는지도 디컴파일로 볼 것.
+> **2단계 완료(2026-10-17)**: setAllCollisionScale 0x1816a0370 은 액터의 **모든** 충돌체에 조건 없이 배율을 곱한다(flags&4 는 밀어내기 '안 밀림'
+> 비트이지 크기 고정이 아님 — Rect 도 배율 받음). 장치 InitCollision 은 전부 pivot 0. 적용: 점프대·스위치 판정, Rect(판정 {0,−h,w,h} × s, 인원별 오프셋은
+> 위치라 그대로 — RectComponent.ParseParameter 0x1816e69a0), 대시판 64×8, PushBox(원작 m_Rect 를 사방 1px 줄인 판정 — InitCollision 0x1816db580; 배율 1 판도
+> 1px 바뀜, 테스트 좌표 갱신), 10-3 공 상자·공·발사기(액터 baseScale = 배율, 공 반지름 12s, 중력 mul(s,42598)), 상자에서 나온 열쇠, 바람 몸통·구역, 사과 24×24·
+> 바구니 44×26(머리 위 −46s)·조준점 원 16s·사과 중력 × s. 배율 안 곱하는 동작(디컴파일 확인): 점프대 세기(notifyJump 0x181868c60), 대시판 속도(OnCollided
+> 0x181817220), 밧줄 길이(DistanceConstraint 위치만), 바람 세기, 사과 튕김·폭발 반경. TopViewMapRect 는 맵 칩만 바꿈(충돌체 없음).
 >   원작 공식(배율 s): 플레이어 몸 X=-16s W=32s, **피벗 (0,-1)** 이라 Y=-46s-1 H=46s(발밑 -1 은 그대로, source-player-collision-init.js 머리주석),
 >   걷기 3s(SpeedSwitch 식과 같음), 점프 초기 mul(s,-334234)·누르기 가속도 jumpVelocity 기준, 중력 증분 mul(min(42598, 1277952-vy), s)
 >   (source-player-default.js gravityDelta/jumpVelocity), 열쇠·골·스위치 등 모든 액터 판정 × s. 런타임엔 +16/+47 하드코딩이 48곳 이상 —

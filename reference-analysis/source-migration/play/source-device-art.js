@@ -61,16 +61,17 @@ function enemies(c,s,time){
 }
 function balls(c,s){
  if(!s.pitcherState||!(s.pitcherState.pitchers||[]).length)return;
+ const k=(s.map.stageScaleRaw||F)/F;// stage scale: every piece drawn k times
  for(const p of s.pitcherState.pitchers){const x=p.positionRaw.xRaw/F,y=p.positionRaw.yRaw/F;
-  rr(c,x-27,y-40,54,40,8);fillStroke(c,'#b9a8e6',INK,2);c.beginPath();c.arc(x,y-20,10,0,Math.PI*2);fillStroke(c,'#5b4a86',INK,1.5);}
+  rr(c,x-27*k,y-40*k,54*k,40*k,8*k);fillStroke(c,'#b9a8e6',INK,2);c.beginPath();c.arc(x,y-20*k,10*k,0,Math.PI*2);fillStroke(c,'#5b4a86',INK,1.5);}
  for(const b of (s.keyBoxState&&s.keyBoxState.boxes)||[]){const a=s.boxActors&&s.boxActors[b.id];if(!a)continue;
   // the box's own colliders: index 0 is the body, index 1 the slot the ball enters
-  for(const col of b.colliders||[]){const r=col.rectRaw,box={x:(a.positionRaw.xRaw+r.xRaw)/F,y:(a.positionRaw.yRaw+r.yRaw)/F,w:r.widthRaw/F,h:r.heightRaw/F};
+  for(const col of b.colliders||[]){const r=col.rectRaw,box={x:(a.positionRaw.xRaw+r.xRaw*k)/F,y:(a.positionRaw.yRaw+r.yRaw*k)/F,w:r.widthRaw*k/F,h:r.heightRaw*k/F};
    if(col.index===0){rr(c,box.x,box.y,box.w,box.h,6);fillStroke(c,'#e8b273',INK,2);c.strokeStyle='#b57d43';c.lineWidth=2;c.strokeRect(box.x+5,box.y+5,box.w-10,box.h-10);}
    else{rr(c,box.x,box.y,box.w,box.h,3);fillStroke(c,'#6b4a2e',null);}}}
  for(const a of Object.values(s.ballActors||{})){if(a.visible===false)continue;
-  c.save();c.globalAlpha=a.collisionActive===false?.45:1;c.beginPath();c.arc(a.positionRaw.xRaw/F,a.positionRaw.yRaw/F,12,0,Math.PI*2);fillStroke(c,'#ffe27a',INK,2);
-  c.fillStyle='rgba(255,255,255,.7)';c.beginPath();c.arc(a.positionRaw.xRaw/F-4,a.positionRaw.yRaw/F-4,3.5,0,Math.PI*2);c.fill();c.restore();}
+  c.save();c.globalAlpha=a.collisionActive===false?.45:1;c.beginPath();c.arc(a.positionRaw.xRaw/F,a.positionRaw.yRaw/F,12*k,0,Math.PI*2);fillStroke(c,'#ffe27a',INK,2);
+  c.fillStyle='rgba(255,255,255,.7)';c.beginPath();c.arc(a.positionRaw.xRaw/F-4*k,a.positionRaw.yRaw/F-4*k,3.5*k,0,Math.PI*2);c.fill();c.restore();}
 }
 function winds(c,s,time){
  const W=root.SourceWindDevices;if(!W||!s.windState||!(s.windState.winds||[]).length)return;
@@ -415,18 +416,18 @@ function fakeOverlay(c,s,view){
 // crosshair is a ring (circle 16) in its player's colour; each BasketPlayer carries
 // a basket (44x26) on its head.
 function appleArt(c,s,time){
- const A=root.SourceAppleRuntime;if(!A||!s.appleState||!s.appleState.controller)return;const d=A.displays(s.appleState);
- for(const a of d.apples){c.save();c.translate(a.x,a.y);c.rotate(a.angle*Math.PI/180);
+ const A=root.SourceAppleRuntime;if(!A||!s.appleState||!s.appleState.controller)return;const d=A.displays(s.appleState),k=(s.appleState.scaleRaw||F)/F;// stage scale
+ for(const a of d.apples){c.save();c.translate(a.x,a.y);c.rotate(a.angle*Math.PI/180);c.scale(k,k);
   if(a.bomb){c.beginPath();c.arc(0,1,11,0,Math.PI*2);fillStroke(c,'#3b3550',INK,2);c.strokeStyle='#c8a26a';c.lineWidth=2;c.beginPath();c.moveTo(4,-8);c.quadraticCurveTo(8,-14,12,-12);c.stroke();
    c.fillStyle=(Math.floor(time*8)%2)?'#ffd84d':'#ff7a3d';c.beginPath();c.arc(12,-12,2.5,0,Math.PI*2);c.fill();}
   else{c.beginPath();c.arc(0,1,11,0,Math.PI*2);fillStroke(c,'#ff6b6b',INK,2);c.fillStyle='rgba(255,255,255,.5)';c.beginPath();c.arc(-4,-3,3,0,Math.PI*2);c.fill();
    c.fillStyle='#6dbf5b';c.beginPath();c.ellipse(4,-10,5,2.5,-.5,0,Math.PI*2);c.fill();}
   c.restore();}
  for(const b of d.blasts){c.save();c.globalAlpha=Math.max(0,1-b.r/250);c.strokeStyle='#ffb04d';c.lineWidth=6;c.beginPath();c.arc(b.x,b.y,Math.max(1,b.r),0,Math.PI*2);c.stroke();c.restore();}
- for(const k of d.baskets){c.save();c.translate(k.x,k.y);rr(c,-22,-30,44,26,6);fillStroke(c,'#c98d52',INK,2);c.strokeStyle='rgba(90,55,30,.6)';c.lineWidth=1.5;
-  for(let x=-14;x<=14;x+=7){c.beginPath();c.moveTo(x,-28);c.lineTo(x,-6);c.stroke();}if(k.count)label(c,String(k.count),0,-40,'#fffdf6',14);c.restore();}
- for(const t of d.targets){const col=FRIEND_COLORS[t.playerIndex%8];c.save();c.globalAlpha=t.cooling?.55:1;c.lineWidth=4;c.strokeStyle=col;c.beginPath();c.arc(t.x,t.y,16,0,Math.PI*2);c.stroke();
-  c.lineWidth=2;c.strokeStyle=INK;c.beginPath();c.moveTo(t.x-24,t.y);c.lineTo(t.x-8,t.y);c.moveTo(t.x+8,t.y);c.lineTo(t.x+24,t.y);c.moveTo(t.x,t.y-24);c.lineTo(t.x,t.y-8);c.moveTo(t.x,t.y+8);c.lineTo(t.x,t.y+24);c.stroke();c.restore();}
+ for(const bk of d.baskets){c.save();c.translate(bk.x,bk.y);c.scale(k,k);rr(c,-22,-30,44,26,6);fillStroke(c,'#c98d52',INK,2);c.strokeStyle='rgba(90,55,30,.6)';c.lineWidth=1.5;
+  for(let x=-14;x<=14;x+=7){c.beginPath();c.moveTo(x,-28);c.lineTo(x,-6);c.stroke();}if(bk.count)label(c,String(bk.count),0,-40,'#fffdf6',14);c.restore();}
+ for(const t of d.targets){const col=FRIEND_COLORS[t.playerIndex%8];c.save();c.globalAlpha=t.cooling?.55:1;c.translate(t.x,t.y);c.scale(k,k);c.lineWidth=4;c.strokeStyle=col;c.beginPath();c.arc(0,0,16,0,Math.PI*2);c.stroke();
+  c.lineWidth=2;c.strokeStyle=INK;c.beginPath();c.moveTo(-24,0);c.lineTo(-8,0);c.moveTo(8,0);c.lineTo(24,0);c.moveTo(0,-24);c.lineTo(0,-8);c.moveTo(0,8);c.lineTo(0,24);c.stroke();c.restore();}
 }
 function appleOverlay(c,s,view){const A=root.SourceAppleRuntime;if(!A||!s.appleState||!s.appleState.controller)return;const d=A.displays(s.appleState);
  if(d.counter)label(c,'🍎 '+d.counter.caught+' / '+d.counter.needed,view.width/2,40,'#fffdf6',30);}

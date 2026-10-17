@@ -100,6 +100,8 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   // source framing instead of inventing one.
   const sourceStage=(source&&source.stages||[]).find(entry=>entry.stageId===stageId);
   const sourceVariant=sourceStage&&sourceStage.json&&sourceStage.json.stageInitParamList[t.variant.index];
+  const stageScaleRaw=sourceVariant&&Number.isFinite(sourceVariant.scale)?Math.trunc(Math.fround(Math.fround(sourceVariant.scale)*65536)):null;
+  const SCALE_RAW=stageScaleRaw===null?65536:stageScaleRaw,SCALE=SCALE_RAW/65536;
   const mapInit=sourceVariant&&sourceVariant.mapInitParam||{};
   const view={displayTileHeight:Number(mapInit.displayTileHeight)||0,
    displayHeight:(Number(mapInit.displayTileHeight)||0)*t.tileSize,
@@ -116,8 +118,8 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
    camera:CameraNative.compile({...sourceVariant,mapInitParam:{...mapInit,width:Number(mapInit.width),height:Number(mapInit.height),chipSize:Number(mapInit.chipSize),displayTileHeight:Number(mapInit.displayTileHeight)||0,startTileX:Number(mapInit.startTileX)||0,startTileY:Number(mapInit.startTileY)||0}})}:null;
   if(autoScroll)view.scrollingPorted=true;
   const relays=Relay.create(t.actors,count);
-  const devices=Devices.compile(t.actors,count);
-  const motion=Motion.compile(t.actors,count);
+  const devices=Devices.compile(t.actors,count,{scale:SCALE});
+  const motion=Motion.compile(t.actors,count,{scale:SCALE});
   const gates=Gates.compile(t.actors,count);
   const bridges=Bridges.compile(t.actors,count);
   const blink=Blink.compile(t.actors,count);
@@ -130,7 +132,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const lifts=Lifts.compile(t.actors,count);
   const landmines=Landmines.compile(t.actors,count);
   const poles=Poles.compile(t.actors,count,{});
-  const winds=Winds.compile(t.actors,count,{});
+  const winds=Winds.compile(t.actors,count,{scale:SCALE});
   const speedSwitches=SpeedSwitches.compile(t.actors,count,{nativeContactFacts:true});
   const linePaths=LinePaths.compile(t.actors,count,{});
   const texts=Texts.compile(t.actors,count,{});
@@ -143,9 +145,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   // StageComponent's actor scale (Actor.Initialize 0x18169cd02) is the selected
   // variant's stageInitParam.scale, a stage float, so it goes through convertFP
   // 0x180554310 like every other one. Only the Dossun family reads it so far.
-  const stageScaleRaw=sourceVariant&&Number.isFinite(sourceVariant.scale)?Math.trunc(Math.fround(Math.fround(sourceVariant.scale)*65536)):null;
   const dossunActors=t.actors.filter(a=>['Dossun','PlayerBlockGun'].includes(a.typeName));
-  const SCALE_RAW=stageScaleRaw===null?65536:stageScaleRaw,SCALE=SCALE_RAW/65536;
   if(dossunActors.length&&stageScaleRaw===null)throw new Error('Dossun stage without stageInitParam.scale: '+stageId);
   const searchLights=SearchLights.compile(t.actors,count,{chipSize:t.tileSize});
   const linePathGears=LinePathGears.compile(t.actors,count,{chipSize:t.tileSize});
@@ -168,7 +168,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const goKarts=GoKarts.compile(t.actors,count);
   const rally=Rallies.compile(t.actors,count);
   const fake=Fakes.compile(t.actors,count);
-  const apple=Apples.compile(t.actors,count);
+  const apple=Apples.compile(t.actors,count,{scaleRaw:SCALE_RAW});
   if(apple.controller)apple.camera=CameraNative.compile({...sourceVariant,mapInitParam:{...mapInit,width:Number(mapInit.width),height:Number(mapInit.height),chipSize:Number(mapInit.chipSize),displayTileHeight:Number(mapInit.displayTileHeight)||0,startTileX:Number(mapInit.startTileX)||0,startTileY:Number(mapInit.startTileY)||0}});
   const arrange=Arranges.compile(t.actors,count);
   const giant=Giants.compile(t.actors,count);
@@ -182,13 +182,13 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const danmaku=Danmakus.compile(t.actors,count);
   if(danmaku.observer)danmaku.camera=CameraNative.compile({...sourceVariant,mapInitParam:{...mapInit,width:Number(mapInit.width),height:Number(mapInit.height),chipSize:Number(mapInit.chipSize),displayTileHeight:Number(mapInit.displayTileHeight)||0,startTileX:Number(mapInit.startTileX)||0,startTileY:Number(mapInit.startTileY)||0}});
   const dossuns=Dossuns.compile(t.actors,count,stageScaleRaw===null?{}:{actorScaleRaw:stageScaleRaw});
-  const springs=relays.relays.filter(r=>r.type==='JumpStand').map(r=>({...r,x:r.x-16,y:r.y-(r.parent?38:34),w:32,h:r.parent?38:34}));
+  const springs=relays.relays.filter(r=>r.type==='JumpStand').map(r=>({...r,x:r.x-16*SCALE,y:r.y-(r.parent?38:34)*SCALE,w:32*SCALE,h:(r.parent?38:34)*SCALE}));// x stage scale (pivot 0)
   // The sensor rectangle is the one SwitchComponent.GetCollisionByDirection
   // 0x1817145a0 picks for this switch's direction byte; spring-switch-runtime
   // decodes the table out of SwitchComponent..cctor 0x181715330 and carries it on
   // the relay. Direction 0 keeps the previous 18x9 box above the anchor.
   const switches=relays.relays.filter(r=>r.type==='Switch'||r.type==='DelaySwitch'||r.type==='LandmineSwitch'||r.type==='DeadSwitch')
-   .map(r=>({...r,x:r.x+r.rect.x,y:r.y+r.rect.y,w:r.rect.w,h:r.rect.h}));
+   .map(r=>({...r,x:r.x+r.rect.x*SCALE,y:r.y+r.rect.y*SCALE,w:r.rect.w*SCALE,h:r.rect.h*SCALE}));// Switch.InitCollision 0x181714790 rect x stage scale
   const goal=t.actors.find(a=>a.typeName==='Goal'),key=t.actors.find(a=>a.typeName==='Key');
   if(!goal)throw new Error('Original stage Goal is missing');
   // WarpComponent.ParseParameter 0x181734390 + OnCollided 0x181734a00:
@@ -409,23 +409,28 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
  function boxRects(s){
   const out=[];
   for(const b of (s.keyBoxState&&s.keyBoxState.boxes)||[]){const a=s.boxActors[b.id];if(!a||(a.flags&8192))continue;
-   for(const c of b.colliders){const r=c.rectRaw;out.push({boxId:b.id,index:c.index,x:(a.positionRaw.xRaw+r.xRaw)/BALL_F,y:(a.positionRaw.yRaw+r.yRaw)/BALL_F,w:r.widthRaw/BALL_F,h:r.heightRaw/BALL_F});}}
+   // GetRect: the collider rect x the actor's base scale (stage scale, AddActor), pivot 0
+   const k=(a.baseScaleRaw||BALL_F)/BALL_F;
+   for(const c of b.colliders){const r=c.rectRaw;out.push({boxId:b.id,index:c.index,x:(a.positionRaw.xRaw+r.xRaw*k)/BALL_F,y:(a.positionRaw.yRaw+r.yRaw*k)/BALL_F,w:r.widthRaw*k/BALL_F,h:r.heightRaw*k/BALL_F});}}
   return out;
  }
  // KeyComponent.Creator, called by BallKeyBox.onCollided: the key appears above
  // the box with the established Key rect around that anchor.
  function createKeyAt(s,positionRaw){
-  const ax=positionRaw.xRaw/BALL_F,ay=positionRaw.yRaw/BALL_F,r=Actor.rects.Key;
-  s.map.key={x:ax+r.x,y:ay+r.y,w:r.width,h:r.height,id:'key',taken:false};s.keyTaken=false;s.keyState=null;s.ballMeta.key={...s.map.key};
+  const ax=positionRaw.xRaw/BALL_F,ay=positionRaw.yRaw/BALL_F,r=Actor.rects.Key,k=(s.map.stageScaleRaw||BALL_F)/BALL_F;
+  s.map.key={x:ax+r.x*k,y:ay+r.y*k,w:r.width*k,h:r.height*k,id:'key',taken:false};s.keyTaken=false;s.keyState=null;s.ballMeta.key={...s.map.key};
  }
  function ballTick(s,players,hz){
   if(!s.pitcherState||!(s.pitcherState.pitchers||[]).length)return;
   const live=players.filter(p=>!p.exit&&!p.dead),terrain=s.map.platforms;
-  for(const b of s.keyBoxState.boxes||[])if(!s.boxActors[b.id]&&!s.ballMeta.gone[b.id])s.boxActors[b.id]={entityId:b.id,flags:0,positionRaw:{...b.positionRaw},velocityRaw:{xRaw:0,yRaw:0},baseScaleRaw:BALL_F};
-  const host={transaction:fn=>fn(),dtRaw:1092,gravityRaw:BALL_GRAVITY_RAW,playSe:()=>{},
+  // stage scale (AddActor -> SetBaseScale): every actor's base scale, gravity mul(s, 42598)
+  // (Gears.stageGravityRaw), the ball's circle 12 x s (GetGlobalCircle)
+  const SR=s.map.stageScaleRaw||BALL_F,GRAV=Gears.stageGravityRaw(SR),RADIUS=BALL_RADIUS*SR/BALL_F;
+  for(const b of s.keyBoxState.boxes||[])if(!s.boxActors[b.id]&&!s.ballMeta.gone[b.id])s.boxActors[b.id]={entityId:b.id,flags:0,positionRaw:{...b.positionRaw},velocityRaw:{xRaw:0,yRaw:0},baseScaleRaw:SR};
+  const host={transaction:fn=>fn(),dtRaw:1092,gravityRaw:GRAV,playSe:()=>{},
    createActorEntity:()=>{const id='ball:'+(++s.ballMeta.serial);
     const a={entityId:id,flags:0,positionRaw:{xRaw:0,yRaw:0},velocityRaw:{xRaw:0,yRaw:0},accelerationRaw:{xRaw:0,yRaw:0},
-     previousPositionRaw:{xRaw:0,yRaw:0},previousVelocityRaw:{xRaw:0,yRaw:0},weightRaw:BALL_F,baseScaleRaw:BALL_F,visible:false,collisionActive:true};
+     previousPositionRaw:{xRaw:0,yRaw:0},previousVelocityRaw:{xRaw:0,yRaw:0},weightRaw:BALL_F,baseScaleRaw:SR,visible:false,collisionActive:true};
     s.ballActors[id]=a;return {entityId:id,actor:a};},
    initBallCollision:()=>{},initBallPost:()=>{},
    addActor:(born,positionRaw)=>{born.actor.positionRaw={...positionRaw};born.actor.previousPositionRaw={...positionRaw};},
@@ -433,7 +438,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   // 1. pitchers (birth / wait), then the balls' own update, in that order.
   const existing=Object.keys(s.ballActors);
   const pitcherActors={};
-  for(const p of s.pitcherState.pitchers)pitcherActors[p.id]={entityId:p.id,flags:0,positionRaw:{...p.positionRaw},velocityRaw:{xRaw:0,yRaw:0},baseScaleRaw:BALL_F,initPositionRaw:{...p.positionRaw}};
+  for(const p of s.pitcherState.pitchers)pitcherActors[p.id]={entityId:p.id,flags:0,positionRaw:{...p.positionRaw},velocityRaw:{xRaw:0,yRaw:0},baseScaleRaw:SR,initPositionRaw:{...p.positionRaw}};
   const before=Pitchers.beforeStep(s.pitcherState,{...host,actors:pitcherActors,ballActors:s.ballActors,ballUpdateEntityIds:existing,
    contactedDownByEntity:Object.fromEntries(existing.map(id=>[id,!!s.ballActors[id].contactedDown]))});
   for(const c of before.actorChanges)if(s.ballActors[c.id])Object.assign(s.ballActors[c.id],c);
@@ -447,21 +452,21 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   for(const a of Object.values(s.ballActors)){
    if((a.flags&8192)||a.collisionActive===false||a.visible===false){a.contactedDown=false;continue;}
    let cx=a.positionRaw.xRaw/BALL_F,cy=a.positionRaw.yRaw/BALL_F,down=false;
-   for(const b of [...terrain,...rects.filter(r=>r.index===0)]){const c=circleRectContact(cx,cy,BALL_RADIUS,b);if(!c)continue;
+   for(const b of [...terrain,...rects.filter(r=>r.index===0)]){const c=circleRectContact(cx,cy,RADIUS,b);if(!c)continue;
     cx-=c.nx*c.depth;cy-=c.ny*c.depth;if(c.ny>0.7)down=true;
     contacts.push({ballEntityId:a.entityId,normalRaw:{xRaw:Math.round(c.nx*BALL_F),yRaw:Math.round(c.ny*BALL_F)},targetActor:null,targetLayer:0});}
-   for(const p of live){const c=circleRectContact(cx,cy,BALL_RADIUS,p);if(!c)continue;
+   for(const p of live){const c=circleRectContact(cx,cy,RADIUS,p);if(!c)continue;
     cx-=c.nx*c.depth;cy-=c.ny*c.depth;if(c.ny>0.7)down=true;
     contacts.push({ballEntityId:a.entityId,normalRaw:{xRaw:Math.round(c.nx*BALL_F),yRaw:Math.round(c.ny*BALL_F)},
      targetActor:{entityId:p.id,flags:0,positionRaw:{xRaw:Math.round(AX(p)*BALL_F),yRaw:Math.round(AY(p)*BALL_F)},
       velocityRaw:{xRaw:Math.round(p.vx/hz*BALL_F),yRaw:Math.round(p.vy/hz*BALL_F)},weightRaw:PLAYER_WEIGHT_RAW},targetLayer:1});}
    a.positionRaw={xRaw:Math.round(cx*BALL_F),yRaw:Math.round(cy*BALL_F)};a.contactedDown=down;
-   for(const r of rects.filter(r=>r.index===1))if(circleRectContact(cx,cy,BALL_RADIUS,r))boxContacts.push({boxId:r.boxId,ownCollisionIndex:1,targetActor:a});
+   for(const r of rects.filter(r=>r.index===1))if(circleRectContact(cx,cy,RADIUS,r))boxContacts.push({boxId:r.boxId,ownCollisionIndex:1,targetActor:a});
   }
   if(contacts.length){const after=Pitchers.afterStep(s.pitcherState,{...host,contacts,ballActors:s.ballActors});
    for(const c of after.actorChanges)if(s.ballActors[c.id])Object.assign(s.ballActors[c.id],c);}
   // 4. the key box: its own gravity, then the ball in its slot.
-  const boxCtx={actors:s.boxActors,dtRaw:1092,gravityRaw:BALL_GRAVITY_RAW,collision0ByBox:{}};
+  const boxCtx={actors:s.boxActors,dtRaw:1092,gravityRaw:GRAV,collision0ByBox:{}};
   for(const b of s.keyBoxState.boxes||[]){if(!s.boxActors[b.id])continue;
    const body=rects.find(r=>r.boxId===b.id&&r.index===0),onFloor=!!body&&terrain.some(t=>horizontal(body,t)&&Math.abs(body.y+body.h-t.y)<0.5);
    boxCtx.collision0ByBox[b.id]={contacts:[],mapNormals:onFloor?[{x:0,y:1}]:[]};}

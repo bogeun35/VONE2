@@ -277,7 +277,7 @@ test('the original 05-02 push box holds the direction 3 wall switch down and the
  const relay = () => s.relayState.relays.find(r => r.id === button.id);
  const box = () => s.deviceState.devices.find(d => d.name === 'PushBox3');
  // PushBox3 starts clear of the sensor and the key starts locked.
- assert.equal(box().x, 96); assert.equal(R.overlap(box(), button), false);
+ assert.equal(box().x, 97); assert.equal(R.overlap(box(), button), false);// m_Rect inset 1 px (InitCollision 0x1816db580)
  assert.equal(relay().pressed, false); assert.equal(s.keyActive, false);
  let pressedAt = -1;
  for (let i = 0; i < 600 && s.status === 'play'; i++) {
