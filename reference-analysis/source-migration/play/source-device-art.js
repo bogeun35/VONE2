@@ -131,6 +131,18 @@ function dossuns(c,s){
   rr(c,r.x,r.y,r.w,r.h,6);fillStroke(c,col,INK,2);c.strokeStyle='rgba(255,255,255,.55)';c.lineWidth=2;rr(c,r.x+4,r.y+4,r.w-8,r.h-8,4);c.stroke();
   eyes(c,r.x+r.w/2,r.y+r.h/2,12,6,4);label(c,String(((b&&b.playerIndex)||0)+1),r.x+r.w/2,r.y-10,'#fffdf6',12);}
 }
+function searchLights(c,s){
+ const L=root.SourceSearchLightDevices;if(!L||!s.searchLightState||!s.searchLightState.lights.length)return;
+ for(const l of L.displays(s.searchLightState).lights){const x=l.xRaw/F,y=l.yRaw/F,crit=l.criteriaRaw/F;
+  // the cone insidePoint tests: radius range*criteria, half angle angle*criteria/2,
+  // direction = worldDirection with Y flipped into screen space
+  const r=l.rangeRaw/F*crit,half=l.angleRaw/F*crit/2*Math.PI/180,dir=Math.atan2(-l.worldDirectionRaw.yRaw,l.worldDirectionRaw.xRaw);
+  const a=Math.max(0,Math.min(1,l.brightnessRaw/F));
+  if(a>0){c.save();const g=c.createRadialGradient(x,y,4,x,y,r);g.addColorStop(0,'rgba(255,240,150,'+(.55*a)+')');g.addColorStop(1,'rgba(255,240,150,'+(.12*a)+')');
+   c.fillStyle=g;c.beginPath();c.moveTo(x,y);c.arc(x,y,r,dir-half,dir+half);c.closePath();c.fill();c.restore();}
+  c.save();c.translate(x,y);c.rotate(dir-Math.PI/2);rr(c,-10,-8,20,14,5);fillStroke(c,a>0?'#ffe27a':'#b8b2c8',INK,1.5);c.restore();
+ }
+}
 function blackoutLabels(c,s){
  const bc=s.blackoutState&&s.blackoutState.controllers&&s.blackoutState.controllers[0];
  if(!bc||!bc.visibleUI)return;const p=s.players[bc.playerIndex];if(!p||p.exit)return;
@@ -139,7 +151,7 @@ function blackoutLabels(c,s){
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
+ try{searchLights(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
