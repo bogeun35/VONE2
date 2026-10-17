@@ -510,10 +510,13 @@ function throwArt(c,s,time){
   else fillStroke(c,'#fff4c2',INK,2);c.restore();}
  for(const b of d.blasts){c.save();c.globalAlpha=Math.max(0,1-b.t);c.strokeStyle='#ffb04d';c.lineWidth=5;c.beginPath();c.arc(b.x,b.y,8+40*b.t,0,Math.PI*2);c.stroke();c.restore();}
 }
+// Shooting rounds: player gun bullets (circle 7) in the shooter's colour.
+function planeArt(c,s,time){const P=root.SourcePlaneRuntime;if(!P||!s.planeState||!s.planeState.guns.length)return;
+ for(const b of P.displays(s.planeState).bullets){c.save();c.globalAlpha=b.fading?.4:1;c.beginPath();c.ellipse(b.x,b.y,b.r+3,b.r-2,0,0,Math.PI*2);fillStroke(c,FRIEND_COLORS[(b.colorIndex||0)%8],INK,1.5);c.restore();}}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);moleArt(c,s,time);throwArt(c,s,time);}
+ try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);moleArt(c,s,time);throwArt(c,s,time);planeArt(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).

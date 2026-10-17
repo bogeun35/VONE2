@@ -59,9 +59,10 @@
   common?require('./source-arrangement-runtime.js'):root.SourceArrangementRuntime,
   common?require('./source-giant-runtime.js'):root.SourceGiantRuntime,
   common?require('./source-mole-runtime.js'):root.SourceMoleRuntime,
-  common?require('./source-throwball-runtime.js'):root.SourceThrowBallRuntime);
+  common?require('./source-throwball-runtime.js'):root.SourceThrowBallRuntime,
+  common?require('./source-plane-runtime.js'):root.SourcePlaneRuntime);
  if(common)module.exports=api;root.SourceStageRuntime=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges,Blink,BlinkThunders,WarpInit,SwitchTimers,Enemies,ThornCeilings,CountUps,Lifts,Landmines,Poles,Winds,SpeedSwitches,LinePaths,Texts,Coins,Checkpoints,TouchEnergies,Pitchers,Balls,KeyBoxes,Blackouts,Players,Dossuns,SearchLights,LinePathGears,UpDownLifts,WarpGuns,BreakableRects,PlayerMagnets,ColorBoxes,MoveContact,Gears,TargetGroups,SineLifts,Ghosts,TopViews,Constraints,BatEnemies,Capturings,StepEnemies,HalfInputs,AutoScroll,CameraNative,FrontSwitches,GoKarts,Rallies,Fakes,Apples,Arranges,Giants,Moles,ThrowBalls){
+})(typeof globalThis!=='undefined'?globalThis:this,function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges,Blink,BlinkThunders,WarpInit,SwitchTimers,Enemies,ThornCeilings,CountUps,Lifts,Landmines,Poles,Winds,SpeedSwitches,LinePaths,Texts,Coins,Checkpoints,TouchEnergies,Pitchers,Balls,KeyBoxes,Blackouts,Players,Dossuns,SearchLights,LinePathGears,UpDownLifts,WarpGuns,BreakableRects,PlayerMagnets,ColorBoxes,MoveContact,Gears,TargetGroups,SineLifts,Ghosts,TopViews,Constraints,BatEnemies,Capturings,StepEnemies,HalfInputs,AutoScroll,CameraNative,FrontSwitches,GoKarts,Rallies,Fakes,Apples,Arranges,Giants,Moles,ThrowBalls,Planes){
  'use strict';
  const clone=x=>JSON.parse(JSON.stringify(x));
  const overlap=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
@@ -69,6 +70,11 @@
  const box=r=>({x:r.x,y:r.y,w:r.width,h:r.height});
  const NATIVE=Object.freeze({walk:3,jump:-334234/65536,gravity:42598/65536,terminal:19.5,holdFactor:13107/65536,holdFrames:14});
  // PlayerComponent.parseParameter: slot 0 -> +9; Initialize 0x1816bd520 then LookLeft when it is set.
+// The player anchor (Pos): body X = -16*s, W = 32*s, Y = -46*s - 1, H = 46*s (pivot (0,-1),
+// source-player-collision-init.js), so Pos = (x + w/2, y + h + 1) for every stage scale s.
+function AX(p){return p.x+p.w/2;}
+function AY(p){return p.y+p.h+1;}
+function setAnchor(p,x,y){p.x=x-p.w/2;p.y=y-p.h-1;}
 function playerLooksLeft(a){const p=a&&(a.properties||a),d=p&&p.datas&&p.datas[0];return !!(d&&d.t===1&&Math.trunc(Math.fround(Math.fround(d.f)*65536))>>16);}
 function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}={}){
   if(!['st_w_01_01','st_w_01_02','st_w_01_03','st_w_01_04','st_w_04_01','st_w_04_03','st_w_04_04','st_w_05_02','st_w_10_02','st_w_11_04','st_w_07_02','st_w_10_01','st_w_10_04','st_w_13_01','st_w_11_02','st_w_12_03','st_w_03_02','st_w_10_03','st_w_05_01','st_w_02_02','st_w_07_03','st_w_14_03','st_w_03_01','st_w_15_01','st_w_05_04','st_w_14_01','st_w_03_03','st_w_12_02','st_w_15_02','st_w_12_04','st_w_02_04','st_w_04_02','st_w_07_04','st_w_09_04','st_w_09_01','st_w_09_03','st_w_09_02','st_w_02_01','st_w_07_01','st_w_15_04','st_w_02_03','st_w_12_01','st_w_05_03','st_w_13_03','st_w_13_04','st_w_08_01','st_w_08_03','st_w_03_04','st_w_14_04','st_w_14_02','st_w_08_02','st_w_08_04'].includes(stageId))throw new Error('Source stage runtime does not support this stage yet');
@@ -154,6 +160,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const mole=Moles.compile(t.actors,count);
   const throwball=ThrowBalls.compile(t.actors,count);
   if(throwball.controller)throwball.camera=CameraNative.compile({...sourceVariant,mapInitParam:{...mapInit,width:Number(mapInit.width),height:Number(mapInit.height),chipSize:Number(mapInit.chipSize),displayTileHeight:Number(mapInit.displayTileHeight)||0,startTileX:Number(mapInit.startTileX)||0,startTileY:Number(mapInit.startTileY)||0}});
+  const planes={guns:Planes.compileGuns(t.actors,count)};
   const dossuns=Dossuns.compile(t.actors,count,stageScaleRaw===null?{}:{actorScaleRaw:stageScaleRaw});
   const springs=relays.relays.filter(r=>r.type==='JumpStand').map(r=>({...r,x:r.x-16,y:r.y-(r.parent?38:34),w:32,h:r.parent?38:34}));
   // The sensor rectangle is the one SwitchComponent.GetCollisionByDirection
@@ -175,7 +182,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
    return {id:'warp:'+i,type:a.typeName,x:a.x,y:a.y,w:n(0),h:n(1),targetAll:a.typeName==='WarpAll',
     destination:{x:n(2),y:n(3)},ordinalOffset:{x:n(4),y:n(5)},counter:0};
   });
-  const supported=new Set(['Player','Key','Goal','Warp','WarpAll','CollisionConstraintMove','MapRect','TopViewMapRect','JumpStand','JumpStandMediator','Switch','DelaySwitch','DeadSwitch','Rect','DashBoard','FallingWall',...Devices.supportedTypes,...Gates.supportedTypes,...Bridges.supportedTypes,...Blink.supportedTypes,...BlinkThunders.supportedTypes,...WarpInit.supportedTypes,...SwitchTimers.supportedTypes,...Enemies.supportedTypes,...ThornCeilings.supportedTypes,...CountUps.supportedTypes,...Lifts.supportedTypes,...Landmines.supportedTypes,...Poles.supportedTypes,...Winds.supportedTypes,'SpeedSwitch','MoveWall',...LinePaths.supportedTypes,...Texts.supportedTypes,...Coins.supportedTypes,...Checkpoints.supportedTypes,...TouchEnergies.supportedTypes,'BoundBallPitcher',...KeyBoxes.supportedTypes,...Blackouts.supportedTypes,...Dossuns.supportedTypes,...SearchLights.supportedTypes,...LinePathGears.supportedTypes,...UpDownLifts.supportedTypes,...WarpGuns.supportedTypes,...BreakableRects.supportedTypes,...PlayerMagnets.supportedTypes,...ColorBoxes.supportedTypes,...Gears.supportedTypes,...TargetGroups.supportedTypes,...SineLifts.supportedTypes,...Ghosts.supportedTypes,...TopViews.supportedTypes,...Constraints.supportedTypes,...BatEnemies.supportedTypes,...Capturings.supportedTypes,...StepEnemies.supportedTypes,...HalfInputs.supportedTypes,...FrontSwitches.supportedTypes,...GoKarts.supportedTypes,...Rallies.supportedTypes,...Fakes.supportedTypes,...Apples.supportedTypes,...Arranges.supportedTypes,...Giants.supportedTypes,...Moles.supportedTypes,...ThrowBalls.supportedTypes]);
+  const supported=new Set(['Player','Key','Goal','Warp','WarpAll','CollisionConstraintMove','MapRect','TopViewMapRect','JumpStand','JumpStandMediator','Switch','DelaySwitch','DeadSwitch','Rect','DashBoard','FallingWall',...Devices.supportedTypes,...Gates.supportedTypes,...Bridges.supportedTypes,...Blink.supportedTypes,...BlinkThunders.supportedTypes,...WarpInit.supportedTypes,...SwitchTimers.supportedTypes,...Enemies.supportedTypes,...ThornCeilings.supportedTypes,...CountUps.supportedTypes,...Lifts.supportedTypes,...Landmines.supportedTypes,...Poles.supportedTypes,...Winds.supportedTypes,'SpeedSwitch','MoveWall',...LinePaths.supportedTypes,...Texts.supportedTypes,...Coins.supportedTypes,...Checkpoints.supportedTypes,...TouchEnergies.supportedTypes,'BoundBallPitcher',...KeyBoxes.supportedTypes,...Blackouts.supportedTypes,...Dossuns.supportedTypes,...SearchLights.supportedTypes,...LinePathGears.supportedTypes,...UpDownLifts.supportedTypes,...WarpGuns.supportedTypes,...BreakableRects.supportedTypes,...PlayerMagnets.supportedTypes,...ColorBoxes.supportedTypes,...Gears.supportedTypes,...TargetGroups.supportedTypes,...SineLifts.supportedTypes,...Ghosts.supportedTypes,...TopViews.supportedTypes,...Constraints.supportedTypes,...BatEnemies.supportedTypes,...Capturings.supportedTypes,...StepEnemies.supportedTypes,...HalfInputs.supportedTypes,...FrontSwitches.supportedTypes,...GoKarts.supportedTypes,...Rallies.supportedTypes,...Fakes.supportedTypes,...Apples.supportedTypes,...Arranges.supportedTypes,...Giants.supportedTypes,...Moles.supportedTypes,...ThrowBalls.supportedTypes,...Planes.supportedTypes]);
   const unsupported=[...new Set(t.actors.filter(a=>!supported.has(a.typeName)).map(a=>a.typeName))];
   const missingMechanics=['Native tick frequency (60 Hz explicit prototype calibration)',
    'Native collision pushback and update ordering equivalence',
@@ -224,12 +231,14 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
    view,coordinateSystem:'Y-down'};
   // TargetPlayer (132) / BasketPlayer (133) / CannonPlayer are Players from ActorFactory.createPlayer
   // (createTargetPlayer 0x1816a47f0 / createBasketPlayer 0x1816a4910 / createCannonPlayer 0x1816a49a0), in actor order.
-  if(!map.spawns.length){const variants=t.actors.filter(a=>['TargetPlayer','BasketPlayer','CannonPlayer'].includes(a.typeName)&&Actor.actorPopulationAllowed(a.playerCount||0,count)).slice(0,count);
-   if(variants.length)map.spawns=variants.map(a=>({x:a.posX-16,y:a.posY-47-0.5,variant:a.typeName,lookLeft:playerLooksLeft(a)}));}
+  if(!map.spawns.length){const variants=t.actors.filter(a=>['TargetPlayer','BasketPlayer','CannonPlayer','PlanePlayer','BattlePlanePlayer'].includes(a.typeName)&&Actor.actorPopulationAllowed(a.playerCount||0,count)).slice(0,count);
+   if(variants.length)map.spawns=variants.map(a=>({x:a.posX-16,y:a.posY-47-0.5,variant:a.typeName,lookLeft:playerLooksLeft(a),
+    // PlayerComponent.parseParameter: plane types (0x1a / 0x6b) may look left only when slot 7 is 1
+    ...(a.typeName==='PlanePlayer'||a.typeName==='BattlePlanePlayer'?{plane:{battle:a.typeName==='BattlePlanePlayer',lookLeftAllowed:Math.trunc(Math.fround(((a.datas||[])[7]||{}).f||0))===1}}:{})}));}
   // 13-4 has no Player actor: the participants start on the first bodies and take
   // the assigned FakePlayers at the timer's OnStart (fakeTick).
   if(!map.spawns.length&&fake.fakes.length)map.spawns=fake.fakes.slice(0,count).map(f=>({x:f.xRaw/65536-16,y:f.yRaw/65536-47}));
-  return {schemaVersion:1,count,map,relays,devices,motion,gates,bridges,blink,blinkThunders,warpInit,switchTimers,enemies,thornCeilings,countUps,lifts,landmines,poles,winds,speedSwitches,linePaths,texts,coins,checkpoints,touchEnergies,pitchers,keyBoxes,blackouts,dossuns,throwball,mole,giant,arrange,apple,fake,rally,goKarts,frontSwitches,autoScroll,halfInput,stepEnemies,capturing,batEnemies,constraints,topViews,ghosts,sineLifts,targetGroups,gears,colorBoxes,playerMagnets,breakableRects,warpGuns,upDownLifts,linePathGears,searchLights,status:{state:'calibration_pending',missingMechanics,
+  return {schemaVersion:1,count,map,relays,devices,motion,gates,bridges,blink,blinkThunders,warpInit,switchTimers,enemies,thornCeilings,countUps,lifts,landmines,poles,winds,speedSwitches,linePaths,texts,coins,checkpoints,touchEnergies,pitchers,keyBoxes,blackouts,dossuns,planes,throwball,mole,giant,arrange,apple,fake,rally,goKarts,frontSwitches,autoScroll,halfInput,stepEnemies,capturing,batEnemies,constraints,topViews,ghosts,sineLifts,targetGroups,gears,colorBoxes,playerMagnets,breakableRects,warpGuns,upDownLifts,linePathGears,searchLights,status:{state:'calibration_pending',missingMechanics,
    unsupportedActorTypes:unsupported,sourceStage:stageId,sourceY:'down',completePhysicsFidelity:false}};
  }
  function create(compiled,options={}){
@@ -237,9 +246,9 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const map=clone(compiled.map),count=compiled.count,ids=options.ids||Array.from({length:count},(_,i)=>'p'+(i+1));
   if(ids.length!==count||new Set(ids).size!==count||ids.some(id=>typeof id!=='string'||!id))throw new Error('Unique IDs must match player count');
   const initPositions=(compiled.warpInit&&compiled.warpInit.initPositions)||[];
-  const state={map,players:ids.map((id,i)=>({id,...map.spawns[i],initPos:initPositions[i]||{x:map.spawns[i].x+16,y:map.spawns[i].y+47.5},onPole:!!(compiled.poles&&compiled.poles.poles&&compiled.poles.poles.length),lookingRight:!map.spawns[i].lookLeft,facingLeft:!!map.spawns[i].lookLeft,w:32,h:46,vx:0,vy:0,grounded:false,ground:false,
+  const state={map,players:ids.map((id,i)=>({id,...map.spawns[i],initPos:initPositions[i]||{x:map.spawns[i].x+16,y:map.spawns[i].y+47.5},onPole:!!(compiled.poles&&compiled.poles.poles&&compiled.poles.poles.length),lookingRight:!map.spawns[i].lookLeft,facingLeft:!!map.spawns[i].lookLeft,...(map.spawns[i].plane?{plane:{...map.spawns[i].plane,life:map.spawns[i].plane.battle?Planes.createLife():null}}:{}),w:32,h:46,vx:0,vy:0,grounded:false,ground:false,
    supportId:null,jump:false,jumpFrame:0,exit:false,visible:true,playerState:1})),
-   relayState:clone(compiled.relays),deviceState:Devices.create(compiled.devices||{schemaVersion:1,count,devices:[],warnings:[]}),motionState:Motion.create(compiled.motion||{count,rects:[],dashBoards:[],walls:[]}),gateState:Gates.create(compiled.gates||{count,gates:[],observers:[],keys:[]}),bridgeState:Bridges.create(compiled.bridges||{count,bridges:[],thunders:[],keyTargets:[],keyTaken:false}),blinkState:Blink.create(compiled.blink||Blink.compile([],count)),blinkThunderState:BlinkThunders.create(compiled.blinkThunders||BlinkThunders.compile([],count)),warpInitState:WarpInit.create(compiled.warpInit||WarpInit.compile([],count)),switchTimerState:SwitchTimers.create(compiled.switchTimers||SwitchTimers.compile([],count)),enemyState:Enemies.create(compiled.enemies||Enemies.compile([],count)),thornCeilingState:ThornCeilings.create(compiled.thornCeilings||ThornCeilings.compile([],count)),countUpState:CountUps.create(compiled.countUps||CountUps.compile([],count)),liftState:Lifts.create(compiled.lifts||Lifts.compile([],count)),landmineState:Landmines.create(compiled.landmines||Landmines.compile([],count)),poleState:Poles.create(compiled.poles||Poles.compile([],count,{})),windState:Winds.create(compiled.winds||Winds.compile([],count,{})),speedSwitchState:SpeedSwitches.create(compiled.speedSwitches||SpeedSwitches.compile([],count,{})),linePathState:LinePaths.create(compiled.linePaths||LinePaths.compile([],count,{})),textsState:Texts.create(compiled.texts||Texts.compile([],count,{})),coinsState:Coins.create(compiled.coins||Coins.compile([],count,{})),checkpointsState:Checkpoints.create(compiled.checkpoints||Checkpoints.compile([],count,{})),touchEnergiesState:TouchEnergies.create(compiled.touchEnergies||TouchEnergies.compile([],count,{})),pitcherState:Pitchers.create(compiled.pitchers||Pitchers.compile([],count)),keyBoxState:KeyBoxes.create(compiled.keyBoxes||KeyBoxes.compile([],count)),blackoutState:Blackouts.create(compiled.blackouts||Blackouts.compile([],count,{})),dossunState:Dossuns.create(compiled.dossuns||Dossuns.compile([],count,{})),throwState:ThrowBalls.create(compiled.throwball||ThrowBalls.compile([],count)),moleState:Moles.create(compiled.mole||Moles.compile([],count),{stageScaleRaw:map.stageScaleRaw||65536}),giantState:Giants.create(compiled.giant||Giants.compile([],count),{playerCount:count,stageScaleRaw:map.stageScaleRaw||65536}),arrangeState:Arranges.create(compiled.arrange||Arranges.compile([],count)),appleState:Apples.create(compiled.apple||Apples.compile([],count)),fakeState:Fakes.create(compiled.fake||Fakes.compile([],count)),rallyState:Rallies.create(compiled.rally||Rallies.compile([],count)),goKartState:GoKarts.create(compiled.goKarts||GoKarts.compile([],count)),frontSwitchState:FrontSwitches.create(compiled.frontSwitches||FrontSwitches.compile([],count)),autoScrollState:compiled.autoScroll?(()=>{const sc=AutoScroll.create(compiled.autoScroll.scroll,{freshStageComponent:true}),cam=CameraNative.create(compiled.autoScroll.camera,null);return {scroll:sc,camera:cam,cameraAreaRaw:CameraNative.stageAreaRaw(cam),steps:0};})():null,halfInputState:HalfInputs.create(compiled.halfInput||HalfInputs.compile([],count)),stepEnemyState:StepEnemies.create(compiled.stepEnemies||StepEnemies.compile([],count)),capturingState:Capturings.create(compiled.capturing||Capturings.compile([],count)),batState:BatEnemies.create(compiled.batEnemies||BatEnemies.compile([],count)),constraintState:Constraints.create(compiled.constraints||Constraints.compile([],count,{nativeConstraintFacts:true})),topViewState:TopViews.create(compiled.topViews||TopViews.compile([],count,{})),ghostState:Ghosts.create(compiled.ghosts||Ghosts.compile([],count,{checkpointInfo:{isActive:false}})),sineLiftState:SineLifts.create(compiled.sineLifts||SineLifts.compile([],count)),targetGroupState:TargetGroups.create(compiled.targetGroups||TargetGroups.compile([],count)),rollGearState:Gears.create(compiled.gears||Gears.compile([],count,{})),colorBoxState:ColorBoxes.create(compiled.colorBoxes||ColorBoxes.compile([],count,{})),magnetState:PlayerMagnets.create(compiled.playerMagnets||PlayerMagnets.compile([],count)),breakableState:BreakableRects.create(compiled.breakableRects||BreakableRects.compile([],count)),warpGunState:WarpGuns.create(compiled.warpGuns||WarpGuns.compile([],count)),upDownLiftState:UpDownLifts.create(compiled.upDownLifts||UpDownLifts.compile([],count)),gearState:LinePathGears.create(compiled.linePathGears||LinePathGears.compile([],count,{})),searchLightState:SearchLights.create(compiled.searchLights||SearchLights.compile([],count,{})),ballActors:{},boxActors:{},ballMeta:{serial:0,gone:{},key:null},playTimeRaw:0,keyActive:!compiled.gates||compiled.gates.keys.every(k=>k.active),sourceStatus:clone(compiled.status),physics:clone(map.physics),
+   relayState:clone(compiled.relays),deviceState:Devices.create(compiled.devices||{schemaVersion:1,count,devices:[],warnings:[]}),motionState:Motion.create(compiled.motion||{count,rects:[],dashBoards:[],walls:[]}),gateState:Gates.create(compiled.gates||{count,gates:[],observers:[],keys:[]}),bridgeState:Bridges.create(compiled.bridges||{count,bridges:[],thunders:[],keyTargets:[],keyTaken:false}),blinkState:Blink.create(compiled.blink||Blink.compile([],count)),blinkThunderState:BlinkThunders.create(compiled.blinkThunders||BlinkThunders.compile([],count)),warpInitState:WarpInit.create(compiled.warpInit||WarpInit.compile([],count)),switchTimerState:SwitchTimers.create(compiled.switchTimers||SwitchTimers.compile([],count)),enemyState:Enemies.create(compiled.enemies||Enemies.compile([],count)),thornCeilingState:ThornCeilings.create(compiled.thornCeilings||ThornCeilings.compile([],count)),countUpState:CountUps.create(compiled.countUps||CountUps.compile([],count)),liftState:Lifts.create(compiled.lifts||Lifts.compile([],count)),landmineState:Landmines.create(compiled.landmines||Landmines.compile([],count)),poleState:Poles.create(compiled.poles||Poles.compile([],count,{})),windState:Winds.create(compiled.winds||Winds.compile([],count,{})),speedSwitchState:SpeedSwitches.create(compiled.speedSwitches||SpeedSwitches.compile([],count,{})),linePathState:LinePaths.create(compiled.linePaths||LinePaths.compile([],count,{})),textsState:Texts.create(compiled.texts||Texts.compile([],count,{})),coinsState:Coins.create(compiled.coins||Coins.compile([],count,{})),checkpointsState:Checkpoints.create(compiled.checkpoints||Checkpoints.compile([],count,{})),touchEnergiesState:TouchEnergies.create(compiled.touchEnergies||TouchEnergies.compile([],count,{})),pitcherState:Pitchers.create(compiled.pitchers||Pitchers.compile([],count)),keyBoxState:KeyBoxes.create(compiled.keyBoxes||KeyBoxes.compile([],count)),blackoutState:Blackouts.create(compiled.blackouts||Blackouts.compile([],count,{})),dossunState:Dossuns.create(compiled.dossuns||Dossuns.compile([],count,{})),planeState:{...clone(compiled.planes||{guns:[]}),rng:{state:'9600629759793949339',inc:'15726070495360670683'}},throwState:ThrowBalls.create(compiled.throwball||ThrowBalls.compile([],count)),moleState:Moles.create(compiled.mole||Moles.compile([],count),{stageScaleRaw:map.stageScaleRaw||65536}),giantState:Giants.create(compiled.giant||Giants.compile([],count),{playerCount:count,stageScaleRaw:map.stageScaleRaw||65536}),arrangeState:Arranges.create(compiled.arrange||Arranges.compile([],count)),appleState:Apples.create(compiled.apple||Apples.compile([],count)),fakeState:Fakes.create(compiled.fake||Fakes.compile([],count)),rallyState:Rallies.create(compiled.rally||Rallies.compile([],count)),goKartState:GoKarts.create(compiled.goKarts||GoKarts.compile([],count)),frontSwitchState:FrontSwitches.create(compiled.frontSwitches||FrontSwitches.compile([],count)),autoScrollState:compiled.autoScroll?(()=>{const sc=AutoScroll.create(compiled.autoScroll.scroll,{freshStageComponent:true}),cam=CameraNative.create(compiled.autoScroll.camera,null);return {scroll:sc,camera:cam,cameraAreaRaw:CameraNative.stageAreaRaw(cam),steps:0};})():null,halfInputState:HalfInputs.create(compiled.halfInput||HalfInputs.compile([],count)),stepEnemyState:StepEnemies.create(compiled.stepEnemies||StepEnemies.compile([],count)),capturingState:Capturings.create(compiled.capturing||Capturings.compile([],count)),batState:BatEnemies.create(compiled.batEnemies||BatEnemies.compile([],count)),constraintState:Constraints.create(compiled.constraints||Constraints.compile([],count,{nativeConstraintFacts:true})),topViewState:TopViews.create(compiled.topViews||TopViews.compile([],count,{})),ghostState:Ghosts.create(compiled.ghosts||Ghosts.compile([],count,{checkpointInfo:{isActive:false}})),sineLiftState:SineLifts.create(compiled.sineLifts||SineLifts.compile([],count)),targetGroupState:TargetGroups.create(compiled.targetGroups||TargetGroups.compile([],count)),rollGearState:Gears.create(compiled.gears||Gears.compile([],count,{})),colorBoxState:ColorBoxes.create(compiled.colorBoxes||ColorBoxes.compile([],count,{})),magnetState:PlayerMagnets.create(compiled.playerMagnets||PlayerMagnets.compile([],count)),breakableState:BreakableRects.create(compiled.breakableRects||BreakableRects.compile([],count)),warpGunState:WarpGuns.create(compiled.warpGuns||WarpGuns.compile([],count)),upDownLiftState:UpDownLifts.create(compiled.upDownLifts||UpDownLifts.compile([],count)),gearState:LinePathGears.create(compiled.linePathGears||LinePathGears.compile([],count,{})),searchLightState:SearchLights.create(compiled.searchLights||SearchLights.compile([],count,{})),ballActors:{},boxActors:{},ballMeta:{serial:0,gone:{},key:null},playTimeRaw:0,keyActive:!compiled.gates||compiled.gates.keys.every(k=>k.active),sourceStatus:clone(compiled.status),physics:clone(map.physics),
    status:'play',elapsed:0,ticks:0,accumulator:0,// A BallKeyBox creates the key later (createKeyAt), so its round starts locked.
    keyTaken:!map.key&&!((compiled.keyBoxes&&compiled.keyBoxes.boxes)||[]).length,
    // GoalComponent flag 1: opened only by the key's collision (layer 10) or event 61
@@ -250,7 +259,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
    // Creator zeroes the local checked flag; global checkpoint info persists on retry.
    for(const c of state.checkpointsState.checkpoints)c.checked=false;
    if(state.checkpointsState.checkpointInfo.isActive){
-    state.players.forEach((p,i)=>{const r=Checkpoints.respawn(state.checkpointsState,i,i);p.x=r.actorPosition.x-16;p.y=r.actorPosition.y-47;});
+    state.players.forEach((p,i)=>{const r=Checkpoints.respawn(state.checkpointsState,i,i);setAnchor(p,r.actorPosition.x,r.actorPosition.y);});
     state.playTimeRaw=state.checkpointsState.checkpointInfo.playTimeRaw;
     // Ghost.Creator: with an active checkpoint the ghost starts at the 9th respawn position
     const rp=state.checkpointsState.checkpointInfo.respawnPositions||[];if(rp.length>8&&state.ghostState)for(const g of state.ghostState.ghosts)g.positionRaw={...rp[8]};
@@ -308,7 +317,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   p.animation=dir<0?14:dir>0?15:13;
   const out=Poles.afterStep(s.poleState,{players:[{id:p.id,nativeState:10,lookingRight:true,anchorYRaw:Math.round(nextY*F)}]});
   const c=out.playerConstraints.find(q=>q.playerId===p.id);
-  p.x=c.anchorXRaw/F-16;p.y=c.anchorYRaw/F-47;
+  setAnchor(p,c.anchorXRaw/F,c.anchorYRaw/F);
  }
  // FloatingThorn collision: the native callback sends event 43 to a category 1
  // (player) or 8 actor it touches, and event 43 is the player death path that
@@ -324,7 +333,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
     if(overlap(body,{x:r.xRaw/F,y:r.yRaw/F,w:r.widthRaw/F,h:r.heightRaw/F})){collisions.push({thornId:t.id,targetId:p.id,category:1});break;}
   }
   if(!collisions.length)return [];
-  const riders=players.filter(p=>!p.exit&&!p.dead).map(p=>({id:p.id,nativeState:p.onPole?10:1,lookingRight:true,anchorYRaw:Math.round((p.y+47)*F)}));
+  const riders=players.filter(p=>!p.exit&&!p.dead).map(p=>({id:p.id,nativeState:p.onPole?10:1,lookingRight:true,anchorYRaw:Math.round(AY(p)*F)}));
   const out=Poles.afterStep(s.poleState,{players:riders,collisions});
   return out.events.filter(e=>e.eventType===43).map(e=>players.find(q=>q.id===e.targetId)).filter(q=>q&&!q.immortal).map(q=>q.id);
  }
@@ -426,7 +435,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
    for(const p of live){const c=circleRectContact(cx,cy,BALL_RADIUS,p);if(!c)continue;
     cx-=c.nx*c.depth;cy-=c.ny*c.depth;if(c.ny>0.7)down=true;
     contacts.push({ballEntityId:a.entityId,normalRaw:{xRaw:Math.round(c.nx*BALL_F),yRaw:Math.round(c.ny*BALL_F)},
-     targetActor:{entityId:p.id,flags:0,positionRaw:{xRaw:Math.round((p.x+16)*BALL_F),yRaw:Math.round((p.y+47)*BALL_F)},
+     targetActor:{entityId:p.id,flags:0,positionRaw:{xRaw:Math.round(AX(p)*BALL_F),yRaw:Math.round(AY(p)*BALL_F)},
       velocityRaw:{xRaw:Math.round(p.vx/hz*BALL_F),yRaw:Math.round(p.vy/hz*BALL_F)},weightRaw:PLAYER_WEIGHT_RAW},targetLayer:1});}
    a.positionRaw={xRaw:Math.round(cx*BALL_F),yRaw:Math.round(cy*BALL_F)};a.contactedDown=down;
    for(const r of rects.filter(r=>r.index===1))if(circleRectContact(cx,cy,BALL_RADIUS,r))boxContacts.push({boxId:r.boxId,ownCollisionIndex:1,targetActor:a});
@@ -465,7 +474,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const bodyOf=p=>s.map.topView?tvBody(p):{id:p.id,x:p.x,y:p.y,w:p.w,h:p.h};
   const facts=s.players.map((p,i)=>{const b=bodyOf(p),others=[...solidsNow,...s.players.filter(q=>q!==p&&!q.exit).map(bodyOf)];
    const faces=SIDE_TOUCH.map(f=>others.some(o=>f(b,o)));
-   return {index:i,xRaw:Math.round((p.x+16)*F),yRaw:Math.round((p.y+47)*F),vxRaw:Math.round((p.vx||0)/hz*F),vyRaw:Math.round((p.vy||0)/hz*F),
+   return {index:i,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),vxRaw:Math.round((p.vx||0)/hz*F),vyRaw:Math.round((p.vy||0)/hz*F),
     state:p.exit?5:1,flags:(p.asBlock||p.catchLevel)?0x200:0,floating:!faces[1],hasCollision:!p.exit,hasActor:!p.exit,
     contactCount0:s.players.filter(q=>q!==p&&!q.exit&&SIDE_TOUCH[0](b,bodyOf(q))).length,contacted1:faces[1],mapFaces:faces};});
   const pending=s.pendingConstraintEvents||[];s.pendingConstraintEvents=[];
@@ -494,7 +503,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const tv=p.tv,body=tvBody(p);
   const obstacles=[...baseSolids(s),...s.players.filter(q=>q!==p&&!q.exit&&!q.asBlock&&!q.hiddenByCardboard&&!(q.tv&&q.tv.topViewFunc===1)).map(tvBody)];
   const btn=k=>[0,input[k]?1:0];
-  const actor={xRaw:Math.round((p.x+16)*F),yRaw:Math.round((p.y+47)*F),scaleXRaw:tv.scaleRaw,scaleYRaw:tv.scaleRaw,baseScaleRaw:F,flags:p.facingLeft?1024:0,
+  const actor={xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),scaleXRaw:tv.scaleRaw,scaleYRaw:tv.scaleRaw,baseScaleRaw:F,flags:p.facingLeft?1024:0,
    windXRaw:Math.round((p.windDx||0)*F),windYRaw:0,vxRaw:0,vyRaw:0,requestAnimationId:null};
   const r=TopViews.updateTopView({...tv,id:p.id,walkSpeedRaw:Math.round((p.walkSpeed||NATIVE.walk)*F)},actor,{
    input:p.inputLocked?null:{stickXRaw:0,stickYRaw:0,buttons:{left:btn('left'),right:btn('right'),up:btn('up'),down:btn('down')}},
@@ -530,7 +539,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const k=s.keyState,holder=k&&k.holderId;
   const keyFacts=g=>({collision1Flags:s.ghostActors[g.id].keyCollider1Flags,attachTargetCollisionLayer:holder?(st.ghosts.some(x=>x.id===holder)?11:1):null});
   const slots=s.players.map((p,i)=>({entityRef:{index:i,generation:1,actorId:p.id},state:p.exit?5:1,flags:p.exit?512:0,
-   actor:{id:p.id,xRaw:Math.round((p.x+16)*F),yRaw:Math.round((p.y+47)*F),flags:p.facingLeft?1024:0}}));
+   actor:{id:p.id,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),flags:p.facingLeft?1024:0}}));
   const entities=s.players.map(()=>({generation:1,components:['PlayerComponent','ActorComponent']}));
   const managerKey=!s.map.key||(k&&k.used)?null:{attachTarget:holder||null,actor:k?{xRaw:k.xRaw,yRaw:k.yRaw}:{xRaw:Math.round((s.map.key.x+16)*F),yRaw:Math.round((s.map.key.y+28)*F)}};
   const actors=Object.fromEntries(st.ghosts.map(g=>[g.id,{positionRaw:{...s.ghostActors[g.id].positionRaw},flags:s.ghostActors[g.id].flags}]));
@@ -559,7 +568,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
  // through its collider 1, the regular 46x32 rect at (-16,-47) from Pos.
  function batPlayers(s){
   const F=65536;
-  return s.players.map((p,i)=>{const px=Math.round((p.x+16)*F),py=Math.round((p.y+47)*F),live=!p.exit&&!p.asBlock&&!p.hiddenByCardboard;
+  return s.players.map((p,i)=>{const px=Math.round(AX(p)*F),py=Math.round(AY(p)*F),live=!p.exit&&!p.asBlock&&!p.hiddenByCardboard;
    // PlayerComponent.IsEquipOrCoverCardboard 0x1816cb8b0: covered byte != 0 or flag 0x80000
    const cardboard=!!p.tv&&(p.tv.cardboardCoveredFlags!==0||!!(p.tv.flags&0x80000));
    return {index:i,id:p.id,flags:(p.tv?p.tv.flags:0)|(p.exit?0x200:0),alive:!p.exit,cardboard,xRaw:px,yRaw:py,spotted:false,
@@ -576,7 +585,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
  function cardboardTick(s,inputs,hz){
   const st=s.batState,F=65536;if(!st||!s.map.topView)return;
   if(!st.cardboards)st.cardboards=s.players.map((p,i)=>({p,i})).filter(({i})=>s.map.tvParseFlags&&!(s.map.tvParseFlags[i]&0x40000))
-   .map(({p,i})=>BatEnemies.cardboardCreate({id:p.id,index:i,xRaw:Math.round((p.x+16)*F),yRaw:Math.round((p.y+47)*F)}));
+   .map(({p,i})=>BatEnemies.cardboardCreate({id:p.id,index:i,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F)}));
   for(const cb of st.cardboards){
    const owner=s.players.find(q=>q.id===cb.playerId);
    let shotPressed=false;if(owner){const held=!!(inputs[owner.id]&&inputs[owner.id].shot)&&!owner.inputLocked;shotPressed=held&&!owner.cbShotHeld;owner.cbShotHeld=held;}
@@ -591,7 +600,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
  }
  function cardboardPost(s){
   const st=s.batState,F=65536;if(!st||!st.cardboards)return;
-  for(const cb of st.cardboards){const o=s.players.find(q=>q.id===cb.playerId);BatEnemies.cardboardPost(cb,o?{xRaw:Math.round((o.x+16)*F),yRaw:Math.round((o.y+47)*F)}:null);}
+  for(const cb of st.cardboards){const o=s.players.find(q=>q.id===cb.playerId);BatEnemies.cardboardPost(cb,o?{xRaw:Math.round(AX(o)*F),yRaw:Math.round(AY(o)*F)}:null);}
  }
  function batTick(s,hz,inputs){
   const st=s.batState;if(!st||!st.bats.length&&!st.cages.length&&!s.map.topView)return [];
@@ -632,7 +641,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
    if(t.veloRaw.xRaw||t.veloRaw.yRaw){const m=sweepRect(rectOf(t),t.veloRaw.xRaw/F,t.veloRaw.yRaw/F,walls);t.xRaw+=Math.round(m.dx*F);t.yRaw+=Math.round(m.dy*F);}
   }
   const c=st.constraints[0];
-  const facts=()=>s.players.map(p=>({state:p.exit?5:9,xRaw:Math.round((p.x+16)*F),yRaw:Math.round((p.y+47)*F)}));
+  const facts=()=>s.players.map(p=>({state:p.exit?5:9,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F)}));
   const forces=Capturings.constraintForces(c,facts());
   s.players.forEach((p,i)=>{const f=forces[i];if(!f||(!f.xRaw&&!f.yRaw))return;
    const body=tvBody(p),m=sweepRect(body,f.xRaw/F,f.yRaw/F,walls);p.x+=m.dx;p.y+=m.dy;});
@@ -686,7 +695,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
  function autoScrollSpeedRaw(s){const a=s.autoScrollState;return AutoScroll.calculateStepRaw(a.scroll,{stageFlags:0,players:s.players.map(()=>({flags:0})),cameraAreaRaw:a.cameraAreaRaw});}
  function autoScrollPush(s,p,hz){
   const a=s.autoScrollState,F=65536;if(!a)return false;
-  let velo=Math.round((p.vx||0)/hz*F);const pos=Math.round((p.x+16)*F),left=a.cameraAreaRaw.x,step=autoScrollSpeedRaw(s);
+  let velo=Math.round((p.vx||0)/hz*F);const pos=Math.round(AX(p)*F),left=a.cameraAreaRaw.x,step=autoScrollSpeedRaw(s);
   const next=pos+velo;if(next-step<left){velo+=(left-next)+step;if(left>pos)autoScrollCarry(s,p,(left-pos)/F,new Set([p.id]));}
   const margin=a.scroll.autoScrollSpeedRaw<5*F?0:100*F;
   p.vx=velo/F*hz;
@@ -716,7 +725,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
  function checkIceFloor(s,p){
   if(!s.map.ice||!p.grounded||!p.supportId)return;
   const sup=baseSolids(s).find(b=>b.id===p.supportId);if(!sup)return;
-  if(String(sup.id).startsWith('terrain:')){const gx=Math.floor((p.x+16)/48),gy=Math.floor((p.y+47+12)/48);p.onIce=s.map.ice.cells.includes(gx+','+gy);}
+  if(String(sup.id).startsWith('terrain:')){const gx=Math.floor(AX(p)/48),gy=Math.floor((p.y+47+12)/48);p.onIce=s.map.ice.cells.includes(gx+','+gy);}
   else p.onIce=!!sup.ice;
  }
  function iceWalk(s,p,dir,hz){
@@ -766,14 +775,14 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
    k.headContact=nr.slice(1).some(h=>walls.some(o=>h.x<o.x+o.w&&h.x+h.w>o.x&&Math.abs(o.y+o.h-h.y)<0.5));}
   // OnPost: riders to their seats
   GoKarts.post(k,dt);
-  if(k.flags&1)s.players.forEach((p,i)=>{if(p.riding!==k.id)return;const q=GoKarts.ridePosition(k,i);p.x=q.xRaw/F-16;p.y=q.yRaw/F-47;p.vx=k.veloRaw.xRaw/F*hz;p.vy=0;p.grounded=false;p.supportId=null;
+  if(k.flags&1)s.players.forEach((p,i)=>{if(p.riding!==k.id)return;const q=GoKarts.ridePosition(k,i);setAnchor(p,q.xRaw/F,q.yRaw/F);p.vx=k.veloRaw.xRaw/F*hz;p.vy=0;p.grounded=false;p.supportId=null;
    p.kartDriver=!!k.infos[i].isDriver;p.grayscale=k.playerCount>4&&!p.kartDriver;});
  }
  function goKartGetOff(s,k){
   const F=65536;
   for(const p of s.players)if(p.riding===k.id){p.riding=null;p.kartDriver=false;p.grayscale=false;p.vx=0;p.vy=0;}
   // a key the kart holds goes to the nearest rider
-  const key=s.keyState;if(key&&key.holderId===k.id){let best=null,bd=Infinity;for(const p of s.players){const dx=(p.x+16)*F-key.xRaw,dy=(p.y+47)*F-key.yRaw,d=Number((BigInt(dx)*BigInt(dx))>>16n)+Number((BigInt(dy)*BigInt(dy))>>16n);if(best===null||d<bd){bd=d;best=p;}}if(best)key.holderId=best.id;}
+  const key=s.keyState;if(key&&key.holderId===k.id){let best=null,bd=Infinity;for(const p of s.players){const dx=AX(p)*F-key.xRaw,dy=AY(p)*F-key.yRaw,d=Number((BigInt(dx)*BigInt(dx))>>16n)+Number((BigInt(dy)*BigInt(dy))>>16n);if(best===null||d<bd){bd=d;best=p;}}if(best)key.holderId=best.id;}
  }
  function goKartEvents(s,events){const st=s.goKartState;if(!st||!st.karts.length)return null;const k=st.karts[0];let dead=null;
   for(const e of events||[]){const target=e.target??e.targetName;if(target!==k.name)continue;const r=GoKarts.receiveEvent(k,e);if(r&&r.allDead)dead=r.allDead;}
@@ -811,7 +820,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const buttons=s.players.map(p=>{const i=inputs[p.id]||{};return p.inputLocked?{}:{left:!!i.left,right:!!i.right,jump:!!i.jump,up:!!i.up,down:!!i.down,decide:!!i.jump};});
   const r=Fakes.step(st,{dtRaw:dt,participants:s.players.map((_,i)=>i),colorOf:i=>i,buttons,terrain:s.map.platforms,goal:s.map.exit,goalOpen:!!s.goalOpen});
   s.players.forEach((p,i)=>{const b=Fakes.bodyFor(st,i);p.fakeProxy=true;p.vx=0;p.vy=0;p.grounded=true;if(!b)return;
-   p.x=b.xRaw/F-16;p.y=b.yRaw/F-47;p.facingLeft=b.facingLeft;p.fakeCaged=!(b.layer===1&&b.visible);});
+   setAnchor(p,b.xRaw/F,b.yRaw/F);p.facingLeft=b.facingLeft;p.fakeCaged=!(b.layer===1&&b.visible);});
   if(r.retry){s.status='dead';s.deaths++;s.failure={playerId:s.players[0].id,reason:'다른 몸을 골랐어요'};return true;}
   if(r.clear)s.status='clear';
   return r.clear;
@@ -827,12 +836,12 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const F=65536,dt=Math.trunc(F/hz);
   if(s.appleRelease&&s.appleRelease.length){for(const i of s.appleRelease)if(s.players[i])s.players[i].rallyTarget=false;s.appleRelease=[];}
   if(!s.appleStarted){s.appleStarted=true;st.targets.forEach(t=>{const p=s.players[t.playerIndex];if(p){p.rallyTarget=true;p.vx=0;p.vy=0;}});}
-  const range=()=>{const live=s.players.filter(p=>!p.exit);const xs=live.map(p=>Math.round((p.x+16)*F)),ys=live.map(p=>Math.round((p.y+47)*F));return xs.length?{left:Math.min(...xs),right:Math.max(...xs),top:Math.min(...ys),bottom:Math.max(...ys)}:null;};
+  const range=()=>{const live=s.players.filter(p=>!p.exit);const xs=live.map(p=>Math.round(AX(p)*F)),ys=live.map(p=>Math.round(AY(p)*F));return xs.length?{left:Math.min(...xs),right:Math.max(...xs),top:Math.min(...ys),bottom:Math.max(...ys)}:null;};
   if(!s.appleCamera&&st.camera)s.appleCamera=CameraNative.create(st.camera,range());
   if(s.appleCamera){const r=range();if(r)CameraNative.update(s.appleCamera,r,dt);}
   const area=s.appleCamera?CameraNative.stageAreaRaw(s.appleCamera):{x:0,y:0,width:s.map.width*F,height:s.map.height*F};
   const prev=s.appleShot||(s.appleShot=[]);
-  const players=s.players.map(p=>({xRaw:Math.round((p.x+16)*F),yRaw:Math.round((p.y+47)*F),visible:!p.exit,layer1Rect:(p.exit||p.dead||p.asBlock)?null:{x:p.x,y:p.y,w:p.w,h:p.h}}));
+  const players=s.players.map(p=>({xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),visible:!p.exit,layer1Rect:(p.exit||p.dead||p.asBlock)?null:{x:p.x,y:p.y,w:p.w,h:p.h}}));
   const r=Apples.step(st,{dtRaw:dt,players,viewRaw:{x:area.x,y:area.y,w:area.width,h:area.height},
    moveVector:i=>{const p=s.players[i];if(!p||p.inputLocked)return {xRaw:0,yRaw:0};const input=inputs[p.id]||{},btn=k=>[0,input[k]?1:0];
     return TopViews.inputVector({stickXRaw:0,stickYRaw:0,buttons:{left:btn('left'),right:btn('right'),up:btn('up'),down:btn('down')}},Rallies.nativeConstants.STICK);},
@@ -869,10 +878,45 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const solid=(c,r)=>s.map.platforms.some(b=>b.x<=c*48+24&&c*48+24<b.x+b.w&&b.y<=r*48+24&&r*48+24<b.y+b.h);
   const boxes=(s.colorBoxState&&s.colorBoxState.boxes||[]).map(b=>{const a=s.colorBoxActors&&s.colorBoxActors[b.id];const p0=a||ColorBoxes.initialPositionRaw(b);return {id:b.id,playerIndex:b.playerIndex,xRaw:p0.xRaw,yRaw:p0.yRaw};});
   const r=Arranges.step(st,{dtRaw:dt,cols,rows,movable:(c,rw)=>!solid(c,rw),
-   players:s.players.map((p,i)=>({index:i,colorIndex:i,xRaw:Math.round((p.x+16)*F),yRaw:Math.round((p.y+47)*F),lookingRight:p.lookingRight!==false})),colorBoxes:boxes});
+   players:s.players.map((p,i)=>({index:i,colorIndex:i,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),lookingRight:p.lookingRight!==false})),colorBoxes:boxes});
   for(const e of r.keyEvents)Gates.signal(s.gateState,e);
   if(r.retry){s.status='dead';s.deaths++;s.failure={playerId:s.players[0].id,reason:'배치가 달라요'};return true;}
   return r.paused;
+ }
+ // ---- Shooting rounds: PlanePlayer / BattlePlanePlayer and PlayerGun -------------
+ // source-plane-runtime.js holds OnUpdate_Plane / OnUpdate_BattlePlane and the gun and
+ // bullet rules; the plane moves with the walk sweeps against terrain and players.
+ function planeMove(s,p,input,hz,terrain,players){
+  const F=65536,dt=Math.trunc(F/hz),a=s.autoScrollState,view=a?{x:a.cameraAreaRaw.x,w:a.cameraAreaRaw.width}:{x:0,w:s.map.width*F};
+  const others=terrain.concat(players.filter(q=>q!==p&&!q.exit));
+  const leftContact=others.some(o=>Math.abs(o.x+o.w-p.x)<0.5&&o.y<p.y+p.h&&o.y+o.h>p.y);
+  const r=Planes.planeVelocity({input,posXRaw:Math.round(AX(p)*F),speedRaw:Planes.planeSpeedRaw(s.map.stageScaleRaw||F),viewRaw:view,scrollRaw:a?autoScrollSpeedRaw(s):0,scrollType2:!!a,leftContact});
+  if(r.look==='right'){p.facingLeft=false;p.lookingRight=true;}else if(r.look==='left'&&p.plane.lookLeftAllowed){p.facingLeft=true;p.lookingRight=false;}
+  if(r.dead&&!p.immortal)return '화면 밖으로 밀려났어요';
+  if(r.carriedRaw>0)autoScrollCarry(s,p,r.carriedRaw/F,new Set([p.id]));
+  p.x+=moveX({...p},r.vxRaw/F,others,s.map.width);moveY(p,r.vyRaw/F,others);
+  p.vx=r.vxRaw/F*hz;p.vy=r.vyRaw/F*hz;p.grounded=false;
+  if(p.plane.life){const lr=Planes.lifeUpdate(p.plane.life,dt,s.planeState.rng);if(lr.dead&&!p.immortal)return '비행기가 격추됐어요';}
+  return null;
+ }
+ function planeGunTick(s,inputs,hz){
+  const st=s.planeState;if(!st||!st.guns.length)return;const F=65536,a=s.autoScrollState,view=a?{x:a.cameraAreaRaw.x,w:a.cameraAreaRaw.width}:{x:0,w:s.map.width*F};
+  const live=s.players.map((p,i)=>({p,i})).filter(o=>!o.p.exit);
+  const terrain=solids(s),toRaw=b=>({x:Math.round(b.x*F),y:Math.round(b.y*F),w:Math.round(b.w*F),h:Math.round(b.h*F)}),hit=(u,v)=>u.x<v.x+v.w&&v.x<u.x+u.w&&u.y<v.y+v.h&&v.y<u.y+u.h;
+  const r=Planes.gunStep(st,{dtRaw:Math.trunc(F/hz),viewRaw:view,
+   players:s.players.map((p,i)=>({index:i,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),lookLeft:!!p.facingLeft,plane:!!p.plane,state3:!!p.dead,shotHeld:!!(inputs[p.id]&&inputs[p.id].shot),alive:!p.exit&&!p.dead,colorIndex:i})),
+   blocked:(box,owner)=>live.some(o=>o.i!==owner&&hit(box,toRaw(o.p)))||(s.planeWalls||[]).some(w=>hit(box,toRaw(w))),
+   sweep:(box,dx,dy,owner)=>{
+    // the earliest body along the step: actors (players, walls) answer event 21, the map is terrain
+    const targets=[...live.filter(o=>o.i!==owner).map(o=>({kind:'actor',target:{player:o.i},r:toRaw(o.p)})),...(s.planeWalls||[]).map(w=>({kind:'actor',target:{wall:w.id},r:toRaw(w)})),
+     ...terrain.filter(b=>!(s.planeWalls||[]).some(w=>w.id===b.id)).map(b=>({kind:'map',chip:b.chip||null,r:toRaw(b)}))];
+    let best=null,bt=1;const steps=Math.max(1,Math.ceil(Math.max(Math.abs(dx),Math.abs(dy))/(2*F)));
+    for(let k=1;k<=steps&&!best;k++){const t=k/steps,b2={...box,x:box.x+Math.round(dx*t),y:box.y+Math.round(dy*t)};
+     for(const o of targets)if(hit(b2,o.r)){best=o;bt=(k-1)/steps;break;}}
+    if(!best)return {dxRaw:dx,dyRaw:dy,hit:null};
+    return {dxRaw:Math.round(dx*bt),dyRaw:Math.round(dy*bt),hit:best.kind==='map'?{kind:'map',chip:best.chip}:{kind:'actor',target:best.target}};},
+   breakChip:(chip,color)=>{if(s.planeBreak)s.planeBreak(chip,color);}});
+  for(const d of r.damage){if(d.target.player===undefined)continue;const q=s.players[d.target.player];if(q&&q.plane&&q.plane.life)Planes.lifeDamage(q.plane.life);}
  }
  // ---- 8-2 / 8-4: CannonPlayer / ThrowBall / ThrowBallBasket / ThrowBallController -
  // source-throwball-runtime.js holds the native decisions. Balls meet the map through
@@ -880,13 +924,13 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
  // createAreaInfo exactly as the 8-1 crosshair margins are fed.
  function throwTick(s,inputs,hz){
   const st=s.throwState;if(!st||!st.controller)return;const F=65536,dt=Math.trunc(F/hz);
-  const range=()=>{const live=s.players.filter(p=>!p.exit);const xs=live.map(p=>Math.round((p.x+16)*F)),ys=live.map(p=>Math.round((p.y+47)*F));return xs.length?{left:Math.min(...xs),right:Math.max(...xs),top:Math.min(...ys),bottom:Math.max(...ys)}:null;};
+  const range=()=>{const live=s.players.filter(p=>!p.exit);const xs=live.map(p=>Math.round(AX(p)*F)),ys=live.map(p=>Math.round(AY(p)*F));return xs.length?{left:Math.min(...xs),right:Math.max(...xs),top:Math.min(...ys),bottom:Math.max(...ys)}:null;};
   if(!s.throwCamera&&st.camera)s.throwCamera=CameraNative.create(st.camera,range());
   if(s.throwCamera){const r=range();if(r)CameraNative.update(s.throwCamera,r,dt);}
   const area=s.throwCamera?CameraNative.stageAreaRaw(s.throwCamera):{x:0,y:0,width:s.map.width*F,height:s.map.height*F};
   const walls=s.map.platforms;
   const r=ThrowBalls.step(st,{dtRaw:dt,gravityRaw:Number(BigInt.asIntN(64,BigInt(s.map.stageScaleRaw||F)*42598n)>>16n),viewRaw:{x:area.x,y:area.y,w:area.width,h:area.height},
-   players:s.players.map((p,i)=>({index:i,xRaw:Math.round((p.x+16)*F),yRaw:Math.round((p.y+47)*F),state1:!p.exit&&!p.dead&&!p.faint&&!p.riding&&!p.asBlock,shotHeld:!!(inputs[p.id]&&inputs[p.id].shot),
+   players:s.players.map((p,i)=>({index:i,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),state1:!p.exit&&!p.dead&&!p.faint&&!p.riding&&!p.asBlock,shotHeld:!!(inputs[p.id]&&inputs[p.id].shot),
     alive:!p.exit&&!p.dead,hidden:!!p.exit,bodyRaw:p.exit?null:{x:Math.round(p.x*F),y:Math.round(p.y*F),w:Math.round(p.w*F),h:Math.round(p.h*F)}})),
    sweep:(b,dx,dy)=>{const m=sweepRect({x:b.x/F,y:b.y/F,w:b.w/F,h:b.h/F},dx/F,dy/F,walls),mx=Math.round(m.dx*F),my=Math.round(m.dy*F);return {dxRaw:mx,dyRaw:my,blocked:Math.abs(mx-dx)>1||Math.abs(my-dy)>1};}});
   for(const f of r.faints){const p=s.players[f.index];if(p&&!p.exit)p.faintRequest={vxRaw:f.vxRaw,vyRaw:f.vyRaw};}
@@ -899,7 +943,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
  function giantTick(s,inputs,hz){
   const st=s.giantState;if(!st||!(st.giants.length||st.punches.length||st.timers.length))return null;const F=65536,ms=s.moleState;
   const plugins=ms&&ms.moles.length?[{update:dt=>Moles.update(ms,dt),targets:out=>Moles.targets(ms,out),overlaps:(pl,out)=>Moles.overlaps(ms,pl,out),post:(dt,out)=>Moles.post(ms,dt,out)}]:[];
-  const r=Giants.step(st,{dtRaw:Math.trunc(F/hz),plugins,players:s.players.map((p,i)=>({index:i,xRaw:Math.round((p.x+16)*F),yRaw:Math.round((p.y+47)*F),lookLeft:!!p.facingLeft,
+  const r=Giants.step(st,{dtRaw:Math.trunc(F/hz),plugins,players:s.players.map((p,i)=>({index:i,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),lookLeft:!!p.facingLeft,
    state1:!p.exit&&!p.dead&&!p.faint&&!p.riding&&!p.asBlock,shotHeld:!!(inputs[p.id]&&inputs[p.id].shot),alive:!p.exit&&!p.dead}))});
   for(const k of r.knocks){const p=s.players[k.index];if(!p)continue;p.forcedVx=k.vxRaw/F*hz;p.vx=p.forcedVx;p.vy=k.vyRaw/F*hz;p.grounded=false;p.ground=false;p.supportId=null;p.jumpFrame=0;}
   for(const f of r.faints){const p=s.players[f.index];if(p&&!p.exit)p.faintRequest={vxRaw:f.vxRaw,vyRaw:f.vyRaw};}
@@ -1159,7 +1203,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const F=65536,solidsNow=baseSolids(s);
   const touch=(p,face)=>solidsNow.some(b=>face==='left'?Math.abs(b.x+b.w-p.x)<0.5&&b.y<p.y+p.h&&b.y+b.h>p.y:face==='right'?Math.abs(p.x+p.w-b.x)<0.5&&b.y<p.y+p.h&&b.y+b.h>p.y:Math.abs(b.y+b.h-p.y)<0.5&&b.x<p.x+p.w&&b.x+b.w>p.x);
   return {
-   actors:()=>s.players.map((p,i)=>({id:p.id,index:i,isPlayer:true,catchable:true,xRaw:Math.round((p.x+16)*F),yRaw:Math.round((p.y+47)*F),rect:MAG_RECT,
+   actors:()=>s.players.map((p,i)=>({id:p.id,index:i,isPlayer:true,catchable:true,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),rect:MAG_RECT,
     facingLeft:!!p.facingLeft,vxRaw:Math.round((p.vx||0)/hz*F),vyRaw:Math.round((p.vy||0)/hz*F),canInput:!p.inputLocked,
     inputHeld:!!(inputs[p.id]&&inputs[p.id].shot),exited:!!p.exit||!!p.dead||!!p.asBlock})),
    // Player.OnRecvEvent_Default event 16: SetCatched + velocity 0; refused only
@@ -1195,13 +1239,13 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const F=65536,live=s.players.filter(p=>!p.exit&&!p.asBlock),solidsNow=baseSolids(s);
   s.warpShotPrev=s.warpShotPrev||{};
   const facts=s.players.map((p,i)=>{const held=!!(inputs[p.id]&&inputs[p.id].shot),edge=held&&!s.warpShotPrev[p.id];s.warpShotPrev[p.id]=held;
-   return {id:p.id,actorIndex:i,playerIndex:i,colorIndex:i,actorFlags:p.facingLeft?0x400:0,xRaw:Math.round((p.x+16)*F),yRaw:Math.round((p.y+47)*F),
+   return {id:p.id,actorIndex:i,playerIndex:i,colorIndex:i,actorFlags:p.facingLeft?0x400:0,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),
     scaleRaw:F,directionRaw:{xRaw:F,yRaw:F},gunScaleRaw:F,sortingOrder:0,pressInput9:edge&&!p.exit&&!p.asBlock};});
   const colorByPlayerIndex=[0,1,2,3,4,5,6,7];
   const dispatchActorEvent=e=>{const p=s.players.find(q=>q.id===e.targetId);if(!p)return 0;
    if(e.eventType===30)return s.players.indexOf(p)+1; // Player.OnRecvEvent 0x1e: m_PlayerIndex + 1
    if(e.eventType===65){p.asBlock=true;p.vx=0;p.vy=0;p.grounded=false;p.supportId=null;}
-   else if(e.eventType===66){p.asBlock=false;p.x=e.positionRaw.xRaw/F-16;p.y=e.positionRaw.yRaw/F-47;p.vx=0;p.vy=0;}
+   else if(e.eventType===66){p.asBlock=false;setAnchor(p,e.positionRaw.xRaw/F,e.positionRaw.yRaw/F);p.vx=0;p.vy=0;}
    return 0;};
   const xs=live.map(p=>p.x),lo=(xs.length?Math.min(...xs):0)-480,hi=(xs.length?Math.max(...xs):0)+512;
   const before=WarpGuns.beforeStep(st,{players:facts,dtRaw:1092,cameraViewRaw:{xRaw:Math.round(lo*F),widthRaw:Math.round((hi-lo)*F)},colorByPlayerIndex});
@@ -1282,7 +1326,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   // players are actors too: Actor.Initialize gives them the same stage scale
   const stageScale=(s.dossunState.devices[0]&&s.dossunState.devices[0].actorScaleRaw)||DS_F;
   return s.players.map((p,i)=>({id:p.id,actorIndex:i,playerIndex:i,colorIndex:i,playerState:p.dead?3:1,sortingOrder:0,
-   xRaw:Math.round((p.x+16)*DS_F),yRaw:Math.round((p.y+47)*DS_F),
+   xRaw:Math.round(AX(p)*DS_F),yRaw:Math.round(AY(p)*DS_F),
    vxRaw:Math.round((p.vx||0)/hz*DS_F),vyRaw:Math.round((p.vy||0)/hz*DS_F),
    flipH:!!p.facingLeft,flipV:false,scaleXRaw:DS_F,scaleYRaw:DS_F,actorScaleRaw:stageScale,rectRaw:{...PLAYER_RECT_RAW}}));
  }
@@ -1294,7 +1338,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
    else if(e.eventType===65){p.asBlock=true;p.vx=0;p.vy=0;p.grounded=false;p.supportId=null;}
    // event 66: Shot again returns the player at the block's position and velocity
    else if(e.eventType===66){p.asBlock=false;
-    if(e.restorePosition){p.x=e.xRaw/DS_F-16;p.y=e.yRaw/DS_F-47;p.vx=e.vxRaw/DS_F*hz;p.vy=e.vyRaw/DS_F*hz;}}
+    if(e.restorePosition){setAnchor(p,e.xRaw/DS_F,e.yRaw/DS_F);p.vx=e.vxRaw/DS_F*hz;p.vy=e.vyRaw/DS_F*hz;}}
   }
   return dead;
  }
@@ -1507,6 +1551,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
    if(p.faintRequest){p.faint={vxRaw:p.faintRequest.vxRaw,vyRaw:p.faintRequest.vyRaw,timerRaw:163840};p.faintRequest=null;p.rallyTarget=false;}
    if(p.faint){faintMove(s,p,hz,[...terrain,...players.filter(q=>q!==p).map(q=>({id:q.id,x:q.x,y:q.y,w:q.w,h:q.h}))]);continue;}
    if(p.catchLevel){p.vx=0;p.vy=0;continue;}
+   if(p.plane){const why=planeMove(s,p,p.inputLocked?{}:(inputs[p.id]||{}),hz,terrain,players);if(why){s.status='dead';s.deaths++;s.failure={playerId:p.id,reason:why};return;}continue;}
    if(s.map.topView){if(topViewMove(s,p,inputs[p.id]||{},hz)){s.status='dead';s.deaths++;s.failure={playerId:p.id,reason:'구멍에 빠졌어요'};return;}continue;}
    // Player state1 Update 0x1816c3060: button 6 (left) first, then 7 -> LookLeft/LookRight
    {const inp=inputs[p.id]||{};if(inp.left){p.facingLeft=true;p.lookingRight=false;}else if(inp.right){p.facingLeft=false;p.lookingRight=true;}}
@@ -1555,6 +1600,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   for(const z of s.map.constraintMoves||[])s.players.forEach((p,i)=>{if(!p.exit&&!p.asBlock&&overlap(p,z)){(s.pendingConstraintEvents||(s.pendingConstraintEvents=[])).push({eventType:24,targetName:z.target,playerIndex:i});}});
   const giantDeath=giantTick(s,inputs,hz);
   throwTick(s,inputs,hz);
+  planeGunTick(s,inputs,hz);
   if(giantDeath){s.status='dead';s.deaths++;s.failure=giantDeath;return;}
   const stepDeaths=stepEnemyContacts(s,hz);
   if(stepDeaths.length){s.status='dead';s.deaths++;s.failure={playerId:stepDeaths[0],reason:'적에게 닿았어요'};return;}
@@ -1697,7 +1743,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
     // takes the toucher's x (0x18173475a).
     if(warp.targetAll){let ax=Math.abs(warp.destination.x)*65536<4?p.x+16:warp.destination.x,ay=warp.destination.y;
      s.players.forEach((q,i)=>{ax+=warp.ordinalOffset.x*i;ay+=warp.ordinalOffset.y*i;if(q.exit)return;
-      q.x=ax-16;q.y=ay-47;q.vx=0;q.vy=0;q.grounded=false;q.ground=false;q.supportId=null;q.jumpFrame=0;});
+      setAnchor(q,ax,ay);q.vx=0;q.vy=0;q.grounded=false;q.ground=false;q.supportId=null;q.jumpFrame=0;});
      for(const q of players)if(q.supportId){q.supportId=null;q.grounded=false;q.ground=false;}
      break;}
     const ordinal=warp.counter;

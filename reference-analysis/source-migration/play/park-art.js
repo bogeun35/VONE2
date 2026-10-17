@@ -423,6 +423,15 @@ function drawFriend(c,p,i,o){
  // changeControlablePlayer 0x181872cc0 greys out everyone who cannot move
  if(p.grayscale){c.filter='grayscale(1)';c.globalAlpha*=.75;}
  c.translate(p.x+p.w/2,p.y+p.h);
+// a plane player (OnInitialize_Plane: animation 8, 9 when damaged) rides a little plane; the
+ // friend sits in its cockpit, the draw offset is OnUpdate_BattlePlane's hit shake
+ if(p.plane){const o=p.plane.life&&p.plane.life.offset;if(o)c.translate(o.xRaw/65536,o.yRaw/65536);
+  const dir=f,hurt=p.plane.life&&p.plane.life.anim===9;c.save();c.scale(dir,1);
+  c.beginPath();c.ellipse(0,-14,22,9,0,0,Math.PI*2);fillStroke(c,hurt&&Math.floor(t*10)%2?mix(pal.body,'#ffffff',.5):pal.body,pal.dark,2);
+  c.beginPath();c.moveTo(-6,-14);c.lineTo(-14,-2);c.lineTo(4,-2);c.closePath();fillStroke(c,mix(pal.body,pal.dark,.25),pal.dark,1.5);
+  c.beginPath();c.moveTo(-18,-16);c.lineTo(-24,-26);c.lineTo(-14,-18);c.closePath();fillStroke(c,mix(pal.body,pal.dark,.25),pal.dark,1.5);
+  c.beginPath();c.arc(22,-14,3,0,Math.PI*2);fillStroke(c,'#e8e3ff',pal.dark,1.2);c.restore();
+  c.translate(0,-18);c.scale(.62,.62);c.translate(0,0);}
  // top-view fall (fallStep 0x1816caba0) shrinks the player to nothing
  if(p.tvScale!==undefined&&p.tvScale<1){if(p.tvScale<=0){c.restore();return;}c.scale(p.tvScale,p.tvScale);}
  if(grounded){c.fillStyle='rgba(30,20,40,.2)';ellipse(c,0,0,14,3);c.fill();}
