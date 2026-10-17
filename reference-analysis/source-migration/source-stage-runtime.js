@@ -191,6 +191,8 @@
    if(state.checkpointsState.checkpointInfo.isActive){
     state.players.forEach((p,i)=>{const r=Checkpoints.respawn(state.checkpointsState,i,i);p.x=r.actorPosition.x-16;p.y=r.actorPosition.y-47;});
     state.playTimeRaw=state.checkpointsState.checkpointInfo.playTimeRaw;
+    // Ghost.Creator: with an active checkpoint the ghost starts at the 9th respawn position
+    const rp=state.checkpointsState.checkpointInfo.respawnPositions||[];if(rp.length>8&&state.ghostState)for(const g of state.ghostState.ghosts)g.positionRaw={...rp[8]};
     state.elapsed=state.playTimeRaw/65536;
    }
   }
