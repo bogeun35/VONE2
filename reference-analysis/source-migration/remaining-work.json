@@ -51,11 +51,12 @@
   "st_w_13_04",
   "st_w_08_01",
   "st_w_08_03",
-  "st_w_03_04"
+  "st_w_03_04",
+  "st_w_14_04"
  ],
  "worldStages": 60,
- "remainingStages": 12,
- "remainingDistinctBlockers": 32,
+ "remainingStages": 11,
+ "remainingDistinctBlockers": 29,
  "nearest": [
   {
    "id": "st_w_06_03",
@@ -88,23 +89,12 @@
    "guardsAfterTypes": []
   },
   {
-   "id": "st_w_14_04",
-   "blockerCount": 3,
-   "blockers": [
-    "GiantEnemy",
-    "PlayerPunch",
-    "SwitchTimerActor"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
    "id": "st_w_14_02",
-   "blockerCount": 4,
+   "blockerCount": 3,
    "blockers": [
     "Mole",
     "MoleGroup",
-    "MoleNest",
-    "PlayerPunch"
+    "MoleNest"
    ],
    "guardsAfterTypes": []
   },
@@ -337,15 +327,6 @@
    "opensAlone": []
   },
   {
-   "type": "PlayerPunch",
-   "stages": [
-    "st_w_14_04",
-    "st_w_14_02"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
    "type": "BgmChanger",
    "stages": [
     "st_w_06_04",
@@ -417,22 +398,6 @@
    "type": "GraphController",
    "stages": [
     "st_w_13_02"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "GiantEnemy",
-   "stages": [
-    "st_w_14_04"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "SwitchTimerActor",
-   "stages": [
-    "st_w_14_04"
    ],
    "appearsIn": 1,
    "opensAlone": []
@@ -1577,70 +1542,38 @@
   },
   {
    "id": "st_w_14_04",
-   "connected": false,
-   "distinctBlockers": [
-    "GiantEnemy",
-    "PlayerPunch",
-    "SwitchTimerActor"
-   ],
-   "blockerCount": 3,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "GiantEnemy",
-      "PlayerPunch",
-      "SwitchTimerActor"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "GiantEnemy",
-      "PlayerPunch",
-      "SwitchTimerActor"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "GiantEnemy",
-      "PlayerPunch",
-      "SwitchTimerActor"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "GiantEnemy",
-      "PlayerPunch",
-      "SwitchTimerActor"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "GiantEnemy",
-      "PlayerPunch",
-      "SwitchTimerActor"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "GiantEnemy",
-      "PlayerPunch",
-      "SwitchTimerActor"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "GiantEnemy",
-      "PlayerPunch",
-      "SwitchTimerActor"
-     ]
+     "missing": []
     }
    }
   },
@@ -2808,16 +2741,14 @@
    "distinctBlockers": [
     "Mole",
     "MoleGroup",
-    "MoleNest",
-    "PlayerPunch"
+    "MoleNest"
    ],
-   "blockerCount": 4,
+   "blockerCount": 3,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "PlayerPunch",
       "MoleNest",
       "MoleGroup",
       "Mole"
@@ -2826,7 +2757,6 @@
     "3": {
      "variant": 0,
      "missing": [
-      "PlayerPunch",
       "MoleNest",
       "MoleGroup",
       "Mole"
@@ -2835,7 +2765,6 @@
     "4": {
      "variant": 0,
      "missing": [
-      "PlayerPunch",
       "MoleNest",
       "MoleGroup",
       "Mole"
@@ -2844,7 +2773,6 @@
     "5": {
      "variant": 0,
      "missing": [
-      "PlayerPunch",
       "MoleNest",
       "MoleGroup",
       "Mole"
@@ -2853,7 +2781,6 @@
     "6": {
      "variant": 0,
      "missing": [
-      "PlayerPunch",
       "MoleNest",
       "MoleGroup",
       "Mole"
@@ -2862,7 +2789,6 @@
     "7": {
      "variant": 0,
      "missing": [
-      "PlayerPunch",
       "MoleNest",
       "MoleGroup",
       "Mole"
@@ -2871,7 +2797,6 @@
     "8": {
      "variant": 0,
      "missing": [
-      "PlayerPunch",
       "MoleNest",
       "MoleGroup",
       "Mole"

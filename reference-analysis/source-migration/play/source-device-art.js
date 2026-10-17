@@ -449,14 +449,36 @@ function arrangeArt(c,s,time){
 function arrangeOverlay(c,s,view){const A=root.SourceArrangementRuntime;if(!A||!s.arrangeState||!s.arrangeState.arrangement)return;const d=A.displays(s.arrangeState);
  if(d.timer)label(c,(d.timer.phase===1?'잘 보세요 ':'똑같이 서세요 ')+d.timer.seconds,view.width/2,48,d.timer.seconds<=10?'#ffd84d':'#fffdf6',36);
  if(d.notice){const k=Math.min(1,d.notice.t),x=view.width*(1.2-1.4*k);label(c,d.notice.type,Math.max(view.width/2,x),view.height/2,'#ffd84d',72);}}
+// 14-4 Giant: the body covers collision 0 (222x328) and floats; its hand is the
+// circle collision (r 48) that flies at a player; each PlayerPunch is a glove in its
+// player's colour while the punch plays; the life text sits 16 px under the body top.
+function giantArt(c,s,time){
+ const G=root.SourceGiantRuntime;if(!G||!s.giantState||!s.giantState.giants.length&&!s.giantState.punches.length)return;const d=G.displays(s.giantState);
+ for(const g of d.giants){const b=g.rects[0],dir=g.lookLeft?-1:1;c.save();
+  if(g.dead)c.globalAlpha*=Math.max(.2,(Math.floor(time*12)%2)?.45:.85);else if(g.anim===2&&Math.floor(time*20)%2)c.globalAlpha*=.7;
+  rr(c,b.x,b.y,b.w,b.h,48);fillStroke(c,'#9a8fc4',INK,3);
+  rr(c,b.x+18,b.y+b.h*.55,b.w-36,b.h*.4,36);fillStroke(c,'#b7aedb',null);
+  const ex=b.x+b.w/2+dir*30,ey=b.y+90;for(const k of [-1,1]){c.beginPath();c.ellipse(ex+k*26,ey,7,11,0,0,Math.PI*2);fillStroke(c,INK,null);}
+  c.fillStyle='rgba(255,140,170,.45)';for(const k of [-1,1]){c.beginPath();c.ellipse(ex+k*44,ey+22,10,6,0,0,Math.PI*2);c.fill();}
+  c.strokeStyle=INK;c.lineWidth=3;c.beginPath();if(g.dead){c.moveTo(ex-8,ey+30);c.lineTo(ex+8,ey+30);}else c.arc(ex,ey+26,8,.15*Math.PI,.85*Math.PI);c.stroke();
+  c.restore();}
+ for(const h of d.hands){const q=h.circle;c.save();c.translate(q.x,q.y);c.rotate((h.lookLeft?Math.PI:0)+h.rotation*Math.PI/180);
+  c.beginPath();c.arc(0,0,q.r-4,0,Math.PI*2);fillStroke(c,h.attacking?'#8a7fb8':'#9a8fc4',INK,3);
+  c.strokeStyle='rgba(42,33,64,.55)';c.lineWidth=2.5;for(const y of [-18,-6,6,18]){c.beginPath();c.moveTo(20,y);c.lineTo(36,y);c.stroke();}
+  c.restore();}
+ for(const p of d.punches){if(!p.attacking)continue;const r=p.rect,col=FRIEND_COLORS[p.actorIndex%8];c.save();
+  c.beginPath();c.arc(r.x+r.w/2,r.y+r.h/2,p.hit?14:11,0,Math.PI*2);fillStroke(c,col,INK,2);c.restore();}
+}
+function giantOverlayWorld(c,s){const G=root.SourceGiantRuntime;if(!G||!s.giantState||!s.giantState.giants.length)return;
+ for(const g of G.displays(s.giantState).giants)if(g.life)label(c,g.life.text,g.life.x,g.life.y,'#fffdf6',30);}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);}
+ try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
-function drawAbove(c,s){if(!s)return;const time=performance.now()/1000;c.save();try{cardboards(c,s);bats(c,s,time);fallingCages(c,s);halfInputMarks(c,s);blackoutLabels(c,s);}finally{c.restore();}}
+function drawAbove(c,s){if(!s)return;const time=performance.now()/1000;c.save();try{giantOverlayWorld(c,s);cardboards(c,s);bats(c,s,time);fallingCages(c,s);halfInputMarks(c,s);blackoutLabels(c,s);}finally{c.restore();}}
 // Screen pass: the blackout darkness covers the whole view.
 function overlay(c,s,view){
  if(s){capturingCounter(c,s,view);fakeOverlay(c,s,view);appleOverlay(c,s,view);arrangeOverlay(c,s,view);}
