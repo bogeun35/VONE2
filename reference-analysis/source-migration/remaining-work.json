@@ -61,91 +61,15 @@
   "st_w_06_02",
   "st_w_13_02",
   "st_w_11_01",
-  "st_w_11_03"
+  "st_w_11_03",
+  "st_w_06_04",
+  "st_w_15_03"
  ],
  "worldStages": 60,
- "remainingStages": 2,
- "remainingDistinctBlockers": 6,
- "nearest": [
-  {
-   "id": "st_w_06_04",
-   "blockerCount": 4,
-   "blockers": [
-    "BgmChanger",
-    "PlayerGuard",
-    "ShootingEnemyBoss",
-    "ShootingSuperApple"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_15_03",
-   "blockerCount": 6,
-   "blockers": [
-    "BgmChanger",
-    "PlayerGuard",
-    "ShootingEnemyBoss",
-    "ShootingEnemyBossEx",
-    "ShootingEnemyBossExParamSetter",
-    "ShootingSuperApple"
-   ],
-   "guardsAfterTypes": []
-  }
- ],
- "byType": [
-  {
-   "type": "BgmChanger",
-   "stages": [
-    "st_w_06_04",
-    "st_w_15_03"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "PlayerGuard",
-   "stages": [
-    "st_w_06_04",
-    "st_w_15_03"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "ShootingEnemyBoss",
-   "stages": [
-    "st_w_06_04",
-    "st_w_15_03"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "ShootingSuperApple",
-   "stages": [
-    "st_w_06_04",
-    "st_w_15_03"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "ShootingEnemyBossEx",
-   "stages": [
-    "st_w_15_03"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "ShootingEnemyBossExParamSetter",
-   "stages": [
-    "st_w_15_03"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  }
- ],
+ "remainingStages": 0,
+ "remainingDistinctBlockers": 0,
+ "nearest": [],
+ "byType": [],
  "stages": [
   {
    "id": "st_w_04_04",
@@ -1725,77 +1649,53 @@
   },
   {
    "id": "st_w_06_04",
-   "connected": false,
+   "connected": true,
    "distinctBlockers": [
-    "BgmChanger",
-    "PlayerGuard",
-    "ShootingEnemyBoss",
-    "ShootingSuperApple"
+    "BgmChanger"
    ],
-   "blockerCount": 4,
+   "blockerCount": 1,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "PlayerGuard",
-      "ShootingEnemyBoss",
-      "BgmChanger",
-      "ShootingSuperApple"
+      "BgmChanger"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
-      "PlayerGuard",
-      "ShootingEnemyBoss",
-      "BgmChanger",
-      "ShootingSuperApple"
+      "BgmChanger"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
-      "PlayerGuard",
-      "ShootingEnemyBoss",
-      "BgmChanger",
-      "ShootingSuperApple"
+      "BgmChanger"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
-      "PlayerGuard",
-      "ShootingEnemyBoss",
-      "BgmChanger",
-      "ShootingSuperApple"
+      "BgmChanger"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
-      "PlayerGuard",
-      "ShootingEnemyBoss",
-      "BgmChanger",
-      "ShootingSuperApple"
+      "BgmChanger"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
-      "PlayerGuard",
-      "ShootingEnemyBoss",
-      "BgmChanger",
-      "ShootingSuperApple"
+      "BgmChanger"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
-      "PlayerGuard",
-      "ShootingEnemyBoss",
-      "BgmChanger",
-      "ShootingSuperApple"
+      "BgmChanger"
      ]
     }
    }
@@ -2431,93 +2331,53 @@
   },
   {
    "id": "st_w_15_03",
-   "connected": false,
+   "connected": true,
    "distinctBlockers": [
-    "BgmChanger",
-    "PlayerGuard",
-    "ShootingEnemyBoss",
-    "ShootingEnemyBossEx",
-    "ShootingEnemyBossExParamSetter",
-    "ShootingSuperApple"
+    "BgmChanger"
    ],
-   "blockerCount": 6,
+   "blockerCount": 1,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "PlayerGuard",
-      "ShootingEnemyBoss",
-      "ShootingEnemyBossEx",
-      "ShootingEnemyBossExParamSetter",
-      "BgmChanger",
-      "ShootingSuperApple"
+      "BgmChanger"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
-      "PlayerGuard",
-      "ShootingEnemyBoss",
-      "ShootingEnemyBossEx",
-      "ShootingEnemyBossExParamSetter",
-      "BgmChanger",
-      "ShootingSuperApple"
+      "BgmChanger"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
-      "PlayerGuard",
-      "ShootingEnemyBoss",
-      "ShootingEnemyBossEx",
-      "ShootingEnemyBossExParamSetter",
-      "BgmChanger",
-      "ShootingSuperApple"
+      "BgmChanger"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
-      "PlayerGuard",
-      "ShootingEnemyBoss",
-      "ShootingEnemyBossEx",
-      "ShootingEnemyBossExParamSetter",
-      "BgmChanger",
-      "ShootingSuperApple"
+      "BgmChanger"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
-      "PlayerGuard",
-      "ShootingEnemyBoss",
-      "ShootingEnemyBossEx",
-      "ShootingEnemyBossExParamSetter",
-      "BgmChanger",
-      "ShootingSuperApple"
+      "BgmChanger"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
-      "PlayerGuard",
-      "ShootingEnemyBoss",
-      "ShootingEnemyBossEx",
-      "ShootingEnemyBossExParamSetter",
-      "BgmChanger",
-      "ShootingSuperApple"
+      "BgmChanger"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
-      "PlayerGuard",
-      "ShootingEnemyBoss",
-      "ShootingEnemyBossEx",
-      "ShootingEnemyBossExParamSetter",
-      "BgmChanger",
-      "ShootingSuperApple"
+      "BgmChanger"
      ]
     }
    }

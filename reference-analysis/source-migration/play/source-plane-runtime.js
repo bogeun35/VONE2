@@ -76,10 +76,16 @@ function planeVelocity(a){const inp=a.input||{};let dx=0,look=null;
   if(a.posXRaw-vx+PLANE.behindRaw<left)dead=true;}
  return {vxRaw:vx,vyRaw:vy,look,carriedRaw:carried,dead};}
 // BattlePlane life (OnInitialize_BattlePlane / OnUpdate_BattlePlane / AddDamage)
-function createLife(){return {life:PLANE.lifeMax,shown:PLANE.lifeMax,phase:0,recoverRaw:0,shakeRaw:0,offset:{xRaw:0,yRaw:0},anim:8,deadSent:false};}
+function createLife(){return {life:PLANE.lifeMax,max:PLANE.lifeMax,shown:PLANE.lifeMax,phase:0,recoverRaw:0,shakeRaw:0,offset:{xRaw:0,yRaw:0},anim:8,deadSent:false,barrier:false,easy:false};}
+// GetHitPointMax_BattlePlane 0x1816c25d0: 2, or 3 / 5 once a ShootingSuperApple equipped the barrier
+const lifeMax=L=>L.max||PLANE.lifeMax;
+// PlayerComponent.EquipBarrier_BattlePlane 0x1816c24a0: Flags2 |= 0x20 (easy |0x200), HP = easy ? 5 : 3
+function equipBarrier(L,easy){L.barrier=true;L.easy=!!easy;L.max=easy?5:3;L.life=L.max;L.shown=L.max;return L;}
+// IsBarrierDeployed_BattlePlane: Flags2 & 0x20, HP > 2, not dead
+function barrierDeployed(L){return !!(L&&L.barrier&&L.life>2&&L.phase<3);}
 function lifeUpdate(L,dt,rng){const out={dead:false,sounds:[]};
  if(L.life!==L.shown){L.anim=(L.life<0||L.life===1)?9:8;}L.shown=L.life;
- if(L.phase===0){if(L.life<1){L.phase=3;}else if(L.life<PLANE.lifeMax){L.recoverRaw-=dt;if(L.recoverRaw<1){L.life=PLANE.lifeMax;L.recoverRaw=PLANE.recoverRaw;}}}
+ if(L.phase===0){if(L.life<1){L.phase=3;}else if(L.life<lifeMax(L)){L.recoverRaw-=dt;if(L.recoverRaw<1){L.life=lifeMax(L);L.recoverRaw=PLANE.recoverRaw;}}}
  else if(L.phase===1){L.recoverRaw=PLANE.recoverRaw;out.sounds.push({se:0xb});L.phase=2;L.shakeRaw=PLANE.shakeRaw;}
  else if(L.phase===2){L.shakeRaw-=dt;let k=Number((B(L.shakeRaw)<<16n)/B(PLANE.shakeRaw));k=mul(k,k);if(k<0)k=0;else if(k>F)k=F;
   const draw=()=>{let x;do x=pcg32(rng);while(x<4);return x;};const ux=draw(),uy=draw();
@@ -118,12 +124,12 @@ function gunStep(st,host){const dt=host.dtRaw,out={damage:[],sounds:[]};st.prevS
   const r=BULLET.radiusRaw,m=host.sweep({x:b.xRaw-r,y:b.yRaw-r,w:2*r,h:2*r},b.veloRaw.xRaw,b.veloRaw.yRaw,b.owner);
   b.xRaw+=m.dxRaw;b.yRaw+=m.dyRaw;
   if(m.hit){if(m.hit.kind==='map'){out.sounds.push({se:3});if(m.hit.chip)host.breakChip(m.hit.chip,b.colorIndex);}
-   else if(m.hit.kind==='actor')out.damage.push({target:m.hit.target,from:b.owner});
+   else if(m.hit.kind==='actor')out.damage.push({target:m.hit.target,from:b.owner,vxRaw:b.veloRaw.xRaw});
    b.active=false;b.waiting=true;b.timerRaw=BULLET.waitRaw;b.veloRaw={xRaw:0,yRaw:0};b.anim=2;continue;}
   if(!(host.viewRaw.x-BULLET.offScreenRaw<=b.xRaw&&b.xRaw<host.viewRaw.x+host.viewRaw.w+BULLET.offScreenRaw))b.active=false;}
  return out;}
 function displays(st){return {bullets:st.guns.flatMap(g=>g.bullets.filter(b=>b.active||b.waiting).map(b=>({id:b.id,x:b.xRaw/F,y:b.yRaw/F,r:BULLET.radiusRaw/F,colorIndex:b.colorIndex,fading:b.waiting}))),
  guns:st.guns.map(g=>({playerIndex:g.playerIndex,hidden:!!g.hidden}))};}
-return {planeSpeedRaw,screenEndWalkVeloX,planeVelocity,createLife,lifeUpdate,lifeDamage,compileGuns,gunStep,displays,pcg32,nextInt,supportedTypes:['PlayerGun','PlanePlayer','BattlePlanePlayer'],
+return {planeSpeedRaw,screenEndWalkVeloX,planeVelocity,createLife,lifeUpdate,lifeDamage,equipBarrier,barrierDeployed,compileGuns,gunStep,displays,pcg32,nextInt,supportedTypes:['PlayerGun','PlanePlayer','BattlePlanePlayer'],
  nativeConstants:{PLANE,DIRS,GUN,BULLET},completePhysicsFidelity:false};
 });

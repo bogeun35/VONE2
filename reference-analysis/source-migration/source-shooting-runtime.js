@@ -31,6 +31,15 @@
  *   square (Size byte px), colour and turn per frame (updatePosition 0x18188bf90 rotates
  *   the velocity by AngularVelocity * 0x477 >> 16 before moving); a player hit takes
  *   the shared HP (addDamageProcess 0x18188c620) instead of event 21.
+ *  6-4 / 15-3 (notes/shooting-boss-spec.md): the bosses' bullets are pool bullets too
+ *   (CreateBullet 0x1816f9fa0, size 10); BossEx's homing bullets carry a target player
+ *   (CreateHomingBullet 0x1816fde50) and updateHoming 0x18188bb20 turns them up to 1
+ *   degree a frame (FPAcos x 0x394bb8, dt x 60) before moving, straight once the target
+ *   is not alive. checkContact 0x18188c230 looks at player i's PlayerGuard before its body:
+ *   a guard hit is -1 (gone, no damage). BossEx's reusable enemies (CreatorReasuable
+ *   0x181703560, Resume 0x181705ff0: Initialize again, HP 1, a homing target) do not
+ *   shoot and steer in moveUpdate 0x181705080: up to 1 degree a frame plus a wobble
+ *   sin(Random * 3 + Timer * 4) * pi / 60, blasting after 16 s.
  *  MapBlockReplacer.OnStart 0x18187c400: x outer, y inner over BreakColor chips; the k-th
  *   colour met becomes gun colours[k % n]. MapBreakBlockRect.OnStart 0x18187ce60: option 1
  *   / 2 picks from the (gun) colours (Next(0, n) when the slot is -1), then paints
@@ -105,6 +114,7 @@ function enemyHit(st,id,out){const e=st.enemies.find(q=>q.id===id);if(!e||!e.act
 function enemyUpdate(st,e,dt,host,out){
  if(e.disappear){e.disappearRaw-=dt;if(e.disappearRaw<1){vanish(e);e.disappear=false;}return;}
  if(!e.active)return;
+ if(e.reusable)return homingUpdate(st,e,dt,host,out);
  const v=host.viewRaw;if(!(v.x-ENEMY.marginRaw<=e.xRaw&&e.xRaw<v.x+v.w+ENEMY.marginRaw)){vanish(e);return;}
  if(e.life<=0)blast(e);else if(e.blink>0)e.blink-=dt;
  if(!e.movingFinished&&!e.disappear){if(e.idx>=e.path.length)e.movingFinished=true;else{
@@ -121,24 +131,61 @@ function enemyUpdate(st,e,dt,host,out){
  else if(e.direction===3){let best=null,bd=null;for(const p of inRange){const d=num(i64(B(p.xRaw-e.xRaw)*B(p.xRaw-e.xRaw))>>16n)+num(i64(B(p.yRaw-e.yRaw)*B(p.yRaw-e.yRaw))>>16n);if(bd===null||d<bd){bd=d;best=p;}}if(best){tx=best.xRaw;ty=best.yRaw;}}
  if(tx===0&&ty===0)return;
  const u=N.normalizeRaw({xRaw:tx-e.xRaw,yRaw:ty-e.yRaw});createBullet(st,{xRaw:e.xRaw,yRaw:e.yRaw},{xRaw:mul(u.xRaw,e.bulletSpeedRaw),yRaw:mul(u.yRaw,e.bulletSpeedRaw)},host,out);}
+// A reusable (BossEx) enemy: checkOffScreen, damageUpdate, the homing branch of moveUpdate
+// 0x181705080; shootAttackUpdate needs Resuable 0, so it never fires. Pos += Velo after.
+const HOMING={validRaw:16*F,turnRaw:1142,wobbleRaw:0x3243f};
+function homingUpdate(st,e,dt,host,out){
+ if(e.skipOnce){e.skipOnce=false;return;}// resumed this frame: the enemies (#97) update before BossEx (#106)
+ const v=host.viewRaw;if(!(v.x-ENEMY.marginRaw<=e.xRaw&&e.xRaw<v.x+v.w+ENEMY.marginRaw)){vanish(e);return;}
+ if(e.life<=0){blast(e);return;}if(e.blink>0)e.blink-=dt;
+ const p=e.homingTarget==null?null:host.players.find(q=>q.index===e.homingTarget);
+ if(p){if(e.timerRaw<HOMING.validRaw){e.timerRaw+=dt;const s=len(e.veloRaw.xRaw,e.veloRaw.yRaw),d=N.normalizeRaw(e.veloRaw),tg=N.normalizeRaw({xRaw:p.xRaw-e.xRaw,yRaw:p.yRaw-e.yRaw});
+   const dot=mul(d.xRaw,tg.xRaw)+mul(d.yRaw,tg.yRaw),ang=dot<-F||dot>F?null:Lut.acosRaw(dot);
+   let wob=mul(dt,mul(Lut.sincosRaw(e.randomRaw*3+e.timerRaw*4)[0],HOMING.wobbleRaw));
+   if(ang!==null&&ang>HOMING.turnRaw&&!p.dead){const cross=mul(d.xRaw,tg.yRaw)-mul(tg.xRaw,d.yRaw);wob+=(cross<0?-1:1)*HOMING.turnRaw;}
+   const [sn,cs]=Lut.sincosRaw(wob),r={xRaw:mul(d.xRaw,cs)-mul(d.yRaw,sn),yRaw:mul(d.xRaw,sn)+mul(d.yRaw,cs)};e.veloRaw={xRaw:mul(r.xRaw,s),yRaw:mul(r.yRaw,s)};}
+  else{blast(e);return;}}
+ e.xRaw+=e.veloRaw.xRaw;e.yRaw+=e.veloRaw.yRaw;}
+// CreatorReasuable 0x181703560 x n (Initialize: one Next(0, 100) each), hidden
+function addReusableEnemies(st,owner,n,rng){for(let i=0;i<n;i++){const r=nextInt(rng,0,100);
+ st.enemies.push({id:owner+':h'+i,owner,reusable:true,xRaw:0,yRaw:0,veloRaw:{xRaw:0,yRaw:0},life:ENEMY.life,active:false,shown:false,disappear:false,disappearRaw:0,gone:true,collision:false,
+  timerRaw:0,randomRaw:div(r*F,100*F),homingTarget:null,anim:1,blink:0,path:[],idx:0,movingFinished:true});}}
+// CreateHomingEnemy 0x1816fe030: the first hidden one -> Resume (Initialize: Next(0, 100), HP 2) then HP 1
+function resumeHomingEnemy(st,owner,pos,dir,speedRaw,target,rng){const e=st.enemies.find(q=>q.reusable&&q.owner===owner&&q.gone&&!q.disappear);if(!e)return false;
+ const r=nextInt(rng,0,100),u=N.normalizeRaw(dir);
+ Object.assign(e,{randomRaw:div(r*F,100*F),life:1,timerRaw:0,xRaw:pos.xRaw,yRaw:pos.yRaw,veloRaw:{xRaw:mul(u.xRaw,speedRaw),yRaw:mul(u.yRaw,speedRaw)},
+  active:true,shown:true,gone:false,collision:true,anim:1,homingTarget:target,skipOnce:true,blink:0});return true;}
 // OptimizedBulletObserverComponent.CreateBullet 0x18188dc30
 function createBullet(st,pos,velo,host,out,extra){let b=st.bullets.find(q=>!q.active);
  if(!b){if(st.bullets.length>=st.pool)return false;b={};st.bullets.push(b);}
+ const x=extra||{};
  Object.assign(b,{active:true,fading:false,seed:randomFP(host.rng),timerRaw:BULLET.validRaw,xRaw:pos.xRaw,yRaw:pos.yRaw,veloRaw:velo,
-  sizeRaw:extra?extra.sizePx<<16:BULLET.sizeRaw,angVelRaw:extra?extra.angVelRaw:0,color:extra?extra.color:null,danmaku:!!extra});if(out)out.sounds.push({se:0x14});return true;}
+  sizeRaw:x.sizePx?x.sizePx<<16:BULLET.sizeRaw,angVelRaw:x.angVelRaw||0,color:x.color||null,danmaku:!!x.danmaku,target:x.target??null,sprite:x.sprite||0});if(out)out.sounds.push({se:0x14});return true;}
 // DanmakuLocator.createBullet -> CreateBullet(stage type 1); a full pool creates nothing
-function createDanmakuBullet(st,param,rng){return createBullet(st,{xRaw:param.xRaw,yRaw:param.yRaw},{...param.veloRaw},{rng},null,param);}
+function createDanmakuBullet(st,param,rng){return createBullet(st,{xRaw:param.xRaw,yRaw:param.yRaw},{...param.veloRaw},{rng},null,{...param,danmaku:true});}
+// ShootingEnemyBoss.CreateBullet 0x1816f9fa0 / BossEx CreateHomingBullet 0x1816fde50: stage type 0,
+// size 10, colour (255, 50, 76); a homing one carries its target player index
+function createEnemyBullet(st,pos,velo,rng,extra={}){return createBullet(st,pos,velo,{rng},null,{color:[255,50,76],...extra});}
+// OptimizedBullet.updateHoming 0x18188bb20: before updatePosition, target alive only
+function updateHoming(b,dt,host){const p=host.players.find(q=>q.index===b.target);if(!p||!p.alive){b.angVelRaw=0;return;}
+ const d=N.normalizeRaw(b.veloRaw),t=N.normalizeRaw({xRaw:p.xRaw-b.xRaw,yRaw:p.yRaw-b.yRaw}),idx=mul(d.xRaw,t.xRaw)+mul(d.yRaw,t.yRaw)+F;
+ const deg=idx<0||idx>0x20000?0:mul(Lut.acosRaw(idx-F),0x394bb8),turn=Math.min(mul(dt,60*F),deg),cross=mul(d.xRaw,t.yRaw)-mul(t.xRaw,d.yRaw);
+ const th=mul(turn*(cross<0?-1:1),0x477),[s,c]=Lut.sincosRaw(th),v0=b.veloRaw;
+ b.veloRaw={xRaw:mul(v0.xRaw,c)-mul(v0.yRaw,s),yRaw:mul(v0.xRaw,s)+mul(v0.yRaw,c)};b.angVelRaw=0;}
 // OptimizedBulletObserver.RemoveAllBullet (named approximation: gone at once)
 function removeAllBullets(st){for(const b of st.bullets)b.active=false;}
 function bulletUpdate(st,b,dt,host,out){
  if(b.fading){b.timerRaw-=dt;if(b.timerRaw<1)b.active=false;return;}
  b.timerRaw-=dt;if(b.timerRaw<=0){b.fading=true;b.timerRaw=BULLET.fadeRaw;return;}
+ if(b.target!=null)updateHoming(b,dt,host);
  if(b.angVelRaw){const th=mul(b.angVelRaw,0x477),[s,c]=Lut.sincosRaw(th),v0=b.veloRaw;b.veloRaw={xRaw:mul(v0.xRaw,c)-mul(v0.yRaw,s),yRaw:mul(v0.xRaw,s)+mul(v0.yRaw,c)};}
  const nx=b.xRaw+b.veloRaw.xRaw,ny=b.yRaw+b.veloRaw.yRaw,v=host.viewRaw;
  if(!(v.x-BULLET.marginRaw<=nx&&nx<v.x+v.w+BULLET.marginRaw)){b.fading=true;b.timerRaw=BULLET.fadeRaw;return;}
  const size=b.sizeRaw||BULLET.sizeRaw,half=size>>1,box={x:nx-half,y:ny-half,w:size,h:size};
- const hitP=host.players.find(p=>p.alive&&p.bodyRaw&&overlap(box,p.bodyRaw));
- if(hitP){out.damage.push(b.danmaku?{player:hitP.index,danmaku:true}:{player:hitP.index});b.fading=true;b.timerRaw=BULLET.fadeRaw;return;}
+ // checkContact 0x18188c230: player i's guard (-1, no damage) before player i's body
+ for(const p of host.players){if(!p.alive)continue;
+  if(p.guardRaw&&overlap(box,p.guardRaw)){b.fading=true;b.timerRaw=BULLET.fadeRaw;out.guarded=(out.guarded||0)+1;return;}
+  if(p.bodyRaw&&overlap(box,p.bodyRaw)){out.damage.push(b.danmaku?{player:p.index,danmaku:true}:{player:p.index});b.fading=true;b.timerRaw=BULLET.fadeRaw;return;}}
  if(host.mapBlocked(box)){b.fading=true;b.timerRaw=BULLET.fadeRaw;return;}
  b.xRaw=nx;b.yRaw=ny;}
 /* One frame. host: {dtRaw, viewRaw:{x,w}, rng, players:[{index, xRaw, yRaw, alive, bodyRaw}],
@@ -162,6 +209,6 @@ function displays(st){return {
  enemies:st.enemies.filter(e=>e.shown&&!e.gone).map(e=>({id:e.id,x:e.xRaw/F,y:e.yRaw/F,blast:e.disappear,blink:e.blink>0,t:e.disappear?1-e.disappearRaw/ENEMY.blastRaw:0})),
  bullets:st.bullets.filter(b=>b.active).map(b=>({x:b.xRaw/F,y:b.yRaw/F,r:b.danmaku?(b.sizeRaw/F)*1.5:5,fading:b.fading,color:b.color||null})),
  chips:Object.entries(st.chips).map(([k,v])=>{const [gx,gy]=k.split(',').map(Number);return {gx,gy,colorIndex:v-CHIP_BASE};})};}
-return {compile,create,start,step,signal,enemyHit,createDanmakuBullet,removeAllBullets,breakChip,chipSolids,targets,displays,cutPath,pcg32,nextInt,
+return {compile,create,start,step,signal,enemyHit,createDanmakuBullet,createEnemyBullet,addReusableEnemies,resumeHomingEnemy,removeAllBullets,breakChip,chipSolids,targets,displays,cutPath,pcg32,nextInt,
  supportedTypes:['ShootingEnemySpawner','OptimizedBulletObserver','MapBlockReplacer','MapBreakBlockRect'],nativeConstants:{ENEMY,BULLET},completePhysicsFidelity:false};
 });

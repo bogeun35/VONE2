@@ -558,6 +558,36 @@ function danmakuArt(c,s,time){const D=root.SourceDanmakuRuntime;if(!D||!s.danmak
   fillStroke(c,full?'#ff7a98':'rgba(255,255,255,.25)',INK,2);c.restore();}
  if(d.state<4)label(c,d.warmUp?'준비 '+d.seconds:String(d.seconds),cx,top+36,'#fffdf6',d.warmUp?22:26);
 }
+// 6-4 / 15-3 bosses: the hull is the body rects, closed hatches are armour plates, open cores
+// glow; missiles (192 x 48, tip at x - 192), PlayerGuard bars, ShootingSuperApples and a barrier
+// bubble on a plane with more than 2 lives. The HP bar (UI prefab) sits over each boss.
+function bossArt(c,s,time){const Bo=root.SourceBossRuntime;const st=s.bossState;if(!Bo||!st||!(st.bosses.length||st.guards.length||st.apples.length))return;const d=Bo.displays(st);
+ for(const a of d.apples){c.save();c.translate(a.x,a.y);c.globalAlpha=a.eaten?.4:1;const k=a.r/24;c.scale(k,k);
+  c.beginPath();c.arc(0,2,20,0,Math.PI*2);fillStroke(c,'#ff6b6b',INK,2.5);c.fillStyle='rgba(255,255,255,.55)';c.beginPath();c.arc(-7,-5,5,0,Math.PI*2);c.fill();
+  c.fillStyle='#6dbf5b';c.beginPath();c.ellipse(7,-18,7,3.5,-.5,0,Math.PI*2);c.fill();c.strokeStyle='#ffd84d';c.lineWidth=2;
+  for(let i=0;i<4;i++){const an=time*2+i*Math.PI/2;c.beginPath();c.moveTo(Math.cos(an)*26,Math.sin(an)*26);c.lineTo(Math.cos(an)*31,Math.sin(an)*31);c.stroke();}c.restore();}
+ for(const b of d.bosses){const sh=b.parts,flash=b.blink&&Math.floor(time*30)%2;c.save();c.translate(b.x,b.y);
+  const hull=b.kind==='boss'?'#8a7bb8':'#6f9bd1',plate=b.kind==='boss'?'#5d5189':'#4a6f9e';
+  for(const r of sh.body){rr(c,r.x/F,r.y/F,r.w/F,r.h/F,8);fillStroke(c,flash?'#fffdf6':hull,INK,2.5);}
+  sh.cores.forEach((r,k)=>{if(!b.cores[k])return;const cx=(r.x+r.w/2)/F,cy=(r.y+r.h/2)/F;c.beginPath();c.arc(cx,cy,r.w/F/2,0,Math.PI*2);fillStroke(c,Math.floor(time*6)%2?'#ff9db0':'#ff6f91',INK,2.5);
+   c.fillStyle='rgba(255,255,255,.7)';c.beginPath();c.arc(cx-8,cy-8,6,0,Math.PI*2);c.fill();});
+  sh.hatches.forEach((r,k)=>{if(!b.hatches[k])return;rr(c,r.x/F,r.y/F,r.w/F,r.h/F,6);fillStroke(c,flash?'#fffdf6':plate,INK,2.5);
+   c.strokeStyle='rgba(255,255,255,.25)';c.lineWidth=2;for(let x=r.x/F+12;x<(r.x+r.w)/F-6;x+=18){c.beginPath();c.moveTo(x,r.y/F+5);c.lineTo(x,(r.y+r.h)/F-5);c.stroke();}});
+  // bean eyes on the bridge
+  const ex=b.kind==='boss'?-60:60;for(const sy of [-1,1]){c.beginPath();c.ellipse(ex+sy*10,-82,3,4.5,0,0,Math.PI*2);fillStroke(c,INK,null);}
+  if(b.dying){c.globalAlpha=.6;c.fillStyle='#ffb04d';for(let i=0;i<5;i++){const an=time*9+i*1.3;c.beginPath();c.arc(Math.cos(an)*90,Math.sin(an*1.3)*140,10+6*Math.sin(time*20+i),0,Math.PI*2);c.fill();}c.globalAlpha=1;}
+  // HP bar over the boss
+  const w=180,y0=-300;rr(c,-w/2,y0,w,14,7);fillStroke(c,'rgba(40,30,60,.55)',INK,2);rr(c,-w/2+2,y0+2,(w-4)*Math.max(0,b.hp)/b.hpMax,10,5);fillStroke(c,'#ff7a98',null);
+  c.restore();}
+ for(const m of d.missiles){c.save();c.translate(m.x,m.y);
+  if(m.exploding){c.globalAlpha=Math.max(0,1-m.t);c.strokeStyle='#ffb04d';c.lineWidth=6;c.beginPath();c.arc(-96,0,16+50*m.t,0,Math.PI*2);c.stroke();c.restore();continue;}
+  c.beginPath();c.moveTo(-192,0);c.quadraticCurveTo(-170,-18,-140,-16);c.lineTo(-12,-16);c.lineTo(-12,16);c.lineTo(-140,16);c.quadraticCurveTo(-170,18,-192,0);c.closePath();fillStroke(c,'#e9e3f5',INK,2.5);
+  c.beginPath();c.moveTo(-40,-16);c.lineTo(-8,-26);c.lineTo(-4,-16);c.closePath();fillStroke(c,'#ff7a98',INK,2);c.beginPath();c.moveTo(-40,16);c.lineTo(-8,26);c.lineTo(-4,16);c.closePath();fillStroke(c,'#ff7a98',INK,2);
+  c.fillStyle=Math.floor(time*20)%2?'#ffd84d':'#ffb04d';c.beginPath();c.ellipse(4,0,10,7,0,0,Math.PI*2);c.fill();c.restore();}
+ const players=s.players.map((p,i)=>({index:i,xRaw:Math.round((p.x+p.w/2)*F),yRaw:Math.round((p.y+p.h+1)*F),visible:!p.exit,lookingRight:!p.facingLeft}));
+ for(const [i,r] of Object.entries(Bo.guardRects(st,players))){c.save();rr(c,r.x/F-2,r.y/F,r.w/F+4,r.h/F,4);fillStroke(c,'#9fd7ff',INK,2);c.strokeStyle='rgba(255,255,255,.7)';c.lineWidth=2;c.beginPath();c.moveTo(r.x/F+r.w/F/2,r.y/F+8);c.lineTo(r.x/F+r.w/F/2,r.y/F+r.h/F-8);c.stroke();c.restore();}
+ for(const p of s.players){const L=p.plane&&p.plane.life;if(!L||!L.barrier||L.life<=2||p.exit)continue;c.save();c.globalAlpha=.35+.15*Math.sin(time*6);c.beginPath();c.arc(p.x+p.w/2,p.y+p.h/2,38,0,Math.PI*2);fillStroke(c,'#bfefff','#5fb8e8',3);c.restore();}
+}
 // 13-2 graphs (UI prefabs; sizes are named approximations): a bar graph has three bars
 // [left, right, jump] of levelMax cells (cell = 288 / max(6, levelMax)); a circle graph
 // is a clockwise pie [jump, right, left] from the top. The number of rounds left sits
@@ -587,7 +617,7 @@ function graphArt(c,s){const G=root.SourceGraphRuntime;if(!G||!s.graphState||!s.
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);moleArt(c,s,time);throwArt(c,s,time);planeObstacleArt(c,s);shootingArt(c,s,time);danmakuArt(c,s,time);graphArt(c,s);planeArt(c,s,time);}
+ try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);moleArt(c,s,time);throwArt(c,s,time);planeObstacleArt(c,s);shootingArt(c,s,time);bossArt(c,s,time);danmakuArt(c,s,time);graphArt(c,s);planeArt(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
