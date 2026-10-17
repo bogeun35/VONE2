@@ -326,10 +326,20 @@ function capturingCounter(c,s,view){
  const k=C.displays(s.capturingState).constraint;if(k.hideUi)return;
  c.save();rr(c,view.width/2-58,12,116,30,15);fillStroke(c,'rgba(255,253,246,.92)',INK,2);label(c,(k.done?'다 잡았어요! ':'잡은 수 ')+k.captured+' / '+k.total,view.width/2,27,INK,14);c.restore();
 }
+// 2-1 / 7-1 StepEnemy: collider (-24,-27,48,26); stomping it bounces you,
+// touching it from the side is a miss.
+function stepEnemies(c,s,time){
+ const E=root.SourceStepEnemyDevices;if(!E||!s.stepEnemyState||!s.stepEnemyState.enemies.length)return;
+ for(const e of E.displays(s.stepEnemyState)){const cx=e.x+e.w/2,step=Math.sin(time*10+e.x*.2);c.save();
+  c.fillStyle=INK;rr(c,cx-17,e.y+e.h-6+(step>0?-1:0),10,6,3);c.fill();rr(c,cx+7,e.y+e.h-6+(step>0?0:-1),10,6,3);c.fill();
+  c.beginPath();c.moveTo(e.x+2,e.y+e.h-4);c.quadraticCurveTo(e.x+2,e.y-4,cx,e.y-4);c.quadraticCurveTo(e.x+e.w-2,e.y-4,e.x+e.w-2,e.y+e.h-4);c.closePath();fillStroke(c,'#ffb07a',INK,2);
+  c.fillStyle='#ffd7b8';rr(c,e.x+8,e.y+2,e.w-16,6,3);c.fill();
+  eyes(c,cx+(e.left?-5:5),e.y+e.h*.5,12,6,4);c.restore();}
+}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
+ try{topViewFloor(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
