@@ -249,14 +249,50 @@ function blackoutLabels(c,s){
  if(!bc||!bc.visibleUI)return;const p=s.players[bc.playerIndex];if(!p||p.exit)return;
  label(c,'X: 불 켜기',p.x+p.w/2,p.y-34,'#ffe082',12);
 }
+// 9-1 BatEnemy / FallingCage. The light cone is the one the bat searches with:
+// radius range*criteria, half angle angle*criteria/2, along the look vector.
+function batLights(c,s){
+ const B=root.SourceBatEnemyDevices;if(!B||!s.batState||!s.batState.bats.length)return;
+ for(const b of B.displays(s.batState).bats){const l=b.light;if(!l.on)continue;
+  const dir=Math.atan2(l.dy,l.dx),half=l.halfAngle*Math.PI/180,a=.35+.65*Math.max(0,Math.min(1,l.brightness));
+  c.save();const g=c.createRadialGradient(l.x,l.y,4,l.x,l.y,l.range);g.addColorStop(0,'rgba(255,236,140,'+(.6*a)+')');g.addColorStop(1,'rgba(255,236,140,'+(.1*a)+')');
+  c.fillStyle=g;c.beginPath();c.moveTo(l.x,l.y);c.arc(l.x,l.y,l.range,dir-half,dir+half);c.closePath();c.fill();c.restore();}
+}
+function bats(c,s,time){
+ const B=root.SourceBatEnemyDevices;if(!B||!s.batState||!s.batState.bats.length)return;
+ for(const b of B.displays(s.batState).bats){
+  // collider (-14,-40,28,40); the body floats higher while ShadowOffset01 is up
+  const lift=b.captured?0:6+8*b.shadowOffset,cx=b.x,cy=b.y-20-lift,flap=b.captured?0:Math.sin(time*14+cx)*5;
+  c.save();c.fillStyle='rgba(40,30,60,.22)';c.beginPath();c.ellipse(cx,b.y-3,12,4,0,0,Math.PI*2);c.fill();
+  c.fillStyle='#8f7bd6';c.strokeStyle=INK;c.lineWidth=2;
+  for(const k of [-1,1]){c.beginPath();c.moveTo(cx+k*8,cy-2);c.quadraticCurveTo(cx+k*20,cy-12-flap,cx+k*24,cy+2+flap*.3);c.quadraticCurveTo(cx+k*17,cy+1,cx+k*14,cy+6);c.quadraticCurveTo(cx+k*11,cy+2,cx+k*8,cy+6);c.closePath();c.fill();c.stroke();}
+  c.beginPath();c.ellipse(cx,cy,11,10,0,0,Math.PI*2);fillStroke(c,'#a693e6',INK,2);
+  c.beginPath();c.moveTo(cx-7,cy-7);c.lineTo(cx-4,cy-14);c.lineTo(cx-1,cy-8);c.moveTo(cx+7,cy-7);c.lineTo(cx+4,cy-14);c.lineTo(cx+1,cy-8);fillStroke(c,'#a693e6',INK,1.5);
+  if(b.phase===1&&!b.captured){c.fillStyle='#ff5a6e';c.beginPath();c.arc(cx-4,cy-1,2.2,0,Math.PI*2);c.arc(cx+4,cy-1,2.2,0,Math.PI*2);c.fill();label(c,'!',cx,cy-26,'#ff5a6e',16);}
+  else if(b.captured){c.strokeStyle=INK;c.lineWidth=1.6;c.beginPath();c.moveTo(cx-6,cy-1);c.lineTo(cx-2,cy+1);c.moveTo(cx+6,cy-1);c.lineTo(cx+2,cy+1);c.stroke();}
+  else eyes(c,cx,cy-1,8,5,3);
+  c.restore();}
+}
+function fallingCages(c,s){
+ const B=root.SourceBatEnemyDevices;if(!B||!s.batState||!s.batState.cages.length)return;
+ for(const k of B.displays(s.batState).cages){
+  // collider (-34,-64,68,64) on the ground; CageY is the drop offset (-400 hidden)
+  c.save();c.globalAlpha=.35*k.shadowAlpha;c.fillStyle='#1d1630';c.beginPath();c.ellipse(k.x,k.y-6,34,9,0,0,Math.PI*2);c.fill();c.restore();
+  if(k.offsetY<=-399&&!k.captured)continue;
+  const x=k.x-34,y=k.y-64+k.offsetY;c.save();
+  rr(c,x,y,68,10,4);fillStroke(c,'#9aa3b8',INK,2);
+  c.strokeStyle='#6b7388';c.lineWidth=4;for(let i=0;i<6;i++){const bx=x+7+i*10.8;c.beginPath();c.moveTo(bx,y+10);c.lineTo(bx,y+62);c.stroke();}
+  c.strokeStyle=INK;c.lineWidth=2;c.strokeRect(x+2,y+10,64,52);rr(c,x,y+58,68,6,3);fillStroke(c,'#9aa3b8',INK,2);
+  c.restore();}
+}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
+ try{topViewFloor(c,s);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
-function drawAbove(c,s){if(!s)return;c.save();try{blackoutLabels(c,s);}finally{c.restore();}}
+function drawAbove(c,s){if(!s)return;const time=performance.now()/1000;c.save();try{bats(c,s,time);fallingCages(c,s);blackoutLabels(c,s);}finally{c.restore();}}
 // Screen pass: the blackout darkness covers the whole view.
 function overlay(c,s,view){
  const B=root.SourceBlackoutDevices;if(!B||!s||!s.blackoutState||!s.blackoutState.blackouts.length)return;

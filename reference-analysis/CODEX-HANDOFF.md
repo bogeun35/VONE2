@@ -5,19 +5,21 @@
 
 ## 현재 상태
 
-> **2026-10-17 심야 (Claude)**: 로컬 **35라운드**(라이브는 22라운드 v=20261017-05 그대로 — 사용자 지시: *다 만들고 한 번에 테스트*).
-> 추가: 3-1, 15-1, 5-4, 14-1, 5-3, 3-3, 12-2, 15-2, 12-4, 2-4, 4-2, 7-4, 9-4. 테스트 2396 통과.
+> **2026-10-17 심야 (Claude)**: 로컬 **36라운드**(라이브는 22라운드 v=20261017-05 그대로 — 사용자 지시: *다 만들고 한 번에 테스트*).
+> 추가: 3-1, 15-1, 5-4, 14-1, 5-3, 3-3, 12-2, 15-2, 12-4, 2-4, 4-2, 7-4, 9-4, 9-1. 테스트 2403 통과.
 > **모든 라운드에 영향 주는 원작 일치 수정 2건** (라이브에도 아직 미반영):
 > - 가로 이동 발판 탑승자 운반(`inertiaCarry`, updateInertia 0x1817fc480) — 예전엔 가로 리프트/선로 발판에서 미끄러졌음.
 > - 열쇠는 플레이어를 따라다니고 **문에 닿아야** 문이 열림(`keyTick/keyCollide`, Key 0x18186cc20 / Goal 0x18185f970), 빼앗기 가능.
 >   `s.goalOpen`(문 열림)과 `s.keyTaken`(처음 집음)을 분리. 예전 규칙으로 녹화한 전 구간 입력 재생은 이제 클리어 안 됨 → 재녹화 필요.
 > 탑뷰 모드(9-x/11-x): `topViewMove` + `source-topviewplayer-devices.js`, 구멍 칩 69(속성16) 낙하, 몸통 28x32 충돌.
-> 다음 작업: BatEnemy(9-1·9-3, 원작 분석 완료 — 아래 메모), Cardboard(9-3), FallingCage(9-1).
->
-> BatEnemy 메모(REA): 정적 rect (40,28,-14,-40) 층8, +0x28=QFP[0x68] 노출 문턱, +0x30=문자열 리터럴(라이트 회전율),
-> +0x38=QFP[0xd8] 라이트 거리. 슬롯0 방향(0하 1상 2좌 3우), 1 경로속도, 2/3 라이트 dark/bright, 4 추격속도(≤0이면 슬롯1*QFP[0x118]),
-> 11==1 루프, 12~ 경로점. 상태 0 순찰(끝에서 1초 정지) / 1 경계(QFP[0x78]초, 화면 흔들림만 PCG 난수) 후 추격 / 2 골판지 숨음 대기(QFP[0x118])
-> / 3 경로 복귀. 층1 접촉 → 이벤트43. Capture(FallingCage)는 박쥐를 멈추고 라이트를 끔.
+> 9-1: `source-batenemy-devices.js`(박쥐 156 + 떨어지는 철창 182, 머리 주석에 원작 주소 전부) + 런타임 `cageTick`(플레이어보다 먼저)
+> / `batTick`(플레이어 다음, 충돌 판정 포함). 탑뷰 플레이어는 충돌체가 2개: 0번 몸통 28x32(벽), **1번 전신 46x32(-16,-47)** —
+> 박쥐 빛 판정(IsPlayerInside, 상태9→충돌체1)과 박쥐 접촉 사망(OnCollided: 상대 층1 && 충돌체 번호(Collision+4)==1)은 1번을 씀.
+> 박쥐 속도는 **프레임당**(OnUpdate2 Pos+=Velo, dt 없음): 슬롯4=5 → 초당 300px. 철창은 착지 후 4프레임만 판정(OneFrame*4).
+> 다음 작업: 9-3 = 박쥐 순찰 경로(QLinePath GetPathPosition 0x1816dd2e0 + 박쥐 엔티티의 QLinePath 생성 위치 미확인 —
+> 지금은 경로 있는 박쥐를 compile 에서 거부) + Cardboard(IsEquipOrCoverCardboard 0x1816cb8b0). 그 다음 남은 라운드는 scan-remaining-work.cjs.
+> 새 도구: `tools/xref_static.py 0x<전역주소>` — RIP 상대 참조 스캔으로 TypeInfo 슬롯의 주인(.cctor) 찾기 (0.6초).
+> 상수 문자열(FP.FromString)은 `source-migration/resolve-string-literals.local.py --cctor 0x<cctor>` 로 값 확인.
 
 > **분석 도구 = REA(Ghidra 엔진) 저장 프로젝트** — `rea decompile` 직접 호출은 매번 56분 재분석이라 쓰지 말 것.
 > - 프로젝트: `C:\Users\user\tools\ghidra-projects\PicoPark2` (IL2CPP 메서드 1만363개 이름 부착; 다시 만들 땐
