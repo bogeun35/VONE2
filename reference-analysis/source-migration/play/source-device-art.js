@@ -471,14 +471,31 @@ function giantArt(c,s,time){
 }
 function giantOverlayWorld(c,s){const G=root.SourceGiantRuntime;if(!G||!s.giantState||!s.giantState.giants.length)return;
  for(const g of G.displays(s.giantState).giants)if(g.life)label(c,g.life.text,g.life.x,g.life.y,'#fffdf6',30);}
+// 14-2 Moles: each nest is a hole facing its direction; a mole fills its collision rect
+// (scaled with the actor), the life text sits 32 px above it.
+function moleArt(c,s,time){
+ const M=root.SourceMoleRuntime;if(!M||!s.moleState||!s.moleState.moles.length)return;const d=M.displays(s.moleState);
+ const rot=[0,Math.PI,-Math.PI/2,Math.PI/2];
+ for(const n of d.nests){c.save();c.translate(n.x,n.y);c.rotate(rot[n.dir]||0);c.beginPath();c.ellipse(0,0,30,9,0,0,Math.PI*2);fillStroke(c,'#5b4636',INK,2);
+  c.beginPath();c.ellipse(0,1,22,5,0,0,Math.PI*2);fillStroke(c,'#2b2030',null);c.restore();}
+ for(const m of d.moles){const r=m.rect;c.save();rr(c,r.x,r.y,r.w,r.h,Math.min(r.w,r.h)/2.2);
+  fillStroke(c,m.anim===4?'#b9a493':(m.anim===2||m.anim===3)&&Math.floor(time*20)%2?'#e0c4ad':'#b98a68',INK,2);
+  const cx=r.x+r.w/2,cy=r.y+r.h/2,k=Math.min(r.w,r.h)/36;
+  if(m.anim===4){c.strokeStyle=INK;c.lineWidth=2*k;for(const sx of [-1,1]){c.beginPath();c.moveTo(cx+sx*7*k-3*k,cy-5*k);c.lineTo(cx+sx*7*k+3*k,cy+k);c.moveTo(cx+sx*7*k+3*k,cy-5*k);c.lineTo(cx+sx*7*k-3*k,cy+k);c.stroke();}}
+  else for(const sx of [-1,1]){c.beginPath();c.ellipse(cx+sx*7*k,cy-2*k,2*k,3*k,0,0,Math.PI*2);fillStroke(c,INK,null);}
+  c.beginPath();c.ellipse(cx,cy+5*k,5*k,3.5*k,0,0,Math.PI*2);fillStroke(c,'#ff9db0',INK,1.5*k);
+  c.restore();}
+}
+function moleOverlayWorld(c,s){const M=root.SourceMoleRuntime;if(!M||!s.moleState||!s.moleState.moles.length)return;
+ for(const m of M.displays(s.moleState).moles)if(m.life)label(c,m.life.text,m.life.x,m.life.y,'#fffdf6',22);}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);}
+ try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);moleArt(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
-function drawAbove(c,s){if(!s)return;const time=performance.now()/1000;c.save();try{giantOverlayWorld(c,s);cardboards(c,s);bats(c,s,time);fallingCages(c,s);halfInputMarks(c,s);blackoutLabels(c,s);}finally{c.restore();}}
+function drawAbove(c,s){if(!s)return;const time=performance.now()/1000;c.save();try{giantOverlayWorld(c,s);moleOverlayWorld(c,s);cardboards(c,s);bats(c,s,time);fallingCages(c,s);halfInputMarks(c,s);blackoutLabels(c,s);}finally{c.restore();}}
 // Screen pass: the blackout darkness covers the whole view.
 function overlay(c,s,view){
  if(s){capturingCounter(c,s,view);fakeOverlay(c,s,view);appleOverlay(c,s,view);arrangeOverlay(c,s,view);}

@@ -229,10 +229,11 @@ function timerPost(st,t,dt,out){if(t.flags&4)return;t.timerRaw-=dt;if(t.timerRaw
  const g=st.giants.find(q=>q.name===t.target);if(g)giantEvent(st,g,EV.START,out);else if(t.target)out.keyEvents.push({eventType:EV.START,targetName:t.target,senderId:t.id});
  if(!(t.flags&2))t.gone=true;}
 /* One frame. host: {dtRaw, players:[{index, xRaw, yRaw (anchor), lookLeft, state1,
- * shotHeld, alive}]}. Returns {deaths:[{index, reason}], knocks:[{index, vxRaw, vyRaw}],
- * keyEvents, sounds, shakes}. */
+ * shotHeld, alive}], plugins:[{update(dt), targets(out) -> [{rect, hit(e)}] (layer-8
+ * punch targets), overlaps(players, out), post(dt, out)}]}. Returns {deaths:[{index,
+ * reason}], knocks:[{index, vxRaw, vyRaw}], faints, keyEvents, sounds, shakes}. */
 function step(st,host){
- const dt=host.dtRaw,out={deaths:[],knocks:[],keyEvents:[],sounds:[],shakes:[]};st.out=out;
+ const dt=host.dtRaw,out={deaths:[],knocks:[],faints:[],keyEvents:[],sounds:[],shakes:[]};st.out=out;const plugins=host.plugins||[];
  const players=(host.players||[]).filter(p=>p.alive!==false);
  for(const p of players){const held=!!p.shotHeld;p.shotPressed=held&&!st.prevShot[p.index];st.prevShot[p.index]=held;}
  for(const p of host.players||[])if(p.alive===false)st.prevShot[p.index]=!!p.shotHeld;
@@ -241,10 +242,12 @@ function step(st,host){
  for(const g of st.giants)if(!g.gone)giantUpdate(st,g,dt,players);
  for(const p of st.punches)punchUpdate(st,p,dt,players.find(q=>q.index===p.actorIndex));
  for(const g of st.giants)if(!g.gone||!g.hand.gone)handUpdate(st,g,dt,players);
+ for(const x of plugins)x.update(dt);
  // overlaps
  const dead=new Set();
  for(const p of st.punches){if(!p.attacking||!p.hit||!p.synced)continue;const r=punchRect(p),power=p.lookLeft?-p.powerRaw:p.powerRaw;
   for(const g of st.giants){if(g.gone||!g.collisionsOn)continue;for(const gr of g.rects)if(overlap(r,giantRect(g,gr)))giantEvent(st,g,{eventType:EV.DAMAGE,sender:p.id,powerRaw:power},out);}
+  for(const x of plugins)for(const t of x.targets(out))if(overlap(r,t.rect))t.hit({eventType:EV.DAMAGE,sender:p.id,powerRaw:power});
   for(const q of players)if(overlap(r,playerRect(q))&&damageCheck(st,'player:'+q.index,p.id,EV.DAMAGE)){
    out.knocks.push({index:q.index,vxRaw:mul(power,PUNCH.knock.xRaw),vyRaw:PUNCH.knock.yRaw});out.shakes.push({amountRaw:PUNCH.shakeRaw});out.sounds.push({se:0x11});}
   for(const g of st.giants){const h=g.hand;if(h.gone||!h.collisionOn||!(h.flags&1)||!overlap(r,handRect(h)))continue;
@@ -255,9 +258,11 @@ function step(st,host){
   if(g.collisionsOn)for(const q of players)if(!dead.has(q.index)&&g.rects.some(gr=>overlap(giantRect(g,gr),playerRect(q)))){dead.add(q.index);out.deaths.push({index:q.index,reason:'giant'});}}
  for(const g of st.giants){const h=g.hand;if(h.gone||!h.collisionOn)continue;
   for(const q of players)if(overlap(handRect(h),playerRect(q))){h.target=null;if(!dead.has(q.index)){dead.add(q.index);out.deaths.push({index:q.index,reason:'hand'});}}}
+ for(const x of plugins)x.overlaps(players,out);
  // OnPost
  for(const p of st.punches)punchPost(st,p,dt,players.find(q=>q.index===p.actorIndex));
  for(const t of st.timers)if(!t.gone)timerPost(st,t,dt,out);
+ for(const x of plugins)x.post(dt,out);
  delete st.out;return out;
 }
 // KeyComponent.OnStart 0x18186bf10 attaches a key naming this actor: offset = key - actor
