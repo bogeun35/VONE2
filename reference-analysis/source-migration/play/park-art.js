@@ -393,7 +393,8 @@ function drawWallBlock(c,b,wall){
 }
 
 // ------------------------------------------------------------------ friends
-function facingOf(p){const prev=memo.facing.get(p.id)||1;const f=p.vx>.5?1:p.vx<-.5?-1:prev;memo.facing.set(p.id,f);return f;}
+// the runtime keeps lookingRight from input (Player Update 0x1816c3060); others go by velocity
+function facingOf(p){const prev=memo.facing.get(p.id)||1;const f=typeof p.facingLeft==='boolean'?(p.facingLeft?-1:1):typeof p.lookingRight==='boolean'?(p.lookingRight?1:-1):p.vx>.5?1:p.vx<-.5?-1:prev;memo.facing.set(p.id,f);return f;}
 function accessory(c,kind,pal,behind){
  const dk=pal.dark;
  if(behind){

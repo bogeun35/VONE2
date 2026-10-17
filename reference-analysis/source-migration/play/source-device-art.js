@@ -430,17 +430,36 @@ function appleArt(c,s,time){
 }
 function appleOverlay(c,s,view){const A=root.SourceAppleRuntime;if(!A||!s.appleState||!s.appleState.controller)return;const d=A.displays(s.appleState);
  if(d.counter)label(c,'🍎 '+d.counter.caught+' / '+d.counter.needed,view.width/2,40,'#fffdf6',30);}
+// 3-4 Arrangement: the picture on the left half is the shown DummyPlayers (player
+// rect 32x46, in their player's colours, facing slot 1) and DummyColorBoxes; the
+// curtain (startFade, 1/15 s) covers the left half while the friends arrange, and
+// each result is a circle or a cross over its dummy.
+function arrangeArt(c,s,time){
+ const A=root.SourceArrangementRuntime,P=root.ParkArt;if(!A||!s.arrangeState||!s.arrangeState.arrangement)return;const d=A.displays(s.arrangeState);
+ for(const g of d.goals){c.save();c.globalAlpha=.55;rr(c,g.x-24,g.y-72,48,72,6);fillStroke(c,'#fffdf6',INK,2);c.restore();}
+ for(const b of d.boxes){const col=FRIEND_COLORS[b.colorIndex%8];rr(c,b.x,b.y,b.w,b.h,6);fillStroke(c,col,INK,2);c.strokeStyle='rgba(255,255,255,.5)';c.lineWidth=2;rr(c,b.x+5,b.y+5,b.w-10,b.h-10,4);c.stroke();}
+ if(P&&P.drawFriend)for(const u of d.dummies)P.drawFriend(c,{id:'dummy:'+u.id,x:u.x-16,y:u.y-47,w:32,h:46,vx:u.facingLeft?-.8:.8,vy:0,grounded:true,lookingRight:!u.facingLeft},u.colorIndex,{time});
+ if(d.curtain&&d.curtain.value>0){const w=d.curtain.right-d.curtain.left,h=s.map.height;c.save();c.globalAlpha=d.curtain.value;
+  c.fillStyle='#463c5f';c.fillRect(0,0,d.curtain.right-24,h);c.strokeStyle='rgba(255,255,255,.12)';c.lineWidth=10;
+  for(let x=24;x<d.curtain.right-24;x+=48){c.beginPath();c.moveTo(x,0);c.lineTo(x,h);c.stroke();}
+  label(c,'?',(d.curtain.right-24)/2,h/2,'#fffdf6',Math.min(160,w/4));c.restore();}
+ for(const r of d.results){const u=d.dummies.find(q=>q.id===r.id),b=d.boxes.find(q=>q.id===r.id),x=u?u.x:b.x+b.w/2,y=u?u.y-70:b.y-18;
+  label(c,r.ok?'○':'×',x,y,r.ok?'#7be08f':'#ff7a7a',34);}
+}
+function arrangeOverlay(c,s,view){const A=root.SourceArrangementRuntime;if(!A||!s.arrangeState||!s.arrangeState.arrangement)return;const d=A.displays(s.arrangeState);
+ if(d.timer)label(c,(d.timer.phase===1?'잘 보세요 ':'똑같이 서세요 ')+d.timer.seconds,view.width/2,48,d.timer.seconds<=10?'#ffd84d':'#fffdf6',36);
+ if(d.notice){const k=Math.min(1,d.notice.t),x=view.width*(1.2-1.4*k);label(c,d.notice.type,Math.max(view.width/2,x),view.height/2,'#ffd84d',72);}}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);}
+ try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
 function drawAbove(c,s){if(!s)return;const time=performance.now()/1000;c.save();try{cardboards(c,s);bats(c,s,time);fallingCages(c,s);halfInputMarks(c,s);blackoutLabels(c,s);}finally{c.restore();}}
 // Screen pass: the blackout darkness covers the whole view.
 function overlay(c,s,view){
- if(s){capturingCounter(c,s,view);fakeOverlay(c,s,view);appleOverlay(c,s,view);}
+ if(s){capturingCounter(c,s,view);fakeOverlay(c,s,view);appleOverlay(c,s,view);arrangeOverlay(c,s,view);}
  const B=root.SourceBlackoutDevices;if(!B||!s||!s.blackoutState||!s.blackoutState.blackouts.length)return;
  for(const b of B.displays(s.blackoutState).blackouts){const a=Math.max(0,Math.min(1,b.alpha*(b.darknessRaw/F)));
   if(a>0){c.fillStyle='rgba(0,0,0,'+a+')';c.fillRect(0,0,view.width,view.height);}}

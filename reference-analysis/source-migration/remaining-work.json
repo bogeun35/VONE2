@@ -50,11 +50,12 @@
   "st_w_13_03",
   "st_w_13_04",
   "st_w_08_01",
-  "st_w_08_03"
+  "st_w_08_03",
+  "st_w_03_04"
  ],
  "worldStages": 60,
- "remainingStages": 13,
- "remainingDistinctBlockers": 36,
+ "remainingStages": 12,
+ "remainingDistinctBlockers": 32,
  "nearest": [
   {
    "id": "st_w_06_03",
@@ -93,17 +94,6 @@
     "GiantEnemy",
     "PlayerPunch",
     "SwitchTimerActor"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_03_04",
-   "blockerCount": 4,
-   "blockers": [
-    "Arrangement",
-    "DummyColorBox",
-    "DummyGoal",
-    "DummyPlayer"
    ],
    "guardsAfterTypes": []
   },
@@ -192,6 +182,23 @@
     "PlayerGuard",
     "PlayerGun",
     "ShootingEnemyBoss",
+    "ShootingEnemySpawner",
+    "ShootingSuperApple"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_15_03",
+   "blockerCount": 10,
+   "blockers": [
+    "BattlePlanePlayer",
+    "BgmChanger",
+    "OptimizedBulletObserver",
+    "PlayerGuard",
+    "PlayerGun",
+    "ShootingEnemyBoss",
+    "ShootingEnemyBossEx",
+    "ShootingEnemyBossExParamSetter",
     "ShootingEnemySpawner",
     "ShootingSuperApple"
    ],
@@ -466,38 +473,6 @@
    "type": "MoleNest",
    "stages": [
     "st_w_14_02"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "Arrangement",
-   "stages": [
-    "st_w_03_04"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "DummyColorBox",
-   "stages": [
-    "st_w_03_04"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "DummyGoal",
-   "stages": [
-    "st_w_03_04"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "DummyPlayer",
-   "stages": [
-    "st_w_03_04"
    ],
    "appearsIn": 1,
    "opensAlone": []
@@ -3017,78 +2992,38 @@
   },
   {
    "id": "st_w_03_04",
-   "connected": false,
-   "distinctBlockers": [
-    "Arrangement",
-    "DummyColorBox",
-    "DummyGoal",
-    "DummyPlayer"
-   ],
-   "blockerCount": 4,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "Arrangement",
-      "DummyPlayer",
-      "DummyColorBox",
-      "DummyGoal"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "Arrangement",
-      "DummyPlayer",
-      "DummyColorBox",
-      "DummyGoal"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "Arrangement",
-      "DummyPlayer",
-      "DummyColorBox",
-      "DummyGoal"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "Arrangement",
-      "DummyPlayer",
-      "DummyColorBox",
-      "DummyGoal"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "Arrangement",
-      "DummyPlayer",
-      "DummyColorBox",
-      "DummyGoal"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "Arrangement",
-      "DummyPlayer",
-      "DummyColorBox",
-      "DummyGoal"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "Arrangement",
-      "DummyPlayer",
-      "DummyColorBox",
-      "DummyGoal"
-     ]
+     "missing": []
     }
    }
   },
