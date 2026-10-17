@@ -96,3 +96,7 @@ test('13-3: sixteen hits clear it for every population: key appears, players are
   assert.ok(st.mallets.every(m=>m.flags&1));
   const x=s.players[0].x;for(let i=0;i<20;i++)R.step(s,{[s.players[0].id]:{right:true}});assert.ok(s.players[0].x>x);}
 });
+test('the ball circle is 12 * ballScale: AddActor -> SetBaseScale scales every collision by the actor scale',()=>{
+ const s=mk(2);let i=0;for(;i<200&&!s.rallyState.balls.length;i++)R.step(s,{});
+ const b=s.rallyState.balls[0];assert.ok(b,'a ball');assert.equal(b.scaleRaw,98304);assert.equal(Y.displays(s.rallyState).balls[0].radius,18);
+});

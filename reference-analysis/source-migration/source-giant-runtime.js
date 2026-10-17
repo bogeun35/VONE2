@@ -10,7 +10,11 @@
  *   +0x50 QFP._1_5, +0x48/+0x20/+0x40 QFP._1, +0x38 300, scale 1.
  *  Collisions (.cctor 0x181859360, H W X Y): (328 222 -110 -330), (290 254 -122 -310),
  *   (84 64 -160 -92), layer 8, no push back (InitCollision 0x1818574e0); looking left
- *   mirrors X to -(W + X) (flipCollision 0x1818578d0). The collision scale stays 1.
+ *   mirrors X to -(W + X) (flipCollision 0x1818578d0). The Creator sets the actor scale
+ *   before ActorSceneComponent.AddActor 0x1816a71d0 -> SetBaseScale 0x1816a08c0 ->
+ *   setAllCollisionScale: every collision is scaled by actor scale * stage scale
+ *   (Collision.GetRect 0x181690610, pivot 0); the hand's circle box likewise. The key's
+ *   layer-11 copy is made later (KeyComponent.OnStart) and keeps scale 1.
  *  OnUpdate 0x181857cc0 = updatePhase 0x181857d40 + floatProc 0x181857f80 (angle +=
  *   dt * 180 wrapped at 360, Pos = base + (0, sin(angle) * 8)). Phase 0 waits for
  *   event 61; 1 flip 0x181858120 (every 1.5 s: turn round when no player stands past
@@ -118,19 +122,19 @@ function compile(actors,count){
 }
 function mirrored(r,left){return left?{...r,x:-(r.w+r.x)}:{...r};}
 function create(compiled,host={}){
- const st=clone(compiled);st.timeRaw=0;st.started=false;st.damage={};st.prevShot={};
+ const st=clone(compiled);const stage=host.stageScaleRaw||F;st.timeRaw=0;st.started=false;st.damage={};st.prevShot={};
  // PlayerPunch Creator: only for a player that exists; OnStart copies the index-0 punch's tuning
  const exists=i=>Number.isInteger(host.playerCount)?i>=0&&i<host.playerCount:true;
  st.punches=st.punches.filter(p=>exists(p.actorIndex));const master=st.punches.find(p=>p.actorIndex===0);
  for(const p of st.punches){if(master)for(const k of ['chargeTimeRaw','powerStepRaw','powerMaxRaw','sizeStepRaw','sizeMaxRaw','growthEveryRaw','growthRaw'])p[k]=master[k];
   p.growthTimerRaw=p.growthRaw;p.sizeRaw=Q._1;p.chargeRaw=Q._1;p.rateRaw=p.chargeTimeRaw>0?div(Q._1,p.chargeTimeRaw):0;
   p.attacking=false;p.hit=false;p.cooling=false;p.frameIndex=0;p.frame=0;p.frameTimerRaw=0;p.xRaw=0;p.yRaw=0;p.lookLeft=false;p.synced=false;}
- for(const g of st.giants){g.phase=0;g.floatRaw=0;g.attackTimerRaw=0;g.baseXRaw=g.xRaw;g.baseYRaw=g.yRaw;g.collisionsOn=true;g.gone=false;g.dead=false;g.anim=1;g.lifeVisible=false;
+ for(const g of st.giants){g.phase=0;g.floatRaw=0;g.attackTimerRaw=0;g.baseXRaw=g.xRaw;g.baseYRaw=g.yRaw;g.collisionsOn=true;g.gone=false;g.dead=false;g.anim=1;g.lifeVisible=false;g.colScale={xRaw:mul(g.scaleXRaw,stage),yRaw:mul(g.scaleYRaw,stage)};
   g.rects=GIANT.rects.map(r=>mirrored(r,!!(g.flags&4)));g.keyRect=null;
   const avg=mul(g.scaleXRaw+g.scaleYRaw,Q._0_5);
   g.hand={phase:0,dir:g.flags&4?2:3,offBaseXRaw:mul(g.scaleXRaw,GIANT.handOffset.xRaw),offBaseYRaw:mul(g.scaleYRaw,GIANT.handOffset.yRaw),offXRaw:0,offYRaw:0,scaleRaw:avg,
    speed0Raw:g.speedRaw,speedMaxRaw:g.speedRaw+g.extraRaw,rangeRaw:g.rangeRaw,speedRaw:0,distRaw:0,angleRaw:0,targetAngleRaw:0,dirRaw:{xRaw:0,yRaw:0},timerRaw:0,
-   flags:(g.flags&1?1:0)|(g.flags&2?2:0),target:null,xRaw:0,yRaw:0,collisionOn:false,center:{xRaw:0,yRaw:0},gone:false,anim:1,started:false};}
+   flags:(g.flags&1?1:0)|(g.flags&2?2:0),target:null,xRaw:0,yRaw:0,collisionOn:false,center:{xRaw:0,yRaw:0},gone:false,anim:1,started:false,colScaleRaw:mul(avg,stage)};}
  return st;
 }
 // Giant OnStart 0x181857a80: createHand, base = Pos. Hand OnStart 0x18185a330.
@@ -144,9 +148,12 @@ function rotate(h,dt){
   h.angleRaw=(d<0?next<h.targetAngleRaw:next>h.targetAngleRaw)?h.targetAngleRaw:next;}
  h.rotationRaw=h.dir===2?h.angleRaw-Q._180:h.angleRaw;h.center=rotateX(HAND.centerRaw.xRaw,h.angleRaw);}
 function rectWorld(xRaw,yRaw,r){return {x:xRaw+r.x,y:yRaw+r.y,w:r.w,h:r.h};}
+// Collision.GetRect 0x181690610 with the collision scale (pivot 0)
+function scaled(r,sc){return {x:mul(sc.xRaw,r.x),y:mul(sc.yRaw,r.y),w:mul(sc.xRaw,r.w),h:mul(sc.yRaw,r.h)};}
+function giantRect(g,r){return rectWorld(g.xRaw,g.yRaw,scaled(r,g.colScale));}
 const overlap=(a,b)=>a.x<b.x+b.w&&b.x<a.x+a.w&&a.y<b.y+b.h&&b.y<a.y+a.h;
 function playerRect(p){return rectWorld(p.xRaw,p.yRaw,PLAYER_RECT);}
-function handRect(h){const r=HAND.radiusRaw;return {x:h.xRaw+h.center.xRaw-r,y:h.yRaw+h.center.yRaw-r,w:r*2,h:r*2};}
+function handRect(h){const r=HAND.radiusRaw,sc={xRaw:h.colScaleRaw,yRaw:h.colScaleRaw};return rectWorld(h.xRaw,h.yRaw,scaled({x:h.center.xRaw-r,y:h.center.yRaw-r,w:r*2,h:r*2},sc));}
 function punchRect(p){const r=PUNCH.rect,x=PUNCH.frameX[p.frame],w=r.w;return rectWorld(p.xRaw,p.yRaw,{h:r.h,w,x:p.lookLeft?-(w+x):x,y:r.y});}
 // DamageManage.Check 0x18180d5c0
 function damageCheck(st,owner,sender,eventType){const list=st.damage[owner]||(st.damage[owner]=[]);
@@ -164,7 +171,7 @@ function giantUpdate(st,g,dt,players){
  const h=g.hand;
  if(g.phase===1){
   // flip 0x181858120
-  g.turnRaw-=dt;if(g.turnRaw<=0){g.turnRaw=Q._1_5;const r=g.rects[0],left=g.xRaw+r.x,edge=(g.flags&4)?left:left+r.w;
+  g.turnRaw-=dt;if(g.turnRaw<=0){g.turnRaw=Q._1_5;const r=giantRect(g,g.rects[0]),left=r.x,edge=(g.flags&4)?left:left+r.w;
    const ahead=players.filter(p=>(g.flags&4)?p.xRaw<edge:edge<p.xRaw).length;
    if(!ahead){g.flags^=4;g.rects=GIANT.rects.map(q=>mirrored(q,!!(g.flags&4)));g.attackTimerRaw=0;}}
   giantMove(g,dt);
@@ -237,7 +244,7 @@ function step(st,host){
  // overlaps
  const dead=new Set();
  for(const p of st.punches){if(!p.attacking||!p.hit||!p.synced)continue;const r=punchRect(p),power=p.lookLeft?-p.powerRaw:p.powerRaw;
-  for(const g of st.giants){if(g.gone||!g.collisionsOn)continue;for(const gr of g.rects)if(overlap(r,rectWorld(g.xRaw,g.yRaw,gr)))giantEvent(st,g,{eventType:EV.DAMAGE,sender:p.id,powerRaw:power},out);}
+  for(const g of st.giants){if(g.gone||!g.collisionsOn)continue;for(const gr of g.rects)if(overlap(r,giantRect(g,gr)))giantEvent(st,g,{eventType:EV.DAMAGE,sender:p.id,powerRaw:power},out);}
   for(const q of players)if(overlap(r,playerRect(q))&&damageCheck(st,'player:'+q.index,p.id,EV.DAMAGE)){
    out.knocks.push({index:q.index,vxRaw:mul(power,PUNCH.knock.xRaw),vyRaw:PUNCH.knock.yRaw});out.shakes.push({amountRaw:PUNCH.shakeRaw});out.sounds.push({se:0x11});}
   for(const g of st.giants){const h=g.hand;if(h.gone||!h.collisionOn||!(h.flags&1)||!overlap(r,handRect(h)))continue;
@@ -245,7 +252,7 @@ function step(st,host){
    const q=players.find(z=>z.index===p.actorIndex);if(q&&damageCheck(st,'player:'+q.index,'hand:'+g.id,EV.DAMAGE))out.knocks.push({index:q.index,vxRaw:mul((g.flags&4)?-Q._1:Q._1,PUNCH.knock.xRaw),vyRaw:PUNCH.knock.yRaw});}
  }
  for(const g of st.giants){if(g.gone)continue;
-  if(g.collisionsOn)for(const q of players)if(!dead.has(q.index)&&g.rects.some(gr=>overlap(rectWorld(g.xRaw,g.yRaw,gr),playerRect(q)))){dead.add(q.index);out.deaths.push({index:q.index,reason:'giant'});}}
+  if(g.collisionsOn)for(const q of players)if(!dead.has(q.index)&&g.rects.some(gr=>overlap(giantRect(g,gr),playerRect(q)))){dead.add(q.index);out.deaths.push({index:q.index,reason:'giant'});}}
  for(const g of st.giants){const h=g.hand;if(h.gone||!h.collisionOn)continue;
   for(const q of players)if(overlap(handRect(h),playerRect(q))){h.target=null;if(!dead.has(q.index)){dead.add(q.index);out.deaths.push({index:q.index,reason:'hand'});}}}
  // OnPost
@@ -264,9 +271,9 @@ function keyBoxes(st){return st.giants.filter(g=>!g.gone&&g.collisionsOn&&g.keyR
 const rectPx=r=>({x:r.x/F,y:r.y/F,w:r.w/F,h:r.h/F});
 function displays(st){return {
  giants:st.giants.filter(g=>!g.gone).map(g=>({id:g.id,x:g.xRaw/F,y:g.yRaw/F,scaleX:g.scaleXRaw/F,scaleY:g.scaleYRaw/F,lookLeft:!!(g.flags&4),anim:g.anim,phase:g.phase,dead:g.dead,
-  life:g.lifeVisible?{text:g.life+'/'+g.lifeMax,x:(g.xRaw+g.rects[0].x+(g.rects[0].w>>1))/F,y:(g.yRaw+g.rects[0].y+GIANT.lifeTextYRaw)/F}:null,rects:g.rects.map(r=>rectPx(rectWorld(g.xRaw,g.yRaw,r)))})),
+  life:g.lifeVisible?(()=>{const r=giantRect(g,g.rects[0]);return {text:g.life+'/'+g.lifeMax,x:(r.x+div(r.w,2*F))/F,y:(r.y+GIANT.lifeTextYRaw)/F};})():null,rects:g.rects.map(r=>rectPx(giantRect(g,r)))})),
  hands:st.giants.filter(g=>!g.hand.gone&&g.hand.started).map(g=>{const h=g.hand;return {id:g.id+':hand',x:h.xRaw/F,y:h.yRaw/F,scale:h.scaleRaw/F,lookLeft:h.dir===2,rotation:(h.rotationRaw||0)/F,phase:h.phase,attacking:h.collisionOn,
-  circle:{x:(h.xRaw+h.center.xRaw)/F,y:(h.yRaw+h.center.yRaw)/F,r:HAND.radiusRaw/F},anim:h.anim};}),
+  circle:{x:(h.xRaw+mul(h.colScaleRaw,h.center.xRaw))/F,y:(h.yRaw+mul(h.colScaleRaw,h.center.yRaw))/F,r:mul(h.colScaleRaw,HAND.radiusRaw)/F},anim:h.anim};}),
  punches:st.punches.filter(p=>p.synced).map(p=>({id:p.id,actorIndex:p.actorIndex,x:p.xRaw/F,y:p.yRaw/F,lookLeft:p.lookLeft,frame:p.frame,attacking:p.attacking,hit:p.hit,charge:p.chargeRaw/F,rect:rectPx(punchRect(p))})),
  timers:st.timers.filter(t=>!t.gone).map(t=>({id:t.id,seconds:t.timerRaw/F}))};}
 return {compile,create,start,step,displays,attachKey,keyHolder,keyBoxes,damageCheck,atan2Raw,rotateX,nextInt,pcg32,table,findCount,

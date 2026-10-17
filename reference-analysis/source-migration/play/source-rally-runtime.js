@@ -45,7 +45,8 @@
  *   OnRecvEvent 0x1816e6020: 35 stop, 57 inc += Speed, 58 inc = 0.
  *  Ball Creator 0x1816dda50: draw scale = ballScale; parent, angle, speed, max.
  *   InitCollision 0x1816ddc90: circle 12 (.cctor 0x1816df1d0), pushBack 3, layer 6;
- *   the collision scale stays 1 (Collision.initialize 0x181690a90).
+ *   AddActor 0x1816a71d0 -> SetBaseScale scales it by the actor scale (ballScale), so the
+ *   circle is 12 * ballScale (13-3: 18).
  *   OnUpdate 0x1816dde00: 0 timer QFP._0_50; 1 count down -> initMove 0x1816de0d0
  *   (Velo = EulerZ(angle) * (1,0,0)); 2 move 0x1816de220 (Velo = normalize(Velo) *
  *   min(speed + inc, max) * BaseScale); 3 animation 2, timer DISAPPEAR_TIME 0.5;
@@ -153,6 +154,10 @@ function controllerPost(st,c,dtRaw){
 }
 // ---- mallet -----------------------------------------------------------------------
 function malletRadius(m){return mul(m.collisionScaleRaw,MALLET_RADIUS);}
+// RallyBall Creator 0x1816dda50 sets the actor scale to ballScale before
+// ActorSceneComponent.AddActor 0x1816a71d0 -> SetBaseScale 0x1816a08c0 -> setAllCollisionScale
+// (actor scale * stage scale), and GetGlobalCircle takes radius * max(scale x, scale y).
+function ballRadius(b){return mul(mul(b.scaleRaw,b.baseScaleRaw),BALL_RADIUS);}
 function start(st){
  if(st.started)return {};st.started=true;const c=controllerOf(st);
  if(c)for(const m of st.mallets){c.malletIds.push(m.id);
@@ -264,7 +269,7 @@ function step(st,host){
  for(const b of st.balls){
   if(!b.collisionActive||(b.flags&0x2000)){b.contactIds=[];continue;}
   const now=[];
-  for(const m of st.mallets){const R=BALL_RADIUS+malletRadius(m),dx=m.xRaw-b.xRaw,dy=m.yRaw-b.yRaw;
+  for(const m of st.mallets){const R=ballRadius(b)+malletRadius(m),dx=m.xRaw-b.xRaw,dy=m.yRaw-b.yRaw;
    if(B(dx)*B(dx)+B(dy)*B(dy)>=B(R)*B(R))continue;
    const n=(dx===0&&dy===0)?{xRaw:0,yRaw:F}:normalize({xRaw:dx,yRaw:dy}),depth=R-N.sqrtRaw(B(sq(dx)+sq(dy)));
    b.xRaw-=mul(n.xRaw,depth);b.yRaw-=mul(n.yRaw,depth);now.push(m.id);
@@ -272,10 +277,10 @@ function step(st,host){
    contactMallet(b,m,n);}
   b.contactIds=now;
   const faces=[];
-  for(const rect of terrain){const h=circleRect(b.xRaw,b.yRaw,BALL_RADIUS,rect);if(!h)continue;
+  for(const rect of terrain){const h=circleRect(b.xRaw,b.yRaw,ballRadius(b),rect);if(!h)continue;
    const f=faces.find(q=>q.normal.xRaw===h.normal.xRaw&&q.normal.yRaw===h.normal.yRaw);if(f){if(h.depthRaw>f.depthRaw)f.depthRaw=h.depthRaw;}else faces.push(h);}
   for(const f of faces){b.xRaw-=mul(f.normal.xRaw,f.depthRaw);b.yRaw-=mul(f.normal.yRaw,f.depthRaw);contactMap(b,f.normal);}
-  if((host.beams||[]).some(r=>overlapsRect(b.xRaw,b.yRaw,BALL_RADIUS,r)))disappear(b);
+  if((host.beams||[]).some(r=>overlapsRect(b.xRaw,b.yRaw,ballRadius(b),r)))disappear(b);
  }
  // OnPost: controller (updater 167)
  if(c){const r=controllerPost(st,c,dt);if(r.keyEvents)out.keyEvents.push(...r.keyEvents);if(r.playerState)out.playerState=r.playerState;}
@@ -288,7 +293,7 @@ function step(st,host){
 }
 function displays(st){const c=controllerOf(st);return {
  mallets:st.mallets.map(m=>({id:m.id,actorIndex:m.actorIndex,x:m.xRaw/F,y:m.yRaw/F,radius:malletRadius(m)/F,initX:m.initXRaw/F,initY:m.initYRaw/F,dirX:m.dirRaw.xRaw/F,dirY:m.dirRaw.yRaw/F,halfLength:m.lengthRaw/F/2,stopped:!!(m.flags&1)})),
- balls:st.balls.map(b=>({id:b.id,x:b.xRaw/F,y:b.yRaw/F,radius:BALL_RADIUS/F,drawScale:b.scaleRaw/F,phase:b.phase,fade:b.phase>=4?Math.max(0,b.timerRaw/DISAPPEAR_TIME):1})),
+ balls:st.balls.map(b=>({id:b.id,x:b.xRaw/F,y:b.yRaw/F,radius:ballRadius(b)/F,drawScale:b.scaleRaw/F,phase:b.phase,fade:b.phase>=4?Math.max(0,b.timerRaw/DISAPPEAR_TIME):1})),
  counter:c?{x:c.xRaw/F,y:c.yRaw/F,count:c.rallyCount,max:c.rallyMax,cleared:!!(c.flags&1)}:null};}
 return {compile,create,start,step,displays,ballHit,ballDisappeared,controllerPost,createBall,malletMove,railInput,ballUpdate,contactMallet,contactMap,disappear,rotX,aimAngle,acosDegrees,mergeRects,circleRect,pcg32,nextInt,nextFP,
  supportedTypes:['RallyController','RallyMallet'],

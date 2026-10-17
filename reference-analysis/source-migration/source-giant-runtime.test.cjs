@@ -86,14 +86,23 @@ test('14-4 with two players: the one puncher brings life 6 down while backing of
  for(;i<4000&&!g.gone&&s.status==='play';i++){const inp={};
   s.players.forEach((pl,k)=>{const p=st.punches.find(q=>q.actorIndex===k),d=pl.x+16-g.xRaw/F;
    if(!p){inp[pl.id]=d<260?{right:true}:{};return;}minD=Math.min(minD,d);
-   // left + shot on one frame (Player Update looks left before the punch's OnUpdate), then back off
-   if(p.attacking){inp[pl.id]=p.frameIndex<=1?{}:(d<196?{right:true}:{});return;}
-   if(p.chargeRaw>=F&&d<205&&d>158){inp[pl.id]={left:true,shot:true};return;}
-   if(d<196)inp[pl.id]={right:true};else if(d>215)inp[pl.id]={left:true};});
+   // left + shot on one frame (Player Update looks left before the punch's OnUpdate); the hit
+   // lands next frame on the rect synced at this OnPost, so backing off right away is safe.
+   // Collision 0 at scale 1.1 ends 123.2 px in front, collision 1 145.2 px: 167.2 < d < 202.2.
+   if(p.attacking){inp[pl.id]=d<198?{right:true}:{};return;}
+   if(p.chargeRaw>=F&&d<202&&d>168){inp[pl.id]={left:true,shot:true};return;}
+   if(d<198)inp[pl.id]={right:true};else if(d>215)inp[pl.id]={left:true};});
   R.step(s,inp);}
- assert.equal(s.status,'play',s.failure&&s.failure.reason);assert.equal(g.gone,true);assert.ok(minD>148,'kept clear of collision 1 ('+minD+')');
+ assert.equal(s.status,'play',s.failure&&s.failure.reason);assert.equal(g.gone,true);assert.ok(minD>161.2,'kept clear of collision 1 at scale 1.1 ('+minD+')');
  const k=s.keyState,other=s.players[0];other.x=k.xRaw/F-16;other.y=k.yRaw/F-30;other.vy=0;R.step(s,{});R.step(s,{});
  assert.equal(k.holderId,other.id);assert.equal(s.keyTaken,true);
  other.x=s.map.exit.x;other.y=s.map.exit.y+s.map.exit.h-46;for(let j=0;j<120&&!s.goalOpen;j++)R.step(s,{});
  assert.equal(s.goalOpen,true);
+});
+test('AddActor -> SetBaseScale: the giant and hand collisions take the actor scale (1.1), the key copy does not',()=>{
+ const st=G.create(G.compile(acts('st_w_14_04'),2),{playerCount:2}),g=st.giants[0];G.step(st,{dtRaw:1092,players:[]});
+ const d=G.displays(st),r1=d.giants[0].rects[1],x=g.xRaw/F;
+ assert.ok(Math.abs(r1.x-(x-134.2))<0.01&&Math.abs(r1.w-279.4)<0.01,JSON.stringify(r1));
+ assert.ok(Math.abs(d.hands[0].circle.r-52.8)<0.01);
+ G.attachKey(st,'GiantEnemy1',{xRaw:g.xRaw-169*F,yRaw:g.yRaw-79*F});assert.deepEqual(G.keyBoxes(st)[0].w,222);
 });
