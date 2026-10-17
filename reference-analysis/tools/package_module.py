@@ -28,7 +28,7 @@ for f in files:
         assert m, 'runtime script tag not found'
         return t[:m.start()] + f'<script src="{f}?v=1"></script>' + t[m.start():]
     edit('play/index.html', html)
-    if f.endswith('-devices.js'):
+    if f.endswith('-devices.js') or f.endswith('-runtime.js'):
         def scan(t):
             if f"'{f}'" in t: return t
             return re.sub(r"(const MODULES=\[.*?)\];", lambda m: m.group(1) + f",'{f}'];", t, count=1, flags=re.S)

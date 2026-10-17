@@ -373,10 +373,22 @@ function goKarts(c,s,time){
   rr(c,b.x,b.y-6,b.w,b.h+8,8);fillStroke(c,'#ff9f6e',INK,2.2);c.fillStyle='rgba(255,255,255,.35)';rr(c,b.x+8,b.y-3,b.w-16,4,2);c.fill();
   wheel(b.x+22);wheel(b.x+b.w-22);c.restore();}
 }
+// 13-3 Rally: every mallet on its rail (circle 25 * malletScale) in its player's
+// colour, the ball (circle 12, fading while it disappears) and the rally count
+// at the controller.
+function rallyArt(c,s){
+ const Y=root.SourceRallyRuntime;if(!Y||!s.rallyState||!s.rallyState.controllers.length)return;const d=Y.displays(s.rallyState);
+ for(const m of d.mallets){c.save();c.strokeStyle='rgba(60,50,90,.22)';c.lineWidth=8;c.lineCap='round';c.beginPath();
+  c.moveTo(m.initX-m.dirX*m.halfLength,m.initY-m.dirY*m.halfLength);c.lineTo(m.initX+m.dirX*m.halfLength,m.initY+m.dirY*m.halfLength);c.stroke();c.restore();}
+ for(const m of d.mallets){c.save();c.beginPath();c.arc(m.x,m.y,m.radius,0,Math.PI*2);fillStroke(c,FRIEND_COLORS[m.actorIndex%8],INK,2.4);
+  c.fillStyle='rgba(255,255,255,.45)';c.beginPath();c.arc(m.x-m.radius*.3,m.y-m.radius*.3,m.radius*.32,0,Math.PI*2);c.fill();c.restore();}
+ for(const b of d.balls){c.save();c.globalAlpha=b.fade;c.beginPath();c.arc(b.x,b.y,b.radius,0,Math.PI*2);fillStroke(c,'#fff4c2',INK,2);c.restore();}
+ if(d.counter)label(c,d.counter.count+' / '+d.counter.max,d.counter.x,d.counter.y,d.counter.cleared?'#ffd84d':'#fffdf6',30);
+}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);}
+ try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).

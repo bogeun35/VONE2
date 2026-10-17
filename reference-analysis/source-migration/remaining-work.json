@@ -37,48 +37,22 @@
   "st_w_12_04",
   "st_w_02_04",
   "st_w_04_02",
-  "st_w_07_04"
+  "st_w_07_04",
+  "st_w_09_04",
+  "st_w_09_01",
+  "st_w_09_03",
+  "st_w_09_02",
+  "st_w_02_01",
+  "st_w_07_01",
+  "st_w_15_04",
+  "st_w_02_03",
+  "st_w_12_01",
+  "st_w_13_03"
  ],
  "worldStages": 60,
- "remainingStages": 26,
- "remainingDistinctBlockers": 61,
+ "remainingStages": 16,
+ "remainingDistinctBlockers": 42,
  "nearest": [
-  {
-   "id": "st_w_09_03",
-   "blockerCount": 2,
-   "blockers": [
-    "BatEnemy",
-    "TopViewPlayer"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_09_04",
-   "blockerCount": 2,
-   "blockers": [
-    "DistanceConstraint",
-    "TopViewPlayer"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_12_01",
-   "blockerCount": 2,
-   "blockers": [
-    "GoKart",
-    "Stick"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_13_03",
-   "blockerCount": 2,
-   "blockers": [
-    "RallyController",
-    "RallyMallet"
-   ],
-   "guardsAfterTypes": []
-  },
   {
    "id": "st_w_13_04",
    "blockerCount": 2,
@@ -89,32 +63,12 @@
    "guardsAfterTypes": []
   },
   {
-   "id": "st_w_02_01",
-   "blockerCount": 3,
-   "blockers": [
-    "DistanceConstraint",
-    "StepEnemy",
-    "WarpAll"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
    "id": "st_w_06_03",
    "blockerCount": 3,
    "blockers": [
     "BattlePlanePlayer",
     "PlaneObstacle",
     "PlayerGun"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_07_01",
-   "blockerCount": 3,
-   "blockers": [
-    "ArrowSign",
-    "HalfOperator",
-    "StepEnemy"
    ],
    "guardsAfterTypes": []
   },
@@ -139,40 +93,98 @@
    "guardsAfterTypes": []
   },
   {
-   "id": "st_w_09_01",
+   "id": "st_w_14_04",
    "blockerCount": 3,
    "blockers": [
-    "BatEnemy",
-    "FallingCage",
-    "TopViewPlayer"
+    "GiantEnemy",
+    "PlayerPunch",
+    "SwitchTimerActor"
    ],
    "guardsAfterTypes": []
   },
   {
-   "id": "st_w_09_02",
-   "blockerCount": 3,
+   "id": "st_w_03_04",
+   "blockerCount": 4,
    "blockers": [
-    "CapturingConstraint",
-    "CapturingTarget",
-    "TopViewPlayer"
+    "Arrangement",
+    "DummyColorBox",
+    "DummyGoal",
+    "DummyPlayer"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_08_01",
+   "blockerCount": 4,
+   "blockers": [
+    "Apple",
+    "AppleController",
+    "BasketPlayer",
+    "TargetPlayer"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_08_03",
+   "blockerCount": 4,
+   "blockers": [
+    "Apple",
+    "AppleController",
+    "BasketPlayer",
+    "TargetPlayer"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_14_02",
+   "blockerCount": 4,
+   "blockers": [
+    "Mole",
+    "MoleGroup",
+    "MoleNest",
+    "PlayerPunch"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_06_02",
+   "blockerCount": 5,
+   "blockers": [
+    "BattlePlanePlayer",
+    "MapBlockReplacer",
+    "OptimizedBulletObserver",
+    "PlayerGun",
+    "ShootingEnemySpawner"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_13_02",
+   "blockerCount": 5,
+   "blockers": [
+    "BarGraph",
+    "BarGraphController",
+    "CircleGraph",
+    "CircleGraphController",
+    "GraphController"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_06_01",
+   "blockerCount": 6,
+   "blockers": [
+    "BattlePlanePlayer",
+    "MapBlockReplacer",
+    "MapBreakBlockRect",
+    "OptimizedBulletObserver",
+    "PlayerGun",
+    "ShootingEnemySpawner"
    ],
    "guardsAfterTypes": []
   }
  ],
  "byType": [
-  {
-   "type": "TopViewPlayer",
-   "stages": [
-    "st_w_09_01",
-    "st_w_11_01",
-    "st_w_09_04",
-    "st_w_09_02",
-    "st_w_09_03",
-    "st_w_11_03"
-   ],
-   "appearsIn": 6,
-   "opensAlone": []
-  },
   {
    "type": "OptimizedBulletObserver",
    "stages": [
@@ -222,16 +234,6 @@
    "opensAlone": []
   },
   {
-   "type": "DistanceConstraint",
-   "stages": [
-    "st_w_09_04",
-    "st_w_02_01",
-    "st_w_02_03"
-   ],
-   "appearsIn": 3,
-   "opensAlone": []
-  },
-  {
    "type": "MapBlockReplacer",
    "stages": [
     "st_w_06_01",
@@ -239,15 +241,6 @@
     "st_w_06_04"
    ],
    "appearsIn": 3,
-   "opensAlone": []
-  },
-  {
-   "type": "BatEnemy",
-   "stages": [
-    "st_w_09_01",
-    "st_w_09_03"
-   ],
-   "appearsIn": 2,
    "opensAlone": []
   },
   {
@@ -291,15 +284,6 @@
    "stages": [
     "st_w_11_01",
     "st_w_11_03"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "FrontSwitch",
-   "stages": [
-    "st_w_15_04",
-    "st_w_02_03"
    ],
    "appearsIn": 2,
    "opensAlone": []
@@ -377,24 +361,6 @@
    "opensAlone": []
   },
   {
-   "type": "StepEnemy",
-   "stages": [
-    "st_w_02_01",
-    "st_w_07_01"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "WarpAll",
-   "stages": [
-    "st_w_02_01",
-    "st_w_02_03"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
    "type": "BgmChanger",
    "stages": [
     "st_w_06_04",
@@ -428,14 +394,6 @@
     "st_w_15_03"
    ],
    "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "FallingCage",
-   "stages": [
-    "st_w_09_01"
-   ],
-   "appearsIn": 1,
    "opensAlone": []
   },
   {
@@ -479,54 +437,6 @@
    "opensAlone": []
   },
   {
-   "type": "GoKart",
-   "stages": [
-    "st_w_12_01"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "Stick",
-   "stages": [
-    "st_w_12_01"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "IceRect",
-   "stages": [
-    "st_w_15_04"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "SwitchIceRect",
-   "stages": [
-    "st_w_15_04"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "CapturingConstraint",
-   "stages": [
-    "st_w_09_02"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "CapturingTarget",
-   "stages": [
-    "st_w_09_02"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
    "type": "GiantEnemy",
    "stages": [
     "st_w_14_04"
@@ -554,54 +464,6 @@
    "type": "PlaneObstacle",
    "stages": [
     "st_w_06_03"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "CollisionConstraintMove",
-   "stages": [
-    "st_w_02_03"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "SwitchRect",
-   "stages": [
-    "st_w_02_03"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "ArrowSign",
-   "stages": [
-    "st_w_07_01"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "HalfOperator",
-   "stages": [
-    "st_w_07_01"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "RallyController",
-   "stages": [
-    "st_w_13_03"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "RallyMallet",
-   "stages": [
-    "st_w_13_03"
    ],
    "appearsIn": 1,
    "opensAlone": []
@@ -735,70 +597,38 @@
   },
   {
    "id": "st_w_09_01",
-   "connected": false,
-   "distinctBlockers": [
-    "BatEnemy",
-    "FallingCage",
-    "TopViewPlayer"
-   ],
-   "blockerCount": 3,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "BatEnemy",
-      "FallingCage"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "BatEnemy",
-      "FallingCage"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "BatEnemy",
-      "FallingCage"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "BatEnemy",
-      "FallingCage"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "BatEnemy",
-      "FallingCage"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "BatEnemy",
-      "FallingCage"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "BatEnemy",
-      "FallingCage"
-     ]
+     "missing": []
     }
    }
   },
@@ -811,16 +641,14 @@
     "DanmakuModifier",
     "DanmakuObserver",
     "DanmakuThunder",
-    "OptimizedBulletObserver",
-    "TopViewPlayer"
+    "OptimizedBulletObserver"
    ],
-   "blockerCount": 7,
+   "blockerCount": 6,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "TopViewPlayer",
       "DanmakuThunder",
       "DanmakuObserver",
       "DanmakuEmitter",
@@ -832,7 +660,6 @@
     "3": {
      "variant": 0,
      "missing": [
-      "TopViewPlayer",
       "DanmakuThunder",
       "DanmakuObserver",
       "DanmakuEmitter",
@@ -844,7 +671,6 @@
     "4": {
      "variant": 0,
      "missing": [
-      "TopViewPlayer",
       "DanmakuThunder",
       "DanmakuObserver",
       "DanmakuEmitter",
@@ -856,7 +682,6 @@
     "5": {
      "variant": 0,
      "missing": [
-      "TopViewPlayer",
       "DanmakuThunder",
       "DanmakuObserver",
       "DanmakuEmitter",
@@ -868,7 +693,6 @@
     "6": {
      "variant": 0,
      "missing": [
-      "TopViewPlayer",
       "DanmakuThunder",
       "DanmakuObserver",
       "DanmakuEmitter",
@@ -880,7 +704,6 @@
     "7": {
      "variant": 0,
      "missing": [
-      "TopViewPlayer",
       "DanmakuThunder",
       "DanmakuObserver",
       "DanmakuEmitter",
@@ -892,7 +715,6 @@
     "8": {
      "variant": 0,
      "missing": [
-      "TopViewPlayer",
       "DanmakuThunder",
       "DanmakuObserver",
       "DanmakuEmitter",
@@ -1154,59 +976,38 @@
   },
   {
    "id": "st_w_12_01",
-   "connected": false,
-   "distinctBlockers": [
-    "GoKart",
-    "Stick"
-   ],
-   "blockerCount": 2,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "GoKart"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "GoKart"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "GoKart"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "GoKart",
-      "Stick"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "GoKart",
-      "Stick"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "GoKart",
-      "Stick"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "GoKart",
-      "Stick"
-     ]
+     "missing": []
     }
    }
   },
@@ -1495,131 +1296,75 @@
   },
   {
    "id": "st_w_15_04",
-   "connected": false,
-   "distinctBlockers": [
-    "FrontSwitch",
-    "IceRect",
-    "SwitchIceRect"
-   ],
-   "blockerCount": 3,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "FrontSwitch",
-      "SwitchIceRect",
-      "IceRect"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "FrontSwitch",
-      "SwitchIceRect",
-      "IceRect"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "FrontSwitch",
-      "SwitchIceRect",
-      "IceRect"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "FrontSwitch",
-      "SwitchIceRect",
-      "IceRect"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "FrontSwitch",
-      "SwitchIceRect",
-      "IceRect"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "FrontSwitch",
-      "SwitchIceRect",
-      "IceRect"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "FrontSwitch",
-      "SwitchIceRect",
-      "IceRect"
-     ]
+     "missing": []
     }
    }
   },
   {
    "id": "st_w_09_04",
-   "connected": false,
-   "distinctBlockers": [
-    "DistanceConstraint",
-    "TopViewPlayer"
-   ],
-   "blockerCount": 2,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "DistanceConstraint"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "DistanceConstraint"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "DistanceConstraint"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "DistanceConstraint"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "DistanceConstraint"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "DistanceConstraint"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "DistanceConstraint"
-     ]
+     "missing": []
     }
    }
   },
@@ -1768,70 +1513,38 @@
   },
   {
    "id": "st_w_09_02",
-   "connected": false,
-   "distinctBlockers": [
-    "CapturingConstraint",
-    "CapturingTarget",
-    "TopViewPlayer"
-   ],
-   "blockerCount": 3,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "CapturingTarget",
-      "CapturingConstraint"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "CapturingTarget",
-      "CapturingConstraint"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "CapturingTarget",
-      "CapturingConstraint"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "CapturingTarget",
-      "CapturingConstraint"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "CapturingTarget",
-      "CapturingConstraint"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "CapturingTarget",
-      "CapturingConstraint"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "CapturingTarget",
-      "CapturingConstraint"
-     ]
+     "missing": []
     }
    }
   },
@@ -1890,62 +1603,38 @@
   },
   {
    "id": "st_w_09_03",
-   "connected": false,
-   "distinctBlockers": [
-    "BatEnemy",
-    "TopViewPlayer"
-   ],
-   "blockerCount": 2,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "BatEnemy"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "BatEnemy"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "BatEnemy"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "BatEnemy"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "BatEnemy"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "BatEnemy"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "TopViewPlayer",
-      "BatEnemy"
-     ]
+     "missing": []
     }
    }
   },
@@ -2101,16 +1790,14 @@
     "DanmakuModifier",
     "DanmakuObserver",
     "DanmakuThunder",
-    "OptimizedBulletObserver",
-    "TopViewPlayer"
+    "OptimizedBulletObserver"
    ],
-   "blockerCount": 7,
+   "blockerCount": 6,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "TopViewPlayer",
       "DanmakuObserver",
       "DanmakuEmitter",
       "DanmakuModifier",
@@ -2122,7 +1809,6 @@
     "3": {
      "variant": 0,
      "missing": [
-      "TopViewPlayer",
       "DanmakuObserver",
       "DanmakuEmitter",
       "DanmakuModifier",
@@ -2134,7 +1820,6 @@
     "4": {
      "variant": 0,
      "missing": [
-      "TopViewPlayer",
       "DanmakuObserver",
       "DanmakuEmitter",
       "DanmakuModifier",
@@ -2146,7 +1831,6 @@
     "5": {
      "variant": 0,
      "missing": [
-      "TopViewPlayer",
       "DanmakuObserver",
       "DanmakuEmitter",
       "DanmakuModifier",
@@ -2158,7 +1842,6 @@
     "6": {
      "variant": 0,
      "missing": [
-      "TopViewPlayer",
       "DanmakuObserver",
       "DanmakuEmitter",
       "DanmakuModifier",
@@ -2170,7 +1853,6 @@
     "7": {
      "variant": 0,
      "missing": [
-      "TopViewPlayer",
       "DanmakuObserver",
       "DanmakuEmitter",
       "DanmakuModifier",
@@ -2182,7 +1864,6 @@
     "8": {
      "variant": 0,
      "missing": [
-      "TopViewPlayer",
       "DanmakuObserver",
       "DanmakuEmitter",
       "DanmakuModifier",
@@ -2614,68 +2295,52 @@
   },
   {
    "id": "st_w_02_01",
-   "connected": false,
+   "connected": true,
    "distinctBlockers": [
-    "DistanceConstraint",
-    "StepEnemy",
     "WarpAll"
    ],
-   "blockerCount": 3,
+   "blockerCount": 1,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "StepEnemy",
-      "DistanceConstraint",
       "WarpAll"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
-      "StepEnemy",
-      "DistanceConstraint",
       "WarpAll"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
-      "StepEnemy",
-      "DistanceConstraint",
       "WarpAll"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
-      "StepEnemy",
-      "DistanceConstraint",
       "WarpAll"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
-      "StepEnemy",
-      "DistanceConstraint",
       "WarpAll"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
-      "StepEnemy",
-      "DistanceConstraint",
       "WarpAll"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
-      "StepEnemy",
-      "DistanceConstraint",
       "WarpAll"
      ]
     }
@@ -2683,85 +2348,61 @@
   },
   {
    "id": "st_w_02_03",
-   "connected": false,
+   "connected": true,
    "distinctBlockers": [
     "CollisionConstraintMove",
-    "DistanceConstraint",
-    "FrontSwitch",
-    "SwitchRect",
     "WarpAll"
    ],
-   "blockerCount": 5,
+   "blockerCount": 2,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "DistanceConstraint",
       "WarpAll",
-      "CollisionConstraintMove",
-      "SwitchRect",
-      "FrontSwitch"
+      "CollisionConstraintMove"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
-      "DistanceConstraint",
       "WarpAll",
-      "CollisionConstraintMove",
-      "SwitchRect",
-      "FrontSwitch"
+      "CollisionConstraintMove"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
-      "DistanceConstraint",
       "WarpAll",
-      "CollisionConstraintMove",
-      "SwitchRect",
-      "FrontSwitch"
+      "CollisionConstraintMove"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
-      "DistanceConstraint",
       "WarpAll",
-      "CollisionConstraintMove",
-      "SwitchRect",
-      "FrontSwitch"
+      "CollisionConstraintMove"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
-      "DistanceConstraint",
       "WarpAll",
-      "CollisionConstraintMove",
-      "SwitchRect",
-      "FrontSwitch"
+      "CollisionConstraintMove"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
-      "DistanceConstraint",
       "WarpAll",
-      "CollisionConstraintMove",
-      "SwitchRect",
-      "FrontSwitch"
+      "CollisionConstraintMove"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
-      "DistanceConstraint",
       "WarpAll",
-      "CollisionConstraintMove",
-      "SwitchRect",
-      "FrontSwitch"
+      "CollisionConstraintMove"
      ]
     }
    }
@@ -3121,131 +2762,75 @@
   },
   {
    "id": "st_w_07_01",
-   "connected": false,
-   "distinctBlockers": [
-    "ArrowSign",
-    "HalfOperator",
-    "StepEnemy"
-   ],
-   "blockerCount": 3,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "HalfOperator",
-      "StepEnemy",
-      "ArrowSign"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "HalfOperator",
-      "StepEnemy",
-      "ArrowSign"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "HalfOperator",
-      "StepEnemy",
-      "ArrowSign"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "HalfOperator",
-      "StepEnemy",
-      "ArrowSign"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "HalfOperator",
-      "StepEnemy",
-      "ArrowSign"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "HalfOperator",
-      "StepEnemy",
-      "ArrowSign"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "HalfOperator",
-      "StepEnemy",
-      "ArrowSign"
-     ]
+     "missing": []
     }
    }
   },
   {
    "id": "st_w_13_03",
-   "connected": false,
-   "distinctBlockers": [
-    "RallyController",
-    "RallyMallet"
-   ],
-   "blockerCount": 2,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "RallyController",
-      "RallyMallet"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 4,
-     "missing": [
-      "RallyController",
-      "RallyMallet"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 3,
-     "missing": [
-      "RallyController",
-      "RallyMallet"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 2,
-     "missing": [
-      "RallyController",
-      "RallyMallet"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 1,
-     "missing": [
-      "RallyController",
-      "RallyMallet"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 6,
-     "missing": [
-      "RallyController",
-      "RallyMallet"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 5,
-     "missing": [
-      "RallyController",
-      "RallyMallet"
-     ]
+     "missing": []
     }
    }
   },

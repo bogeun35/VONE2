@@ -46,7 +46,9 @@ function getFallOffset(a,map){const x=raw(a.xRaw),y=raw(a.yRaw),ix=Math.trunc(Nu
  else if(attributes(cell(map,ix,iy+1))&16){targetY=iy+1;center=false;}
  return{xRaw:add((targetX*48+24)*F,-x),yRaw:add((targetY*48+(center?24:0))*F,-y)};
 }
-function inputVector(input){if(!N)throw Error('TopViewPlayer native sqrt dependency absent');if(!input)return{xRaw:0,yRaw:0};const stick={xRaw:raw(input.stickXRaw),yRaw:raw(input.stickYRaw)};if(N.lengthRaw(stick)>=THRESHOLD)return stick;
+// GetMoveVector takes the stick threshold from its caller: TopViewPlayer 0.2,
+// RallyMallet QGameDefine +0x30 = 0.078125 (raw 5120).
+function inputVector(input,thresholdRaw=THRESHOLD){if(!N)throw Error('TopViewPlayer native sqrt dependency absent');if(!input)return{xRaw:0,yRaw:0};const stick={xRaw:raw(input.stickXRaw),yRaw:raw(input.stickYRaw)};if(N.lengthRaw(stick)>=thresholdRaw)return stick;
  function pressed(k){const pair=input.buttons?.[k];if(!Array.isArray(pair)||pair.length!==2||!pair.every(Number.isInteger))throw Error('TopViewPlayer native Button int32 pair required: '+k);return(pair[1]|0)>(pair[0]|0);}
  const x=pressed('left')?-1:pressed('right')?1:0,y=pressed('up')?-1:pressed('down')?1:0;if(x&&y)return{...DIAGONALS[x+','+y]};return{xRaw:x*F,yRaw:y*F};
 }
