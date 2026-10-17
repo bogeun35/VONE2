@@ -541,10 +541,36 @@ function shootingArt(c,s,time){const S=root.SourceShootingRuntime;const st=s.sho
  for(const b of d.bullets){c.save();c.globalAlpha=b.fading?.4:1;c.beginPath();c.arc(b.x,b.y,b.r,0,Math.PI*2);fillStroke(c,'#e2557a',INK,1.5);
   c.fillStyle='rgba(255,255,255,.7)';c.beginPath();c.arc(b.x-1.5,b.y-1.5,1.5,0,Math.PI*2);c.fill();c.restore();}
 }
+// 13-2 graphs (UI prefabs; sizes are named approximations): a bar graph has three bars
+// [left, right, jump] of levelMax cells (cell = 288 / max(6, levelMax)); a circle graph
+// is a clockwise pie [jump, right, left] from the top. The number of rounds left sits
+// at UIPlayersPos, the hint (left, right, jump goal) at UINumbersPos.
+const GRAPH_COLORS=['#7fb2ff','#ffb067','#86d98f'];
+function graphIcon(c,k,x,y,s){c.save();c.translate(x,y);c.scale(s,s);c.strokeStyle=INK;c.fillStyle=GRAPH_COLORS[k];c.lineWidth=2.5;c.beginPath();
+ if(k===0){c.moveTo(9,-8);c.lineTo(-9,0);c.lineTo(9,8);c.closePath();}else if(k===1){c.moveTo(-9,-8);c.lineTo(9,0);c.lineTo(-9,8);c.closePath();}else{c.moveTo(-9,7);c.lineTo(0,-9);c.lineTo(9,7);c.closePath();}
+ c.fill();c.stroke();c.restore();}
+function graphArt(c,s){const G=root.SourceGraphRuntime;if(!G||!s.graphState||!s.graphState.gc)return;const d=G.displays(s.graphState);
+ for(const g of d.graphs){c.save();c.translate(g.x,g.y);c.scale(g.scale,g.scale);
+  if(g.kind==='bar'){const max=Math.max(6,g.levelMax),cell=288/max,bw=44,gap=18,x0=-(3*bw+2*gap)/2;
+   rr(c,x0-16,-300,3*bw+2*gap+32,336,14);fillStroke(c,g.target?'rgba(255,253,246,.9)':'rgba(255,253,246,.75)',INK,2.5);
+   for(let k=0;k<3;k++){const bx=x0+k*(bw+gap);
+    for(let i=0;i<g.levelMax;i++){const y=-12-(i+1)*cell;rr(c,bx,y+2,bw,cell-4,5);fillStroke(c,i<g.levels[k]?GRAPH_COLORS[k]:'rgba(60,50,80,.08)',i<g.levels[k]?INK:'rgba(60,50,80,.18)',1.5);}
+    graphIcon(c,k,bx+bw/2,16,1);}
+   if(g.target){label(c,'★',0,-318,'#ffd84d',24);}}
+  else{const r=118;c.beginPath();c.arc(0,0,r+8,0,Math.PI*2);fillStroke(c,'rgba(255,253,246,.9)',INK,2.5);
+   let a=-Math.PI/2;const order=[2,1,0];// pie slices [jump, right, left]
+   for(let k=0;k<3;k++){const p=g.percents[k];if(p<=0)continue;c.beginPath();c.moveTo(0,0);c.arc(0,0,r,a,a+p*Math.PI*2);c.closePath();fillStroke(c,GRAPH_COLORS[order[k]],INK,2);
+    const m=a+p*Math.PI;if(p>0.06)graphIcon(c,order[k],Math.cos(m)*r*0.6,Math.sin(m)*r*0.6,1.1);a+=p*Math.PI*2;}
+   if(g.percents.every(p=>p<=0)){c.beginPath();c.arc(0,0,r,0,Math.PI*2);fillStroke(c,'rgba(60,50,80,.08)',null);}
+   if(g.target)label(c,'★',0,-r-26,'#ffd84d',24);}
+  c.restore();}
+ if(d.remaining>0&&d.remainingAt)label(c,String(d.remaining),d.remainingAt.x,d.remainingAt.y+40,'#fffdf6',44*d.uiScale);
+ if(d.hint){const h=d.hint;for(let k=0;k<3;k++){graphIcon(c,k,h.at.x-60+k*60,h.at.y+24,1);label(c,String(h.values[k]),h.at.x-60+k*60,h.at.y+56,'#fffdf6',24);}}
+}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);moleArt(c,s,time);throwArt(c,s,time);planeObstacleArt(c,s);shootingArt(c,s,time);planeArt(c,s,time);}
+ try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);moleArt(c,s,time);throwArt(c,s,time);planeObstacleArt(c,s);shootingArt(c,s,time);graphArt(c,s);planeArt(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).

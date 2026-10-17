@@ -58,11 +58,12 @@
   "st_w_08_04",
   "st_w_06_03",
   "st_w_06_01",
-  "st_w_06_02"
+  "st_w_06_02",
+  "st_w_13_02"
  ],
  "worldStages": 60,
- "remainingStages": 5,
- "remainingDistinctBlockers": 16,
+ "remainingStages": 4,
+ "remainingDistinctBlockers": 11,
  "nearest": [
   {
    "id": "st_w_06_04",
@@ -96,18 +97,6 @@
     "DanmakuModifier",
     "DanmakuObserver",
     "DanmakuThunder"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_13_02",
-   "blockerCount": 5,
-   "blockers": [
-    "BarGraph",
-    "BarGraphController",
-    "CircleGraph",
-    "CircleGraphController",
-    "GraphController"
    ],
    "guardsAfterTypes": []
   },
@@ -205,46 +194,6 @@
     "st_w_15_03"
    ],
    "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "BarGraph",
-   "stages": [
-    "st_w_13_02"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "BarGraphController",
-   "stages": [
-    "st_w_13_02"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "CircleGraph",
-   "stages": [
-    "st_w_13_02"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "CircleGraphController",
-   "stages": [
-    "st_w_13_02"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "GraphController",
-   "stages": [
-    "st_w_13_02"
-   ],
-   "appearsIn": 1,
    "opensAlone": []
   },
   {
@@ -463,86 +412,38 @@
   },
   {
    "id": "st_w_13_02",
-   "connected": false,
-   "distinctBlockers": [
-    "BarGraph",
-    "BarGraphController",
-    "CircleGraph",
-    "CircleGraphController",
-    "GraphController"
-   ],
-   "blockerCount": 5,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "CircleGraph",
-      "CircleGraphController",
-      "BarGraph",
-      "BarGraphController",
-      "GraphController"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "CircleGraph",
-      "CircleGraphController",
-      "BarGraph",
-      "BarGraphController",
-      "GraphController"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "CircleGraph",
-      "CircleGraphController",
-      "BarGraph",
-      "BarGraphController",
-      "GraphController"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "CircleGraph",
-      "CircleGraphController",
-      "BarGraph",
-      "BarGraphController",
-      "GraphController"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "CircleGraph",
-      "CircleGraphController",
-      "BarGraph",
-      "BarGraphController",
-      "GraphController"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "CircleGraph",
-      "CircleGraphController",
-      "BarGraph",
-      "BarGraphController",
-      "GraphController"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "CircleGraph",
-      "CircleGraphController",
-      "BarGraph",
-      "BarGraphController",
-      "GraphController"
-     ]
+     "missing": []
     }
    }
   },
