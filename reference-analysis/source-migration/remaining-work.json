@@ -28,36 +28,15 @@
   "st_w_14_03",
   "st_w_03_01",
   "st_w_15_01",
-  "st_w_05_04"
+  "st_w_05_04",
+  "st_w_14_01",
+  "st_w_05_03",
+  "st_w_03_03"
  ],
  "worldStages": 60,
- "remainingStages": 35,
- "remainingDistinctBlockers": 71,
+ "remainingStages": 32,
+ "remainingDistinctBlockers": 69,
  "nearest": [
-  {
-   "id": "st_w_03_03",
-   "blockerCount": 1,
-   "blockers": [
-    "PlayerMagnet"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_05_03",
-   "blockerCount": 1,
-   "blockers": [
-    "PlayerMagnet"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_14_01",
-   "blockerCount": 1,
-   "blockers": [
-    "BreakableRect"
-   ],
-   "guardsAfterTypes": []
-  },
   {
    "id": "st_w_02_04",
    "blockerCount": 2,
@@ -138,32 +117,37 @@
     "RallyMallet"
    ],
    "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_13_04",
+   "blockerCount": 2,
+   "blockers": [
+    "FakePlayer",
+    "FakeTimer"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_15_02",
+   "blockerCount": 2,
+   "blockers": [
+    "ColorBox",
+    "DeadSwitch"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_02_01",
+   "blockerCount": 3,
+   "blockers": [
+    "DistanceConstraint",
+    "StepEnemy",
+    "WarpAll"
+   ],
+   "guardsAfterTypes": []
   }
  ],
  "byType": [
-  {
-   "type": "PlayerMagnet",
-   "stages": [
-    "st_w_03_03",
-    "st_w_05_03",
-    "st_w_03_04"
-   ],
-   "appearsIn": 3,
-   "opensAlone": [
-    "st_w_03_03",
-    "st_w_05_03"
-   ]
-  },
-  {
-   "type": "BreakableRect",
-   "stages": [
-    "st_w_14_01"
-   ],
-   "appearsIn": 1,
-   "opensAlone": [
-    "st_w_14_01"
-   ]
-  },
   {
    "type": "TopViewPlayer",
    "stages": [
@@ -2104,54 +2088,38 @@
   },
   {
    "id": "st_w_03_03",
-   "connected": false,
-   "distinctBlockers": [
-    "PlayerMagnet"
-   ],
-   "blockerCount": 1,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "PlayerMagnet"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "PlayerMagnet"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "PlayerMagnet"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "PlayerMagnet"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "PlayerMagnet"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "PlayerMagnet"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "PlayerMagnet"
-     ]
+     "missing": []
     }
    }
   },
@@ -3476,54 +3444,38 @@
   },
   {
    "id": "st_w_05_03",
-   "connected": false,
-   "distinctBlockers": [
-    "PlayerMagnet"
-   ],
-   "blockerCount": 1,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "PlayerMagnet"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "PlayerMagnet"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "PlayerMagnet"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 1,
-     "missing": [
-      "PlayerMagnet"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 1,
-     "missing": [
-      "PlayerMagnet"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 1,
-     "missing": [
-      "PlayerMagnet"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 1,
-     "missing": [
-      "PlayerMagnet"
-     ]
+     "missing": []
     }
    }
   },
@@ -3717,54 +3669,38 @@
   },
   {
    "id": "st_w_14_01",
-   "connected": false,
-   "distinctBlockers": [
-    "BreakableRect"
-   ],
-   "blockerCount": 1,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "BreakableRect"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "BreakableRect"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "BreakableRect"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "BreakableRect"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "BreakableRect"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "BreakableRect"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "BreakableRect"
-     ]
+     "missing": []
     }
    }
   },
@@ -3776,16 +3712,14 @@
     "ColorBox",
     "DummyColorBox",
     "DummyGoal",
-    "DummyPlayer",
-    "PlayerMagnet"
+    "DummyPlayer"
    ],
-   "blockerCount": 6,
+   "blockerCount": 5,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "PlayerMagnet",
       "ColorBox",
       "Arrangement",
       "DummyPlayer",
@@ -3796,7 +3730,6 @@
     "3": {
      "variant": 0,
      "missing": [
-      "PlayerMagnet",
       "ColorBox",
       "Arrangement",
       "DummyPlayer",
@@ -3807,7 +3740,6 @@
     "4": {
      "variant": 0,
      "missing": [
-      "PlayerMagnet",
       "ColorBox",
       "Arrangement",
       "DummyPlayer",
@@ -3818,7 +3750,6 @@
     "5": {
      "variant": 0,
      "missing": [
-      "PlayerMagnet",
       "ColorBox",
       "Arrangement",
       "DummyPlayer",
@@ -3829,7 +3760,6 @@
     "6": {
      "variant": 0,
      "missing": [
-      "PlayerMagnet",
       "ColorBox",
       "Arrangement",
       "DummyPlayer",
@@ -3840,7 +3770,6 @@
     "7": {
      "variant": 0,
      "missing": [
-      "PlayerMagnet",
       "ColorBox",
       "Arrangement",
       "DummyPlayer",
@@ -3851,7 +3780,6 @@
     "8": {
      "variant": 0,
      "missing": [
-      "PlayerMagnet",
       "ColorBox",
       "Arrangement",
       "DummyPlayer",

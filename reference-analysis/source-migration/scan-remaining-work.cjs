@@ -21,13 +21,13 @@ const base=__dirname;
 
 // Types the stage runtime handles itself, copied from the `supported` set in
 // source-stage-runtime.js compile(). Keep the two in step.
-const BUILT_IN=['Player','Key','Goal','Warp','MapRect','TopViewMapRect','JumpStand',
+const BUILT_IN=['Player','Key','Goal','Warp','MapRect','TopViewMapRect','JumpStand','DeadSwitch',
  'JumpStandMediator','Switch','DelaySwitch','Rect','DashBoard','FallingWall'];
 const MODULES=['source-devices-runtime.js','source-gate-devices.js','source-bridge-devices.js',
  'source-blink-devices.js','source-blinkthunder-devices.js','source-warpinit-devices.js',
  'source-switchtimer-devices.js','source-enemy-devices.js','source-thorn-ceiling-devices.js',
  'source-countup-devices.js','source-lift-devices.js','source-landmine-devices.js','source-pole-devices.js','source-wind-devices.js','source-linepath-devices.js','source-text-devices.js','source-coin-devices.js','source-checkpoint-devices.js','source-touchenergy-devices.js',
- 'source-boundballpitcher-devices.js','source-ballkeybox-devices.js','source-blackout-devices.js','source-dossun-devices.js','source-searchlight-devices.js','source-linepathgear-devices.js','source-updownlift-devices.js','source-playerwarpgun-devices.js','source-breakablerect-devices.js','source-playermagnet-devices.js'];
+ 'source-boundballpitcher-devices.js','source-ballkeybox-devices.js','source-blackout-devices.js','source-dossun-devices.js','source-searchlight-devices.js','source-linepathgear-devices.js','source-updownlift-devices.js','source-playerwarpgun-devices.js','source-breakablerect-devices.js','source-playermagnet-devices.js','source-colorbox-devices.js'];
 
 const supported=new Set(BUILT_IN);
 for(const file of MODULES)for(const type of require(path.join(base,file)).supportedTypes||[])supported.add(type);
