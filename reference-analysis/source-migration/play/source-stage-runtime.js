@@ -336,6 +336,12 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   let nextY=anchorY+dir*NATIVE.walk;
   const box={x:anchorX-10,y:nextY-47,w:20,h:44};
   if(dir&&terrain.some(b=>overlap(box,b)))nextY=anchorY;
+  // OnInitialize_PoleLadder 0x1816c9380 only reshapes collision 0 (pushBackTarget 3 stays):
+  // riders push each other, so a climb stops at the next rider's pole rect.
+  if(dir&&nextY!==anchorY){const others=s.players.filter(q=>q!==p&&!q.exit&&q.onPole).map(q=>({x:q.x+16-10,y:q.y+47-47,w:20,h:44}));
+   for(const o of others)if(box.x<o.x+o.w&&o.x<box.x+box.w){
+    if(dir>0&&anchorY-47+44<=o.y+0.001&&nextY-47+44>o.y)nextY=Math.min(nextY,o.y-44+47);
+    if(dir<0&&anchorY-47>=o.y+o.h-0.001&&nextY-47<o.y+o.h)nextY=Math.max(nextY,o.y+o.h+47);}}
   p.lookingRight=true;p.vx=0;p.vy=0;p.grounded=false;p.supportId=null;p.jump=false;
   p.animation=dir<0?14:dir>0?15:13;
   const out=Poles.afterStep(s.poleState,{players:[{id:p.id,nativeState:10,lookingRight:true,anchorYRaw:Math.round(nextY*F)}]});

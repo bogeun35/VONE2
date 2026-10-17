@@ -251,7 +251,8 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 1. **수평 발판 전달 경로 발견, 아직 미연결.** CollisionScene.postPushBack → updateInertia → moveForInertia가 collision currentX-preX를 전달한다(0x1817fc1c2..1d9/0x1817fc3ea). MoveContactActor X=0만으로 수평 carry 부재를 주장한 설명은 철회한다. Map.Move/UpdatePushBack/camera 보정 및 native cache/Player wakeUpCount·equipment 상태를 연결해야 한다. LinePathLift는 isInertia로 disable0x80을 설정하므로 mode를 무시한 일괄 carry도 잘못이다. 주소와 필터는 move-contact-report.json 참조.
 2. DamageRect 의 활성 조건 mask 3 에 지형도 포함되는지(지금은 플레이어만 봄).
 3. `source-move-contact.js` 부분 완료 — 원작 충돌 캐시 생성과 타입별 콜백 근거.
-4. 11-2 기둥: 원작은 좌/우로 기둥 반대편(52px)으로 도는 것으로 보이나 미구현, 탑승자끼리 충돌 없음.
+4. (해결 2026-10-17) 11-2 기둥: OnUpdate_PoleLadder 0x1816c95b0 은 위/아래(입력 4/5)만 읽어 좌우로 반대편에 가지 않음(방향 0x400 은 판정
+   모양만 바꿈) — 기존 '오른쪽 고정'이 원작과 같음. OnInitialize_PoleLadder 0x1816c9380 은 판정만 20×44 로 바꾸고 밀어내기 대상 3 유지 → 탑승자끼리 막힘(연결함).
 5. 새로 연 라운드(10-1 10-4 13-1 11-2 12-3 3-2 10-3 5-1 2-2 7-3 14-3)는 **사람이 끝까지 해본 적 없다**.
 5a. **무대 `scale`**: `stageInitParam.scale` 이 10-1(5인 이상)·10-2·10-3 에서 1.5 인데 런타임은 무시한다.
     StageComponent 액터 배율(Actor.Initialize 0x18169cd02)이 이 값이면 그 라운드의 캐릭터·장치 크기가 원작과 다르다.

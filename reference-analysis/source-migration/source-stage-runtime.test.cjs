@@ -396,3 +396,15 @@ test('shufflePlayer: the stage order matches source-player-index-list.js initial
  const one = R.create(R.compile({source, geometry, count:4, stageId:'st_w_01_01'}), {shuffleSeed:7});
  assert.deepEqual(one.players.map(p => p.id), ['p1', 'p2', 'p3', 'p4']);
 });
+
+// 11-2: OnUpdate_PoleLadder 0x1816c95b0 reads only up / down; OnInitialize_PoleLadder 0x1816c9380
+// reshapes collision 0 to the 20 x 44 pole rect and keeps pushBackTarget 3, so riders block each other.
+test('11-2 pole riders stop at the next rider (6 px gap) and keep facing right on left / right', () => {
+ const s = R.create(R.compile({source, geometry, count:2, stageId:'st_w_11_02'}));R.step(s, {});
+ const [a, b] = s.players, ay = () => a.y + a.h + 1, by = () => b.y + b.h + 1;
+ assert.equal(by() - ay(), 50);
+ for (let i = 0; i < 10; i++) R.step(s, {[a.id]:{down:true}});
+ assert.equal(by() - ay(), 44, 'the pole rects touch');
+ for (let i = 0; i < 5; i++) R.step(s, {[a.id]:{left:true}});
+ assert.equal(a.lookingRight, true);
+});
