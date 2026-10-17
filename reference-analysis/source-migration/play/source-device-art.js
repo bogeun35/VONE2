@@ -224,6 +224,19 @@ function rollGears(c,s){
   fillStroke(c,g.standby?'#cfc9e0':'#f0c27a',INK,2);c.beginPath();c.arc(0,0,R*.5,0,Math.PI*2);fillStroke(c,'#fff1c9',INK,1.5);
   c.beginPath();c.arc(0,0,7,0,Math.PI*2);fillStroke(c,INK,null);c.restore();}
 }
+function ghosts(c,s,time){
+ if(!s.ghostState||!s.ghostState.ghosts.length||!s.ghostActors)return;
+ for(const g of s.ghostState.ghosts){const a=s.ghostActors[g.id];if(!a)continue;
+  // collider (-20,-55,40,54); alpha fades out on defeat; sprite 0 chasing,
+  // 1..3 partly looked at, 4 stopped (covering its face)
+  const x=a.positionRaw.xRaw/F,y=a.positionRaw.yRaw/F-28,alpha=Math.max(0,Math.min(1,(g.alphaRaw??F)/F));if(alpha<=0)continue;
+  c.save();c.globalAlpha*=alpha*.92;c.translate(x,y);if(a.facingLeft)c.scale(-1,1);
+  c.beginPath();c.moveTo(-20,22);c.lineTo(-20,-6);c.arc(0,-6,20,Math.PI,0);c.lineTo(20,22);for(let i=0;i<4;i++){c.lineTo(20-i*10-5,16);c.lineTo(20-(i+1)*10,22);}c.closePath();
+  fillStroke(c,'#f5f3ff',INK,2);
+  if((g.spriteIndex??0)>=4){c.fillStyle='#ffb3c6';rr(c,-14,-10,12,8,4);c.fill();rr(c,2,-10,12,8,4);c.fill();}
+  else{eyes(c,0,-6,14,8,5);c.fillStyle=INK;c.beginPath();c.ellipse(0,6,5,3,0,0,Math.PI*2);c.fill();}
+  c.restore();}
+}
 function blackoutLabels(c,s){
  const bc=s.blackoutState&&s.blackoutState.controllers&&s.blackoutState.controllers[0];
  if(!bc||!bc.visibleUI)return;const p=s.players[bc.playerIndex];if(!p||p.exit)return;
@@ -232,7 +245,7 @@ function blackoutLabels(c,s){
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
+ try{ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).

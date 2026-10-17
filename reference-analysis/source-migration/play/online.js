@@ -10,7 +10,7 @@ const memberIds=room=>Object.keys(room.players||{}).sort((a,b)=>(room.players[a]
 // at the values it had when the round was created.
 const DEVICE_STATES=[['devices','deviceState'],['motion','motionState'],['gates','gateState'],
  ['bridges','bridgeState'],['blink','blinkState'],['blinkThunders','blinkThunderState'],
- ['warpInit','warpInitState'],['switchTimers','switchTimerState'],['enemies','enemyState'],['thornCeilings','thornCeilingState'],['countUps','countUpState'],['lifts','liftState'],['landmines','landmineState'],['poles','poleState'],['winds','windState'],['speedSwitches','speedSwitchState'],['linePaths','linePathState'],['pitchers','pitcherState'],['keyBoxes','keyBoxState'],['ballActors','ballActors'],['boxActors','boxActors'],['ballMeta','ballMeta'],['blackouts','blackoutState'],['texts','textsState'],['coins','coinsState'],['checkpoints','checkpointsState'],['touchEnergies','touchEnergiesState'],['dossuns','dossunState'],['searchLights','searchLightState'],['linePathGears','gearState'],['gearActors','gearActors'],['upDownLifts','upDownLiftState'],['warpGuns','warpGunState'],['breakableRects','breakableState'],['playerMagnets','magnetState'],['colorBoxes','colorBoxState'],['colorBoxActors','colorBoxActors'],['rollGears','rollGearState'],['rollGearActors','rollGearActors'],['targetGroups','targetGroupState']];
+ ['warpInit','warpInitState'],['switchTimers','switchTimerState'],['enemies','enemyState'],['thornCeilings','thornCeilingState'],['countUps','countUpState'],['lifts','liftState'],['landmines','landmineState'],['poles','poleState'],['winds','windState'],['speedSwitches','speedSwitchState'],['linePaths','linePathState'],['pitchers','pitcherState'],['keyBoxes','keyBoxState'],['ballActors','ballActors'],['boxActors','boxActors'],['ballMeta','ballMeta'],['blackouts','blackoutState'],['texts','textsState'],['coins','coinsState'],['checkpoints','checkpointsState'],['touchEnergies','touchEnergiesState'],['dossuns','dossunState'],['searchLights','searchLightState'],['linePathGears','gearState'],['gearActors','gearActors'],['upDownLifts','upDownLiftState'],['warpGuns','warpGunState'],['breakableRects','breakableState'],['playerMagnets','magnetState'],['colorBoxes','colorBoxState'],['colorBoxActors','colorBoxActors'],['rollGears','rollGearState'],['rollGearActors','rollGearActors'],['targetGroups','targetGroupState'],['sineLifts','sineLiftState'],['ghosts','ghostState'],['ghostActors','ghostActors'],['keyState','keyState']];
 // The thorn ceiling draws its rows from a PCG32 generator whose state is a
 // BigInt pair; JSON and the database both refuse those, so they travel as
 // decimal strings and are rebuilt on arrival.
@@ -25,12 +25,12 @@ const unpackState=v=>{
  return walk(v);
 };
 const pack=(s,runId,paused)=>{
- const snapshot={runId,stageId:s.map.id,count:s.players.length,ids:s.players.map(p=>p.id),status:s.status,paused,players:s.players,elapsed:s.elapsed,playTimeRaw:s.playTimeRaw,ticks:s.ticks,accumulator:s.accumulator,keyTaken:s.keyTaken,keyActive:s.keyActive,deaths:s.deaths,failure:s.failure,relays:s.relayState};
+ const snapshot={runId,stageId:s.map.id,count:s.players.length,ids:s.players.map(p=>p.id),status:s.status,paused,players:s.players,elapsed:s.elapsed,playTimeRaw:s.playTimeRaw,ticks:s.ticks,accumulator:s.accumulator,keyTaken:s.keyTaken,goalOpen:s.goalOpen,keyRect:s.map.key?{x:s.map.key.x,y:s.map.key.y,hidden:!!s.map.key.hidden}:null,keyActive:s.keyActive,deaths:s.deaths,failure:s.failure,relays:s.relayState};
  for(const [key,field] of DEVICE_STATES)if(s[field]!==undefined)snapshot[key]=packState(s[field]);
  return snapshot;
 };
 function apply(s,p,positions=true){
- for(const k of ['status','elapsed','ticks','accumulator','keyTaken','deaths','failure'])s[k]=p[k];
+ for(const k of ['status','elapsed','ticks','accumulator','keyTaken','goalOpen','deaths','failure'])s[k]=p[k];
  if(p.playTimeRaw!==undefined)s.playTimeRaw=p.playTimeRaw;
  // Firebase drops empty arrays and objects, so a state that arrives without one
  // of its lists must keep the shape the runtime expects rather than lose it.
@@ -43,7 +43,7 @@ function apply(s,p,positions=true){
  // A Key created at runtime (BallKeyBox) is not in the static map peers built.
  if(s.ballMeta&&s.ballMeta.key&&!s.map.key)s.map.key={...s.ballMeta.key};
  s.keyActive=p.keyActive!==false;
- s.relayState={...copy(p.relays),relays:copy(p.relays.relays||[])};if(s.map.key)s.map.key.taken=s.keyTaken;
+ s.relayState={...copy(p.relays),relays:copy(p.relays.relays||[])};if(s.map.key){s.map.key.taken=s.keyTaken;if(p.keyRect){s.map.key.x=p.keyRect.x;s.map.key.y=p.keyRect.y;s.map.key.hidden=p.keyRect.hidden;}}
  for(const b of s.map.switches){const r=s.relayState.relays.find(r=>r.id===b.id);b.pressed=r.pressed;b.remaining=r.remaining||0;}
  for(const b of s.map.springs){const r=s.relayState.relays.find(r=>r.id===b.id);b.phase=r.phase;b.visible=r.visible;}
  s.players=p.players.map(p=>({...p}));return s;
