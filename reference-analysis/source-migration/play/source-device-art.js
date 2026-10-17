@@ -351,10 +351,23 @@ function halfInputMarks(c,s){
   c.beginPath();c.arc(p.x+p.w/2,p.y-18,7,0,Math.PI*2);fillStroke(c,'#ffd84d',INK,1.6);
   c.fillStyle=INK;c.beginPath();c.moveTo(p.x+p.w/2-3,p.y-21);c.lineTo(p.x+p.w/2+4,p.y-18);c.lineTo(p.x+p.w/2-3,p.y-15);c.closePath();c.fill();c.restore();});
 }
+// 15-4 / 2-3: FrontSwitch orbs (20x20 sensor), SwitchRect / SwitchIceRect /
+// IceRect blocks. Hidden switch rects are not displayed (SetVisible false).
+function frontSwitchArt(c,s,time){
+ const S=root.SourceFrontSwitchDevices;if(!S||!s.frontSwitchState)return;const d=S.displays(s.frontSwitchState);
+ const iceBlock=(r,alpha=1)=>{c.save();c.globalAlpha*=alpha;rr(c,r.x,r.y,r.w,r.h,4);fillStroke(c,'#bfe9ff',INK,2);
+  c.strokeStyle='rgba(255,255,255,.9)';c.lineWidth=3;for(let x=r.x+10;x<r.x+r.w-8;x+=34){c.beginPath();c.moveTo(x,r.y+r.h-6);c.lineTo(x+12,r.y+6);c.stroke();}c.restore();};
+ for(const r of d.ices)iceBlock(r);
+ for(const r of d.rects){if(!r.visible)continue;if(r.ice)iceBlock(r);else{rr(c,r.x,r.y,r.w,r.h,4);fillStroke(c,'#c8a2e8',INK,2);c.fillStyle='rgba(255,255,255,.35)';rr(c,r.x+4,r.y+4,r.w-8,6,3);c.fill();}}
+ for(const w of d.switches){const cx=w.x+w.w/2,cy=w.y+w.h/2;c.save();
+  if(w.on){c.fillStyle='rgba(255,226,120,.35)';c.beginPath();c.arc(cx,cy,16+Math.sin(time*6)*2,0,Math.PI*2);c.fill();}
+  c.beginPath();c.arc(cx,cy,10,0,Math.PI*2);fillStroke(c,w.on?'#ffd84d':'#9fb3d9',INK,2);
+  c.fillStyle='rgba(255,255,255,.7)';c.beginPath();c.arc(cx-3,cy-3,3,0,Math.PI*2);c.fill();c.restore();}
+}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);}
+ try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
