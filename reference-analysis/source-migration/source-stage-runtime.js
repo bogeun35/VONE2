@@ -783,8 +783,23 @@
   p.y=target;
   if(support){p.grounded=true;p.ground=true;p.supportId=support.id;p.vy=0;}
  }
+ // Horizontal carry: CollisionScene.postPushBack -> updateInertia 0x1817fc480 ->
+ // moveForInertia 0x1817fd100 moves what stands on a layer 1/2/13 collision by
+ // that collision's currentX - preX (vertical travel is each device's own
+ // MoveContactActor). Named approximation of the contact-face list: a player
+ // standing on a solid (grounded, supportId) is carried by the solid's x step
+ // this tick, together with everyone standing on that player; the move stops at
+ // terrain like a walk. Players carrying players already happens in the walk.
+ function inertiaCarry(s,before){
+  const players=active(s),now=baseSolids(s),terrainIds=new Set(s.map.platforms.map(b=>b.id));
+  for(const b of now){if(terrainIds.has(b.id))continue;const x0=before.get(b.id);if(x0===undefined)continue;const dx=b.x-x0;if(Math.abs(dx)<1/65536*4)continue;
+   const riders=players.filter(p=>p.grounded&&p.supportId===b.id);if(!riders.length)continue;
+   const others=now.filter(o=>o.id!==b.id);
+   for(const r of riders){const group=[r,...ridersOf(r,players)];for(const q of group)moveX(q,dx,others.filter(o=>o.id!==q.id&&!group.some(g=>g.id===o.id)),s.map.width);}}
+ }
  function tick(s,inputs,h){
   const hz=s.physics.nativeTickRate,players=active(s);
+  const solidXBefore=new Map(baseSolids(s).map(b=>[b.id,b.x]));
   s.playTimeRaw+=Math.trunc(h*65536);
   const coinUpdate=Coins.beforeStep(s.coinsState);
   // TimerComponent.onTimeUp 0x18172e0cb sends event 61 to the single actor named
@@ -1035,6 +1050,7 @@
     for(const q of players)if(q.supportId===p.id){q.supportId=null;q.grounded=false;q.ground=false;}
    }
   }
+  inertiaCarry(s,solidXBefore);
   magnetPost(s,hz);
   if(s.players.every(p=>p.exit))s.status='clear';
  }
