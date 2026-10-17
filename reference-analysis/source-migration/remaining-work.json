@@ -22,20 +22,13 @@
   "st_w_12_03",
   "st_w_03_02",
   "st_w_10_03",
-  "st_w_05_01"
+  "st_w_05_01",
+  "st_w_02_02"
  ],
  "worldStages": 60,
- "remainingStages": 41,
- "remainingDistinctBlockers": 80,
+ "remainingStages": 40,
+ "remainingDistinctBlockers": 79,
  "nearest": [
-  {
-   "id": "st_w_02_02",
-   "blockerCount": 1,
-   "blockers": [
-    "WeightedLiftSingle"
-   ],
-   "guardsAfterTypes": []
-  },
   {
    "id": "st_w_03_03",
    "blockerCount": 1,
@@ -131,6 +124,15 @@
     "Stick"
    ],
    "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_12_02",
+   "blockerCount": 2,
+   "blockers": [
+    "ColorBox",
+    "DeadSwitch"
+   ],
+   "guardsAfterTypes": []
   }
  ],
  "byType": [
@@ -145,16 +147,6 @@
    "opensAlone": [
     "st_w_03_03",
     "st_w_05_03"
-   ]
-  },
-  {
-   "type": "WeightedLiftSingle",
-   "stages": [
-    "st_w_02_02"
-   ],
-   "appearsIn": 1,
-   "opensAlone": [
-    "st_w_02_02"
    ]
   },
   {
@@ -3730,54 +3722,38 @@
   },
   {
    "id": "st_w_02_02",
-   "connected": false,
-   "distinctBlockers": [
-    "WeightedLiftSingle"
-   ],
-   "blockerCount": 1,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "WeightedLiftSingle"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "WeightedLiftSingle"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "WeightedLiftSingle"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 1,
-     "missing": [
-      "WeightedLiftSingle"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 1,
-     "missing": [
-      "WeightedLiftSingle"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 1,
-     "missing": [
-      "WeightedLiftSingle"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 1,
-     "missing": [
-      "WeightedLiftSingle"
-     ]
+     "missing": []
     }
    }
   },

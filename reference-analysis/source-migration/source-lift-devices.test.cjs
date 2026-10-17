@@ -195,16 +195,18 @@ test('an absent or non-string table slot decodes to seven zeros instead of faili
  assert.equal(compileOne(lift1004(),2).w,192);
 });
 
-test('compile claims WeightedLiftEx and WeightedLift and silently ignores the other lift actors',()=>{
- assert.deepEqual(L.supportedTypes,['WeightedLiftEx','WeightedLift']);
+test('compile claims the three ExtraWeightedLift/NormalWeightedLift types',()=>{
+ // WeightedLiftSingle runs on the SAME delegate as WeightedLiftEx
+ // (ExtraWeightedLiftComponent.Creator 0x18183aef0) with m_Width forced to 48.
+ assert.deepEqual(L.supportedTypes,['WeightedLiftEx','WeightedLift','WeightedLiftSingle']);
+ assert.equal(compileOne(actor('st_w_02_02','WeightedLiftSingle1'),4).w,48);
  const single=actor('st_w_02_02','WeightedLiftSingle1');
  const normal=stageActors('st_w_05_01').find(a=>a.typeName==='WeightedLift');
  assert.ok(normal,'st_w_05_01 must still carry a WeightedLift actor');
  const c=L.compile([single,normal],4);
- assert.equal(c.lifts.length,1,'the WeightedLift compiles, the WeightedLiftSingle is skipped');
- assert.equal(c.lifts[0].type,'WeightedLift');
+ assert.deepEqual(c.lifts.map(l=>l.type).sort(),['WeightedLift','WeightedLiftSingle']);
  assert.deepEqual(c.warnings,[]);
- assert.equal(L.compile([single,normal,lift1004()],4).lifts.length,2);
+ assert.equal(L.compile([single,normal,lift1004()],4).lifts.length,3);
 });
 
 test('vertical WeightedLiftEx travel compiles, and a zero vector is still refused',()=>{
