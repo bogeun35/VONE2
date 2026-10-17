@@ -182,6 +182,20 @@ function breakables(c,s){
   c.strokeStyle='rgba(70,58,98,.55)';for(let x=r.x+30;x<r.x+r.w;x+=96){c.beginPath();c.moveTo(x,r.y+4);c.lineTo(x+6,r.y+12);c.lineTo(x+2,r.y+20);c.stroke();}
   c.restore();}
 }
+function magnets(c,s,time){
+ const M=root.SourcePlayerMagnetDevices;if(!M||!s.magnetState||!s.magnetState.magnets.length)return;
+ for(const m of M.displays(s.magnetState)){if(m.xRaw===null)continue;const owner=s.players[m.ownerIndex];if(!owner||owner.exit||owner.asBlock)continue;
+  const x=m.xRaw/F,y=m.yRaw/F,col=FRIEND_COLORS[m.ownerIndex%8];
+  // the pull field while X is held: the magnet's own collision rect
+  if(m.input&&m.rect){c.save();c.globalAlpha=.18+.06*Math.sin(time*10);c.fillStyle=col;rr(c,m.rect.x,m.rect.y,m.rect.w,m.rect.h,10);c.fill();c.restore();}
+  // horseshoe magnet in front of the owner
+  c.save();c.translate(x,y);if(m.facingLeft)c.scale(-1,1);c.lineCap='round';
+  c.strokeStyle=INK;c.lineWidth=9;c.beginPath();c.arc(0,0,7,Math.PI/2,Math.PI*3/2,true);c.stroke();
+  c.strokeStyle='#ff7a90';c.lineWidth=6;c.beginPath();c.arc(0,0,7,Math.PI/2,Math.PI*3/2,true);c.stroke();
+  c.fillStyle='#e9edf4';c.fillRect(0,-10,5,5);c.fillRect(0,5,5,5);c.restore();
+  if(m.targetId){const t=s.players.find(q=>q.id===m.targetId);if(t){c.save();c.strokeStyle=col;c.lineWidth=2;c.setLineDash([4,4]);c.beginPath();c.moveTo(x,y);c.lineTo(t.x+t.w/2,t.y+t.h/2);c.stroke();c.restore();}}
+ }
+}
 function blackoutLabels(c,s){
  const bc=s.blackoutState&&s.blackoutState.controllers&&s.blackoutState.controllers[0];
  if(!bc||!bc.visibleUI)return;const p=s.players[bc.playerIndex];if(!p||p.exit)return;
@@ -190,7 +204,7 @@ function blackoutLabels(c,s){
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{breakables(c,s);searchLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
+ try{breakables(c,s);magnets(c,s,time);searchLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
