@@ -52,11 +52,14 @@
   "st_w_08_01",
   "st_w_08_03",
   "st_w_03_04",
-  "st_w_14_04"
+  "st_w_14_04",
+  "st_w_14_02",
+  "st_w_08_02",
+  "st_w_08_04"
  ],
  "worldStages": 60,
- "remainingStages": 11,
- "remainingDistinctBlockers": 29,
+ "remainingStages": 8,
+ "remainingDistinctBlockers": 23,
  "nearest": [
   {
    "id": "st_w_06_03",
@@ -65,36 +68,6 @@
     "BattlePlanePlayer",
     "PlaneObstacle",
     "PlayerGun"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_08_02",
-   "blockerCount": 3,
-   "blockers": [
-    "CannonPlayer",
-    "ThrowBallBasket",
-    "ThrowBallController"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_08_04",
-   "blockerCount": 3,
-   "blockers": [
-    "CannonPlayer",
-    "ThrowBallBasket",
-    "ThrowBallController"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_14_02",
-   "blockerCount": 3,
-   "blockers": [
-    "Mole",
-    "MoleGroup",
-    "MoleNest"
    ],
    "guardsAfterTypes": []
   },
@@ -300,33 +273,6 @@
    "opensAlone": []
   },
   {
-   "type": "CannonPlayer",
-   "stages": [
-    "st_w_08_02",
-    "st_w_08_04"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "ThrowBallBasket",
-   "stages": [
-    "st_w_08_02",
-    "st_w_08_04"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "ThrowBallController",
-   "stages": [
-    "st_w_08_02",
-    "st_w_08_04"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
    "type": "BgmChanger",
    "stages": [
     "st_w_06_04",
@@ -414,30 +360,6 @@
    "type": "PlaneObstacle",
    "stages": [
     "st_w_06_03"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "Mole",
-   "stages": [
-    "st_w_14_02"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "MoleGroup",
-   "stages": [
-    "st_w_14_02"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "MoleNest",
-   "stages": [
-    "st_w_14_02"
    ],
    "appearsIn": 1,
    "opensAlone": []
@@ -1272,70 +1194,38 @@
   },
   {
    "id": "st_w_08_02",
-   "connected": false,
-   "distinctBlockers": [
-    "CannonPlayer",
-    "ThrowBallBasket",
-    "ThrowBallController"
-   ],
-   "blockerCount": 3,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "CannonPlayer",
-      "ThrowBallBasket",
-      "ThrowBallController"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "CannonPlayer",
-      "ThrowBallBasket",
-      "ThrowBallController"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "CannonPlayer",
-      "ThrowBallBasket",
-      "ThrowBallController"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "CannonPlayer",
-      "ThrowBallBasket",
-      "ThrowBallController"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "CannonPlayer",
-      "ThrowBallBasket",
-      "ThrowBallController"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "CannonPlayer",
-      "ThrowBallBasket",
-      "ThrowBallController"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "CannonPlayer",
-      "ThrowBallBasket",
-      "ThrowBallController"
-     ]
+     "missing": []
     }
    }
   },
@@ -2019,70 +1909,38 @@
   },
   {
    "id": "st_w_08_04",
-   "connected": false,
-   "distinctBlockers": [
-    "CannonPlayer",
-    "ThrowBallBasket",
-    "ThrowBallController"
-   ],
-   "blockerCount": 3,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "CannonPlayer",
-      "ThrowBallBasket",
-      "ThrowBallController"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "CannonPlayer",
-      "ThrowBallBasket",
-      "ThrowBallController"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "CannonPlayer",
-      "ThrowBallBasket",
-      "ThrowBallController"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "CannonPlayer",
-      "ThrowBallBasket",
-      "ThrowBallController"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "CannonPlayer",
-      "ThrowBallBasket",
-      "ThrowBallController"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "CannonPlayer",
-      "ThrowBallBasket",
-      "ThrowBallController"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "CannonPlayer",
-      "ThrowBallBasket",
-      "ThrowBallController"
-     ]
+     "missing": []
     }
    }
   },
@@ -2737,70 +2595,38 @@
   },
   {
    "id": "st_w_14_02",
-   "connected": false,
-   "distinctBlockers": [
-    "Mole",
-    "MoleGroup",
-    "MoleNest"
-   ],
-   "blockerCount": 3,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "MoleNest",
-      "MoleGroup",
-      "Mole"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "MoleNest",
-      "MoleGroup",
-      "Mole"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "MoleNest",
-      "MoleGroup",
-      "Mole"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "MoleNest",
-      "MoleGroup",
-      "Mole"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "MoleNest",
-      "MoleGroup",
-      "Mole"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "MoleNest",
-      "MoleGroup",
-      "Mole"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "MoleNest",
-      "MoleGroup",
-      "Mole"
-     ]
+     "missing": []
     }
    }
   },

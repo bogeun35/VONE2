@@ -510,13 +510,23 @@ function throwArt(c,s,time){
   else fillStroke(c,'#fff4c2',INK,2);c.restore();}
  for(const b of d.blasts){c.save();c.globalAlpha=Math.max(0,1-b.t);c.strokeStyle='#ffb04d';c.lineWidth=5;c.beginPath();c.arc(b.x,b.y,8+40*b.t,0,Math.PI*2);c.stroke();c.restore();}
 }
+// 6-3 PlaneObstacle: walls (DamageRect pieces glow, Rect pieces are plain stone) and the
+// colour blocks each player has to shoot open (chip 0x1e + colour, a number when
+// isShowBreakColorNumber is set).
+function planeObstacleArt(c,s){const O=root.SourcePlaneObstacleRuntime;if(!O||!s.planeObstacleState||!s.planeObstacleState.obstacles.length)return;const d=O.displays(s.planeObstacleState);
+ for(const w of d.walls){c.save();rr(c,w.x,w.y,w.w,w.h,6);fillStroke(c,w.type==='DamageRect'?'#f07a8a':'#8f86a8',INK,2.5);
+  if(w.type==='DamageRect'){c.strokeStyle='rgba(255,255,255,.35)';c.lineWidth=6;for(let x=w.x-w.h;x<w.x+w.w;x+=28){c.beginPath();c.moveTo(Math.max(w.x,x),Math.max(w.y,w.y+(w.x-x)));c.lineTo(Math.min(w.x+w.w,x+w.h),Math.min(w.y+w.h,w.y+w.h+(w.x+w.w-x-w.h)));c.stroke();}}
+  c.restore();}
+ for(const b of d.chips){const x=b.gx*48,y=b.gy*48,col=FRIEND_COLORS[b.colorIndex%8];rr(c,x+2,y+2,44,44,7);fillStroke(c,col,INK,2);
+  c.strokeStyle='rgba(255,255,255,.55)';c.lineWidth=2;rr(c,x+8,y+8,32,32,5);c.stroke();label(c,String(b.colorIndex+1),x+24,y+24,'#fffdf6',18);}
+}
 // Shooting rounds: player gun bullets (circle 7) in the shooter's colour.
 function planeArt(c,s,time){const P=root.SourcePlaneRuntime;if(!P||!s.planeState||!s.planeState.guns.length)return;
  for(const b of P.displays(s.planeState).bullets){c.save();c.globalAlpha=b.fading?.4:1;c.beginPath();c.ellipse(b.x,b.y,b.r+3,b.r-2,0,0,Math.PI*2);fillStroke(c,FRIEND_COLORS[(b.colorIndex||0)%8],INK,1.5);c.restore();}}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);moleArt(c,s,time);throwArt(c,s,time);planeArt(c,s,time);}
+ try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);moleArt(c,s,time);throwArt(c,s,time);planeObstacleArt(c,s);planeArt(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
