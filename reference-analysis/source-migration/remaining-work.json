@@ -47,21 +47,13 @@
   "st_w_15_04",
   "st_w_02_03",
   "st_w_12_01",
-  "st_w_13_03"
+  "st_w_13_03",
+  "st_w_13_04"
  ],
  "worldStages": 60,
- "remainingStages": 16,
- "remainingDistinctBlockers": 42,
+ "remainingStages": 15,
+ "remainingDistinctBlockers": 40,
  "nearest": [
-  {
-   "id": "st_w_13_04",
-   "blockerCount": 2,
-   "blockers": [
-    "FakePlayer",
-    "FakeTimer"
-   ],
-   "guardsAfterTypes": []
-  },
   {
    "id": "st_w_06_03",
    "blockerCount": 3,
@@ -180,6 +172,19 @@
     "OptimizedBulletObserver",
     "PlayerGun",
     "ShootingEnemySpawner"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_11_01",
+   "blockerCount": 6,
+   "blockers": [
+    "DanmakuEmitter",
+    "DanmakuLocator",
+    "DanmakuModifier",
+    "DanmakuObserver",
+    "DanmakuThunder",
+    "OptimizedBulletObserver"
    ],
    "guardsAfterTypes": []
   }
@@ -520,22 +525,6 @@
    "type": "DummyPlayer",
    "stages": [
     "st_w_03_04"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "FakePlayer",
-   "stages": [
-    "st_w_13_04"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "FakeTimer",
-   "stages": [
-    "st_w_13_04"
    ],
    "appearsIn": 1,
    "opensAlone": []
@@ -3212,62 +3201,38 @@
   },
   {
    "id": "st_w_13_04",
-   "connected": false,
-   "distinctBlockers": [
-    "FakePlayer",
-    "FakeTimer"
-   ],
-   "blockerCount": 2,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "FakeTimer",
-      "FakePlayer"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "FakeTimer",
-      "FakePlayer"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "FakeTimer",
-      "FakePlayer"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "FakeTimer",
-      "FakePlayer"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "FakeTimer",
-      "FakePlayer"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "FakeTimer",
-      "FakePlayer"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "FakeTimer",
-      "FakePlayer"
-     ]
+     "missing": []
     }
    }
   },

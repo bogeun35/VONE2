@@ -411,7 +411,7 @@ function accessory(c,kind,pal,behind){
  else if(kind==='antenna'){star(c,3,-52,4.8,2.1);fillStroke(c,'#ffe066','#a88512',1.2);}
 }
 function drawFriend(c,p,i,o){
- const pal=FRIENDS[i%8],t=o.time,f=facingOf(p),grounded=!!p.grounded;
+ const pal=o.palette||FRIENDS[i%8],t=o.time,f=facingOf(p),grounded=!!p.grounded;
  const wasAir=memo.air.get(p.id);memo.air.set(p.id,!grounded);if(wasAir&&grounded)memo.land.set(p.id,t);
  let sx=1,sy=1;const landAge=t-(memo.land.get(p.id)??-9);
  if(!grounded){if((p.vy||0)<0){sy=1.07;sx=.95;}else{sy=1.02;sx=.98;}}
@@ -575,7 +575,7 @@ function render(ctx,state,camera,opts={}){
  // friends: the controlled one last so it is never hidden
  const deadId=state.status==='dead'&&state.failure?state.failure.playerId:null;
  const o={time,selected:opts.selected,zoom:z,deadId,flash:ceil&&ceil.flash};
- const order=players.map((p,i)=>i).filter(i=>!players[i].exit&&!players[i].asBlock&&!players[i].hiddenByCardboard).sort((a,b)=>(a===opts.selected)-(b===opts.selected));
+ const order=players.map((p,i)=>i).filter(i=>!players[i].exit&&!players[i].asBlock&&!players[i].hiddenByCardboard&&!players[i].fakeProxy).sort((a,b)=>(a===opts.selected)-(b===opts.selected));
  for(const i of order){const p=players[i];if(p.x>view.x1+60||p.x+p.w<view.x0-60)continue;drawFriend(ctx,p,i,o);}
  for(const i of order){const p=players[i];drawBadge(ctx,p,i,o);}
  if(root.SourceDeviceArt)root.SourceDeviceArt.drawAbove(ctx,state);
@@ -608,5 +608,5 @@ function drawDebug(c,state,map){
 }
 function blank(ctx,canvas){const vp=viewport(canvas||ctx.canvas),s=vp.scale;ctx.setTransform(s,0,0,s,0,0);const g=ctx.createLinearGradient(0,0,0,VH);g.addColorStop(0,'#16244a');g.addColorStop(1,'#3a2f63');ctx.fillStyle=g;ctx.fillRect(0,0,vp.width,VH);}
 
-root.ParkArt={render,drawRegisteredDevices,drawRegisteredHud,blank,viewport,FRIENDS,THEMES,worldOf,VW,VH};
+root.ParkArt={render,drawRegisteredDevices,drawRegisteredHud,blank,viewport,drawFriend,mix,FRIENDS,THEMES,worldOf,VW,VH};
 })(typeof window!=='undefined'?window:globalThis);

@@ -385,17 +385,42 @@ function rallyArt(c,s){
  for(const b of d.balls){c.save();c.globalAlpha=b.fade;c.beginPath();c.arc(b.x,b.y,b.radius,0,Math.PI*2);fillStroke(c,'#fff4c2',INK,2);c.restore();}
  if(d.counter)label(c,d.counter.count+' / '+d.counter.max,d.counter.x,d.counter.y,d.counter.cleared?'#ffd84d':'#fffdf6',30);
 }
+// 13-4 Fake: every body is drawn as a friend in one plain look; a revealed body
+// turns into its player's colours over the fade (fakeLevel 1 -> 0). The cage is
+// FakeCage's frame (.cctor 0x18183c8c0: top/bottom 78x6, sides 10x72) with bars,
+// each cursor a ring in its player's colour on the selected cage.
+const FAKE_LOOK={body:'#ece8f4',dark:'#6f6a86',light:'#ffffff',acc:null};
+function fakeArt(c,s,time){
+ const K=root.SourceFakeRuntime,P=root.ParkArt;if(!K||!s.fakeState||!s.fakeState.timer)return;const d=K.displays(s.fakeState);
+ for(const f of d.fakes){if(!f.visible||!P||!P.drawFriend)continue;
+  let pal=FAKE_LOOK;if(f.revealed&&f.playerIndex>=0){const F=P.FRIENDS[f.playerIndex%8],k=1-f.fakeLevel;pal={body:P.mix(FAKE_LOOK.body,F.body,k),dark:P.mix(FAKE_LOOK.dark,F.dark,k),light:P.mix(FAKE_LOOK.light,F.light,k),acc:k>.5?F.acc:null};}
+  P.drawFriend(c,{id:f.id,x:f.rect.x,y:f.rect.y,w:f.rect.w,h:f.rect.h,vx:f.anim===2||f.anim===3?(f.facingLeft?-3:3):0,vy:f.anim===4?-1:0,grounded:f.anim!==4},f.playerIndex>=0?f.playerIndex:0,{time,palette:pal});}
+ for(const g of d.cages){c.save();c.globalAlpha*=g.fade;
+  c.strokeStyle='rgba(70,60,95,.85)';c.lineWidth=3;for(let x=g.x-27;x<=g.x+27;x+=13.5){c.beginPath();c.moveTo(x,g.y-34);c.lineTo(x,g.y+34);c.stroke();}
+  for(const [h,w,x,y] of [[6,78,-39,-40],[6,78,-39,34],[72,10,-40,-36],[72,10,30,-36]]){rr(c,g.x+x,g.y+y,w,h,2);fillStroke(c,'#8d84ad',INK,1.5);}
+  c.restore();}
+ for(const u of d.cursors){const col=FRIEND_COLORS[u.colorIndex%8],a=u.count>1?u.order/u.count*Math.PI*2+time*2:0,ox=u.count>1?Math.cos(a)*10:0,oy=u.count>1?Math.sin(a)*10:0;
+  c.save();c.lineWidth=5;c.strokeStyle=col;c.beginPath();c.arc(u.x+ox,u.y+oy,44,0,Math.PI*2);c.stroke();
+  c.lineWidth=1.5;c.strokeStyle=INK;c.stroke();
+  if(u.answer){label(c,u.answer===1?'○':'×',u.x,u.y-54,u.answer===1?'#7be08f':'#ff7a7a',26);}
+  c.restore();}
+}
+function fakeOverlay(c,s,view){
+ const K=root.SourceFakeRuntime;if(!K||!s.fakeState||!s.fakeState.timer)return;const d=K.displays(s.fakeState);
+ if(d.timer&&d.timer.phase<=4)label(c,String(d.timer.seconds),view.width/2,64,'#fffdf6',56);
+ if(d.notice){const k=Math.min(1,d.notice.t),x=view.width*(1.2-1.4*k);label(c,'WHO ARE YOU?',Math.max(view.width/2,x),view.height/2,'#ffd84d',64);}
+}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);}
+ try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
 function drawAbove(c,s){if(!s)return;const time=performance.now()/1000;c.save();try{cardboards(c,s);bats(c,s,time);fallingCages(c,s);halfInputMarks(c,s);blackoutLabels(c,s);}finally{c.restore();}}
 // Screen pass: the blackout darkness covers the whole view.
 function overlay(c,s,view){
- if(s)capturingCounter(c,s,view);
+ if(s){capturingCounter(c,s,view);fakeOverlay(c,s,view);}
  const B=root.SourceBlackoutDevices;if(!B||!s||!s.blackoutState||!s.blackoutState.blackouts.length)return;
  for(const b of B.displays(s.blackoutState).blackouts){const a=Math.max(0,Math.min(1,b.alpha*(b.darknessRaw/F)));
   if(a>0){c.fillStyle='rgba(0,0,0,'+a+')';c.fillRect(0,0,view.width,view.height);}}
