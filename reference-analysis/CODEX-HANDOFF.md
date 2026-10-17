@@ -89,8 +89,13 @@
 > **판정 배율 규칙**(모든 라운드): ActorSceneComponent.AddActor 0x1816a71d0 → SetBaseScale(스테이지 배율) → 모든 충돌체 배율 = 액터 배율 × 스테이지
 > 배율 (GetRect 0x181690610). 13-3 공(1.5배 → 반지름 18)·14-4 거인(1.1배) 수정함. 점검 결과 남은 틈: FloatingThorn(source-pole-devices.js)은 스테이지
 > 배율 미반영, 워프건 총알은 둘 다 미반영(현재 배율 1이라 무해).
-> ⚠️ **스테이지 배율 ≠ 1 인 연결 라운드: 8-1·8-3·10-1·10-2·10-3(1.5배), 9-4(3배)** — 런타임은 플레이어 몸(32x46)·걷기·중력·점프에 스테이지 배율을
-> 아직 안 씀(s.map.stageScaleRaw 미설정). 원작은 플레이어도 AddActor 로 판정 1.5배가 됨. 다음 정리 대상.
+> ⚠️ **스테이지 배율 ≠ 1 인 연결 라운드: 8-1·8-3·10-1(5인 이상)·10-2·10-3(1.5배), 9-4(3배)**.
+> **1단계 완료(2026-10-17)**: map.stageScaleRaw 설정, 플레이어 몸 32s×46s(기준점 (posX, posY−0.5) 유지), 걷기 3s, 점프 mul(s,−334234)·누르기 가속,
+> 중력 증분 mul(min(42598, 1277952−vy), s), 열쇠(32×56 @(−16,−28))·골 판정 × s(Scene.CreateCollision 기본 pivot 0), 열쇠 따라가기 = 들고 있는 사람 판정 모서리,
+> 탑뷰 몸통 28×32 @(−16,−29) 을 pivot (0,−1) 로 × s, TopView 의 baseScaleRaw = 스테이지 배율(낙하 탐침 7×2 도 배율). s = 1 이면 계산이 예전과 같음.
+> **남은 2단계**: 장치마다 InitCollision 의 고정 크기 비트(flags&4: Rect·DamageRect 는 배율 안 받음)를 확인하고 판정 × s —
+> Switch·JumpStand(10-1), DashBoard·PushBox·WarpInitPos(10-2), BoundBallPitcher·BallKeyBox(10-3), Wind·TopViewMapRect·Switch·DistanceConstraint(9-4),
+> 사과·바구니·과녁(8-1/8-3; 사과 중력은 이미 × s). 동작 값(점프대 세기 등)이 배율을 곱하는지도 디컴파일로 볼 것.
 >   원작 공식(배율 s): 플레이어 몸 X=-16s W=32s, **피벗 (0,-1)** 이라 Y=-46s-1 H=46s(발밑 -1 은 그대로, source-player-collision-init.js 머리주석),
 >   걷기 3s(SpeedSwitch 식과 같음), 점프 초기 mul(s,-334234)·누르기 가속도 jumpVelocity 기준, 중력 증분 mul(min(42598, 1277952-vy), s)
 >   (source-player-default.js gravityDelta/jumpVelocity), 열쇠·골·스위치 등 모든 액터 판정 × s. 런타임엔 +16/+47 하드코딩이 48곳 이상 —

@@ -83,8 +83,9 @@ function setAnchor(p,x,y){p.x=x-p.w/2;p.y=y-p.h-1;}
 // BasketPlayer 133, CannonPlayer) takes the next player in actor order (ActorScene
 // m_PlayerIndexList, createPlayer 0x1816a3e40); 6-2 interleaves planes and walkers.
 const PLAYER_TYPES=['Player','PlanePlayer','BattlePlanePlayer','TargetPlayer','BasketPlayer','CannonPlayer'];
-function playerActorSpawns(actors,count){
- return actors.filter(a=>PLAYER_TYPES.includes(a.typeName)&&Actor.actorPopulationAllowed(a.playerCount||0,count)).slice(0,count).map(a=>({x:a.posX-16,y:a.posY-47-0.5,
+// S = stage scale (AddActor 0x1816a71d0 -> SetBaseScale): the spawn keeps Pos = (posX, posY - 0.5).
+function playerActorSpawns(actors,count,S=1){
+ return actors.filter(a=>PLAYER_TYPES.includes(a.typeName)&&Actor.actorPopulationAllowed(a.playerCount||0,count)).slice(0,count).map(a=>({x:a.posX-16*S,y:a.posY-0.5-46*S-1,
   ...(a.typeName==='Player'?{}:{variant:a.typeName}),lookLeft:playerLooksLeft(a),
   // PlayerComponent.parseParameter: plane types (0x1a / 0x6b) may look left only when slot 7 is 1
   ...(a.typeName==='PlanePlayer'||a.typeName==='BattlePlanePlayer'?{plane:{battle:a.typeName==='BattlePlanePlayer',lookLeftAllowed:Math.trunc(Math.fround(((a.datas||[])[7]||{}).f||0))===1}}:{})}));}
@@ -144,6 +145,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   // 0x180554310 like every other one. Only the Dossun family reads it so far.
   const stageScaleRaw=sourceVariant&&Number.isFinite(sourceVariant.scale)?Math.trunc(Math.fround(Math.fround(sourceVariant.scale)*65536)):null;
   const dossunActors=t.actors.filter(a=>['Dossun','PlayerBlockGun'].includes(a.typeName));
+  const SCALE_RAW=stageScaleRaw===null?65536:stageScaleRaw,SCALE=SCALE_RAW/65536;
   if(dossunActors.length&&stageScaleRaw===null)throw new Error('Dossun stage without stageInitParam.scale: '+stageId);
   const searchLights=SearchLights.compile(t.actors,count,{chipSize:t.tileSize});
   const linePathGears=LinePathGears.compile(t.actors,count,{chipSize:t.tileSize});
@@ -213,8 +215,9 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   if(t.cells.some(c=>(c.flags&~1)!==0))missingMechanics.push('Dynamic tile attributes');
   const map={id:stageId,count,width:t.width,height:t.height,tileSize:t.tileSize,variant:t.variant,
    platforms:t.platforms.filter(p=>!(p.flags&8)).map((p,i)=>({...p,id:'terrain:'+i})),springs,switches,warps,constraintMoves,
-   spawns:topViews.players.length?t.actors.filter(a=>a.typeName==='TopViewPlayer'&&Actor.actorPopulationAllowed(a.playerCount||0,count)).slice(0,count).map(a=>({x:a.posX-16,y:a.posY-47-0.5}))
-    :playerActorSpawns(t.actors,count),
+   spawns:topViews.players.length?t.actors.filter(a=>a.typeName==='TopViewPlayer'&&Actor.actorPopulationAllowed(a.playerCount||0,count)).slice(0,count).map(a=>({x:a.posX-16*SCALE,y:a.posY-0.5-46*SCALE-1}))
+    :playerActorSpawns(t.actors,count,SCALE),
+   stageScaleRaw:SCALE_RAW,
    // top view: TopViewPlayer.initialize 0x1816c9d20 and the stage's raw map chips (fall attribute 16)
    ice:(t.cells.some(c=>c.flags&2)||frontSwitches.ices.length||frontSwitches.rects.some(r=>r.ice))&&sourceVariant?{resistivityRaw:cfp(sourceVariant.iceResistivity),frictionRaw:cfp(sourceVariant.iceFriction),speedUpRaw:cfp(sourceVariant.iceSpeedUp),
     cells:t.cells.filter(c=>c.flags&2).map(c=>c.gridX+','+c.gridY)}:null,
@@ -229,13 +232,13 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
    // (224,452) sat inside the floor tiles at gridY 9 and half of it below the
    // map, so no player could overlap it. See actor-runtime.js keySpawnOffset
    // and key-reach-report.json.
-   key:key?{...box(Actor.collisionRect(key,1,count)),id:'key'}:null,
+   key:key?{...box(Actor.collisionRect(key,SCALE,count)),id:'key'}:null,// Key/Goal colliders: pivot 0, x stage scale (AddActor)
    // Key slot 3: the name KeyComponent notifies with event 61 on first pickup
    keyTarget:key&&key.datas&&key.datas[3]&&key.datas[3].t===2&&key.datas[3].s?key.datas[3].s:null,
    keyHoldYRaw:key&&key.datas&&key.datas[4]&&key.datas[4].t===1?Math.trunc(Math.fround(Math.fround(key.datas[4].f)*65536)):0,
    keyGhostYRaw:key&&key.datas&&key.datas[5]&&key.datas[5].t===1?Math.trunc(Math.fround(Math.fround(key.datas[5].f)*65536)):0,
    keyAttach:key&&key.datas&&key.datas[8]&&key.datas[8].t===2?key.datas[8].s||'':'',
-   exit:{...box(Actor.collisionRect(goal)),id:'goal'},
+   exit:{...box(Actor.collisionRect(goal,SCALE)),id:'goal'},
    // StageComponent.prepare3 0x18170aad0 writes FailFallY = mapHeight*chipSize +
    // stageInitParam.failDownY. failDownY is 0.0 for every World stage, so the
    // QGameDefine..cctor 0x181780720 default applies: statics+0x10 = 0x9600000 =
@@ -259,7 +262,8 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const map=clone(compiled.map),count=compiled.count,ids=options.ids||Array.from({length:count},(_,i)=>'p'+(i+1));
   if(ids.length!==count||new Set(ids).size!==count||ids.some(id=>typeof id!=='string'||!id))throw new Error('Unique IDs must match player count');
   const initPositions=(compiled.warpInit&&compiled.warpInit.initPositions)||[];
-  const state={map,players:ids.map((id,i)=>({id,...map.spawns[i],initPos:initPositions[i]||{x:map.spawns[i].x+16,y:map.spawns[i].y+47.5},onPole:!!(compiled.poles&&compiled.poles.poles&&compiled.poles.poles.length),lookingRight:!map.spawns[i].lookLeft,facingLeft:!!map.spawns[i].lookLeft,...(map.spawns[i].plane?{plane:{...map.spawns[i].plane,life:map.spawns[i].plane.battle?Planes.createLife():null}}:{}),w:32,h:46,vx:0,vy:0,grounded:false,ground:false,
+  const SC=(map.stageScaleRaw||65536)/65536;
+  const state={map,players:ids.map((id,i)=>({id,...map.spawns[i],initPos:initPositions[i]||{x:map.spawns[i].x+16*SC,y:map.spawns[i].y+46*SC+1.5},onPole:!!(compiled.poles&&compiled.poles.poles&&compiled.poles.poles.length),lookingRight:!map.spawns[i].lookLeft,facingLeft:!!map.spawns[i].lookLeft,...(map.spawns[i].plane?{plane:{...map.spawns[i].plane,life:map.spawns[i].plane.battle?Planes.createLife():null}}:{}),w:32*SC,h:46*SC,...(SC!==1?{walkSpeed:3*SC}:{}),vx:0,vy:0,grounded:false,ground:false,
    supportId:null,jump:false,jumpFrame:0,exit:false,visible:true,playerState:1})),
    relayState:clone(compiled.relays),deviceState:Devices.create(compiled.devices||{schemaVersion:1,count,devices:[],warnings:[]}),motionState:Motion.create(compiled.motion||{count,rects:[],dashBoards:[],walls:[]}),gateState:Gates.create(compiled.gates||{count,gates:[],observers:[],keys:[]}),bridgeState:Bridges.create(compiled.bridges||{count,bridges:[],thunders:[],keyTargets:[],keyTaken:false}),blinkState:Blink.create(compiled.blink||Blink.compile([],count)),blinkThunderState:BlinkThunders.create(compiled.blinkThunders||BlinkThunders.compile([],count)),warpInitState:WarpInit.create(compiled.warpInit||WarpInit.compile([],count)),switchTimerState:SwitchTimers.create(compiled.switchTimers||SwitchTimers.compile([],count)),enemyState:Enemies.create(compiled.enemies||Enemies.compile([],count)),thornCeilingState:ThornCeilings.create(compiled.thornCeilings||ThornCeilings.compile([],count)),countUpState:CountUps.create(compiled.countUps||CountUps.compile([],count)),liftState:Lifts.create(compiled.lifts||Lifts.compile([],count)),landmineState:Landmines.create(compiled.landmines||Landmines.compile([],count)),poleState:Poles.create(compiled.poles||Poles.compile([],count,{})),windState:Winds.create(compiled.winds||Winds.compile([],count,{})),speedSwitchState:SpeedSwitches.create(compiled.speedSwitches||SpeedSwitches.compile([],count,{})),linePathState:LinePaths.create(compiled.linePaths||LinePaths.compile([],count,{})),textsState:Texts.create(compiled.texts||Texts.compile([],count,{})),coinsState:Coins.create(compiled.coins||Coins.compile([],count,{})),checkpointsState:Checkpoints.create(compiled.checkpoints||Checkpoints.compile([],count,{})),touchEnergiesState:TouchEnergies.create(compiled.touchEnergies||TouchEnergies.compile([],count,{})),pitcherState:Pitchers.create(compiled.pitchers||Pitchers.compile([],count)),keyBoxState:KeyBoxes.create(compiled.keyBoxes||KeyBoxes.compile([],count)),blackoutState:Blackouts.create(compiled.blackouts||Blackouts.compile([],count,{})),dossunState:Dossuns.create(compiled.dossuns||Dossuns.compile([],count,{})),danmakuState:Danmakus.create(compiled.danmaku||Danmakus.compile([],count)),graphState:Graphs.create(compiled.graph||Graphs.compile([],count)),shootingState:Shootings.create(compiled.shooting||Shootings.compile([],count)),planeObstacleState:PlaneObstacles.create(compiled.planeObstacle||PlaneObstacles.compile([],count)),planeState:{...clone(compiled.planes||{guns:[]}),rng:{state:'9600629759793949339',inc:'15726070495360670683'}},throwState:ThrowBalls.create(compiled.throwball||ThrowBalls.compile([],count)),moleState:Moles.create(compiled.mole||Moles.compile([],count),{stageScaleRaw:map.stageScaleRaw||65536}),giantState:Giants.create(compiled.giant||Giants.compile([],count),{playerCount:count,stageScaleRaw:map.stageScaleRaw||65536}),arrangeState:Arranges.create(compiled.arrange||Arranges.compile([],count)),appleState:Apples.create(compiled.apple||Apples.compile([],count)),fakeState:Fakes.create(compiled.fake||Fakes.compile([],count)),rallyState:Rallies.create(compiled.rally||Rallies.compile([],count)),goKartState:GoKarts.create(compiled.goKarts||GoKarts.compile([],count)),frontSwitchState:FrontSwitches.create(compiled.frontSwitches||FrontSwitches.compile([],count)),autoScrollState:compiled.autoScroll?(()=>{const sc=AutoScroll.create(compiled.autoScroll.scroll,{freshStageComponent:true}),cam=CameraNative.create(compiled.autoScroll.camera,null);return {scroll:sc,camera:cam,cameraAreaRaw:CameraNative.stageAreaRaw(cam),steps:0};})():null,halfInputState:HalfInputs.create(compiled.halfInput||HalfInputs.compile([],count)),stepEnemyState:StepEnemies.create(compiled.stepEnemies||StepEnemies.compile([],count)),capturingState:Capturings.create(compiled.capturing||Capturings.compile([],count)),batState:BatEnemies.create(compiled.batEnemies||BatEnemies.compile([],count)),constraintState:Constraints.create(compiled.constraints||Constraints.compile([],count,{nativeConstraintFacts:true})),topViewState:TopViews.create(compiled.topViews||TopViews.compile([],count,{})),ghostState:Ghosts.create(compiled.ghosts||Ghosts.compile([],count,{checkpointInfo:{isActive:false}})),sineLiftState:SineLifts.create(compiled.sineLifts||SineLifts.compile([],count)),targetGroupState:TargetGroups.create(compiled.targetGroups||TargetGroups.compile([],count)),rollGearState:Gears.create(compiled.gears||Gears.compile([],count,{})),colorBoxState:ColorBoxes.create(compiled.colorBoxes||ColorBoxes.compile([],count,{})),magnetState:PlayerMagnets.create(compiled.playerMagnets||PlayerMagnets.compile([],count)),breakableState:BreakableRects.create(compiled.breakableRects||BreakableRects.compile([],count)),warpGunState:WarpGuns.create(compiled.warpGuns||WarpGuns.compile([],count)),upDownLiftState:UpDownLifts.create(compiled.upDownLifts||UpDownLifts.compile([],count)),gearState:LinePathGears.create(compiled.linePathGears||LinePathGears.compile([],count,{})),searchLightState:SearchLights.create(compiled.searchLights||SearchLights.compile([],count,{})),ballActors:{},boxActors:{},ballMeta:{serial:0,gone:{},key:null},playTimeRaw:0,gameOverCount:options.gameOverCount||0,keyActive:!compiled.gates||compiled.gates.keys.every(k=>k.active),sourceStatus:clone(compiled.status),physics:clone(map.physics),
    status:'play',elapsed:0,ticks:0,accumulator:0,// A BallKeyBox creates the key later (createKeyAt), so its round starts locked.
@@ -511,13 +515,15 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
  //  - CalcScreenEndWalkVelo passes the velocity through (no screen-end clamp);
  //  - pushback = move x then y, stopping at terrain, solids and other bodies.
  const TV_BODY={x:-16,y:-29,w:32,h:28};
- function tvBody(p){return {id:p.id,x:p.x+16+TV_BODY.x,y:p.y+47+TV_BODY.y,w:TV_BODY.w,h:TV_BODY.h};}
+ // pivot (0,-1) like the regular body (source-player-collision-init.js): x stage scale S = w / 32
+ function tvBody(p){const S=p.w/32;if(S===1)return {id:p.id,x:p.x+16+TV_BODY.x,y:p.y+47+TV_BODY.y,w:TV_BODY.w,h:TV_BODY.h};
+  return {id:p.id,x:AX(p)+TV_BODY.x*S,y:AY(p)+(TV_BODY.y+1)*S-1,w:TV_BODY.w*S,h:TV_BODY.h*S};}
  function topViewMove(s,p,input,hz){
   const F=65536;if(!p.tv){const pf=s.map.tvParseFlags&&s.map.tvParseFlags[s.players.indexOf(p)];p.tv={state:0,topViewFunc:0,flags:(pf===undefined?262144:pf)|(1<<17),cardboardCoveredFlags:0,wakeUpCount:1,currentAnimationId:0,isFlashing:0,flashTimerRaw:0,waitTimerRaw:0,flags2:0,scaleRaw:F};}
   const tv=p.tv,body=tvBody(p);
   const obstacles=[...baseSolids(s),...s.players.filter(q=>q!==p&&!q.exit&&!q.asBlock&&!q.hiddenByCardboard&&!(q.tv&&q.tv.topViewFunc===1)).map(tvBody)];
   const btn=k=>[0,input[k]?1:0];
-  const actor={xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),scaleXRaw:tv.scaleRaw,scaleYRaw:tv.scaleRaw,baseScaleRaw:F,flags:p.facingLeft?1024:0,
+  const actor={xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),scaleXRaw:tv.scaleRaw,scaleYRaw:tv.scaleRaw,baseScaleRaw:s.map.stageScaleRaw||F,flags:p.facingLeft?1024:0,
    windXRaw:Math.round((p.windDx||0)*F),windYRaw:0,vxRaw:0,vyRaw:0,requestAnimationId:null};
   const r=TopViews.updateTopView({...tv,id:p.id,walkSpeedRaw:Math.round((p.walkSpeed||NATIVE.walk)*F)},actor,{
    input:p.inputLocked?null:{stickXRaw:0,stickYRaw:0,buttons:{left:btn('left'),right:btn('right'),up:btn('up'),down:btn('down')}},
@@ -1068,11 +1074,13 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
  //  - touching the Goal (layer 12) opens it (Goal.OnCollided layer 10) and uses
  //    the key: hidden next update, event 40 to the holder.
  const KEY_RECT={x:-16,y:-28,w:32,h:56},KEY_EXCLUDE=Math.trunc(0.25*65536);
+ // Key.InitCollision 0x18186bdb0 (pivot 0) after AddActor: x stage scale
+ function keyRectOf(s){const S=(s.map.stageScaleRaw||65536)/65536;return S===1?KEY_RECT:{x:KEY_RECT.x*S,y:KEY_RECT.y*S,w:KEY_RECT.w*S,h:KEY_RECT.h*S};}
  function keyInit(s){
   if(!s.map.key)return null;const k=s.map.key;
   const st={holderId:null,excludeId:null,excludeRaw:0,phase:0,used:false,justAttached:false,
-   xRaw:Math.round((k.x-KEY_RECT.x)*65536),yRaw:Math.round((k.y-KEY_RECT.y)*65536),
-   initXRaw:Math.round((k.x-KEY_RECT.x)*65536),initYRaw:Math.round((k.y-KEY_RECT.y)*65536),holdYRaw:s.map.keyHoldYRaw||0};
+   xRaw:Math.round((k.x-keyRectOf(s).x)*65536),yRaw:Math.round((k.y-keyRectOf(s).y)*65536),
+   initXRaw:Math.round((k.x-keyRectOf(s).x)*65536),initYRaw:Math.round((k.y-keyRectOf(s).y)*65536),holdYRaw:s.map.keyHoldYRaw||0};
   // KeyComponent.OnStart 0x18186bf10: slot 8 names the holder it starts on (flag 2: not this update)
   if(s.map.keyAttach&&s.giantState){const id=Giants.attachKey(s.giantState,s.map.keyAttach,{xRaw:st.xRaw,yRaw:st.yRaw});if(id){st.holderId=id;st.justAttached=true;}}
   return st;
@@ -1084,7 +1092,8 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   // updatePhase
   const holder=k.holderId&&s.players.find(p=>p.id===k.holderId&&!p.exit);const ghostHolder=k.holderId&&s.ghostActors&&s.ghostActors[k.holderId];
   let target=null;
-  if(holder){target={xRaw:Math.round((holder.x+16-16+(holder.facingLeft?32:0))*F),yRaw:Math.round((holder.y+47-47)*F)+k.holdYRaw};}
+  // the holder's collider-1 GetRect corner (+ width when looking left), source-key-lifecycle.js
+  if(holder){target={xRaw:Math.round((holder.x+(holder.facingLeft?holder.w:0))*F),yRaw:Math.round(holder.y*F)+k.holdYRaw};}
   else if(k.holderId&&s.ghostActors&&s.ghostActors[k.holderId]){const g=s.ghostActors[k.holderId];
    target={xRaw:g.positionRaw.xRaw+(GHOST_RECT.x+(g.facingLeft?GHOST_RECT.w:0))*F,yRaw:g.positionRaw.yRaw+GHOST_RECT.y*F+(s.map.keyGhostYRaw||0)};}
   const giant=k.holderId&&s.giantState&&Giants.keyHolder(s.giantState,k.holderId);if(giant)target=giant;
@@ -1096,7 +1105,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
    if(Number((BigInt(dy)*BigInt(dy))>>16n)+Number((BigInt(dx)*BigInt(dx))>>16n)<0x1999){k.xRaw=target.xRaw;k.yRaw=target.yRaw;if(k.phase===1)k.phase=0;}
    else{k.xRaw+=Number((BigInt(dx)*0x1999n)>>16n);k.yRaw+=Number((BigInt(dy)*0x1999n)>>16n);}}
   k.justAttached=false;
-  s.map.key.x=k.xRaw/F+KEY_RECT.x;s.map.key.y=k.yRaw/F+KEY_RECT.y;
+  const KR=keyRectOf(s);s.map.key.x=k.xRaw/F+KR.x;s.map.key.y=k.yRaw/F+KR.y;
  }
  function keyCollide(s){
   const k=s.keyState;if(!k||k.used||!s.keyActive||!s.map.key)return;
@@ -1515,6 +1524,9 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
  }
  function baseSolids(s){return [...s.map.platforms,...s.map.springs.filter(b=>s.relayState.relays.find(r=>r.id===b.id)?.visible),...Motion.solids(s.motionState),...Gates.solids(s.gateState),...Bridges.solids(s.bridgeState),...Blink.solids(s.blinkState),...BlinkThunders.solids(s.blinkThunderState),...Lifts.solids(s.liftState),...Winds.solids(s.windState),...LinePaths.solids(s.linePathState),...keyBoxSolids(s),...dossunSolids(s),...UpDownLifts.solids(s.upDownLiftState),...BreakableRects.solids(s.breakableState),...colorBoxSolids(s),...SpeedSwitches.solids(s.speedSwitchState),...SineLifts.solids(s.sineLiftState),...BatEnemies.solids(s.batState),...stepEnemySolids(s),...FrontSwitches.solids(s.frontSwitchState),...Arranges.solids(s.arrangeState),...PlaneObstacles.solids(s.planeObstacleState),...Shootings.chipSolids(s.shootingState)];}
  function solids(s){return [...baseSolids(s),...Devices.solids(s.deviceState)];}
+ function scaledJump(s){const SR=s.map.stageScaleRaw||65536;return SR===65536?NATIVE.jump:Number(BigInt.asIntN(64,BigInt(SR)*-334234n)>>16n)/65536;}
+ function scaledGravity(s,vy,hz){const SR=s.map.stageScaleRaw||65536;if(SR===65536)return Math.min(NATIVE.terminal*hz,vy+NATIVE.gravity*hz);
+  const F=65536,v=vy/hz*F;return (v+Math.min(42598,1277952-v)*SR/F)/F*hz;}
  function ridersOf(p,players){
   const ids=new Set([p.id]);let added=true;
   while(added){added=false;for(const q of players)if(q.grounded&&ids.has(q.supportId)&&!ids.has(q.id)){ids.add(q.id);added=true;}}
@@ -1668,11 +1680,14 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
    const input=p.inputLocked?{}:(inputs[p.id]||{}),held=!!input.jump,edge=held&&!p.jump,riders=ridersOf(p,players);
    p.jumpBlocked=!!(edge&&p.grounded&&riders.length);
    const started=edge&&p.grounded&&!riders.length;
-   if(started){p.vy=NATIVE.jump*hz;p.jumpFrame=1;p.grounded=false;p.supportId=null;}
+   // stage scale s (source-player-default.js): jumpVelocity = mul(s, -334234), gravity delta
+   // mul(min(42598, 1277952 - vy), s); s = 1 keeps the plain constants.
+   const JUMP=scaledJump(s);
+   if(started){p.vy=JUMP*hz;p.jumpFrame=1;p.grounded=false;p.supportId=null;}
    // Native dec(frame)<=12 accepts frames1..13; frame0 cannot restart an
    // airborne jump after release. The initial jump is its own update.
    if(!started&&held&&p.jumpFrame>0&&p.jumpFrame<NATIVE.holdFrames){
-    p.vy+=NATIVE.jump*NATIVE.holdFactor*(1-p.jumpFrame/NATIVE.holdFrames)*hz;p.jumpFrame++;
+    p.vy+=JUMP*NATIVE.holdFactor*(1-p.jumpFrame/NATIVE.holdFrames)*hz;p.jumpFrame++;
    }else if(!started)p.jumpFrame=0;
    if(p.grounded)p.forcedVx=0;
    p.jump=held;checkIceFloor(s,p);{const dir=(input.right?1:0)-(input.left?1:0);p.vx=p.forcedVx||(s.map.ice&&p.onIce?iceWalk(s,p,dir,hz):dir*(p.walkSpeed||NATIVE.walk)*hz);}
@@ -1683,7 +1698,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
    p.x+=dx;for(const q of riders)q.x+=dx;
    const wall=terrain.find(b=>b.wallId&&horizontal({x:p.x-0.01,y:p.y,w:p.w+0.02,h:p.h},b)&&p.y<b.y+b.h&&p.y+p.h>b.y&&Math.abs(dx-p.vx*h)>.001);
    if(wall){const contact=Motion.contactWall(s.motionState,wall.wallId,{vx:p.vx/hz,vy:p.vy/hz,face:p.vx>0?'left':'right'});if(contact.impulse){p.vx=contact.impulse.vx*hz;p.forcedVx=p.vx;p.vy=contact.impulse.vy*hz;p.grounded=false;p.supportId=null;p.jumpFrame=0;}}
-   p.vy=Math.min(NATIVE.terminal*hz,p.vy+NATIVE.gravity*hz);
+   p.vy=scaledGravity(s,p.vy,hz);
    moveY(p,p.vy*h,terrain.concat(players.filter(q=>q!==p)));
    const top=terrain.find(b=>b.wallId&&b.id===p.supportId);
    if(top){const contact=Motion.contactWall(s.motionState,top.wallId,{vx:p.vx/hz,vy:p.vy/hz,face:'top',playerCenterX:p.x+p.w/2,blockCenterX:top.x+top.w/2});if(contact.impulse){p.forcedVx=contact.impulse.vx*hz;p.vx=p.forcedVx;p.vy=contact.impulse.vy*hz;p.grounded=false;p.supportId=null;}}

@@ -20,10 +20,11 @@ test('8-1 / 8-3 data: catches per count, controller slots, apple overrides, role
 });
 test('a TargetPlayer stands in state 8; its crosshair starts 500 px toward the view centre',()=>{
  const s=mk('st_w_08_01',2);R.step(s,{});
- assert.deepEqual([s.players[0].x,s.players[0].y,s.players[0].rallyTarget],[128,288.5,true]);
+ const p0=s.players[0];// stage scale 1.5: the body is 48 x 69, Pos stays (144, 335.5)
+ assert.deepEqual([p0.x+p0.w/2,p0.y+p0.h+1,p0.w,p0.h,p0.rallyTarget],[144,335.5,48,69,true]);
  assert.equal(s.players[1].rallyTarget,undefined);
  assert.equal(s.appleState.targets[0].xRaw,Math.round((128+16)*F)+500*F);
- for(let i=0;i<30;i++)R.step(s,{[s.players[0].id]:{right:true}});assert.equal(s.players[0].x,128);// the crosshair moves, not the player
+ for(let i=0;i<30;i++)R.step(s,{[s.players[0].id]:{right:true}});assert.equal(s.players[0].x,120);// the crosshair moves, not the player
  assert.ok(s.appleState.targets[0].xRaw>Math.round(144*F)+500*F);
 });
 test('controller: the first apple after 1 s, the next after RandomRange(0.5, 1.5)',()=>{
