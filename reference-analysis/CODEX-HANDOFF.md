@@ -5,15 +5,22 @@
 
 ## 현재 상태
 
-> **2026-10-17 저녁 (Claude)**: 라이브 **22라운드**, 배포 `v=20261017-05` / chamchicode `ddb3d46`.
-> 1-1 1-2 1-3 1-4 4-1 4-3 4-4 5-2 10-2 11-4 7-2 10-1 10-4 13-1 11-2 12-3 3-2 10-3 5-1 2-2 7-3 **14-3**.
-> - 14-3: Dossun(쿵쿵 블록) + PlayerBlockGun(X키로 동료를 블록으로) 연결. 호스트는 `source-stage-runtime.js` 의 `dossunTick`.
-> - **화면 버그 수정**: 라이브 그림은 `park-art.js` 가 그리고, `play.js` 의 `renderFlat` 은 실패 시 대체 경로뿐이었다.
->   그래서 12라운드 이후 장치(리프트·폴/가시·적·공/투수/상자·바람·선로·카운트업·지뢰 표시·암전)가 **라이브에서 안 보였다**.
->   이제 `play/source-device-art.js` 하나가 두 경로 모두에서 그린다(아래 등록 순서 참고).
-> - 10-3: 열쇠가 상자에서 나중에 생기는데 "시작 시 열쇠 없음 = 문 열림"으로 처리돼 문이 처음부터 열려 있었다 → 잠긴 채 시작.
-> - `check-source-play.cjs` 가 `restart()` 를 감시하지 않아 예전부터 깨져 있던 것 수정(지금 통과).
-> - 테스트 2384 통과. 다음 후보(차단 1개): 03_01(SearchLight chipSize), 03_03·05_03(PlayerMagnet), 14_01, 15_01(LinePathGear).
+> **2026-10-17 밤 (Claude)**: 로컬 **32라운드**(라이브는 22라운드 v=20261017-05 그대로 — 사용자 지시: *다 만들고 한 번에 테스트*).
+> 오늘 추가: 3-1 서치라이트, 15-1 추격 톱니, 5-4 워프건+위아래 리프트, 14-1 부서지는 블록, 5-3 자석, 3-3 발판 외부출발,
+> 12-2·15-2 컬러박스+데드스위치, 12-4·2-4 이동벽. 테스트 2395 통과. 남은 28라운드는 `scan-remaining-work.cjs` 참고.
+>
+> **분석 도구 = REA(Ghidra 엔진) 저장 프로젝트** — `rea decompile` 직접 호출은 매번 56분 재분석이라 쓰지 말 것.
+> - 프로젝트: `C:\Users\user\tools\ghidra-projects\PicoPark2` (IL2CPP 메서드 1만363개 이름 부착; 다시 만들 땐
+>   `tools/ghidra/ApplyIl2CppNames.java` + `names.tsv`(quantum/assembly-csharp 메서드 색인에서 생성)).
+> - 조회 10초: `tools/ghidra/decompile.sh OUT.local.txt 0x주소 'Type$$Method' 'Type$$'` (출력은 반드시 `.local.` — 커밋 금지).
+>   `tools/ghidra/fn.sh OUT 'Type$$Method'` 는 il2cpp 잡음을 걸러 한 함수만 보여준다.
+> - 숫자는 어셈블리(`tools/disasm.py --raw 0x주소 N`)로 대조 후 인용. QFP 정적 오프셋 → `quantum-field-offsets.json` 의 `QFP` 타입.
+> - 액터 종류 번호 찾기: `mov edx,<번호>; call Frame.GetFactoryParam(0x1817481f0)` 패턴 검색(가시껍질=0x8f 이렇게 찾음).
+> - 갱신 순서: 엔티티마다 OnUpdate1 → 컴포넌트 OnUpdate → OnUpdate2(pos+=velo), 종류는 `actor-lifecycle-report.json` 의 updater 등록 순.
+>
+> **모듈 등록 자동화**: `python tools/register_module.py 파일 전역명 팩토리 컴파일키 상태필드 "컴파일식" "빈컴파일식"` (런타임 기계적 부분),
+> `python tools/package_module.py --file X.js --state key:field --stage "st_w_..:2편 ..–.."` (패키지/배포/HTML/온라인/스캔 목록).
+> 호스트(틱 연결)와 그리기(`play/source-device-art.js`)는 손으로.
 
 
 - **최신 로컬 상태**: v20261013-12 배포 커밋 `ec50e31` 준비됨(3-2 재귀 탑승 인원 수정). 라이브는 v20261013-11 / `4dd3947` 유지. VONE2 로컬 `f69a3bfa`, `791c5a8d` 및 후속 커밋이 원격 `cec72c8e`보다 앞서며 푸시 보류. 원격 승인 심사가 다시 거절한 정확한 내역과 재개 명령은 문서 마지막 절에 있음. 이전 “현재 차단 아님” 문구는 당시 기록이다.
@@ -106,6 +113,9 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 5a. **무대 `scale`**: `stageInitParam.scale` 이 10-1(5인 이상)·10-2·10-3 에서 1.5 인데 런타임은 무시한다.
     StageComponent 액터 배율(Actor.Initialize 0x18169cd02)이 이 값이면 그 라운드의 캐릭터·장치 크기가 원작과 다르다.
     지금은 Dossun 만 이 값을 읽는다(14-3 은 1).
+5c. 오늘 연 라운드의 호스트 근사(각 호스트 주석에 이름 붙여 둠): 접촉 세계 = 0.5px 이내 맞닿은 몸체(위아래 리프트·이동벽),
+    충돌 단계 푸시백 = 겹친 몸체를 이동 방향으로 밀어냄(자석·이동벽), 데드스위치의 '누른 액터' = 그 프레임 마지막 접촉,
+    컬러박스 중력 = 플레이어 증분 42598, 서치라이트 사망 = 이벤트26 이 19 와 같은 경로(Ghidra 확인).
 5b. 14-3 호스트 근사(이름 붙여 둠): 총알은 쏜 사람과 충돌하지 않음(collideBullet 이 소유자 확인보다 먼저
     사라지기를 요청하므로 원작 레이어 필터가 자기 충돌을 안 낸다고 판단), 총알은 블록을 통과,
     PlayerBlock 은 떨어지지 않음(모듈에 가속 없음), 쿵쿵은 지형·플레이어·블록(충돌 종류 3)에서 멈춘다,
