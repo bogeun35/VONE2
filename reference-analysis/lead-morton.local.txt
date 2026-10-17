@@ -1,0 +1,100 @@
+
+== CollisionQuadTree.GetMortonNumber 0x18177efb0
+0x18177efb0 mov qword ptr [rsp + 8], rbx
+0x18177efb5 mov qword ptr [rsp + 0x10], rsi
+0x18177efba push rdi
+0x18177efbb sub rsp, 0x20
+0x18177efbf cmp byte ptr [rip + 0x1bdbc6d], 0
+0x18177efc6 mov rsi, rcx
+0x18177efc9 jne 0x18177efe3
+0x18177efcb lea rcx, [rip + 0x19e60de]
+0x18177efd2 call 0x1802c5dc0 ; 
+0x18177efd7 lock or dword ptr [rsp], 0
+0x18177efdc mov byte ptr [rip + 0x1bdbc50], 1
+0x18177efe3 mov rcx, qword ptr [rip + 0x19e60c6]
+0x18177efea cmp dword ptr [rcx + 0xe0], 0
+0x18177eff1 jne 0x18177efff
+0x18177eff3 call 0x1802ec040 ; 
+0x18177eff8 mov rcx, qword ptr [rip + 0x19e60b1]
+0x18177efff mov rax, qword ptr [rcx + 0xb8]
+0x18177f006 mov rbx, qword ptr [rax + 0x20]
+0x18177f00a mov rdi, rbx
+0x18177f00d imul rdi, qword ptr [rsi]
+0x18177f011 imul rbx, qword ptr [rsi + 8]
+0x18177f016 sar rdi, 0x20
+0x18177f01a sar rbx, 0x20
+0x18177f01e test edi, edi
+0x18177f020 js 0x18177f0fe
+0x18177f026 cmp dword ptr [rcx + 0xe0], 0
+0x18177f02d jne 0x18177f03b
+0x18177f02f call 0x1802ec040 ; 
+0x18177f034 mov rcx, qword ptr [rip + 0x19e6075]
+0x18177f03b mov rax, qword ptr [rcx + 0xb8]
+0x18177f042 cmp edi, dword ptr [rax + 4]
+0x18177f045 jge 0x18177f0fe
+0x18177f04b test ebx, ebx
+0x18177f04d js 0x18177f0fe
+0x18177f053 cmp dword ptr [rcx + 0xe0], 0
+0x18177f05a jne 0x18177f068
+0x18177f05c call 0x1802ec040 ; 
+0x18177f061 mov rcx, qword ptr [rip + 0x19e6048]
+0x18177f068 mov rax, qword ptr [rcx + 0xb8]
+0x18177f06f cmp ebx, dword ptr [rax + 4]
+0x18177f072 jge 0x18177f0fe
+0x18177f078 cmp dword ptr [rcx + 0xe0], 0
+0x18177f07f jne 0x18177f086
+0x18177f081 call 0x1802ec040 ; 
+0x18177f086 mov ecx, edi
+0x18177f088 shl ecx, 8
+0x18177f08b or ecx, edi
+0x18177f08d and ecx, 0xff00ff
+0x18177f093 mov eax, ecx
+0x18177f095 shl eax, 4
+0x18177f098 or eax, ecx
+0x18177f09a mov ecx, ebx
+0x18177f09c and eax, 0xf0f0f0f
+0x18177f0a1 shl ecx, 8
+0x18177f0a4 or ecx, ebx
+0x18177f0a6 and ecx, 0xff00ff
+0x18177f0ac lea edx, [rax*4]
+0x18177f0b3 or edx, eax
+0x18177f0b5 mov eax, ecx
+0x18177f0b7 shl eax, 4
+0x18177f0ba or eax, ecx
+0x18177f0bc and eax, 0xf0f0f0f
+0x18177f0c1 lea ecx, [rax*4]
+0x18177f0c8 or ecx, eax
+0x18177f0ca and ecx, 0x33333333
+0x18177f0d0 lea eax, [rcx + rcx]
+0x18177f0d3 or eax, ecx
+0x18177f0d5 mov ecx, edx
+0x18177f0d7 and eax, 0xd5555555
+0x18177f0dc and ecx, 0x22222222
+0x18177f0e2 or eax, ecx
+0x18177f0e4 and edx, 0x11111111
+0x18177f0ea add eax, eax
+0x18177f0ec or eax, edx
+0x18177f0ee mov rbx, qword ptr [rsp + 0x30]
+0x18177f0f3 mov rsi, qword ptr [rsp + 0x38]
+0x18177f0f8 add rsp, 0x20
+0x18177f0fc pop rdi
+0x18177f0fd ret 
+0x18177f0fe mov rbx, qword ptr [rsp + 0x30]
+0x18177f103 mov eax, 0xffffffff
+0x18177f108 mov rsi, qword ptr [rsp + 0x38]
+0x18177f10d add rsp, 0x20
+0x18177f111 pop rdi
+0x18177f112 ret 
+0x18177f113 int3 
+0x18177f114 int3 
+0x18177f115 int3 
+0x18177f116 int3 
+0x18177f117 int3 
+0x18177f118 int3 
+0x18177f119 int3 
+0x18177f11a int3 
+0x18177f11b int3 
+0x18177f11c int3 
+0x18177f11d int3 
+0x18177f11e int3 
+0x18177f11f int3 

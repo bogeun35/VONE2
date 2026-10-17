@@ -1,0 +1,150 @@
+
+== QGameDefine..cctor 0x181780720
+0x181780720 sub rsp, 0x28
+0x181780724 cmp byte ptr [rip + 0x1bda514], 0
+0x18178072b jne 0x181780756
+0x18178072d lea rcx, [rip + 0x1a433e4]
+0x181780734 call 0x1802c5dc0 ; 
+0x181780739 lock or dword ptr [rsp], 0
+0x18178073e lea rcx, [rip + 0x19e490b]
+0x181780745 call 0x1802c5dc0 ; 
+0x18178074a lock or dword ptr [rsp], 0
+0x18178074f mov byte ptr [rip + 0x1bda4e9], 1
+0x181780756 mov rax, qword ptr [rip + 0x1a433bb]
+0x18178075d xor edx, edx
+0x18178075f mov rcx, qword ptr [rax + 0xb8]
+0x181780766 mov qword ptr [rcx], 0x300000
+0x18178076d mov rax, qword ptr [rip + 0x1a433a4]
+0x181780774 mov rcx, qword ptr [rax + 0xb8]
+0x18178077b mov qword ptr [rcx + 8], 0xfffffffff6a00000
+0x181780783 mov rax, qword ptr [rip + 0x1a4338e]
+0x18178078a mov rcx, qword ptr [rax + 0xb8]
+0x181780791 mov qword ptr [rcx + 0x10], 0x9600000
+0x181780799 mov rax, qword ptr [rip + 0x1a43378]
+0x1817807a0 mov rcx, qword ptr [rax + 0xb8]
+0x1817807a7 movabs rax, 0x151800000
+0x1817807b1 mov qword ptr [rcx + 0x18], rax
+0x1817807b5 mov rax, qword ptr [rip + 0x1a4335c]
+0x1817807bc mov rcx, qword ptr [rax + 0xb8]
+0x1817807c3 mov qword ptr [rcx + 0x20], 0x3555555
+0x1817807cb mov rax, qword ptr [rip + 0x1a43346]
+0x1817807d2 mov rcx, qword ptr [rax + 0xb8]
+0x1817807d9 mov qword ptr [rcx + 0x28], 0x1e00000
+0x1817807e1 mov rcx, qword ptr [rip + 0x19e4868]
+0x1817807e8 call 0x18163fcb0 ; 
+0x1817807ed mov rcx, qword ptr [rip + 0x1a43324]
+0x1817807f4 mov rdx, qword ptr [rcx + 0xb8]
+0x1817807fb mov qword ptr [rdx + 0x30], rax
+0x1817807ff add rsp, 0x28
+0x181780803 ret 
+0x181780804 int3 
+0x181780805 int3 
+0x181780806 int3 
+0x181780807 int3 
+0x181780808 int3 
+0x181780809 int3 
+0x18178080a int3 
+0x18178080b int3 
+0x18178080c int3 
+0x18178080d int3 
+0x18178080e int3 
+0x18178080f int3 
+
+== CameraComponent.ToPlayerCenter 0x1817dffd0
+0x1817dffd0 mov qword ptr [rsp + 8], rbx
+0x1817dffd5 push rdi
+0x1817dffd6 sub rsp, 0xd0
+0x1817dffdd cmp byte ptr [rip + 0x1b7b097], 0
+0x1817dffe4 mov rdi, rdx
+0x1817dffe7 mov rbx, rcx
+0x1817dffea jne 0x1817e0015
+0x1817dffec lea rcx, [rip + 0x198f8ed]
+0x1817dfff3 call 0x1802c5dc0 ; 
+0x1817dfff8 lock or dword ptr [rsp], 0
+0x1817dfffd lea rcx, [rip + 0x19f0f04]
+0x1817e0004 call 0x1802c5dc0 ; 
+0x1817e0009 lock or dword ptr [rsp], 0
+0x1817e000e mov byte ptr [rip + 0x1b7b066], 1
+0x1817e0015 test rdi, rdi
+0x1817e0018 je 0x1817e0188
+0x1817e001e xor edx, edx
+0x1817e0020 mov rcx, rdi
+0x1817e0023 call 0x18174ab40 ; Frame.GetStage
+0x1817e0028 mov rcx, qword ptr [rip + 0x19f0ed9]
+0x1817e002f mov rdi, rax
+0x1817e0032 cmp dword ptr [rcx + 0xe0], 0
+0x1817e0039 jne 0x1817e0040
+0x1817e003b call 0x1802ec040 ; 
+0x1817e0040 movups xmm1, xmmword ptr [rdi + 0x80]
+0x1817e0047 mov rcx, qword ptr [rip + 0x198f892]
+0x1817e004e xor r9d, r9d
+0x1817e0051 movups xmm0, xmmword ptr [rdi + 0x70]
+0x1817e0055 lea r8, [rsp + 0x30]
+0x1817e005a movups xmmword ptr [rsp + 0xa0], xmm1
+0x1817e0062 mov rax, qword ptr [rsp + 0xa0]
+0x1817e006a movups xmmword ptr [rsp + 0x70], xmm0
+0x1817e006f add rax, qword ptr [rsp + 0x78]
+0x1817e0074 shl rax, 0x10
+0x1817e0078 cqo 
+0x1817e007a and edx, 0x1ffff
+0x1817e0080 add rax, rdx
+0x1817e0083 mov rdx, qword ptr [rcx + 0xb8]
+0x1817e008a sar rax, 0x11
+0x1817e008e movups xmmword ptr [rsp + 0x60], xmm1
+0x1817e0093 mov qword ptr [rdx], rax
+0x1817e0096 mov rcx, qword ptr [rip + 0x198f843]
+0x1817e009d mov rax, qword ptr [rsp + 0x68]
+0x1817e00a2 movups xmmword ptr [rsp + 0x50], xmm0
+0x1817e00a7 add rax, qword ptr [rsp + 0x50]
+0x1817e00ac shl rax, 0x10
+0x1817e00b0 cqo 
+0x1817e00b2 and edx, 0x1ffff
+0x1817e00b8 add rax, rdx
+0x1817e00bb mov rdx, qword ptr [rcx + 0xb8]
+0x1817e00c2 sar rax, 0x11
+0x1817e00c6 mov qword ptr [rdx + 8], rax
+0x1817e00ca lea rdx, [rbx + 0x130]
+0x1817e00d1 mov rax, qword ptr [rip + 0x198f808]
+0x1817e00d8 mov rcx, qword ptr [rax + 0xb8]
+0x1817e00df mov qword ptr [rcx + 0x10], 0
+0x1817e00e7 mov rax, qword ptr [rip + 0x198f7f2]
+0x1817e00ee mov rcx, qword ptr [rax + 0xb8]
+0x1817e00f5 movups xmm0, xmmword ptr [rcx]
+0x1817e00f8 movsd xmm1, qword ptr [rcx + 0x10]
+0x1817e00fd lea rcx, [rsp + 0xb0]
+0x1817e0105 movaps xmmword ptr [rsp + 0x30], xmm0
+0x1817e010a movsd qword ptr [rsp + 0x40], xmm1
+0x1817e0110 call 0x181644610 ; 
+0x1817e0115 mov rcx, qword ptr [rbx + 0x88]
+0x1817e011c mov qword ptr [rsp + 0x28], rcx
+0x1817e0121 mov rcx, qword ptr [rbx + 0x18]
+0x1817e0125 movups xmm0, xmmword ptr [rax]
+0x1817e0128 movups xmmword ptr [rsp + 0x30], xmm0
+0x1817e012d mov rax, qword ptr [rsp + 0x30]
+0x1817e0132 mov qword ptr [rsp + 0x20], rax
+0x1817e0137 movaps xmm0, xmmword ptr [rsp + 0x20]
+0x1817e013c movdqa xmmword ptr [rsp + 0x20], xmm0
+0x1817e0142 cmp rax, rcx
+0x1817e0145 jl 0x1817e0155
+0x1817e0147 mov rcx, qword ptr [rbx + 0x10]
+0x1817e014b cmp rax, rcx
+0x1817e014e jg 0x1817e0155
+0x1817e0150 mov rcx, qword ptr [rsp + 0x20]
+0x1817e0155 mov rdx, qword ptr [rbx + 0x28]
+0x1817e0159 mov rax, qword ptr [rsp + 0x28]
+0x1817e015e cmp rax, rdx
+0x1817e0161 jl 0x1817e016c
+0x1817e0163 mov rdx, qword ptr [rbx + 0x20]
+0x1817e0167 cmp rax, rdx
+0x1817e016a jle 0x1817e016f
+0x1817e016c mov rax, rdx
+0x1817e016f mov qword ptr [rbx + 0x70], rcx
+0x1817e0173 mov qword ptr [rbx + 0x78], rax
+0x1817e0177 mov rbx, qword ptr [rsp + 0xe0]
+0x1817e017f add rsp, 0xd0
+0x1817e0186 pop rdi
+0x1817e0187 ret 
+0x1817e0188 call 0x18032a5e0 ; 
+0x1817e018d int3 
+0x1817e018e int3 
+0x1817e018f int3 

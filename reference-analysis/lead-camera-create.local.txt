@@ -1,0 +1,132 @@
+
+== CameraComponent.CreateEntity 0x1817df310
+0x1817df310 mov qword ptr [rsp + 8], rbx
+0x1817df315 mov qword ptr [rsp + 0x10], rsi
+0x1817df31a push rdi
+0x1817df31b sub rsp, 0x30
+0x1817df31f cmp byte ptr [rip + 0x1b7bd4f], 0
+0x1817df326 mov rdi, rcx
+0x1817df329 jne 0x1817df365
+0x1817df32b lea rcx, [rip + 0x19905b6]
+0x1817df332 call 0x1802c5dc0 ; 
+0x1817df337 lock or dword ptr [rsp], 0
+0x1817df33c lea rcx, [rip + 0x19e775d]
+0x1817df343 call 0x1802c5dc0 ; 
+0x1817df348 lock or dword ptr [rsp], 0
+0x1817df34d lea rcx, [rip + 0x19e5f8c]
+0x1817df354 call 0x1802c5dc0 ; 
+0x1817df359 lock or dword ptr [rsp], 0
+0x1817df35e mov byte ptr [rip + 0x1b7bd10], 1
+0x1817df365 cmp byte ptr [rip + 0x1b7b8df], 0
+0x1817df36c mov rsi, qword ptr [rip + 0x19e5f6d]
+0x1817df373 jne 0x1817df3c0
+0x1817df375 lea rcx, [rip + 0x19c3874]
+0x1817df37c call 0x1802c5dc0 ; 
+0x1817df381 lock or dword ptr [rsp], 0
+0x1817df386 lea rcx, [rip + 0x1985c2b]
+0x1817df38d call 0x1802c5dc0 ; 
+0x1817df392 lock or dword ptr [rsp], 0
+0x1817df397 lea rcx, [rip + 0x1985c22]
+0x1817df39e call 0x1802c5dc0 ; 
+0x1817df3a3 lock or dword ptr [rsp], 0
+0x1817df3a8 lea rcx, [rip + 0x1985c01]
+0x1817df3af call 0x1802c5dc0 ; 
+0x1817df3b4 lock or dword ptr [rsp], 0
+0x1817df3b9 mov byte ptr [rip + 0x1b7b88b], 1
+0x1817df3c0 mov rcx, qword ptr [rip + 0x19c3829]
+0x1817df3c7 cmp dword ptr [rcx + 0xe0], 0
+0x1817df3ce jne 0x1817df3d5
+0x1817df3d0 call 0x1802ec040 ; 
+0x1817df3d5 xor ecx, ecx
+0x1817df3d7 call 0x181786ef0 ; QUtility.get_StringBuilder
+0x1817df3dc mov rbx, rax
+0x1817df3df test rax, rax
+0x1817df3e2 je 0x1817df51e
+0x1817df3e8 mov rcx, qword ptr [rax + 0x10]
+0x1817df3ec test rcx, rcx
+0x1817df3ef je 0x1817df51e
+0x1817df3f5 mov rdx, qword ptr [rip + 0x1985bc4]
+0x1817df3fc xor r8d, r8d
+0x1817df3ff call 0x1812b5c90 ; 
+0x1817df404 mov rcx, qword ptr [rbx + 0x10]
+0x1817df408 test rcx, rcx
+0x1817df40b je 0x1817df51e
+0x1817df411 mov rdx, qword ptr [rip + 0x1985b98]
+0x1817df418 xor r8d, r8d
+0x1817df41b call 0x1812b5c90 ; 
+0x1817df420 mov rcx, qword ptr [rbx + 0x10]
+0x1817df424 test rcx, rcx
+0x1817df427 je 0x1817df51e
+0x1817df42d xor r8d, r8d
+0x1817df430 mov rdx, rsi
+0x1817df433 call 0x1812b5c90 ; 
+0x1817df438 mov rcx, qword ptr [rbx + 0x10]
+0x1817df43c test rcx, rcx
+0x1817df43f je 0x1817df51e
+0x1817df445 mov rdx, qword ptr [rip + 0x1985b6c]
+0x1817df44c xor r8d, r8d
+0x1817df44f call 0x1812b5c90 ; 
+0x1817df454 mov rcx, qword ptr [rbx + 0x10]
+0x1817df458 mov byte ptr [rbx + 0x18], 0
+0x1817df45c test rcx, rcx
+0x1817df45f je 0x1817df51e
+0x1817df465 mov rdx, qword ptr [rcx]
+0x1817df468 mov rax, qword ptr [rdx + 0x168]
+0x1817df46f mov rdx, qword ptr [rdx + 0x170]
+0x1817df476 call rax
+0x1817df478 mov rsi, rax
+0x1817df47b test rdi, rdi
+0x1817df47e je 0x1817df51e
+0x1817df484 mov rbx, qword ptr [rip + 0x19e7615]
+0x1817df48b cmp qword ptr [rbx + 0x38], 0
+0x1817df490 jne 0x1817df49a
+0x1817df492 mov rcx, rbx
+0x1817df495 call 0x180306dd0 ; 
+0x1817df49a mov rcx, qword ptr [rbx + 0x38]
+0x1817df49e mov r9d, 1
+0x1817df4a4 movzx r8d, r9b
+0x1817df4a8 mov rdx, qword ptr [rcx]
+0x1817df4ab mov rcx, rdi
+0x1817df4ae mov qword ptr [rsp + 0x20], rdx
+0x1817df4b3 mov rdx, rsi
+0x1817df4b6 call 0x180785ae0 ; 
+0x1817df4bb xor r8d, r8d
+0x1817df4be mov rdx, rax
+0x1817df4c1 mov rcx, rdi
+0x1817df4c4 call 0x1819786c0 ; 
+0x1817df4c9 mov rsi, qword ptr [rip + 0x1990418]
+0x1817df4d0 mov rbx, rax
+0x1817df4d3 cmp qword ptr [rsi + 0x38], 0
+0x1817df4d8 jne 0x1817df4e2
+0x1817df4da mov rcx, rsi
+0x1817df4dd call 0x180306dd0 ; 
+0x1817df4e2 mov rcx, qword ptr [rdi + 0xa0]
+0x1817df4e9 test rcx, rcx
+0x1817df4ec je 0x1817df51e
+0x1817df4ee mov rax, qword ptr [rsi + 0x38]
+0x1817df4f2 mov rdx, rbx
+0x1817df4f5 mov r8, qword ptr [rax]
+0x1817df4f8 call 0x1807871f0 ; 
+0x1817df4fd xor r8d, r8d
+0x1817df500 mov rdx, rdi
+0x1817df503 mov rcx, rax
+0x1817df506 mov qword ptr [rax + 8], rbx
+0x1817df50a mov rbx, qword ptr [rsp + 0x40]
+0x1817df50f mov rsi, qword ptr [rsp + 0x48]
+0x1817df514 add rsp, 0x30
+0x1817df518 pop rdi
+0x1817df519 jmp 0x1817df530 ; CameraComponent.Initialize
+0x1817df51e call 0x18032a5e0 ; 
+0x1817df523 int3 
+0x1817df524 int3 
+0x1817df525 int3 
+0x1817df526 int3 
+0x1817df527 int3 
+0x1817df528 int3 
+0x1817df529 int3 
+0x1817df52a int3 
+0x1817df52b int3 
+0x1817df52c int3 
+0x1817df52d int3 
+0x1817df52e int3 
+0x1817df52f int3 

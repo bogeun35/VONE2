@@ -1,0 +1,104 @@
+
+== ThunderComponent.OnUpdate 0x18172c8f0
+0x18172c8f0 mov qword ptr [rsp + 0x18], rsi
+0x18172c8f5 mov qword ptr [rsp + 0x20], rdi
+0x18172c8fa push r14
+0x18172c8fc sub rsp, 0x30
+0x18172c900 cmp byte ptr [rip + 0x1c2e1a0], 0
+0x18172c907 mov r14, r8
+0x18172c90a mov rsi, rdx
+0x18172c90d mov rdi, rcx
+0x18172c910 jne 0x18172c93b
+0x18172c912 lea rcx, [rip + 0x1aaaf9f]
+0x18172c919 call 0x1802c5dc0 ; 
+0x18172c91e lock or dword ptr [rsp], 0
+0x18172c923 lea rcx, [rip + 0x1a418e6]
+0x18172c92a call 0x1802c5dc0 ; 
+0x18172c92f lock or dword ptr [rsp], 0
+0x18172c934 mov byte ptr [rip + 0x1c2e16c], 1
+0x18172c93b mov rcx, qword ptr [rip + 0x1a418ce]
+0x18172c942 cmp dword ptr [rcx + 0xe0], 0
+0x18172c949 jne 0x18172c950
+0x18172c94b call 0x1802ec040 ; 
+0x18172c950 cmp byte ptr [rip + 0x1c2e14c], 0
+0x18172c957 jne 0x18172c971
+0x18172c959 lea rcx, [rip + 0x1aaaf60]
+0x18172c960 call 0x1802c5dc0 ; 
+0x18172c965 lock or dword ptr [rsp], 0
+0x18172c96a mov byte ptr [rip + 0x1c2e132], 1
+0x18172c971 test rsi, rsi
+0x18172c974 je 0x18172ca6b
+0x18172c97a mov rdx, qword ptr [rdi + 8]
+0x18172c97e mov rcx, rsi
+0x18172c981 mov qword ptr [rsp + 0x48], rbp
+0x18172c986 call 0x18000a150 ; 
+0x18172c98b mov rcx, qword ptr [rip + 0x1aaaf26]
+0x18172c992 mov rbp, rax
+0x18172c995 cmp dword ptr [rcx + 0xe0], 0
+0x18172c99c jne 0x18172c9a3
+0x18172c99e call 0x1802ec040 ; 
+0x18172c9a3 test byte ptr [rbp + 2], 8
+0x18172c9a7 ja 0x18172ca30
+0x18172c9ad mov rcx, qword ptr [rip + 0x1a4185c]
+0x18172c9b4 cmp dword ptr [rcx + 0xe0], 0
+0x18172c9bb jne 0x18172c9c2
+0x18172c9bd call 0x1802ec040 ; 
+0x18172c9c2 cmp byte ptr [rdi + 1], 4
+0x18172c9c6 jge 0x18172ca16
+0x18172c9c8 mov rax, qword ptr [rdi + 0x10]
+0x18172c9cc mov rdx, rax
+0x18172c9cf sar rdx, 0x3f
+0x18172c9d3 lea rcx, [rdx + rax]
+0x18172c9d7 xor rcx, rdx
+0x18172c9da cmp rcx, 4
+0x18172c9de jl 0x18172ca16
+0x18172c9e0 mov qword ptr [rsp + 0x40], rbx
+0x18172c9e5 mov rdx, qword ptr [rsi]
+0x18172c9e8 mov rcx, rsi
+0x18172c9eb mov rbx, qword ptr [rdi + 0x18]
+0x18172c9ef mov rax, qword ptr [rdx + 0x248]
+0x18172c9f6 mov rdx, qword ptr [rdx + 0x250]
+0x18172c9fd call rax
+0x18172c9ff lea rcx, [rax + rbx]
+0x18172ca03 mov rbx, qword ptr [rsp + 0x40]
+0x18172ca08 mov qword ptr [rdi + 0x18], rcx
+0x18172ca0c cmp rcx, qword ptr [rdi + 0x10]
+0x18172ca10 jl 0x18172ca16
+0x18172ca12 mov byte ptr [rdi + 1], 4
+0x18172ca16 mov r9, rbp
+0x18172ca19 mov qword ptr [rsp + 0x20], 0
+0x18172ca22 mov r8, r14
+0x18172ca25 mov rdx, rsi
+0x18172ca28 mov rcx, rdi
+0x18172ca2b call 0x18172cb00 ; ThunderComponent.updatePhase
+0x18172ca30 mov rcx, qword ptr [rip + 0x1aaae81]
+0x18172ca37 cmp dword ptr [rcx + 0xe0], 0
+0x18172ca3e jne 0x18172ca45
+0x18172ca40 call 0x1802ec040 ; 
+0x18172ca45 xor r9d, r9d
+0x18172ca48 mov r8, r14
+0x18172ca4b mov rdx, rsi
+0x18172ca4e mov rcx, rbp
+0x18172ca51 mov rbp, qword ptr [rsp + 0x48]
+0x18172ca56 mov rsi, qword ptr [rsp + 0x50]
+0x18172ca5b mov rdi, qword ptr [rsp + 0x58]
+0x18172ca60 add rsp, 0x30
+0x18172ca64 pop r14
+0x18172ca66 jmp 0x18172ac00 ; ThunderBaseComponent.OnUpdate
+0x18172ca6b call 0x18032a5e0 ; 
+0x18172ca70 int3 
+0x18172ca71 int3 
+0x18172ca72 int3 
+0x18172ca73 int3 
+0x18172ca74 int3 
+0x18172ca75 int3 
+0x18172ca76 int3 
+0x18172ca77 int3 
+0x18172ca78 int3 
+0x18172ca79 int3 
+0x18172ca7a int3 
+0x18172ca7b int3 
+0x18172ca7c int3 
+0x18172ca7d int3 
+0x18172ca7e int3 
+0x18172ca7f int3 

@@ -8,6 +8,12 @@
       "tests": 1384,
       "pass": 1384,
       "fail": 0
+    },
+    "documentationCorrection": {
+      "scope": "report/result/header/comments only; API and behavior unchanged",
+      "ownTests": 16,
+      "fullSuiteTests": 1630,
+      "fullSuiteFail": 0
     }
   },
   "api": {

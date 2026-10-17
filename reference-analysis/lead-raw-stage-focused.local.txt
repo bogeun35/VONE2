@@ -1,0 +1,23 @@
+✔ bridge control transaction decodes once and commits signed sorting bytes without persistent Actor mirror (11.3268ms)
+✔ canonical owner and position are sole logic authority while flat views are discarded (4.0811ms)
+✔ independent raw mutation, duplicate authorities, missing sidecars and late failure cannot commit (9.7423ms)
+✔ Stage prepare3 builds no-shuffle Player bindings before next-Update input and prepare5 camera/activation (27.2272ms)
+✔ unverified preparation does no factory/index/allocator writes (1.108ms)
+✔ preparation exception rolls back Stage config, scene limit, indices and creator allocation (1.5362ms)
+✔ phase6 preparation gate is mask4; inactive flag1 still reaches required active-stage callback (1.3367ms)
+✔ range uses actual Scene PlayerInfo list and registered actors, excluding unregistered materialized Actors (6.5757ms)
+✔ Stage suspended entry skips missing scene/factory/notice but still advances verified time (0.4415ms)
+✔ prepared actual3-2 Player fixture runs factory/input/update/collision/range/post/camera/sort/status/time (47.6202ms)
+✔ inactive Stage still executes native Actor/collision/Post, skips camera/status but runs Notice/time (17.8057ms)
+✔ Stage frame captures entry gates even when Update callback sets suspend, and later failure rolls back whole frame (23.7309ms)
+✔ prepare5 default Scene activation uses physical slot order and real pooled owner controls (11.2751ms)
+✔ Scene activation requires physical evidence and rolls back flags/owners on missing descriptor (11.3847ms)
+✔ prepared Player frame reads and writes raw Actor pool as sole committed authority (29.3338ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 472.3412

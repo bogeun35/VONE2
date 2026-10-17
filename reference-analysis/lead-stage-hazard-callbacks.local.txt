@@ -1,0 +1,247 @@
+
+== ThunderComponent.OnCollided 0x18172d030
+0x18172d030 mov qword ptr [rsp + 8], rbx
+0x18172d035 mov qword ptr [rsp + 0x10], rbp
+0x18172d03a mov qword ptr [rsp + 0x18], rsi
+0x18172d03f push rdi
+0x18172d040 sub rsp, 0x30
+0x18172d044 cmp byte ptr [rip + 0x1c2da5e], 0
+0x18172d04b mov rsi, r9
+0x18172d04e mov rbp, r8
+0x18172d051 mov rbx, rdx
+0x18172d054 mov rdi, rcx
+0x18172d057 jne 0x18172d082
+0x18172d059 lea rcx, [rip + 0x1aaa858]
+0x18172d060 call 0x1802c5dc0 ; 
+0x18172d065 lock or dword ptr [rsp], 0
+0x18172d06a lea rcx, [rip + 0x1a4119f]
+0x18172d071 call 0x1802c5dc0 ; 
+0x18172d076 lock or dword ptr [rsp], 0
+0x18172d07b mov byte ptr [rip + 0x1c2da27], 1
+0x18172d082 mov rcx, qword ptr [rip + 0x1a41187]
+0x18172d089 cmp dword ptr [rcx + 0xe0], 0
+0x18172d090 jne 0x18172d097
+0x18172d092 call 0x1802ec040 ; 
+0x18172d097 cmp byte ptr [rip + 0x1c2da05], 0
+0x18172d09e jne 0x18172d0b8
+0x18172d0a0 lea rcx, [rip + 0x1aaa819]
+0x18172d0a7 call 0x1802c5dc0 ; 
+0x18172d0ac lock or dword ptr [rsp], 0
+0x18172d0b1 mov byte ptr [rip + 0x1c2d9eb], 1
+0x18172d0b8 test rbx, rbx
+0x18172d0bb je 0x18172d10f
+0x18172d0bd mov rdx, qword ptr [rdi + 8]
+0x18172d0c1 mov rcx, rbx
+0x18172d0c4 call 0x18000a150 ; 
+0x18172d0c9 mov rcx, qword ptr [rip + 0x1aaa7e8]
+0x18172d0d0 mov rdi, rax
+0x18172d0d3 cmp dword ptr [rcx + 0xe0], 0
+0x18172d0da jne 0x18172d0e1
+0x18172d0dc call 0x1802ec040 ; 
+0x18172d0e1 mov r9, rsi
+0x18172d0e4 mov qword ptr [rsp + 0x68], 0
+0x18172d0ed mov r8, rbp
+0x18172d0f0 mov rdx, rbx
+0x18172d0f3 mov rcx, rdi
+0x18172d0f6 mov rbx, qword ptr [rsp + 0x40]
+0x18172d0fb mov rbp, qword ptr [rsp + 0x48]
+0x18172d100 mov rsi, qword ptr [rsp + 0x50]
+0x18172d105 add rsp, 0x30
+0x18172d109 pop rdi
+0x18172d10a jmp 0x18172b000 ; ThunderBaseComponent.OnCollided
+0x18172d10f call 0x18032a5e0 ; 
+0x18172d114 int3 
+0x18172d115 int3 
+0x18172d116 int3 
+0x18172d117 int3 
+0x18172d118 int3 
+0x18172d119 int3 
+0x18172d11a int3 
+0x18172d11b int3 
+0x18172d11c int3 
+0x18172d11d int3 
+0x18172d11e int3 
+0x18172d11f int3 
+
+== NormalThornComponent.OnCollided 0x181889710
+0x181889710 mov qword ptr [rsp + 8], rbx
+0x181889715 mov qword ptr [rsp + 0x10], rbp
+0x18188971a mov qword ptr [rsp + 0x18], rsi
+0x18188971f push rdi
+0x181889720 sub rsp, 0x30
+0x181889724 cmp byte ptr [rip + 0x1ad1f49], 0
+0x18188972b mov rsi, r9
+0x18188972e mov rbp, r8
+0x181889731 mov rbx, rdx
+0x181889734 mov rdi, rcx
+0x181889737 jne 0x181889751
+0x181889739 lea rcx, [rip + 0x192bef8]
+0x181889740 call 0x1802c5dc0 ; 
+0x181889745 lock or dword ptr [rsp], 0
+0x18188974a mov byte ptr [rip + 0x1ad1f23], 1
+0x181889751 cmp byte ptr [rip + 0x1ad1f16], 0
+0x181889758 jne 0x181889772
+0x18188975a lea rcx, [rip + 0x194e197]
+0x181889761 call 0x1802c5dc0 ; 
+0x181889766 lock or dword ptr [rsp], 0
+0x18188976b mov byte ptr [rip + 0x1ad1efc], 1
+0x181889772 test rbx, rbx
+0x181889775 je 0x1818897c8
+0x181889777 mov rdx, qword ptr [rdi]
+0x18188977a mov rcx, rbx
+0x18188977d call 0x18000a0b0 ; 
+0x181889782 mov rcx, qword ptr [rip + 0x192beaf]
+0x181889789 mov rdi, rax
+0x18188978c cmp dword ptr [rcx + 0xe0], 0
+0x181889793 jne 0x18188979a
+0x181889795 call 0x1802ec040 ; 
+0x18188979a mov r9, rsi
+0x18188979d mov qword ptr [rsp + 0x68], 0
+0x1818897a6 mov r8, rbp
+0x1818897a9 mov rdx, rbx
+0x1818897ac mov rcx, rdi
+0x1818897af mov rbx, qword ptr [rsp + 0x40]
+0x1818897b4 mov rbp, qword ptr [rsp + 0x48]
+0x1818897b9 mov rsi, qword ptr [rsp + 0x50]
+0x1818897be add rsp, 0x30
+0x1818897c2 pop rdi
+0x1818897c3 jmp 0x181722050 ; ThornComponent.OnCollided
+0x1818897c8 call 0x18032a5e0 ; 
+0x1818897cd int3 
+0x1818897ce int3 
+0x1818897cf int3 
+
+== NormalThornComponent.OnContacted 0x1818897d0
+0x1818897d0 mov qword ptr [rsp + 8], rbx
+0x1818897d5 mov qword ptr [rsp + 0x10], rbp
+0x1818897da mov qword ptr [rsp + 0x18], rsi
+0x1818897df push rdi
+0x1818897e0 sub rsp, 0x60
+0x1818897e4 cmp byte ptr [rip + 0x1ad1e8a], 0
+0x1818897eb mov rsi, r9
+0x1818897ee mov rbp, r8
+0x1818897f1 mov rbx, rdx
+0x1818897f4 mov rdi, rcx
+0x1818897f7 jne 0x181889811
+0x1818897f9 lea rcx, [rip + 0x192be38]
+0x181889800 call 0x1802c5dc0 ; 
+0x181889805 lock or dword ptr [rsp], 0
+0x18188980a mov byte ptr [rip + 0x1ad1e64], 1
+0x181889811 cmp byte ptr [rip + 0x1ad1e56], 0
+0x181889818 jne 0x181889832
+0x18188981a lea rcx, [rip + 0x194e0d7]
+0x181889821 call 0x1802c5dc0 ; 
+0x181889826 lock or dword ptr [rsp], 0
+0x18188982b mov byte ptr [rip + 0x1ad1e3c], 1
+0x181889832 test rbx, rbx
+0x181889835 je 0x1818898d0
+0x18188983b mov rdx, qword ptr [rdi]
+0x18188983e mov rcx, rbx
+0x181889841 call 0x18000a0b0 ; 
+0x181889846 mov rcx, qword ptr [rip + 0x192bdeb]
+0x18188984d mov rdi, rax
+0x181889850 cmp dword ptr [rcx + 0xe0], 0
+0x181889857 jne 0x18188985e
+0x181889859 call 0x1802ec040 ; 
+0x18188985e mov rax, qword ptr [rsp + 0xa0]
+0x181889866 mov r9, rsi
+0x181889869 mov rcx, qword ptr [rsp + 0x90]
+0x181889871 mov r8, rbp
+0x181889874 mov qword ptr [rsp + 0x40], 0
+0x18188987d mov rdx, rbx
+0x181889880 movups xmm0, xmmword ptr [rcx]
+0x181889883 mov rcx, qword ptr [rsp + 0xa8]
+0x18188988b mov qword ptr [rsp + 0x38], rcx
+0x181889890 mov rcx, rdi
+0x181889893 mov qword ptr [rsp + 0x30], rax
+0x181889898 movzx eax, byte ptr [rsp + 0x98]
+0x1818898a0 mov byte ptr [rsp + 0x28], al
+0x1818898a4 lea rax, [rsp + 0x50]
+0x1818898a9 mov qword ptr [rsp + 0x20], rax
+0x1818898ae movaps xmmword ptr [rsp + 0x50], xmm0
+0x1818898b3 call 0x181721b20 ; ThornComponent.OnContacted
+0x1818898b8 mov rbx, qword ptr [rsp + 0x70]
+0x1818898bd mov rbp, qword ptr [rsp + 0x78]
+0x1818898c2 mov rsi, qword ptr [rsp + 0x80]
+0x1818898ca add rsp, 0x60
+0x1818898ce pop rdi
+0x1818898cf ret 
+0x1818898d0 call 0x18032a5e0 ; 
+0x1818898d5 int3 
+0x1818898d6 int3 
+0x1818898d7 int3 
+0x1818898d8 int3 
+0x1818898d9 int3 
+0x1818898da int3 
+0x1818898db int3 
+0x1818898dc int3 
+0x1818898dd int3 
+0x1818898de int3 
+0x1818898df int3 
+
+== NormalThornComponent.OnPushedBack 0x181889620
+0x181889620 mov qword ptr [rsp + 8], rbx
+0x181889625 mov qword ptr [rsp + 0x10], rbp
+0x18188962a mov qword ptr [rsp + 0x18], rsi
+0x18188962f push rdi
+0x181889630 sub rsp, 0x50
+0x181889634 cmp byte ptr [rip + 0x1ad2038], 0
+0x18188963b mov rsi, r9
+0x18188963e mov rbp, r8
+0x181889641 mov rbx, rdx
+0x181889644 mov rdi, rcx
+0x181889647 jne 0x181889661
+0x181889649 lea rcx, [rip + 0x192bfe8]
+0x181889650 call 0x1802c5dc0 ; 
+0x181889655 lock or dword ptr [rsp], 0
+0x18188965a mov byte ptr [rip + 0x1ad2012], 1
+0x181889661 cmp byte ptr [rip + 0x1ad2006], 0
+0x181889668 jne 0x181889682
+0x18188966a lea rcx, [rip + 0x194e287]
+0x181889671 call 0x1802c5dc0 ; 
+0x181889676 lock or dword ptr [rsp], 0
+0x18188967b mov byte ptr [rip + 0x1ad1fec], 1
+0x181889682 test rbx, rbx
+0x181889685 je 0x1818896fd
+0x181889687 mov rdx, qword ptr [rdi]
+0x18188968a mov rcx, rbx
+0x18188968d call 0x18000a0b0 ; 
+0x181889692 mov rcx, qword ptr [rip + 0x192bf9f]
+0x181889699 mov rdi, rax
+0x18188969c cmp dword ptr [rcx + 0xe0], 0
+0x1818896a3 jne 0x1818896aa
+0x1818896a5 call 0x1802ec040 ; 
+0x1818896aa mov rcx, qword ptr [rsp + 0x80]
+0x1818896b2 lea rax, [rsp + 0x30]
+0x1818896b7 movups xmm1, xmmword ptr [rsi]
+0x1818896ba mov qword ptr [rsp + 0x28], 0
+0x1818896c3 lea r9, [rsp + 0x40]
+0x1818896c8 mov r8, rbp
+0x1818896cb mov qword ptr [rsp + 0x20], rax
+0x1818896d0 movups xmm0, xmmword ptr [rcx]
+0x1818896d3 mov rdx, rbx
+0x1818896d6 mov rcx, rdi
+0x1818896d9 movaps xmmword ptr [rsp + 0x40], xmm1
+0x1818896de movaps xmmword ptr [rsp + 0x30], xmm0
+0x1818896e3 call 0x181721c90 ; ThornComponent.OnPushedBack
+0x1818896e8 mov rbx, qword ptr [rsp + 0x60]
+0x1818896ed mov rbp, qword ptr [rsp + 0x68]
+0x1818896f2 mov rsi, qword ptr [rsp + 0x70]
+0x1818896f7 add rsp, 0x50
+0x1818896fb pop rdi
+0x1818896fc ret 
+0x1818896fd call 0x18032a5e0 ; 
+0x181889702 int3 
+0x181889703 int3 
+0x181889704 int3 
+0x181889705 int3 
+0x181889706 int3 
+0x181889707 int3 
+0x181889708 int3 
+0x181889709 int3 
+0x18188970a int3 
+0x18188970b int3 
+0x18188970c int3 
+0x18188970d int3 
+0x18188970e int3 
+0x18188970f int3 

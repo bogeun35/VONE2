@@ -1,0 +1,5917 @@
+{
+  "task": "DamageRectUpdate",
+  "status": "native component helper; exact hosts required",
+  "verification": {
+    "method": "read-only native PE disassembly and metadata; original game never executed",
+    "dllSha256": "dc554e2008b23c7d52f0c063886ea19acf20369ac698c77be7c67cfb516edd71",
+    "dedicatedTests": 36,
+    "fullSuite": {
+      "tests": 2199,
+      "pass": 2199,
+      "fail": 0,
+      "includesConcurrentHelpers": true
+    },
+    "fixtureMeaning": "Actual authored parameters and population selectors; cache/allocator/player lists are explicit synthetic native snapshots. No native overlap trace or full stage/frame claimed.",
+    "dedicatedPassed": 36,
+    "existingFilesModified": false,
+    "gitActions": false,
+    "originalGameExecuted": false
+  },
+  "nativeMethods": {
+    "OnUpdate": "0x18180e190",
+    "checkDamage": "0x18180e330",
+    "OnRecvEvent": "0x18180ebf0",
+    "sharedEntityListGetter": "0x1817871c0",
+    "FrameNotifyEvent": "0x18174a110",
+    "PlayerReceiver43": "0x1816c14a2"
+  },
+  "componentFields": {
+    "typeIndex": 4614,
+    "type": "DamageRectComponent",
+    "fields": [
+      {
+        "name": "m_EntityRef",
+        "offset": 16,
+        "typeIndex": 18961
+      },
+      {
+        "name": "m_Rect",
+        "offset": 24,
+        "typeIndex": 24984
+      },
+      {
+        "name": "RESOURCE_PATH",
+        "offset": 0,
+        "typeIndex": 13801
+      }
+    ]
+  },
+  "rawOffsets": {
+    "EntityRef": 0,
+    "Rect": 8,
+    "RectHeight": 8,
+    "RectWidth": 16,
+    "RectX": 24,
+    "RectY": 32
+  },
+  "nativeBlocks": [
+    {
+      "va": "0x18180e208",
+      "bytes": 223,
+      "sha256": "99cb75b4bf1f344c0c2909d9e4af95e921d284bac10aec62e30b2479eb154e10",
+      "instructions": [
+        {
+          "va": "0x18180e208",
+          "text": "test byte ptr [rsi + 0xc], 8"
+        },
+        {
+          "va": "0x18180e20c",
+          "text": "mov qword ptr [rsp + 0x40], rbx"
+        },
+        {
+          "va": "0x18180e211",
+          "text": "ja 0x18180e2e6"
+        },
+        {
+          "va": "0x18180e217",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18180e21e",
+          "text": "jne 0x18180e225"
+        },
+        {
+          "va": "0x18180e220",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18180e225",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18180e228",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x18180e22b",
+          "text": "mov rdx, rdi"
+        },
+        {
+          "va": "0x18180e22e",
+          "text": "mov rcx, rsi"
+        },
+        {
+          "va": "0x18180e231",
+          "text": "call 0x1816a0200"
+        },
+        {
+          "va": "0x18180e236",
+          "text": "mov rbx, rax"
+        },
+        {
+          "va": "0x18180e239",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x18180e23c",
+          "text": "je 0x18180e2e6"
+        },
+        {
+          "va": "0x18180e242",
+          "text": "test byte ptr [rax + 6], 1"
+        },
+        {
+          "va": "0x18180e246",
+          "text": "jbe 0x18180e2e6"
+        },
+        {
+          "va": "0x18180e24c",
+          "text": "test rdi, rdi"
+        },
+        {
+          "va": "0x18180e24f",
+          "text": "je 0x18180e321"
+        },
+        {
+          "va": "0x18180e255",
+          "text": "xor edx, edx"
+        },
+        {
+          "va": "0x18180e257",
+          "text": "mov qword ptr [rsp + 0x48], rbp"
+        },
+        {
+          "va": "0x18180e25c",
+          "text": "mov rcx, rdi"
+        },
+        {
+          "va": "0x18180e25f",
+          "text": "call 0x18174a4a0"
+        },
+        {
+          "va": "0x18180e264",
+          "text": "mov rcx, qword ptr [rip + 0x19b4525]"
+        },
+        {
+          "va": "0x18180e26b",
+          "text": "mov rbp, rax"
+        },
+        {
+          "va": "0x18180e26e",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18180e275",
+          "text": "jne 0x18180e27c"
+        },
+        {
+          "va": "0x18180e277",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18180e27c",
+          "text": "mov r9b, 3"
+        },
+        {
+          "va": "0x18180e27f",
+          "text": "mov qword ptr [rsp + 0x20], 0"
+        },
+        {
+          "va": "0x18180e288",
+          "text": "mov r8, rbx"
+        },
+        {
+          "va": "0x18180e28b",
+          "text": "mov rdx, rdi"
+        },
+        {
+          "va": "0x18180e28e",
+          "text": "mov rcx, rbp"
+        },
+        {
+          "va": "0x18180e291",
+          "text": "call 0x1817f73b0"
+        },
+        {
+          "va": "0x18180e296",
+          "text": "mov rbp, qword ptr [rsp + 0x48]"
+        },
+        {
+          "va": "0x18180e29b",
+          "text": "test al, al"
+        },
+        {
+          "va": "0x18180e29d",
+          "text": "jne 0x18180e2e6"
+        },
+        {
+          "va": "0x18180e29f",
+          "text": "mov rcx, qword ptr [rip + 0x196057a]"
+        },
+        {
+          "va": "0x18180e2a6",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18180e2ad",
+          "text": "jne 0x18180e2b4"
+        },
+        {
+          "va": "0x18180e2af",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18180e2b4",
+          "text": "mov rcx, qword ptr [rip + 0x19acdd5]"
+        },
+        {
+          "va": "0x18180e2bb",
+          "text": "mov rbx, qword ptr [r14]"
+        },
+        {
+          "va": "0x18180e2be",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18180e2c5",
+          "text": "jne 0x18180e2cc"
+        },
+        {
+          "va": "0x18180e2c7",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18180e2cc",
+          "text": "mov r9, rbx"
+        },
+        {
+          "va": "0x18180e2cf",
+          "text": "mov qword ptr [rsp + 0x20], 0"
+        },
+        {
+          "va": "0x18180e2d8",
+          "text": "mov r8b, 1"
+        },
+        {
+          "va": "0x18180e2db",
+          "text": "mov rdx, rdi"
+        },
+        {
+          "va": "0x18180e2de",
+          "text": "mov rcx, rsi"
+        },
+        {
+          "va": "0x18180e2e1",
+          "text": "call 0x18169ff50"
+        },
+        {
+          "va": "0x18180e2e6",
+          "text": ".byte 0x48"
+        }
+      ]
+    },
+    {
+      "va": "0x18180e2e6",
+      "bytes": 59,
+      "sha256": "dedc35eb806f62eefc183e6b0339dfa835895dc13fe635a25739c6358f4bce69",
+      "instructions": [
+        {
+          "va": "0x18180e2e6",
+          "text": "mov rcx, qword ptr [rip + 0x1960533]"
+        },
+        {
+          "va": "0x18180e2ed",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18180e2f4",
+          "text": "jne 0x18180e2fb"
+        },
+        {
+          "va": "0x18180e2f6",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18180e2fb",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18180e2fe",
+          "text": "mov r8, rsi"
+        },
+        {
+          "va": "0x18180e301",
+          "text": "mov rdx, rdi"
+        },
+        {
+          "va": "0x18180e304",
+          "text": "mov rcx, r14"
+        },
+        {
+          "va": "0x18180e307",
+          "text": "mov rbx, qword ptr [rsp + 0x40]"
+        },
+        {
+          "va": "0x18180e30c",
+          "text": "mov rsi, qword ptr [rsp + 0x50]"
+        },
+        {
+          "va": "0x18180e311",
+          "text": "mov rdi, qword ptr [rsp + 0x58]"
+        },
+        {
+          "va": "0x18180e316",
+          "text": "add rsp, 0x30"
+        },
+        {
+          "va": "0x18180e31a",
+          "text": "pop r14"
+        },
+        {
+          "va": "0x18180e31c",
+          "text": "jmp 0x18180e330"
+        }
+      ]
+    },
+    {
+      "va": "0x18180e48d",
+      "bytes": 100,
+      "sha256": "bd99be3376f59641a244b3a2484088fd7bee35142231bf1e473c28cc906681ad",
+      "instructions": [
+        {
+          "va": "0x18180e48d",
+          "text": "xor ecx, ecx"
+        },
+        {
+          "va": "0x18180e48f",
+          "text": "call 0x1817871c0"
+        },
+        {
+          "va": "0x18180e494",
+          "text": "mov r13, rax"
+        },
+        {
+          "va": "0x18180e497",
+          "text": "mov qword ptr [rsp + 0x38], rax"
+        },
+        {
+          "va": "0x18180e49c",
+          "text": "test r12, r12"
+        },
+        {
+          "va": "0x18180e49f",
+          "text": "je 0x18180eb20"
+        },
+        {
+          "va": "0x18180e4a5",
+          "text": "xor edx, edx"
+        },
+        {
+          "va": "0x18180e4a7",
+          "text": "mov rcx, r12"
+        },
+        {
+          "va": "0x18180e4aa",
+          "text": "call 0x18174a4a0"
+        },
+        {
+          "va": "0x18180e4af",
+          "text": "mov qword ptr [rsp + 0x30], rax"
+        },
+        {
+          "va": "0x18180e4b4",
+          "text": "mov rcx, qword ptr [rip + 0x19acbd5]"
+        },
+        {
+          "va": "0x18180e4bb",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18180e4c2",
+          "text": "jne 0x18180e4c9"
+        },
+        {
+          "va": "0x18180e4c4",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18180e4c9",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18180e4cc",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x18180e4cf",
+          "text": "mov rdx, r12"
+        },
+        {
+          "va": "0x18180e4d2",
+          "text": "mov rcx, rbx"
+        },
+        {
+          "va": "0x18180e4d5",
+          "text": "call 0x1816a0200"
+        },
+        {
+          "va": "0x18180e4da",
+          "text": "mov rbx, rax"
+        },
+        {
+          "va": "0x18180e4dd",
+          "text": "cmp byte ptr [rip + 0x1b4c107], 0"
+        },
+        {
+          "va": "0x18180e4e4",
+          "text": "jne 0x18180e4fe"
+        },
+        {
+          "va": "0x18180e4e6",
+          "text": "lea rcx, [rip + 0x19b41eb]"
+        },
+        {
+          "va": "0x18180e4ed",
+          "text": ".byte 0xe8"
+        },
+        {
+          "va": "0x18180e4ee",
+          "text": ".byte 0xce"
+        },
+        {
+          "va": "0x18180e4ef",
+          "text": "js 0x18180e49c"
+        }
+      ]
+    },
+    {
+      "va": "0x18180e51f",
+      "bytes": 71,
+      "sha256": "ecae64425ed093e222aa154fa0e303ee46f6585b48f3427dd6981bbf44b8e6c8",
+      "instructions": [
+        {
+          "va": "0x18180e51f",
+          "text": "mov r9, qword ptr [rip + 0x19b41b2]"
+        },
+        {
+          "va": "0x18180e526",
+          "text": "mov r8d, dword ptr [rbx + 8]"
+        },
+        {
+          "va": "0x18180e52a",
+          "text": "mov rdx, r12"
+        },
+        {
+          "va": "0x18180e52d",
+          "text": "lea rcx, [rsp + 0xe0]"
+        },
+        {
+          "va": "0x18180e535",
+          "text": "call 0x180005a50"
+        },
+        {
+          "va": "0x18180e53a",
+          "text": "movups xmm0, xmmword ptr [rax]"
+        },
+        {
+          "va": "0x18180e53d",
+          "text": "movups xmmword ptr [rsp + 0x98], xmm0"
+        },
+        {
+          "va": "0x18180e545",
+          "text": "xor ebx, ebx"
+        },
+        {
+          "va": "0x18180e547",
+          "text": "movq rsi, xmm0"
+        },
+        {
+          "va": "0x18180e54c",
+          "text": "test rsi, rsi"
+        },
+        {
+          "va": "0x18180e54f",
+          "text": "je 0x18180eb20"
+        },
+        {
+          "va": "0x18180e555",
+          "text": "mov r15d, dword ptr [rsi]"
+        },
+        {
+          "va": "0x18180e558",
+          "text": "test r15d, r15d"
+        },
+        {
+          "va": "0x18180e55b",
+          "text": "jle 0x18180e686"
+        },
+        {
+          "va": "0x18180e561",
+          "text": ".byte 0x4c"
+        },
+        {
+          "va": "0x18180e562",
+          "text": ".byte 0x8b"
+        },
+        {
+          "va": "0x18180e563",
+          "text": "mov ah, 0x24"
+        },
+        {
+          "va": "0x18180e565",
+          "text": ".byte 0xa0"
+        }
+      ]
+    },
+    {
+      "va": "0x18180e5b1",
+      "bytes": 213,
+      "sha256": "4104fd1f20fc8102eb1ab8f7ac2fe39e1e789d1ca534161fd94b33086e42bafe",
+      "instructions": [
+        {
+          "va": "0x18180e5b1",
+          "text": "cmp ebx, dword ptr [rsi]"
+        },
+        {
+          "va": "0x18180e5b3",
+          "text": "jae 0x18180eb2c"
+        },
+        {
+          "va": "0x18180e5b9",
+          "text": "movsd xmm0, qword ptr [rsi + 4]"
+        },
+        {
+          "va": "0x18180e5be",
+          "text": "movsd qword ptr [rsp + 0x78], xmm0"
+        },
+        {
+          "va": "0x18180e5c4",
+          "text": "mov r9d, dword ptr [rsi + 0xc]"
+        },
+        {
+          "va": "0x18180e5c8",
+          "text": "mov dword ptr [rsp + 0x80], r9d"
+        },
+        {
+          "va": "0x18180e5d0",
+          "text": "mov r8, r14"
+        },
+        {
+          "va": "0x18180e5d3",
+          "text": "call 0x1800255c0"
+        },
+        {
+          "va": "0x18180e5d8",
+          "text": "mov ecx, dword ptr [rsp + 0x7c]"
+        },
+        {
+          "va": "0x18180e5dc",
+          "text": "imul ecx, ebx"
+        },
+        {
+          "va": "0x18180e5df",
+          "text": "movsxd rdx, ecx"
+        },
+        {
+          "va": "0x18180e5e2",
+          "text": "add rdx, rax"
+        },
+        {
+          "va": "0x18180e5e5",
+          "text": "je 0x18180eb20"
+        },
+        {
+          "va": "0x18180e5eb",
+          "text": "mov edi, dword ptr [rdx + 4]"
+        },
+        {
+          "va": "0x18180e5ee",
+          "text": "mov rcx, qword ptr [rip + 0x19b419b]"
+        },
+        {
+          "va": "0x18180e5f5",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18180e5fc",
+          "text": "jne 0x18180e603"
+        },
+        {
+          "va": "0x18180e5fe",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18180e603",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18180e606",
+          "text": "mov r8d, edi"
+        },
+        {
+          "va": "0x18180e609",
+          "text": "mov rdx, r12"
+        },
+        {
+          "va": "0x18180e60c",
+          "text": "mov rcx, qword ptr [rsp + 0x30]"
+        },
+        {
+          "va": "0x18180e611",
+          "text": "call 0x1817f6940"
+        },
+        {
+          "va": "0x18180e616",
+          "text": "mov rdi, rax"
+        },
+        {
+          "va": "0x18180e619",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x18180e61c",
+          "text": "je 0x18180e67b"
+        },
+        {
+          "va": "0x18180e61e",
+          "text": "cmp byte ptr [rax + 1], 1"
+        },
+        {
+          "va": "0x18180e622",
+          "text": "jne 0x18180e67b"
+        },
+        {
+          "va": "0x18180e624",
+          "text": "mov rcx, qword ptr [rip + 0x19aca65]"
+        },
+        {
+          "va": "0x18180e62b",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18180e632",
+          "text": "jne 0x18180e639"
+        },
+        {
+          "va": "0x18180e634",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18180e639",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x18180e63c",
+          "text": "lea edx, [r8 + 0x2b]"
+        },
+        {
+          "va": "0x18180e640",
+          "text": "mov rcx, qword ptr [rsp + 0x160]"
+        },
+        {
+          "va": "0x18180e648",
+          "text": "call 0x18169dbd0"
+        },
+        {
+          "va": "0x18180e64d",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18180e650",
+          "text": "mov r8, rax"
+        },
+        {
+          "va": "0x18180e653",
+          "text": "mov rdx, qword ptr [rdi + 0x18]"
+        },
+        {
+          "va": "0x18180e657",
+          "text": "mov rcx, r12"
+        },
+        {
+          "va": "0x18180e65a",
+          "text": "call 0x18174a110"
+        },
+        {
+          "va": "0x18180e65f",
+          "text": "test r13, r13"
+        },
+        {
+          "va": "0x18180e662",
+          "text": "je 0x18180eb20"
+        },
+        {
+          "va": "0x18180e668",
+          "text": "mov r8, qword ptr [rip + 0x19b33c1]"
+        },
+        {
+          "va": "0x18180e66f",
+          "text": "mov rdx, qword ptr [rdi + 0x18]"
+        },
+        {
+          "va": "0x18180e673",
+          "text": "mov rcx, r13"
+        },
+        {
+          "va": "0x18180e676",
+          "text": "call 0x18000afd0"
+        },
+        {
+          "va": "0x18180e67b",
+          "text": "inc ebx"
+        },
+        {
+          "va": "0x18180e67d",
+          "text": "cmp ebx, r15d"
+        },
+        {
+          "va": "0x18180e680",
+          "text": "jl 0x18180e570"
+        }
+      ]
+    },
+    {
+      "va": "0x18180e731",
+      "bytes": 86,
+      "sha256": "d72cb5cd1b6081623304cccf342f43b9323ac1e1241b78de8000c1da56e896e5",
+      "instructions": [
+        {
+          "va": "0x18180e731",
+          "text": "mov r9, qword ptr [rip + 0x19b5538]"
+        },
+        {
+          "va": "0x18180e738",
+          "text": "mov r8d, dword ptr [rbx + 0x30]"
+        },
+        {
+          "va": "0x18180e73c",
+          "text": "mov rdx, r12"
+        },
+        {
+          "va": "0x18180e73f",
+          "text": "lea rcx, [rsp + 0xf0]"
+        },
+        {
+          "va": "0x18180e747",
+          "text": "call 0x180005a50"
+        },
+        {
+          "va": "0x18180e74c",
+          "text": "movups xmm0, xmmword ptr [rax]"
+        },
+        {
+          "va": "0x18180e74f",
+          "text": "movups xmmword ptr [rsp + 0xa8], xmm0"
+        },
+        {
+          "va": "0x18180e757",
+          "text": "xor r15d, r15d"
+        },
+        {
+          "va": "0x18180e75a",
+          "text": "mov dword ptr [rsp + 0x24], r15d"
+        },
+        {
+          "va": "0x18180e75f",
+          "text": "movq rax, xmm0"
+        },
+        {
+          "va": "0x18180e764",
+          "text": "mov qword ptr [rsp + 0xa8], rax"
+        },
+        {
+          "va": "0x18180e76c",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x18180e76f",
+          "text": "je 0x18180eb20"
+        },
+        {
+          "va": "0x18180e775",
+          "text": "mov eax, dword ptr [rax]"
+        },
+        {
+          "va": "0x18180e777",
+          "text": "mov dword ptr [rsp + 0x28], eax"
+        },
+        {
+          "va": "0x18180e77b",
+          "text": "lea rbx, [rip + 0x1b9d49e]"
+        },
+        {
+          "va": "0x18180e782",
+          "text": "cmp r15d, dword ptr [rsp + 0x28]"
+        }
+      ]
+    },
+    {
+      "va": "0x18180e7d7",
+      "bytes": 62,
+      "sha256": "b6a85261d1f2f05de86b9ecae8e28fb27b0b019c37e11765e517295911fcd7b7",
+      "instructions": [
+        {
+          "va": "0x18180e7d7",
+          "text": "cmp r15d, dword ptr [rax]"
+        },
+        {
+          "va": "0x18180e7da",
+          "text": "jae 0x18180eb8c"
+        },
+        {
+          "va": "0x18180e7e0",
+          "text": "movsd xmm0, qword ptr [rax + 4]"
+        },
+        {
+          "va": "0x18180e7e5",
+          "text": "movsd qword ptr [rsp + 0x88], xmm0"
+        },
+        {
+          "va": "0x18180e7ee",
+          "text": "mov r9d, dword ptr [rax + 0xc]"
+        },
+        {
+          "va": "0x18180e7f2",
+          "text": "mov dword ptr [rsp + 0x90], r9d"
+        },
+        {
+          "va": "0x18180e7fa",
+          "text": "call 0x1800255c0"
+        },
+        {
+          "va": "0x18180e7ff",
+          "text": "mov ecx, dword ptr [rsp + 0x8c]"
+        },
+        {
+          "va": "0x18180e806",
+          "text": "imul ecx, r15d"
+        },
+        {
+          "va": "0x18180e80a",
+          "text": "movsxd rsi, ecx"
+        },
+        {
+          "va": "0x18180e80d",
+          "text": "add rsi, rax"
+        },
+        {
+          "va": "0x18180e810",
+          "text": "mov qword ptr [rsp + 0x70], rsi"
+        }
+      ]
+    },
+    {
+      "va": "0x18180e871",
+      "bytes": 116,
+      "sha256": "759f4e9605158f3d42f38e788881088d1c3257ab3a54642c9a4ebf043f4c12bd",
+      "instructions": [
+        {
+          "va": "0x18180e871",
+          "text": "mov dword ptr [rsp + 0x48], 0"
+        },
+        {
+          "va": "0x18180e879",
+          "text": "mov eax, dword ptr [r13 + 0x1c]"
+        },
+        {
+          "va": "0x18180e87d",
+          "text": "mov dword ptr [rsp + 0x4c], eax"
+        },
+        {
+          "va": "0x18180e881",
+          "text": "xor eax, eax"
+        },
+        {
+          "va": "0x18180e883",
+          "text": "mov qword ptr [rsp + 0x50], rax"
+        },
+        {
+          "va": "0x18180e888",
+          "text": "movups xmm0, xmmword ptr [rsp + 0x40]"
+        },
+        {
+          "va": "0x18180e88d",
+          "text": "movups xmmword ptr [rsp + 0x58], xmm0"
+        },
+        {
+          "va": "0x18180e892",
+          "text": "movsd xmm1, qword ptr [rsp + 0x50]"
+        },
+        {
+          "va": "0x18180e898",
+          "text": "movsd qword ptr [rsp + 0x68], xmm1"
+        },
+        {
+          "va": "0x18180e89e",
+          "text": "mov qword ptr [rsp + 0xb8], rax"
+        },
+        {
+          "va": "0x18180e8a6",
+          "text": "lea rax, [rsp + 0x58]"
+        },
+        {
+          "va": "0x18180e8ab",
+          "text": "mov qword ptr [rsp + 0xc0], rax"
+        },
+        {
+          "va": "0x18180e8b3",
+          "text": "mov rdx, qword ptr [rip + 0x1969c1e]"
+        },
+        {
+          "va": "0x18180e8ba",
+          "text": "lea rcx, [rsp + 0x58]"
+        },
+        {
+          "va": "0x18180e8bf",
+          "text": "call 0x1800a34a0"
+        },
+        {
+          "va": "0x18180e8c4",
+          "text": "test al, al"
+        },
+        {
+          "va": "0x18180e8c6",
+          "text": "je 0x18180e8e5"
+        },
+        {
+          "va": "0x18180e8c8",
+          "text": "test rsi, rsi"
+        },
+        {
+          "va": "0x18180e8cb",
+          "text": "je 0x18180eb26"
+        },
+        {
+          "va": "0x18180e8d1",
+          "text": "mov rax, qword ptr [rsi]"
+        },
+        {
+          "va": "0x18180e8d4",
+          "text": "cmp qword ptr [rsp + 0x68], rax"
+        },
+        {
+          "va": "0x18180e8d9",
+          "text": "jne 0x18180e8b3"
+        },
+        {
+          "va": "0x18180e8db",
+          "text": "mov byte ptr [rsp + 0x20], 1"
+        },
+        {
+          "va": "0x18180e8e0",
+          "text": "jmp 0x18180eaef"
+        }
+      ]
+    },
+    {
+      "va": "0x18180e923",
+      "bytes": 136,
+      "sha256": "172b8a59a3e48bed718e6d452433e642c579c3165c856200835c85f1d1ff9e02",
+      "instructions": [
+        {
+          "va": "0x18180e923",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x18180e926",
+          "text": "mov rdx, qword ptr [rsi]"
+        },
+        {
+          "va": "0x18180e929",
+          "text": "mov rcx, r12"
+        },
+        {
+          "va": "0x18180e92c",
+          "text": "call 0x181749520"
+        },
+        {
+          "va": "0x18180e931",
+          "text": "mov rbx, rax"
+        },
+        {
+          "va": "0x18180e934",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x18180e937",
+          "text": "je 0x18180eae8"
+        },
+        {
+          "va": "0x18180e93d",
+          "text": "mov rcx, qword ptr [rip + 0x19c25cc]"
+        },
+        {
+          "va": "0x18180e944",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18180e94b",
+          "text": "jne 0x18180e952"
+        },
+        {
+          "va": "0x18180e94d",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18180e952",
+          "text": "test dword ptr [rbx + 0x20], 0x200"
+        },
+        {
+          "va": "0x18180e959",
+          "text": "ja 0x18180eae8"
+        },
+        {
+          "va": "0x18180e95f",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x18180e962",
+          "text": "mov rdx, qword ptr [rsi]"
+        },
+        {
+          "va": "0x18180e965",
+          "text": "mov rcx, r12"
+        },
+        {
+          "va": "0x18180e968",
+          "text": "call 0x1817480b0"
+        },
+        {
+          "va": "0x18180e96d",
+          "text": "mov rbx, rax"
+        },
+        {
+          "va": "0x18180e970",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x18180e973",
+          "text": "je 0x18180eae8"
+        },
+        {
+          "va": "0x18180e979",
+          "text": "mov rcx, qword ptr [rip + 0x19ac710]"
+        },
+        {
+          "va": "0x18180e980",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18180e987",
+          "text": "jne 0x18180e98e"
+        },
+        {
+          "va": "0x18180e989",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18180e98e",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18180e991",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x18180e994",
+          "text": "mov rdx, r12"
+        },
+        {
+          "va": "0x18180e997",
+          "text": "mov rcx, rbx"
+        },
+        {
+          "va": "0x18180e99a",
+          "text": "call 0x1816a0200"
+        },
+        {
+          "va": "0x18180e99f",
+          "text": "mov rbx, rax"
+        },
+        {
+          "va": "0x18180e9a2",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x18180e9a5",
+          "text": "je 0x18180eae8"
+        }
+      ]
+    },
+    {
+      "va": "0x18180e9ed",
+      "bytes": 60,
+      "sha256": "5567565dbe6c0d62ba2644ede72d4feb140bba3661201c26ac93797d9546de63",
+      "instructions": [
+        {
+          "va": "0x18180e9ed",
+          "text": "mov r9, qword ptr [rip + 0x19b3ce4]"
+        },
+        {
+          "va": "0x18180e9f4",
+          "text": "mov r8d, dword ptr [rbx + 8]"
+        },
+        {
+          "va": "0x18180e9f8",
+          "text": "mov rdx, r12"
+        },
+        {
+          "va": "0x18180e9fb",
+          "text": "lea rcx, [rsp + 0x100]"
+        },
+        {
+          "va": "0x18180ea03",
+          "text": "call 0x180005a50"
+        },
+        {
+          "va": "0x18180ea08",
+          "text": "movups xmm0, xmmword ptr [rax]"
+        },
+        {
+          "va": "0x18180ea0b",
+          "text": "movups xmmword ptr [rsp + 0xd0], xmm0"
+        },
+        {
+          "va": "0x18180ea13",
+          "text": "xor edi, edi"
+        },
+        {
+          "va": "0x18180ea15",
+          "text": "movq rax, xmm0"
+        },
+        {
+          "va": "0x18180ea1a",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x18180ea1d",
+          "text": "je 0x18180eb20"
+        },
+        {
+          "va": "0x18180ea23",
+          "text": "mov r14d, dword ptr [rax]"
+        },
+        {
+          "va": "0x18180ea26",
+          "text": "test r14d, r14d"
+        }
+      ]
+    },
+    {
+      "va": "0x18180ea30",
+      "bytes": 184,
+      "sha256": "72bd720c06bc452f9bdd7c5ce6f9598c91807d04ef4942981de1b8d69c007de1",
+      "instructions": [
+        {
+          "va": "0x18180ea30",
+          "text": "mov r8, qword ptr [rip + 0x19b3ce9]"
+        },
+        {
+          "va": "0x18180ea37",
+          "text": "mov edx, edi"
+        },
+        {
+          "va": "0x18180ea39",
+          "text": "lea rcx, [rsp + 0xd0]"
+        },
+        {
+          "va": "0x18180ea41",
+          "text": "call 0x180035970"
+        },
+        {
+          "va": "0x18180ea46",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x18180ea49",
+          "text": "je 0x18180eb20"
+        },
+        {
+          "va": "0x18180ea4f",
+          "text": "mov ebx, dword ptr [rax + 4]"
+        },
+        {
+          "va": "0x18180ea52",
+          "text": "mov rcx, qword ptr [rip + 0x19b3d37]"
+        },
+        {
+          "va": "0x18180ea59",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18180ea60",
+          "text": "jne 0x18180ea67"
+        },
+        {
+          "va": "0x18180ea62",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18180ea67",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18180ea6a",
+          "text": "mov r8d, ebx"
+        },
+        {
+          "va": "0x18180ea6d",
+          "text": "mov rdx, r12"
+        },
+        {
+          "va": "0x18180ea70",
+          "text": "mov rcx, qword ptr [rsp + 0x30]"
+        },
+        {
+          "va": "0x18180ea75",
+          "text": "call 0x1817f6940"
+        },
+        {
+          "va": "0x18180ea7a",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x18180ea7d",
+          "text": "je 0x18180eaa5"
+        },
+        {
+          "va": "0x18180ea7f",
+          "text": "mov rbx, qword ptr [rax + 0x18]"
+        },
+        {
+          "va": "0x18180ea83",
+          "text": "mov rcx, qword ptr [rip + 0x195fd96]"
+        },
+        {
+          "va": "0x18180ea8a",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18180ea91",
+          "text": "jne 0x18180ea98"
+        },
+        {
+          "va": "0x18180ea93",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18180ea98",
+          "text": "mov rax, qword ptr [rsp + 0x150]"
+        },
+        {
+          "va": "0x18180eaa0",
+          "text": "cmp rbx, qword ptr [rax]"
+        },
+        {
+          "va": "0x18180eaa3",
+          "text": "je 0x18180eaae"
+        },
+        {
+          "va": "0x18180eaa5",
+          "text": "inc edi"
+        },
+        {
+          "va": "0x18180eaa7",
+          "text": "cmp edi, r14d"
+        },
+        {
+          "va": "0x18180eaaa",
+          "text": "jge 0x18180eae8"
+        },
+        {
+          "va": "0x18180eaac",
+          "text": "jmp 0x18180ea30"
+        },
+        {
+          "va": "0x18180eaae",
+          "text": "mov rcx, qword ptr [rip + 0x19ac5db]"
+        },
+        {
+          "va": "0x18180eab5",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18180eabc",
+          "text": "jne 0x18180eac3"
+        },
+        {
+          "va": "0x18180eabe",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18180eac3",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x18180eac6",
+          "text": "lea edx, [r8 + 0x2b]"
+        },
+        {
+          "va": "0x18180eaca",
+          "text": "mov rcx, qword ptr [rsp + 0x160]"
+        },
+        {
+          "va": "0x18180ead2",
+          "text": "call 0x18169dbd0"
+        },
+        {
+          "va": "0x18180ead7",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18180eada",
+          "text": "mov r8, rax"
+        },
+        {
+          "va": "0x18180eadd",
+          "text": "mov rdx, qword ptr [rsi]"
+        },
+        {
+          "va": "0x18180eae0",
+          "text": "mov rcx, r12"
+        },
+        {
+          "va": "0x18180eae3",
+          "text": "call 0x18174a110"
+        }
+      ]
+    },
+    {
+      "va": "0x18180eafc",
+      "bytes": 36,
+      "sha256": "5da3bd095a89d1aa981f32ef27a1b94c1511de94e686a0d82379b02840ea3fe9",
+      "instructions": [
+        {
+          "va": "0x18180eafc",
+          "text": "test r13, r13"
+        },
+        {
+          "va": "0x18180eaff",
+          "text": "je 0x18180eb20"
+        },
+        {
+          "va": "0x18180eb01",
+          "text": "inc dword ptr [r13 + 0x1c]"
+        },
+        {
+          "va": "0x18180eb05",
+          "text": "mov dword ptr [r13 + 0x18], 0"
+        },
+        {
+          "va": "0x18180eb0d",
+          "text": "add rsp, 0x110"
+        },
+        {
+          "va": "0x18180eb14",
+          "text": "pop r15"
+        },
+        {
+          "va": "0x18180eb16",
+          "text": "pop r14"
+        },
+        {
+          "va": "0x18180eb18",
+          "text": "pop r13"
+        },
+        {
+          "va": "0x18180eb1a",
+          "text": "pop r12"
+        },
+        {
+          "va": "0x18180eb1c",
+          "text": "pop rdi"
+        },
+        {
+          "va": "0x18180eb1d",
+          "text": "pop rsi"
+        },
+        {
+          "va": "0x18180eb1e",
+          "text": "pop rbx"
+        },
+        {
+          "va": "0x18180eb1f",
+          "text": "ret "
+        }
+      ]
+    },
+    {
+      "va": "0x181787215",
+      "bytes": 50,
+      "sha256": "babef697299525ba5594b4785ee443f2b38fb7efd8d761e64fa7ab3065b768e7",
+      "instructions": [
+        {
+          "va": "0x181787215",
+          "text": "mov rax, qword ptr [rax + 0xb8]"
+        },
+        {
+          "va": "0x18178721c",
+          "text": "mov rcx, qword ptr [rax + 0x18]"
+        },
+        {
+          "va": "0x181787220",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x181787223",
+          "text": "je 0x181787246"
+        },
+        {
+          "va": "0x181787225",
+          "text": "inc dword ptr [rcx + 0x1c]"
+        },
+        {
+          "va": "0x181787228",
+          "text": "mov dword ptr [rcx + 0x18], 0"
+        },
+        {
+          "va": "0x18178722f",
+          "text": "mov rax, qword ptr [rip + 0x1a1b9ba]"
+        },
+        {
+          "va": "0x181787236",
+          "text": "mov rax, qword ptr [rax + 0xb8]"
+        },
+        {
+          "va": "0x18178723d",
+          "text": "mov rax, qword ptr [rax + 0x18]"
+        },
+        {
+          "va": "0x181787241",
+          "text": "add rsp, 0x28"
+        },
+        {
+          "va": "0x181787245",
+          "text": "ret "
+        },
+        {
+          "va": "0x181787246",
+          "text": ".byte 0xe8"
+        }
+      ]
+    },
+    {
+      "va": "0x18000afd0",
+      "bytes": 72,
+      "sha256": "7494616a27c8805ca7886e7083d6a7b4109e342e71b778745f63e357c49023b6",
+      "instructions": [
+        {
+          "va": "0x18000afd0",
+          "text": "sub rsp, 0x28"
+        },
+        {
+          "va": "0x18000afd4",
+          "text": "inc dword ptr [rcx + 0x1c]"
+        },
+        {
+          "va": "0x18000afd7",
+          "text": "mov r10, qword ptr [rcx + 0x10]"
+        },
+        {
+          "va": "0x18000afdb",
+          "text": "movsxd r9, dword ptr [rcx + 0x18]"
+        },
+        {
+          "va": "0x18000afdf",
+          "text": "test r10, r10"
+        },
+        {
+          "va": "0x18000afe2",
+          "text": "je 0x18000b019"
+        },
+        {
+          "va": "0x18000afe4",
+          "text": "cmp r9d, dword ptr [r10 + 0x18]"
+        },
+        {
+          "va": "0x18000afe8",
+          "text": "jb 0x18000b002"
+        },
+        {
+          "va": "0x18000afea",
+          "text": "mov rax, qword ptr [r8 + 0x20]"
+        },
+        {
+          "va": "0x18000afee",
+          "text": "mov r8, qword ptr [rax + 0xc0]"
+        },
+        {
+          "va": "0x18000aff5",
+          "text": "mov r8, qword ptr [r8 + 0x70]"
+        },
+        {
+          "va": "0x18000aff9",
+          "text": "add rsp, 0x28"
+        },
+        {
+          "va": "0x18000affd",
+          "text": "jmp 0x1810a5f00"
+        },
+        {
+          "va": "0x18000b002",
+          "text": "lea eax, [r9 + 1]"
+        },
+        {
+          "va": "0x18000b006",
+          "text": "mov dword ptr [rcx + 0x18], eax"
+        },
+        {
+          "va": "0x18000b009",
+          "text": "cmp r9d, dword ptr [r10 + 0x18]"
+        },
+        {
+          "va": "0x18000b00d",
+          "text": "jae 0x18000b01f"
+        },
+        {
+          "va": "0x18000b00f",
+          "text": "mov qword ptr [r10 + r9*8 + 0x20], rdx"
+        },
+        {
+          "va": "0x18000b014",
+          "text": "add rsp, 0x28"
+        }
+      ]
+    },
+    {
+      "va": "0x1800a34a0",
+      "bytes": 147,
+      "sha256": "38e400e4691817e80311d024ec2ba3e4e6685faeeb017ad5d0a7c36799ef9837",
+      "instructions": [
+        {
+          "va": "0x1800a34a0",
+          "text": "push rbx"
+        },
+        {
+          "va": "0x1800a34a2",
+          "text": "sub rsp, 0x20"
+        },
+        {
+          "va": "0x1800a34a6",
+          "text": "mov rbx, rcx"
+        },
+        {
+          "va": "0x1800a34a9",
+          "text": "mov rcx, qword ptr [rcx]"
+        },
+        {
+          "va": "0x1800a34ac",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x1800a34af",
+          "text": "je 0x1800a3520"
+        },
+        {
+          "va": "0x1800a34b1",
+          "text": "mov eax, dword ptr [rcx + 0x1c]"
+        },
+        {
+          "va": "0x1800a34b4",
+          "text": "cmp dword ptr [rbx + 0xc], eax"
+        },
+        {
+          "va": "0x1800a34b7",
+          "text": "jne 0x1800a34ea"
+        },
+        {
+          "va": "0x1800a34b9",
+          "text": "movsxd r8, dword ptr [rbx + 8]"
+        },
+        {
+          "va": "0x1800a34bd",
+          "text": "cmp r8d, dword ptr [rcx + 0x18]"
+        },
+        {
+          "va": "0x1800a34c1",
+          "text": "jae 0x1800a34ea"
+        },
+        {
+          "va": "0x1800a34c3",
+          "text": "mov rcx, qword ptr [rcx + 0x10]"
+        },
+        {
+          "va": "0x1800a34c7",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x1800a34ca",
+          "text": "je 0x1800a3520"
+        },
+        {
+          "va": "0x1800a34cc",
+          "text": "cmp r8d, dword ptr [rcx + 0x18]"
+        },
+        {
+          "va": "0x1800a34d0",
+          "text": "jae 0x1800a3526"
+        },
+        {
+          "va": "0x1800a34d2",
+          "text": "mov rcx, qword ptr [rcx + r8*8 + 0x20]"
+        },
+        {
+          "va": "0x1800a34d7",
+          "text": "lea eax, [r8 + 1]"
+        },
+        {
+          "va": "0x1800a34db",
+          "text": "mov dword ptr [rbx + 8], eax"
+        },
+        {
+          "va": "0x1800a34de",
+          "text": "mov al, 1"
+        },
+        {
+          "va": "0x1800a34e0",
+          "text": "mov qword ptr [rbx + 0x10], rcx"
+        },
+        {
+          "va": "0x1800a34e4",
+          "text": "add rsp, 0x20"
+        },
+        {
+          "va": "0x1800a34e8",
+          "text": "pop rbx"
+        },
+        {
+          "va": "0x1800a34e9",
+          "text": "ret "
+        },
+        {
+          "va": "0x1800a34ea",
+          "text": "mov rcx, qword ptr [rdx + 0x20]"
+        },
+        {
+          "va": "0x1800a34ee",
+          "text": "test byte ptr [rcx + 0x135], 1"
+        },
+        {
+          "va": "0x1800a34f5",
+          "text": "jne 0x1800a34fc"
+        },
+        {
+          "va": "0x1800a34f7",
+          "text": "call 0x180306d50"
+        },
+        {
+          "va": "0x1800a34fc",
+          "text": "mov rcx, qword ptr [rbx]"
+        },
+        {
+          "va": "0x1800a34ff",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x1800a3502",
+          "text": "je 0x1800a3520"
+        },
+        {
+          "va": "0x1800a3504",
+          "text": "mov eax, dword ptr [rcx + 0x1c]"
+        },
+        {
+          "va": "0x1800a3507",
+          "text": "cmp dword ptr [rbx + 0xc], eax"
+        },
+        {
+          "va": "0x1800a350a",
+          "text": "jne 0x1800a352c"
+        },
+        {
+          "va": "0x1800a350c",
+          "text": "mov eax, dword ptr [rcx + 0x18]"
+        },
+        {
+          "va": "0x1800a350f",
+          "text": "inc eax"
+        },
+        {
+          "va": "0x1800a3511",
+          "text": "mov dword ptr [rbx + 8], eax"
+        },
+        {
+          "va": "0x1800a3514",
+          "text": "xor eax, eax"
+        },
+        {
+          "va": "0x1800a3516",
+          "text": "mov qword ptr [rbx + 0x10], rax"
+        },
+        {
+          "va": "0x1800a351a",
+          "text": "add rsp, 0x20"
+        },
+        {
+          "va": "0x1800a351e",
+          "text": "pop rbx"
+        },
+        {
+          "va": "0x1800a351f",
+          "text": "ret "
+        },
+        {
+          "va": "0x1800a3520",
+          "text": "call 0x18032a5e0"
+        },
+        {
+          "va": "0x1800a3525",
+          "text": "int3 "
+        },
+        {
+          "va": "0x1800a3526",
+          "text": "call 0x18032a5f0"
+        },
+        {
+          "va": "0x1800a352b",
+          "text": "int3 "
+        },
+        {
+          "va": "0x1800a352c",
+          "text": "xor ecx, ecx"
+        },
+        {
+          "va": "0x1800a352e",
+          "text": "call 0x1814b1be0"
+        }
+      ]
+    },
+    {
+      "va": "0x18180ec31",
+      "bytes": 77,
+      "sha256": "201264e323bc3a2ccac6533582a02dfa8402f380ca13db41be392daca001c2de",
+      "instructions": [
+        {
+          "va": "0x18180ec31",
+          "text": "test rbx, rbx"
+        },
+        {
+          "va": "0x18180ec34",
+          "text": "je 0x18180ece0"
+        },
+        {
+          "va": "0x18180ec3a",
+          "text": "cmp dword ptr [rbx + 0x10], 4"
+        },
+        {
+          "va": "0x18180ec3e",
+          "text": "je 0x18180ec7e"
+        },
+        {
+          "va": "0x18180ec40",
+          "text": "mov rcx, qword ptr [rip + 0x19ac449]"
+        },
+        {
+          "va": "0x18180ec47",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18180ec4e",
+          "text": "jne 0x18180ec55"
+        },
+        {
+          "va": "0x18180ec50",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18180ec55",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18180ec58",
+          "text": "mov r8, rbx"
+        },
+        {
+          "va": "0x18180ec5b",
+          "text": "mov rdx, rdi"
+        },
+        {
+          "va": "0x18180ec5e",
+          "text": "mov rcx, rbp"
+        },
+        {
+          "va": "0x18180ec61",
+          "text": "call 0x18169e840"
+        },
+        {
+          "va": "0x18180ec66",
+          "text": "mov rbx, qword ptr [rsp + 0x70]"
+        },
+        {
+          "va": "0x18180ec6b",
+          "text": "mov rbp, qword ptr [rsp + 0x78]"
+        },
+        {
+          "va": "0x18180ec70",
+          "text": "mov rsi, qword ptr [rsp + 0x80]"
+        },
+        {
+          "va": "0x18180ec78",
+          "text": "add rsp, 0x60"
+        },
+        {
+          "va": "0x18180ec7c",
+          "text": "pop rdi"
+        },
+        {
+          "va": "0x18180ec7d",
+          "text": "ret "
+        }
+      ]
+    },
+    {
+      "va": "0x18180ec7e",
+      "bytes": 98,
+      "sha256": "08ea980fe64c2da08cd5c27fe05d574c1bd9a805b5d155d2d5911233be6c344b",
+      "instructions": [
+        {
+          "va": "0x18180ec7e",
+          "text": "test rdi, rdi"
+        },
+        {
+          "va": "0x18180ec81",
+          "text": "je 0x18180ece0"
+        },
+        {
+          "va": "0x18180ec83",
+          "text": "xor edx, edx"
+        },
+        {
+          "va": "0x18180ec85",
+          "text": "mov rcx, rdi"
+        },
+        {
+          "va": "0x18180ec88",
+          "text": "call 0x18174a230"
+        },
+        {
+          "va": "0x18180ec8d",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x18180ec90",
+          "text": "lea rcx, [rsp + 0x20]"
+        },
+        {
+          "va": "0x18180ec95",
+          "text": "mov rdx, rax"
+        },
+        {
+          "va": "0x18180ec98",
+          "text": "call 0x1817dfd10"
+        },
+        {
+          "va": "0x18180ec9d",
+          "text": "mov rcx, qword ptr [rip + 0x19ac3ec]"
+        },
+        {
+          "va": "0x18180eca4",
+          "text": "movups xmm1, xmmword ptr [rax + 0x10]"
+        },
+        {
+          "va": "0x18180eca8",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18180ecaf",
+          "text": "movups xmmword ptr [rsp + 0x50], xmm1"
+        },
+        {
+          "va": "0x18180ecb4",
+          "text": "jne 0x18180ecbb"
+        },
+        {
+          "va": "0x18180ecb6",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18180ecbb",
+          "text": "movups xmm0, xmmword ptr [rbp + 0xb0]"
+        },
+        {
+          "va": "0x18180ecc2",
+          "text": "mov rcx, qword ptr [rsi + 0x18]"
+        },
+        {
+          "va": "0x18180ecc6",
+          "text": "xor eax, eax"
+        },
+        {
+          "va": "0x18180ecc8",
+          "text": "add rcx, qword ptr [rsi + 0x10]"
+        },
+        {
+          "va": "0x18180eccc",
+          "text": "movups xmmword ptr [rsp + 0x20], xmm0"
+        },
+        {
+          "va": "0x18180ecd1",
+          "text": "add rcx, qword ptr [rsp + 0x20]"
+        },
+        {
+          "va": "0x18180ecd6",
+          "text": "cmp rcx, qword ptr [rsp + 0x50]"
+        },
+        {
+          "va": "0x18180ecdb",
+          "text": "setge al"
+        },
+        {
+          "va": "0x18180ecde",
+          "text": "jmp 0x18180ec66"
+        }
+      ]
+    },
+    {
+      "va": "0x18174a17c",
+      "bytes": 120,
+      "sha256": "d463d1dbed088fd6478a18a39c420b80aee62fbb3ab723f6f5cead3803cf8b0b",
+      "instructions": [
+        {
+          "va": "0x18174a17c",
+          "text": "test rdi, rdi"
+        },
+        {
+          "va": "0x18174a17f",
+          "text": "je 0x18174a1f5"
+        },
+        {
+          "va": "0x18174a181",
+          "text": "mov qword ptr [rsp + 0x30], rsi"
+        },
+        {
+          "va": "0x18174a186",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x18174a189",
+          "text": "mov rdx, rbx"
+        },
+        {
+          "va": "0x18174a18c",
+          "text": "mov rcx, rbp"
+        },
+        {
+          "va": "0x18174a18f",
+          "text": "xor esi, esi"
+        },
+        {
+          "va": "0x18174a191",
+          "text": "call 0x1817480b0"
+        },
+        {
+          "va": "0x18174a196",
+          "text": "mov rbx, rax"
+        },
+        {
+          "va": "0x18174a199",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x18174a19c",
+          "text": "je 0x18174a1c5"
+        },
+        {
+          "va": "0x18174a19e",
+          "text": "mov rcx, qword ptr [rip + 0x1a7de1b]"
+        },
+        {
+          "va": "0x18174a1a5",
+          "text": "cmp dword ptr [rcx + 0xe0], esi"
+        },
+        {
+          "va": "0x18174a1ab",
+          "text": "jne 0x18174a1b2"
+        },
+        {
+          "va": "0x18174a1ad",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18174a1b2",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18174a1b5",
+          "text": "mov r8, rdi"
+        },
+        {
+          "va": "0x18174a1b8",
+          "text": "mov rdx, rbx"
+        },
+        {
+          "va": "0x18174a1bb",
+          "text": "mov rcx, rbp"
+        },
+        {
+          "va": "0x18174a1be",
+          "text": "call 0x18177b780"
+        },
+        {
+          "va": "0x18174a1c3",
+          "text": "mov esi, eax"
+        },
+        {
+          "va": "0x18174a1c5",
+          "text": "mov rcx, qword ptr [rip + 0x1a77ab4]"
+        },
+        {
+          "va": "0x18174a1cc",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18174a1d3",
+          "text": "jne 0x18174a1da"
+        },
+        {
+          "va": "0x18174a1d5",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18174a1da",
+          "text": "mov byte ptr [rdi + 0x14], 0"
+        },
+        {
+          "va": "0x18174a1de",
+          "text": "mov eax, esi"
+        },
+        {
+          "va": "0x18174a1e0",
+          "text": "mov rsi, qword ptr [rsp + 0x30]"
+        },
+        {
+          "va": "0x18174a1e5",
+          "text": "mov rbx, qword ptr [rsp + 0x38]"
+        },
+        {
+          "va": "0x18174a1ea",
+          "text": "mov rbp, qword ptr [rsp + 0x40]"
+        },
+        {
+          "va": "0x18174a1ef",
+          "text": "add rsp, 0x20"
+        },
+        {
+          "va": "0x18174a1f3",
+          "text": "pop rdi"
+        }
+      ]
+    },
+    {
+      "va": "0x1816c14a2",
+      "bytes": 100,
+      "sha256": "85d4748202cea815fd57362305af40d7ed4edaf2fb65bbf16d1a5077f31125a9",
+      "instructions": [
+        {
+          "va": "0x1816c14a2",
+          "text": "cmp byte ptr [rdi + 0xd], r14b"
+        },
+        {
+          "va": "0x1816c14a6",
+          "text": "jle 0x1816c144a"
+        },
+        {
+          "va": "0x1816c14a8",
+          "text": "cmp byte ptr [rbp + 0x6c], r12b"
+        },
+        {
+          "va": "0x1816c14ac",
+          "text": "je 0x1816c14df"
+        },
+        {
+          "va": "0x1816c14ae",
+          "text": "mov rcx, qword ptr [rip + 0x1b0fa5b]"
+        },
+        {
+          "va": "0x1816c14b5",
+          "text": "cmp dword ptr [rcx + 0xe0], r14d"
+        },
+        {
+          "va": "0x1816c14bc",
+          "text": "jne 0x1816c14c3"
+        },
+        {
+          "va": "0x1816c14be",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x1816c14c3",
+          "text": "test dword ptr [rdi + 0x20], 0x100"
+        },
+        {
+          "va": "0x1816c14ca",
+          "text": "ja 0x1816c144a"
+        },
+        {
+          "va": "0x1816c14d0",
+          "text": "test rsi, rsi"
+        },
+        {
+          "va": "0x1816c14d3",
+          "text": "je 0x1816c1a91"
+        },
+        {
+          "va": "0x1816c14d9",
+          "text": "cmp byte ptr [rbp + 0x6c], r12b"
+        },
+        {
+          "va": "0x1816c14dd",
+          "text": "jne 0x1816c1506"
+        },
+        {
+          "va": "0x1816c14df",
+          "text": "mov rcx, qword ptr [rip + 0x1b0fa2a]"
+        },
+        {
+          "va": "0x1816c14e6",
+          "text": "cmp dword ptr [rcx + 0xe0], r14d"
+        },
+        {
+          "va": "0x1816c14ed",
+          "text": "jne 0x1816c14f4"
+        },
+        {
+          "va": "0x1816c14ef",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x1816c14f4",
+          "text": "xor edx, edx"
+        },
+        {
+          "va": "0x1816c14f6",
+          "text": "mov rcx, rdi"
+        },
+        {
+          "va": "0x1816c14f9",
+          "text": "call 0x1816bff20"
+        },
+        {
+          "va": "0x1816c14fe",
+          "text": "test al, al"
+        },
+        {
+          "va": "0x1816c1500",
+          "text": "jne 0x1816c16a0"
+        }
+      ]
+    },
+    {
+      "va": "0x1816bcd20",
+      "bytes": 11,
+      "sha256": "6143e8701e44e79d9c71812e6a3049a9fad69c2a78c87d2f5ed17c4326c97af6",
+      "instructions": [
+        {
+          "va": "0x1816bcd20",
+          "text": "test dword ptr [rcx + 0x20], 0x100"
+        },
+        {
+          "va": "0x1816bcd27",
+          "text": "seta al"
+        },
+        {
+          "va": "0x1816bcd2a",
+          "text": "ret "
+        }
+      ]
+    }
+  ],
+  "activation": {
+    "outerPauseGate": "Lifecycle bit4, not this body",
+    "ownGate": "hidden bit3 bypasses activation only @18180e208",
+    "primaryCollision": "GetCollision0 @18180e231; inactive bit0 required to probe",
+    "query": "existing PushBackTargetQuery mask3 @18180e291",
+    "enable": "self component EntityRef owner @18180e2e1; owner gate may reject",
+    "tail": "always checkDamage @18180e31c, even hidden/blocked/missing collision; missing collision fails @e526"
+  },
+  "damagePasses": {
+    "first": "Capture own collision contact count; each cached target by live ID lookup, type1 only. Send fresh pooled43 then append collider.EntityRef re-read AFTER receiver. No Player/life/dead/active/layer/normal/geometry filter. Duplicates send independently.",
+    "second": "Acquire actual Scene.PlayerList after first pass, capture count. For each live QList entry, fresh enumerate shared first-pass ref list; skip matching refs, missing Player, Player bit9, missing Actor/collision0. Scan Player cache in order, by target lookup, match ANY collider.EntityRef to DamageRect component.EntityRef. Send once at first matching contact, no type/active/layer/normal test. Reverse-only refs are not appended, so duplicate PlayerList entries can resend.",
+    "timing": "Read existing committed contact cache before this frame Collision.Update; no geometry refresh/no new AABB or render checks. Every call repeats; no cooldown/dt field."
+  },
+  "sharedScratch": {
+    "shape": "explicit host QUtility singleton {items:logical EntityRef array,version:uint32}; managed backing capacity/heap omitted",
+    "entry": "get_EntityList clears logical size and increments version @181787225/228",
+    "append": "List.Add after Frame.NotifyEvent @18180e676; increment version @18000afd4",
+    "exit": "successful tail increments version/size0 @18180eb01/eb05; no finally clear",
+    "reentrancy": "same singleton across calls. Nested checkDamage clears outer list; outer appends after nested return, potentially allowing an already-sent first target through reverse pass. Shared event pool retains outer leased slot during inner dispatch."
+  },
+  "payload": {
+    "EventType": 43,
+    "CauseDead": 0,
+    "NotifiedActor": "source Actor.entityId, through existing NativeEventPool.getEventParam",
+    "otherFields": "reset defaults; no CollisionId/force/value writes",
+    "poolExhaustion": "Frame.NotifyEvent(null) logs and returns0; first-pass ref append still executes. Mandatory diagnostic host when reached.",
+    "exception": "receiver exception retains leased InUse and scratch mutations in in-place callback; outer world transaction may roll back"
+  },
+  "receivers": {
+    "DamageRect4": "return int32(actor.PosX + component.Rect.X + component.Rect.Width >= Camera.CalcCameraViewStageArea.X), signed64 additions. Camera LEFT edge, not right; ignores collider scale/Actor Y. >= equality. Others forward base Actor.OnRecvEvent @18180ec61.",
+    "Player43": "CauseDead0: life<=0/flags bit8 immortal ignored; no invincible timer gate for this cause. Shared Lifecycle.playerDeath/resolveGearPlayerEvent43 plan reused; actual receiver host must apply all patches, shared HP, nested events, audio/shake in native order. This helper does not implement a second general Player receiver."
+  },
+  "corrections": [
+    "Existing LinePath diagnostic activation helper calls the input actorPaused, but native OnUpdate tests Actor hidden bit3; outer lifecycle pause is bit4. No existing file changed.",
+    "Existing flat damageContactEvents function remains valid only for already-resolved immutable host lists; it cannot represent live reentrant shared QUtility list mutations. New helper does not replace or modify it.",
+    "Actual3-2 parameter array has eight DamageRect entries; population2 selects six, populations3..8 each select four, with name substitutions. No claim of six at every count."
+  ],
+  "unresolved": [
+    "Actual complete allocator/Actor/Player component queries and current native caches remain host state; no stage snapshot fabricated.",
+    "Custom receiver dispatch including non-Player type1 collision targets must be provided. Player death plan is a plan, not effects or nested-event execution.",
+    "QUtility List backing-array capacity/growth/OOM and physical heap are not modeled; logical shared list/version snapshot required, stable array identity represents captured QList header.",
+    "Common Actor event forwarding and null-event native logging require exact synchronous hosts when reached.",
+    "Full stage/runtime registration, creator/OnStart, collision cache generation, later Actor movement/collision phase and horizontal carry are not in scope.",
+    "All in-place external static/sound/network effects must join caller rollback. Existing modules/public documents/Git not changed."
+  ],
+  "actualPopulations": [
+    {
+      "stageId": "st_w_03_02",
+      "count": 2,
+      "online": false,
+      "parameters": [
+        {
+          "authoredIndex": 13,
+          "name": "DamageRect1",
+          "playerCount": -6,
+          "allowed": true,
+          "posX": 2160,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect1",
+            "xRaw": 141557760,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 14,
+          "name": "DamageRect8",
+          "playerCount": 7,
+          "allowed": false,
+          "posX": 2144,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect8",
+            "xRaw": 140509184,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 15,
+          "name": "DamageRect2",
+          "playerCount": -4,
+          "allowed": true,
+          "posX": 2304,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect2",
+            "xRaw": 150994944,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 16,
+          "name": "DamageRect3",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 336,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 384,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect3",
+            "xRaw": 84934656,
+            "yRaw": 22020096,
+            "rectRaw": {
+              "height": 25165824,
+              "width": 3145728,
+              "x": 0,
+              "y": -25165824
+            }
+          }
+        },
+        {
+          "authoredIndex": 17,
+          "name": "DamageRect4",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 49,
+          "slots": [
+            {
+              "t": 1,
+              "f": 264,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 49,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect4",
+            "xRaw": 84934656,
+            "yRaw": 3211264,
+            "rectRaw": {
+              "height": 3211264,
+              "width": 17301504,
+              "x": 0,
+              "y": -3211264
+            }
+          }
+        },
+        {
+          "authoredIndex": 19,
+          "name": "DamageRect5",
+          "playerCount": 5,
+          "allowed": false,
+          "posX": 2348,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect5",
+            "xRaw": 153878528,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 21,
+          "name": "DamageRect6",
+          "playerCount": -2,
+          "allowed": true,
+          "posX": 2172,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect6",
+            "xRaw": 142344192,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 22,
+          "name": "DamageRect7",
+          "playerCount": -2,
+          "allowed": true,
+          "posX": 2292,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect7",
+            "xRaw": 150208512,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 3,
+      "online": false,
+      "parameters": [
+        {
+          "authoredIndex": 13,
+          "name": "DamageRect1",
+          "playerCount": -6,
+          "allowed": true,
+          "posX": 2160,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect1",
+            "xRaw": 141557760,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 14,
+          "name": "DamageRect8",
+          "playerCount": 7,
+          "allowed": false,
+          "posX": 2144,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect8",
+            "xRaw": 140509184,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 15,
+          "name": "DamageRect2",
+          "playerCount": -4,
+          "allowed": true,
+          "posX": 2304,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect2",
+            "xRaw": 150994944,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 16,
+          "name": "DamageRect3",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 336,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 384,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect3",
+            "xRaw": 84934656,
+            "yRaw": 22020096,
+            "rectRaw": {
+              "height": 25165824,
+              "width": 3145728,
+              "x": 0,
+              "y": -25165824
+            }
+          }
+        },
+        {
+          "authoredIndex": 17,
+          "name": "DamageRect4",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 49,
+          "slots": [
+            {
+              "t": 1,
+              "f": 264,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 49,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect4",
+            "xRaw": 84934656,
+            "yRaw": 3211264,
+            "rectRaw": {
+              "height": 3211264,
+              "width": 17301504,
+              "x": 0,
+              "y": -3211264
+            }
+          }
+        },
+        {
+          "authoredIndex": 19,
+          "name": "DamageRect5",
+          "playerCount": 5,
+          "allowed": false,
+          "posX": 2348,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect5",
+            "xRaw": 153878528,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 21,
+          "name": "DamageRect6",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2172,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect6",
+            "xRaw": 142344192,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 22,
+          "name": "DamageRect7",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2292,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect7",
+            "xRaw": 150208512,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 4,
+      "online": false,
+      "parameters": [
+        {
+          "authoredIndex": 13,
+          "name": "DamageRect1",
+          "playerCount": -6,
+          "allowed": true,
+          "posX": 2160,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect1",
+            "xRaw": 141557760,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 14,
+          "name": "DamageRect8",
+          "playerCount": 7,
+          "allowed": false,
+          "posX": 2144,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect8",
+            "xRaw": 140509184,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 15,
+          "name": "DamageRect2",
+          "playerCount": -4,
+          "allowed": true,
+          "posX": 2304,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect2",
+            "xRaw": 150994944,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 16,
+          "name": "DamageRect3",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 336,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 384,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect3",
+            "xRaw": 84934656,
+            "yRaw": 22020096,
+            "rectRaw": {
+              "height": 25165824,
+              "width": 3145728,
+              "x": 0,
+              "y": -25165824
+            }
+          }
+        },
+        {
+          "authoredIndex": 17,
+          "name": "DamageRect4",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 49,
+          "slots": [
+            {
+              "t": 1,
+              "f": 264,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 49,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect4",
+            "xRaw": 84934656,
+            "yRaw": 3211264,
+            "rectRaw": {
+              "height": 3211264,
+              "width": 17301504,
+              "x": 0,
+              "y": -3211264
+            }
+          }
+        },
+        {
+          "authoredIndex": 19,
+          "name": "DamageRect5",
+          "playerCount": 5,
+          "allowed": false,
+          "posX": 2348,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect5",
+            "xRaw": 153878528,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 21,
+          "name": "DamageRect6",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2172,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect6",
+            "xRaw": 142344192,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 22,
+          "name": "DamageRect7",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2292,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect7",
+            "xRaw": 150208512,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 5,
+      "online": false,
+      "parameters": [
+        {
+          "authoredIndex": 13,
+          "name": "DamageRect1",
+          "playerCount": -6,
+          "allowed": true,
+          "posX": 2160,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect1",
+            "xRaw": 141557760,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 14,
+          "name": "DamageRect8",
+          "playerCount": 7,
+          "allowed": false,
+          "posX": 2144,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect8",
+            "xRaw": 140509184,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 15,
+          "name": "DamageRect2",
+          "playerCount": -4,
+          "allowed": false,
+          "posX": 2304,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect2",
+            "xRaw": 150994944,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 16,
+          "name": "DamageRect3",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 336,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 384,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect3",
+            "xRaw": 84934656,
+            "yRaw": 22020096,
+            "rectRaw": {
+              "height": 25165824,
+              "width": 3145728,
+              "x": 0,
+              "y": -25165824
+            }
+          }
+        },
+        {
+          "authoredIndex": 17,
+          "name": "DamageRect4",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 49,
+          "slots": [
+            {
+              "t": 1,
+              "f": 264,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 49,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect4",
+            "xRaw": 84934656,
+            "yRaw": 3211264,
+            "rectRaw": {
+              "height": 3211264,
+              "width": 17301504,
+              "x": 0,
+              "y": -3211264
+            }
+          }
+        },
+        {
+          "authoredIndex": 19,
+          "name": "DamageRect5",
+          "playerCount": 5,
+          "allowed": true,
+          "posX": 2348,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect5",
+            "xRaw": 153878528,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 21,
+          "name": "DamageRect6",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2172,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect6",
+            "xRaw": 142344192,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 22,
+          "name": "DamageRect7",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2292,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect7",
+            "xRaw": 150208512,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 6,
+      "online": false,
+      "parameters": [
+        {
+          "authoredIndex": 13,
+          "name": "DamageRect1",
+          "playerCount": -6,
+          "allowed": true,
+          "posX": 2160,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect1",
+            "xRaw": 141557760,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 14,
+          "name": "DamageRect8",
+          "playerCount": 7,
+          "allowed": false,
+          "posX": 2144,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect8",
+            "xRaw": 140509184,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 15,
+          "name": "DamageRect2",
+          "playerCount": -4,
+          "allowed": false,
+          "posX": 2304,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect2",
+            "xRaw": 150994944,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 16,
+          "name": "DamageRect3",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 336,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 384,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect3",
+            "xRaw": 84934656,
+            "yRaw": 22020096,
+            "rectRaw": {
+              "height": 25165824,
+              "width": 3145728,
+              "x": 0,
+              "y": -25165824
+            }
+          }
+        },
+        {
+          "authoredIndex": 17,
+          "name": "DamageRect4",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 49,
+          "slots": [
+            {
+              "t": 1,
+              "f": 264,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 49,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect4",
+            "xRaw": 84934656,
+            "yRaw": 3211264,
+            "rectRaw": {
+              "height": 3211264,
+              "width": 17301504,
+              "x": 0,
+              "y": -3211264
+            }
+          }
+        },
+        {
+          "authoredIndex": 19,
+          "name": "DamageRect5",
+          "playerCount": 5,
+          "allowed": true,
+          "posX": 2348,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect5",
+            "xRaw": 153878528,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 21,
+          "name": "DamageRect6",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2172,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect6",
+            "xRaw": 142344192,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 22,
+          "name": "DamageRect7",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2292,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect7",
+            "xRaw": 150208512,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 7,
+      "online": false,
+      "parameters": [
+        {
+          "authoredIndex": 13,
+          "name": "DamageRect1",
+          "playerCount": -6,
+          "allowed": false,
+          "posX": 2160,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect1",
+            "xRaw": 141557760,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 14,
+          "name": "DamageRect8",
+          "playerCount": 7,
+          "allowed": true,
+          "posX": 2144,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect8",
+            "xRaw": 140509184,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 15,
+          "name": "DamageRect2",
+          "playerCount": -4,
+          "allowed": false,
+          "posX": 2304,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect2",
+            "xRaw": 150994944,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 16,
+          "name": "DamageRect3",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 336,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 384,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect3",
+            "xRaw": 84934656,
+            "yRaw": 22020096,
+            "rectRaw": {
+              "height": 25165824,
+              "width": 3145728,
+              "x": 0,
+              "y": -25165824
+            }
+          }
+        },
+        {
+          "authoredIndex": 17,
+          "name": "DamageRect4",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 49,
+          "slots": [
+            {
+              "t": 1,
+              "f": 264,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 49,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect4",
+            "xRaw": 84934656,
+            "yRaw": 3211264,
+            "rectRaw": {
+              "height": 3211264,
+              "width": 17301504,
+              "x": 0,
+              "y": -3211264
+            }
+          }
+        },
+        {
+          "authoredIndex": 19,
+          "name": "DamageRect5",
+          "playerCount": 5,
+          "allowed": true,
+          "posX": 2348,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect5",
+            "xRaw": 153878528,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 21,
+          "name": "DamageRect6",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2172,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect6",
+            "xRaw": 142344192,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 22,
+          "name": "DamageRect7",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2292,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect7",
+            "xRaw": 150208512,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 8,
+      "online": false,
+      "parameters": [
+        {
+          "authoredIndex": 13,
+          "name": "DamageRect1",
+          "playerCount": -6,
+          "allowed": false,
+          "posX": 2160,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect1",
+            "xRaw": 141557760,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 14,
+          "name": "DamageRect8",
+          "playerCount": 7,
+          "allowed": true,
+          "posX": 2144,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect8",
+            "xRaw": 140509184,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 15,
+          "name": "DamageRect2",
+          "playerCount": -4,
+          "allowed": false,
+          "posX": 2304,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect2",
+            "xRaw": 150994944,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 16,
+          "name": "DamageRect3",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 336,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 384,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect3",
+            "xRaw": 84934656,
+            "yRaw": 22020096,
+            "rectRaw": {
+              "height": 25165824,
+              "width": 3145728,
+              "x": 0,
+              "y": -25165824
+            }
+          }
+        },
+        {
+          "authoredIndex": 17,
+          "name": "DamageRect4",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 49,
+          "slots": [
+            {
+              "t": 1,
+              "f": 264,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 49,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect4",
+            "xRaw": 84934656,
+            "yRaw": 3211264,
+            "rectRaw": {
+              "height": 3211264,
+              "width": 17301504,
+              "x": 0,
+              "y": -3211264
+            }
+          }
+        },
+        {
+          "authoredIndex": 19,
+          "name": "DamageRect5",
+          "playerCount": 5,
+          "allowed": true,
+          "posX": 2348,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect5",
+            "xRaw": 153878528,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 21,
+          "name": "DamageRect6",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2172,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect6",
+            "xRaw": 142344192,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 22,
+          "name": "DamageRect7",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2292,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect7",
+            "xRaw": 150208512,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 2,
+      "online": true,
+      "parameters": [
+        {
+          "authoredIndex": 13,
+          "name": "DamageRect1",
+          "playerCount": -6,
+          "allowed": true,
+          "posX": 2160,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect1",
+            "xRaw": 141557760,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 14,
+          "name": "DamageRect8",
+          "playerCount": 7,
+          "allowed": false,
+          "posX": 2144,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect8",
+            "xRaw": 140509184,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 15,
+          "name": "DamageRect2",
+          "playerCount": -4,
+          "allowed": true,
+          "posX": 2304,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect2",
+            "xRaw": 150994944,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 16,
+          "name": "DamageRect3",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 336,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 384,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect3",
+            "xRaw": 84934656,
+            "yRaw": 22020096,
+            "rectRaw": {
+              "height": 25165824,
+              "width": 3145728,
+              "x": 0,
+              "y": -25165824
+            }
+          }
+        },
+        {
+          "authoredIndex": 17,
+          "name": "DamageRect4",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 49,
+          "slots": [
+            {
+              "t": 1,
+              "f": 264,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 49,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect4",
+            "xRaw": 84934656,
+            "yRaw": 3211264,
+            "rectRaw": {
+              "height": 3211264,
+              "width": 17301504,
+              "x": 0,
+              "y": -3211264
+            }
+          }
+        },
+        {
+          "authoredIndex": 19,
+          "name": "DamageRect5",
+          "playerCount": 5,
+          "allowed": false,
+          "posX": 2348,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect5",
+            "xRaw": 153878528,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 21,
+          "name": "DamageRect6",
+          "playerCount": -2,
+          "allowed": true,
+          "posX": 2172,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect6",
+            "xRaw": 142344192,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 22,
+          "name": "DamageRect7",
+          "playerCount": -2,
+          "allowed": true,
+          "posX": 2292,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect7",
+            "xRaw": 150208512,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 3,
+      "online": true,
+      "parameters": [
+        {
+          "authoredIndex": 13,
+          "name": "DamageRect1",
+          "playerCount": -6,
+          "allowed": true,
+          "posX": 2160,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect1",
+            "xRaw": 141557760,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 14,
+          "name": "DamageRect8",
+          "playerCount": 7,
+          "allowed": false,
+          "posX": 2144,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect8",
+            "xRaw": 140509184,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 15,
+          "name": "DamageRect2",
+          "playerCount": -4,
+          "allowed": true,
+          "posX": 2304,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect2",
+            "xRaw": 150994944,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 16,
+          "name": "DamageRect3",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 336,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 384,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect3",
+            "xRaw": 84934656,
+            "yRaw": 22020096,
+            "rectRaw": {
+              "height": 25165824,
+              "width": 3145728,
+              "x": 0,
+              "y": -25165824
+            }
+          }
+        },
+        {
+          "authoredIndex": 17,
+          "name": "DamageRect4",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 49,
+          "slots": [
+            {
+              "t": 1,
+              "f": 264,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 49,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect4",
+            "xRaw": 84934656,
+            "yRaw": 3211264,
+            "rectRaw": {
+              "height": 3211264,
+              "width": 17301504,
+              "x": 0,
+              "y": -3211264
+            }
+          }
+        },
+        {
+          "authoredIndex": 19,
+          "name": "DamageRect5",
+          "playerCount": 5,
+          "allowed": false,
+          "posX": 2348,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect5",
+            "xRaw": 153878528,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 21,
+          "name": "DamageRect6",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2172,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect6",
+            "xRaw": 142344192,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 22,
+          "name": "DamageRect7",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2292,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect7",
+            "xRaw": 150208512,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 4,
+      "online": true,
+      "parameters": [
+        {
+          "authoredIndex": 13,
+          "name": "DamageRect1",
+          "playerCount": -6,
+          "allowed": true,
+          "posX": 2160,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect1",
+            "xRaw": 141557760,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 14,
+          "name": "DamageRect8",
+          "playerCount": 7,
+          "allowed": false,
+          "posX": 2144,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect8",
+            "xRaw": 140509184,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 15,
+          "name": "DamageRect2",
+          "playerCount": -4,
+          "allowed": true,
+          "posX": 2304,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect2",
+            "xRaw": 150994944,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 16,
+          "name": "DamageRect3",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 336,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 384,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect3",
+            "xRaw": 84934656,
+            "yRaw": 22020096,
+            "rectRaw": {
+              "height": 25165824,
+              "width": 3145728,
+              "x": 0,
+              "y": -25165824
+            }
+          }
+        },
+        {
+          "authoredIndex": 17,
+          "name": "DamageRect4",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 49,
+          "slots": [
+            {
+              "t": 1,
+              "f": 264,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 49,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect4",
+            "xRaw": 84934656,
+            "yRaw": 3211264,
+            "rectRaw": {
+              "height": 3211264,
+              "width": 17301504,
+              "x": 0,
+              "y": -3211264
+            }
+          }
+        },
+        {
+          "authoredIndex": 19,
+          "name": "DamageRect5",
+          "playerCount": 5,
+          "allowed": false,
+          "posX": 2348,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect5",
+            "xRaw": 153878528,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 21,
+          "name": "DamageRect6",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2172,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect6",
+            "xRaw": 142344192,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 22,
+          "name": "DamageRect7",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2292,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect7",
+            "xRaw": 150208512,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 5,
+      "online": true,
+      "parameters": [
+        {
+          "authoredIndex": 13,
+          "name": "DamageRect1",
+          "playerCount": -6,
+          "allowed": true,
+          "posX": 2160,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect1",
+            "xRaw": 141557760,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 14,
+          "name": "DamageRect8",
+          "playerCount": 7,
+          "allowed": false,
+          "posX": 2144,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect8",
+            "xRaw": 140509184,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 15,
+          "name": "DamageRect2",
+          "playerCount": -4,
+          "allowed": false,
+          "posX": 2304,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect2",
+            "xRaw": 150994944,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 16,
+          "name": "DamageRect3",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 336,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 384,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect3",
+            "xRaw": 84934656,
+            "yRaw": 22020096,
+            "rectRaw": {
+              "height": 25165824,
+              "width": 3145728,
+              "x": 0,
+              "y": -25165824
+            }
+          }
+        },
+        {
+          "authoredIndex": 17,
+          "name": "DamageRect4",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 49,
+          "slots": [
+            {
+              "t": 1,
+              "f": 264,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 49,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect4",
+            "xRaw": 84934656,
+            "yRaw": 3211264,
+            "rectRaw": {
+              "height": 3211264,
+              "width": 17301504,
+              "x": 0,
+              "y": -3211264
+            }
+          }
+        },
+        {
+          "authoredIndex": 19,
+          "name": "DamageRect5",
+          "playerCount": 5,
+          "allowed": true,
+          "posX": 2348,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect5",
+            "xRaw": 153878528,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 21,
+          "name": "DamageRect6",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2172,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect6",
+            "xRaw": 142344192,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 22,
+          "name": "DamageRect7",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2292,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect7",
+            "xRaw": 150208512,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 6,
+      "online": true,
+      "parameters": [
+        {
+          "authoredIndex": 13,
+          "name": "DamageRect1",
+          "playerCount": -6,
+          "allowed": true,
+          "posX": 2160,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect1",
+            "xRaw": 141557760,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 14,
+          "name": "DamageRect8",
+          "playerCount": 7,
+          "allowed": false,
+          "posX": 2144,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect8",
+            "xRaw": 140509184,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 15,
+          "name": "DamageRect2",
+          "playerCount": -4,
+          "allowed": false,
+          "posX": 2304,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect2",
+            "xRaw": 150994944,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 16,
+          "name": "DamageRect3",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 336,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 384,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect3",
+            "xRaw": 84934656,
+            "yRaw": 22020096,
+            "rectRaw": {
+              "height": 25165824,
+              "width": 3145728,
+              "x": 0,
+              "y": -25165824
+            }
+          }
+        },
+        {
+          "authoredIndex": 17,
+          "name": "DamageRect4",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 49,
+          "slots": [
+            {
+              "t": 1,
+              "f": 264,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 49,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect4",
+            "xRaw": 84934656,
+            "yRaw": 3211264,
+            "rectRaw": {
+              "height": 3211264,
+              "width": 17301504,
+              "x": 0,
+              "y": -3211264
+            }
+          }
+        },
+        {
+          "authoredIndex": 19,
+          "name": "DamageRect5",
+          "playerCount": 5,
+          "allowed": true,
+          "posX": 2348,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect5",
+            "xRaw": 153878528,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 21,
+          "name": "DamageRect6",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2172,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect6",
+            "xRaw": 142344192,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 22,
+          "name": "DamageRect7",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2292,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect7",
+            "xRaw": 150208512,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 7,
+      "online": true,
+      "parameters": [
+        {
+          "authoredIndex": 13,
+          "name": "DamageRect1",
+          "playerCount": -6,
+          "allowed": false,
+          "posX": 2160,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect1",
+            "xRaw": 141557760,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 14,
+          "name": "DamageRect8",
+          "playerCount": 7,
+          "allowed": true,
+          "posX": 2144,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect8",
+            "xRaw": 140509184,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 15,
+          "name": "DamageRect2",
+          "playerCount": -4,
+          "allowed": false,
+          "posX": 2304,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect2",
+            "xRaw": 150994944,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 16,
+          "name": "DamageRect3",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 336,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 384,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect3",
+            "xRaw": 84934656,
+            "yRaw": 22020096,
+            "rectRaw": {
+              "height": 25165824,
+              "width": 3145728,
+              "x": 0,
+              "y": -25165824
+            }
+          }
+        },
+        {
+          "authoredIndex": 17,
+          "name": "DamageRect4",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 49,
+          "slots": [
+            {
+              "t": 1,
+              "f": 264,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 49,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect4",
+            "xRaw": 84934656,
+            "yRaw": 3211264,
+            "rectRaw": {
+              "height": 3211264,
+              "width": 17301504,
+              "x": 0,
+              "y": -3211264
+            }
+          }
+        },
+        {
+          "authoredIndex": 19,
+          "name": "DamageRect5",
+          "playerCount": 5,
+          "allowed": true,
+          "posX": 2348,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect5",
+            "xRaw": 153878528,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 21,
+          "name": "DamageRect6",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2172,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect6",
+            "xRaw": 142344192,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 22,
+          "name": "DamageRect7",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2292,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect7",
+            "xRaw": 150208512,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 8,
+      "online": true,
+      "parameters": [
+        {
+          "authoredIndex": 13,
+          "name": "DamageRect1",
+          "playerCount": -6,
+          "allowed": false,
+          "posX": 2160,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect1",
+            "xRaw": 141557760,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 14,
+          "name": "DamageRect8",
+          "playerCount": 7,
+          "allowed": true,
+          "posX": 2144,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect8",
+            "xRaw": 140509184,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 15,
+          "name": "DamageRect2",
+          "playerCount": -4,
+          "allowed": false,
+          "posX": 2304,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect2",
+            "xRaw": 150994944,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 16,
+          "name": "DamageRect3",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 336,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 384,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect3",
+            "xRaw": 84934656,
+            "yRaw": 22020096,
+            "rectRaw": {
+              "height": 25165824,
+              "width": 3145728,
+              "x": 0,
+              "y": -25165824
+            }
+          }
+        },
+        {
+          "authoredIndex": 17,
+          "name": "DamageRect4",
+          "playerCount": 0,
+          "allowed": true,
+          "posX": 1296,
+          "posY": 49,
+          "slots": [
+            {
+              "t": 1,
+              "f": 264,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 49,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect4",
+            "xRaw": 84934656,
+            "yRaw": 3211264,
+            "rectRaw": {
+              "height": 3211264,
+              "width": 17301504,
+              "x": 0,
+              "y": -3211264
+            }
+          }
+        },
+        {
+          "authoredIndex": 19,
+          "name": "DamageRect5",
+          "playerCount": 5,
+          "allowed": true,
+          "posX": 2348,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect5",
+            "xRaw": 153878528,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        },
+        {
+          "authoredIndex": 21,
+          "name": "DamageRect6",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2172,
+          "posY": 500,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 356,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect6",
+            "xRaw": 142344192,
+            "yRaw": 32768000,
+            "rectRaw": {
+              "height": 23330816,
+              "width": 3145728,
+              "x": 0,
+              "y": -23330816
+            }
+          }
+        },
+        {
+          "authoredIndex": 22,
+          "name": "DamageRect7",
+          "playerCount": -2,
+          "allowed": false,
+          "posX": 2292,
+          "posY": 133,
+          "slots": [
+            {
+              "t": 1,
+              "f": 48,
+              "s": null
+            },
+            {
+              "t": 1,
+              "f": 336,
+              "s": null
+            }
+          ],
+          "decoded": {
+            "type": "DamageRect",
+            "name": "DamageRect7",
+            "xRaw": 150208512,
+            "yRaw": 8716288,
+            "rectRaw": {
+              "height": 22020096,
+              "width": 3145728,
+              "x": 0,
+              "y": -22020096
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "api": {
+    "onUpdate": "(world,actualActor9,exactHost) => trace; in-place activation then checkDamage",
+    "checkDamage": "(world,actualActor9,exactHost) => trace; in-place native two-pass cached query, shared QUtility list and pooled event dispatch",
+    "receive": "(world,actualActor9,nativeQEventParam,exactHost) => int32; event4 uses actual camera left edge; others base host",
+    "planPlayerEvent43": "(actualActor27,nativeCauseDead0Event43,resolvedSharedHitPoint) => shared Lifecycle death plan; no implicit patch/effect application",
+    "createHost": "({getWorld?,actorByEntity,playerByEntity,invokeOnRecvEvent,nullEventDiagnostic,commonActorReceive,cameraStageArea?}) => exact collision/storage/query/owner adapter; actor/player functions must independently generation-check",
+    "update": "(inputWorld,entityRef,hostOptions) => {world,trace}; JSON world transaction",
+    "world": "actual storage + optional live collision overlay, explicit scenePlayerRefs and entityListScratch {items,version}, shared eventPool8; camera uses existing CameraNative schema. Creator/movement/cache commit timing belongs caller."
+  }
+}

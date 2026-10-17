@@ -1,0 +1,20 @@
+✔ four directions allocate ordered two rectangles with native layer, flags and zero positions (5.3292ms)
+✔ capacity failure on second rectangle keeps only successful native holder (3.0432ms)
+✔ actual3-2/10-4 population variants preserve authored direction and two bodies per Thorn (113.4493ms)
+✔ Player presence counts as kill target but event43 requires Player state1, not dead flag test (0.4263ms)
+✔ type173 receives43; absent Actor and other Actor types return false (0.3232ms)
+✔ disappear only phases1..3 zero Actor velocity; reusable flag disables both holders via owner gate (1.0086ms)
+✔ late collision dispatch re-queries Actor after damage, then type28 disappears and plays sound (0.5453ms)
+✔ both Thorn bits suppress late callback before lookup; belt suppresses type28 sound only (0.397ms)
+✔ map contact ignores belt; normalY positive alone plays disappearance sound (1.2572ms)
+✔ collision with non-default Player still disappears but suppresses sound (0.4859ms)
+✔ pushback reads holder0 exact-normal cache even when called for holder1; deleted targets skipped (0.8573ms)
+✔ native late collision pass uses real layer matrix and registry for both Thorn rectangles (1.6256ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 322.9761

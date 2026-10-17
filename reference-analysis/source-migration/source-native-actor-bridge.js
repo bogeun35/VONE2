@@ -11,6 +11,8 @@
 'use strict';
 const Lifecycle=require('./source-actor-lifecycle.js'),Capture=require('./source-player-capture.js'),Warp=require('./source-actor-warp-jump.js'),Motion=require('./source-actor-motion.js'),Broad=require('./source-collision-broadphase.js');
 const Default=require('./source-player-default.js'),Input=require('./source-player-native-input.js'),Boundary=require('./source-player-screen-boundary.js'),Queries=require('./source-player-contact-queries.js'),Jump=require('./source-player-jump-notify.js');
+const ActorStorage=require('./source-native-actor-storage.js');
+const Damage=require('./source-damage-rect-update.js'),Allocator=require('./source-native-entity-allocator.js');
 const Pool=require('./source-native-event-pool.js');
 const GoalQuery=require('./source-player-goal-query.js');
 const Effects=require('./source-player-effects.js');
@@ -42,8 +44,15 @@ function jumpHost(world,host){return {
   return Pool.notifyEvent(target,event,(_,param)=>{const result=invoke(param);return typeof result==='object'?result.handled:result;});
  }
 };}
+function damageHost(w,host){
+ const resolve=(world,id)=>Allocator.isCurrent(world.entityAllocator,id)?world.actors.find(a=>a.entityId===id)||null:null;
+ return Damage.createHost({actorByEntity:resolve,playerByEntity:(world,id)=>resolve(world,id)?.player||null,
+ invokeOnRecvEvent:(world,a,event)=>syncResult(required(host,'invokeOnRecvEvent',world,a,event)),
+ nullEventDiagnostic:(world,detail)=>required(host,'nullEventDiagnostic',world,detail)});
+}
 function dispatch(world,id,event,host){
  const a=actor(world,id),type=event.eventType;
+ if(a.actorType===9&&type===4)return Damage.receive(world,a,{EventType:4},damageHost(world,host));
  if(a.actorType===17)return syncResult(Key.receive(view(world),a,event,keyHost(world,host)));
  if(type===37&&(a.jumpReceiver==='actor-base'||a.jumpReceiver==='player-default'&&a.player?.state===1))return Jump.receive37(a,event).handled;
  if(a.actorType===27&&[30,65,66].includes(type)){
@@ -67,11 +76,11 @@ function dispatch(world,id,event,host){
  }
  if([49,51,52,53,54,55].includes(type)){
   const receiver=Lifecycle.registry.events.find(r=>r.ordinal===a.actorType);
-  if(receiver&&a.actorType!==93&&!['Player','Blackout','BlackoutController'].includes(receiver.actorType))return syncResult(required(host,'receiveCustomEvent',world,a,event));
+  if(receiver&&![9,93].includes(a.actorType)&&!['Player','Blackout','BlackoutController'].includes(receiver.actorType))return syncResult(required(host,'receiveCustomEvent',world,a,event));
   // Work on the actual Actor so nested callbacks observe owner/flag writes.
   const previous=a.ordinal;a.ordinal=a.actorType;let result;
-  // NormalThorn.OnRecvEvent181889613 -> Thorn181721a97: every non61 event forwards Actor unchanged.
-  try {result=a.actorType===93?Lifecycle.commonEvent(a,event):Lifecycle.receiveControl(a,event);}finally {if(previous===undefined)delete a.ordinal;else a.ordinal=previous;}
+  // DamageRect18180ec61 also forwards base controls. NormalThorn.OnRecvEvent181889613 -> Thorn181721a97: every non61 event forwards Actor unchanged.
+  try {result=[9,93].includes(a.actorType)?Lifecycle.commonEvent(a,event):Lifecycle.receiveControl(a,event);}finally {if(previous===undefined)delete a.ordinal;else a.ordinal=previous;}
   for(const call of result.calls){if(call.kind==='setCollisionActive')Motion.setCollisionActive(view(world),a,call.value,call.sourceId);else if(call.kind==='notifyEvent')dispatch(world,call.targetId,{eventType:call.eventType,sourceId:call.sourceId,value:call.value},host);else throw Error('Native lifecycle call not implemented: '+call.kind);}
   return 0;
  }
@@ -83,7 +92,7 @@ function motionHost(world,host){return {
  // representation instead of interpreting them as normalized actor contacts.
  jumpProc:(w,a)=>{const q=Queries.createHost({lookupMode:'scene',getWorld:()=>w});Jump.jumpProc(w,a,{getCollision:(_,a,index)=>w.collisions.find(c=>c.id===a.collisionHolders[index]?.collisionId)||null,isContacted:(_,c,face)=>q.contactProbe(c,face).contacted,getGravity:()=>w.stage?.gravityRaw??w.gravityRaw});},checkOutMap:Motion.checkOutMap,setCollisionActive:Motion.setCollisionActive
 };}
-function transaction(input,operation){const world=clone(input);if(!Array.isArray(world.actors))throw Error('Native bridge Actor table required');const result=operation(world);return {world,result};}
+function transaction(input,operation){if(input.actorStorageMode==='raw336')return ActorStorage.run(input,w=>transaction(w,operation));const world=clone(input);if(!Array.isArray(world.actors))throw Error('Native bridge Actor table required');const result=operation(world);return {world,result};}
 function receive(input,id,event,host={}){return transaction(input,w=>dispatch(w,id,event,host));}
 function post1(input,id,host={}){return transaction(input,w=>{const a=actor(w,id),v=view(w);Motion.post1(v,a,motionHost(w,host));return null;});}
 function post2(input,id){return transaction(input,w=>{const a=actor(w,id),v=view(w);Motion.post2(v,a,{setCollisionActive:Motion.setCollisionActive});return null;});}
@@ -219,6 +228,7 @@ function runPhaseInPlace(w,phase,frame,host){
    }
    else if(name==='PlayerComponent.OnPost')componentPost(w,a,frame,host);
    else if(name==='ThunderComponent.OnUpdate'&&a.thunderState&&((a.thunder.flags&8)||(a.thunderState.phase===0&&Math.abs(a.thunderState.disappearTimeRaw)<4)))Thunder.update(v,a,a.thunder);
+   else if(name==='DamageRectComponent.OnUpdate')Damage.onUpdate(w,a,damageHost(w,host));
    else if(name==='DamageRectComponent.OnStart'){if(a.damageRect?.entityId!==a.entityId)throw Error('Native DamageRect component identity required');Motion.setCollisionActive(v,a,false,a.damageRect.entityId);}
    else if(name==='KeyComponent.OnStart')Key.onStart(view(w),a,keyHost(w,host));
    else if(name==='KeyComponent.OnUpdate')Key.onUpdate(view(w),a,frame.dtRaw,keyHost(w,host));
@@ -247,8 +257,9 @@ function collisionHost(host){
   syncActorPosition:(w,b,p)=>{actor(w,b.entityId).positionRaw={xRaw:p.xRaw,yRaw:p.yRaw};}
  });
 }
-function collide(input,host={}){const w=clone(input);for(const c of allCollisions(w))c.actorExists=w.actors.some(a=>a.entityId===c.entityId);const out=Pipeline.step(w,collisionHost(host));return {world:out.state,result:{events:out.events,orderedIds:out.orderedIds,pushTrace:out.pushTrace,inertiaTrace:out.inertiaTrace}};}
+function collide(input,host={}){if(input.actorStorageMode==='raw336')return ActorStorage.run(input,w=>collide(w,host));const w=clone(input);for(const c of allCollisions(w))c.actorExists=w.actors.some(a=>a.entityId===c.entityId);const out=Pipeline.step(w,collisionHost(host));return {world:out.state,result:{events:out.events,orderedIds:out.orderedIds,pushTrace:out.pushTrace,inertiaTrace:out.inertiaTrace}};}
 function stepScene(input,frame,host={}){
+ if(input.actorStorageMode==='raw336')return ActorStorage.run(input,w=>stepScene(w,frame,host));
  // A native stage host must supply the range/auto-scroll and camera phases.
  // Their placement is fixed; no silent omission or legacy per-player solver.
  let w=clone(input);w.frameNumber=frame.number;w.verified=frame.verified;Input.applySimulationInputs(w.inputs,frame.number,frame.packets);

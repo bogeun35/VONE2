@@ -1,0 +1,326 @@
+
+== DamageRectComponent.Creator 0x18180dd70
+0x18180dd70 mov qword ptr [rsp + 0x18], rbp
+0x18180dd75 push rsi
+0x18180dd76 sub rsp, 0x20
+0x18180dd7a cmp byte ptr [rip + 0x1b4d508], 0
+0x18180dd81 mov rbp, rdx
+0x18180dd84 mov rsi, rcx
+0x18180dd87 jne 0x18180ddc3
+0x18180dd89 lea rcx, [rip + 0x19ad300]
+0x18180dd90 call 0x1802c5dc0 ; 
+0x18180dd95 lock or dword ptr [rsp], 0
+0x18180dd9a lea rcx, [rip + 0x1960a7f]
+0x18180dda1 call 0x1802c5dc0 ; 
+0x18180dda6 lock or dword ptr [rsp], 0
+0x18180ddab lea rcx, [rip + 0x196a5d6]
+0x18180ddb2 call 0x1802c5dc0 ; 
+0x18180ddb7 lock or dword ptr [rsp], 0
+0x18180ddbc mov byte ptr [rip + 0x1b4d4c6], 1
+0x18180ddc3 mov rax, qword ptr [rip + 0x1960a56]
+0x18180ddca cmp dword ptr [rax + 0xe0], 0
+0x18180ddd1 jne 0x18180dde2
+0x18180ddd3 mov rcx, rax
+0x18180ddd6 call 0x1802ec040 ; 
+0x18180dddb mov rax, qword ptr [rip + 0x1960a3e]
+0x18180dde2 mov rax, qword ptr [rax + 0xb8]
+0x18180dde9 mov r8, qword ptr [rax]
+0x18180ddec test r8, r8
+0x18180ddef je 0x18180dec3
+0x18180ddf5 cmp dword ptr [r8 + 0x18], 0
+0x18180ddfa jbe 0x18180dec9
+0x18180de00 test rsi, rsi
+0x18180de03 je 0x18180dec3
+0x18180de09 mov r8, qword ptr [r8 + 0x20]
+0x18180de0d xor r9d, r9d
+0x18180de10 mov qword ptr [rsp + 0x30], rbx
+0x18180de15 mov rdx, rbp
+0x18180de18 mov rcx, rsi
+0x18180de1b mov qword ptr [rsp + 0x38], rdi
+0x18180de20 call 0x1817482c0 ; Frame.CreateActorEntity
+0x18180de25 mov rcx, qword ptr [rip + 0x19ad264]
+0x18180de2c mov rdi, rax
+0x18180de2f cmp dword ptr [rcx + 0xe0], 0
+0x18180de36 jne 0x18180de3d
+0x18180de38 call 0x1802ec040 ; 
+0x18180de3d mov rdx, qword ptr [rdi + 0x20]
+0x18180de41 mov rcx, rsi
+0x18180de44 call 0x1802197b0 ; 
+0x18180de49 xor r9d, r9d
+0x18180de4c mov r8, rbp
+0x18180de4f mov rdx, rsi
+0x18180de52 mov rcx, rax
+0x18180de55 mov rbx, rax
+0x18180de58 call 0x18180ded0 ; DamageRectComponent.ParseParameter
+0x18180de5d xor r9d, r9d
+0x18180de60 mov r8, rdi
+0x18180de63 mov rdx, rsi
+0x18180de66 mov rcx, rbx
+0x18180de69 call 0x18180dfc0 ; DamageRectComponent.InitCollision
+0x18180de6e cmp byte ptr [rip + 0x1b4d416], 0
+0x18180de75 mov rbx, qword ptr [rsp + 0x30]
+0x18180de7a jne 0x18180de94
+0x18180de7c lea rcx, [rip + 0x19ad20d]
+0x18180de83 call 0x1802c5dc0 ; 
+0x18180de88 lock or dword ptr [rsp], 0
+0x18180de8d mov byte ptr [rip + 0x1b4d3f7], 1
+0x18180de94 mov rcx, qword ptr [rip + 0x19ad1f5]
+0x18180de9b cmp dword ptr [rcx + 0xe0], 0
+0x18180dea2 jne 0x18180dea9
+0x18180dea4 call 0x1802ec040 ; 
+0x18180dea9 mov eax, dword ptr [rdi + 0xc]
+0x18180deac mov rbp, qword ptr [rsp + 0x40]
+0x18180deb1 bts eax, 0x12
+0x18180deb5 mov dword ptr [rdi + 0xc], eax
+0x18180deb8 mov rdi, qword ptr [rsp + 0x38]
+0x18180debd add rsp, 0x20
+0x18180dec1 pop rsi
+0x18180dec2 ret 
+0x18180dec3 call 0x18032a5e0 ; 
+0x18180dec8 int3 
+0x18180dec9 call 0x18032a5f0 ; 
+0x18180dece int3 
+0x18180decf int3 
+
+== DamageRectComponent.ParseParameter 0x18180ded0
+0x18180ded0 sub rsp, 0x48
+0x18180ded4 mov r9, r8
+0x18180ded7 mov r11, rcx
+0x18180deda test r8, r8
+0x18180dedd je 0x18180dfb2
+0x18180dee3 mov r10, qword ptr [r8 + 0x10]
+0x18180dee7 test r10, r10
+0x18180deea je 0x18180dfb2
+0x18180def0 mov rdx, qword ptr [r10 + 0x48]
+0x18180def4 test rdx, rdx
+0x18180def7 je 0x18180dfb2
+0x18180defd cmp dword ptr [rdx + 0x18], 0
+0x18180df01 jbe 0x18180dfb8
+0x18180df07 mov rcx, qword ptr [rdx + 0x20]
+0x18180df0b test rcx, rcx
+0x18180df0e je 0x18180dfb2
+0x18180df14 cmp dword ptr [rcx + 0x10], 1
+0x18180df18 jne 0x18180df23
+0x18180df1a mov rcx, qword ptr [rcx + 0x18]
+0x18180df1e mov rax, rcx
+0x18180df21 jmp 0x18180df27 ; 
+0x18180df23 xor ecx, ecx
+0x18180df25 xor eax, eax
+0x18180df27 cmp dword ptr [rdx + 0x18], 1
+0x18180df2b jbe 0x18180dfb8
+0x18180df31 mov rdx, qword ptr [rdx + 0x28]
+0x18180df35 test rdx, rdx
+0x18180df38 je 0x18180dfb2
+0x18180df3a cmp dword ptr [rdx + 0x10], 1
+0x18180df3e jne 0x18180df46
+0x18180df40 mov rdx, qword ptr [rdx + 0x18]
+0x18180df44 jmp 0x18180df48 ; 
+0x18180df46 xor edx, edx
+0x18180df48 mov r8, qword ptr [r10 + 0x20]
+0x18180df4c mov qword ptr [rsp + 0x20], r8
+0x18180df51 mov r8, qword ptr [r10 + 0x28]
+0x18180df55 mov qword ptr [rsp + 0x28], r8
+0x18180df5a movups xmm0, xmmword ptr [rsp + 0x20]
+0x18180df5f movups xmmword ptr [r9 + 0x28], xmm0
+0x18180df64 test rcx, rcx
+0x18180df67 jns 0x18180df7b
+0x18180df69 add qword ptr [r9 + 0x28], rcx
+0x18180df6d mov rax, rcx
+0x18180df70 neg rax
+0x18180df73 shl rax, 0x10
+0x18180df77 sar rax, 0x10
+0x18180df7b mov rcx, rdx
+0x18180df7e mov qword ptr [rsp + 0x28], rax
+0x18180df83 neg rcx
+0x18180df86 mov qword ptr [rsp + 0x20], rdx
+0x18180df8b movups xmm0, xmmword ptr [rsp + 0x20]
+0x18180df90 mov qword ptr [rsp + 0x38], rcx
+0x18180df95 mov qword ptr [rsp + 0x30], 0
+0x18180df9e movups xmm1, xmmword ptr [rsp + 0x30]
+0x18180dfa3 movups xmmword ptr [r11 + 8], xmm0
+0x18180dfa8 movups xmmword ptr [r11 + 0x18], xmm1
+0x18180dfad add rsp, 0x48
+0x18180dfb1 ret 
+0x18180dfb2 call 0x18032a5e0 ; 
+0x18180dfb7 int3 
+0x18180dfb8 call 0x18032a5f0 ; 
+0x18180dfbd int3 
+0x18180dfbe int3 
+0x18180dfbf int3 
+
+== DamageRectComponent.InitPost 0x18180e090
+0x18180e090 push rbx
+0x18180e092 sub rsp, 0x20
+0x18180e096 cmp byte ptr [rip + 0x1b4d1ee], 0
+0x18180e09d mov rbx, r8
+0x18180e0a0 jne 0x18180e0ba
+0x18180e0a2 lea rcx, [rip + 0x19acfe7]
+0x18180e0a9 call 0x1802c5dc0 ; 
+0x18180e0ae lock or dword ptr [rsp], 0
+0x18180e0b3 mov byte ptr [rip + 0x1b4d1d1], 1
+0x18180e0ba mov rcx, qword ptr [rip + 0x19acfcf]
+0x18180e0c1 cmp dword ptr [rcx + 0xe0], 0
+0x18180e0c8 jne 0x18180e0cf
+0x18180e0ca call 0x1802ec040 ; 
+0x18180e0cf mov eax, dword ptr [rbx + 0xc]
+0x18180e0d2 bts eax, 0x12
+0x18180e0d6 mov dword ptr [rbx + 0xc], eax
+0x18180e0d9 add rsp, 0x20
+0x18180e0dd pop rbx
+0x18180e0de ret 
+0x18180e0df int3 
+
+== DamageRectComponent.OnStart 0x18180e0e0
+0x18180e0e0 mov qword ptr [rsp + 8], rbx
+0x18180e0e5 mov qword ptr [rsp + 0x10], rsi
+0x18180e0ea push rdi
+0x18180e0eb sub rsp, 0x30
+0x18180e0ef cmp byte ptr [rip + 0x1b4d196], 0
+0x18180e0f6 mov rdi, r8
+0x18180e0f9 mov rsi, rdx
+0x18180e0fc mov rbx, rcx
+0x18180e0ff jne 0x18180e12a
+0x18180e101 lea rcx, [rip + 0x19acf88]
+0x18180e108 call 0x1802c5dc0 ; 
+0x18180e10d lock or dword ptr [rsp], 0
+0x18180e112 lea rcx, [rip + 0x1960707]
+0x18180e119 call 0x1802c5dc0 ; 
+0x18180e11e lock or dword ptr [rsp], 0
+0x18180e123 mov byte ptr [rip + 0x1b4d162], 1
+0x18180e12a mov rcx, qword ptr [rip + 0x19606ef]
+0x18180e131 cmp dword ptr [rcx + 0xe0], 0
+0x18180e138 jne 0x18180e13f
+0x18180e13a call 0x1802ec040 ; 
+0x18180e13f mov rcx, qword ptr [rip + 0x19acf4a]
+0x18180e146 mov rbx, qword ptr [rbx]
+0x18180e149 cmp dword ptr [rcx + 0xe0], 0
+0x18180e150 jne 0x18180e157
+0x18180e152 call 0x1802ec040 ; 
+0x18180e157 mov r9, rbx
+0x18180e15a mov qword ptr [rsp + 0x20], 0
+0x18180e163 xor r8d, r8d
+0x18180e166 mov rdx, rsi
+0x18180e169 mov rcx, rdi
+0x18180e16c call 0x18169ff50 ; ActorComponent.SetCollisionActive
+0x18180e171 mov rbx, qword ptr [rsp + 0x40]
+0x18180e176 mov rsi, qword ptr [rsp + 0x48]
+0x18180e17b add rsp, 0x30
+0x18180e17f pop rdi
+0x18180e180 ret 
+0x18180e181 int3 
+0x18180e182 int3 
+0x18180e183 int3 
+0x18180e184 int3 
+0x18180e185 int3 
+0x18180e186 int3 
+0x18180e187 int3 
+0x18180e188 int3 
+0x18180e189 int3 
+0x18180e18a int3 
+0x18180e18b int3 
+0x18180e18c int3 
+0x18180e18d int3 
+0x18180e18e int3 
+0x18180e18f int3 
+
+== DamageRectComponent.OnUpdate 0x18180e190
+0x18180e190 mov qword ptr [rsp + 0x18], rsi
+0x18180e195 mov qword ptr [rsp + 0x20], rdi
+0x18180e19a push r14
+0x18180e19c sub rsp, 0x30
+0x18180e1a0 cmp byte ptr [rip + 0x1b4d0e6], 0
+0x18180e1a7 mov rsi, r8
+0x18180e1aa mov rdi, rdx
+0x18180e1ad mov r14, rcx
+0x18180e1b0 jne 0x18180e1ec
+0x18180e1b2 lea rcx, [rip + 0x19aced7]
+0x18180e1b9 call 0x1802c5dc0 ; 
+0x18180e1be lock or dword ptr [rsp], 0
+0x18180e1c3 lea rcx, [rip + 0x19b45c6]
+0x18180e1ca call 0x1802c5dc0 ; 
+0x18180e1cf lock or dword ptr [rsp], 0
+0x18180e1d4 lea rcx, [rip + 0x1960645]
+0x18180e1db call 0x1802c5dc0 ; 
+0x18180e1e0 lock or dword ptr [rsp], 0
+0x18180e1e5 mov byte ptr [rip + 0x1b4d0a1], 1
+0x18180e1ec mov rcx, qword ptr [rip + 0x19ace9d]
+0x18180e1f3 cmp dword ptr [rcx + 0xe0], 0
+0x18180e1fa jne 0x18180e208
+0x18180e1fc call 0x1802ec040 ; 
+0x18180e201 mov rcx, qword ptr [rip + 0x19ace88]
+0x18180e208 test byte ptr [rsi + 0xc], 8
+0x18180e20c mov qword ptr [rsp + 0x40], rbx
+0x18180e211 ja 0x18180e2e6
+0x18180e217 cmp dword ptr [rcx + 0xe0], 0
+0x18180e21e jne 0x18180e225
+0x18180e220 call 0x1802ec040 ; 
+0x18180e225 xor r9d, r9d
+0x18180e228 xor r8d, r8d
+0x18180e22b mov rdx, rdi
+0x18180e22e mov rcx, rsi
+0x18180e231 call 0x1816a0200 ; ActorComponent.GetCollision
+0x18180e236 mov rbx, rax
+0x18180e239 test rax, rax
+0x18180e23c je 0x18180e2e6
+0x18180e242 test byte ptr [rax + 6], 1
+0x18180e246 jbe 0x18180e2e6
+0x18180e24c test rdi, rdi
+0x18180e24f je 0x18180e321
+0x18180e255 xor edx, edx
+0x18180e257 mov qword ptr [rsp + 0x48], rbp
+0x18180e25c mov rcx, rdi
+0x18180e25f call 0x18174a4a0 ; Frame.GetCollisionScene
+0x18180e264 mov rcx, qword ptr [rip + 0x19b4525]
+0x18180e26b mov rbp, rax
+0x18180e26e cmp dword ptr [rcx + 0xe0], 0
+0x18180e275 jne 0x18180e27c
+0x18180e277 call 0x1802ec040 ; 
+0x18180e27c mov r9b, 3
+0x18180e27f mov qword ptr [rsp + 0x20], 0
+0x18180e288 mov r8, rbx
+0x18180e28b mov rdx, rdi
+0x18180e28e mov rcx, rbp
+0x18180e291 call 0x1817f73b0 ; CollisionSceneComponent.IsCollidedByPushBackTarget
+0x18180e296 mov rbp, qword ptr [rsp + 0x48]
+0x18180e29b test al, al
+0x18180e29d jne 0x18180e2e6
+0x18180e29f mov rcx, qword ptr [rip + 0x196057a]
+0x18180e2a6 cmp dword ptr [rcx + 0xe0], 0
+0x18180e2ad jne 0x18180e2b4
+0x18180e2af call 0x1802ec040 ; 
+0x18180e2b4 mov rcx, qword ptr [rip + 0x19acdd5]
+0x18180e2bb mov rbx, qword ptr [r14]
+0x18180e2be cmp dword ptr [rcx + 0xe0], 0
+0x18180e2c5 jne 0x18180e2cc
+0x18180e2c7 call 0x1802ec040 ; 
+0x18180e2cc mov r9, rbx
+0x18180e2cf mov qword ptr [rsp + 0x20], 0
+0x18180e2d8 mov r8b, 1
+0x18180e2db mov rdx, rdi
+0x18180e2de mov rcx, rsi
+0x18180e2e1 call 0x18169ff50 ; ActorComponent.SetCollisionActive
+0x18180e2e6 mov rcx, qword ptr [rip + 0x1960533]
+0x18180e2ed cmp dword ptr [rcx + 0xe0], 0
+0x18180e2f4 jne 0x18180e2fb
+0x18180e2f6 call 0x1802ec040 ; 
+0x18180e2fb xor r9d, r9d
+0x18180e2fe mov r8, rsi
+0x18180e301 mov rdx, rdi
+0x18180e304 mov rcx, r14
+0x18180e307 mov rbx, qword ptr [rsp + 0x40]
+0x18180e30c mov rsi, qword ptr [rsp + 0x50]
+0x18180e311 mov rdi, qword ptr [rsp + 0x58]
+0x18180e316 add rsp, 0x30
+0x18180e31a pop r14
+0x18180e31c jmp 0x18180e330 ; DamageRectComponent.checkDamage
+0x18180e321 call 0x18032a5e0 ; 
+0x18180e326 int3 
+0x18180e327 int3 
+0x18180e328 int3 
+0x18180e329 int3 
+0x18180e32a int3 
+0x18180e32b int3 
+0x18180e32c int3 
+0x18180e32d int3 
+0x18180e32e int3 
+0x18180e32f int3 

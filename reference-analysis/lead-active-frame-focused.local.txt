@@ -1,0 +1,32 @@
+✔ Stage prepare3 builds no-shuffle Player bindings before next-Update input and prepare5 camera/activation (22.3982ms)
+✔ unverified preparation does no factory/index/allocator writes (1.785ms)
+✔ preparation exception rolls back Stage config, scene limit, indices and creator allocation (1.9882ms)
+✔ phase6 preparation gate is mask4; inactive flag1 still reaches required active-stage callback (1.7787ms)
+✔ range uses actual Scene PlayerInfo list and registered actors, excluding unregistered materialized Actors (7.4738ms)
+✔ Stage suspended entry skips missing scene/factory/notice but still advances verified time (0.4061ms)
+✔ prepared actual3-2 Player fixture runs factory/input/update/collision/range/post/camera/sort/status/time (47.1195ms)
+✖ inactive Stage still executes native Actor/collision/Post, skips camera/status but runs Notice/time (10.834ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 324.2437
+
+✖ failing tests:
+
+test at source-migration\source-native-stage-driver.test.cjs:21:1
+✖ inactive Stage still executes native Actor/collision/Post, skips camera/status but runs Notice/time (10.834ms)
+  Error: Native bridge explicit input singleton snapshot required: NormalInputComponent
+      at Object.lookupInputSingleton (C:\Users\user\projects\VONE2\reference-analysis\source-migration\source-native-actor-bridge.js:110:61)
+      at call (C:\Users\user\projects\VONE2\reference-analysis\source-migration\source-stage-input-update.js:22:148)
+      at Object.buttonsForPlayer (C:\Users\user\projects\VONE2\reference-analysis\source-migration\source-stage-input-update.js:36:15)
+      at playerButtons (C:\Users\user\projects\VONE2\reference-analysis\source-migration\source-native-actor-bridge.js:112:6)
+      at updatePlayerInPlace (C:\Users\user\projects\VONE2\reference-analysis\source-migration\source-native-actor-bridge.js:130:16)
+      at Object.OnUpdate_Default (C:\Users\user\projects\VONE2\reference-analysis\source-migration\source-native-actor-bridge.js:215:40)
+      at call (C:\Users\user\projects\VONE2\reference-analysis\source-migration\source-player-state-dispatch.js:27:611)
+      at updatePlayerState (C:\Users\user\projects\VONE2\reference-analysis\source-migration\source-player-state-dispatch.js:30:2)
+      at Object.onUpdate (C:\Users\user\projects\VONE2\reference-analysis\source-migration\source-player-state-dispatch.js:32:351)
+      at Object.dispatch (C:\Users\user\projects\VONE2\reference-analysis\source-migration\source-native-actor-bridge.js:211:19)

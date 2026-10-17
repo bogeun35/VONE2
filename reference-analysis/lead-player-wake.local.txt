@@ -1,0 +1,208 @@
+
+== PlayerComponent.Initialize 0x1816bd520
+0x1816bd520 mov qword ptr [rsp + 0x10], rbx
+0x1816bd525 mov qword ptr [rsp + 0x18], rbp
+0x1816bd52a push rsi
+0x1816bd52b push rdi
+0x1816bd52c push r15
+0x1816bd52e sub rsp, 0x30
+0x1816bd532 cmp byte ptr [rip + 0x1c9d1f8], 0
+0x1816bd539 mov rsi, r9
+0x1816bd53c mov r15, r8
+0x1816bd53f mov rbp, rdx
+0x1816bd542 mov rdi, rcx
+0x1816bd545 jne 0x1816bd5a3
+0x1816bd547 lea rcx, [rip + 0x1afdb42]
+0x1816bd54e call 0x1802c5dc0 ; 
+0x1816bd553 lock or dword ptr [rsp], 0
+0x1816bd558 lea rcx, [rip + 0x1b139b1]
+0x1816bd55f call 0x1802c5dc0 ; 
+0x1816bd564 lock or dword ptr [rsp], 0
+0x1816bd569 lea rcx, [rip + 0x1b04a68]
+0x1816bd570 call 0x1802c5dc0 ; 
+0x1816bd575 lock or dword ptr [rsp], 0
+0x1816bd57a lea rcx, [rip + 0x1b134bf]
+0x1816bd581 call 0x1802c5dc0 ; 
+0x1816bd586 lock or dword ptr [rsp], 0
+0x1816bd58b lea rcx, [rip + 0x1b094e6]
+0x1816bd592 call 0x1802c5dc0 ; 
+0x1816bd597 lock or dword ptr [rsp], 0
+0x1816bd59c mov byte ptr [rip + 0x1c9d18e], 1
+0x1816bd5a3 movzx eax, byte ptr [rsp + 0x70]
+0x1816bd5a8 mov byte ptr [rdi + 8], al
+0x1816bd5ab movzx eax, byte ptr [rsp + 0x78]
+0x1816bd5b0 mov byte ptr [rdi + 0xe], al
+0x1816bd5b3 movzx eax, byte ptr [rsp + 0x80]
+0x1816bd5bb mov byte ptr [rdi + 7], al
+0x1816bd5be mov rcx, qword ptr [rip + 0x1afdacb]
+0x1816bd5c5 cmp dword ptr [rcx + 0xe0], 0
+0x1816bd5cc jne 0x1816bd5d3
+0x1816bd5ce call 0x1802ec040 ; 
+0x1816bd5d3 movzx eax, word ptr [rsi + 6]
+0x1816bd5d7 mov word ptr [rdi + 0x18], ax
+0x1816bd5db mov word ptr [rdi + 3], 0x100
+0x1816bd5e1 mov byte ptr [rdi + 0xd], 1
+0x1816bd5e5 mov byte ptr [rdi + 5], 2
+0x1816bd5e9 mov word ptr [rdi + 0x11], 0x101
+0x1816bd5ef mov rax, qword ptr [rip + 0x1b1391a]
+0x1816bd5f6 cmp dword ptr [rax + 0xe0], 0
+0x1816bd5fd jne 0x1816bd60e
+0x1816bd5ff mov rcx, rax
+0x1816bd602 call 0x1802ec040 ; 
+0x1816bd607 mov rax, qword ptr [rip + 0x1b13902]
+0x1816bd60e mov rax, qword ptr [rax + 0xb8]
+0x1816bd615 mov rcx, qword ptr [rax + 0x90]
+0x1816bd61c mov qword ptr [rdi + 0x50], rcx
+0x1816bd620 mov qword ptr [rdi + 0x78], rcx
+0x1816bd624 mov rax, qword ptr [rip + 0x1b049ad]
+0x1816bd62b cmp dword ptr [rax + 0xe0], 0
+0x1816bd632 jne 0x1816bd643
+0x1816bd634 mov rcx, rax
+0x1816bd637 call 0x1802ec040 ; 
+0x1816bd63c mov rax, qword ptr [rip + 0x1b04995]
+0x1816bd643 mov rax, qword ptr [rax + 0xb8]
+0x1816bd64a movups xmm0, xmmword ptr [rax + 0x20]
+0x1816bd64e movups xmm1, xmmword ptr [rax + 0x30]
+0x1816bd652 movups xmmword ptr [rdi + 0xb8], xmm0
+0x1816bd659 movups xmmword ptr [rdi + 0xc8], xmm1
+0x1816bd660 mov eax, dword ptr [rdi + 0x20]
+0x1816bd663 bts eax, 3
+0x1816bd667 mov dword ptr [rdi + 0x20], eax
+0x1816bd66a mov rbx, qword ptr [rip + 0x1b133cf]
+0x1816bd671 cmp dword ptr [rbx + 0xe0], 0
+0x1816bd678 jne 0x1816bd689
+0x1816bd67a mov rcx, rbx
+0x1816bd67d call 0x1802ec040 ; 
+0x1816bd682 mov rbx, qword ptr [rip + 0x1b133b7]
+0x1816bd689 cmp byte ptr [rip + 0x1c9d0ac], 0
+0x1816bd690 mov rbx, qword ptr [rbx + 0xb8]
+0x1816bd697 mov rbx, qword ptr [rbx + 0xf0]
+0x1816bd69e jne 0x1816bd6c9
+0x1816bd6a0 lea rcx, [rip + 0x1b093d1]
+0x1816bd6a7 call 0x1802c5dc0 ; 
+0x1816bd6ac lock or dword ptr [rsp], 0
+0x1816bd6b1 lea rcx, [rip + 0x1b13850]
+0x1816bd6b8 call 0x1802c5dc0 ; 
+0x1816bd6bd lock or dword ptr [rsp], 0
+0x1816bd6c2 mov byte ptr [rip + 0x1c9d073], 1
+0x1816bd6c9 test rbp, rbp
+0x1816bd6cc je 0x1816bd84c
+0x1816bd6d2 xor edx, edx
+0x1816bd6d4 mov qword ptr [rsp + 0x50], r14
+0x1816bd6d9 mov rcx, rbp
+0x1816bd6dc call 0x18174ab40 ; Frame.GetStage
+0x1816bd6e1 mov rcx, qword ptr [rip + 0x1b13820]
+0x1816bd6e8 mov r14, rax
+0x1816bd6eb cmp dword ptr [rcx + 0xe0], 0
+0x1816bd6f2 jne 0x1816bd6f9
+0x1816bd6f4 call 0x1802ec040 ; 
+0x1816bd6f9 imul rbx, qword ptr [r14 + 0x10]
+0x1816bd6fe mov rax, qword ptr [rip + 0x1b09373]
+0x1816bd705 sar rbx, 0x10
+0x1816bd709 cmp dword ptr [rax + 0xe0], 0
+0x1816bd710 jne 0x1816bd721
+0x1816bd712 mov rcx, rax
+0x1816bd715 call 0x1802ec040 ; 
+0x1816bd71a mov rax, qword ptr [rip + 0x1b09357]
+0x1816bd721 mov rax, qword ptr [rax + 0xb8]
+0x1816bd728 xor r9d, r9d
+0x1816bd72b mov r8, r15
+0x1816bd72e mov rdx, rbp
+0x1816bd731 mov rcx, rdi
+0x1816bd734 imul rbx, qword ptr [rax + 8]
+0x1816bd739 sar rbx, 0x10
+0x1816bd73d mov qword ptr [rdi + 0x88], rbx
+0x1816bd744 imul rbx, qword ptr [r14 + 0x50]
+0x1816bd749 sar rbx, 0x10
+0x1816bd74d mov qword ptr [rdi + 0x90], rbx
+0x1816bd754 call 0x1816bd860 ; PlayerComponent.parseParameter
+0x1816bd759 mov eax, dword ptr [rsi + 0xc]
+0x1816bd75c xor r9d, r9d
+0x1816bd75f bts eax, 7
+0x1816bd763 mov rdx, rbp
+0x1816bd766 mov dword ptr [rsi + 0xc], eax
+0x1816bd769 mov rcx, rsi
+0x1816bd76c movsx eax, byte ptr [rdi + 0xe]
+0x1816bd770 sub eax, 8
+0x1816bd773 lea r8d, [rax + rax*4]
+0x1816bd777 add r8d, r8d
+0x1816bd77a call 0x18169f440 ; ActorComponent.SetSortingOrder
+0x1816bd77f mov eax, dword ptr [rsi + 0xc]
+0x1816bd782 mov r14, qword ptr [rsp + 0x50]
+0x1816bd787 bts eax, 9
+0x1816bd78b bts eax, 0xb
+0x1816bd78f mov dword ptr [rsi + 0xc], eax
+0x1816bd792 mov rax, qword ptr [rip + 0x1b092df]
+0x1816bd799 cmp dword ptr [rax + 0xe0], 0
+0x1816bd7a0 jne 0x1816bd7b1
+0x1816bd7a2 mov rcx, rax
+0x1816bd7a5 call 0x1802ec040 ; 
+0x1816bd7aa mov rax, qword ptr [rip + 0x1b092c7]
+0x1816bd7b1 mov rax, qword ptr [rax + 0xb8]
+0x1816bd7b8 mov rcx, qword ptr [rax]
+0x1816bd7bb mov qword ptr [rsi + 0x58], rcx
+0x1816bd7bf mov eax, dword ptr [rsi + 0xc]
+0x1816bd7c2 bts eax, 0xf
+0x1816bd7c6 bts eax, 0x10
+0x1816bd7ca bts eax, 0x12
+0x1816bd7ce bts eax, 0x18
+0x1816bd7d2 mov dword ptr [rsi + 0xc], eax
+0x1816bd7d5 cmp byte ptr [rdi + 9], 0
+0x1816bd7d9 je 0x1816bd7fa
+0x1816bd7db mov rcx, qword ptr [rip + 0x1afd8ae]
+0x1816bd7e2 cmp dword ptr [rcx + 0xe0], 0
+0x1816bd7e9 jne 0x1816bd7f0
+0x1816bd7eb call 0x1802ec040 ; 
+0x1816bd7f0 xor edx, edx
+0x1816bd7f2 mov rcx, rsi
+0x1816bd7f5 call 0x18169de00 ; ActorComponent.LookLeft
+0x1816bd7fa mov rcx, qword ptr [rip + 0x1b1370f]
+0x1816bd801 cmp dword ptr [rcx + 0xe0], 0
+0x1816bd808 jne 0x1816bd80f
+0x1816bd80a call 0x1802ec040 ; 
+0x1816bd80f xor r9d, r9d
+0x1816bd812 mov r8, rsi
+0x1816bd815 mov rdx, rbp
+0x1816bd818 mov rcx, rdi
+0x1816bd81b call 0x1816bde50 ; PlayerComponent.initCollision
+0x1816bd820 mov r9b, 1
+0x1816bd823 mov qword ptr [rsp + 0x70], 0
+0x1816bd82c mov r8, rsi
+0x1816bd82f mov rdx, rbp
+0x1816bd832 mov rcx, rdi
+0x1816bd835 mov rbx, qword ptr [rsp + 0x58]
+0x1816bd83a mov rbp, qword ptr [rsp + 0x60]
+0x1816bd83f add rsp, 0x30
+0x1816bd843 pop r15
+0x1816bd845 pop rdi
+0x1816bd846 pop rsi
+0x1816bd847 jmp 0x1816c07c0 ; PlayerComponent.updatePlayerState
+0x1816bd84c call 0x18032a5e0 ; 
+0x1816bd851 int3 
+0x1816bd852 int3 
+0x1816bd853 int3 
+0x1816bd854 int3 
+0x1816bd855 int3 
+0x1816bd856 int3 
+0x1816bd857 int3 
+0x1816bd858 int3 
+0x1816bd859 int3 
+0x1816bd85a int3 
+0x1816bd85b int3 
+0x1816bd85c int3 
+0x1816bd85d int3 
+0x1816bd85e int3 
+0x1816bd85f int3 
+
+== PlayerComponent.IsSleeping 0x1816bf5e0
+0x1816bf5e0 cmp byte ptr [rcx + 0x11], 0
+0x1816bf5e4 sete al
+0x1816bf5e7 ret 
+0x1816bf5e8 int3 
+0x1816bf5e9 int3 
+0x1816bf5ea int3 
+0x1816bf5eb int3 
+0x1816bf5ec int3 
+0x1816bf5ed int3 
+0x1816bf5ee int3 
+0x1816bf5ef int3 

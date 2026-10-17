@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "module": "source-ballkeybox-devices.js",
+  "status": "partial_native_box_core_verified_boundball_key_physics_host_pending",
+  "settledOn": "2026-10-15",
+  "nativeCodeExecuted": false,
+  "creator": {
+    "ordinal": 62,
+    "method": "0x1816b0cf0",
+    "delegateSite": "0x181776fa7",
+    "chain": "Frame.CreateActorEntity0x1816b0da7 ->generic0x1801f69e0->factory0x180684fd0->RuntimeType.CreateInstanceDefaultCtor0x18068510e->24zero bytes0x180685141..15f; BallKeyBox hasnoinstancector. Creator inlineParseandInitCollision; Initialize/InitPost/OnStart/OnPost bare ret.",
+    "prototypeEvidence": "resources.assets read-only UnityPy bundledPython3.12 -I -B, prefabBallKeyBox1867 EntityPrototype/EntityView/BallKeyBoxView; childRoot1114 SortingGroup/Animator/GameAnimator; childBody1414 SpriteRenderer/SpriteArray. No serialized BallKeyBox component. No sharedextractor or dependency modified."
+  },
+  "stage": {
+    "id": "st_w_10_03",
+    "counts2to8": [
+      {
+        "count": 2,
+        "position": [
+          144,
+          671
+        ],
+        "slot0": 0,
+        "numberOfBoxes": 1
+      },
+      {
+        "count": 3,
+        "position": [
+          144,
+          671
+        ],
+        "slot0": 0,
+        "numberOfBoxes": 1
+      },
+      {
+        "count": 4,
+        "position": [
+          144,
+          671
+        ],
+        "slot0": 0,
+        "numberOfBoxes": 1
+      },
+      {
+        "count": 5,
+        "position": [
+          144,
+          719
+        ],
+        "slot0": 0,
+        "numberOfBoxes": 1
+      },
+      {
+        "count": 6,
+        "position": [
+          144,
+          719
+        ],
+        "slot0": 0,
+        "numberOfBoxes": 1
+      },
+      {
+        "count": 7,
+        "position": [
+          144,
+          719
+        ],
+        "slot0": 0,
+        "numberOfBoxes": 1
+      },
+      {
+        "count": 8,
+        "position": [
+          144,
+          719
+        ],
+        "slot0": 0,
+        "numberOfBoxes": 1
+      }
+    ],
+    "compile": "Nativecomponentcore compilesall2..8; no activephysics/Key/BallPitcher fallback andno roundopeningclaim"
+  },
+  "fields": {
+    "componentUnboxed": "damageCount+0,flags+2,isDisappear+4,entity+8,disappearTime+0x10",
+    "actor": "m_Pos+b0,m_BaseScale+50,m_Velo+f0,m_RequestAnimationId+2,m_Flags+c",
+    "identity": "module box.id isjoin key; actual Actor.entityId isevent39sender, targetActor.entityId istarget. MustnotreplaceEntityRefgenerationwithsourceindex."
+  },
+  "parameters": {
+    "slot0": "FPperplayerXoffset. x=authoredX+actualPlayerActorCount*slot0 usingintegercount multiplywithoutFPshift. yunchanged. InlineCreator0x1816b0e22..3f andParse0x1816b0ecf..eeb writeQFactoryParam.InitPos+28/30. Notdamagecount/durability.",
+    "defaults": "Absentserializedcomponent/default24zero meansdamageCount0,flags0,isDisappearfalse,time0. No dynamic damagecounter reads/writes found outsideSerialize/GetHashCode."
+  },
+  "constants": {
+    "keyOffsetYRaw": {
+      "value": -1703936,
+      "source": "0x1816b16e1 literal -26FP"
+    },
+    "disappearTimeRaw": {
+      "value": 10922,
+      "literalSlot": "0x1831c3ae0",
+      "text": "0.1666666666666667",
+      "store": "0x1816b1731",
+      "resolver": "resolve-string-literals.local.py --cctor0x1816b15e0"
+    },
+    "body": {
+      "xRaw": -1441792,
+      "yRaw": -3670016,
+      "widthRaw": 2883584,
+      "heightRaw": 3670016,
+      "source": "0x1816b16fc..1723"
+    },
+    "trigger": {
+      "xRaw": -262144,
+      "yRaw": -3932160,
+      "widthRaw": 524288,
+      "heightRaw": 655360,
+      "source": "0x1816b173c..175e"
+    }
+  },
+  "collisionBirth": {
+    "body": "index0/type0/layer5/pushBackTarget3/syncPos true@0x1816b0fd2/fdc",
+    "trigger": "index1/type0/layer5/pushBackTarget0/syncPos true@0x1816b1060/106a",
+    "flagsScale": "HostActor.CreateCollision registry/SetBaseScale ownactualIDs/fullflags/scales. Modulecolliders aredefinitionplans; solids[] avoidsduplicateorunscaledAABB."
+  },
+  "update": {
+    "fall": "0x1816b1100 skipiffdisappearing. collision0 IsContacted(face1,includeMaptrue)@1179; groundedYvelocity=0evennegative@1196; airborneaddrawFrame.Gravity@11d3 (no dt). Nativecachednormals exactly(0,+1).",
+    "wait": "0x1816b11f0 timer-=dt;<=0 Actor.flagsbit13setandcomponentisDisappearclear@1278/127f. Timerretainsnegativeoverrun. dt1092:10ticksleave2raw,11thtick-1090requestsdelete. ActorSceneexitownsremoval."
+  },
+  "onCollided": {
+    "native": "0x1816b12b0",
+    "gate": "r9isOWNCollision; byte+4=m_Index!=0@1302. ThisisNOTcomponentisDisappear even thoughsameoffset. Primary0ignored,trigger1eligible. No targettype/layerfilter.",
+    "distance": "targetActorPosX-boxActorPosX abs <= i64(i64(baseScale*5)<<16)>>16 @1375..138b; inclusiveequality. FullActorlookuprequired, notrectoverlap orbodyScale.",
+    "sequence": [
+      "GetEventParam39senderboxActualEntityRef +PositionboxPos@13a9/13ca",
+      "targetActor.NotifyEvent synchronous39@13ce; int32zeroabort",
+      "nonzero Box.Velo=(0,0)@13ef",
+      "KeyComponent.Creator0x18186b5c0 atboxPosY+(-26*baseScale>>16)@14ea..1527",
+      "Actor.m_RequestAnimationId2/componentisDisappear1/time10922@1597..15cc"
+    ],
+    "noLatch": "ReceiverdoesnottestisDisappearorflags,doesnotdisableowncolliders. Repeatedacceptedcontacts resetfadeandcreateKeyagain. Do notaddone-shotunlessnativehigherlayerjustifies."
+  },
+  "boundBallDependency": {
+    "receiver": "BoundBallComponent.OnRecvEvent0x1817d3a00, event39 branch0x1817d3a9c..3b17",
+    "effect": "BoundBall.ActorPosX=eventPositionX, existingYpreserved; Velo=(0,3FP), if!component.m_IsDisappear callsinactive0x1817d4150; returns1.",
+    "ownership": "No BoundBall/BoundBallPitcher implementation added. actualdispatcher mustrunreceiver, notsimplyreturntrue; moduleguardrequiresdispatch/KeyCreator host. Diagnosticstubs aretests only."
+  },
+  "integration": {
+    "beforeStep": "ctx.actors[moduleId] actualentityId/flags/positionRaw/velocityRaw/baseScaleRaw; ctx.collision0ByBox nativecontact/mapcache; gravityRawanddtRaw. ActorchangesapplyduringcomponentUpdate beforeActor.Update2. CommonActorpausedbit16 skips update.",
+    "afterStep": "nativeorderedcontacts{boxId,ownCollisionIndex,targetActor:{entityId,positionRaw}}. ctx.transaction runswholeframe; dispatchActorEvent39 synchronousnativeint32, createKey exactKey.Creator. Returned events/keyPositions areauditrecords andmustnotbedispatched/createdtwice.",
+    "keyCreation": "NativeprogrammaticKey.Creator registersentity/ActorScene/ActorManager.m_Key; modulehasnokeyplaceholderstate. Hostactualfactoryownsallocation/generation/globalkeyref.",
+    "errors": "No guessedcallbackapproval, noBoundBallphysics orsharedKeymutationimplemented. Missingeligible-contacthost refuses. Transactionmustrollbackworld/ball/eventpool/keyregistrations aswellasmodule; directonCollided requirescallertransaction.",
+    "receivers": "BallKeyBox hasnoOnRecvEvent override. ctx.eventsforwardcommonActor; commonvisibility/pause/exit handledbyexistinghost.",
+    "scope": "Coreonly; actualBoundBallPitcher/Key/nativephysics/render/10-3parallelverification remainlead."
+  },
+  "verification": {
+    "unitCommand": "node --test source-migration/source-ballkeybox-devices.test.cjs",
+    "unitTests": {
+      "tests": 21,
+      "pass": 21,
+      "fail": 0
+    },
+    "fullCommand": "node --test source-migration/*.test.cjs",
+    "fullSuite": {
+      "tests": 1437,
+      "pass": 1437,
+      "fail": 0
+    },
+    "checked": [
+      "actual7populations",
+      "slotcountXoffset",
+      "grounded/airborne/exactnormals",
+      "index0skip/inclusiveXdistance/scaledoffset",
+      "synchronous39 reject/accept/order",
+      "missinghosts/asyncguard",
+      "repeatcontactnolatch",
+      "11tickexpiry",
+      "nestedhostrollback",
+      "JSON/pause",
+      "malformed/delayedguard",
+      "actualEntityRefsendernotmodulekey"
+    ]
+  },
+  "corrections": [
+    {
+      "draft": "Initial reading of +4 inOnCollided couldbeconfusedwithcomponentisDisappear, andActorbyte+2 couldbecalledproc.",
+      "settled": "r9isCollision, +4=m_Index; nonzeroindexgate. Actorbyte+2=m_RequestAnimationId, notstate/proc. FinalcodeusesexplicitownCollisionIndex/requestedAnimationId."
+    }
+  ],
+  "unresolved": [
+    "ActualBoundBallPitcher/BoundBallcreation/movement/inactive callback andnativeKeyfactoryhostintegration remainseparate.",
+    "NativeActor/collisioncache/IDs/scales/layercheck/physics phaseordering/common lifecycle/render andactual10-3playablevalidation notperformed."
+  ],
+  "files": [
+    "source-ballkeybox-devices.js",
+    "source-ballkeybox-devices.test.cjs",
+    "ballkeybox-device-report.json",
+    "ballkeybox-native.local.txt"
+  ],
+  "ownership": "NewBallKeyBoxfiles/result/claimonly; allpreviousowned/sharedmodules/runtime/play/HANDOFF/Git/deployunchanged.",
+  "freeze": "Completedverifiedunit; frozenforleadreview.",
+  "completePhysicsFidelity": false
+}

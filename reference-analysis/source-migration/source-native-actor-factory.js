@@ -30,7 +30,7 @@ function orderCreationParams(authored){
 }
 function materializeActorPrefab(input,actorType){
  // Exact uint64 GUIDs from audited installed ResourceContainer; never Number.
- const guid={93:'252681393109828677',38:'1049018996789292933',30:'3012907236034044674',9:'1028558524506428955',14:'1358310291138607793',17:'843619264496456878',27:'2433998748904079550'}[actorType];
+ const guid={103:'2991712624845831119',93:'252681393109828677',38:'1049018996789292933',30:'3012907236034044674',9:'1028558524506428955',14:'1358310291138607793',17:'843619264496456878',27:'2433998748904079550'}[actorType];
  if(!guid)throw Error('Native factory audited prefab mapping required for ActorType '+actorType);
  const w=JSON.parse(JSON.stringify(input));
  const out=Prefab.createFromPrefab({schemaVersion:1,allocator:w.entityAllocator,viewPool:w.viewPool},{prototypeGuid:guid},w.materializationProfile);
@@ -279,6 +279,35 @@ function createThorn(input,authored,host={}){
  const w=JSON.parse(JSON.stringify(input));if(typeof host.materializeThornBeforeInitialize!=='function')throw Error('Native Thorn actual prefab/materialization host required');
  const supplied=host.materializeThornBeforeInitialize(w,authored);if(supplied&&typeof supplied.then==='function')throw Error('Native Thorn materialization must be synchronous');if(!supplied?.actor||!supplied?.binding)throw Error('Native Thorn initialized Actor and Add facts required');return finishThornCreation(w,authored,supplied.actor,supplied.binding);
 }
+function finishLinePathLiftCreation(input,authored,actorAtInitialize,binding){
+ // Creator181878360/8384/8398/83a9/83ce. Actual Initialize allocates
+ // path capacity10 and fake capacity2; host supplies verified empty QList state.
+ const w=JSON.parse(JSON.stringify(input)),id=actorAtInitialize.entityId,ref=Allocator.decodeRef(id);
+ if(authored.type!==103||!authored.name)throw Error('Native LinePathLift resolved factory name required');
+ if(binding?.linePathLiftComponentAbsent!==true||binding.linePathLiftAddDefaultVerified!==true)throw Error('Native LinePathLift actual absent-component Add/default facts required');
+ if(ref.index===0||ref.rawVersion<0x80000000||!Allocator.isCurrent(w.entityAllocator,id))throw Error('Native LinePathLift allocated current EntityRef required');
+ if(!Array.isArray(w.actors)||w.actors.some(a=>a.entityId===id))throw Error('Native LinePathLift complete Actor table without duplicate identity required');
+ if(actorAtInitialize.actorType!==103||!QString.equals(QString.fromBytes(actorAtInitialize.nameQStringBytes),QString.fromString(authored.name)))throw Error('Native LinePathLift Actor type/resolved name mismatch');
+ const lists=binding.initializedPathLists;
+ if(lists?.nativeInitializeVerified!==true)throw Error('Native LinePathLift actual initialized path lists required');
+ for(const [key,capacity]of [['path',10],['fakePath',2]]){const l=lists[key];if(!Number.isInteger(l?.handle)||l.handle===0||l.handle< -2147483648||l.handle>2147483647||l.capacity!==capacity||!Array.isArray(l.items)||l.items.length!==0)throw Error('Native LinePathLift verified empty '+key+' allocation required');}
+ if(lists.path.handle===lists.fakePath.handle)throw Error('Native LinePathLift distinct allocated list handles required');
+ const count=w.playerIndices?.indexList?.length;
+ // Reuse audited parameter arithmetic only in its exact non-overflow domain.
+ for(const i of [4,5,6,7,8,9,30,31]){const d=authored.datas?.[i];if(!d||!Number.isInteger(d.t))throw Error('Native LinePathLift parameter slot'+i+' required');if(d.t===1){const raw=PlayerInit.stageRaw(d.f);if([5,6,7,8,9,30].includes(i)&&Math.abs(Math.floor(raw/65536))>0x7fffffff)throw Error('Native LinePathLift int32 parameter overflow unsupported');}}
+ for(let i=10;i<30;i+=2){const pair=authored.datas?.slice(i,i+2);if(pair?.length!==2||pair.some(d=>!d||!Number.isInteger(d.t)))throw Error('Native LinePathLift path parameter pair required');if(pair.every(d=>d.t!==1||PlayerInit.stageRaw(d.f)===0))break;}
+ const d=LinePath.decodeLinePathLift(authored,count),a=canonicalActor(JSON.parse(JSON.stringify(actorAtInitialize)));
+ if(Object.values(d.rectRaw).some(n=>!Number.isSafeInteger(n))||Math.abs(d.rectRaw.width/65536)>0x7fffffff||!Number.isSafeInteger(d.speedRaw))throw Error('Native LinePathLift arithmetic overflow unsupported');
+ a.linePathLift={entityId:id,flags:(d.disabled?1:0)|(d.loop?2:0)|(d.externalStart?8:0),moveContactCount:d.moveContactCount,needRideCount:d.needRideCount,targetPathIndex:0,absLoop:d.absLoop,enableLine:d.enableLine,isInertia:d.isInertia,returnDirection:0,waitInEndPoint:d.waitInEndPoint,pathPositions:{handle:lists.path.handle,capacity:10,items:d.paths},fakePathPositions:{handle:lists.fakePath.handle,capacity:2,items:[{xRaw:0,yRaw:0},{xRaw:0,yRaw:0}]},speedRaw:d.speedRaw,timerRaw:0,moveRaw:{xRaw:0,yRaw:0},offsetPositionRaw:{xRaw:0,yRaw:0},rectRaw:d.rectRaw};
+ w.actors.push(a);const c=CollisionFactory.createRect(w,a,d.rectRaw,2,true);if(c){c.layer=13;c.flags=(c.flags|4|1024);c.flags=d.isInertia?c.flags&~128:c.flags|128;}
+ Names.addUnique(w,a);const registered=Init.register(a,Bridge.allCollisions(w),{xRaw:d.xRaw,yRaw:d.yRaw},w.stage?.baseScaleRaw,{uniqueNameVerified:true});Object.assign(a,registered.actor);
+ for(const c of registered.collisions){Object.assign(Broad.getCollisionById(w.storage,c.id),c);const overlay=w.collisions?.find(b=>b.id===c.id);if(overlay)Object.assign(overlay,c);}
+ return {world:w,actorId:id};
+}
+function createLinePathLift(input,authored,host={}){
+ const w=JSON.parse(JSON.stringify(input));if(typeof host.materializeLinePathLiftBeforeParse!=='function')throw Error('Native LinePathLift actual prefab/Add/Initialize host required');
+ const supplied=host.materializeLinePathLiftBeforeParse(w,authored);if(supplied&&typeof supplied.then==='function')throw Error('Native LinePathLift materialization must be synchronous');if(!supplied?.actor||!supplied?.binding)throw Error('Native LinePathLift initialized Actor and path allocation facts required');return finishLinePathLiftCreation(w,authored,supplied.actor,supplied.binding);
+}
 function update(input,thresholdRaw,host={}){
  // ActorFactory.Update1816a2f50: count captured@2fe9, marked entry check@30a3
  // BEFORE threshold@30e4; population skip advances cursor without marking.
@@ -303,6 +332,7 @@ function update(input,thresholdRaw,host={}){
   else if(a.type===30&&typeof host.createActorByType!=='function'){const out=createRect(w,a,host);w=out.world;result={actorId:out.actorId};}
   else if(a.type===38&&typeof host.createActorByType!=='function'){const out=createThunder(w,a,host);w=out.world;result={actorId:out.actorId};}
   else if(a.type===93&&typeof host.createActorByType!=='function'){const out=createThorn(w,a,host);w=out.world;result={actorId:out.actorId};}
+  else if(a.type===103&&typeof host.createActorByType!=='function'){const out=createLinePathLift(w,a,host);w=out.world;result={actorId:out.actorId};}
   else {if(typeof host.createActorByType!=='function')throw Error('Native factory creator required: '+a.typeName+' ('+a.type+')');result=host.createActorByType(w,a,{authoredIndex:e.authoredIndex,convertedIndex:at});if(result&&typeof result.then==='function')throw Error('Native factory creator must be synchronous');}
   f=check();if(f.cursor>=f.createdEntries.length)throw Error('Native factory live created-list index out of range after creator');
   const markedIndex=f.cursor;f.createdEntries[markedIndex]=1;f.cursor=(f.cursor+1)&65535;
@@ -310,4 +340,4 @@ function update(input,thresholdRaw,host={}){
  }
  return {world:w,result:{trace,capturedPlayerIndexCount:count}};
 }
-module.exports={priority,orderCreationParams,materializeActorPrefab,addAndInitializeActor,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,initializePlayerIndices,createNextPlayer,finishKeyCreation,createKey,finishGoalCreation,createGoal,finishDamageRectCreation,createDamageRect,finishRectCreation,createRect,finishThunderCreation,createThunder,finishThornCreation,createThorn,update,completePhysicsFidelity:false};
+module.exports={priority,orderCreationParams,materializeActorPrefab,addAndInitializeActor,initializeAbsentActor,canonicalPlayer,finishPlayerCreation,initializePlayerIndices,createNextPlayer,finishKeyCreation,createKey,finishGoalCreation,createGoal,finishDamageRectCreation,createDamageRect,finishRectCreation,createRect,finishThunderCreation,createThunder,finishThornCreation,createThorn,finishLinePathLiftCreation,createLinePathLift,update,completePhysicsFidelity:false};

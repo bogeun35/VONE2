@@ -4,7 +4,7 @@ files: source-migration/source-actor-initialization.js, source-migration/source-
 
 tests: 전용 16 passing; full suite 1384 passing / 0 failing.
 
-what it is: Actor의 실제 생성 상태에 Initialize의 검증된 쓰기만 적용하는 순수 helper다. Actor가 없는 경우의 implicit zero 상태도 별도 API로 제공하며, 기존 프리팹 Actor는 보존한다. 성공한 AddActor의 InitPos/Pos 설정과 충돌 위치·스케일 처리는 기존 PlayerCollisionInit 코어를 재사용한다.
+what it is: Actor의 실제 생성 상태에 Initialize의 검증된 쓰기만 적용하는 순수 helper다. Actor가 없는 경우의 implicit zero 상태도 별도 API로 제공한다. 입력의 기존 필드 보존은 Initialize 자체의 의미이며, factory의 existing-Actor AddComponent 성공을 뜻하지 않는다. 성공한 AddActor의 InitPos/Pos 설정과 충돌 위치·스케일 처리는 기존 PlayerCollisionInit 코어를 재사용한다.
 
 stage compiles alone: no. 실제 3-2·10-4 온/오프라인 2..8인 population 및 Player collider 초기화 조합 검증은 통과했다. 완전한 stage factory는 실제 프리팹 상태, allocator EntityRef, holder handle, QString 결과와 scene 등록을 공급해야 한다.
 

@@ -1,0 +1,73 @@
+0x18001ccb0 mov qword ptr [rsp + 8], rbx
+0x18001ccb5 mov qword ptr [rsp + 0x10], rbp
+0x18001ccba mov qword ptr [rsp + 0x18], rsi
+0x18001ccbf push rdi
+0x18001ccc0 sub rsp, 0x30
+0x18001ccc4 cmp qword ptr [r9 + 0x38], 0
+0x18001ccc9 mov rdi, r9
+0x18001cccc mov esi, r8d
+0x18001cccf mov rbp, rdx
+0x18001ccd2 mov rbx, rcx
+0x18001ccd5 jne 0x18001ccdf
+0x18001ccd7 mov rcx, r9
+0x18001ccda call 0x180306dd0 ; 
+0x18001ccdf mov rax, qword ptr [rdi + 0x38]
+0x18001cce3 mov r9d, 0xc8
+0x18001cce9 mov r8d, 4
+0x18001ccef mov edx, esi
+0x18001ccf1 mov rcx, rbp
+0x18001ccf4 mov r10, qword ptr [rax + 8]
+0x18001ccf8 mov qword ptr [rsp + 0x20], r10
+0x18001ccfd call 0x18000fa30 ; 
+0x18001cd02 xorps xmm0, xmm0
+0x18001cd05 mov rsi, rax
+0x18001cd08 movups xmmword ptr [rbx], xmm0
+0x18001cd0b mov rcx, qword ptr [rdi + 0x20]
+0x18001cd0f test byte ptr [rcx + 0x135], 1
+0x18001cd16 jne 0x18001cd1d
+0x18001cd18 call 0x180306d50 ; 
+0x18001cd1d cmp dword ptr [rip + 0x33376b8], 0
+0x18001cd24 mov qword ptr [rbx], rbp
+0x18001cd27 je 0x18001cd61
+0x18001cd29 mov r8, rbx
+0x18001cd2c lea rcx, [rip + 0x338eeed]
+0x18001cd33 shr r8, 0xc
+0x18001cd37 and r8d, 0x1fffff
+0x18001cd3e mov eax, r8d
+0x18001cd41 shr rax, 6
+0x18001cd45 and r8d, 0x3f
+0x18001cd49 lea rdx, [rcx + rax*8]
+0x18001cd4d prefetchw byte ptr [rdx]
+0x18001cd50 mov rax, qword ptr [rdx]
+0x18001cd53 mov rcx, rax
+0x18001cd56 bts rcx, r8
+0x18001cd5a lock cmpxchg qword ptr [rdx], rcx
+0x18001cd5f jne 0x18001cd50
+0x18001cd61 mov rbp, qword ptr [rsp + 0x48]
+0x18001cd66 mov rax, rbx
+0x18001cd69 mov qword ptr [rbx + 8], rsi
+0x18001cd6d mov rbx, qword ptr [rsp + 0x40]
+0x18001cd72 mov rsi, qword ptr [rsp + 0x50]
+0x18001cd77 add rsp, 0x30
+0x18001cd7b pop rdi
+0x18001cd7c ret 
+0x18001cd7d int3 
+0x18001cd7e int3 
+0x18001cd7f int3 
+0x18001cd80 mov qword ptr [rsp + 8], rbx
+0x18001cd85 mov qword ptr [rsp + 0x10], rbp
+0x18001cd8a mov qword ptr [rsp + 0x18], rsi
+0x18001cd8f mov qword ptr [rsp + 0x20], rdi
+0x18001cd94 push r14
+0x18001cd96 sub rsp, 0x20
+0x18001cd9a cmp qword ptr [r9 + 0x38], 0
+0x18001cd9f mov rdi, r9
+0x18001cda2 mov r14d, r8d
+0x18001cda5 mov rbp, rdx
+0x18001cda8 mov rbx, rcx
+0x18001cdab jne 0x18001cdb5
+0x18001cdad mov rcx, r9
+0x18001cdb0 .byte 0xe8
+0x18001cdb1 .byte 0x1b
+0x18001cdb2 .byte 0xa0
+0x18001cdb3 .byte 0x2e

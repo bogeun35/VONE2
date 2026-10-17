@@ -1,0 +1,51 @@
+
+== QGameDefine..cctor 0x181780720
+0x181780720 sub rsp, 0x28
+0x181780724 cmp byte ptr [rip + 0x1bda514], 0
+0x18178072b jne 0x181780756
+0x18178072d lea rcx, [rip + 0x1a433e4]
+0x181780734 call 0x1802c5dc0 ; 
+0x181780739 lock or dword ptr [rsp], 0
+0x18178073e lea rcx, [rip + 0x19e490b]
+0x181780745 call 0x1802c5dc0 ; 
+0x18178074a lock or dword ptr [rsp], 0
+0x18178074f mov byte ptr [rip + 0x1bda4e9], 1
+0x181780756 mov rax, qword ptr [rip + 0x1a433bb]
+0x18178075d xor edx, edx
+0x18178075f mov rcx, qword ptr [rax + 0xb8]
+0x181780766 mov qword ptr [rcx], 0x300000
+0x18178076d mov rax, qword ptr [rip + 0x1a433a4]
+0x181780774 mov rcx, qword ptr [rax + 0xb8]
+0x18178077b mov qword ptr [rcx + 8], 0xfffffffff6a00000
+0x181780783 mov rax, qword ptr [rip + 0x1a4338e]
+0x18178078a mov rcx, qword ptr [rax + 0xb8]
+0x181780791 mov qword ptr [rcx + 0x10], 0x9600000
+0x181780799 mov rax, qword ptr [rip + 0x1a43378]
+0x1817807a0 mov rcx, qword ptr [rax + 0xb8]
+0x1817807a7 movabs rax, 0x151800000
+0x1817807b1 mov qword ptr [rcx + 0x18], rax
+0x1817807b5 mov rax, qword ptr [rip + 0x1a4335c]
+0x1817807bc mov rcx, qword ptr [rax + 0xb8]
+0x1817807c3 mov qword ptr [rcx + 0x20], 0x3555555
+0x1817807cb mov rax, qword ptr [rip + 0x1a43346]
+0x1817807d2 mov rcx, qword ptr [rax + 0xb8]
+0x1817807d9 mov qword ptr [rcx + 0x28], 0x1e00000
+0x1817807e1 mov rcx, qword ptr [rip + 0x19e4868]
+0x1817807e8 call 0x18163fcb0 ; 
+0x1817807ed mov rcx, qword ptr [rip + 0x1a43324]
+0x1817807f4 mov rdx, qword ptr [rcx + 0xb8]
+0x1817807fb mov qword ptr [rdx + 0x30], rax
+0x1817807ff add rsp, 0x28
+0x181780803 ret 
+0x181780804 int3 
+0x181780805 int3 
+0x181780806 int3 
+0x181780807 int3 
+0x181780808 int3 
+0x181780809 int3 
+0x18178080a int3 
+0x18178080b int3 
+0x18178080c int3 
+0x18178080d int3 
+0x18178080e int3 
+0x18178080f int3 

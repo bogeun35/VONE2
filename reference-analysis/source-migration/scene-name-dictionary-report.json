@@ -1,0 +1,102 @@
+{
+  "task": "SceneNameDictionary",
+  "status": "verified fixed-capacity hash/physical mutation helper; resize explicitly refused",
+  "readOnlyStatic": true,
+  "nativeCodeExecuted": false,
+  "verification": {
+    "ownTests": 52,
+    "ownPass": 52,
+    "ownFail": 0,
+    "fullSuiteTests": 2140,
+    "fullSuitePass": 2140,
+    "fullSuiteFail": 0,
+    "commands": ["node --test source-migration/source-scene-name-dictionary.test.cjs", "node --test source-migration/*.test.cjs"],
+    "instructionOracle": "DLL bytes and global metadata only: Scene capacity request/Allocate/prime normalization/stride calls, hash lookup/TryAdd/Add-wrapper/Remove/resize calls, Count expression, full prime initializer data, IFrameHeap cleared-allocation method names and absence of Clear in dictionary type methods.",
+    "actualStages": "3-2/10-4 2..8 offline/online (28 cases): frozen Factory.orderCreationParams + population selectors + UniqueName helper produce conditional successful registration-name stream with Player limit. Explicit EntityRef outcomes and no hidden insertions/removals assumed. Correct counts3-2:[14,13,14,15,16,17,18],10-4:[20,21,22,23,24,25,26]. Key A1_Key,Goal A2_Goal, later replacement A3_Key reuses removed physical slot. Not actual complete allocator/prototype/shuffle/boot execution."
+  },
+  "api": {
+    "global": "SourceSceneNameDictionary",
+    "create": "create({headerRef,requestedCapacity=128}) ->world-owned descriptor accepted directly by frozen SceneActivation. Host supplies identity of actual native allocated header; no invented entity or heap allocator IDs. Supported normalized capacities<=193.",
+    "query": "containsKey/getValue/findSlotIndex/getCount, keys are explicit NativeQString {bytes:[32]} objects. No implicit JS string normalization/hash.",
+    "mutation": "tryAdd ->boolean, add ->void/ArgumentException on duplicate, remove ->boolean. All mutate existing header/slot graph in place, preserve native physical slots and free list.",
+    "physicalSnapshot": "validate +return SAME descriptor, no clone, sort, compact or conversion from SceneNames logical entries.",
+    "clear_resize": "Explicit throwing boundaries, not silent no-ops. Full append requires native resize branch and is refused before mutation. Dictionary Clear not found in type metadata; Scene.Initialize allocates a new header."
+  },
+  "capacity": {
+    "request": 128,
+    "actual": 193,
+    "evidence": "ActorScene.Initialize0x1816a5b0e requests0x80, calls Allocate0x18001cbe0@b17 ->QDictionaryInternal.Allocate0x18000fa30@cc2b. GetNextPrimeGreaterThanOrEqual0x18197edc0 called@fab8; first table entry>=128 is193. Not128,137 or256.",
+    "primeTable": [3,7,17,29,53,97,193,389,769,1543,3079,6151,12289,24593,49157,98317,196613,393241,786433,1572869,3145739,6291469,12582917,25165843,50331653,100663319,201326611,402653189,805306457,1610612741],
+    "primeSource": "QCollectionsUtils.cctor0x18197f4e0 allocates30 Int32s@f545 and InitializeArray@f55f. Literal FieldRef slot0x1831a1448 token0x800002ad ->FieldRef342 ->field41356,dataIndex323976 of global metadata. Whole120-byte table verified in tests.",
+    "normalization": "GetNextPrimeGreaterThanOrEqual scans signed int table with>=@0x18197ee59..63; nonpositive request selects3. Exact existing prime retained. Above final table exhausts rather than computing new prime. Constructor deliberately refuses allocation scope above193; pure normalizeCapacity exposes verified table mapping.",
+    "growthObservation": "Resize0x1807f9920 calls GetNextPrime0x18197ea00@99ae, strict greater@ea99..aa3, so193 would request389. Helper does not implement resize allocation/commit/lifetime semantics."
+  },
+  "allocationAndLayout": {
+    "source": "QString32/EntityRef Allocate wrapper0x18001cc13..cc2b supplies key32/value8. QDictionaryInternal.CalculateStrides0x18197f680 aligns header12 to8 ->16,key32->32,value8->8 via0x181646760. Allocate0x18000fa30 stores combined offsets/stride@fb17..fb99.",
+    "headerBytes": 36,
+    "headerFields": {"0x00": "valueOffset=48", "0x04": "buckets heap handle", "0x08": "freeHead heap handle", "0x0c": "usedCount", "0x10": "freeCount", "0x14": "keyOffset=16", "0x18": "capacity", "0x1c": "entryStride=56", "0x20": "entries heap handle"},
+    "entryFields": {"0x00": "next link (bucket chain or free chain)", "0x04": "32-bit hash bits", "0x08": "state int32:0 cleared,1 removed,2 occupied", "0x10": "QString32 inline key", "0x30": "EntityRef64 value"},
+    "slotStrideBytes": 56,
+    "clearedStorage": "Metadata type8789 Quantum.Allocator.IFrameHeap slots0/1 are AllocateAndClear/AllocateAndClearPtr. Native allocation helpers0x18001b7b0/0x180025490 dispatch those methods. Header36,buckets193*4,entries193*56 allocated cleared. Zero bucket/freeHead/counters and unused entry state/payload are proven cleared-allocation results.",
+    "version": "No dictionary version counter in this36-byte header and no invented per-mutation version field. EntityRef versions are actual supplied values and unrelated to dictionary slot allocation."
+  },
+  "hashLookup": {
+    "source": "QString.GetHashCode0x18168ecc0 reused from frozen helper. Native find0x180033880 receives hash via EBP (zero-extends to64)@38ab; computes RAX=RBP then signed64 idiv positive capacity@392c..3934, hence index=(hash>>>0)%capacity, not signed remainder/abs/hash&0x7fffffff.",
+    "chain": "Start bucket head@3937; compare stored hash bits@395a; byte-counted QString comparator0x181939ce0@39b1 if equal; next link@39ba until native0. Module normalizes heap links to physical slot indices and null sentinel, preserving graph order.",
+    "witnesses": "Aa/BB hash70405 both bucket153 atcap193 and coexist by byte comparison. Korean 한글 hash-1662274657 ->uint32 2632692639 ->bucket97. Empty key hash68231 ->bucket102. Key tail padding ignored by equality/hash but full32 bytes copied on insertion.",
+    "emptyKey": "Dictionary can contain empty QString key and EntityRef0. Separate FindActor empty-key guard does not prohibit this generic dictionary key.",
+    "valueQueryError": "get_Item missing branch0x180033b03 type slot0x183190e60 token0x2000ab71 resolves System.Collections.Generic.KeyNotFoundException. JS error.name matches type; native exception text/stack not claimed identical."
+  },
+  "tryAddAndAdd": {
+    "source": "Scene successful registration call0x1816a73b1 reaches shared TryAdd0x180024500. It hashes@2455a, finds duplicate@245bd, returns false@245c7 before insert. Public Add wrapper0x180951f60 calls this shared helper@951fb4 and throws on false@951fcd..2004. Generic method specs65769 Add /65774 TryAdd confirm wrapper distinction.",
+    "duplicate": "TryAdd false, no overwrite or graph/counter change, even when usedCount==capacity. Add throws ArgumentException (type slot0x183164c08 token0x20007267 ->System.ArgumentException). This is raw dictionary behavior; ActorScene.AddActor's separate ContainsKey duplicate OnExit/Destroy branch remains parent/host responsibility.",
+    "freeReuse": "insert0x1807fb690 gets core header+4. core+4 freeHead nonzero ->resolve removed slot@b71b/b759, read old next@b76a, decrement freeCount@b76c, freeHead=old next@b76f. usedCount unchanged; free list is LIFO.",
+    "append": "No freeHead ->if usedCount==capacity call resize@b799. Otherwise slotIndex=usedCount, entry address=index*stride@b7b3..7bf, increment usedCount@b7c5.",
+    "writes": "Stored hash@b7e7,next=old bucket head@b823,state2@b825,key full32 bytes@b830/b834; bucket head=new entry@b871; value EntityRef64 copy after insert@0x180024666. No JS Map or insertion-order dictionary used."
+  },
+  "remove": {
+    "source": "Scene.exitActors0x1816a6f60 and closed generic Remove0x180952230 call0x1807fc010. Same unsigned hash bucket selection@c078..c081, stored-hash test@c0ea and QString compare@c14d.",
+    "missing": "Returnsfalse@c163; no slot/counter/link writes.",
+    "found": "Unlink from bucket head or predecessor.next@c189..c1c3. slot.next=old freeHead@c1c7..c1ca;slot.state=1@c1ce;freeCount++@c1d5;freeHead=removed entry@c1d8. Hash/key/value retained, usedCount not decremented, no swap/dense compaction.",
+    "count": "get_Count0x180951c0d..c10 =usedCount-freeCount. Removing all entries can leave positive usedCount and a full free list; it is not a Clear.",
+    "physicalEffect": "Reinsert consumes last removed slot first. Logical insertion order generally differs from physical ascending slot order after deletion/reuse."
+  },
+  "representation": {
+    "schema": "Frozen SceneActivation.SCHEMA (SceneNameDictionaryPhysicalV1)",
+    "fields": "World-owned descriptor includes headerRef,completePhysicalSnapshotVerified,capacity,usedCount,freeCount,freeHead,buckets,slots[{physicalIndex,state,next,hashCode,key,valueEntityRef}],layout metadata and normalizedSlotLinks:true.",
+    "links": "freeHead/buckets/slot.next are normalized physical slot index or null. Native raw heap handle0 corresponds to null; normalized index0 is a valid slot, not none. These are explicit graph projections, never purported original allocator offsets. Actual EntityRef values are preserved unchanged, including versions.",
+    "validation": "Requires complete typed graph and full cleared capacity. Bucket chains only contain state2 with matching QString hash/bucket, free chain onlystate1, no cycles/overlap/orphans and exact counts. Underlying frozen SceneActivation validator also checks physicalIndex/order/provenance. Graph validation does not independently certify that caller-supplied EntityRefs/header identity or registration stream came from full native boot.",
+    "json": "All graph links/keys/values are JSON-safe. Serialization/restore retains normalized physical order and explicit headerRef value. No JS Map iteration semantics.",
+    "pointerBoundary": "Queries return values or normalized indices, not persistent native heap pointers. Nested key objects are data values, not aliases to original inline key memory. Caller must not treat pre-resize/retained JS record references as verified native pointers."
+  },
+  "lifetimeAndCallbacks": {
+    "sameHeader": "Add/Remove mutate current descriptor and slot objects in place. SceneActivation captured header sees future deletions/reuse/appends and live usedCount. No native callbacks within these fixed-capacity hash/mutation operations; event-driven calls occur outside through Scene/Actor hosts.",
+    "reinitialize": "Scene.Initialize allocates a new cleared dictionary rather than clearing existing header. Caller supplies new actual headerRef and replaces world descriptor with a new object. Old captured descriptor remains distinct; do not overwrite old headerRef/object with a new allocation.",
+    "transactions": "Lead-owned world cloning/adoption must preserve descriptor identity for mutations to same captured header during an active traversal; otherwise old enumerator would observe stale clone. New native allocation requires separate object. This helper does not impose transaction rollback policy or mutate factory/runtime.",
+    "deallocation": "IFrameHeap Free, buffer handle reuse and header validity are external. No invented automatic header versions, allocation IDs or free policy."
+  },
+  "resizeBoundary": {
+    "trigger": "New absent key, no freeHead, usedCount==capacity ->0x1807f9920. Duplicate key and removed-slot reuse still work at full usedCount without resizing.",
+    "observed": "Internal resize obtains strict next prime@7f99ae (193->389), allocates new bucket/entry buffers, copies old capacity*stride@7f9aa0..ac2, rebuilds links by reverse physical scan@7f9adc..b58, frees old buffers and updates metadata@7f9b5a..bd8. Header pointer retained. These instruction observations are recorded without claiming complete allocation-failure/commit/pointer-lifetime reconstruction.",
+    "implemented": false,
+    "behavior": "resize() and full append throw before any helper state mutation. Constructor allocation above193 also refuses. Exact native heap buffer replacement/handles and commit/lifetime branch verification required before expanding scope."
+  },
+  "clearBoundary": {
+    "metadata": "QDictionary`2 TypeDef8751 method definitions57043..57054:Count,item,ContainsKey,TryGetValuePointer,Add,TryAdd,Remove,GetEnumerator,Allocate,GetValue,implicit,ctor. QDictionaryInternal8754 methods57071..57075:CalculateStrides,Allocate,Free,Print,Serialize. Neither has Clear. This does not claim no other unrelated global reset code exists.",
+    "behavior": "clear() explicitly refuses unverified in-place reset. Use actual Scene.Initialize/new allocation outcome through create with separate header identity; remove-all retains native usedCount/freeHead behavior. No fabricated zero-counter/no-op Clear."
+  },
+  "integrationBoundary": "Keep existing logical SceneNames lookup projection read-only. Lead can supply fresh physical descriptor from actual Scene.Initialize allocation identity, apply helper TryAdd/Add only for exact verified successful native registration stream and Remove for actual removals, then feed SAME descriptor to SceneActivation host. Parent duplicate OnExit/Destroy, factory custom creators/listeners, actual10-4 identity/RNG and both projections' transaction consistency remain lead-owned. Neither module auto-converts logical names order to physical evidence.",
+  "unresolved": [
+    "Resize beyond current fixed-capacity scope and allocation failure/commit/old-pointer lifetime are explicitly refused; do not silently substitute a JS container growth policy.",
+    "No verified in-place Clear API for this type; Scene reinitialize/free lifetime requires actual separate allocation outcome.",
+    "Native heap handles and header identity supplied by host; normalized links are not raw byte allocator offsets. Actual initial heap/allocator/prototype/listener stream and actor identity remain external facts.",
+    "Scene AddActor duplicate branch invokes parent OnExit/Destroy; raw dictionary helper does not perform actor destruction, registry changes, player list operations or name generation.",
+    "Actual successful scene registration order, hidden creator/listener mutations,10-4 shuffle identity and world transaction integration are not established by fixture counts. No complete gameboot/play equivalence claim."
+  ],
+  "corrections": [
+    "Scene requested capacity128 normalizes to actual193 via the original sparse prime table. Prior SceneActivation note correctly said request128; actual normalized capacity is newly resolved here.",
+    "Shared180024500 is bool TryAdd body (direct registration checks result), while public Add180951f60 wraps it with ArgumentException on duplicate. New helper exposes both distinctly.",
+    "Remove-all is not Clear; native usedCount retains holes and free list. No assumed dictionary version counter or insertion-order enumeration."
+  ],
+  "filesPolicy": "Only source-scene-name-dictionary.js/.test.cjs, scene-name-dictionary-report.json, SceneNameDictionary.result.md and claim marker created. NativeQString/SceneNames/SceneActivation/Factory/UniqueName/runtime/play/HANDOFF/Git read-only."
+}

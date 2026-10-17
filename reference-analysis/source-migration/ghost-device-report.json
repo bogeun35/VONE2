@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "module": "source-ghost-devices.js",
+  "status": "partial_native_phase0_core_and_birth_verified_host_physics_checkpoint_binding_pending",
+  "settledOn": "2026-10-15",
+  "nativeCodeExecuted": false,
+  "creator": {
+    "ordinal": 55,
+    "site": "0x181776d4a",
+    "method": "GhostComponent.Creator0x181853c60",
+    "notGhostPlayer": "GhostPlayer is differentdelegate/type; supportedTypesonlyGhost"
+  },
+  "stage": {
+    "id": "st_w_07_04",
+    "populations": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "actorsPerCount": 1,
+    "name": "Ghost1",
+    "position": [
+      93,
+      191
+    ],
+    "slots": [
+      0.5,
+      6,
+      100,
+      0,
+      0
+    ],
+    "compile": "실제2..8인 모두 명시적 실제checkpointInfo.isActive=false로Ghost1개compile. checkpoint누락은계속throw. 전체playable개방주장없음."
+  },
+  "parameters": {
+    "native": "0x181853f10",
+    "slot0": "m_BorderRate raw+0x20,abs>=4 override at0x181854025,default32768@0x181853dfb",
+    "slot1": "m_Speed raw+0x38,abs>=4 override at0x18185403d,default85195@0x181853e0b",
+    "slot2": "m_KeyRange raw+0x30,abs>=4 override at0x181854055,default6553600@0x181853e03",
+    "slot3": "m_InitDir raw+2 fromlow32value arithmetic>>16 thenbyte at0x181853fdd..fe5/0x181854059",
+    "slot4": "FPsar16 int32nonzero setsflagsbit0@0x18185405d..6b,doesnotclearzero",
+    "initialize": "Defaults alpha65536/sprite4/border32768/keyrange6553600/speed85195. GenericGhost helper0x180224390->0x1806874a0,RuntimeType.CreateInstanceDefaultCtor0x1806875de,72byteszero-copy0x180687611..647,noGhostinstancector; prefab1100/root1880/flip1983/body2551 no serializedGhost."
+  },
+  "stateKernels": {
+    "looking": "0x181854570: flagsbit1 meansactive. inactiveactivatesonlylook0; activestopswhenlook>=max(1,(i64((count<<16)*border)>>32)),else sprite=min(look,4). Countsprovideddiagnostic, notsubstitutefornativeorderedqueries.",
+    "motion": "0x181854a30 selectsnearKey otherwiseNearPlayerActor, addsTARGET_OFFSET_Y16, exactFPSqrt length/minspeed/nativeNormalize,velocity=n*speed>>16. LookLeft/Right basednormalizedX,zero leavesLook. HostActor appliesmotion,no dt. FrozenSourceDistanceConstraintMath read-only.",
+    "floating": "0x181854f10: oldSin(time*2)*8; time+=dt; newSin(time*2)*8; PosY+=new-old. Oneperiod0x6487e wrapanddivideby2 storedbacktime. FrozenSourceUpDownLiftMath exactLUT read-only.",
+    "phase1": "0x181854414: StopStage0x1818550a0 clearsStageflagsbit9,scrollType0,CameraRequestStop; event53pausedtrueviaFrame.NotifyEvent0x181749790thirdarg0; PlaySe11/shake;sprite2,velocity0,timer65536,phase2",
+    "phase2": "timer-=dt;<=0ActorVeloY=-32768,phase3@0x181854407..412",
+    "phase3": "alpha-=2dt,<=0alpha0,Actorflag13set/Stageflag10set,phase4@0x18185431c..3a3",
+    "receiver": "0x1818551c0 event61flagsbit2set;40/43 phase0->1;53ignoredifphase!=0elsecommonActor;othercommonActor",
+    "collision": "0x181855290 phase0 andtargetCollision.layer1 ->targetedevent43. Playerdamage/commonhandlerownsdeath, no directdeadPlayerIds."
+  },
+  "constants": {
+    "collisionRectRaw": {
+      "height": 3538944,
+      "width": 2621440,
+      "x": -1310720,
+      "y": -3604480,
+      "addresses": "0x181855418..43f"
+    },
+    "targetOffsetYRaw": {
+      "value": 1048576,
+      "store": "0x181855463"
+    },
+    "amplitudeSpeedRaw": {
+      "value": 131072,
+      "store": "0x181855479"
+    },
+    "amplitudeRaw": {
+      "value": 524288,
+      "store": "0x18185548f"
+    }
+  },
+  "unresolved": [
+    "HostmustprovideactualCheckPointInfo andliveorderedPlayeractor-indexslots/entitygenerations/components, ActorManager.m_Key snapshot andKey.attachTarget/Actor resolution, collision1flags andFrame.GetKey.AttachTargetCollisionLayer. Unknownfactscontinuefailclosed.",
+    "HostActorphasequery/commonpause, collisionallocationIDs/flags/layerchecks/nativebaseScale sync andActor.Update2/Post integration remainlead. ModuleoutputsactorChanges/effects, doesnotcreatefakeAABBcontacts.",
+    "Actual7-4playable/originalparallel/renderverification notperformed."
+  ],
+  "verification": {
+    "unitCommand": "node --test source-migration/source-ghost-devices.test.cjs",
+    "unitTests": {
+      "tests": 25,
+      "pass": 25,
+      "fail": 0
+    },
+    "fullCommand": "node --test source-migration/*.test.cjs",
+    "fullSuite": {
+      "tests": 1385,
+      "pass": 1385,
+      "fail": 0
+    },
+    "scope": "Actual2..8 compilewithactualcheckpointfacts plusphase0orderednullable/generation/state/dead/facing/tie/managerKeypriority/physicscommands. Fullhostphysics/render adapter NOTcompleted."
+  },
+  "nextCommands": [
+    "LeadbindactualCheckPointInfo andActorScene playerActorIndex/liveentitygeneration queries toexistingmodulefacts",
+    "BindnativeActor.Update2/Post/collision creation/currentpositions/scales/flags andActorManager.m_Key; no fakecontacts",
+    "SynchronousStopStage broadcastFrame.NotifyEvent andstage/camera effects; retainGhostreceiver53 phasebehavior",
+    "Runactual7-4scene integration/comparison onlythroughauthorizedleadworkflow; nooriginalgameexecutionbythishelper"
+  ],
+  "files": [
+    "source-ghost-devices.js",
+    "source-ghost-devices.test.cjs",
+    "ghost-device-report.json",
+    "ghost-native.local.txt",
+    "ghost-helpers.native.local.txt",
+    "extract-ghost-prototype.local.py",
+    "ghost-prototype-evidence.json"
+  ],
+  "ownership": "OnlynewGhostfiles+result/claim; otherownedmodules/runtime/play/HANDOFF/Git/deployunchanged.",
+  "completePhysicsFidelity": false,
+  "checkpointCorrection": {
+    "previous": "FrameConfigentry8 andActor+28/30 were suspected; leftunresolved.",
+    "actual": "Frame managedclass+0xc8=_globals; _globals_.CheckPointInfo boxedfieldoffset0x100->raw0xf0. CheckPointInfo.IsActive raw4 checked@0x181853e44. RespawnPositionListPtr raw8. Ifactive andlistcount>8,entry8 read@0x181853ecc/ed5; copiedtoQFactoryParam.InitPos managedoffset0x28/+0x30@0x181853eec/ef5. Thiswritesfactoryparam, NOTActorinactiveownerfields.",
+    "contract": "compile options.checkpointInfo requiresactualisActive boolean. Active requiresactualrespawnPositionsRaw list. Index8overridesonlyiflength>8; inactive/shortlistkeepsauthored(93,191). No inferredfalse default."
+  },
+  "queryRecovery": {
+    "players": "GetPlayerActorCount@0x18185476a thenGetPlayerByActorIndex0..count-1@0x181854838; nullskip; state5skip@865; IsAlive0x1816bff90 means!Playerflag512 &&state!=5; Frame.GetActor nullskip@8b6. Nativeactorlookupvalidatesgeneration/masks; moduleliveentitytable enforcesgeneration/components forprovidedactorindexslots.",
+    "counts": "CountactiveonlyaftervalidActor@8c6. NativeFPSqrt strictdistance<nearest@925/928; equalretainsfirstactor-indexentry. Nearentityrecord@942/9ae. Lookingifdx<0andLookRight,elsedx>=0and!LookRight; noYrange/anglecondition. Actor.IsLookingRight0x18169dd5f is!(actor.flags&1024).",
+    "key": "Correction: getNearKey doesNOTiterateorderedKeylist. ItreadsonlyActorManager.m_Key raw+0x50@0x181854d80. Ghostflag0 disableslookup. Nullkey/noActor/Key.AttachTargetraw+8nonnullreturnsnull. Strictabs(keyX-ghostX)<KeyRange@0x181854e17/1b; Yignored. Keytarget takespriority overNearPlayer, onlywhenNearPlayernonnull becausemoveentry@0x181854a73.",
+    "collision": "Bothrect0:layer8@0x18185415c;rect1:layer11@0x1818541ea;bothCreateCollision pushBackTarget0 andsyncPos true. SameH54/W40/X-20/Y-55. Fullflags/scale/IDs arehostActorCreateCollision/SetBaseScale binding. checkKeyTarget usescollisionindex1 flag0 andFrame.GetKey.AttachTargetCollisionLayer byte0==1 todisablecollision1. Prior wording keyState1 waswrongname: FinalAPI ctx.keyTargetFacts.attachTargetCollisionLayer isactualKey.m_AttachTargetCollisionLayer(+0), NOTKey.m_Phase(+1). PreviouskeyState labelremovedbeforehandoff.",
+    "initPost": "Actorbit9set@0x181854249,Lookbit10 clearedifinitDir0/setifnonzero@256/26c,bit24alwaysset@25a/270. Deviceflag/phase/floatingtime/timer/nearrefzerofromabsentserializedcomponent/newdefault72bytes."
+  },
+  "frameBroadcastCorrection": {
+    "previous": "r8=0 atFrame.NotifyEvent0x181749790 was anunresolved thirdrecipientselector.",
+    "actual": "metadataFrame.NotifyEvent token0x6001495 parameterCount1; r8=0 ishiddenMethodInfo, NOTexplicitselector. Nativebody getsActorScene, enumeratesliveentries(type2 occupancy) inactualstorageorder,Frame.GetActor nullskip, invokesNotifyEvents.Invoke_OnRecvEvent@0x181749aea. event53broadcast hostappliesactualregisteredreceivers; Ghostphase>0 ignores53 andcontinuesdefeat."
+  },
+  "correctionHistory": [
+    {
+      "previous": "FrameConfigentry8 andActor+28/30 were suspected; leftunresolved.",
+      "actual": "Frame managedclass+0xc8=_globals; _globals_.CheckPointInfo boxedfieldoffset0x100->raw0xf0. CheckPointInfo.IsActive raw4 checked@0x181853e44. RespawnPositionListPtr raw8. Ifactive andlistcount>8,entry8 read@0x181853ecc/ed5; copiedtoQFactoryParam.InitPos managedoffset0x28/+0x30@0x181853eec/ef5. Thiswritesfactoryparam, NOTActorinactiveownerfields.",
+      "contract": "compile options.checkpointInfo requiresactualisActive boolean. Active requiresactualrespawnPositionsRaw list. Index8overridesonlyiflength>8; inactive/shortlistkeepsauthored(93,191). No inferredfalse default."
+    },
+    {
+      "previous": "r8=0 atFrame.NotifyEvent0x181749790 was anunresolved thirdrecipientselector.",
+      "actual": "metadataFrame.NotifyEvent token0x6001495 parameterCount1; r8=0 ishiddenMethodInfo, NOTexplicitselector. Nativebody getsActorScene, enumeratesliveentries(type2 occupancy) inactualstorageorder,Frame.GetActor nullskip, invokesNotifyEvents.Invoke_OnRecvEvent@0x181749aea. event53broadcast hostappliesactualregisteredreceivers; Ghostphase>0 ignores53 andcontinuesdefeat."
+    },
+    {
+      "previous": "getNearKey was describedasorderednearestKey selection.",
+      "actual": "ActorManager.m_Key singleprimaryref,unattachedandstrictXrange,Yignored. ActualPlayerquery remainsactorindexordered."
+    },
+    {
+      "previous": "checkKeyTarget byte0 waslabelled keyState/phase1; phase0couldqueryKeywithnullNearPlayer.",
+      "actual": "Byte0 isKey.AttachTargetCollisionLayer notPhase. APIrenamedattachTargetCollisionLayer;Key.phase1doesnottriggerdisableiflayer!=1. moveentry requiresNearPlayernonnull beforekeylookup. PreexistingcommonActorpausedbit16 skipallphases; defeatedGhostonlyignoresnew53receiver,doesnotbypasspreexistingpause."
+    }
+  ]
+}

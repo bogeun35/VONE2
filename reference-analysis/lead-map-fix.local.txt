@@ -1,0 +1,328 @@
+
+== CollisionSceneComponent.fixPlayerPos 0x1817fe120
+0x1817fe120 sub rsp, 0x88
+0x1817fe127 cmp byte ptr [rip + 0x1b5d0e4], 0
+0x1817fe12e jne 0x1817fe18c
+0x1817fe130 lea rcx, [rip + 0x19c4659]
+0x1817fe137 call 0x1802c5dc0 ; 
+0x1817fe13c lock or dword ptr [rsp], 0
+0x1817fe141 lea rcx, [rip + 0x19773e0]
+0x1817fe148 call 0x1802c5dc0 ; 
+0x1817fe14d lock or dword ptr [rsp], 0
+0x1817fe152 lea rcx, [rip + 0x19772af]
+0x1817fe159 call 0x1802c5dc0 ; 
+0x1817fe15e lock or dword ptr [rsp], 0
+0x1817fe163 lea rcx, [rip + 0x19772ae]
+0x1817fe16a call 0x1802c5dc0 ; 
+0x1817fe16f lock or dword ptr [rsp], 0
+0x1817fe174 lea rcx, [rip + 0x1977285]
+0x1817fe17b call 0x1802c5dc0 ; 
+0x1817fe180 lock or dword ptr [rsp], 0
+0x1817fe185 mov byte ptr [rip + 0x1b5d086], 1
+0x1817fe18c mov rax, qword ptr [rip + 0x19c45fd]
+0x1817fe193 cmp dword ptr [rax + 0xe0], 0
+0x1817fe19a jne 0x1817fe1ab
+0x1817fe19c mov rcx, rax
+0x1817fe19f call 0x1802ec040 ; 
+0x1817fe1a4 mov rax, qword ptr [rip + 0x19c45e5]
+0x1817fe1ab mov rax, qword ptr [rax + 0xb8]
+0x1817fe1b2 mov r9, qword ptr [rax + 0x20]
+0x1817fe1b6 test r9, r9
+0x1817fe1b9 je 0x1817fe35b
+0x1817fe1bf xorps xmm0, xmm0
+0x1817fe1c2 movdqu xmmword ptr [rsp + 0x60], xmm0
+0x1817fe1c8 xor r10d, r10d
+0x1817fe1cb mov qword ptr [rsp + 0x70], r10
+0x1817fe1d0 mov qword ptr [rsp + 0x58], r9
+0x1817fe1d5 cmp dword ptr [rip + 0x1b56200], r10d
+0x1817fe1dc je 0x1817fe221
+0x1817fe1de lea r8, [rsp + 0x58]
+0x1817fe1e3 shr r8, 0xc
+0x1817fe1e7 and r8d, 0x1fffff
+0x1817fe1ee mov eax, r8d
+0x1817fe1f1 shr rax, 6
+0x1817fe1f5 lea rcx, [rip + 0x1bada24]
+0x1817fe1fc lea rdx, [rcx + rax*8]
+0x1817fe200 and r8d, 0x3f
+0x1817fe204 prefetchw byte ptr [rdx]
+0x1817fe207 nop word ptr [rax + rax]
+0x1817fe210 mov rax, qword ptr [rdx]
+0x1817fe213 mov rcx, rax
+0x1817fe216 bts rcx, r8
+0x1817fe21a lock cmpxchg qword ptr [rdx], rcx
+0x1817fe21f jne 0x1817fe210
+0x1817fe221 mov dword ptr [rsp + 0x60], r10d
+0x1817fe226 mov eax, dword ptr [r9 + 0x1c]
+0x1817fe22a mov dword ptr [rsp + 0x64], eax
+0x1817fe22e xorps xmm1, xmm1
+0x1817fe231 movups xmm0, xmmword ptr [rsp + 0x58]
+0x1817fe236 movups xmmword ptr [rsp + 0x38], xmm0
+0x1817fe23b movups xmmword ptr [rsp + 0x48], xmm1
+0x1817fe240 mov qword ptr [rsp + 0x28], r10
+0x1817fe245 lea rax, [rsp + 0x38]
+0x1817fe24a mov qword ptr [rsp + 0x30], rax
+0x1817fe24f mov r10d, 6
+0x1817fe255 mov rcx, qword ptr [rsp + 0x38]
+0x1817fe25a mov edx, dword ptr [rsp + 0x40]
+0x1817fe25e nop 
+0x1817fe260 mov r8, qword ptr [rip + 0x19771a1]
+0x1817fe267 test rcx, rcx
+0x1817fe26a je 0x1817fe34f
+0x1817fe270 mov eax, dword ptr [rcx + 0x1c]
+0x1817fe273 cmp dword ptr [rsp + 0x44], eax
+0x1817fe277 jne 0x1817fe2eb
+0x1817fe279 cmp edx, dword ptr [rcx + 0x18]
+0x1817fe27c jae 0x1817fe2eb
+0x1817fe27e mov r8, qword ptr [rcx + 0x10]
+0x1817fe282 test r8, r8
+0x1817fe285 je 0x1817fe33e
+0x1817fe28b movsxd rax, edx
+0x1817fe28e cmp eax, dword ptr [r8 + 0x18]
+0x1817fe292 jae 0x1817fe338
+0x1817fe298 add rax, 2
+0x1817fe29c add rax, rax
+0x1817fe29f movups xmm0, xmmword ptr [r8 + rax*8]
+0x1817fe2a4 movups xmmword ptr [rsp + 0x48], xmm0
+0x1817fe2a9 inc edx
+0x1817fe2ab mov dword ptr [rsp + 0x40], edx
+0x1817fe2af movq r8, xmm0
+0x1817fe2b4 movzx r9d, byte ptr [r8 + 1]
+0x1817fe2b9 lea eax, [r9 - 1]
+0x1817fe2bd cmp eax, 1
+0x1817fe2c0 jbe 0x1817fe2c8
+0x1817fe2c2 cmp r9b, 0xd
+0x1817fe2c6 jne 0x1817fe260
+0x1817fe2c8 movups xmm1, xmmword ptr [r8 + 0x40]
+0x1817fe2cd movups xmmword ptr [r8 + 0x40], xmm1
+0x1817fe2d2 movups xmmword ptr [r8 + 0x50], xmm1
+0x1817fe2d7 movzx eax, word ptr [r8 + 6]
+0x1817fe2dc btr ax, r10w
+0x1817fe2e1 mov word ptr [r8 + 6], ax
+0x1817fe2e6 jmp 0x1817fe255 ; 
+0x1817fe2eb mov rax, qword ptr [r8 + 0x20]
+0x1817fe2ef test byte ptr [rax + 0x135], 1
+0x1817fe2f6 jne 0x1817fe305
+0x1817fe2f8 mov rcx, rax
+0x1817fe2fb call 0x180306d50 ; 
+0x1817fe300 mov rcx, qword ptr [rsp + 0x38]
+0x1817fe305 test rcx, rcx
+0x1817fe308 je 0x1817fe34a
+0x1817fe30a mov eax, dword ptr [rcx + 0x1c]
+0x1817fe30d cmp dword ptr [rsp + 0x44], eax
+0x1817fe311 jne 0x1817fe343
+0x1817fe313 mov eax, dword ptr [rcx + 0x18]
+0x1817fe316 inc eax
+0x1817fe318 mov dword ptr [rsp + 0x40], eax
+0x1817fe31c xorps xmm0, xmm0
+0x1817fe31f movups xmmword ptr [rsp + 0x48], xmm0
+0x1817fe324 jmp 0x1817fe330 ; 
+0x1817fe326 mov rcx, qword ptr [rsp + 0x28]
+0x1817fe32b test rcx, rcx
+0x1817fe32e jne 0x1817fe355
+0x1817fe330 add rsp, 0x88
+0x1817fe337 ret 
+0x1817fe338 call 0x18032a5f0 ; 
+0x1817fe33d nop 
+0x1817fe33e call 0x18032a5e0 ; 
+0x1817fe343 xor ecx, ecx
+0x1817fe345 call 0x1814b1be0 ; 
+0x1817fe34a call 0x18032a5e0 ; 
+0x1817fe34f call 0x18032a5e0 ; 
+0x1817fe354 nop 
+0x1817fe355 call 0x1802f6b10 ; 
+0x1817fe35a int3 
+0x1817fe35b call 0x18032a5e0 ; 
+0x1817fe360 int3 
+0x1817fe361 int3 
+0x1817fe362 int3 
+0x1817fe363 int3 
+0x1817fe364 int3 
+0x1817fe365 int3 
+0x1817fe366 int3 
+0x1817fe367 int3 
+0x1817fe368 int3 
+0x1817fe369 int3 
+0x1817fe36a int3 
+0x1817fe36b int3 
+0x1817fe36c int3 
+0x1817fe36d int3 
+0x1817fe36e int3 
+0x1817fe36f int3 
+
+== MapComponent.IsContacted 0x18187ea30
+0x18187ea30 mov qword ptr [rsp + 8], rbx
+0x18187ea35 mov qword ptr [rsp + 0x20], rsi
+0x18187ea3a push rbp
+0x18187ea3b push rdi
+0x18187ea3c push r12
+0x18187ea3e push r14
+0x18187ea40 push r15
+0x18187ea42 lea rbp, [rsp - 0x2f]
+0x18187ea47 sub rsp, 0xe0
+0x18187ea4e cmp byte ptr [rip + 0x1adcbbd], 0
+0x18187ea55 mov r14, r9
+0x18187ea58 mov rbx, r8
+0x18187ea5b mov r12, rdx
+0x18187ea5e mov r15, rcx
+0x18187ea61 jne 0x18187ea8c
+0x18187ea63 lea rcx, [rip + 0x194a49e]
+0x18187ea6a call 0x1802c5dc0 ; 
+0x18187ea6f lock or dword ptr [rsp], 0
+0x18187ea74 lea rcx, [rip + 0x194509d]
+0x18187ea7b call 0x1802c5dc0 ; 
+0x18187ea80 lock or dword ptr [rsp], 0
+0x18187ea85 mov byte ptr [rip + 0x1adcb86], 1
+0x18187ea8c movups xmm1, xmmword ptr [rbx]
+0x18187ea8f xorps xmm0, xmm0
+0x18187ea92 movups xmmword ptr [rbp - 0x31], xmm1
+0x18187ea96 mov rax, qword ptr [rbp - 0x31]
+0x18187ea9a movups xmmword ptr [rbp - 0x11], xmm1
+0x18187ea9e mov rcx, qword ptr [rbp - 9]
+0x18187eaa2 movups xmmword ptr [rsp + 0x30], xmm1
+0x18187eaa7 imul rax, qword ptr [rsp + 0x30]
+0x18187eaad movups xmmword ptr [rbp - 1], xmm1
+0x18187eab1 imul rcx, qword ptr [rbp + 7]
+0x18187eab6 movups xmmword ptr [rbp - 0x51], xmm0
+0x18187eaba movaps xmmword ptr [rbp - 0x61], xmm1
+0x18187eabe add rcx, rax
+0x18187eac1 je 0x18187eb14
+0x18187eac3 call 0x1816463a0 ; 
+0x18187eac8 movups xmm0, xmmword ptr [rbx]
+0x18187eacb mov rcx, rax
+0x18187eace shr rax, 0x20
+0x18187ead2 movsxd r8, eax
+0x18187ead5 add ecx, 0xe
+0x18187ead8 movabs rax, 0x100000000000
+0x18187eae2 and ecx, 0x3f
+0x18187eae5 cqo 
+0x18187eae7 idiv r8
+0x18187eaea movups xmmword ptr [rsp + 0x30], xmm0
+0x18187eaef mov rdx, qword ptr [rsp + 0x30]
+0x18187eaf4 imul rdx, rax
+0x18187eaf8 sar rdx, cl
+0x18187eafb mov qword ptr [rbp - 0x61], rdx
+0x18187eaff mov rdx, qword ptr [rbp - 0x59]
+0x18187eb03 imul rdx, rax
+0x18187eb07 sar rdx, cl
+0x18187eb0a mov qword ptr [rbp - 0x59], rdx
+0x18187eb0e movaps xmm0, xmmword ptr [rbp - 0x61]
+0x18187eb12 jmp 0x18187eb17 ; 
+0x18187eb14 xorps xmm0, xmm0
+0x18187eb17 mov rbx, qword ptr [rip + 0x1944ffa]
+0x18187eb1e movaps xmmword ptr [rbp - 0x61], xmm0
+0x18187eb22 mov rdi, qword ptr [rbp - 0x61]
+0x18187eb26 shl rdi, 0xf
+0x18187eb2a movdqa xmmword ptr [rsp + 0x30], xmm0
+0x18187eb30 mov rsi, qword ptr [rbp - 0x79]
+0x18187eb34 shl rsi, 0xf
+0x18187eb38 sar rdi, 0x10
+0x18187eb3c sar rsi, 0x10
+0x18187eb40 cmp dword ptr [rbx + 0xe0], 0
+0x18187eb47 jne 0x18187eb58
+0x18187eb49 mov rcx, rbx
+0x18187eb4c call 0x1802ec040 ; 
+0x18187eb51 mov rbx, qword ptr [rip + 0x1944fc0]
+0x18187eb58 mov rbx, qword ptr [rbx + 0xb8]
+0x18187eb5f lea rcx, [rbp + 0xf]
+0x18187eb63 xor r8d, r8d
+0x18187eb66 mov rdx, r12
+0x18187eb69 mov rbx, qword ptr [rbx]
+0x18187eb6c call 0x181690610 ; Collision.GetRect
+0x18187eb71 movups xmm0, xmmword ptr [r12 + 0x40]
+0x18187eb77 movups xmm1, xmmword ptr [rax + 0x10]
+0x18187eb7b movaps xmmword ptr [rsp + 0x30], xmm0
+0x18187eb80 movq rcx, xmm0
+0x18187eb85 movups xmm0, xmmword ptr [rax]
+0x18187eb88 mov rdx, qword ptr [rbp - 0x79]
+0x18187eb8c add rcx, rdi
+0x18187eb8f add rdx, rsi
+0x18187eb92 movups xmmword ptr [rbp - 0x71], xmm1
+0x18187eb96 mov rax, qword ptr [rbp - 0x71]
+0x18187eb9a add rax, rcx
+0x18187eb9d movups xmmword ptr [rsp + 0x30], xmm0
+0x18187eba2 mov qword ptr [rbp - 0x51], rax
+0x18187eba6 movups xmmword ptr [rbp - 0x31], xmm0
+0x18187ebaa movups xmmword ptr [rsp + 0x30], xmm0
+0x18187ebaf mov rcx, qword ptr [rbp - 0x79]
+0x18187ebb3 add rcx, rax
+0x18187ebb6 movups xmmword ptr [rbp - 0x31], xmm0
+0x18187ebba mov r8, qword ptr [rbp - 0x31]
+0x18187ebbe movups xmmword ptr [rbp - 0x21], xmm1
+0x18187ebc2 add rdx, qword ptr [rbp - 0x19]
+0x18187ebc6 add r8, rdx
+0x18187ebc9 mov qword ptr [rbp - 0x49], rdx
+0x18187ebcd mov qword ptr [rbp - 0x41], rcx
+0x18187ebd1 mov qword ptr [rbp - 0x39], r8
+0x18187ebd5 test rsi, rsi
+0x18187ebd8 js 0x18187ebe2
+0x18187ebda jle 0x18187ebe6
+0x18187ebdc mov qword ptr [rbp - 0x49], r8
+0x18187ebe0 jmp 0x18187ebe6 ; 
+0x18187ebe2 mov qword ptr [rbp - 0x39], rdx
+0x18187ebe6 test rdi, rdi
+0x18187ebe9 js 0x18187ebf6
+0x18187ebeb jle 0x18187ebfd
+0x18187ebed mov rax, rcx
+0x18187ebf0 mov qword ptr [rbp - 0x51], rcx
+0x18187ebf4 jmp 0x18187ebfd ; 
+0x18187ebf6 mov rcx, rax
+0x18187ebf9 mov qword ptr [rbp - 0x41], rax
+0x18187ebfd movaps xmm0, xmmword ptr [rbp - 0x51]
+0x18187ec01 shl rax, 0x10
+0x18187ec05 cqo 
+0x18187ec07 movdqa xmmword ptr [rsp + 0x30], xmm0
+0x18187ec0d movaps xmm0, xmmword ptr [rbp - 0x41]
+0x18187ec11 idiv rbx
+0x18187ec14 shl rcx, 0x10
+0x18187ec18 mov r9, rax
+0x18187ec1b mov rax, qword ptr [rbp - 0x79]
+0x18187ec1f shl rax, 0x10
+0x18187ec23 cqo 
+0x18187ec25 movdqa xmmword ptr [rsp + 0x30], xmm0
+0x18187ec2b idiv rbx
+0x18187ec2e sar r9, 0x10
+0x18187ec32 mov r8, rax
+0x18187ec35 mov dword ptr [rbp + 0x6f], r9d
+0x18187ec39 mov rax, rcx
+0x18187ec3c sar r8, 0x10
+0x18187ec40 cqo 
+0x18187ec42 mov dword ptr [rbp + 0x73], r8d
+0x18187ec46 idiv rbx
+0x18187ec49 mov rcx, rax
+0x18187ec4c mov rax, qword ptr [rbp - 0x79]
+0x18187ec50 shl rax, 0x10
+0x18187ec54 cqo 
+0x18187ec56 sar rcx, 0x10
+0x18187ec5a idiv rbx
+0x18187ec5d mov dword ptr [rbp + 0x67], ecx
+0x18187ec60 mov rcx, qword ptr [rip + 0x194a2a1]
+0x18187ec67 sar rax, 0x10
+0x18187ec6b mov dword ptr [rbp + 0x6b], eax
+0x18187ec6e cmp dword ptr [rcx + 0xe0], 0
+0x18187ec75 jne 0x18187ec7c
+0x18187ec77 call 0x1802ec040 ; 
+0x18187ec7c mov r8, qword ptr [rbp + 0x67]
+0x18187ec80 mov r9, r14
+0x18187ec83 mov rdx, qword ptr [rbp + 0x6f]
+0x18187ec87 mov rcx, r15
+0x18187ec8a mov qword ptr [rsp + 0x20], 0
+0x18187ec93 call 0x18187ddd0 ; MapComponent.IsMovable
+0x18187ec98 lea r11, [rsp + 0xe0]
+0x18187eca0 test al, al
+0x18187eca2 mov rbx, qword ptr [r11 + 0x30]
+0x18187eca6 mov rsi, qword ptr [r11 + 0x48]
+0x18187ecaa sete al
+0x18187ecad mov rsp, r11
+0x18187ecb0 pop r15
+0x18187ecb2 pop r14
+0x18187ecb4 pop r12
+0x18187ecb6 pop rdi
+0x18187ecb7 pop rbp
+0x18187ecb8 ret 
+0x18187ecb9 int3 
+0x18187ecba int3 
+0x18187ecbb int3 
+0x18187ecbc int3 
+0x18187ecbd int3 
+0x18187ecbe int3 
+0x18187ecbf int3 

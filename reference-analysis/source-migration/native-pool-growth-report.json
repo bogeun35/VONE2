@@ -1,0 +1,6902 @@
+{
+  "registry": {
+    "reservedTypes": 1,
+    "builtinRegistrations": [
+      {
+        "instructionVA": "0x181936677",
+        "slotVA": "0x183192a90",
+        "encodedToken": "0xc002e33f",
+        "tag": 6,
+        "index": 94623,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "Transform2D",
+            "typeIndex": 8503,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1819366f1",
+        "slotVA": "0x183192a98",
+        "encodedToken": "0xc002e343",
+        "tag": 6,
+        "index": 94625,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "Transform3D",
+            "typeIndex": 8481,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181936774",
+        "slotVA": "0x183192aa8",
+        "encodedToken": "0xc002e341",
+        "tag": 6,
+        "index": 94624,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "Transform2DVertical",
+            "typeIndex": 8504,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181936836",
+        "slotVA": "0x183192ac8",
+        "encodedToken": "0xc002e293",
+        "tag": 6,
+        "index": 94537,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "PhysicsCollider2D",
+            "typeIndex": 8429,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181936907",
+        "slotVA": "0x183192ae8",
+        "encodedToken": "0xc002e28b",
+        "tag": 6,
+        "index": 94533,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "PhysicsBody2D",
+            "typeIndex": 8426,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1819369d8",
+        "slotVA": "0x183192ab0",
+        "encodedToken": "0xc002e295",
+        "tag": 6,
+        "index": 94538,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "PhysicsCollider3D",
+            "typeIndex": 8451,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181936aa9",
+        "slotVA": "0x183192ad0",
+        "encodedToken": "0xc002e28d",
+        "tag": 6,
+        "index": 94534,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "PhysicsBody3D",
+            "typeIndex": 8449,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181936b7a",
+        "slotVA": "0x183192ab8",
+        "encodedToken": "0xc002e297",
+        "tag": 6,
+        "index": 94539,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "PhysicsJoints2D",
+            "typeIndex": 8393,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181936c4b",
+        "slotVA": "0x183192aa0",
+        "encodedToken": "0xc002e299",
+        "tag": 6,
+        "index": 94540,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "PhysicsJoints3D",
+            "typeIndex": 8395,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181936d1c",
+        "slotVA": "0x183192ad8",
+        "encodedToken": "0xc002e28f",
+        "tag": 6,
+        "index": 94535,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "PhysicsCallbacks2D",
+            "typeIndex": 8427,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181936ded",
+        "slotVA": "0x183192ac0",
+        "encodedToken": "0xc002e291",
+        "tag": 6,
+        "index": 94536,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "PhysicsCallbacks3D",
+            "typeIndex": 8450,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181936e70",
+        "slotVA": "0x183192bb0",
+        "encodedToken": "0xc002e19b",
+        "tag": 6,
+        "index": 94413,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "CharacterController2D",
+            "typeIndex": 8392,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181936ef3",
+        "slotVA": "0x183192bb8",
+        "encodedToken": "0xc002e19d",
+        "tag": 6,
+        "index": 94414,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "CharacterController3D",
+            "typeIndex": 8394,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181936fc4",
+        "slotVA": "0x183192af8",
+        "encodedToken": "0xc002e271",
+        "tag": 6,
+        "index": 94520,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "NavMeshPathfinder",
+            "typeIndex": 8356,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181937095",
+        "slotVA": "0x183192ae0",
+        "encodedToken": "0xc002e273",
+        "tag": 6,
+        "index": 94521,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "NavMeshSteeringAgent",
+            "typeIndex": 8421,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181937166",
+        "slotVA": "0x183192ba8",
+        "encodedToken": "0xc002e26d",
+        "tag": 6,
+        "index": 94518,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "NavMeshAvoidanceAgent",
+            "typeIndex": 8357,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181937237",
+        "slotVA": "0x183192af0",
+        "encodedToken": "0xc002e26f",
+        "tag": 6,
+        "index": 94519,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "NavMeshAvoidanceObstacle",
+            "typeIndex": 8354,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1819372ba",
+        "slotVA": "0x183192a80",
+        "encodedToken": "0xc002e34b",
+        "tag": 6,
+        "index": 94629,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "View",
+            "typeIndex": 8523,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18193733d",
+        "slotVA": "0x183192ba0",
+        "encodedToken": "0xc002e25b",
+        "tag": 6,
+        "index": 94509,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55122,
+        "owner": 8283,
+        "token": "0x6000187",
+        "arguments": [
+          {
+            "name": "MapEntityLink",
+            "typeIndex": 8383,
+            "kind": 17
+          }
+        ]
+      }
+    ],
+    "gameRegistrations": [
+      {
+        "instructionVA": "0x18174ef9f",
+        "slotVA": "0x1831d5700",
+        "encodedToken": "0xc002e35b",
+        "tag": 6,
+        "index": 94637,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "ActorComponent",
+            "typeIndex": 4490,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f054",
+        "slotVA": "0x1831d56f8",
+        "encodedToken": "0xc002e35d",
+        "tag": 6,
+        "index": 94638,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "ActorFactoryComponent",
+            "typeIndex": 4491,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f0e5",
+        "slotVA": "0x1831d56f0",
+        "encodedToken": "0xc002e35f",
+        "tag": 6,
+        "index": 94639,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "ActorManagerComponent",
+            "typeIndex": 4492,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f199",
+        "slotVA": "0x1831d56e8",
+        "encodedToken": "0xc002e361",
+        "tag": 6,
+        "index": 94640,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "ActorSceneComponent",
+            "typeIndex": 4495,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f228",
+        "slotVA": "0x1831d56e0",
+        "encodedToken": "0xc002e363",
+        "tag": 6,
+        "index": 94641,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "AppleComponent",
+            "typeIndex": 4498,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f2d4",
+        "slotVA": "0x1831d56d8",
+        "encodedToken": "0xc002e365",
+        "tag": 6,
+        "index": 94642,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "AppleControllerComponent",
+            "typeIndex": 4499,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f380",
+        "slotVA": "0x1831d56d0",
+        "encodedToken": "0xc002e367",
+        "tag": 6,
+        "index": 94643,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "ArrangementComponent",
+            "typeIndex": 4501,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f409",
+        "slotVA": "0x1831d56c8",
+        "encodedToken": "0xc002e369",
+        "tag": 6,
+        "index": 94644,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "ArrowSignComponent",
+            "typeIndex": 4502,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f492",
+        "slotVA": "0x1831d56c0",
+        "encodedToken": "0xc002e36b",
+        "tag": 6,
+        "index": 94645,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BallKeyBoxComponent",
+            "typeIndex": 4503,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f51b",
+        "slotVA": "0x1831d56b8",
+        "encodedToken": "0xc002e36d",
+        "tag": 6,
+        "index": 94646,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BallPitcherComponent",
+            "typeIndex": 4507,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f5a4",
+        "slotVA": "0x1831d55b0",
+        "encodedToken": "0xc002e36f",
+        "tag": 6,
+        "index": 94647,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BallReceiverComponent",
+            "typeIndex": 4508,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f62d",
+        "slotVA": "0x1831d55a8",
+        "encodedToken": "0xc002e371",
+        "tag": 6,
+        "index": 94648,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BallSpeedControllerComponent",
+            "typeIndex": 4510,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f6b6",
+        "slotVA": "0x1831d55a0",
+        "encodedToken": "0xc002e373",
+        "tag": 6,
+        "index": 94649,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BarGraphComponent",
+            "typeIndex": 4512,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f73f",
+        "slotVA": "0x1831d5598",
+        "encodedToken": "0xc002e375",
+        "tag": 6,
+        "index": 94650,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BarGraphControllerComponent",
+            "typeIndex": 4521,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f7eb",
+        "slotVA": "0x1831d5590",
+        "encodedToken": "0xc002e377",
+        "tag": 6,
+        "index": 94651,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BatEnemyComponent",
+            "typeIndex": 4522,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f883",
+        "slotVA": "0x1831d5588",
+        "encodedToken": "0xc002e379",
+        "tag": 6,
+        "index": 94652,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BestScoreComponent",
+            "typeIndex": 4523,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f91b",
+        "slotVA": "0x1831d5580",
+        "encodedToken": "0xc002e37b",
+        "tag": 6,
+        "index": 94653,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BgmChangerComponent",
+            "typeIndex": 4525,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174f9d6",
+        "slotVA": "0x1831d5578",
+        "encodedToken": "0xc002e37d",
+        "tag": 6,
+        "index": 94654,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BlackoutComponent",
+            "typeIndex": 4528,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174fa6e",
+        "slotVA": "0x1831d5570",
+        "encodedToken": "0xc002e37f",
+        "tag": 6,
+        "index": 94655,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BlackoutControllerComponent",
+            "typeIndex": 4530,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174fb06",
+        "slotVA": "0x1831d5568",
+        "encodedToken": "0xc002e381",
+        "tag": 6,
+        "index": 94656,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BlinkBlockComponent",
+            "typeIndex": 4532,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174fb9e",
+        "slotVA": "0x1831d5560",
+        "encodedToken": "0xc002e383",
+        "tag": 6,
+        "index": 94657,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BlinkThunderComponent",
+            "typeIndex": 4533,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174fc36",
+        "slotVA": "0x1831d5558",
+        "encodedToken": "0xc002e385",
+        "tag": 6,
+        "index": 94658,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BoundBallComponent",
+            "typeIndex": 4535,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174fcce",
+        "slotVA": "0x1831d5550",
+        "encodedToken": "0xc002e387",
+        "tag": 6,
+        "index": 94659,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "Bowwow2EnemyComponent",
+            "typeIndex": 4536,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174fd66",
+        "slotVA": "0x1831d5548",
+        "encodedToken": "0xc002e389",
+        "tag": 6,
+        "index": 94660,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BowwowEnemyComponent",
+            "typeIndex": 4538,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174fdfe",
+        "slotVA": "0x1831d5540",
+        "encodedToken": "0xc002e38b",
+        "tag": 6,
+        "index": 94661,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BreakableRectComponent",
+            "typeIndex": 4540,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174fe96",
+        "slotVA": "0x1831d5538",
+        "encodedToken": "0xc002e38d",
+        "tag": 6,
+        "index": 94662,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BreakoutBallComponent",
+            "typeIndex": 4543,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174ff51",
+        "slotVA": "0x1831d5630",
+        "encodedToken": "0xc002e38f",
+        "tag": 6,
+        "index": 94663,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BreakoutBallObserverComponent",
+            "typeIndex": 4544,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18174ffe9",
+        "slotVA": "0x1831d5628",
+        "encodedToken": "0xc002e391",
+        "tag": 6,
+        "index": 94664,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BreakoutBattleBallComponent",
+            "typeIndex": 4545,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750081",
+        "slotVA": "0x1831d5620",
+        "encodedToken": "0xc002e393",
+        "tag": 6,
+        "index": 94665,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BreakoutBattleJudgeComponent",
+            "typeIndex": 4549,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750119",
+        "slotVA": "0x1831d5618",
+        "encodedToken": "0xc002e395",
+        "tag": 6,
+        "index": 94666,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BreakoutScaleControllerComponent",
+            "typeIndex": 4550,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817501b1",
+        "slotVA": "0x1831d5610",
+        "encodedToken": "0xc002e397",
+        "tag": 6,
+        "index": 94667,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "BridgeComponent",
+            "typeIndex": 4551,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750249",
+        "slotVA": "0x1831d5608",
+        "encodedToken": "0xc002e399",
+        "tag": 6,
+        "index": 94668,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CameraComponent",
+            "typeIndex": 4552,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750307",
+        "slotVA": "0x1831d5600",
+        "encodedToken": "0xc002e39b",
+        "tag": 6,
+        "index": 94669,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CapturingConstraintComponent",
+            "typeIndex": 4556,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175039f",
+        "slotVA": "0x1831d55f8",
+        "encodedToken": "0xc002e39d",
+        "tag": 6,
+        "index": 94670,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CapturingTargetComponent",
+            "typeIndex": 4558,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750437",
+        "slotVA": "0x1831d55f0",
+        "encodedToken": "0xc002e39f",
+        "tag": 6,
+        "index": 94671,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CardboardComponent",
+            "typeIndex": 4560,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817504cf",
+        "slotVA": "0x1831d55e8",
+        "encodedToken": "0xc002e3a1",
+        "tag": 6,
+        "index": 94672,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CheckPointComponent",
+            "typeIndex": 4561,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750567",
+        "slotVA": "0x1831d55e0",
+        "encodedToken": "0xc002e3a3",
+        "tag": 6,
+        "index": 94673,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CircleGraphComponent",
+            "typeIndex": 4563,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817505ff",
+        "slotVA": "0x1831d55d8",
+        "encodedToken": "0xc002e3a5",
+        "tag": 6,
+        "index": 94674,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CircleGraphControllerComponent",
+            "typeIndex": 4574,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750697",
+        "slotVA": "0x1831d55d0",
+        "encodedToken": "0xc002e3a7",
+        "tag": 6,
+        "index": 94675,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CoinComponent",
+            "typeIndex": 4575,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750752",
+        "slotVA": "0x1831d55c8",
+        "encodedToken": "0xc002e3a9",
+        "tag": 6,
+        "index": 94676,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CoinObserverComponent",
+            "typeIndex": 4576,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817507ea",
+        "slotVA": "0x1831d55c0",
+        "encodedToken": "0xc002e3ab",
+        "tag": 6,
+        "index": 94677,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CollisionActorCreatorComponent",
+            "typeIndex": 4577,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750882",
+        "slotVA": "0x1831d55b8",
+        "encodedToken": "0xc002e3ad",
+        "tag": 6,
+        "index": 94678,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CollisionChangePlayerComponent",
+            "typeIndex": 4578,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175091a",
+        "slotVA": "0x1831d54b0",
+        "encodedToken": "0xc002e3af",
+        "tag": 6,
+        "index": 94679,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CollisionConstraintMoveComponent",
+            "typeIndex": 4579,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817509d5",
+        "slotVA": "0x1831d54a8",
+        "encodedToken": "0xc002e3b1",
+        "tag": 6,
+        "index": 94680,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CollisionSceneComponent",
+            "typeIndex": 4588,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750a70",
+        "slotVA": "0x1831d54a0",
+        "encodedToken": "0xc002e3b3",
+        "tag": 6,
+        "index": 94681,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CollisionScrollComponent",
+            "typeIndex": 4591,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750b08",
+        "slotVA": "0x1831d5498",
+        "encodedToken": "0xc002e3b5",
+        "tag": 6,
+        "index": 94682,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CollisionSwitchComponent",
+            "typeIndex": 4593,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750ba0",
+        "slotVA": "0x1831d5490",
+        "encodedToken": "0xc002e3b7",
+        "tag": 6,
+        "index": 94683,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "ColorBoxComponent",
+            "typeIndex": 4594,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750c38",
+        "slotVA": "0x1831d5488",
+        "encodedToken": "0xc002e3b9",
+        "tag": 6,
+        "index": 94684,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "ColorMatchBoxComponent",
+            "typeIndex": 4598,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750cf3",
+        "slotVA": "0x1831d5480",
+        "encodedToken": "0xc002e3bb",
+        "tag": 6,
+        "index": 94685,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "ColorMatchControllerComponent",
+            "typeIndex": 4602,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750d8b",
+        "slotVA": "0x1831d5478",
+        "encodedToken": "0xc002e3bd",
+        "tag": 6,
+        "index": 94686,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CoopCountUpTimerComponent",
+            "typeIndex": 4605,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750e23",
+        "slotVA": "0x1831d5470",
+        "encodedToken": "0xc002e3bf",
+        "tag": 6,
+        "index": 94687,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CoopStopWatchComponent",
+            "typeIndex": 4606,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750ebb",
+        "slotVA": "0x1831d5468",
+        "encodedToken": "0xc002e3c1",
+        "tag": 6,
+        "index": 94688,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CountUpJudgeComponent",
+            "typeIndex": 4611,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181750f53",
+        "slotVA": "0x1831d5460",
+        "encodedToken": "0xc002e3c3",
+        "tag": 6,
+        "index": 94689,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "CountUpTimerComponent",
+            "typeIndex": 4612,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175100e",
+        "slotVA": "0x1831d5458",
+        "encodedToken": "0xc002e3c5",
+        "tag": 6,
+        "index": 94690,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DamageManageComponent",
+            "typeIndex": 4613,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817510a6",
+        "slotVA": "0x1831d5450",
+        "encodedToken": "0xc002e3c7",
+        "tag": 6,
+        "index": 94691,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DamageRectComponent",
+            "typeIndex": 4614,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175113e",
+        "slotVA": "0x1831d5448",
+        "encodedToken": "0xc002e3c9",
+        "tag": 6,
+        "index": 94692,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DanmakuEmitterComponent",
+            "typeIndex": 4615,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817511f9",
+        "slotVA": "0x1831d5440",
+        "encodedToken": "0xc002e3cb",
+        "tag": 6,
+        "index": 94693,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DanmakuLocatorComponent",
+            "typeIndex": 4617,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751291",
+        "slotVA": "0x1831d5438",
+        "encodedToken": "0xc002e3cd",
+        "tag": 6,
+        "index": 94694,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DanmakuModifierComponent",
+            "typeIndex": 4618,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751329",
+        "slotVA": "0x1831d5530",
+        "encodedToken": "0xc002e3cf",
+        "tag": 6,
+        "index": 94695,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DanmakuObserverComponent",
+            "typeIndex": 4621,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817513c1",
+        "slotVA": "0x1831d5528",
+        "encodedToken": "0xc002e3d1",
+        "tag": 6,
+        "index": 94696,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DanmakuThunderComponent",
+            "typeIndex": 4623,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751459",
+        "slotVA": "0x1831d5520",
+        "encodedToken": "0xc002e3d3",
+        "tag": 6,
+        "index": 94697,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DashBoardComponent",
+            "typeIndex": 4624,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817514f1",
+        "slotVA": "0x1831d5518",
+        "encodedToken": "0xc002e3d5",
+        "tag": 6,
+        "index": 94698,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DeadSwitchComponent",
+            "typeIndex": 4625,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751589",
+        "slotVA": "0x1831d5510",
+        "encodedToken": "0xc002e3d7",
+        "tag": 6,
+        "index": 94699,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DelaySwitchComponent",
+            "typeIndex": 4626,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751621",
+        "slotVA": "0x1831d5508",
+        "encodedToken": "0xc002e3d9",
+        "tag": 6,
+        "index": 94700,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DistanceConstraintComponent",
+            "typeIndex": 4629,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817516b9",
+        "slotVA": "0x1831d5500",
+        "encodedToken": "0xc002e3db",
+        "tag": 6,
+        "index": 94701,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DossunComponent",
+            "typeIndex": 4631,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751751",
+        "slotVA": "0x1831d54f8",
+        "encodedToken": "0xc002e3dd",
+        "tag": 6,
+        "index": 94702,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DummyColorBoxComponent",
+            "typeIndex": 4632,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817517e9",
+        "slotVA": "0x1831d54f0",
+        "encodedToken": "0xc002e3df",
+        "tag": 6,
+        "index": 94703,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DummyEquipmentComponent",
+            "typeIndex": 4634,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751881",
+        "slotVA": "0x1831d54e8",
+        "encodedToken": "0xc002e3e1",
+        "tag": 6,
+        "index": 94704,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DummyGoalComponent",
+            "typeIndex": 4635,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751919",
+        "slotVA": "0x1831d54e0",
+        "encodedToken": "0xc002e3e3",
+        "tag": 6,
+        "index": 94705,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "DummyPlayerComponent",
+            "typeIndex": 4636,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817519b1",
+        "slotVA": "0x1831d54d8",
+        "encodedToken": "0xc002e3e5",
+        "tag": 6,
+        "index": 94706,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "EndlessCountUpScoreComponent",
+            "typeIndex": 4642,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751a49",
+        "slotVA": "0x1831d54d0",
+        "encodedToken": "0xc002e3e7",
+        "tag": 6,
+        "index": 94707,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "EndlessDanmakuObserverComponent",
+            "typeIndex": 4645,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751b04",
+        "slotVA": "0x1831d54c8",
+        "encodedToken": "0xc002e3e9",
+        "tag": 6,
+        "index": 94708,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "EndlessDeadSwitchCreatorComponent",
+            "typeIndex": 4646,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751b9c",
+        "slotVA": "0x1831d54c0",
+        "encodedToken": "0xc002e3eb",
+        "tag": 6,
+        "index": 94709,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "EndlessGraphScoreComponent",
+            "typeIndex": 4648,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751c34",
+        "slotVA": "0x1831d54b8",
+        "encodedToken": "0xc002e3ed",
+        "tag": 6,
+        "index": 94710,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "EndlessJumpScoreComponent",
+            "typeIndex": 4649,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751cef",
+        "slotVA": "0x1831d53b0",
+        "encodedToken": "0xc002e3ef",
+        "tag": 6,
+        "index": 94711,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "EndlessLandmineObserverComponent",
+            "typeIndex": 4653,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751d87",
+        "slotVA": "0x1831d53a8",
+        "encodedToken": "0xc002e3f1",
+        "tag": 6,
+        "index": 94712,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "EndlessObstacleComponent",
+            "typeIndex": 4655,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751e1f",
+        "slotVA": "0x1831d53a0",
+        "encodedToken": "0xc002e3f3",
+        "tag": 6,
+        "index": 94713,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "EndlessPlaneObstacleComponent",
+            "typeIndex": 4657,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751eda",
+        "slotVA": "0x1831d5398",
+        "encodedToken": "0xc002e3f5",
+        "tag": 6,
+        "index": 94714,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "EndlessPoleLadderObserverComponent",
+            "typeIndex": 4663,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181751f95",
+        "slotVA": "0x1831d5390",
+        "encodedToken": "0xc002e3f7",
+        "tag": 6,
+        "index": 94715,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "EndlessRallyScoreComponent",
+            "typeIndex": 4665,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175202d",
+        "slotVA": "0x1831d5388",
+        "encodedToken": "0xc002e3f9",
+        "tag": 6,
+        "index": 94716,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "EndlessScoreComponent",
+            "typeIndex": 4666,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817520c5",
+        "slotVA": "0x1831d5380",
+        "encodedToken": "0xc002e3fb",
+        "tag": 6,
+        "index": 94717,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "EndlessScrollScoreComponent",
+            "typeIndex": 4667,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175215d",
+        "slotVA": "0x1831d5378",
+        "encodedToken": "0xc002e3fd",
+        "tag": 6,
+        "index": 94718,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "ExtraWeightedLiftComponent",
+            "typeIndex": 4668,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817521f5",
+        "slotVA": "0x1831d5370",
+        "encodedToken": "0xc002e3ff",
+        "tag": 6,
+        "index": 94719,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "FPInterpolatorComponent",
+            "typeIndex": 4669,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175228d",
+        "slotVA": "0x1831d5368",
+        "encodedToken": "0xc002e401",
+        "tag": 6,
+        "index": 94720,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "FakeCageComponent",
+            "typeIndex": 4671,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752325",
+        "slotVA": "0x1831d5360",
+        "encodedToken": "0xc002e403",
+        "tag": 6,
+        "index": 94721,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "FakeCursorComponent",
+            "typeIndex": 4673,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817523bd",
+        "slotVA": "0x1831d5358",
+        "encodedToken": "0xc002e405",
+        "tag": 6,
+        "index": 94722,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "FakePlayerComponent",
+            "typeIndex": 4678,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752478",
+        "slotVA": "0x1831d5350",
+        "encodedToken": "0xc002e407",
+        "tag": 6,
+        "index": 94723,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "FakeTimerComponent",
+            "typeIndex": 4682,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752510",
+        "slotVA": "0x1831d5348",
+        "encodedToken": "0xc002e409",
+        "tag": 6,
+        "index": 94724,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "FallBoxComponent",
+            "typeIndex": 4683,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817525a8",
+        "slotVA": "0x1831d5340",
+        "encodedToken": "0xc002e40b",
+        "tag": 6,
+        "index": 94725,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "FallingCageComponent",
+            "typeIndex": 4685,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752640",
+        "slotVA": "0x1831d5338",
+        "encodedToken": "0xc002e40d",
+        "tag": 6,
+        "index": 94726,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "FallingWallBlockComponent",
+            "typeIndex": 4686,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817526fb",
+        "slotVA": "0x1831d5430",
+        "encodedToken": "0xc002e40f",
+        "tag": 6,
+        "index": 94727,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "FallingWallComponent",
+            "typeIndex": 4687,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752793",
+        "slotVA": "0x1831d5428",
+        "encodedToken": "0xc002e411",
+        "tag": 6,
+        "index": 94728,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "FloatingThornComponent",
+            "typeIndex": 4688,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175282b",
+        "slotVA": "0x1831d5420",
+        "encodedToken": "0xc002e413",
+        "tag": 6,
+        "index": 94729,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "FrontSwitchComponent",
+            "typeIndex": 4689,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817528e6",
+        "slotVA": "0x1831d5418",
+        "encodedToken": "0xc002e415",
+        "tag": 6,
+        "index": 94730,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "GameComponent",
+            "typeIndex": 4691,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752981",
+        "slotVA": "0x1831d5410",
+        "encodedToken": "0xc002e417",
+        "tag": 6,
+        "index": 94731,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "GateComponent",
+            "typeIndex": 4692,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752a19",
+        "slotVA": "0x1831d5408",
+        "encodedToken": "0xc002e419",
+        "tag": 6,
+        "index": 94732,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "GearComponent",
+            "typeIndex": 4693,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752ab1",
+        "slotVA": "0x1831d5400",
+        "encodedToken": "0xc002e41b",
+        "tag": 6,
+        "index": 94733,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "GhostComponent",
+            "typeIndex": 4695,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752b49",
+        "slotVA": "0x1831d53f8",
+        "encodedToken": "0xc002e41d",
+        "tag": 6,
+        "index": 94734,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "GhostPlayerComponent",
+            "typeIndex": 4698,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752be1",
+        "slotVA": "0x1831d53f0",
+        "encodedToken": "0xc002e41f",
+        "tag": 6,
+        "index": 94735,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "GiantEnemyComponent",
+            "typeIndex": 4700,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752c79",
+        "slotVA": "0x1831d53e8",
+        "encodedToken": "0xc002e421",
+        "tag": 6,
+        "index": 94736,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "GiantEnemyHandComponent",
+            "typeIndex": 4703,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752d11",
+        "slotVA": "0x1831d53e0",
+        "encodedToken": "0xc002e423",
+        "tag": 6,
+        "index": 94737,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "GoKartComponent",
+            "typeIndex": 4705,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752da9",
+        "slotVA": "0x1831d53d8",
+        "encodedToken": "0xc002e425",
+        "tag": 6,
+        "index": 94738,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "GoalComponent",
+            "typeIndex": 4706,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752e41",
+        "slotVA": "0x1831d53d0",
+        "encodedToken": "0xc002e427",
+        "tag": 6,
+        "index": 94739,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "GraphControllerComponent",
+            "typeIndex": 4708,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752ed9",
+        "slotVA": "0x1831d53c8",
+        "encodedToken": "0xc002e429",
+        "tag": 6,
+        "index": 94740,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "GraphDebugComponent",
+            "typeIndex": 4711,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181752f71",
+        "slotVA": "0x1831d53c0",
+        "encodedToken": "0xc002e42b",
+        "tag": 6,
+        "index": 94741,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "HalfInputComponent",
+            "typeIndex": 4713,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175302f",
+        "slotVA": "0x1831d53b8",
+        "encodedToken": "0xc002e42d",
+        "tag": 6,
+        "index": 94742,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "HalfOperatorComponent",
+            "typeIndex": 4714,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817530c7",
+        "slotVA": "0x1831d52b0",
+        "encodedToken": "0xc002e42f",
+        "tag": 6,
+        "index": 94743,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "HeightJudgeComponent",
+            "typeIndex": 4716,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175315f",
+        "slotVA": "0x1831d52a8",
+        "encodedToken": "0xc002e431",
+        "tag": 6,
+        "index": 94744,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "IceRectComponent",
+            "typeIndex": 4717,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817531f7",
+        "slotVA": "0x1831d52a0",
+        "encodedToken": "0xc002e433",
+        "tag": 6,
+        "index": 94745,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "JudgeComponent",
+            "typeIndex": 4718,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175328f",
+        "slotVA": "0x1831d5298",
+        "encodedToken": "0xc002e435",
+        "tag": 6,
+        "index": 94746,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "JumpAreaComponent",
+            "typeIndex": 4719,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181753327",
+        "slotVA": "0x1831d5290",
+        "encodedToken": "0xc002e437",
+        "tag": 6,
+        "index": 94747,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "JumpJudgeComponent",
+            "typeIndex": 4720,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817533bf",
+        "slotVA": "0x1831d5288",
+        "encodedToken": "0xc002e439",
+        "tag": 6,
+        "index": 94748,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "JumpStandComponent",
+            "typeIndex": 4723,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181753457",
+        "slotVA": "0x1831d5280",
+        "encodedToken": "0xc002e43b",
+        "tag": 6,
+        "index": 94749,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "JumpStandMediatorComponent",
+            "typeIndex": 4724,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817534ef",
+        "slotVA": "0x1831d5278",
+        "encodedToken": "0xc002e43d",
+        "tag": 6,
+        "index": 94750,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "JumpSwitchComponent",
+            "typeIndex": 4725,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181753587",
+        "slotVA": "0x1831d5270",
+        "encodedToken": "0xc002e43f",
+        "tag": 6,
+        "index": 94751,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "KeyComponent",
+            "typeIndex": 4727,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175361f",
+        "slotVA": "0x1831d5268",
+        "encodedToken": "0xc002e441",
+        "tag": 6,
+        "index": 94752,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "KeyGetJudgeComponent",
+            "typeIndex": 4729,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817536b7",
+        "slotVA": "0x1831d5260",
+        "encodedToken": "0xc002e443",
+        "tag": 6,
+        "index": 94753,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "KillerEnemyComponent",
+            "typeIndex": 4731,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175374f",
+        "slotVA": "0x1831d5258",
+        "encodedToken": "0xc002e445",
+        "tag": 6,
+        "index": 94754,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "LandmineSwitchComponent",
+            "typeIndex": 4732,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175380a",
+        "slotVA": "0x1831d5250",
+        "encodedToken": "0xc002e447",
+        "tag": 6,
+        "index": 94755,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "LandmineSwitchObserverComponent",
+            "typeIndex": 4733,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817538a2",
+        "slotVA": "0x1831d5248",
+        "encodedToken": "0xc002e449",
+        "tag": 6,
+        "index": 94756,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "LaserBallComponent",
+            "typeIndex": 4735,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175393a",
+        "slotVA": "0x1831d5240",
+        "encodedToken": "0xc002e44b",
+        "tag": 6,
+        "index": 94757,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "LaserKeyBoxComponent",
+            "typeIndex": 4736,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817539d2",
+        "slotVA": "0x1831d5238",
+        "encodedToken": "0xc002e44d",
+        "tag": 6,
+        "index": 94758,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "LiftComponent",
+            "typeIndex": 4737,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181753a8d",
+        "slotVA": "0x1831d5330",
+        "encodedToken": "0xc002e44f",
+        "tag": 6,
+        "index": 94759,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "LinePathGearComponent",
+            "typeIndex": 4738,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181753b48",
+        "slotVA": "0x1831d5328",
+        "encodedToken": "0xc002e451",
+        "tag": 6,
+        "index": 94760,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "LinePathLiftComponent",
+            "typeIndex": 4739,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181753be0",
+        "slotVA": "0x1831d5320",
+        "encodedToken": "0xc002e453",
+        "tag": 6,
+        "index": 94761,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "MajorityControllerComponent",
+            "typeIndex": 4740,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181753c78",
+        "slotVA": "0x1831d5318",
+        "encodedToken": "0xc002e455",
+        "tag": 6,
+        "index": 94762,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "MajorityInputComponent",
+            "typeIndex": 4744,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181753d13",
+        "slotVA": "0x1831d5310",
+        "encodedToken": "0xc002e457",
+        "tag": 6,
+        "index": 94763,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "MapBlockReplacerComponent",
+            "typeIndex": 4745,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181753dab",
+        "slotVA": "0x1831d5308",
+        "encodedToken": "0xc002e459",
+        "tag": 6,
+        "index": 94764,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "MapBreakBlockRectComponent",
+            "typeIndex": 4746,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181753e43",
+        "slotVA": "0x1831d5300",
+        "encodedToken": "0xc002e45b",
+        "tag": 6,
+        "index": 94765,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "MapComponent",
+            "typeIndex": 4748,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181753ede",
+        "slotVA": "0x1831d52f8",
+        "encodedToken": "0xc002e45d",
+        "tag": 6,
+        "index": 94766,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "MapRectComponent",
+            "typeIndex": 4750,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181753f76",
+        "slotVA": "0x1831d52f0",
+        "encodedToken": "0xc002e45f",
+        "tag": 6,
+        "index": 94767,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "MoleComponent",
+            "typeIndex": 4752,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175400e",
+        "slotVA": "0x1831d52e8",
+        "encodedToken": "0xc002e461",
+        "tag": 6,
+        "index": 94768,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "MoleGroupComponent",
+            "typeIndex": 4754,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817540a6",
+        "slotVA": "0x1831d52e0",
+        "encodedToken": "0xc002e463",
+        "tag": 6,
+        "index": 94769,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "MoleNestComponent",
+            "typeIndex": 4755,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175413e",
+        "slotVA": "0x1831d52d8",
+        "encodedToken": "0xc002e465",
+        "tag": 6,
+        "index": 94770,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "MoveEnergyComponent",
+            "typeIndex": 4756,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817541d6",
+        "slotVA": "0x1831d52d0",
+        "encodedToken": "0xc002e467",
+        "tag": 6,
+        "index": 94771,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "MoveHistoryManageComponent",
+            "typeIndex": 4758,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175426e",
+        "slotVA": "0x1831d52c8",
+        "encodedToken": "0xc002e469",
+        "tag": 6,
+        "index": 94772,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "MoveWallComponent",
+            "typeIndex": 4759,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181754306",
+        "slotVA": "0x1831d52c0",
+        "encodedToken": "0xc002e46b",
+        "tag": 6,
+        "index": 94773,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "MultiInputComponent",
+            "typeIndex": 4760,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817543a1",
+        "slotVA": "0x1831d52b8",
+        "encodedToken": "0xc002e46d",
+        "tag": 6,
+        "index": 94774,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "NormalBreakoutBallComponent",
+            "typeIndex": 4761,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181754439",
+        "slotVA": "0x1831d51b0",
+        "encodedToken": "0xc002e46f",
+        "tag": 6,
+        "index": 94775,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "NormalInputComponent",
+            "typeIndex": 4762,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817544d4",
+        "slotVA": "0x1831d51a8",
+        "encodedToken": "0xc002e471",
+        "tag": 6,
+        "index": 94776,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "NormalPlaneObstacleComponent",
+            "typeIndex": 4763,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175456c",
+        "slotVA": "0x1831d51a0",
+        "encodedToken": "0xc002e473",
+        "tag": 6,
+        "index": 94777,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "NormalSwitchComponent",
+            "typeIndex": 4764,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181754604",
+        "slotVA": "0x1831d5198",
+        "encodedToken": "0xc002e475",
+        "tag": 6,
+        "index": 94778,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "NormalThornComponent",
+            "typeIndex": 4765,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x18175469c",
+        "slotVA": "0x1831d5190",
+        "encodedToken": "0xc002e477",
+        "tag": 6,
+        "index": 94779,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "NormalWeightedLiftComponent",
+            "typeIndex": 4766,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181754757",
+        "slotVA": "0x1831d5188",
+        "encodedToken": "0xc002e479",
+        "tag": 6,
+        "index": 94780,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "ObstacleComponent",
+            "typeIndex": 4767,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817547ef",
+        "slotVA": "0x1831d5168",
+        "encodedToken": "0xc002e47b",
+        "tag": 6,
+        "index": 94781,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "OptimizedBullet",
+            "typeIndex": 4769,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817548aa",
+        "slotVA": "0x1831d5180",
+        "encodedToken": "0xc002e47d",
+        "tag": 6,
+        "index": 94782,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "OptimizedBulletObserverComponent",
+            "typeIndex": 4771,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181754942",
+        "slotVA": "0x1831d5178",
+        "encodedToken": "0xc002e47f",
+        "tag": 6,
+        "index": 94783,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "OptimizedBulletParam",
+            "typeIndex": 4772,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817549da",
+        "slotVA": "0x1831d5170",
+        "encodedToken": "0xc002e481",
+        "tag": 6,
+        "index": 94784,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "OptimizedBulletTargetInfo",
+            "typeIndex": 4773,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181754a72",
+        "slotVA": "0x1831d5160",
+        "encodedToken": "0xc002e483",
+        "tag": 6,
+        "index": 94785,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlaneObstacleComponent",
+            "typeIndex": 4774,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181754b0a",
+        "slotVA": "0x1831d5158",
+        "encodedToken": "0xc002e485",
+        "tag": 6,
+        "index": 94786,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerBasketComponent",
+            "typeIndex": 4775,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181754ba2",
+        "slotVA": "0x1831d5150",
+        "encodedToken": "0xc002e487",
+        "tag": 6,
+        "index": 94787,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerBlockComponent",
+            "typeIndex": 4777,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181754c3a",
+        "slotVA": "0x1831d5148",
+        "encodedToken": "0xc002e489",
+        "tag": 6,
+        "index": 94788,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerBlockGunBulletComponent",
+            "typeIndex": 4778,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181754cd2",
+        "slotVA": "0x1831d5140",
+        "encodedToken": "0xc002e48b",
+        "tag": 6,
+        "index": 94789,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerBlockGunComponent",
+            "typeIndex": 4779,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181754d6a",
+        "slotVA": "0x1831d5138",
+        "encodedToken": "0xc002e48d",
+        "tag": 6,
+        "index": 94790,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerCannonBallComponent",
+            "typeIndex": 4781,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181754e02",
+        "slotVA": "0x1831d5230",
+        "encodedToken": "0xc002e48f",
+        "tag": 6,
+        "index": 94791,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerCannonComponent",
+            "typeIndex": 4782,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181754e9a",
+        "slotVA": "0x1831d5228",
+        "encodedToken": "0xc002e491",
+        "tag": 6,
+        "index": 94792,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerComponent",
+            "typeIndex": 4786,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181754f32",
+        "slotVA": "0x1831d5220",
+        "encodedToken": "0xc002e493",
+        "tag": 6,
+        "index": 94793,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerGuardComponent",
+            "typeIndex": 4787,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181754fed",
+        "slotVA": "0x1831d5218",
+        "encodedToken": "0xc002e495",
+        "tag": 6,
+        "index": 94794,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerGunComponent",
+            "typeIndex": 4789,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181755085",
+        "slotVA": "0x1831d5210",
+        "encodedToken": "0xc002e497",
+        "tag": 6,
+        "index": 94795,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerHeaddressComponent",
+            "typeIndex": 4790,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181755140",
+        "slotVA": "0x1831d5208",
+        "encodedToken": "0xc002e499",
+        "tag": 6,
+        "index": 94796,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerMagnetComponent",
+            "typeIndex": 4794,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817551d8",
+        "slotVA": "0x1831d5200",
+        "encodedToken": "0xc002e49b",
+        "tag": 6,
+        "index": 94797,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerMoveObserverComponent",
+            "typeIndex": 4795,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181755270",
+        "slotVA": "0x1831d51f8",
+        "encodedToken": "0xc002e49d",
+        "tag": 6,
+        "index": 94798,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerPunchComponent",
+            "typeIndex": 4797,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181755308",
+        "slotVA": "0x1831d51f0",
+        "encodedToken": "0xc002e49f",
+        "tag": 6,
+        "index": 94799,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerTargetComponent",
+            "typeIndex": 4799,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817553a0",
+        "slotVA": "0x1831d51e8",
+        "encodedToken": "0xc002e4a1",
+        "tag": 6,
+        "index": 94800,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerWarpGunBulletComponent",
+            "typeIndex": 4800,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181755438",
+        "slotVA": "0x1831d51e0",
+        "encodedToken": "0xc002e4a3",
+        "tag": 6,
+        "index": 94801,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PlayerWarpGunComponent",
+            "typeIndex": 4801,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x1817554d0",
+        "slotVA": "0x1831d51d8",
+        "encodedToken": "0xc002e4a5",
+        "tag": 6,
+        "index": 94802,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PoleLadderComponent",
+            "typeIndex": 4802,
+            "kind": 17
+          }
+        ]
+      },
+      {
+        "instructionVA": "0x181755568",
+        "slotVA": "0x1831d51d0",
+        "encodedToken": "0xc002e4a7",
+        "tag": 6,
+        "index": 94803,
+        "method": "ComponentTypeId.Add",
+        "methodIndex": 55121,
+        "owner": 8283,
+        "token": "0x6000186",
+        "arguments": [
+          {
+            "name": "PushBoxComponent",
+            "typeIndex": 4803,
+            "kind": 17
+          }
+        ]
+      }
+    ],
+    "conditionalStandardTypeCount": 187
+  },
+  "schemaVersion": 1,
+  "status": "frozen — static growth/config audit and address-free oracle",
+  "nativeCodeExecuted": false,
+  "dllSha256": "dc554e2008b23c7d52f0c063886ea19acf20369ac698c77be7c67cfb516edd71",
+  "metadataSha256": "a2b7b05e180d948652be00322bc11dba5f5942c2df2803f9a4e6ebbbdca4a7c1",
+  "configs": [
+    {
+      "class": "SimulationConfigAsset",
+      "file": "resources.assets",
+      "pathId": 6169,
+      "byteStart": 14375392,
+      "byteSize": 764,
+      "sha256": "8a986efb399b996dc94f87414b5d6df12c37bc16cad5551d297787519c907117",
+      "name": "SimulationConfig",
+      "path": "Resources/DB/Configs/SimulationConfig",
+      "guid": "5",
+      "entities": {
+        "CommitCommandsMode": 0,
+        "DefaultEntityCapacity": 1024,
+        "DefaultComponentBlockCapacity": 128,
+        "ComponentTypeConfiguration": []
+      },
+      "tailOffset": 708,
+      "tailHex": "00000000000400008000000000000000020000000000000002000000000003000000000000000000000000000f0000000001000000000000",
+      "strictTreeConsumedWholeObject": true,
+      "typeTreeCorrection": "Generated Layers node incorrectly labelled string while child is Array<string>; relabel vector to consume real string[] and require strict fullobject byte count."
+    },
+    {
+      "class": "SimulationConfigAsset",
+      "file": "resources.assets",
+      "pathId": 6170,
+      "byteStart": 14376160,
+      "byteSize": 784,
+      "sha256": "160aef6a682069d56795e02df54728263dead0ccd69c87b2931c942df48ec615",
+      "name": "SimulationConfig_ForDebug",
+      "path": "Resources/DB/Configs/SimulationConfig_ForDebug",
+      "guid": "1549650302694300407",
+      "entities": {
+        "CommitCommandsMode": 0,
+        "DefaultEntityCapacity": 1024,
+        "DefaultComponentBlockCapacity": 128,
+        "ComponentTypeConfiguration": []
+      },
+      "tailOffset": 728,
+      "tailHex": "00000000000400008000000000000000020000000100000002000000000003000000000000000000000000000f0000000001000000000000",
+      "strictTreeConsumedWholeObject": true,
+      "typeTreeCorrection": "Generated Layers node incorrectly labelled string while child is Array<string>; relabel vector to consume real string[] and require strict fullobject byte count."
+    }
+  ],
+  "methodPointers": [
+    {
+      "typeIndex": 8316,
+      "type": "ComponentDataBuffer",
+      "namespace": "Quantum",
+      "method": "Create",
+      "token": "0x6000227",
+      "va": "0x18193c4f0",
+      "assembly": "quantum.core.dll",
+      "moduleVA": "0x182d629f0",
+      "pointerEntryVA": "0x1832d8080",
+      "parameters": [
+        [
+          "allocator",
+          33705
+        ],
+        [
+          "config",
+          32380
+        ],
+        [
+          "type",
+          28030
+        ],
+        [
+          "dataStride",
+          21483
+        ],
+        [
+          "flags",
+          16443
+        ]
+      ]
+    },
+    {
+      "typeIndex": 8316,
+      "type": "ComponentDataBuffer",
+      "namespace": "Quantum",
+      "method": "ChangeEntityCapacity",
+      "token": "0x600022a",
+      "va": "0x18193c900",
+      "assembly": "quantum.core.dll",
+      "moduleVA": "0x182d629f0",
+      "pointerEntryVA": "0x1832d8098",
+      "parameters": [
+        [
+          "oldBuffer",
+          12617
+        ],
+        [
+          "oldCapacity",
+          21483
+        ],
+        [
+          "newBuffer",
+          12617
+        ],
+        [
+          "newCapacity",
+          21483
+        ]
+      ]
+    },
+    {
+      "typeIndex": 8316,
+      "type": "ComponentDataBuffer",
+      "namespace": "Quantum",
+      "method": "GetBufferEntry",
+      "token": "0x6000232",
+      "va": "0x18193cb60",
+      "assembly": "quantum.core.dll",
+      "moduleVA": "0x182d629f0",
+      "pointerEntryVA": "0x1832d80d8",
+      "parameters": [
+        [
+          "allocator",
+          33705
+        ],
+        [
+          "entityRef",
+          18958
+        ]
+      ]
+    },
+    {
+      "typeIndex": 8316,
+      "type": "ComponentDataBuffer",
+      "namespace": "Quantum",
+      "method": "UseNextBlock",
+      "token": "0x6000235",
+      "va": "0x18193d050",
+      "assembly": "quantum.core.dll",
+      "moduleVA": "0x182d629f0",
+      "pointerEntryVA": "0x1832d80f0",
+      "parameters": [
+        [
+          "allocator",
+          33705
+        ]
+      ]
+    },
+    {
+      "typeIndex": 8316,
+      "type": "ComponentDataBuffer",
+      "namespace": "Quantum",
+      "method": "AllocateBlock",
+      "token": "0x6000236",
+      "va": "0x18193d1c0",
+      "assembly": "quantum.core.dll",
+      "moduleVA": "0x182d629f0",
+      "pointerEntryVA": "0x1832d80f8",
+      "parameters": [
+        [
+          "allocator",
+          33705
+        ]
+      ]
+    },
+    {
+      "typeIndex": 8736,
+      "type": "EntitiesConfig",
+      "namespace": "",
+      "method": "GetComponentBlockCapacity",
+      "token": "0x60008c3",
+      "va": "0x18197ae40",
+      "assembly": "quantum.core.dll",
+      "moduleVA": "0x182d629f0",
+      "pointerEntryVA": "0x1832db560",
+      "parameters": [
+        [
+          "type",
+          28030
+        ]
+      ]
+    },
+    {
+      "typeIndex": 8736,
+      "type": "EntitiesConfig",
+      "namespace": "",
+      "method": ".ctor",
+      "token": "0x60008c4",
+      "va": "0x18197b080",
+      "assembly": "quantum.core.dll",
+      "moduleVA": "0x182d629f0",
+      "pointerEntryVA": "0x1832db568",
+      "parameters": []
+    },
+    {
+      "typeIndex": 12989,
+      "type": "Allocator",
+      "namespace": "",
+      "method": "Expand",
+      "token": "0x6000140",
+      "va": "0x181646970",
+      "assembly": "PhotonDeterministic.dll",
+      "moduleVA": "0x182d54da0",
+      "pointerEntryVA": "0x1832ad4c8",
+      "parameters": [
+        [
+          "buffer",
+          12635
+        ],
+        [
+          "currentSize",
+          21483
+        ],
+        [
+          "newSize",
+          21483
+        ]
+      ]
+    },
+    {
+      "typeIndex": 12989,
+      "type": "Allocator",
+      "namespace": "",
+      "method": ".ctor",
+      "token": "0x6000142",
+      "va": "0x180476130",
+      "assembly": "PhotonDeterministic.dll",
+      "moduleVA": "0x182d54da0",
+      "pointerEntryVA": "0x1832ad4d8",
+      "parameters": []
+    }
+  ],
+  "fields": {
+    "ComponentDataBuffer": [
+      {
+        "name": "DEFAULT_BLOCK_CAPACITY",
+        "offset": 0,
+        "typeIndex": 21508
+      },
+      {
+        "name": "_flags",
+        "offset": 16,
+        "typeIndex": 28512
+      },
+      {
+        "name": "_singletonSparse",
+        "offset": 18,
+        "typeIndex": 28512
+      },
+      {
+        "name": "_count",
+        "offset": 20,
+        "typeIndex": 21486
+      },
+      {
+        "name": "_pendingRemoval",
+        "offset": 24,
+        "typeIndex": 21486
+      },
+      {
+        "name": "_stride",
+        "offset": 28,
+        "typeIndex": 21486
+      },
+      {
+        "name": "_version",
+        "offset": 32,
+        "typeIndex": 21486
+      },
+      {
+        "name": "_componentTypeID",
+        "offset": 36,
+        "typeIndex": 21486
+      },
+      {
+        "name": "_blocksList",
+        "offset": 40,
+        "typeIndex": 12648
+      },
+      {
+        "name": "_blocksListCapacity",
+        "offset": 48,
+        "typeIndex": 21486
+      },
+      {
+        "name": "_blocksListCount",
+        "offset": 52,
+        "typeIndex": 21486
+      },
+      {
+        "name": "_blockCapacity",
+        "offset": 56,
+        "typeIndex": 21486
+      },
+      {
+        "name": "_blockByteSize",
+        "offset": 60,
+        "typeIndex": 21486
+      },
+      {
+        "name": "_blockDataOffset",
+        "offset": 64,
+        "typeIndex": 21486
+      },
+      {
+        "name": "_sparse",
+        "offset": 72,
+        "typeIndex": 12619
+      },
+      {
+        "name": "_sparseCapacity",
+        "offset": 80,
+        "typeIndex": 21486
+      }
+    ],
+    "EntitiesConfig": [
+      {
+        "name": "CommitCommandsMode",
+        "offset": 16,
+        "typeIndex": 16385
+      },
+      {
+        "name": "DefaultEntityCapacity",
+        "offset": 20,
+        "typeIndex": 21489
+      },
+      {
+        "name": "DefaultComponentBlockCapacity",
+        "offset": 24,
+        "typeIndex": 21489
+      },
+      {
+        "name": "ComponentTypeConfiguration",
+        "offset": 32,
+        "typeIndex": 14200
+      }
+    ]
+  },
+  "nativeBlocks": [
+    {
+      "va": "0x18193c537",
+      "bytes": "8b8424a000000033ed892e48896e1048896e1848896e2048896e2848896e3048896e3848896e4089460c8b8424a800000048c74604010000003dffff00000f8ff200000033d2668906488bcbe8b892ffff8946144885ff0f84d30000004533c0488bd3488bcfe89ee803008946280f105620660f73da08660f7ed08d04c50000000083e0f88946300f1046200f101e0f10d00f294424400f29442440660f73da08660f73db08660f7ed066480f7ed948c1e9200fafc8034e30894e2c48c74620040000000f1046200f294424404d85f6745e4d8b06498bce8b7c2440c1e7048bd7498b80880100004d8b8090010000ffd04d8b16448bc7488bd0498bce488bd84d8b8ab001000041ff92a801",
+      "instructions": [
+        {
+          "va": "0x18193c537",
+          "text": "mov eax, dword ptr [rsp + 0xa0]"
+        },
+        {
+          "va": "0x18193c53e",
+          "text": "xor ebp, ebp"
+        },
+        {
+          "va": "0x18193c540",
+          "text": "mov dword ptr [rsi], ebp"
+        },
+        {
+          "va": "0x18193c542",
+          "text": "mov qword ptr [rsi + 0x10], rbp"
+        },
+        {
+          "va": "0x18193c546",
+          "text": "mov qword ptr [rsi + 0x18], rbp"
+        },
+        {
+          "va": "0x18193c54a",
+          "text": "mov qword ptr [rsi + 0x20], rbp"
+        },
+        {
+          "va": "0x18193c54e",
+          "text": "mov qword ptr [rsi + 0x28], rbp"
+        },
+        {
+          "va": "0x18193c552",
+          "text": "mov qword ptr [rsi + 0x30], rbp"
+        },
+        {
+          "va": "0x18193c556",
+          "text": "mov qword ptr [rsi + 0x38], rbp"
+        },
+        {
+          "va": "0x18193c55a",
+          "text": "mov qword ptr [rsi + 0x40], rbp"
+        },
+        {
+          "va": "0x18193c55e",
+          "text": "mov dword ptr [rsi + 0xc], eax"
+        },
+        {
+          "va": "0x18193c561",
+          "text": "mov eax, dword ptr [rsp + 0xa8]"
+        },
+        {
+          "va": "0x18193c568",
+          "text": "mov qword ptr [rsi + 4], 1"
+        },
+        {
+          "va": "0x18193c570",
+          "text": "cmp eax, 0xffff"
+        },
+        {
+          "va": "0x18193c575",
+          "text": "jg 0x18193c66d"
+        },
+        {
+          "va": "0x18193c57b",
+          "text": "xor edx, edx"
+        },
+        {
+          "va": "0x18193c57d",
+          "text": "mov word ptr [rsi], ax"
+        },
+        {
+          "va": "0x18193c580",
+          "text": "mov rcx, rbx"
+        },
+        {
+          "va": "0x18193c583",
+          "text": "call 0x181935840"
+        },
+        {
+          "va": "0x18193c588",
+          "text": "mov dword ptr [rsi + 0x14], eax"
+        },
+        {
+          "va": "0x18193c58b",
+          "text": "test rdi, rdi"
+        },
+        {
+          "va": "0x18193c58e",
+          "text": "je 0x18193c667"
+        },
+        {
+          "va": "0x18193c594",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x18193c597",
+          "text": "mov rdx, rbx"
+        },
+        {
+          "va": "0x18193c59a",
+          "text": "mov rcx, rdi"
+        },
+        {
+          "va": "0x18193c59d",
+          "text": "call 0x18197ae40"
+        },
+        {
+          "va": "0x18193c5a2",
+          "text": "mov dword ptr [rsi + 0x28], eax"
+        },
+        {
+          "va": "0x18193c5a5",
+          "text": "movups xmm2, xmmword ptr [rsi + 0x20]"
+        },
+        {
+          "va": "0x18193c5a9",
+          "text": "psrldq xmm2, 8"
+        },
+        {
+          "va": "0x18193c5ae",
+          "text": "movd eax, xmm2"
+        },
+        {
+          "va": "0x18193c5b2",
+          "text": "lea eax, [rax*8]"
+        },
+        {
+          "va": "0x18193c5b9",
+          "text": "and eax, 0xfffffff8"
+        },
+        {
+          "va": "0x18193c5bc",
+          "text": "mov dword ptr [rsi + 0x30], eax"
+        },
+        {
+          "va": "0x18193c5bf",
+          "text": "movups xmm0, xmmword ptr [rsi + 0x20]"
+        },
+        {
+          "va": "0x18193c5c3",
+          "text": "movups xmm3, xmmword ptr [rsi]"
+        },
+        {
+          "va": "0x18193c5c6",
+          "text": "movups xmm2, xmm0"
+        },
+        {
+          "va": "0x18193c5c9",
+          "text": "movaps xmmword ptr [rsp + 0x40], xmm0"
+        },
+        {
+          "va": "0x18193c5ce",
+          "text": "movaps xmmword ptr [rsp + 0x40], xmm0"
+        },
+        {
+          "va": "0x18193c5d3",
+          "text": "psrldq xmm2, 8"
+        },
+        {
+          "va": "0x18193c5d8",
+          "text": "psrldq xmm3, 8"
+        },
+        {
+          "va": "0x18193c5dd",
+          "text": "movd eax, xmm2"
+        },
+        {
+          "va": "0x18193c5e1",
+          "text": "movq rcx, xmm3"
+        },
+        {
+          "va": "0x18193c5e6",
+          "text": "shr rcx, 0x20"
+        },
+        {
+          "va": "0x18193c5ea",
+          "text": "imul ecx, eax"
+        },
+        {
+          "va": "0x18193c5ed",
+          "text": "add ecx, dword ptr [rsi + 0x30]"
+        },
+        {
+          "va": "0x18193c5f0",
+          "text": "mov dword ptr [rsi + 0x2c], ecx"
+        },
+        {
+          "va": "0x18193c5f3",
+          "text": "mov qword ptr [rsi + 0x20], 4"
+        },
+        {
+          "va": "0x18193c5fb",
+          "text": "movups xmm0, xmmword ptr [rsi + 0x20]"
+        },
+        {
+          "va": "0x18193c5ff",
+          "text": "movaps xmmword ptr [rsp + 0x40], xmm0"
+        },
+        {
+          "va": "0x18193c604",
+          "text": "test r14, r14"
+        },
+        {
+          "va": "0x18193c607",
+          "text": "je 0x18193c667"
+        },
+        {
+          "va": "0x18193c609",
+          "text": "mov r8, qword ptr [r14]"
+        },
+        {
+          "va": "0x18193c60c",
+          "text": "mov rcx, r14"
+        },
+        {
+          "va": "0x18193c60f",
+          "text": "mov edi, dword ptr [rsp + 0x40]"
+        },
+        {
+          "va": "0x18193c613",
+          "text": "shl edi, 4"
+        },
+        {
+          "va": "0x18193c616",
+          "text": "mov edx, edi"
+        },
+        {
+          "va": "0x18193c618",
+          "text": "mov rax, qword ptr [r8 + 0x188]"
+        },
+        {
+          "va": "0x18193c61f",
+          "text": "mov r8, qword ptr [r8 + 0x190]"
+        },
+        {
+          "va": "0x18193c626",
+          "text": "call rax"
+        },
+        {
+          "va": "0x18193c628",
+          "text": "mov r10, qword ptr [r14]"
+        },
+        {
+          "va": "0x18193c62b",
+          "text": "mov r8d, edi"
+        },
+        {
+          "va": "0x18193c62e",
+          "text": "mov rdx, rax"
+        },
+        {
+          "va": "0x18193c631",
+          "text": "mov rcx, r14"
+        },
+        {
+          "va": "0x18193c634",
+          "text": "mov rbx, rax"
+        },
+        {
+          "va": "0x18193c637",
+          "text": "mov r9, qword ptr [r10 + 0x1b0]"
+        }
+      ]
+    },
+    {
+      "va": "0x18193cb6f",
+      "bytes": "4963c0488bf9498bd8488d3400488b41380fb70c066685c97426f6070174160fb74702663bc1740d6685c00f85a200000066894f028bc199f77f28448bc0eb658b47240faf47283947047c0b4533c0488bcfe88a040000f60701741366837f02000f85d30000000fb7470466894702448b4f04418d4101894704410fb7c199f77f284c63c0498bc048c1e00448034718743b488b004863ca48891cc8488b47386644890c064d63c049c1e0044c034718741b0faf570c488b5c2430488b7424384863c2490340084883c4205fc3e89f",
+      "instructions": [
+        {
+          "va": "0x18193cb6f",
+          "text": "movsxd rax, r8d"
+        },
+        {
+          "va": "0x18193cb72",
+          "text": "mov rdi, rcx"
+        },
+        {
+          "va": "0x18193cb75",
+          "text": "mov rbx, r8"
+        },
+        {
+          "va": "0x18193cb78",
+          "text": "lea rsi, [rax + rax]"
+        },
+        {
+          "va": "0x18193cb7c",
+          "text": "mov rax, qword ptr [rcx + 0x38]"
+        },
+        {
+          "va": "0x18193cb80",
+          "text": "movzx ecx, word ptr [rsi + rax]"
+        },
+        {
+          "va": "0x18193cb84",
+          "text": "test cx, cx"
+        },
+        {
+          "va": "0x18193cb87",
+          "text": "je 0x18193cbaf"
+        },
+        {
+          "va": "0x18193cb89",
+          "text": "test byte ptr [rdi], 1"
+        },
+        {
+          "va": "0x18193cb8c",
+          "text": "je 0x18193cba4"
+        },
+        {
+          "va": "0x18193cb8e",
+          "text": "movzx eax, word ptr [rdi + 2]"
+        },
+        {
+          "va": "0x18193cb92",
+          "text": "cmp ax, cx"
+        },
+        {
+          "va": "0x18193cb95",
+          "text": "je 0x18193cba4"
+        },
+        {
+          "va": "0x18193cb97",
+          "text": "test ax, ax"
+        },
+        {
+          "va": "0x18193cb9a",
+          "text": "jne 0x18193cc42"
+        },
+        {
+          "va": "0x18193cba0",
+          "text": "mov word ptr [rdi + 2], cx"
+        },
+        {
+          "va": "0x18193cba4",
+          "text": "mov eax, ecx"
+        },
+        {
+          "va": "0x18193cba6",
+          "text": "cdq "
+        },
+        {
+          "va": "0x18193cba7",
+          "text": "idiv dword ptr [rdi + 0x28]"
+        },
+        {
+          "va": "0x18193cbaa",
+          "text": "mov r8d, eax"
+        },
+        {
+          "va": "0x18193cbad",
+          "text": "jmp 0x18193cc14"
+        },
+        {
+          "va": "0x18193cbaf",
+          "text": "mov eax, dword ptr [rdi + 0x24]"
+        },
+        {
+          "va": "0x18193cbb2",
+          "text": "imul eax, dword ptr [rdi + 0x28]"
+        },
+        {
+          "va": "0x18193cbb6",
+          "text": "cmp dword ptr [rdi + 4], eax"
+        },
+        {
+          "va": "0x18193cbb9",
+          "text": "jl 0x18193cbc6"
+        },
+        {
+          "va": "0x18193cbbb",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x18193cbbe",
+          "text": "mov rcx, rdi"
+        },
+        {
+          "va": "0x18193cbc1",
+          "text": "call 0x18193d050"
+        },
+        {
+          "va": "0x18193cbc6",
+          "text": "test byte ptr [rdi], 1"
+        },
+        {
+          "va": "0x18193cbc9",
+          "text": "je 0x18193cbde"
+        },
+        {
+          "va": "0x18193cbcb",
+          "text": "cmp word ptr [rdi + 2], 0"
+        },
+        {
+          "va": "0x18193cbd0",
+          "text": "jne 0x18193cca9"
+        },
+        {
+          "va": "0x18193cbd6",
+          "text": "movzx eax, word ptr [rdi + 4]"
+        },
+        {
+          "va": "0x18193cbda",
+          "text": "mov word ptr [rdi + 2], ax"
+        },
+        {
+          "va": "0x18193cbde",
+          "text": "mov r9d, dword ptr [rdi + 4]"
+        },
+        {
+          "va": "0x18193cbe2",
+          "text": "lea eax, [r9 + 1]"
+        },
+        {
+          "va": "0x18193cbe6",
+          "text": "mov dword ptr [rdi + 4], eax"
+        },
+        {
+          "va": "0x18193cbe9",
+          "text": "movzx eax, r9w"
+        },
+        {
+          "va": "0x18193cbed",
+          "text": "cdq "
+        },
+        {
+          "va": "0x18193cbee",
+          "text": "idiv dword ptr [rdi + 0x28]"
+        },
+        {
+          "va": "0x18193cbf1",
+          "text": "movsxd r8, eax"
+        },
+        {
+          "va": "0x18193cbf4",
+          "text": "mov rax, r8"
+        },
+        {
+          "va": "0x18193cbf7",
+          "text": "shl rax, 4"
+        },
+        {
+          "va": "0x18193cbfb",
+          "text": "add rax, qword ptr [rdi + 0x18]"
+        },
+        {
+          "va": "0x18193cbff",
+          "text": "je 0x18193cc3c"
+        },
+        {
+          "va": "0x18193cc01",
+          "text": "mov rax, qword ptr [rax]"
+        },
+        {
+          "va": "0x18193cc04",
+          "text": "movsxd rcx, edx"
+        },
+        {
+          "va": "0x18193cc07",
+          "text": "mov qword ptr [rax + rcx*8], rbx"
+        },
+        {
+          "va": "0x18193cc0b",
+          "text": "mov rax, qword ptr [rdi + 0x38]"
+        },
+        {
+          "va": "0x18193cc0f",
+          "text": "mov word ptr [rsi + rax], r9w"
+        },
+        {
+          "va": "0x18193cc14",
+          "text": "movsxd r8, r8d"
+        },
+        {
+          "va": "0x18193cc17",
+          "text": "shl r8, 4"
+        },
+        {
+          "va": "0x18193cc1b",
+          "text": "add r8, qword ptr [rdi + 0x18]"
+        },
+        {
+          "va": "0x18193cc1f",
+          "text": "je 0x18193cc3c"
+        },
+        {
+          "va": "0x18193cc21",
+          "text": "imul edx, dword ptr [rdi + 0xc]"
+        },
+        {
+          "va": "0x18193cc25",
+          "text": "mov rbx, qword ptr [rsp + 0x30]"
+        },
+        {
+          "va": "0x18193cc2a",
+          "text": "mov rsi, qword ptr [rsp + 0x38]"
+        },
+        {
+          "va": "0x18193cc2f",
+          "text": "movsxd rax, edx"
+        },
+        {
+          "va": "0x18193cc32",
+          "text": "add rax, qword ptr [r8 + 8]"
+        },
+        {
+          "va": "0x18193cc36",
+          "text": "add rsp, 0x20"
+        },
+        {
+          "va": "0x18193cc3a",
+          "text": "pop rdi"
+        },
+        {
+          "va": "0x18193cc3b",
+          "text": "ret "
+        }
+      ]
+    },
+    {
+      "va": "0x18193d07f",
+      "bytes": "448b472048895c246048896c246848897424704c897c2440443947247539438d1c00413bd87e304d85f60f8403010000488b5718448bcb41c1e104498bce41c1e00448c744242000000000e8a198d0ff48894718895f2048634f24488b6f18488bf14803f68d4101894724488d04f5000000004803c50f84b700000048833800744f488b05f08c8801488b88b8000000488b094885c90f8497000000488b01448b472c488b54f5004c8b88c0010000ff90b80100004c8b7c2440488b742470488b6c2468488b5c24604883c448415e5fc3448b7f2c4d85f674594d8b0e41b808000000418bd7498bce498b81980100004d8b89a0010000ffd04d8b16458bc7488bd0498bce488bd84d8b8ab001000041ff92a801000048634f304803cb48895c243048894c24380f104424300f1144f500eb82e829",
+      "instructions": [
+        {
+          "va": "0x18193d07f",
+          "text": "mov r8d, dword ptr [rdi + 0x20]"
+        },
+        {
+          "va": "0x18193d083",
+          "text": "mov qword ptr [rsp + 0x60], rbx"
+        },
+        {
+          "va": "0x18193d088",
+          "text": "mov qword ptr [rsp + 0x68], rbp"
+        },
+        {
+          "va": "0x18193d08d",
+          "text": "mov qword ptr [rsp + 0x70], rsi"
+        },
+        {
+          "va": "0x18193d092",
+          "text": "mov qword ptr [rsp + 0x40], r15"
+        },
+        {
+          "va": "0x18193d097",
+          "text": "cmp dword ptr [rdi + 0x24], r8d"
+        },
+        {
+          "va": "0x18193d09b",
+          "text": "jne 0x18193d0d6"
+        },
+        {
+          "va": "0x18193d09d",
+          "text": "lea ebx, [r8 + r8]"
+        },
+        {
+          "va": "0x18193d0a1",
+          "text": "cmp ebx, r8d"
+        },
+        {
+          "va": "0x18193d0a4",
+          "text": "jle 0x18193d0d6"
+        },
+        {
+          "va": "0x18193d0a6",
+          "text": "test r14, r14"
+        },
+        {
+          "va": "0x18193d0a9",
+          "text": "je 0x18193d1b2"
+        },
+        {
+          "va": "0x18193d0af",
+          "text": "mov rdx, qword ptr [rdi + 0x18]"
+        },
+        {
+          "va": "0x18193d0b3",
+          "text": "mov r9d, ebx"
+        },
+        {
+          "va": "0x18193d0b6",
+          "text": "shl r9d, 4"
+        },
+        {
+          "va": "0x18193d0ba",
+          "text": "mov rcx, r14"
+        },
+        {
+          "va": "0x18193d0bd",
+          "text": "shl r8d, 4"
+        },
+        {
+          "va": "0x18193d0c1",
+          "text": "mov qword ptr [rsp + 0x20], 0"
+        },
+        {
+          "va": "0x18193d0ca",
+          "text": "call 0x181646970"
+        },
+        {
+          "va": "0x18193d0cf",
+          "text": "mov qword ptr [rdi + 0x18], rax"
+        },
+        {
+          "va": "0x18193d0d3",
+          "text": "mov dword ptr [rdi + 0x20], ebx"
+        },
+        {
+          "va": "0x18193d0d6",
+          "text": "movsxd rcx, dword ptr [rdi + 0x24]"
+        },
+        {
+          "va": "0x18193d0da",
+          "text": "mov rbp, qword ptr [rdi + 0x18]"
+        },
+        {
+          "va": "0x18193d0de",
+          "text": "mov rsi, rcx"
+        },
+        {
+          "va": "0x18193d0e1",
+          "text": "add rsi, rsi"
+        },
+        {
+          "va": "0x18193d0e4",
+          "text": "lea eax, [rcx + 1]"
+        },
+        {
+          "va": "0x18193d0e7",
+          "text": "mov dword ptr [rdi + 0x24], eax"
+        },
+        {
+          "va": "0x18193d0ea",
+          "text": "lea rax, [rsi*8]"
+        },
+        {
+          "va": "0x18193d0f2",
+          "text": "add rax, rbp"
+        },
+        {
+          "va": "0x18193d0f5",
+          "text": "je 0x18193d1b2"
+        },
+        {
+          "va": "0x18193d0fb",
+          "text": "cmp qword ptr [rax], 0"
+        },
+        {
+          "va": "0x18193d0ff",
+          "text": "je 0x18193d150"
+        },
+        {
+          "va": "0x18193d101",
+          "text": "mov rax, qword ptr [rip + 0x1888cf0]"
+        },
+        {
+          "va": "0x18193d108",
+          "text": "mov rcx, qword ptr [rax + 0xb8]"
+        },
+        {
+          "va": "0x18193d10f",
+          "text": "mov rcx, qword ptr [rcx]"
+        },
+        {
+          "va": "0x18193d112",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x18193d115",
+          "text": "je 0x18193d1b2"
+        },
+        {
+          "va": "0x18193d11b",
+          "text": "mov rax, qword ptr [rcx]"
+        },
+        {
+          "va": "0x18193d11e",
+          "text": "mov r8d, dword ptr [rdi + 0x2c]"
+        },
+        {
+          "va": "0x18193d122",
+          "text": "mov rdx, qword ptr [rbp + rsi*8]"
+        },
+        {
+          "va": "0x18193d127",
+          "text": "mov r9, qword ptr [rax + 0x1c0]"
+        },
+        {
+          "va": "0x18193d12e",
+          "text": "call qword ptr [rax + 0x1b8]"
+        },
+        {
+          "va": "0x18193d134",
+          "text": "mov r15, qword ptr [rsp + 0x40]"
+        },
+        {
+          "va": "0x18193d139",
+          "text": "mov rsi, qword ptr [rsp + 0x70]"
+        },
+        {
+          "va": "0x18193d13e",
+          "text": "mov rbp, qword ptr [rsp + 0x68]"
+        },
+        {
+          "va": "0x18193d143",
+          "text": "mov rbx, qword ptr [rsp + 0x60]"
+        },
+        {
+          "va": "0x18193d148",
+          "text": "add rsp, 0x48"
+        },
+        {
+          "va": "0x18193d14c",
+          "text": "pop r14"
+        },
+        {
+          "va": "0x18193d14e",
+          "text": "pop rdi"
+        },
+        {
+          "va": "0x18193d14f",
+          "text": "ret "
+        },
+        {
+          "va": "0x18193d150",
+          "text": "mov r15d, dword ptr [rdi + 0x2c]"
+        },
+        {
+          "va": "0x18193d154",
+          "text": "test r14, r14"
+        },
+        {
+          "va": "0x18193d157",
+          "text": "je 0x18193d1b2"
+        },
+        {
+          "va": "0x18193d159",
+          "text": "mov r9, qword ptr [r14]"
+        },
+        {
+          "va": "0x18193d15c",
+          "text": "mov r8d, 8"
+        },
+        {
+          "va": "0x18193d162",
+          "text": "mov edx, r15d"
+        },
+        {
+          "va": "0x18193d165",
+          "text": "mov rcx, r14"
+        },
+        {
+          "va": "0x18193d168",
+          "text": "mov rax, qword ptr [r9 + 0x198]"
+        },
+        {
+          "va": "0x18193d16f",
+          "text": "mov r9, qword ptr [r9 + 0x1a0]"
+        },
+        {
+          "va": "0x18193d176",
+          "text": "call rax"
+        },
+        {
+          "va": "0x18193d178",
+          "text": "mov r10, qword ptr [r14]"
+        },
+        {
+          "va": "0x18193d17b",
+          "text": "mov r8d, r15d"
+        },
+        {
+          "va": "0x18193d17e",
+          "text": "mov rdx, rax"
+        },
+        {
+          "va": "0x18193d181",
+          "text": "mov rcx, r14"
+        },
+        {
+          "va": "0x18193d184",
+          "text": "mov rbx, rax"
+        },
+        {
+          "va": "0x18193d187",
+          "text": "mov r9, qword ptr [r10 + 0x1b0]"
+        },
+        {
+          "va": "0x18193d18e",
+          "text": "call qword ptr [r10 + 0x1a8]"
+        },
+        {
+          "va": "0x18193d195",
+          "text": "movsxd rcx, dword ptr [rdi + 0x30]"
+        },
+        {
+          "va": "0x18193d199",
+          "text": "add rcx, rbx"
+        },
+        {
+          "va": "0x18193d19c",
+          "text": "mov qword ptr [rsp + 0x30], rbx"
+        },
+        {
+          "va": "0x18193d1a1",
+          "text": "mov qword ptr [rsp + 0x38], rcx"
+        },
+        {
+          "va": "0x18193d1a6",
+          "text": "movups xmm0, xmmword ptr [rsp + 0x30]"
+        },
+        {
+          "va": "0x18193d1ab",
+          "text": "movups xmmword ptr [rbp + rsi*8], xmm0"
+        },
+        {
+          "va": "0x18193d1b0",
+          "text": "jmp 0x18193d134"
+        }
+      ]
+    },
+    {
+      "va": "0x18193c941",
+      "bytes": "488b05b09488014c8b88b8000000498b094885c974404c8b11448d0c364c8bc5488bd3498b82b0010000488944242041ff92a80100008b442460488b6c2448488b74245048895f38488b5c24408947404883c4305fc3",
+      "instructions": [
+        {
+          "va": "0x18193c941",
+          "text": "mov rax, qword ptr [rip + 0x18894b0]"
+        },
+        {
+          "va": "0x18193c948",
+          "text": "mov r9, qword ptr [rax + 0xb8]"
+        },
+        {
+          "va": "0x18193c94f",
+          "text": "mov rcx, qword ptr [r9]"
+        },
+        {
+          "va": "0x18193c952",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x18193c955",
+          "text": "je 0x18193c997"
+        },
+        {
+          "va": "0x18193c957",
+          "text": "mov r10, qword ptr [rcx]"
+        },
+        {
+          "va": "0x18193c95a",
+          "text": "lea r9d, [rsi + rsi]"
+        },
+        {
+          "va": "0x18193c95e",
+          "text": "mov r8, rbp"
+        },
+        {
+          "va": "0x18193c961",
+          "text": "mov rdx, rbx"
+        },
+        {
+          "va": "0x18193c964",
+          "text": "mov rax, qword ptr [r10 + 0x1b0]"
+        },
+        {
+          "va": "0x18193c96b",
+          "text": "mov qword ptr [rsp + 0x20], rax"
+        },
+        {
+          "va": "0x18193c970",
+          "text": "call qword ptr [r10 + 0x1a8]"
+        },
+        {
+          "va": "0x18193c977",
+          "text": "mov eax, dword ptr [rsp + 0x60]"
+        },
+        {
+          "va": "0x18193c97b",
+          "text": "mov rbp, qword ptr [rsp + 0x48]"
+        },
+        {
+          "va": "0x18193c980",
+          "text": "mov rsi, qword ptr [rsp + 0x50]"
+        },
+        {
+          "va": "0x18193c985",
+          "text": "mov qword ptr [rdi + 0x38], rbx"
+        },
+        {
+          "va": "0x18193c989",
+          "text": "mov rbx, qword ptr [rsp + 0x40]"
+        },
+        {
+          "va": "0x18193c98e",
+          "text": "mov dword ptr [rdi + 0x40], eax"
+        },
+        {
+          "va": "0x18193c991",
+          "text": "add rsp, 0x30"
+        },
+        {
+          "va": "0x18193c995",
+          "text": "pop rdi"
+        },
+        {
+          "va": "0x18193c996",
+          "text": "ret "
+        }
+      ]
+    },
+    {
+      "va": "0x1816469b7",
+      "bytes": "4c8b038bd6488bcb498b80880100004d8b8090010000ffd04c8b13448bc6488bd0488bcb488be84d8b8ab001000041ff92a8010000488b0d05f4b701488b91b8000000488b0a4885c974534c8b11458bce4c8bc7488bd5498b82b0010000488944242041ff92a8010000488b03488bd7488bcb4c8b8080010000ff9078010000",
+      "instructions": [
+        {
+          "va": "0x1816469b7",
+          "text": "mov r8, qword ptr [rbx]"
+        },
+        {
+          "va": "0x1816469ba",
+          "text": "mov edx, esi"
+        },
+        {
+          "va": "0x1816469bc",
+          "text": "mov rcx, rbx"
+        },
+        {
+          "va": "0x1816469bf",
+          "text": "mov rax, qword ptr [r8 + 0x188]"
+        },
+        {
+          "va": "0x1816469c6",
+          "text": "mov r8, qword ptr [r8 + 0x190]"
+        },
+        {
+          "va": "0x1816469cd",
+          "text": "call rax"
+        },
+        {
+          "va": "0x1816469cf",
+          "text": "mov r10, qword ptr [rbx]"
+        },
+        {
+          "va": "0x1816469d2",
+          "text": "mov r8d, esi"
+        },
+        {
+          "va": "0x1816469d5",
+          "text": "mov rdx, rax"
+        },
+        {
+          "va": "0x1816469d8",
+          "text": "mov rcx, rbx"
+        },
+        {
+          "va": "0x1816469db",
+          "text": "mov rbp, rax"
+        },
+        {
+          "va": "0x1816469de",
+          "text": "mov r9, qword ptr [r10 + 0x1b0]"
+        },
+        {
+          "va": "0x1816469e5",
+          "text": "call qword ptr [r10 + 0x1a8]"
+        },
+        {
+          "va": "0x1816469ec",
+          "text": "mov rcx, qword ptr [rip + 0x1b7f405]"
+        },
+        {
+          "va": "0x1816469f3",
+          "text": "mov rdx, qword ptr [rcx + 0xb8]"
+        },
+        {
+          "va": "0x1816469fa",
+          "text": "mov rcx, qword ptr [rdx]"
+        },
+        {
+          "va": "0x1816469fd",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x181646a00",
+          "text": "je 0x181646a55"
+        },
+        {
+          "va": "0x181646a02",
+          "text": "mov r10, qword ptr [rcx]"
+        },
+        {
+          "va": "0x181646a05",
+          "text": "mov r9d, r14d"
+        },
+        {
+          "va": "0x181646a08",
+          "text": "mov r8, rdi"
+        },
+        {
+          "va": "0x181646a0b",
+          "text": "mov rdx, rbp"
+        },
+        {
+          "va": "0x181646a0e",
+          "text": "mov rax, qword ptr [r10 + 0x1b0]"
+        },
+        {
+          "va": "0x181646a15",
+          "text": "mov qword ptr [rsp + 0x20], rax"
+        },
+        {
+          "va": "0x181646a1a",
+          "text": "call qword ptr [r10 + 0x1a8]"
+        },
+        {
+          "va": "0x181646a21",
+          "text": "mov rax, qword ptr [rbx]"
+        },
+        {
+          "va": "0x181646a24",
+          "text": "mov rdx, rdi"
+        },
+        {
+          "va": "0x181646a27",
+          "text": "mov rcx, rbx"
+        },
+        {
+          "va": "0x181646a2a",
+          "text": "mov r8, qword ptr [rax + 0x180]"
+        },
+        {
+          "va": "0x181646a31",
+          "text": "call qword ptr [rax + 0x178]"
+        }
+      ]
+    },
+    {
+      "va": "0x18197739a",
+      "bytes": "33c941be010000004c897320894b284885c00f8442050000488b0d8ff183018b701483b9e0000000007505e8764c97fe4c8b7b68b8200000003bf00f4ef089732c8973304d85ff0f",
+      "instructions": [
+        {
+          "va": "0x18197739a",
+          "text": "xor ecx, ecx"
+        },
+        {
+          "va": "0x18197739c",
+          "text": "mov r14d, 1"
+        },
+        {
+          "va": "0x1819773a2",
+          "text": "mov qword ptr [rbx + 0x20], r14"
+        },
+        {
+          "va": "0x1819773a6",
+          "text": "mov dword ptr [rbx + 0x28], ecx"
+        },
+        {
+          "va": "0x1819773a9",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x1819773ac",
+          "text": "je 0x1819778f4"
+        },
+        {
+          "va": "0x1819773b2",
+          "text": "mov rcx, qword ptr [rip + 0x183f18f]"
+        },
+        {
+          "va": "0x1819773b9",
+          "text": "mov esi, dword ptr [rax + 0x14]"
+        },
+        {
+          "va": "0x1819773bc",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x1819773c3",
+          "text": "jne 0x1819773ca"
+        },
+        {
+          "va": "0x1819773c5",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x1819773ca",
+          "text": "mov r15, qword ptr [rbx + 0x68]"
+        },
+        {
+          "va": "0x1819773ce",
+          "text": "mov eax, 0x20"
+        },
+        {
+          "va": "0x1819773d3",
+          "text": "cmp esi, eax"
+        },
+        {
+          "va": "0x1819773d5",
+          "text": "cmovle esi, eax"
+        },
+        {
+          "va": "0x1819773d8",
+          "text": "mov dword ptr [rbx + 0x2c], esi"
+        },
+        {
+          "va": "0x1819773db",
+          "text": "mov dword ptr [rbx + 0x30], esi"
+        },
+        {
+          "va": "0x1819773de",
+          "text": "test r15, r15"
+        }
+      ]
+    },
+    {
+      "va": "0x181977593",
+      "bytes": "41c74704ffffff7f488b0586a98101488b88b8000000488b41384885c00f843e0300004c8b7b688b4818894b604d85ff0f842b0300004d8bbfd80000004d85ff0f841b0300004d8b078d34c9c1",
+      "instructions": [
+        {
+          "va": "0x181977593",
+          "text": "mov dword ptr [r15 + 4], 0x7fffffff"
+        },
+        {
+          "va": "0x18197759b",
+          "text": "mov rax, qword ptr [rip + 0x181a986]"
+        },
+        {
+          "va": "0x1819775a2",
+          "text": "mov rcx, qword ptr [rax + 0xb8]"
+        },
+        {
+          "va": "0x1819775a9",
+          "text": "mov rax, qword ptr [rcx + 0x38]"
+        },
+        {
+          "va": "0x1819775ad",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x1819775b0",
+          "text": "je 0x1819778f4"
+        },
+        {
+          "va": "0x1819775b6",
+          "text": "mov r15, qword ptr [rbx + 0x68]"
+        },
+        {
+          "va": "0x1819775ba",
+          "text": "mov ecx, dword ptr [rax + 0x18]"
+        },
+        {
+          "va": "0x1819775bd",
+          "text": "mov dword ptr [rbx + 0x60], ecx"
+        },
+        {
+          "va": "0x1819775c0",
+          "text": "test r15, r15"
+        },
+        {
+          "va": "0x1819775c3",
+          "text": "je 0x1819778f4"
+        },
+        {
+          "va": "0x1819775c9",
+          "text": "mov r15, qword ptr [r15 + 0xd8]"
+        },
+        {
+          "va": "0x1819775d0",
+          "text": "test r15, r15"
+        },
+        {
+          "va": "0x1819775d3",
+          "text": "je 0x1819778f4"
+        },
+        {
+          "va": "0x1819775d9",
+          "text": "mov r8, qword ptr [r15]"
+        },
+        {
+          "va": "0x1819775dc",
+          "text": "lea esi, [rcx + rcx*8]"
+        }
+      ]
+    },
+    {
+      "va": "0x1819776df",
+      "bytes": "33c04c8975e38945ef894507894513894523448965eb81ffffff00000f8fd501000033d266897ddf498bc8668945e189451f48894517e826e1fbff488b55674533c0488b4d6f8945f3e8133700008945078d14c500000000488b4de748c1e9200fafc889550f48c745ff0400000003ca894d0b4d85ed0f84990100004d8b4500ba40000000498bcd498b80880100004d8b8090010000ffd04d8b550041b84000",
+      "instructions": [
+        {
+          "va": "0x1819776df",
+          "text": "xor eax, eax"
+        },
+        {
+          "va": "0x1819776e1",
+          "text": "mov qword ptr [rbp - 0x1d], r14"
+        },
+        {
+          "va": "0x1819776e5",
+          "text": "mov dword ptr [rbp - 0x11], eax"
+        },
+        {
+          "va": "0x1819776e8",
+          "text": "mov dword ptr [rbp + 7], eax"
+        },
+        {
+          "va": "0x1819776eb",
+          "text": "mov dword ptr [rbp + 0x13], eax"
+        },
+        {
+          "va": "0x1819776ee",
+          "text": "mov dword ptr [rbp + 0x23], eax"
+        },
+        {
+          "va": "0x1819776f1",
+          "text": "mov dword ptr [rbp - 0x15], r12d"
+        },
+        {
+          "va": "0x1819776f5",
+          "text": "cmp edi, 0xffff"
+        },
+        {
+          "va": "0x1819776fb",
+          "text": "jg 0x1819778d6"
+        },
+        {
+          "va": "0x181977701",
+          "text": "xor edx, edx"
+        },
+        {
+          "va": "0x181977703",
+          "text": "mov word ptr [rbp - 0x21], di"
+        },
+        {
+          "va": "0x181977707",
+          "text": "mov rcx, r8"
+        },
+        {
+          "va": "0x18197770a",
+          "text": "mov word ptr [rbp - 0x1f], ax"
+        },
+        {
+          "va": "0x18197770e",
+          "text": "mov dword ptr [rbp + 0x1f], eax"
+        },
+        {
+          "va": "0x181977711",
+          "text": "mov qword ptr [rbp + 0x17], rax"
+        },
+        {
+          "va": "0x181977715",
+          "text": "call 0x181935840"
+        },
+        {
+          "va": "0x18197771a",
+          "text": "mov rdx, qword ptr [rbp + 0x67]"
+        },
+        {
+          "va": "0x18197771e",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x181977721",
+          "text": "mov rcx, qword ptr [rbp + 0x6f]"
+        },
+        {
+          "va": "0x181977725",
+          "text": "mov dword ptr [rbp - 0xd], eax"
+        },
+        {
+          "va": "0x181977728",
+          "text": "call 0x18197ae40"
+        },
+        {
+          "va": "0x18197772d",
+          "text": "mov dword ptr [rbp + 7], eax"
+        },
+        {
+          "va": "0x181977730",
+          "text": "lea edx, [rax*8]"
+        },
+        {
+          "va": "0x181977737",
+          "text": "mov rcx, qword ptr [rbp - 0x19]"
+        },
+        {
+          "va": "0x18197773b",
+          "text": "shr rcx, 0x20"
+        },
+        {
+          "va": "0x18197773f",
+          "text": "imul ecx, eax"
+        },
+        {
+          "va": "0x181977742",
+          "text": "mov dword ptr [rbp + 0xf], edx"
+        },
+        {
+          "va": "0x181977745",
+          "text": "mov qword ptr [rbp - 1], 4"
+        },
+        {
+          "va": "0x18197774d",
+          "text": "add ecx, edx"
+        },
+        {
+          "va": "0x18197774f",
+          "text": "mov dword ptr [rbp + 0xb], ecx"
+        },
+        {
+          "va": "0x181977752",
+          "text": "test r13, r13"
+        },
+        {
+          "va": "0x181977755",
+          "text": "je 0x1819778f4"
+        },
+        {
+          "va": "0x18197775b",
+          "text": "mov r8, qword ptr [r13]"
+        },
+        {
+          "va": "0x18197775f",
+          "text": "mov edx, 0x40"
+        },
+        {
+          "va": "0x181977764",
+          "text": "mov rcx, r13"
+        },
+        {
+          "va": "0x181977767",
+          "text": "mov rax, qword ptr [r8 + 0x188]"
+        },
+        {
+          "va": "0x18197776e",
+          "text": "mov r8, qword ptr [r8 + 0x190]"
+        },
+        {
+          "va": "0x181977775",
+          "text": "call rax"
+        },
+        {
+          "va": "0x181977777",
+          "text": "mov r10, qword ptr [r13]"
+        }
+      ]
+    },
+    {
+      "va": "0x1819777fb",
+      "bytes": "4d8b0424498bcc8b73600faf732c498b80880100004d8b809001000003f68bd6ffd04d8b1424448bc6488bd0498bcc488bf84d8b8ab001000041ff92a801000048897b48418bc63b43607d55488b53584963c6488d0cc04c8d04cd00000000498d04104885c00f848d000000418bc60faf432c4863c8488b4348488d0c484a894c3a38488b4b58498d04084885c074698b432c41ffc642894439404983c748eba3",
+      "instructions": [
+        {
+          "va": "0x1819777fb",
+          "text": "mov r8, qword ptr [r12]"
+        },
+        {
+          "va": "0x1819777ff",
+          "text": "mov rcx, r12"
+        },
+        {
+          "va": "0x181977802",
+          "text": "mov esi, dword ptr [rbx + 0x60]"
+        },
+        {
+          "va": "0x181977805",
+          "text": "imul esi, dword ptr [rbx + 0x2c]"
+        },
+        {
+          "va": "0x181977809",
+          "text": "mov rax, qword ptr [r8 + 0x188]"
+        },
+        {
+          "va": "0x181977810",
+          "text": "mov r8, qword ptr [r8 + 0x190]"
+        },
+        {
+          "va": "0x181977817",
+          "text": "add esi, esi"
+        },
+        {
+          "va": "0x181977819",
+          "text": "mov edx, esi"
+        },
+        {
+          "va": "0x18197781b",
+          "text": "call rax"
+        },
+        {
+          "va": "0x18197781d",
+          "text": "mov r10, qword ptr [r12]"
+        },
+        {
+          "va": "0x181977821",
+          "text": "mov r8d, esi"
+        },
+        {
+          "va": "0x181977824",
+          "text": "mov rdx, rax"
+        },
+        {
+          "va": "0x181977827",
+          "text": "mov rcx, r12"
+        },
+        {
+          "va": "0x18197782a",
+          "text": "mov rdi, rax"
+        },
+        {
+          "va": "0x18197782d",
+          "text": "mov r9, qword ptr [r10 + 0x1b0]"
+        },
+        {
+          "va": "0x181977834",
+          "text": "call qword ptr [r10 + 0x1a8]"
+        },
+        {
+          "va": "0x18197783b",
+          "text": "mov qword ptr [rbx + 0x48], rdi"
+        },
+        {
+          "va": "0x18197783f",
+          "text": "mov eax, r14d"
+        },
+        {
+          "va": "0x181977842",
+          "text": "cmp eax, dword ptr [rbx + 0x60]"
+        },
+        {
+          "va": "0x181977845",
+          "text": "jge 0x18197789c"
+        },
+        {
+          "va": "0x181977847",
+          "text": "mov rdx, qword ptr [rbx + 0x58]"
+        },
+        {
+          "va": "0x18197784b",
+          "text": "movsxd rax, r14d"
+        },
+        {
+          "va": "0x18197784e",
+          "text": "lea rcx, [rax + rax*8]"
+        },
+        {
+          "va": "0x181977852",
+          "text": "lea r8, [rcx*8]"
+        },
+        {
+          "va": "0x18197785a",
+          "text": "lea rax, [r8 + rdx]"
+        },
+        {
+          "va": "0x18197785e",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x181977861",
+          "text": "je 0x1819778f4"
+        },
+        {
+          "va": "0x181977867",
+          "text": "mov eax, r14d"
+        },
+        {
+          "va": "0x18197786a",
+          "text": "imul eax, dword ptr [rbx + 0x2c]"
+        },
+        {
+          "va": "0x18197786e",
+          "text": "movsxd rcx, eax"
+        },
+        {
+          "va": "0x181977871",
+          "text": "mov rax, qword ptr [rbx + 0x48]"
+        },
+        {
+          "va": "0x181977875",
+          "text": "lea rcx, [rax + rcx*2]"
+        },
+        {
+          "va": "0x181977879",
+          "text": "mov qword ptr [rdx + r15 + 0x38], rcx"
+        },
+        {
+          "va": "0x18197787e",
+          "text": "mov rcx, qword ptr [rbx + 0x58]"
+        },
+        {
+          "va": "0x181977882",
+          "text": "lea rax, [r8 + rcx]"
+        },
+        {
+          "va": "0x181977886",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x181977889",
+          "text": "je 0x1819778f4"
+        },
+        {
+          "va": "0x18197788b",
+          "text": "mov eax, dword ptr [rbx + 0x2c]"
+        },
+        {
+          "va": "0x18197788e",
+          "text": "inc r14d"
+        },
+        {
+          "va": "0x181977891",
+          "text": "mov dword ptr [rcx + r15 + 0x40], eax"
+        },
+        {
+          "va": "0x181977896",
+          "text": "add r15, 0x48"
+        },
+        {
+          "va": "0x18197789a",
+          "text": "jmp 0x18197783f"
+        }
+      ]
+    },
+    {
+      "va": "0x1819783bb",
+      "bytes": "488b4b68397b300f8d120200004885c90f84da020000488b89d80000004885c90f84ca0200008d473f4533c09983e23f03d0c1fa06c1e203e8b8e4ccff488b0df9d984014c8bf84889442460488b91b8000000488b0a4885c90f84910200008b432c4c8b1183c03f4c8b43409983e23f448d0c02498b92b001000041c1f9064889542420498bd741c1e10341ff92a8010000488b4b684885c90f8451020000488b89d80000004885c90f8441020000448b432c448bcf488b53384533f641c1e00441c1e1044c89742420e8e6e4ccff488b4b68488943384885c90f8410020000488b89d80000004885c90f8400020000448b432c448bcf488b535041c1e00641c1e1064c89742420e8a8e4ccff488b4b6848894350897b2c897b304885c90f84cc010000488b89d80000004885c90f84bc0100008b53604533c00fafd703d2e8b1e3ccffbe010000004c8be83973607e5f448bfd448be70f1f400066660f1f840000000000488b4348448bc54963cc4c89742428897c24204c8d0c4d000000004963cf4d03cd488d14484863c6488d0cc0488b4358488d0cc8e8a743fcffffc64403e74403fd3b73607cba4c8b7c2460488b4b684885c90f8433010000488b89d80000004885c90f8423010000488b01488b53404c8b8080010000ff9078010000488b4b684c897b404885c90f84fe000000488b89d80000004885c90f84ee000000488b01488b53484c8b8080010000ff90780100004c896b48e9c0fdff",
+      "instructions": [
+        {
+          "va": "0x1819783bb",
+          "text": "mov rcx, qword ptr [rbx + 0x68]"
+        },
+        {
+          "va": "0x1819783bf",
+          "text": "cmp dword ptr [rbx + 0x30], edi"
+        },
+        {
+          "va": "0x1819783c2",
+          "text": "jge 0x1819785da"
+        },
+        {
+          "va": "0x1819783c8",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x1819783cb",
+          "text": "je 0x1819786ab"
+        },
+        {
+          "va": "0x1819783d1",
+          "text": "mov rcx, qword ptr [rcx + 0xd8]"
+        },
+        {
+          "va": "0x1819783d8",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x1819783db",
+          "text": "je 0x1819786ab"
+        },
+        {
+          "va": "0x1819783e1",
+          "text": "lea eax, [rdi + 0x3f]"
+        },
+        {
+          "va": "0x1819783e4",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x1819783e7",
+          "text": "cdq "
+        },
+        {
+          "va": "0x1819783e8",
+          "text": "and edx, 0x3f"
+        },
+        {
+          "va": "0x1819783eb",
+          "text": "add edx, eax"
+        },
+        {
+          "va": "0x1819783ed",
+          "text": "sar edx, 6"
+        },
+        {
+          "va": "0x1819783f0",
+          "text": "shl edx, 3"
+        },
+        {
+          "va": "0x1819783f3",
+          "text": "call 0x1816468b0"
+        },
+        {
+          "va": "0x1819783f8",
+          "text": "mov rcx, qword ptr [rip + 0x184d9f9]"
+        },
+        {
+          "va": "0x1819783ff",
+          "text": "mov r15, rax"
+        },
+        {
+          "va": "0x181978402",
+          "text": "mov qword ptr [rsp + 0x60], rax"
+        },
+        {
+          "va": "0x181978407",
+          "text": "mov rdx, qword ptr [rcx + 0xb8]"
+        },
+        {
+          "va": "0x18197840e",
+          "text": "mov rcx, qword ptr [rdx]"
+        },
+        {
+          "va": "0x181978411",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x181978414",
+          "text": "je 0x1819786ab"
+        },
+        {
+          "va": "0x18197841a",
+          "text": "mov eax, dword ptr [rbx + 0x2c]"
+        },
+        {
+          "va": "0x18197841d",
+          "text": "mov r10, qword ptr [rcx]"
+        },
+        {
+          "va": "0x181978420",
+          "text": "add eax, 0x3f"
+        },
+        {
+          "va": "0x181978423",
+          "text": "mov r8, qword ptr [rbx + 0x40]"
+        },
+        {
+          "va": "0x181978427",
+          "text": "cdq "
+        },
+        {
+          "va": "0x181978428",
+          "text": "and edx, 0x3f"
+        },
+        {
+          "va": "0x18197842b",
+          "text": "lea r9d, [rdx + rax]"
+        },
+        {
+          "va": "0x18197842f",
+          "text": "mov rdx, qword ptr [r10 + 0x1b0]"
+        },
+        {
+          "va": "0x181978436",
+          "text": "sar r9d, 6"
+        },
+        {
+          "va": "0x18197843a",
+          "text": "mov qword ptr [rsp + 0x20], rdx"
+        },
+        {
+          "va": "0x18197843f",
+          "text": "mov rdx, r15"
+        },
+        {
+          "va": "0x181978442",
+          "text": "shl r9d, 3"
+        },
+        {
+          "va": "0x181978446",
+          "text": "call qword ptr [r10 + 0x1a8]"
+        },
+        {
+          "va": "0x18197844d",
+          "text": "mov rcx, qword ptr [rbx + 0x68]"
+        },
+        {
+          "va": "0x181978451",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x181978454",
+          "text": "je 0x1819786ab"
+        },
+        {
+          "va": "0x18197845a",
+          "text": "mov rcx, qword ptr [rcx + 0xd8]"
+        },
+        {
+          "va": "0x181978461",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x181978464",
+          "text": "je 0x1819786ab"
+        },
+        {
+          "va": "0x18197846a",
+          "text": "mov r8d, dword ptr [rbx + 0x2c]"
+        },
+        {
+          "va": "0x18197846e",
+          "text": "mov r9d, edi"
+        },
+        {
+          "va": "0x181978471",
+          "text": "mov rdx, qword ptr [rbx + 0x38]"
+        },
+        {
+          "va": "0x181978475",
+          "text": "xor r14d, r14d"
+        },
+        {
+          "va": "0x181978478",
+          "text": "shl r8d, 4"
+        },
+        {
+          "va": "0x18197847c",
+          "text": "shl r9d, 4"
+        },
+        {
+          "va": "0x181978480",
+          "text": "mov qword ptr [rsp + 0x20], r14"
+        },
+        {
+          "va": "0x181978485",
+          "text": "call 0x181646970"
+        },
+        {
+          "va": "0x18197848a",
+          "text": "mov rcx, qword ptr [rbx + 0x68]"
+        },
+        {
+          "va": "0x18197848e",
+          "text": "mov qword ptr [rbx + 0x38], rax"
+        },
+        {
+          "va": "0x181978492",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x181978495",
+          "text": "je 0x1819786ab"
+        },
+        {
+          "va": "0x18197849b",
+          "text": "mov rcx, qword ptr [rcx + 0xd8]"
+        },
+        {
+          "va": "0x1819784a2",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x1819784a5",
+          "text": "je 0x1819786ab"
+        },
+        {
+          "va": "0x1819784ab",
+          "text": "mov r8d, dword ptr [rbx + 0x2c]"
+        },
+        {
+          "va": "0x1819784af",
+          "text": "mov r9d, edi"
+        },
+        {
+          "va": "0x1819784b2",
+          "text": "mov rdx, qword ptr [rbx + 0x50]"
+        },
+        {
+          "va": "0x1819784b6",
+          "text": "shl r8d, 6"
+        },
+        {
+          "va": "0x1819784ba",
+          "text": "shl r9d, 6"
+        },
+        {
+          "va": "0x1819784be",
+          "text": "mov qword ptr [rsp + 0x20], r14"
+        },
+        {
+          "va": "0x1819784c3",
+          "text": "call 0x181646970"
+        },
+        {
+          "va": "0x1819784c8",
+          "text": "mov rcx, qword ptr [rbx + 0x68]"
+        },
+        {
+          "va": "0x1819784cc",
+          "text": "mov qword ptr [rbx + 0x50], rax"
+        },
+        {
+          "va": "0x1819784d0",
+          "text": "mov dword ptr [rbx + 0x2c], edi"
+        },
+        {
+          "va": "0x1819784d3",
+          "text": "mov dword ptr [rbx + 0x30], edi"
+        },
+        {
+          "va": "0x1819784d6",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x1819784d9",
+          "text": "je 0x1819786ab"
+        },
+        {
+          "va": "0x1819784df",
+          "text": "mov rcx, qword ptr [rcx + 0xd8]"
+        },
+        {
+          "va": "0x1819784e6",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x1819784e9",
+          "text": "je 0x1819786ab"
+        },
+        {
+          "va": "0x1819784ef",
+          "text": "mov edx, dword ptr [rbx + 0x60]"
+        },
+        {
+          "va": "0x1819784f2",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x1819784f5",
+          "text": "imul edx, edi"
+        },
+        {
+          "va": "0x1819784f8",
+          "text": "add edx, edx"
+        },
+        {
+          "va": "0x1819784fa",
+          "text": "call 0x1816468b0"
+        },
+        {
+          "va": "0x1819784ff",
+          "text": "mov esi, 1"
+        },
+        {
+          "va": "0x181978504",
+          "text": "mov r13, rax"
+        },
+        {
+          "va": "0x181978507",
+          "text": "cmp dword ptr [rbx + 0x60], esi"
+        },
+        {
+          "va": "0x18197850a",
+          "text": "jle 0x18197856b"
+        },
+        {
+          "va": "0x18197850c",
+          "text": "mov r15d, ebp"
+        },
+        {
+          "va": "0x18197850f",
+          "text": "mov r12d, edi"
+        },
+        {
+          "va": "0x181978512",
+          "text": "nop dword ptr [rax]"
+        },
+        {
+          "va": "0x181978516",
+          "text": "nop word ptr [rax + rax]"
+        },
+        {
+          "va": "0x181978520",
+          "text": "mov rax, qword ptr [rbx + 0x48]"
+        },
+        {
+          "va": "0x181978524",
+          "text": "mov r8d, ebp"
+        },
+        {
+          "va": "0x181978527",
+          "text": "movsxd rcx, r12d"
+        },
+        {
+          "va": "0x18197852a",
+          "text": "mov qword ptr [rsp + 0x28], r14"
+        },
+        {
+          "va": "0x18197852f",
+          "text": "mov dword ptr [rsp + 0x20], edi"
+        },
+        {
+          "va": "0x181978533",
+          "text": "lea r9, [rcx*2]"
+        },
+        {
+          "va": "0x18197853b",
+          "text": "movsxd rcx, r15d"
+        },
+        {
+          "va": "0x18197853e",
+          "text": "add r9, r13"
+        },
+        {
+          "va": "0x181978541",
+          "text": "lea rdx, [rax + rcx*2]"
+        },
+        {
+          "va": "0x181978545",
+          "text": "movsxd rax, esi"
+        },
+        {
+          "va": "0x181978548",
+          "text": "lea rcx, [rax + rax*8]"
+        },
+        {
+          "va": "0x18197854c",
+          "text": "mov rax, qword ptr [rbx + 0x58]"
+        },
+        {
+          "va": "0x181978550",
+          "text": "lea rcx, [rax + rcx*8]"
+        },
+        {
+          "va": "0x181978554",
+          "text": "call 0x18193c900"
+        },
+        {
+          "va": "0x181978559",
+          "text": "inc esi"
+        },
+        {
+          "va": "0x18197855b",
+          "text": "add r12d, edi"
+        },
+        {
+          "va": "0x18197855e",
+          "text": "add r15d, ebp"
+        },
+        {
+          "va": "0x181978561",
+          "text": "cmp esi, dword ptr [rbx + 0x60]"
+        },
+        {
+          "va": "0x181978564",
+          "text": "jl 0x181978520"
+        },
+        {
+          "va": "0x181978566",
+          "text": "mov r15, qword ptr [rsp + 0x60]"
+        },
+        {
+          "va": "0x18197856b",
+          "text": "mov rcx, qword ptr [rbx + 0x68]"
+        },
+        {
+          "va": "0x18197856f",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x181978572",
+          "text": "je 0x1819786ab"
+        },
+        {
+          "va": "0x181978578",
+          "text": "mov rcx, qword ptr [rcx + 0xd8]"
+        },
+        {
+          "va": "0x18197857f",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x181978582",
+          "text": "je 0x1819786ab"
+        },
+        {
+          "va": "0x181978588",
+          "text": "mov rax, qword ptr [rcx]"
+        },
+        {
+          "va": "0x18197858b",
+          "text": "mov rdx, qword ptr [rbx + 0x40]"
+        },
+        {
+          "va": "0x18197858f",
+          "text": "mov r8, qword ptr [rax + 0x180]"
+        },
+        {
+          "va": "0x181978596",
+          "text": "call qword ptr [rax + 0x178]"
+        },
+        {
+          "va": "0x18197859c",
+          "text": "mov rcx, qword ptr [rbx + 0x68]"
+        },
+        {
+          "va": "0x1819785a0",
+          "text": "mov qword ptr [rbx + 0x40], r15"
+        },
+        {
+          "va": "0x1819785a4",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x1819785a7",
+          "text": "je 0x1819786ab"
+        },
+        {
+          "va": "0x1819785ad",
+          "text": "mov rcx, qword ptr [rcx + 0xd8]"
+        },
+        {
+          "va": "0x1819785b4",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x1819785b7",
+          "text": "je 0x1819786ab"
+        },
+        {
+          "va": "0x1819785bd",
+          "text": "mov rax, qword ptr [rcx]"
+        },
+        {
+          "va": "0x1819785c0",
+          "text": "mov rdx, qword ptr [rbx + 0x48]"
+        },
+        {
+          "va": "0x1819785c4",
+          "text": "mov r8, qword ptr [rax + 0x180]"
+        },
+        {
+          "va": "0x1819785cb",
+          "text": "call qword ptr [rax + 0x178]"
+        },
+        {
+          "va": "0x1819785d1",
+          "text": "mov qword ptr [rbx + 0x48], r13"
+        }
+      ]
+    },
+    {
+      "va": "0x1819785da",
+      "bytes": "4885c90f84c80000008b53604533c90fafd5458d410803d2e8294b0000488b0dfad784014c8be8488b91b8000000488b0a4885c90f84970000004c8b11448bcd440faf4b60498bd54c8b4348498b82b001000048894424204503c941ff92a8010000be01000000897b2c3973600f8e4dfdffff448bfd448be74533f666660f1f840000000000488b4348448bc54963cc4c89742428897c24204c8d0c484963c7488d1445000000004863c64903d5488d0cc0488b4358488d0cc8e86742fcffffc64403e74403fd3b73607cbae9",
+      "instructions": [
+        {
+          "va": "0x1819785da",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x1819785dd",
+          "text": "je 0x1819786ab"
+        },
+        {
+          "va": "0x1819785e3",
+          "text": "mov edx, dword ptr [rbx + 0x60]"
+        },
+        {
+          "va": "0x1819785e6",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x1819785e9",
+          "text": "imul edx, ebp"
+        },
+        {
+          "va": "0x1819785ec",
+          "text": "lea r8d, [r9 + 8]"
+        },
+        {
+          "va": "0x1819785f0",
+          "text": "add edx, edx"
+        },
+        {
+          "va": "0x1819785f2",
+          "text": "call 0x18197d120"
+        },
+        {
+          "va": "0x1819785f7",
+          "text": "mov rcx, qword ptr [rip + 0x184d7fa]"
+        },
+        {
+          "va": "0x1819785fe",
+          "text": "mov r13, rax"
+        },
+        {
+          "va": "0x181978601",
+          "text": "mov rdx, qword ptr [rcx + 0xb8]"
+        },
+        {
+          "va": "0x181978608",
+          "text": "mov rcx, qword ptr [rdx]"
+        },
+        {
+          "va": "0x18197860b",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x18197860e",
+          "text": "je 0x1819786ab"
+        },
+        {
+          "va": "0x181978614",
+          "text": "mov r10, qword ptr [rcx]"
+        },
+        {
+          "va": "0x181978617",
+          "text": "mov r9d, ebp"
+        },
+        {
+          "va": "0x18197861a",
+          "text": "imul r9d, dword ptr [rbx + 0x60]"
+        },
+        {
+          "va": "0x18197861f",
+          "text": "mov rdx, r13"
+        },
+        {
+          "va": "0x181978622",
+          "text": "mov r8, qword ptr [rbx + 0x48]"
+        },
+        {
+          "va": "0x181978626",
+          "text": "mov rax, qword ptr [r10 + 0x1b0]"
+        },
+        {
+          "va": "0x18197862d",
+          "text": "mov qword ptr [rsp + 0x20], rax"
+        },
+        {
+          "va": "0x181978632",
+          "text": "add r9d, r9d"
+        },
+        {
+          "va": "0x181978635",
+          "text": "call qword ptr [r10 + 0x1a8]"
+        },
+        {
+          "va": "0x18197863c",
+          "text": "mov esi, 1"
+        },
+        {
+          "va": "0x181978641",
+          "text": "mov dword ptr [rbx + 0x2c], edi"
+        },
+        {
+          "va": "0x181978644",
+          "text": "cmp dword ptr [rbx + 0x60], esi"
+        },
+        {
+          "va": "0x181978647",
+          "text": "jle 0x18197839a"
+        },
+        {
+          "va": "0x18197864d",
+          "text": "mov r15d, ebp"
+        },
+        {
+          "va": "0x181978650",
+          "text": "mov r12d, edi"
+        },
+        {
+          "va": "0x181978653",
+          "text": "xor r14d, r14d"
+        },
+        {
+          "va": "0x181978656",
+          "text": "nop word ptr [rax + rax]"
+        },
+        {
+          "va": "0x181978660",
+          "text": "mov rax, qword ptr [rbx + 0x48]"
+        },
+        {
+          "va": "0x181978664",
+          "text": "mov r8d, ebp"
+        },
+        {
+          "va": "0x181978667",
+          "text": "movsxd rcx, r12d"
+        },
+        {
+          "va": "0x18197866a",
+          "text": "mov qword ptr [rsp + 0x28], r14"
+        },
+        {
+          "va": "0x18197866f",
+          "text": "mov dword ptr [rsp + 0x20], edi"
+        },
+        {
+          "va": "0x181978673",
+          "text": "lea r9, [rax + rcx*2]"
+        },
+        {
+          "va": "0x181978677",
+          "text": "movsxd rax, r15d"
+        },
+        {
+          "va": "0x18197867a",
+          "text": "lea rdx, [rax*2]"
+        },
+        {
+          "va": "0x181978682",
+          "text": "movsxd rax, esi"
+        },
+        {
+          "va": "0x181978685",
+          "text": "add rdx, r13"
+        },
+        {
+          "va": "0x181978688",
+          "text": "lea rcx, [rax + rax*8]"
+        },
+        {
+          "va": "0x18197868c",
+          "text": "mov rax, qword ptr [rbx + 0x58]"
+        },
+        {
+          "va": "0x181978690",
+          "text": "lea rcx, [rax + rcx*8]"
+        },
+        {
+          "va": "0x181978694",
+          "text": "call 0x18193c900"
+        },
+        {
+          "va": "0x181978699",
+          "text": "inc esi"
+        },
+        {
+          "va": "0x18197869b",
+          "text": "add r12d, edi"
+        },
+        {
+          "va": "0x18197869e",
+          "text": "add r15d, ebp"
+        },
+        {
+          "va": "0x1819786a1",
+          "text": "cmp esi, dword ptr [rbx + 0x60]"
+        },
+        {
+          "va": "0x1819786a4",
+          "text": "jl 0x181978660"
+        }
+      ]
+    },
+    {
+      "va": "0x181979096",
+      "bytes": "48635128488bd985d2752b8b512c395120750a03d24533c0e80df1ffff48635320488bca48c1e10448034b388d42018943207435eb15488bca48c1e10448034b3874268b01ff4b2489432889118b4104ffc00fbaf01f89410481",
+      "instructions": [
+        {
+          "va": "0x181979096",
+          "text": "movsxd rdx, dword ptr [rcx + 0x28]"
+        },
+        {
+          "va": "0x18197909a",
+          "text": "mov rbx, rcx"
+        },
+        {
+          "va": "0x18197909d",
+          "text": "test edx, edx"
+        },
+        {
+          "va": "0x18197909f",
+          "text": "jne 0x1819790cc"
+        },
+        {
+          "va": "0x1819790a1",
+          "text": "mov edx, dword ptr [rcx + 0x2c]"
+        },
+        {
+          "va": "0x1819790a4",
+          "text": "cmp dword ptr [rcx + 0x20], edx"
+        },
+        {
+          "va": "0x1819790a7",
+          "text": "jne 0x1819790b3"
+        },
+        {
+          "va": "0x1819790a9",
+          "text": "add edx, edx"
+        },
+        {
+          "va": "0x1819790ab",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x1819790ae",
+          "text": "call 0x1819781c0"
+        },
+        {
+          "va": "0x1819790b3",
+          "text": "movsxd rdx, dword ptr [rbx + 0x20]"
+        },
+        {
+          "va": "0x1819790b7",
+          "text": "mov rcx, rdx"
+        },
+        {
+          "va": "0x1819790ba",
+          "text": "shl rcx, 4"
+        },
+        {
+          "va": "0x1819790be",
+          "text": "add rcx, qword ptr [rbx + 0x38]"
+        },
+        {
+          "va": "0x1819790c2",
+          "text": "lea eax, [rdx + 1]"
+        },
+        {
+          "va": "0x1819790c5",
+          "text": "mov dword ptr [rbx + 0x20], eax"
+        },
+        {
+          "va": "0x1819790c8",
+          "text": "je 0x1819790ff"
+        },
+        {
+          "va": "0x1819790ca",
+          "text": "jmp 0x1819790e1"
+        },
+        {
+          "va": "0x1819790cc",
+          "text": "mov rcx, rdx"
+        },
+        {
+          "va": "0x1819790cf",
+          "text": "shl rcx, 4"
+        },
+        {
+          "va": "0x1819790d3",
+          "text": "add rcx, qword ptr [rbx + 0x38]"
+        },
+        {
+          "va": "0x1819790d7",
+          "text": "je 0x1819790ff"
+        },
+        {
+          "va": "0x1819790d9",
+          "text": "mov eax, dword ptr [rcx]"
+        },
+        {
+          "va": "0x1819790db",
+          "text": "dec dword ptr [rbx + 0x24]"
+        },
+        {
+          "va": "0x1819790de",
+          "text": "mov dword ptr [rbx + 0x28], eax"
+        },
+        {
+          "va": "0x1819790e1",
+          "text": "mov dword ptr [rcx], edx"
+        },
+        {
+          "va": "0x1819790e3",
+          "text": "mov eax, dword ptr [rcx + 4]"
+        },
+        {
+          "va": "0x1819790e6",
+          "text": "inc eax"
+        },
+        {
+          "va": "0x1819790e8",
+          "text": "btr eax, 0x1f"
+        },
+        {
+          "va": "0x1819790ec",
+          "text": "mov dword ptr [rcx + 4], eax"
+        }
+      ]
+    },
+    {
+      "va": "0x18197afed",
+      "bytes": "488d4c2420488d0527626bfe488bd6498940384c8b0d19698201e874b2ddfe48837c242000488b0d2fb58301743883b9e0000000007505e8171097fe8b442428b9010000003bc10f4ec1488b6c2440488b5c2448488b7424504883c4305fc3488b0df5b4830183b9e0000000008b5f187505e8dc0f97feb9010000003bd90f4ed98bc3ebc5e869f59afecccccccccccccc",
+      "instructions": [
+        {
+          "va": "0x18197afed",
+          "text": "lea rcx, [rsp + 0x20]"
+        },
+        {
+          "va": "0x18197aff2",
+          "text": "lea rax, [rip - 0x1949dd9]"
+        },
+        {
+          "va": "0x18197aff9",
+          "text": "mov rdx, rsi"
+        },
+        {
+          "va": "0x18197affc",
+          "text": "mov qword ptr [r8 + 0x38], rax"
+        },
+        {
+          "va": "0x18197b000",
+          "text": "mov r9, qword ptr [rip + 0x1826919]"
+        },
+        {
+          "va": "0x18197b007",
+          "text": "call 0x180756280"
+        },
+        {
+          "va": "0x18197b00c",
+          "text": "cmp qword ptr [rsp + 0x20], 0"
+        },
+        {
+          "va": "0x18197b012",
+          "text": "mov rcx, qword ptr [rip + 0x183b52f]"
+        },
+        {
+          "va": "0x18197b019",
+          "text": "je 0x18197b053"
+        },
+        {
+          "va": "0x18197b01b",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18197b022",
+          "text": "jne 0x18197b029"
+        },
+        {
+          "va": "0x18197b024",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18197b029",
+          "text": "mov eax, dword ptr [rsp + 0x28]"
+        },
+        {
+          "va": "0x18197b02d",
+          "text": "mov ecx, 1"
+        },
+        {
+          "va": "0x18197b032",
+          "text": "cmp eax, ecx"
+        },
+        {
+          "va": "0x18197b034",
+          "text": "cmovle eax, ecx"
+        },
+        {
+          "va": "0x18197b037",
+          "text": "mov rbp, qword ptr [rsp + 0x40]"
+        },
+        {
+          "va": "0x18197b03c",
+          "text": "mov rbx, qword ptr [rsp + 0x48]"
+        },
+        {
+          "va": "0x18197b041",
+          "text": "mov rsi, qword ptr [rsp + 0x50]"
+        },
+        {
+          "va": "0x18197b046",
+          "text": "add rsp, 0x30"
+        },
+        {
+          "va": "0x18197b04a",
+          "text": "pop rdi"
+        },
+        {
+          "va": "0x18197b04b",
+          "text": "ret "
+        },
+        {
+          "va": "0x18197b04c",
+          "text": "mov rcx, qword ptr [rip + 0x183b4f5]"
+        },
+        {
+          "va": "0x18197b053",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18197b05a",
+          "text": "mov ebx, dword ptr [rdi + 0x18]"
+        },
+        {
+          "va": "0x18197b05d",
+          "text": "jne 0x18197b064"
+        },
+        {
+          "va": "0x18197b05f",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18197b064",
+          "text": "mov ecx, 1"
+        },
+        {
+          "va": "0x18197b069",
+          "text": "cmp ebx, ecx"
+        },
+        {
+          "va": "0x18197b06b",
+          "text": "cmovle ebx, ecx"
+        },
+        {
+          "va": "0x18197b06e",
+          "text": "mov eax, ebx"
+        },
+        {
+          "va": "0x18197b070",
+          "text": "jmp 0x18197b037"
+        },
+        {
+          "va": "0x18197b072",
+          "text": "call 0x18032a5e0"
+        },
+        {
+          "va": "0x18197b077",
+          "text": "int3 "
+        },
+        {
+          "va": "0x18197b078",
+          "text": "int3 "
+        },
+        {
+          "va": "0x18197b079",
+          "text": "int3 "
+        },
+        {
+          "va": "0x18197b07a",
+          "text": "int3 "
+        },
+        {
+          "va": "0x18197b07b",
+          "text": "int3 "
+        },
+        {
+          "va": "0x18197b07c",
+          "text": "int3 "
+        },
+        {
+          "va": "0x18197b07d",
+          "text": "int3 "
+        }
+      ]
+    },
+    {
+      "va": "0x18197b080",
+      "bytes": "c7411400040000c7411880000000c3",
+      "instructions": [
+        {
+          "va": "0x18197b080",
+          "text": "mov dword ptr [rcx + 0x14], 0x400"
+        },
+        {
+          "va": "0x18197b087",
+          "text": "mov dword ptr [rcx + 0x18], 0x80"
+        },
+        {
+          "va": "0x18197b08e",
+          "text": "ret "
+        }
+      ]
+    },
+    {
+      "va": "0x18197b090",
+      "bytes": "40534883ec20488b4910488bda4885c97459488b11488b1b488b82b8010000488b92c0010000ffd0483bd874364885db74294885c0742448634b103b4810751b4c8bc1488d50144d03c0488d4b144533c94883c4205be9556bb2ff32c04883c4205bc3b0014883c4205bc3",
+      "instructions": [
+        {
+          "va": "0x18197b090",
+          "text": "push rbx"
+        },
+        {
+          "va": "0x18197b092",
+          "text": "sub rsp, 0x20"
+        },
+        {
+          "va": "0x18197b096",
+          "text": "mov rcx, qword ptr [rcx + 0x10]"
+        },
+        {
+          "va": "0x18197b09a",
+          "text": "mov rbx, rdx"
+        },
+        {
+          "va": "0x18197b09d",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x18197b0a0",
+          "text": "je 0x18197b0fb"
+        },
+        {
+          "va": "0x18197b0a2",
+          "text": "mov rdx, qword ptr [rcx]"
+        },
+        {
+          "va": "0x18197b0a5",
+          "text": "mov rbx, qword ptr [rbx]"
+        },
+        {
+          "va": "0x18197b0a8",
+          "text": "mov rax, qword ptr [rdx + 0x1b8]"
+        },
+        {
+          "va": "0x18197b0af",
+          "text": "mov rdx, qword ptr [rdx + 0x1c0]"
+        },
+        {
+          "va": "0x18197b0b6",
+          "text": "call rax"
+        },
+        {
+          "va": "0x18197b0b8",
+          "text": "cmp rbx, rax"
+        },
+        {
+          "va": "0x18197b0bb",
+          "text": "je 0x18197b0f3"
+        },
+        {
+          "va": "0x18197b0bd",
+          "text": "test rbx, rbx"
+        },
+        {
+          "va": "0x18197b0c0",
+          "text": "je 0x18197b0eb"
+        },
+        {
+          "va": "0x18197b0c2",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x18197b0c5",
+          "text": "je 0x18197b0eb"
+        },
+        {
+          "va": "0x18197b0c7",
+          "text": "movsxd rcx, dword ptr [rbx + 0x10]"
+        },
+        {
+          "va": "0x18197b0cb",
+          "text": "cmp ecx, dword ptr [rax + 0x10]"
+        },
+        {
+          "va": "0x18197b0ce",
+          "text": "jne 0x18197b0eb"
+        },
+        {
+          "va": "0x18197b0d0",
+          "text": "mov r8, rcx"
+        },
+        {
+          "va": "0x18197b0d3",
+          "text": "lea rdx, [rax + 0x14]"
+        },
+        {
+          "va": "0x18197b0d7",
+          "text": "add r8, r8"
+        },
+        {
+          "va": "0x18197b0da",
+          "text": "lea rcx, [rbx + 0x14]"
+        },
+        {
+          "va": "0x18197b0de",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18197b0e1",
+          "text": "add rsp, 0x20"
+        },
+        {
+          "va": "0x18197b0e5",
+          "text": "pop rbx"
+        },
+        {
+          "va": "0x18197b0e6",
+          "text": "jmp 0x1814a1c40"
+        },
+        {
+          "va": "0x18197b0eb",
+          "text": "xor al, al"
+        },
+        {
+          "va": "0x18197b0ed",
+          "text": "add rsp, 0x20"
+        },
+        {
+          "va": "0x18197b0f1",
+          "text": "pop rbx"
+        },
+        {
+          "va": "0x18197b0f2",
+          "text": "ret "
+        },
+        {
+          "va": "0x18197b0f3",
+          "text": "mov al, 1"
+        },
+        {
+          "va": "0x18197b0f5",
+          "text": "add rsp, 0x20"
+        },
+        {
+          "va": "0x18197b0f9",
+          "text": "pop rbx"
+        },
+        {
+          "va": "0x18197b0fa",
+          "text": "ret "
+        }
+      ]
+    }
+  ],
+  "poolOracleCases": [
+    {
+      "input": {
+        "count": 1,
+        "block_size": 128,
+        "active_blocks": 0,
+        "list_capacity": 4
+      },
+      "result": {
+        "count": 2,
+        "blockSize": 128,
+        "activeBlocks": 1,
+        "listCapacity": 4,
+        "versionDelta": 0,
+        "slot": 1,
+        "effects": [
+          {
+            "op": "allocAndClearBlock",
+            "bytes": 2048,
+            "alignment": 8,
+            "blockIndex": 0
+          },
+          {
+            "op": "writeEntityRef",
+            "blockIndex": 0,
+            "offsetBytes": 8
+          },
+          {
+            "op": "writeSparse",
+            "slot": 1
+          },
+          {
+            "op": "writeView",
+            "blockIndex": 0,
+            "offsetBytes": 1032
+          }
+        ],
+        "metadataOnly": true
+      }
+    },
+    {
+      "input": {
+        "count": 127,
+        "block_size": 128,
+        "active_blocks": 1,
+        "list_capacity": 4
+      },
+      "result": {
+        "count": 128,
+        "blockSize": 128,
+        "activeBlocks": 1,
+        "listCapacity": 4,
+        "versionDelta": 0,
+        "slot": 127,
+        "effects": [
+          {
+            "op": "writeEntityRef",
+            "blockIndex": 0,
+            "offsetBytes": 1016
+          },
+          {
+            "op": "writeSparse",
+            "slot": 127
+          },
+          {
+            "op": "writeView",
+            "blockIndex": 0,
+            "offsetBytes": 2040
+          }
+        ],
+        "metadataOnly": true
+      }
+    },
+    {
+      "input": {
+        "count": 128,
+        "block_size": 128,
+        "active_blocks": 1,
+        "list_capacity": 4
+      },
+      "result": {
+        "count": 129,
+        "blockSize": 128,
+        "activeBlocks": 2,
+        "listCapacity": 4,
+        "versionDelta": 0,
+        "slot": 128,
+        "effects": [
+          {
+            "op": "allocAndClearBlock",
+            "bytes": 2048,
+            "alignment": 8,
+            "blockIndex": 1
+          },
+          {
+            "op": "writeEntityRef",
+            "blockIndex": 1,
+            "offsetBytes": 0
+          },
+          {
+            "op": "writeSparse",
+            "slot": 128
+          },
+          {
+            "op": "writeView",
+            "blockIndex": 1,
+            "offsetBytes": 1024
+          }
+        ],
+        "metadataOnly": true
+      }
+    },
+    {
+      "input": {
+        "count": 512,
+        "block_size": 128,
+        "active_blocks": 4,
+        "list_capacity": 4
+      },
+      "result": {
+        "count": 513,
+        "blockSize": 128,
+        "activeBlocks": 5,
+        "listCapacity": 8,
+        "versionDelta": 0,
+        "slot": 512,
+        "effects": [
+          {
+            "op": "expandDescriptorList",
+            "oldBytes": 64,
+            "newBytes": 128,
+            "preserveBytes": 64,
+            "zeroTailBytes": 64,
+            "freeOld": true
+          },
+          {
+            "op": "allocAndClearBlock",
+            "bytes": 2048,
+            "alignment": 8,
+            "blockIndex": 4
+          },
+          {
+            "op": "writeEntityRef",
+            "blockIndex": 4,
+            "offsetBytes": 0
+          },
+          {
+            "op": "writeSparse",
+            "slot": 512
+          },
+          {
+            "op": "writeView",
+            "blockIndex": 4,
+            "offsetBytes": 1024
+          }
+        ],
+        "metadataOnly": true
+      }
+    },
+    {
+      "input": {
+        "count": 128,
+        "block_size": 128,
+        "active_blocks": 1,
+        "list_capacity": 4,
+        "existing_block": true
+      },
+      "result": {
+        "count": 129,
+        "blockSize": 128,
+        "activeBlocks": 2,
+        "listCapacity": 4,
+        "versionDelta": 0,
+        "slot": 128,
+        "effects": [
+          {
+            "op": "clearExistingBlock",
+            "bytes": 2048,
+            "alignment": null,
+            "blockIndex": 1
+          },
+          {
+            "op": "writeEntityRef",
+            "blockIndex": 1,
+            "offsetBytes": 0
+          },
+          {
+            "op": "writeSparse",
+            "slot": 128
+          },
+          {
+            "op": "writeView",
+            "blockIndex": 1,
+            "offsetBytes": 1024
+          }
+        ],
+        "metadataOnly": true
+      }
+    },
+    {
+      "input": {
+        "count": 65535,
+        "block_size": 128,
+        "active_blocks": 512,
+        "list_capacity": 512
+      },
+      "result": {
+        "count": 65536,
+        "blockSize": 128,
+        "activeBlocks": 512,
+        "listCapacity": 512,
+        "versionDelta": 0,
+        "slot": 65535,
+        "effects": [
+          {
+            "op": "writeEntityRef",
+            "blockIndex": 511,
+            "offsetBytes": 1016
+          },
+          {
+            "op": "writeSparse",
+            "slot": 65535
+          },
+          {
+            "op": "writeView",
+            "blockIndex": 511,
+            "offsetBytes": 2040
+          }
+        ],
+        "metadataOnly": true
+      }
+    }
+  ],
+  "allocatorOracleCases": [
+    {
+      "input": {
+        "old": 32,
+        "allocated": 32,
+        "new": 64,
+        "types": 20
+      },
+      "result": {
+        "capacity": 64,
+        "allocatedCapacity": 64,
+        "culledBytes": 8,
+        "entries": {
+          "oldBytes": 512,
+          "newBytes": 1024
+        },
+        "masks": {
+          "oldBytes": 2048,
+          "newBytes": 4096
+        },
+        "sparse": {
+          "newBytes": 2560,
+          "rows": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "copyEntriesPerRow": 32,
+          "zeroTailEntriesPerRow": 32
+        },
+        "order": [
+          "allocClearCulling",
+          "copyOldCulling",
+          "expandClearEntriesCopyFree",
+          "expandClearMasksCopyFree",
+          "updateCapacityAndAllocated",
+          "allocClearSparse",
+          "copyAndRebindEachType",
+          "freeOldCulling",
+          "freeOldSparse"
+        ],
+        "metadataOnly": true
+      }
+    },
+    {
+      "input": {
+        "old": 1024,
+        "allocated": 1024,
+        "new": 2048,
+        "types": 20
+      },
+      "result": {
+        "capacity": 2048,
+        "allocatedCapacity": 2048,
+        "culledBytes": 256,
+        "entries": {
+          "oldBytes": 16384,
+          "newBytes": 32768
+        },
+        "masks": {
+          "oldBytes": 65536,
+          "newBytes": 131072
+        },
+        "sparse": {
+          "newBytes": 81920,
+          "rows": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "copyEntriesPerRow": 1024,
+          "zeroTailEntriesPerRow": 1024
+        },
+        "order": [
+          "allocClearCulling",
+          "copyOldCulling",
+          "expandClearEntriesCopyFree",
+          "expandClearMasksCopyFree",
+          "updateCapacityAndAllocated",
+          "allocClearSparse",
+          "copyAndRebindEachType",
+          "freeOldCulling",
+          "freeOldSparse"
+        ],
+        "metadataOnly": true
+      }
+    },
+    {
+      "input": {
+        "old": 64,
+        "allocated": 128,
+        "new": 256,
+        "types": 3
+      },
+      "result": {
+        "capacity": 256,
+        "allocatedCapacity": 256,
+        "culledBytes": 32,
+        "entries": {
+          "oldBytes": 1024,
+          "newBytes": 4096
+        },
+        "masks": {
+          "oldBytes": 4096,
+          "newBytes": 16384
+        },
+        "sparse": {
+          "newBytes": 1536,
+          "rows": [
+            1,
+            2
+          ],
+          "copyEntriesPerRow": 64,
+          "zeroTailEntriesPerRow": 192
+        },
+        "order": [
+          "allocClearCulling",
+          "copyOldCulling",
+          "expandClearEntriesCopyFree",
+          "expandClearMasksCopyFree",
+          "updateCapacityAndAllocated",
+          "allocClearSparse",
+          "copyAndRebindEachType",
+          "freeOldCulling",
+          "freeOldSparse"
+        ],
+        "metadataOnly": true
+      }
+    }
+  ],
+  "conclusions": {
+    "freshProfile": "Immediately after FrameBase.Initialize, with installed standard SimulationConfig asset6169 Guid5 (or debug6170), unmodified fixed registration and before any subsequent systems/stage creation. This is not a stage-preparation snapshot.",
+    "freshAllocator": {
+      "capacity": 1024,
+      "allocatedCapacity": 1024,
+      "nextUnused": 1,
+      "freeHead": 0,
+      "freeCount": 0,
+      "pendingCommitOrder": [],
+      "entries": "1024 zero 16-byte entries except reserved entry0.rawVersion=0x7fffffff",
+      "masks": "1024 zero 64-byte masks",
+      "cullingBytes": 128,
+      "componentTypeCount": 187,
+      "componentBufferHeaderBytes": 13464,
+      "packedSparseBytes": 382976
+    },
+    "freshView": {
+      "componentId": 18,
+      "flags": 0,
+      "stride": 8,
+      "countIncludingSentinel": 1,
+      "pendingRemoval": 0,
+      "version": 0,
+      "singletonSparse": 0,
+      "blocksListCapacity": 4,
+      "blocksListCount": 0,
+      "blockCapacity": 128,
+      "blockDataOffset": 1024,
+      "blockByteSize": 2048,
+      "descriptorListBytes": 64,
+      "descriptorList": "4 zero descriptors (refs/data pointers null), no physical block allocated",
+      "sparseCapacity": 1024,
+      "sparse": "1024 zero ushort entries; row18 of packed matrix, offset36864 bytes",
+      "slots": "logical [null] only; zero allocated blocks is intentional"
+    },
+    "firstView": "count1 >= activeBlocks0 * blockCapacity128, so UseNextBlock activates block0 and allocates/clears2048 bytes alignment8. Write entity ref at block-relative8, sparse[index]=1, View.Current at block-relative1032; count2, activeBlocks1, listCapacity4, version0. Offsets are not heap addresses.",
+    "subsequentPoolGrowth": "Append slot128 activates block1; slot512 activates block4 and expands descriptor list4->8 (64->128 bytes). Descriptor expansion preserves existing descriptors and block payloads, zeroes new descriptor tail and frees old list. Existing dormant descriptor non-null branch clears entire retained block instead of allocating. Append never increments version.",
+    "entityGrowth": "Create doubles capacity only when freeHead==0 and nextUnused==capacity. For newCapacity>allocatedCapacity: allocClear new culling, copy old culling; Expand entries and masks with old logical byte counts; set logical/allocated capacities; allocClear full new packed ushort sparse matrix; for IDs1..N-1 copy oldCapacity entries from old row stride to new row stride and rebind each buffer sparse pointer/capacity; free old culling and sparse matrix. Component physical count, block descriptors, slot order, payload, version do not change just from entity capacity growth.",
+    "standardDoubling1024To2048": {
+      "cullingBytes": 256,
+      "entriesNewBytes": 32768,
+      "entriesCopyBytes": 16384,
+      "maskNewBytes": 131072,
+      "maskCopyBytes": 65536,
+      "sparseNewBytes": 765952,
+      "sparseCopyEntriesPerType": 1024,
+      "viewSparseOldOffset": 36864,
+      "viewSparseNewOffset": 73728
+    },
+    "retainedBackingRegrowth": "When newCapacity<=allocatedCapacity, native takes a separate temp-buffer/repack path0x1819785da, not AllocateClear-new-matrix path. ChangeEntityCapacity copies oldCapacity ushort entries and rebinds; it does not explicitly clear every grown row tail. Exact raw backing contents are required; cannot substitute blanket zero-extension. Oracle refuses this branch.",
+    "logicalVsHeap": "Address-free logical model can exactly represent successful monotonic expansions using explicit byte arrays, descriptor occupancy, block bytes/refs/View payloads, packed sparse remapping and ordered allocation/copy/clear/free events. This is a state/ordering projection, not heap-pointer/checksum fidelity. Actual pointer values, relocated references, allocation success/exhaustion and heap bytes require authoritative allocator topology."
+  },
+  "hostContract": {
+    "logicalInputs": [
+      "Actual full prestate allocator counters, logical AND allocated capacities, all16-byte entries/masks, culling bitset, pending/free state",
+      "ComponentType registry/count/sizes/flags and complete per-type sparse mapping; entity doubling remaps ALL types, not View only",
+      "View count/version/flags/stride, blockCapacity, active blocksListCount distinct from descriptor blocksListCapacity, occupancy of EVERY retained descriptor, block payload/ref bytes and sparseCapacity",
+      "Chosen active config asset/runtime overrides and precise initialization point; standard asset values do not prove stage state is pristine"
+    ],
+    "logicalOperations": [
+      "Preserve alloc-clear/copy/free order and new allocation zero tail; copy/rebind packed sparse rows using old/new logical strides",
+      "Append same entity ref to physical block, update ushort sparse and count, write exact View uint64 and caller mask bit18; preserve existing pool version",
+      "No fake addresses: represent blocks by logical descriptor indices and relative offsets only; do not claim native heap identity"
+    ],
+    "heapRequired": [
+      "Actual heap allocator/context implementation and page/free-list/relocation state for returned addresses, allocation limits/failure, pointer checksums, rollback and snapshots",
+      "Native Utils copy/clear/free semantics and retained descriptor pointers; reuse branch must be selected from real occupancy",
+      "Raw retained packed sparse backing and full shrink/regrow history for newCapacity<=allocatedCapacity"
+    ],
+    "freshConstruction": "A separate projection may construct the fresh logical seed above ONLY at the exact post-Initialize point with verified config5/debug and fixed registry187. It must allow activeBlocks0 and perform first-block allocation; positive blockCount or preallocated descriptor payloads cannot be assumed.",
+    "integration": "No existing helper changed. NativePrefabMaterializer29 currently requires blockCount>=1 and refuses block growth; therefore its supported snapshots exclude untouched fresh View buffer. Lead must explicitly extend schema/first-allocation transition before feeding this seed. Existing allocator resize hook requires real dependent storage remapping; capacity-only callback is insufficient."
+  },
+  "unresolved": [
+    "No original game execution or actual live heap capture. Standard config/registration conditional initial values are static, not evidence of runtime selection or stage pre-existing entities.",
+    "Full heap topology, relocation/checksum fidelity and allocation failure/rollback not implemented.",
+    "Retained backing shrink/regrow projection requires raw packed table and untouched backing bytes; oracle intentionally refuses.",
+    "Pathological configured blockCapacity1 fresh append and old count65536 ushort truncation are exposed/refused by oracle; no repair loop or invented safe clamp. Block size1 is accepted by config clamp but one native UseNextBlock does not make append block1 available when only block0 was just allocated.",
+    "This is a static audit/oracle, not production growth implementation or runtime integration."
+  ],
+  "corrections": [
+    "TypeTreeGenerator labelled Layers Array<string> as string, yielding a partial misaligned config decode. Audit explicitly relabels only that parent as vector and enforces whole-object consumption; independent test manually parses32 layers and32 matrix entries before Entities. Initial partial decode was discarded.",
+    "Fresh descriptor capacity4 does not mean4 allocated blocks, and count1 includes reserved slot0. Previous materializer deliberately refused growth but its positive blockCount schema also excludes untouched fresh buffer; this audit identifies that integration boundary without editing frozen files."
+  ],
+  "verification": {
+    "dedicated": {
+      "tests": 26,
+      "passed": 26,
+      "failed": 0
+    },
+    "full": {
+      "tests": 2061,
+      "passed": 2061,
+      "failed": 0
+    },
+    "originalCodeExecuted": false,
+    "commands": [
+      "node --test source-migration/native-pool-growth.test.cjs",
+      "node --test source-migration/*.test.cjs"
+    ],
+    "oracle": "Owned Python scalar/event oracle only; never calls original native functions. Expected byte counts/offsets and branch results independently checked in JS against actual PE/serialized config evidence."
+  }
+}

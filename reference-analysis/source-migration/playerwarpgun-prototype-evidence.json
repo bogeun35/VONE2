@@ -1,0 +1,1186 @@
+[
+  {
+    "pathId": 1778,
+    "gameObject": {
+      "m_Component": [
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 3306
+          }
+        },
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 7644
+          }
+        },
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 7795
+          }
+        },
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 6731
+          }
+        }
+      ],
+      "m_Layer": 0,
+      "m_Name": "PlayerWarpGun",
+      "m_Tag": 0,
+      "m_IsActive": true
+    },
+    "components": [
+      {
+        "pathId": 3306,
+        "type": "Transform",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 1778
+          },
+          "m_LocalRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "m_LocalPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_LocalScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "m_Children": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 3383
+            }
+          ],
+          "m_Father": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          }
+        }
+      },
+      {
+        "pathId": 7644,
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 1778
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": 1793
+          },
+          "m_Name": "",
+          "TransformMode": 2,
+          "Transform2DVertical": {
+            "IsEnabled": 0,
+            "Height": {
+              "RawValue": 0
+            },
+            "PositionOffset": {
+              "RawValue": 0
+            }
+          },
+          "PhysicsCollider": {
+            "IsTrigger": 0,
+            "Material": {
+              "Id": {
+                "Value": 0
+              }
+            },
+            "SourceCollider": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "IsEnabled": 0,
+            "Shape2D": {
+              "ShapeType": 0,
+              "PolygonCollider": {
+                "Id": {
+                  "Value": 0
+                }
+              },
+              "CircleRadius": {
+                "RawValue": 0
+              },
+              "EdgeExtent": {
+                "RawValue": 0
+              },
+              "BoxExtents": {
+                "X": {
+                  "RawValue": 0
+                },
+                "Y": {
+                  "RawValue": 0
+                }
+              },
+              "PositionOffset": {
+                "X": {
+                  "RawValue": 0
+                },
+                "Y": {
+                  "RawValue": 0
+                }
+              },
+              "RotationOffset": {
+                "RawValue": 0
+              },
+              "UserTag": 0,
+              "IsPersistent": 1,
+              "CompoundShapes": [],
+              "IsSetFromSourceCollider": 0
+            },
+            "Shape3D": {
+              "ShapeType": 0,
+              "SphereRadius": {
+                "RawValue": 0
+              },
+              "PositionOffset": {
+                "X": {
+                  "RawValue": 0
+                },
+                "Y": {
+                  "RawValue": 0
+                },
+                "Z": {
+                  "RawValue": 0
+                }
+              },
+              "BoxExtents": {
+                "X": {
+                  "RawValue": 0
+                },
+                "Y": {
+                  "RawValue": 0
+                },
+                "Z": {
+                  "RawValue": 0
+                }
+              },
+              "RotationOffset": {
+                "X": {
+                  "RawValue": 0
+                },
+                "Y": {
+                  "RawValue": 0
+                },
+                "Z": {
+                  "RawValue": 0
+                }
+              },
+              "UserTag": 0,
+              "IsPersistent": 1,
+              "CompoundShapes": [],
+              "IsSetFromSourceCollider": 0
+            },
+            "Layer": 0,
+            "CallbackFlags": {
+              "Value": 0
+            }
+          },
+          "PhysicsBody": {
+            "IsEnabled": 0,
+            "Version2D": 0,
+            "Version3D": 0,
+            "Config2D": 116,
+            "Config3D": 58,
+            "RotationFreeze": 0,
+            "Mass": {
+              "RawValue": 65536
+            },
+            "Drag": {
+              "RawValue": 32768
+            },
+            "AngularDrag": {
+              "RawValue": 32768
+            },
+            "CenterOfMass2D": {
+              "X": {
+                "RawValue": 0
+              },
+              "Y": {
+                "RawValue": 0
+              }
+            },
+            "CenterOfMass3D": {
+              "X": {
+                "RawValue": 0
+              },
+              "Y": {
+                "RawValue": 0
+              },
+              "Z": {
+                "RawValue": 0
+              }
+            },
+            "GravityScale": {
+              "_hasValue": 0,
+              "_value": {
+                "RawValue": 65536
+              }
+            }
+          },
+          "NavMeshPathfinder": {
+            "IsEnabled": 0,
+            "NavMeshAgentConfig": {
+              "Id": {
+                "Value": 0
+              }
+            },
+            "InitialTarget": {
+              "IsEnabled": 0,
+              "Target": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "Position": {
+                "X": {
+                  "RawValue": 0
+                },
+                "Y": {
+                  "RawValue": 0
+                },
+                "Z": {
+                  "RawValue": 0
+                }
+              },
+              "NavMesh": {
+                "Reference": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "Asset": {
+                  "Id": {
+                    "Value": 0
+                  }
+                },
+                "Name": ""
+              }
+            }
+          },
+          "NavMeshSteeringAgent": {
+            "IsEnabled": 0,
+            "MaxSpeed": {
+              "IsEnabled": 0,
+              "Value": {
+                "RawValue": 0
+              }
+            },
+            "Acceleration": {
+              "IsEnabled": 0,
+              "Value": {
+                "RawValue": 0
+              }
+            }
+          },
+          "NavMeshAvoidanceAgent": {
+            "IsEnabled": 0
+          },
+          "View": {
+            "Id": {
+              "Value": 0
+            }
+          }
+        }
+      },
+      {
+        "pathId": 7795,
+        "type": "MonoBehaviour",
+        "data": {
+          "scriptClass": "EntityView"
+        }
+      },
+      {
+        "pathId": 6731,
+        "type": "MonoBehaviour",
+        "data": {
+          "scriptClass": "PlayerWarpGunView"
+        }
+      }
+    ]
+  },
+  {
+    "pathId": 2578,
+    "gameObject": {
+      "m_Component": [
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 3095
+          }
+        },
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 7108
+          }
+        },
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 7700
+          }
+        },
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 6973
+          }
+        }
+      ],
+      "m_Layer": 0,
+      "m_Name": "PlayerWarpGunBullet",
+      "m_Tag": 0,
+      "m_IsActive": true
+    },
+    "components": [
+      {
+        "pathId": 3095,
+        "type": "Transform",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 2578
+          },
+          "m_LocalRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "m_LocalPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_LocalScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "m_Children": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 3364
+            }
+          ],
+          "m_Father": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          }
+        }
+      },
+      {
+        "pathId": 7108,
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 2578
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": 1793
+          },
+          "m_Name": "",
+          "TransformMode": 2,
+          "Transform2DVertical": {
+            "IsEnabled": 0,
+            "Height": {
+              "RawValue": 0
+            },
+            "PositionOffset": {
+              "RawValue": 0
+            }
+          },
+          "PhysicsCollider": {
+            "IsTrigger": 0,
+            "Material": {
+              "Id": {
+                "Value": 0
+              }
+            },
+            "SourceCollider": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "IsEnabled": 0,
+            "Shape2D": {
+              "ShapeType": 0,
+              "PolygonCollider": {
+                "Id": {
+                  "Value": 0
+                }
+              },
+              "CircleRadius": {
+                "RawValue": 0
+              },
+              "EdgeExtent": {
+                "RawValue": 0
+              },
+              "BoxExtents": {
+                "X": {
+                  "RawValue": 0
+                },
+                "Y": {
+                  "RawValue": 0
+                }
+              },
+              "PositionOffset": {
+                "X": {
+                  "RawValue": 0
+                },
+                "Y": {
+                  "RawValue": 0
+                }
+              },
+              "RotationOffset": {
+                "RawValue": 0
+              },
+              "UserTag": 0,
+              "IsPersistent": 1,
+              "CompoundShapes": [],
+              "IsSetFromSourceCollider": 0
+            },
+            "Shape3D": {
+              "ShapeType": 0,
+              "SphereRadius": {
+                "RawValue": 0
+              },
+              "PositionOffset": {
+                "X": {
+                  "RawValue": 0
+                },
+                "Y": {
+                  "RawValue": 0
+                },
+                "Z": {
+                  "RawValue": 0
+                }
+              },
+              "BoxExtents": {
+                "X": {
+                  "RawValue": 0
+                },
+                "Y": {
+                  "RawValue": 0
+                },
+                "Z": {
+                  "RawValue": 0
+                }
+              },
+              "RotationOffset": {
+                "X": {
+                  "RawValue": 0
+                },
+                "Y": {
+                  "RawValue": 0
+                },
+                "Z": {
+                  "RawValue": 0
+                }
+              },
+              "UserTag": 0,
+              "IsPersistent": 1,
+              "CompoundShapes": [],
+              "IsSetFromSourceCollider": 0
+            },
+            "Layer": 0,
+            "CallbackFlags": {
+              "Value": 0
+            }
+          },
+          "PhysicsBody": {
+            "IsEnabled": 0,
+            "Version2D": 0,
+            "Version3D": 0,
+            "Config2D": 116,
+            "Config3D": 58,
+            "RotationFreeze": 0,
+            "Mass": {
+              "RawValue": 65536
+            },
+            "Drag": {
+              "RawValue": 32768
+            },
+            "AngularDrag": {
+              "RawValue": 32768
+            },
+            "CenterOfMass2D": {
+              "X": {
+                "RawValue": 0
+              },
+              "Y": {
+                "RawValue": 0
+              }
+            },
+            "CenterOfMass3D": {
+              "X": {
+                "RawValue": 0
+              },
+              "Y": {
+                "RawValue": 0
+              },
+              "Z": {
+                "RawValue": 0
+              }
+            },
+            "GravityScale": {
+              "_hasValue": 0,
+              "_value": {
+                "RawValue": 65536
+              }
+            }
+          },
+          "NavMeshPathfinder": {
+            "IsEnabled": 0,
+            "NavMeshAgentConfig": {
+              "Id": {
+                "Value": 0
+              }
+            },
+            "InitialTarget": {
+              "IsEnabled": 0,
+              "Target": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "Position": {
+                "X": {
+                  "RawValue": 0
+                },
+                "Y": {
+                  "RawValue": 0
+                },
+                "Z": {
+                  "RawValue": 0
+                }
+              },
+              "NavMesh": {
+                "Reference": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "Asset": {
+                  "Id": {
+                    "Value": 0
+                  }
+                },
+                "Name": ""
+              }
+            }
+          },
+          "NavMeshSteeringAgent": {
+            "IsEnabled": 0,
+            "MaxSpeed": {
+              "IsEnabled": 0,
+              "Value": {
+                "RawValue": 0
+              }
+            },
+            "Acceleration": {
+              "IsEnabled": 0,
+              "Value": {
+                "RawValue": 0
+              }
+            }
+          },
+          "NavMeshAvoidanceAgent": {
+            "IsEnabled": 0
+          },
+          "View": {
+            "Id": {
+              "Value": 0
+            }
+          }
+        }
+      },
+      {
+        "pathId": 7700,
+        "type": "MonoBehaviour",
+        "data": {
+          "scriptClass": "EntityView"
+        }
+      },
+      {
+        "pathId": 6973,
+        "type": "MonoBehaviour",
+        "data": {
+          "scriptClass": "PlayerWarpGunBulletView"
+        }
+      }
+    ]
+  },
+  {
+    "pathId": 1430,
+    "gameObject": {
+      "m_Component": [
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 3383
+          }
+        },
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 3777
+          }
+        },
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 6893
+          }
+        }
+      ],
+      "m_Layer": 0,
+      "m_Name": "Root",
+      "m_Tag": 0,
+      "m_IsActive": true
+    },
+    "components": [
+      {
+        "pathId": 3383,
+        "type": "Transform",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 1430
+          },
+          "m_LocalRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "m_LocalPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_LocalScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "m_Children": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 2849
+            }
+          ],
+          "m_Father": {
+            "m_FileID": 0,
+            "m_PathID": 3306
+          }
+        }
+      },
+      {
+        "pathId": 3777,
+        "type": "SortingGroup",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 1430
+          },
+          "m_Enabled": 1,
+          "m_SortingLayerID": 0,
+          "m_SortingLayer": 0,
+          "m_SortingOrder": 0,
+          "m_SortAtRoot": false
+        }
+      },
+      {
+        "pathId": 6893,
+        "type": "MonoBehaviour",
+        "data": {
+          "scriptClass": "PlayerColorController"
+        }
+      }
+    ]
+  },
+  {
+    "pathId": 1221,
+    "gameObject": {
+      "m_Component": [
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 3364
+          }
+        },
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 3698
+          }
+        },
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 3623
+          }
+        },
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 7042
+          }
+        },
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 6922
+          }
+        }
+      ],
+      "m_Layer": 0,
+      "m_Name": "Root",
+      "m_Tag": 0,
+      "m_IsActive": true
+    },
+    "components": [
+      {
+        "pathId": 3364,
+        "type": "Transform",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 1221
+          },
+          "m_LocalRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "m_LocalPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_LocalScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "m_Children": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 3188
+            }
+          ],
+          "m_Father": {
+            "m_FileID": 0,
+            "m_PathID": 3095
+          }
+        }
+      },
+      {
+        "pathId": 3698,
+        "type": "SortingGroup",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 1221
+          },
+          "m_Enabled": 1,
+          "m_SortingLayerID": 0,
+          "m_SortingLayer": 0,
+          "m_SortingOrder": 0,
+          "m_SortAtRoot": false
+        }
+      },
+      {
+        "pathId": 3623,
+        "type": "Animator",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 1221
+          },
+          "m_Enabled": 1,
+          "m_Avatar": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          },
+          "m_Controller": {
+            "m_FileID": 0,
+            "m_PathID": 296
+          },
+          "m_CullingMode": 0,
+          "m_UpdateMode": 0,
+          "m_ApplyRootMotion": false,
+          "m_LinearVelocityBlending": false,
+          "m_StabilizeFeet": false,
+          "m_HasTransformHierarchy": true,
+          "m_AllowConstantClipSamplingOptimization": true,
+          "m_KeepAnimatorStateOnDisable": false,
+          "m_WriteDefaultValuesOnDisable": false
+        }
+      },
+      {
+        "pathId": 7042,
+        "type": "MonoBehaviour",
+        "data": {
+          "scriptClass": "GameAnimator"
+        }
+      },
+      {
+        "pathId": 6922,
+        "type": "MonoBehaviour",
+        "data": {
+          "scriptClass": "PlayerColorController"
+        }
+      }
+    ]
+  },
+  {
+    "pathId": 2123,
+    "gameObject": {
+      "m_Component": [
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 2849
+          }
+        }
+      ],
+      "m_Layer": 0,
+      "m_Name": "Flip",
+      "m_Tag": 0,
+      "m_IsActive": true
+    },
+    "components": [
+      {
+        "pathId": 2849,
+        "type": "Transform",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 2123
+          },
+          "m_LocalRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "m_LocalPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_LocalScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "m_Children": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 3286
+            }
+          ],
+          "m_Father": {
+            "m_FileID": 0,
+            "m_PathID": 3383
+          }
+        }
+      }
+    ]
+  },
+  {
+    "pathId": 1713,
+    "gameObject": {
+      "m_Component": [
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 3188
+          }
+        },
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 3957
+          }
+        }
+      ],
+      "m_Layer": 0,
+      "m_Name": "Body",
+      "m_Tag": 0,
+      "m_IsActive": true
+    },
+    "components": [
+      {
+        "pathId": 3188,
+        "type": "Transform",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 1713
+          },
+          "m_LocalRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "m_LocalPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_LocalScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "m_Children": [],
+          "m_Father": {
+            "m_FileID": 0,
+            "m_PathID": 3364
+          }
+        }
+      },
+      {
+        "pathId": 3957,
+        "type": "SpriteRenderer",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 1713
+          },
+          "m_Enabled": true,
+          "m_CastShadows": 0,
+          "m_ReceiveShadows": 0,
+          "m_DynamicOccludee": 1,
+          "m_StaticShadowCaster": 0,
+          "m_MotionVectors": 1,
+          "m_LightProbeUsage": 1,
+          "m_ReflectionProbeUsage": 1,
+          "m_RayTracingMode": 0,
+          "m_RayTraceProcedural": 0,
+          "m_RenderingLayerMask": 1,
+          "m_RendererPriority": 0,
+          "m_LightmapIndex": 65535,
+          "m_LightmapIndexDynamic": 65535,
+          "m_LightmapTilingOffset": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "m_LightmapTilingOffsetDynamic": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "m_Materials": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 11
+            }
+          ],
+          "m_StaticBatchInfo": {
+            "firstSubMesh": 0,
+            "subMeshCount": 0
+          },
+          "m_StaticBatchRoot": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          },
+          "m_ProbeAnchor": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          },
+          "m_LightProbeVolumeOverride": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          },
+          "m_SortingLayerID": 0,
+          "m_SortingLayer": 0,
+          "m_SortingOrder": 0,
+          "m_Sprite": {
+            "m_FileID": 0,
+            "m_PathID": 720
+          },
+          "m_Color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "m_FlipX": false,
+          "m_FlipY": false,
+          "m_DrawMode": 0,
+          "m_Size": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "m_AdaptiveModeThreshold": 0.5,
+          "m_SpriteTileMode": 0,
+          "m_WasSpriteAssigned": true,
+          "m_MaskInteraction": 0,
+          "m_SpriteSortPoint": 0
+        }
+      }
+    ]
+  },
+  {
+    "pathId": 1398,
+    "gameObject": {
+      "m_Component": [
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 3286
+          }
+        },
+        {
+          "component": {
+            "m_FileID": 0,
+            "m_PathID": 4084
+          }
+        }
+      ],
+      "m_Layer": 0,
+      "m_Name": "Body",
+      "m_Tag": 0,
+      "m_IsActive": true
+    },
+    "components": [
+      {
+        "pathId": 3286,
+        "type": "Transform",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 1398
+          },
+          "m_LocalRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "m_LocalPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_LocalScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "m_Children": [],
+          "m_Father": {
+            "m_FileID": 0,
+            "m_PathID": 2849
+          }
+        }
+      },
+      {
+        "pathId": 4084,
+        "type": "SpriteRenderer",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 1398
+          },
+          "m_Enabled": true,
+          "m_CastShadows": 0,
+          "m_ReceiveShadows": 0,
+          "m_DynamicOccludee": 1,
+          "m_StaticShadowCaster": 0,
+          "m_MotionVectors": 1,
+          "m_LightProbeUsage": 1,
+          "m_ReflectionProbeUsage": 1,
+          "m_RayTracingMode": 0,
+          "m_RayTraceProcedural": 0,
+          "m_RenderingLayerMask": 1,
+          "m_RendererPriority": 0,
+          "m_LightmapIndex": 65535,
+          "m_LightmapIndexDynamic": 65535,
+          "m_LightmapTilingOffset": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "m_LightmapTilingOffsetDynamic": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "m_Materials": [
+            {
+              "m_FileID": 0,
+              "m_PathID": 11
+            }
+          ],
+          "m_StaticBatchInfo": {
+            "firstSubMesh": 0,
+            "subMeshCount": 0
+          },
+          "m_StaticBatchRoot": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          },
+          "m_ProbeAnchor": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          },
+          "m_LightProbeVolumeOverride": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          },
+          "m_SortingLayerID": 0,
+          "m_SortingLayer": 0,
+          "m_SortingOrder": 0,
+          "m_Sprite": {
+            "m_FileID": 0,
+            "m_PathID": 723
+          },
+          "m_Color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "m_FlipX": false,
+          "m_FlipY": false,
+          "m_DrawMode": 0,
+          "m_Size": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "m_AdaptiveModeThreshold": 0.5,
+          "m_SpriteTileMode": 0,
+          "m_WasSpriteAssigned": true,
+          "m_MaskInteraction": 0,
+          "m_SpriteSortPoint": 0
+        }
+      }
+    ]
+  }
+]

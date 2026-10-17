@@ -1,0 +1,218 @@
+
+== LinePathLiftComponent.OnUpdate 0x181878d00
+0x181878d00 mov qword ptr [rsp + 8], rbx
+0x181878d05 mov qword ptr [rsp + 0x10], rbp
+0x181878d0a mov qword ptr [rsp + 0x18], rsi
+0x181878d0f push rdi
+0x181878d10 sub rsp, 0x30
+0x181878d14 cmp byte ptr [rip + 0x1ae28c1], 0
+0x181878d1b mov rbp, r8
+0x181878d1e mov rsi, rdx
+0x181878d21 mov rdi, rcx
+0x181878d24 jne 0x181878d4f
+0x181878d26 lea rcx, [rip + 0x1942363]
+0x181878d2d call 0x1802c5dc0 ; 
+0x181878d32 lock or dword ptr [rsp], 0
+0x181878d37 lea rcx, [rip + 0x195a872]
+0x181878d3e call 0x1802c5dc0 ; 
+0x181878d43 lock or dword ptr [rsp], 0
+0x181878d48 mov byte ptr [rip + 0x1ae288d], 1
+0x181878d4f mov rcx, qword ptr [rip + 0x194233a]
+0x181878d56 cmp dword ptr [rcx + 0xe0], 0
+0x181878d5d jne 0x181878d64
+0x181878d5f call 0x1802ec040 ; 
+0x181878d64 xor r9d, r9d
+0x181878d67 xor r8d, r8d
+0x181878d6a mov rdx, rsi
+0x181878d6d mov rcx, rbp
+0x181878d70 call 0x1816a0200 ; ActorComponent.GetCollision
+0x181878d75 mov rbx, rax
+0x181878d78 test rax, rax
+0x181878d7b je 0x181878ea6
+0x181878d81 movzx ecx, word ptr [rdi + 4]
+0x181878d85 test cl, 1
+0x181878d88 ja 0x181878ea6
+0x181878d8e test cl, 4
+0x181878d91 ja 0x181878e48
+0x181878d97 mov ebp, 2
+0x181878d9c test cl, 8
+0x181878d9f ja 0x181878de0
+0x181878da1 cmp byte ptr [rdi + 1], 0
+0x181878da5 jle 0x181878de0
+0x181878da7 mov rcx, qword ptr [rip + 0x195a802]
+0x181878dae cmp dword ptr [rcx + 0xe0], 0
+0x181878db5 jne 0x181878dbc
+0x181878db7 call 0x1802ec040 ; 
+0x181878dbc xor r9d, r9d
+0x181878dbf mov r8, rbx
+0x181878dc2 mov rdx, rsi
+0x181878dc5 mov rcx, rdi
+0x181878dc8 call 0x18187a280 ; LinePathLiftComponent.calcNeedRideCount
+0x181878dcd mov byte ptr [rdi + 1], al
+0x181878dd0 test al, al
+0x181878dd2 jne 0x181878de0
+0x181878dd4 movzx eax, word ptr [rdi + 4]
+0x181878dd8 bts ax, bp
+0x181878ddc mov word ptr [rdi + 4], ax
+0x181878de0 cmp dword ptr [rdi + 0x18], 0
+0x181878de4 jbe 0x181878ea6
+0x181878dea cmp dword ptr [rdi + 8], 0
+0x181878dee jbe 0x181878ea6
+0x181878df4 cmp dword ptr [rdi + 0x14], 0
+0x181878df8 jbe 0x181878ea6
+0x181878dfe mov rbx, qword ptr [rdi + 0x38]
+0x181878e02 test rsi, rsi
+0x181878e05 je 0x181878ebb
+0x181878e0b mov rdx, qword ptr [rsi]
+0x181878e0e mov rcx, rsi
+0x181878e11 mov rax, qword ptr [rdx + 0x248]
+0x181878e18 mov rdx, qword ptr [rdx + 0x250]
+0x181878e1f call rax
+0x181878e21 lea rcx, [rax + rbx]
+0x181878e25 mov qword ptr [rdi + 0x38], rcx
+0x181878e29 cmp rcx, 0x20000
+0x181878e30 jle 0x181878ea6
+0x181878e32 movzx eax, word ptr [rdi + 4]
+0x181878e36 bts ax, bp
+0x181878e3a mov word ptr [rdi + 4], ax
+0x181878e3e mov qword ptr [rdi + 0x38], 0
+0x181878e46 jmp 0x181878ea6 ; 
+0x181878e48 test cl, 0x10
+0x181878e4b mov rcx, qword ptr [rip + 0x195a75e]
+0x181878e52 ja 0x181878e7e
+0x181878e54 cmp dword ptr [rcx + 0xe0], 0
+0x181878e5b jne 0x181878e62
+0x181878e5d call 0x1802ec040 ; 
+0x181878e62 mov r9, rbx
+0x181878e65 mov qword ptr [rsp + 0x20], 0
+0x181878e6e mov r8, rbp
+0x181878e71 mov rdx, rsi
+0x181878e74 mov rcx, rdi
+0x181878e77 call 0x181878ed0 ; LinePathLiftComponent.liftUpdate
+0x181878e7c jmp 0x181878ea6 ; 
+0x181878e7e cmp dword ptr [rcx + 0xe0], 0
+0x181878e85 jne 0x181878e8c
+0x181878e87 call 0x1802ec040 ; 
+0x181878e8c mov r9, rbx
+0x181878e8f mov qword ptr [rsp + 0x20], 0
+0x181878e98 mov r8, rbp
+0x181878e9b mov rdx, rsi
+0x181878e9e mov rcx, rdi
+0x181878ea1 call 0x1818794b0 ; LinePathLiftComponent.fakeLiftUpdate
+0x181878ea6 mov rbx, qword ptr [rsp + 0x40]
+0x181878eab mov rbp, qword ptr [rsp + 0x48]
+0x181878eb0 mov rsi, qword ptr [rsp + 0x50]
+0x181878eb5 add rsp, 0x30
+0x181878eb9 pop rdi
+0x181878eba ret 
+0x181878ebb call 0x18032a5e0 ; 
+0x181878ec0 int3 
+0x181878ec1 int3 
+0x181878ec2 int3 
+0x181878ec3 int3 
+0x181878ec4 int3 
+0x181878ec5 int3 
+0x181878ec6 int3 
+0x181878ec7 int3 
+0x181878ec8 int3 
+0x181878ec9 int3 
+0x181878eca int3 
+0x181878ecb int3 
+0x181878ecc int3 
+0x181878ecd int3 
+0x181878ece int3 
+0x181878ecf int3 
+
+== LinePathLiftComponent.getRideCount 0x18187a310
+0x18187a310 mov qword ptr [rsp + 8], rbx
+0x18187a315 push rdi
+0x18187a316 sub rsp, 0x40
+0x18187a31a cmp byte ptr [rip + 0x1ae12c1], 0
+0x18187a321 mov rbx, r8
+0x18187a324 mov rdi, rdx
+0x18187a327 jne 0x18187a341
+0x18187a329 lea rcx, [rip + 0x194c6d0]
+0x18187a330 call 0x1802c5dc0 ; 
+0x18187a335 lock or dword ptr [rsp], 0
+0x18187a33a mov byte ptr [rip + 0x1ae12a1], 1
+0x18187a341 xor eax, eax
+0x18187a343 mov r9b, 1
+0x18187a346 mov qword ptr [rsp + 0x30], rax
+0x18187a34b xor r8d, r8d
+0x18187a34e mov dword ptr [rsp + 0x28], 6
+0x18187a356 mov rdx, rdi
+0x18187a359 mov rcx, rbx
+0x18187a35c mov qword ptr [rsp + 0x20], rax
+0x18187a361 call 0x181695050 ; Collision.GetContactCount
+0x18187a366 test rax, rax
+0x18187a369 je 0x18187a37a
+0x18187a36b movzx eax, byte ptr [rax + 0x18]
+0x18187a36f mov rbx, qword ptr [rsp + 0x50]
+0x18187a374 add rsp, 0x40
+0x18187a378 pop rdi
+0x18187a379 ret 
+0x18187a37a call 0x18032a5e0 ; 
+0x18187a37f int3 
+
+== LinePathLiftComponent.isEnableMoveRidingActor 0x18187a380
+0x18187a380 mov qword ptr [rsp + 8], rbx
+0x18187a385 mov qword ptr [rsp + 0x10], rsi
+0x18187a38a push rdi
+0x18187a38b sub rsp, 0x60
+0x18187a38f cmp byte ptr [rip + 0x1ae124d], 0
+0x18187a396 mov rbx, r9
+0x18187a399 movaps xmmword ptr [rsp + 0x50], xmm6
+0x18187a39e mov rdi, r8
+0x18187a3a1 mov rsi, rdx
+0x18187a3a4 jne 0x18187a3be
+0x18187a3a6 lea rcx, [rip + 0x1940ce3]
+0x18187a3ad call 0x1802c5dc0 ; 
+0x18187a3b2 lock or dword ptr [rsp], 0
+0x18187a3b7 mov byte ptr [rip + 0x1ae1225], 1
+0x18187a3be mov rax, qword ptr [rsp + 0x90]
+0x18187a3c6 movups xmm0, xmmword ptr [rbx]
+0x18187a3c9 movups xmm1, xmmword ptr [rax]
+0x18187a3cc movups xmmword ptr [rsp + 0x40], xmm0
+0x18187a3d1 movaps xmmword ptr [rsp + 0x30], xmm1
+0x18187a3d6 movq rax, xmm1
+0x18187a3db sub rax, qword ptr [rsp + 0x40]
+0x18187a3e0 mov qword ptr [rsp + 0x30], rax
+0x18187a3e5 movups xmmword ptr [rsp + 0x40], xmm0
+0x18187a3ea mov rax, qword ptr [rsp + 0x48]
+0x18187a3ef sub qword ptr [rsp + 0x38], rax
+0x18187a3f4 jns 0x18187a400
+0x18187a3f6 movdqa xmm6, xmmword ptr [rip + 0x160e282]
+0x18187a3fe jmp 0x18187a405 ; 
+0x18187a400 movaps xmm6, xmmword ptr [rsp + 0x30]
+0x18187a405 mov rcx, qword ptr [rip + 0x1940c84]
+0x18187a40c cmp dword ptr [rcx + 0xe0], 0
+0x18187a413 jne 0x18187a41a
+0x18187a415 call 0x1802ec040 ; 
+0x18187a41a xor eax, eax
+0x18187a41c movdqa xmmword ptr [rsp + 0x40], xmm6
+0x18187a422 mov qword ptr [rsp + 0x28], rax
+0x18187a427 lea r8, [rsp + 0x40]
+0x18187a42c xor r9d, r9d
+0x18187a42f mov dword ptr [rsp + 0x20], eax
+0x18187a433 mov rdx, rsi
+0x18187a436 mov rcx, rdi
+0x18187a439 call 0x1816a15c0 ; ActorComponent.IsEnableMoveContactActor
+0x18187a43e mov rbx, qword ptr [rsp + 0x70]
+0x18187a443 mov rsi, qword ptr [rsp + 0x78]
+0x18187a448 movaps xmm6, xmmword ptr [rsp + 0x50]
+0x18187a44d add rsp, 0x60
+0x18187a451 pop rdi
+0x18187a452 ret 
+0x18187a453 int3 
+0x18187a454 int3 
+0x18187a455 int3 
+0x18187a456 int3 
+0x18187a457 int3 
+0x18187a458 int3 
+0x18187a459 int3 
+0x18187a45a int3 
+0x18187a45b int3 
+0x18187a45c int3 
+0x18187a45d int3 
+0x18187a45e int3 
+0x18187a45f int3 

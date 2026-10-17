@@ -1,0 +1,44 @@
+✔ st_w_03_02 converter matches independently audited28 population selections before filtering (12.0119ms)
+✔ st_w_10_04 converter matches independently audited28 population selections before filtering (6.1033ms)
+✔ priority pass moves equal-priority pairs indirectly rather than using stable sort (0.2155ms)
+✔ threshold second pass also swaps indirectly after priority pass and uses converted FP ties (0.2195ms)
+✔ priority constants and explicit malformed parameter refusal (0.4428ms)
+✔ factory requires absent Actor and maps zero owner fields into actual lifecycle schema (1.0988ms)
+✔ factory Player completion allocates live collider and projects full native initialization into bridge schema (4.9125ms)
+✔ factory preserves current allocator generation and refuses stale identity or unverified registration without mutation (1.9946ms)
+✔ factory uses live issueId rather than authored index and refuses exhausted collider storage transactionally (1.3783ms)
+✔ actual3-2 authored Player factory output enters typed first frame without partial Default.compile snapshot (29.3102ms)
+✔ factory registers exact native name and type before returning and rejects duplicate transaction (1.7942ms)
+✔ Key typed OnStart resolves factory-registered Player through actual QString dictionary and generation (2.7924ms)
+✔ actual3-2 2p no-shuffle index list drives factory identities and limit before allocation (3.5538ms)
+✔ actual3-2 3p no-shuffle index list drives factory identities and limit before allocation (3.354ms)
+✔ actual3-2 4p no-shuffle index list drives factory identities and limit before allocation (3.3856ms)
+✔ actual3-2 5p no-shuffle index list drives factory identities and limit before allocation (4.6376ms)
+✔ actual3-2 6p no-shuffle index list drives factory identities and limit before allocation (4.5887ms)
+✔ actual3-2 7p no-shuffle index list drives factory identities and limit before allocation (6.4004ms)
+✔ actual3-2 8p no-shuffle index list drives factory identities and limit before allocation (7.6819ms)
+✔ factory missing-roster skip and checkpoint/dummy refusal happen before materialization (1.0088ms)
+✔ factory transaction rolls back materialization allocation and PlayerInfo append on duplicate name (2.0599ms)
+✔ factory initialization preserves existing index-list prefix and returns exact post-shuffle RNG state (1.3324ms)
+✔ factory Update skips marked entries before threshold and retains cursor at first unmet threshold (0.6012ms)
+✔ factory Update captures population once, skips without marking and marks null creator returns (0.2743ms)
+✔ factory Update marks live cursor after synchronous creator mutations (0.1857ms)
+✔ actual3-2 full converted cursor visits Player limits and device creators in native audited order (5.7183ms)
+✔ actual3-2 default factory explicitly stops at missing Key creator and rolls back earlier Player creation (4.7329ms)
+✔ static Key creator installs parsed component and live collision before manager/name/position registration (1.4554ms)
+✔ Key creator duplicate name rolls back manager and collider allocation (1.7084ms)
+✔ inactive static Key uses shared visibility pool and native owner gates before Scene registration (2.6076ms)
+✔ static Key collision capacity null preserves native successful creator and zero holders (1.2571ms)
+✔ full actual3-2 factory with explicit Key materialization passes Key and reaches next unsupported creator (5.7979ms)
+✔ factory materialization boundary writes exact Player/Key View GUIDs on current allocator without extra roots (1.9568ms)
+✔ lazy generated names consume only creator attempts, including limited blank Players before skip (1.2119ms)
+✔ Goal creator parses offset, allocates layer12 and writes primary before scene placement (1.7609ms)
+✔ Goal nonnumeric slot uses zero offset and duplicate registration rolls back manager/collider (1.1211ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 378.7886

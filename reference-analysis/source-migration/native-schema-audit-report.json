@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 1,
+  "status": "audit_complete_frozen_no_runtime_changes",
+  "settledOn": "2026-10-15",
+  "scope": [
+    "PlayerDefault",
+    "CollisionInit",
+    "PlayerCapture",
+    "ActorMotion",
+    "ActorLifecycle",
+    "ActorWarpJump",
+    "NativeInput",
+    "ScreenBoundary"
+  ],
+  "nativeCodeExecuted": false,
+  "completePhysicsFidelity": false,
+  "offsetRule": "quantum-field-offsets IL2CPP boxed struct offsets subtract16. Managed class DeterministicFrame.Number offset0x1c isNOTsubjecttostructminus16.",
+  "mapping": [
+    {
+      "native": "Actor.m_Velo",
+      "rawOffset": "0xf0",
+      "names": {
+        "Capture": "actor.worldVelocityRaw",
+        "Default/Motion/WarpJump": "actor.velocityRaw"
+      },
+      "unit": "signed64 16.16 displacement-per-native-update; no dt multiplier",
+      "evidence": "ResetVeloAll0x18169da35; MotionUpdate2@0x18169e100; warp0x18169e64d",
+      "rule": "samefieldalias; do notretain twodivergingcopies"
+    },
+    {
+      "native": "Actor.m_Accel",
+      "rawOffset": "0x60",
+      "names": {
+        "Capture": "actor.moveVelocityRaw (misleadinglegacyalias)",
+        "Motion": "actor.accelerationRaw"
+      },
+      "unit": "signed64 16.16 acceleration-per-update",
+      "evidence": "ResetVeloAll0x18169da3c; metadata Actor.m_Accel",
+      "rule": "maptoacceleration notcurrentvelocity; Update2positionadds signed64 halfacceleration thenvelocity+=acceleration"
+    },
+    {
+      "native": "Actor.m_JumpVelo / WarpPos / WarpVelo",
+      "rawOffset": "0x90 /0x100 /0x110",
+      "names": {
+        "Capture/Motion/WarpJump": "jumpVelocityRaw / warpPositionRaw / warpVelocityRaw"
+      },
+      "unit": "raw16.16",
+      "evidence": "Player66 stores0x1816c12a6/b2,zeroJump@0x18169da40; warpconsumption@0x18169e63f..654",
+      "rule": "pendingwarpnotcurrentPos; release66 zeroescurrentVelo/Accel/Jump; laterwarpVelo replacesVelo"
+    },
+    {
+      "native": "Actor.m_Pos / m_PrePos / m_InitPos",
+      "rawOffset": "0xb0 /0xc0 /0x80",
+      "names": {
+        "Default/CollisionInit/ScreenBoundary": "xRaw/yRaw; initXRaw/initYRaw",
+        "Motion/WarpJump/Capture": "positionRaw/prePositionRaw vectors"
+      },
+      "unit": "stage-anchor rawpixels, notrecttop-left/world-chips",
+      "evidence": "SetPosForce0x18169d592/59a; InitPosition0x18169d41f/423",
+      "rule": "shapeadapterrequired; warp resetspositionhistory notPreVelo, ScreenBoundarycomparesactoranchor"
+    },
+    {
+      "native": "Actor.m_Scale /m_BaseScale",
+      "rawOffset": "0xe0 /0x50",
+      "names": {
+        "Default/CollisionInit": "scaleXRaw/scaleYRaw +baseScaleRaw",
+        "WarpGun nativefacts": "directionRaw legacylabel for actualm_Scale inshoot/sync paths",
+        "Collision": "scaleRaw/preScaleRaw/expectedScaleRaw separated"
+      },
+      "unit": "dimensionless16.16, actorXY bodyscale vsstagebasescale",
+      "evidence": "CollisionInitInitialize0x18169cd02/06; applyBaseScale0x1816a08c0/0x1816a0370",
+      "rule": "Do notapplystageScaleagain toregisteredcolliders; Dynamicupdatechangescurrentonly. FlaglegacyWarpGundirectionRaw namingrisk, modulefrozen."
+    },
+    {
+      "native": "Actor.flags vsPlayer.flags vsCollision.flags",
+      "rawOffset": "0xc vs0x20 vs0x6",
+      "names": {
+        "Actor": "actor.flags",
+        "Player": "player.flags",
+        "Collision": "collision.flags"
+      },
+      "unit": "distinctbitmasks",
+      "evidence": "Player65/66@0x1816c1344/1395/12da; ActorLifecycleownergates; Collisionbit6@0x18169d6f6",
+      "rule": "Actorbit3 hidden/4pause/17warpvisibility/19jump/20disablecorrect/25warpframe; Playerbit9dead/10capture/23reverse; Collisionbit0inactive/1callback/6moved. NeverOR/copycrossnamespaces"
+    },
+    {
+      "native": "Player.m_PlayerState /m_Index /m_PlayerIndex /m_PlayerActorType",
+      "rawOffset": "0x3 /0x8 /0xe /0x18",
+      "names": {
+        "Default": "playerState",
+        "Capture": "state,playerIndex",
+        "ScreenBoundary": "playerActorType",
+        "Creation": "actorIndex isseparatelookupindex"
+      },
+      "unit": "statebyte; signedplayerIndex byte; cachedactorTypeuint16",
+      "evidence": "query30 signed+1@0x1816c181f; Initializecachedtype@0x1816bd5d3/5d7; screenbypass19@0x1816c6202/6207",
+      "rule": "Do notsubstituteslot/actorcreationindex forquery30. CachedPlayerActorType can19 forspecialcase, notalways27; mustcarryactualsnapshot"
+    },
+    {
+      "native": "EntityRef /Collision.m_Id /densecomponent slot",
+      "rawOffset": "Actor+20 Player+28 CollisionEntity+18 CollisionId+14",
+      "names": {
+        "LifecycleQuery": "{actorId,index,generation}",
+        "Otherhelpers": "entityId/id opaquejoinedhostkeys",
+        "CollisionInit": "binding.id collisionID vsbinding.entityId actorRef"
+      },
+      "unit": "identitytuple/generation, notplayerindex/denseslot",
+      "evidence": "TypedNext0x180cd69c0 validateslivegeneration/masks; poolRemove0x18193cd10 swapslastslot+version@0x18193cf29",
+      "rule": "Stringkeysrequirehostgeneration-awarelookup. Neverdiscardgeneration orusecomponentphysicalslot asentityindex. Actor.id/entityId Capturepair mustmatchsameactualRef"
+    },
+    {
+      "native": "Collision.ExpectedPos/ExpectedScale/Pos/PrePos/PreScale/Scale",
+      "rawOffset": "0x20/0x30/0x40/0x50/0x60/0x70",
+      "names": {
+        "CollisionInit/Motion/WarpJump": "expectedXRaw/YRaw,expectedScaleRaw,xRaw/yRaw,preXRaw/preYRaw,preScaleRaw,scaleRaw"
+      },
+      "unit": "positionrawpixels vsdimensionlessscales",
+      "evidence": "InitCollision copiesprevious/expectedscale@0x1816be014..020; dynamicScalecurrentonly@0x1816bf8e4/ec; warpSetPosForce@0x18169d6ea/6ee",
+      "rule": "birthpositionzeroexpectedremainszero; SetPosForcecurrent+pre only, leaveexpected. Do notoverwriteexpectedwithcurrentonadapterconversion; syncPos/isEnableSyncPos holderaliasexplicit"
+    },
+    {
+      "native": "Stage.m_ScrollParam.ScrollType",
+      "rawOffset": "0x91 =Stage160-16 +QScrollParam17-16",
+      "names": {
+        "WarpJump": "world.stageByte91",
+        "Default/NativeCamera/StageAutoScroll": "scrollType"
+      },
+      "unit": "enum0None/1Normal/2Auto",
+      "evidence": "converter0x180553d25 ->QStageInitParam+2c; prepare3@0x18170ad29; ChangeScrollType@0x18170d5fa",
+      "rule": "Usecurrentlivescrolltype, selectedvariantonlyinitialsource. Normal/Auto bothpositivewarpclamp. NotIsUnreturnScroll boolean"
+    },
+    {
+      "native": "DeterministicFrame.Number /Buttontimestamps /Verified",
+      "rawOffset": "managedFrame+0x1c /Button0,4,8 /managedVerified+0x18",
+      "names": {
+        "NativeInput": "frameNumber and[up,down,current]",
+        "Default": "buttons enum-ordered same3words",
+        "Motion": "verified boolean"
+      },
+      "unit": "signedint32simulationframe vsbooleanverification",
+      "evidence": "SetPlayerInput0x181739350; ButtonUpdate0x181933e80; MotionUpdate1@0x18169e0b0",
+      "rule": "No render-tick/timestamp/FPdelta substitute. Producerupdatesglobalsslotsevenwhenmenufilterhidesbuttons. Replaymissingpacket policyhost, nofakefalsepacket."
+    }
+  ],
+  "findings": [
+    {
+      "priority": "P1",
+      "file": "source-player-capture.js",
+      "function": "plan event66",
+      "issue": "Legacyactor.moveVelocityRaw is native+60 m_Accel, notMoveVelo. Currentheader/reportcallitMoveVelo.",
+      "evidence": "quantumfieldActor.m_Accel offset112-16=0x60; ResetVeloAll0x18169da3c",
+      "minimalFix": "Leadadapter explicitlymaps Capture.moveVelocityRaw ->Motion.accelerationRaw; laterapprovedrename/compatibilityalias, updateheader/report. Frozenfilenotmodified."
+    },
+    {
+      "priority": "P1",
+      "file": "source-player-default.js",
+      "function": "compile/step ->ActorMotion.update2",
+      "issue": "DefaultactorflattenedxRaw/yRaw andvelocityRaw;MotionrequirespositionRaw/prePositionRaw/accelerationRaw/collisionHolders. DirectpassisnotvalidcommonActorstate.",
+      "minimalFix": "LeadcanonicalActorstorewithschema-viewbridge; populateactualhistory/acceleration/holders notzeros."
+    },
+    {
+      "priority": "P1",
+      "file": "source-player-collision-init.js",
+      "function": "bootstrap ->ScreenBoundary.createHost",
+      "issue": "PlayersnapshotdoesnotpopulateplayerActorType,m_PlayerIndex/EntityRefneededbyotherhelpers. actor.actorType27doesnotuniversallyreplacePlayercachedtype19.",
+      "evidence": "Initialize0x1816bd5d3/5d7; query30@0x1816c181f",
+      "minimalFix": "LeadbindactualinitializedPlayeridentity/cachedtype andaliasesplayerState/state; noordinal27fallbackforspecialcachedtype."
+    },
+    {
+      "priority": "P1",
+      "file": "source-player-collision-init.js",
+      "function": "setInitPosition/applyBaseScale ->ActorMotion.syncCollisionPos/WarpJump",
+      "issue": "CollisiondescriptorisEnableSyncPos vsActorholder.syncPos; expectedpos/scales andcollisionID/entityRefcanbecollapsedbyflatadapter.",
+      "minimalFix": "Mapholderbitseparatelyandpreserveexpected/pre/current; bindcollisionIDsdistinctfromentities/generations."
+    },
+    {
+      "priority": "P2",
+      "file": "source-player-screen-boundary.js",
+      "function": "header vsupperEdgeX",
+      "issue": "Header says missingcollision/Actor skipped, implementationrequiresroot/recursivecollision0 andthrows. Native0x1816c6404 callGetCollision resultusemustbeverifiedbeforelooseningrefusal.",
+      "minimalFix": "Keepfailclosed; leadclarifyheader/contract afterexactnativebranchcheck. Markdocmismatch, notassertedruntimebug."
+    },
+    {
+      "priority": "P2",
+      "file": "source-playerwarpgun-devices.js",
+      "function": "syncPlayerPos/spawnBullet",
+      "issue": "directionRaw native+e0 is Actor.m_Scale accordingtofieldoffsets, notunitlookdirection. LookX/invertY areseparateActorflags.",
+      "minimalFix": "Leadclarifygunfactslabel asnativeScaleVectorRaw/compatibilityalias; do notnormalizeorreplacewithunitfacing. Frozenmodulekept."
+    }
+  ],
+  "verification": {
+    "scope": "read-onlyschemaaudit; nofullphysicsclaim",
+    "nativeGameExecuted": false,
+    "unitCommand": "node --test source-migration/source-native-schema-audit.test.cjs",
+    "unitTests": {
+      "tests": 8,
+      "pass": 8,
+      "fail": 0
+    },
+    "fullCommand": "node --test source-migration/*.test.cjs",
+    "fullSuite": {
+      "tests": 1207,
+      "pass": 1207,
+      "fail": 0
+    },
+    "concurrentRunHistory": "첫전체1207중NativeActorBridge6실패(다른소유신규테스트). 즉시단독재검증통과후최종전체1207/1207통과. 다른파일수정없음.",
+    "interpretation": "Tests pinmetadata/currenthelper boundaries andidentity/timing semantics, notnewruntimeadapter/fullphysics. Findings are adapterrequirements/documentationrisks, notassertionthateveryhostalreadyviolates them."
+  },
+  "ownership": "Onlynewauditreport/test/result/claim. Noimplementation/runtimeadapterchanges.",
+  "freeze": "Auditcomplete; allownedoutputs frozen forleadreview. No existingimplementation modified."
+}

@@ -1,0 +1,54 @@
+{
+ "schemaVersion":1,
+ "devices":["SwitchTargetGroup"],
+ "module":"source-switchtargetgroup-devices.js",
+ "status":"implemented_tested_unregistered",
+ "settledOn":"2026-10-13",
+ "nativeCodeExecuted":false,
+ "binary":"D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base 0x180000000",
+ "summary":"이름이 지정된 여러 장치에 스위치 켜짐·꺼짐 이벤트를 전달하는 보이지 않는 그룹이다. 4-2에서는 Gear1과 Gear2를 동시에 제어한다. 대상 장치 자체의 동작은 구현하지 않는다.",
+ "evidence":{
+  "creator":"ordinal205, delegate site0x181776283 -> SwitchTargetGroupComponent.Creator0x181719a30",
+  "fields":"quantum-field-offsets.json: raw+0 flags, +8 entity, +0x10 target array; IL2CPP instance offset minus16",
+  "targetCount":"ParseParameter0x181719db8 AsString(index); 0x181719df8 increment0x20; 0x181719dfb bound0x280 ->20 slots",
+  "stringTag":"QActorCreateParam.AsString0x1817800e1 compares tag2; 0x1817800e7 returns string verbatim. Quotes/whitespace are not removed.",
+  "nameCapacity":"QStringUtf8_32 ctor0x18168e7c2 /0x18168e82a: UTF-8 capacity30 bytes; validation helper0x181939a90 checked statically",
+  "acceptedEvents":"OnRecvEvent0x181719eda subtract60 then0x181719ede compare1 unsigned ->60/61 only",
+  "baseEvents":"OnRecvEvent0x181719f04 delegates other events to ActorComponent.OnRecvEvent; adapter returns actorEvents for caller",
+  "emptyAndDuplicateSlots":"notifyToTargets0x18171a07b checks name length, 0x18171a121 advances32 bytes; skips blanks and retains duplicate named destinations",
+  "sender":"GetEventParam0x18171a0ec with group ActorComponent;0x18169dc43 type and0x18169dc4a group entity sender. Input sender/payload are not copied.",
+  "dispatch":"0x18171a11c Frame.NotifyEvent0x181749fa0; FindActor0x18174a073 followed immediately by Invoke_OnRecvEvent0x18174a0a5; missing actor bypasses delivery0x18174a083",
+  "noTickOrCollision":"Initialize/InitPost bare ret0x180476130; Creator has no collision setup; component method index has no OnUpdate/OnPost"
+ },
+ "stages":{
+  "st_w_04_02":["Gear1","Gear2"],
+  "st_w_02_03":["JumpStand1","JumpStand2","SwitchRect1","SwitchRect2","SwitchRect3","SwitchRect4","SwitchRect5","SwitchRect6","JumpStand3","JumpStand4"],
+  "st_w_06_04":["Key1","BgmChanger2"],
+  "st_w_15_03":["Key1","BgmChanger2"],
+  "st_l_03_03":["Thorn30","Thorn31","Thorn32","Thorn33","Thorn34","Thorn35","Thorn36"]
+ },
+ "verification":{
+  "unitTests":"node --test source-migration/source-switchtargetgroup-devices.test.cjs:18/18 passed",
+  "realStageSelections":"5 stages x7 populations=35 exact target-array checks, with population-rules.selectVariant(...,count,true)",
+  "behaviour":"60/61 immediate relay, new group sender, slot order, duplicate destinations, repeated notifications, empty slots, tag2-only decoding,30 UTF-8 byte capacity, baseActor delegation, target filters, JSON roundtrip, no output across600 no-input ticks",
+  "integrationTest":"Real st_w_06_04 authored-inactive Key1 activated/deactivated through existing source-gate-devices.signal; no runtime edits",
+  "fullSuite":"First run494/494 passed. Final run after2 additional unit tests and concurrent session changes failed in source-distanceconstraint-devices.test.cjs (floor friction11234 vs expected11233) and source-registration.test.cjs (checkpoint JSON BigInt serialization). Other-session files left untouched."
+ },
+ "integration":{
+  "registration":"Lead registers UMD global SourceSwitchTargetGroupDevices/CommonJS module, compile/create state and event dispatcher. No shared files were changed.",
+  "dispatch":"Use signal for immediate synchronous delivery. Consume events once, routing targetName via native first matching ActorScene.FindActor semantics; do not deliver absent target names. Nested group output must be processed before the next source slot, preserving synchronous order. Calling both step hooks with identical input duplicates delivery.",
+  "baseActor":"Route actorEvents to shared ActorComponent only, not back into this module. No group target fanout for other event types.",
+  "dependencies":"Gear belongs to auxiliary session1. BgmChanger, SwitchRect, JumpStand and Thorn receivers/lifecycle are separate modules. Groups compile independently; this does not claim entire stages compile or play.",
+  "stageCompilesAlone":"No complete stage opened; st_w_04_02 still requires Gear and lead registration. Other stages retain blockers in remaining-work.json."
+ },
+ "unresolved":[
+  "Shared ActorComponent lifecycle for non60/61 events is not implemented here; caller must handle actorEvents.",
+  "Delayed ActorFactory createThreshold>0 is refused: SwitchTargetGroup delayed creation requires ActorFactory lifecycle integration.",
+  "Duplicate scene names involving a group are refused because ActorScene.FindActor selection order for duplicates was not verified. No shipped group fixture has this ambiguity.",
+  "Names longer than30 UTF-8 bytes are refused; malformed UTF-16 encoder fallback behavior was not independently verified.",
+  "Pooled QEventParam additional field defaults were not traced. Relay output intentionally carries only verified eventType and group sender plus adapter on/targetName.",
+  "Nested groups/cycles require the shared synchronous dispatcher; native self-cycle behavior is not simulated inside this standalone module.",
+  "Gear/BgmChanger and other target mechanics are outside scope. No original game execution, human gameplay comparison, runtime registration, deployment or commit was performed."
+ ],
+ "corrections":[]
+}

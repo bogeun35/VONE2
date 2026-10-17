@@ -1,0 +1,30 @@
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const D=require('./source-switchtargetgroup-devices.js'),pop=require('./population-rules.cjs');
+const stages=JSON.parse(fs.readFileSync(path.join(__dirname,'installed-stage-decoded.local.json'),'utf8')).stages;
+const actors=(id,count)=>pop.actorsForCount(pop.selectVariant(stages.find(s=>s.stageId===id).json.stageInitParamList,count,true),count);
+const state=()=>D.create(D.compile(actors('st_w_04_02',4),4));
+const expected={st_w_04_02:['Gear1','Gear2'],st_w_02_03:['JumpStand1','JumpStand2','SwitchRect1','SwitchRect2','SwitchRect3','SwitchRect4','SwitchRect5','SwitchRect6','JumpStand3','JumpStand4'],st_w_06_04:['Key1','BgmChanger2'],st_w_15_03:['Key1','BgmChanger2'],st_l_03_03:['Thorn30','Thorn31','Thorn32','Thorn33','Thorn34','Thorn35','Thorn36']};
+for(const [id,names] of Object.entries(expected))test(id+' real variants, all 2..8 populations',()=>{
+ for(let count=2;count<=8;count++){
+  const s=D.compile(actors(id,count),count);assert.equal(s.groups.length,1);assert.equal(s.groups[0].targets.length,20);
+  assert.deepEqual(s.groups[0].targets,names.concat(Array(20-names.length).fill('')));
+  const e=D.signal(s,{targetName:s.groups[0].name,eventType:61});
+  assert.deepEqual(e.events,names.map(targetName=>({targetName,eventType:61,on:true,senderId:s.groups[0].id})));
+ }
+});
+test('on and off relay immediately with group sender and fresh payload',()=>{
+ const s=state(),id=s.groups[0].id;
+ for(const eventType of [61,60])assert.deepEqual(D.signal(s,{targetName:'SwitchTargetGroup1',eventType,senderId:'switch',payload:99}).events,['Gear1','Gear2'].map(targetName=>({targetName,eventType,on:eventType===61,senderId:id})));
+});
+test('repeat input is never latched or deduplicated',()=>{const s=state(),e={targetName:'SwitchTargetGroup1',eventType:61};assert.deepEqual(D.signal(s,e),D.signal(s,e));assert.equal(D.beforeStep(s,{events:[e,e]}).events.length,4);});
+test('empty slots do not terminate and duplicate names retain slot order',()=>{const s=state();s.groups[0].targets=['A','','A','B'];assert.deepEqual(D.signal(s,{targetId:s.groups[0].id,eventType:60}).events.map(e=>e.targetName),['A','A','B']);});
+test('target selection by name, id, whole scene and actor type',()=>{const s=state();for(const e of [{targetName:'SwitchTargetGroup1'},{target:s.groups[0].name},{targetId:s.groups[0].id},{broadcast:true},{broadcastActorType:205}])assert.equal(D.signal(s,{...e,eventType:61}).events.length,2);for(const e of [{},{targetName:'missing'},{targetId:'missing'},{broadcastActorType:17,broadcast:true}])assert.deepEqual(D.signal(s,{...e,eventType:61}),{events:[],actorEvents:[]});});
+test('other event types delegate to shared ActorComponent without fanout',()=>{const s=state();for(const eventType of [1,19,47,59,62]){const e={targetName:'SwitchTargetGroup1',eventType,senderId:'source'};assert.deepEqual(D.signal(s,e),{events:[],actorEvents:[{...e,targetId:s.groups[0].id}]});}});
+test('step hooks do not delay received events and no input gives no output for 600 ticks',()=>{const s=state(),snapshot=JSON.stringify(s);for(let i=0;i<600;i++)assert.deepEqual(D.beforeStep(s),{events:[],actorEvents:[],solids:[],deadPlayerIds:[]});assert.equal(JSON.stringify(s),snapshot);assert.equal(D.afterStep(s,{events:[{targetName:'SwitchTargetGroup1',on:false}]}).events[0].eventType,60);assert.deepEqual(D.solids(s),[]);assert.deepEqual(D.displays(s),[]);});
+test('JSON state round trip preserves routing and create does not alias compile',()=>{const c=D.compile(actors('st_w_04_02',4),4),s=D.create(c);s.groups[0].targets[0]='Changed';assert.equal(c.groups[0].targets[0],'Gear1');const restored=JSON.parse(JSON.stringify(s)),e={targetName:'SwitchTargetGroup1',eventType:61};assert.deepEqual(D.signal(restored,e),D.signal(s,e));});
+test('AsString ignores numeric slots, whitespace and quotes remain literal, slots after 19 ignored',()=>{const a={typeName:'SwitchTargetGroup',name:'G',datas:Array(21).fill(null)};a.datas[0]={t:1,f:10,s:'ignored'};a.datas[1]={t:2,s:' "A" '};a.datas[20]={t:2,s:'not a target'};const s=D.compile([a],2);assert.deepEqual(s.groups[0].targets,['',' "A" ',...Array(18).fill('')]);});
+test('UTF-8 name capacity: 30 ASCII bytes or 10 Korean syllables accepted; overflow refused',()=>{for(const name of ['a'.repeat(30),'가'.repeat(10)])assert.equal(D.compile([{typeName:'SwitchTargetGroup',datas:[{t:2,s:name}]}],2).groups[0].targets[0],name);for(const name of ['a'.repeat(31),'가'.repeat(11)])assert.throws(()=>D.compile([{typeName:'SwitchTargetGroup',datas:[{t:2,s:name}]}],2),/30 UTF-8 bytes/);});
+test('population filtering and raw wrapper use stable full actor index',()=>{const a=[{typeName:'Player'},{properties:{typeName:'SwitchTargetGroup',name:'G',playerCount:35},parameters:[{t:2,s:'A'}]},{typeName:'SwitchTargetGroup',playerCount:-3}];assert.equal(D.compile(a,2).groups.length,1);assert.deepEqual(D.compile(a,3).groups.map(g=>g.id),['source:a1','source:a2']);assert.equal(D.compile(a,6).groups.length,0);});
+test('unintegrated delayed creation is explicitly refused',()=>{assert.throws(()=>D.compile([{typeName:'SwitchTargetGroup',createThreshold:1}],2),/ActorFactory lifecycle/);});
+test('real 06-04 group event activates authored-inactive Key1 through existing key handler',()=>{const G=require('./source-gate-devices.js'),a=actors('st_w_06_04',4),s=D.create(D.compile(a,4)),key=G.create(G.compile(a.filter(a=>a.typeName==='Key'),4));assert.equal(key.keys[0].active,false);for(const e of D.signal(s,{targetName:'SwitchTargetGroup1',eventType:61}).events)G.signal(key,e);assert.equal(key.keys[0].active,true);for(const e of D.signal(s,{targetName:'SwitchTargetGroup1',eventType:60}).events)G.signal(key,e);assert.equal(key.keys[0].active,false);});
+test('ambiguous duplicate scene names refuse unverified lookup order',()=>{assert.throws(()=>D.compile([{typeName:'SwitchTargetGroup',name:'G'},{typeName:'Gear',name:'G'}],4),/duplicate actor name/);});

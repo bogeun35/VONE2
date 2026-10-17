@@ -1,0 +1,143 @@
+
+== GoalComponent.Creator 0x18185f5f0
+0x18185f5f0 mov qword ptr [rsp + 0x10], rbx
+0x18185f5f5 push rdi
+0x18185f5f6 sub rsp, 0x20
+0x18185f5fa cmp byte ptr [rip + 0x1afbefa], 0
+0x18185f601 mov rbx, rdx
+0x18185f604 mov rdi, rcx
+0x18185f607 jne 0x18185f643
+0x18185f609 lea rcx, [rip + 0x195ba80]
+0x18185f610 call 0x1802c5dc0 ; 
+0x18185f615 lock or dword ptr [rsp], 0
+0x18185f61a lea rcx, [rip + 0x191d72f]
+0x18185f621 call 0x1802c5dc0 ; 
+0x18185f626 lock or dword ptr [rsp], 0
+0x18185f62b lea rcx, [rip + 0x197130e]
+0x18185f632 call 0x1802c5dc0 ; 
+0x18185f637 lock or dword ptr [rsp], 0
+0x18185f63c mov byte ptr [rip + 0x1afbeb8], 1
+0x18185f643 mov rax, qword ptr [rip + 0x19712f6]
+0x18185f64a cmp dword ptr [rax + 0xe0], 0
+0x18185f651 jne 0x18185f662
+0x18185f653 mov rcx, rax
+0x18185f656 call 0x1802ec040 ; 
+0x18185f65b mov rax, qword ptr [rip + 0x19712de]
+0x18185f662 mov rax, qword ptr [rax + 0xb8]
+0x18185f669 mov qword ptr [rsp + 0x30], rsi
+0x18185f66e mov r8, qword ptr [rax]
+0x18185f671 test r8, r8
+0x18185f674 je 0x18185f737
+0x18185f67a cmp dword ptr [r8 + 0x18], 0
+0x18185f67f jbe 0x18185f73d
+0x18185f685 test rdi, rdi
+0x18185f688 je 0x18185f737
+0x18185f68e mov r8, qword ptr [r8 + 0x20]
+0x18185f692 xor r9d, r9d
+0x18185f695 mov rdx, rbx
+0x18185f698 mov rcx, rdi
+0x18185f69b call 0x1817482c0 ; Frame.CreateActorEntity
+0x18185f6a0 mov rcx, qword ptr [rip + 0x195b9e9]
+0x18185f6a7 mov rsi, rax
+0x18185f6aa cmp dword ptr [rcx + 0xe0], 0
+0x18185f6b1 jne 0x18185f6b8
+0x18185f6b3 call 0x1802ec040 ; 
+0x18185f6b8 mov rdx, qword ptr [rsi + 0x20]
+0x18185f6bc mov rcx, rdi
+0x18185f6bf call 0x180224f30 ; 
+0x18185f6c4 mov r10, rax
+0x18185f6c7 test rbx, rbx
+0x18185f6ca je 0x18185f737
+0x18185f6cc mov rcx, qword ptr [rbx + 0x10]
+0x18185f6d0 test rcx, rcx
+0x18185f6d3 je 0x18185f737
+0x18185f6d5 mov rcx, qword ptr [rcx + 0x48]
+0x18185f6d9 test rcx, rcx
+0x18185f6dc je 0x18185f737
+0x18185f6de cmp dword ptr [rcx + 0x18], 0
+0x18185f6e2 jbe 0x18185f73d
+0x18185f6e4 mov rax, qword ptr [rcx + 0x20]
+0x18185f6e8 test rax, rax
+0x18185f6eb je 0x18185f737
+0x18185f6ed cmp dword ptr [rax + 0x10], 1
+0x18185f6f1 jne 0x18185f6f9
+0x18185f6f3 mov rax, qword ptr [rax + 0x18]
+0x18185f6f7 jmp 0x18185f6fb ; 
+0x18185f6f9 xor eax, eax
+0x18185f6fb xor r9d, r9d
+0x18185f6fe mov qword ptr [r10 + 0x10], rax
+0x18185f702 mov r8, rsi
+0x18185f705 mov rdx, rdi
+0x18185f708 mov rcx, r10
+0x18185f70b call 0x18185f750 ; GoalComponent.InitCollision
+0x18185f710 mov rbx, qword ptr [rsi + 0x20]
+0x18185f714 xor edx, edx
+0x18185f716 mov rcx, rdi
+0x18185f719 call 0x181748470 ; Frame.GetActorManager
+0x18185f71e test rax, rax
+0x18185f721 je 0x18185f737
+0x18185f723 mov rsi, qword ptr [rsp + 0x30]
+0x18185f728 mov qword ptr [rax + 0x48], rbx
+0x18185f72c mov rbx, qword ptr [rsp + 0x38]
+0x18185f731 add rsp, 0x20
+0x18185f735 pop rdi
+0x18185f736 ret 
+0x18185f737 call 0x18032a5e0 ; 
+0x18185f73c int3 
+0x18185f73d call 0x18032a5f0 ; 
+0x18185f742 int3 
+0x18185f743 int3 
+0x18185f744 int3 
+0x18185f745 int3 
+0x18185f746 int3 
+0x18185f747 int3 
+0x18185f748 int3 
+0x18185f749 int3 
+0x18185f74a int3 
+0x18185f74b int3 
+0x18185f74c int3 
+0x18185f74d int3 
+0x18185f74e int3 
+0x18185f74f int3 
+
+== GoalComponent.ParseParameter 0x1817d5a20
+0x1817d5a20 sub rsp, 0x28
+0x1817d5a24 test r8, r8
+0x1817d5a27 je 0x1817d5a68
+0x1817d5a29 mov rax, qword ptr [r8 + 0x10]
+0x1817d5a2d test rax, rax
+0x1817d5a30 je 0x1817d5a68
+0x1817d5a32 mov rax, qword ptr [rax + 0x48]
+0x1817d5a36 test rax, rax
+0x1817d5a39 je 0x1817d5a68
+0x1817d5a3b cmp dword ptr [rax + 0x18], 0
+0x1817d5a3f jbe 0x1817d5a6e
+0x1817d5a41 mov rax, qword ptr [rax + 0x20]
+0x1817d5a45 test rax, rax
+0x1817d5a48 je 0x1817d5a68
+0x1817d5a4a cmp dword ptr [rax + 0x10], 1
+0x1817d5a4e jne 0x1817d5a5d
+0x1817d5a50 mov rax, qword ptr [rax + 0x18]
+0x1817d5a54 mov qword ptr [rcx + 0x10], rax
+0x1817d5a58 add rsp, 0x28
+0x1817d5a5c ret 
+0x1817d5a5d xor eax, eax
+0x1817d5a5f mov qword ptr [rcx + 0x10], rax
+0x1817d5a63 add rsp, 0x28
+0x1817d5a67 ret 
+0x1817d5a68 call 0x18032a5e0 ; 
+0x1817d5a6d int3 
+0x1817d5a6e call 0x18032a5f0 ; 
+0x1817d5a73 int3 
+0x1817d5a74 int3 
+0x1817d5a75 int3 
+0x1817d5a76 int3 
+0x1817d5a77 int3 
+0x1817d5a78 int3 
+0x1817d5a79 int3 
+0x1817d5a7a int3 
+0x1817d5a7b int3 
+0x1817d5a7c int3 
+0x1817d5a7d int3 
+0x1817d5a7e int3 
+0x1817d5a7f int3 

@@ -1,0 +1,444 @@
+/* Interpreted original world01-01. No native code, source assets or file IO. */
+(function(root,factory){
+ const common=typeof module==='object'&&module.exports;
+ const api=factory(common?require('./terrain-runtime.js'):root.SourceTerrainRuntime,
+  common?require('./actor-runtime.js'):root.SourceActorRuntime,
+  common?require('./spring-switch-runtime.js'):root.SourceSpringSwitch,
+  common?require('./source-devices-runtime.js'):root.SourceDevicesRuntime,
+  common?require('./source-motion-devices.js'):root.SourceMotionDevices,
+  common?require('./source-gate-devices.js'):root.SourceGateDevices,
+  common?require('./source-bridge-devices.js'):root.SourceBridgeDevices,
+  common?require('./source-blink-devices.js'):root.SourceBlinkDevices,
+  common?require('./source-blinkthunder-devices.js'):root.SourceBlinkThunderDevices,
+  common?require('./source-warpinit-devices.js'):root.SourceWarpInitDevices,
+  common?require('./source-switchtimer-devices.js'):root.SourceSwitchTimerDevices,
+  common?require('./source-enemy-devices.js'):root.SourceEnemyDevices,
+  common?require('./source-thorn-ceiling-devices.js'):root.SourceThornCeilingDevices,
+  common?require('./source-countup-devices.js'):root.SourceCountUpDevices,
+  common?require('./source-lift-devices.js'):root.SourceLiftDevices,
+  common?require('./source-landmine-devices.js'):root.SourceLandmineDevices,
+  common?require('./source-pole-devices.js'):root.SourcePoleDevices,
+  common?require('./source-wind-devices.js'):root.SourceWindDevices,
+  common?require('./source-movewall-devices.js'):root.SourceMoveWallDevices,
+  common?require('./source-linepath-devices.js'):root.SourceLinepathDevices);
+ if(common)module.exports=api;root.SourceStageRuntime=api;
+})(typeof globalThis!=='undefined'?globalThis:this,function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges,Blink,BlinkThunders,WarpInit,SwitchTimers,Enemies,ThornCeilings,CountUps,Lifts,Landmines,Poles,Winds,SpeedSwitches,LinePaths){
+ 'use strict';
+ const clone=x=>JSON.parse(JSON.stringify(x));
+ const overlap=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+ const horizontal=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x;
+ const box=r=>({x:r.x,y:r.y,w:r.width,h:r.height});
+ const NATIVE=Object.freeze({walk:3,jump:-334234/65536,gravity:42598/65536,terminal:19.5,holdFactor:13107/65536,holdFrames:14});
+ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}={}){
+  if(!['st_w_01_01','st_w_01_02','st_w_01_03','st_w_01_04','st_w_04_01','st_w_04_03','st_w_04_04','st_w_05_02','st_w_10_02','st_w_11_04','st_w_07_02','st_w_10_01','st_w_10_04','st_w_13_01','st_w_11_02','st_w_12_03','st_w_03_02'].includes(stageId))throw new Error('Source stage runtime does not support this stage yet');
+  if(!Number.isFinite(nativeTickRate)||nativeTickRate<1||nativeTickRate>240)throw new Error('Invalid calibration tick rate');
+  const t=Terrain.createTerrain({source,geometry,count,stageId});
+  // The original frames a fixed window, not the whole map: mapInitParam carries
+  // displayTileHeight (10 tiles on world01-01, i.e. 480px of a 960px map) and the
+  // stage carries its scroll mode. Record them so the camera can match the
+  // source framing instead of inventing one.
+  const sourceStage=(source&&source.stages||[]).find(entry=>entry.stageId===stageId);
+  const sourceVariant=sourceStage&&sourceStage.json&&sourceStage.json.stageInitParamList[t.variant.index];
+  const mapInit=sourceVariant&&sourceVariant.mapInitParam||{};
+  const view={displayTileHeight:Number(mapInit.displayTileHeight)||0,
+   displayHeight:(Number(mapInit.displayTileHeight)||0)*t.tileSize,
+   startTileX:Number(mapInit.startTileX)||0,startTileY:Number(mapInit.startTileY)||0,
+   scrollType:sourceVariant?Number(sourceVariant.scrollType)||0:0,
+   zoomOut:sourceVariant?Number(sourceVariant.zoomOut)||0:0,
+   scrollingPorted:false};
+  const relays=Relay.create(t.actors,count);
+  const devices=Devices.compile(t.actors,count);
+  const motion=Motion.compile(t.actors,count);
+  const gates=Gates.compile(t.actors,count);
+  const bridges=Bridges.compile(t.actors,count);
+  const blink=Blink.compile(t.actors,count);
+  const blinkThunders=BlinkThunders.compile(t.actors,count);
+  const warpInit=WarpInit.compile(t.actors,count);
+  const switchTimers=SwitchTimers.compile(t.actors,count);
+  const enemies=Enemies.compile(t.actors,count);
+  const thornCeilings=ThornCeilings.compile(t.actors,count);
+  const countUps=CountUps.compile(t.actors,count);
+  const lifts=Lifts.compile(t.actors,count);
+  const landmines=Landmines.compile(t.actors,count);
+  const poles=Poles.compile(t.actors,count,{});
+  const winds=Winds.compile(t.actors,count,{});
+  const speedSwitches=SpeedSwitches.compile(t.actors,count,{});
+  const linePaths=LinePaths.compile(t.actors,count,{});
+  const springs=relays.relays.filter(r=>r.type==='JumpStand').map(r=>({...r,x:r.x-16,y:r.y-(r.parent?38:34),w:32,h:r.parent?38:34}));
+  // The sensor rectangle is the one SwitchComponent.GetCollisionByDirection
+  // 0x1817145a0 picks for this switch's direction byte; spring-switch-runtime
+  // decodes the table out of SwitchComponent..cctor 0x181715330 and carries it on
+  // the relay. Direction 0 keeps the previous 18x9 box above the anchor.
+  const switches=relays.relays.filter(r=>r.type==='Switch'||r.type==='DelaySwitch'||r.type==='LandmineSwitch')
+   .map(r=>({...r,x:r.x+r.rect.x,y:r.y+r.rect.y,w:r.rect.w,h:r.rect.h}));
+  const goal=t.actors.find(a=>a.typeName==='Goal'),key=t.actors.find(a=>a.typeName==='Key');
+  if(!goal)throw new Error('Original stage Goal is missing');
+  // WarpComponent.ParseParameter 0x181734390 + OnCollided 0x181734a00:
+  // slots width,height,destX,destY,ordinalOffsetX,ordinalOffsetY. Event63
+  // ActorComponent handler/warpProc resets velocity and collision contacts.
+  const warps=t.actors.filter(a=>a.typeName==='Warp').map((a,i)=>{
+   const n=j=>a.datas[j]?.t===1?a.datas[j].f:0;
+   if(n(0)<=0||n(1)<=0)throw new Error('Unsupported Warp dimensions');
+   return {id:'warp:'+i,type:'Warp',x:a.x,y:a.y,w:n(0),h:n(1),
+    destination:{x:n(2),y:n(3)},ordinalOffset:{x:n(4),y:n(5)},counter:0};
+  });
+  const supported=new Set(['Player','Key','Goal','Warp','MapRect','TopViewMapRect','JumpStand','JumpStandMediator','Switch','DelaySwitch','Rect','DashBoard','FallingWall',...Devices.supportedTypes,...Gates.supportedTypes,...Bridges.supportedTypes,...Blink.supportedTypes,...BlinkThunders.supportedTypes,...WarpInit.supportedTypes,...SwitchTimers.supportedTypes,...Enemies.supportedTypes,...ThornCeilings.supportedTypes,...CountUps.supportedTypes,...Lifts.supportedTypes,...Landmines.supportedTypes,...Poles.supportedTypes,...Winds.supportedTypes,'SpeedSwitch',...LinePaths.supportedTypes]);
+  const unsupported=[...new Set(t.actors.filter(a=>!supported.has(a.typeName)).map(a=>a.typeName))];
+  const missingMechanics=['Native tick frequency (60 Hz explicit prototype calibration)',
+   'Native collision pushback and update ordering equivalence',
+   'Key attach, transfer and goal-opening state machine (overlap pickup used)'];
+  for(const type of unsupported)missingMechanics.push(type+' handler ('+t.actors.filter(a=>a.typeName===type).length+' source actor)');
+  missingMechanics.push(...devices.warnings,...(blink.warnings||[]),...(blinkThunders.warnings||[]),...(warpInit.warnings||[]),...(switchTimers.warnings||[]),...(enemies.warnings||[]),...(thornCeilings.warnings||[]),...(countUps.warnings||[]),...(lifts.warnings||[]),...(landmines.warnings||[]),...(poles.warnings||[]),...(winds.warnings||[]),...(speedSwitches.warnings||[]),...(linePaths.warnings||[]));
+  if(unsupported.length||devices.warnings.length)throw Error('Unsupported source devices: '+[...unsupported,...devices.warnings].join(', '));
+  if(t.cells.some(c=>(c.flags&~1)!==0))missingMechanics.push('Dynamic tile attributes');
+  const map={id:stageId,count,width:t.width,height:t.height,tileSize:t.tileSize,variant:t.variant,
+   platforms:t.platforms.map((p,i)=>({...p,id:'terrain:'+i})),springs,switches,warps,
+   spawns:Actor.playerSpawns(t.actors,count).map(p=>({x:p.collision.x,y:p.collision.y-0.5})),
+   // KeyComponent.ParseParameter 0x18186b780 moves the key off its authored
+   // anchor before ActorFactoryComponent.CreateActor 0x1816a3658 reads the
+   // position back for ActorSceneComponent.AddActor 0x1816a3687, so the key box
+   // has to be built at the population-dependent spawn anchor, not at posX/posY.
+   // Without this, st_w_04_03's key stayed at (240,480) - its 32x56 box
+   // (224,452) sat inside the floor tiles at gridY 9 and half of it below the
+   // map, so no player could overlap it. See actor-runtime.js keySpawnOffset
+   // and key-reach-report.json.
+   key:key?{...box(Actor.collisionRect(key,1,count)),id:'key'}:null,
+   exit:{...box(Actor.collisionRect(goal)),id:'goal'},
+   // StageComponent.prepare3 0x18170aad0 writes FailFallY = mapHeight*chipSize +
+   // stageInitParam.failDownY. failDownY is 0.0 for every World stage, so the
+   // QGameDefine..cctor 0x181780720 default applies: statics+0x10 = 0x9600000 =
+   // 2400. killY is compared against the collision box top, and the native anchor
+   // sits 47 below it (PlayerComponent.CreateEntity 0x1816bd4e8), hence -47.
+   // A margin of 144 leaves 7 of the 16 authored Warp volumes unreachable; 2400
+   // makes 15 of 16 reachable, which is what the shipped level data expects.
+   failFallY:t.height+2400,killY:t.height+2400-47,
+   devices:[],coins:[],hazards:[],timers:[],movingPlatforms:[],crates:[],requiredCoins:0,
+   physics:{playerWidth:32,playerHeight:46,nativeTickRate,status:'calibration_pending'},
+   unsupportedActors:t.actors.filter(a=>!supported.has(a.typeName)).map(a=>({type:a.typeName,x:a.x,y:a.y})),
+   view,coordinateSystem:'Y-down'};
+  return {schemaVersion:1,count,map,relays,devices,motion,gates,bridges,blink,blinkThunders,warpInit,switchTimers,enemies,thornCeilings,countUps,lifts,landmines,poles,winds,speedSwitches,linePaths,status:{state:'calibration_pending',missingMechanics,
+   unsupportedActorTypes:unsupported,sourceStage:stageId,sourceY:'down',completePhysicsFidelity:false}};
+ }
+ function create(compiled,options={}){
+  if(!compiled||compiled.schemaVersion!==1)throw new Error('Compiled source stage required');
+  const map=clone(compiled.map),count=compiled.count,ids=options.ids||Array.from({length:count},(_,i)=>'p'+(i+1));
+  if(ids.length!==count||new Set(ids).size!==count||ids.some(id=>typeof id!=='string'||!id))throw new Error('Unique IDs must match player count');
+  const initPositions=(compiled.warpInit&&compiled.warpInit.initPositions)||[];
+  return {map,players:ids.map((id,i)=>({id,...map.spawns[i],initPos:initPositions[i]||{x:map.spawns[i].x+16,y:map.spawns[i].y+47.5},onPole:!!(compiled.poles&&compiled.poles.poles&&compiled.poles.poles.length),lookingRight:true,w:32,h:46,vx:0,vy:0,grounded:false,ground:false,
+   supportId:null,jump:false,jumpFrame:0,exit:false,visible:true,playerState:1})),
+   relayState:clone(compiled.relays),deviceState:Devices.create(compiled.devices||{schemaVersion:1,count,devices:[],warnings:[]}),motionState:Motion.create(compiled.motion||{count,rects:[],dashBoards:[],walls:[]}),gateState:Gates.create(compiled.gates||{count,gates:[],observers:[],keys:[]}),bridgeState:Bridges.create(compiled.bridges||{count,bridges:[],thunders:[],keyTargets:[],keyTaken:false}),blinkState:Blink.create(compiled.blink||Blink.compile([],count)),blinkThunderState:BlinkThunders.create(compiled.blinkThunders||BlinkThunders.compile([],count)),warpInitState:WarpInit.create(compiled.warpInit||WarpInit.compile([],count)),switchTimerState:SwitchTimers.create(compiled.switchTimers||SwitchTimers.compile([],count)),enemyState:Enemies.create(compiled.enemies||Enemies.compile([],count)),thornCeilingState:ThornCeilings.create(compiled.thornCeilings||ThornCeilings.compile([],count)),countUpState:CountUps.create(compiled.countUps||CountUps.compile([],count)),liftState:Lifts.create(compiled.lifts||Lifts.compile([],count)),landmineState:Landmines.create(compiled.landmines||Landmines.compile([],count)),poleState:Poles.create(compiled.poles||Poles.compile([],count,{})),windState:Winds.create(compiled.winds||Winds.compile([],count,{})),speedSwitchState:SpeedSwitches.create(compiled.speedSwitches||SpeedSwitches.compile([],count,{})),linePathState:LinePaths.create(compiled.linePaths||LinePaths.compile([],count,{})),keyActive:!compiled.gates||compiled.gates.keys.every(k=>k.active),sourceStatus:clone(compiled.status),physics:clone(map.physics),
+   status:'play',elapsed:0,ticks:0,accumulator:0,keyTaken:!map.key,coinsTaken:0,deaths:0,failure:null,
+   lastRelayEvents:[],lastImpulses:[],lastContacts:{switchContacts:[],springContacts:[]}};
+ }
+ function active(s){return s.players.filter(p=>!p.exit);}
+ // Native switch contact rule, recovered from SwitchComponent.OnCollided
+ // 0x181714f80: the handler is entered for ANY overlap with the direction's
+ // sensor rectangle and then inspects only the collided Collision.m_PushBackTarget
+ // (bit1, 0x18171502a) and Collision.m_Layer (1,2,3 or 8,
+ // 0x181715034..0x181715042). Nothing in it reads a contact normal, a relative
+ // velocity or a grounded flag, and the direction byte is used only to pick the
+ // rectangle (GetCollisionByDirection 0x1817145a0) plus two direction-0-only side
+ // effects: the flags bit5/bit6 jump impulse at 0x181715116 (never set on a
+ // shipped Switch) and the cosmetic m_OffsetDrawPos.y = ACTOR_DRAW_OFFSET_Y (-3)
+ // write at 0x181715244. Plain overlap is therefore the rule.
+ function switchSensorOverlap(body,button){return overlap(body,button);}
+ // Exception, deliberately kept: for direction 0 the player test stays the
+ // narrower "landed on the sensor's top face" condition this runtime has used
+ // since the first round was connected. Widening it would change all 101
+ // direction-0 World switches, which is out of scope for this change; it is
+ // listed as a known deviation in switch-direction-report.json.
+ function playerPressesSwitch(p,button){
+  if(button.direction!==0)return switchSensorOverlap(p,button);
+  return p.grounded&&horizontal(p,button)&&p.y<button.y&&p.y+p.h>=button.y&&p.y+p.h<=button.y+button.h+0.01;
+ }
+ // Switch.InitCollision 0x181714790 creates a sensor, not a solid: CreateCollision
+ // gets 0 for m_PushBackTarget (0x1817147fa) and m_CollisionType stays 0
+ // (0x18169f586), then 0x18171486e sets m_Layer 5. Switches never block anybody.
+ // PoleLadder (source-pole-devices.js). The native OnPost puts every player
+ // that is not in state 3..5 into state 10 and snaps them to the pole, with no
+ // contact test, so in practice the whole party rides the pole from the first
+ // tick. A rider climbs with up/down at the walk speed instead of walking or
+ // jumping (PlayerComponent.OnUpdate_PoleLadder 0x1816c95b0 via poleStep), is
+ // snapped to the pole's x by the module's playerConstraints and clamped to its
+ // span, and the pole itself moves (PoleLadder OnUpdate).
+ //   anchor <-> top-left: players are 32x46 boxes whose native anchor sits at
+ //   (+16, +47), the transform actor-runtime.js already uses.
+ function poleMove(s,p,input,terrain){
+  const F=65536,anchorX=p.x+16,anchorY=p.y+47;
+  const dir=input.up?-1:input.down?1:0;
+  // Collision.IsContactedMapOrRect: a rider does not climb into terrain.
+  let nextY=anchorY+dir*NATIVE.walk;
+  const box={x:anchorX-10,y:nextY-47,w:20,h:44};
+  if(dir&&terrain.some(b=>overlap(box,b)))nextY=anchorY;
+  p.lookingRight=true;p.vx=0;p.vy=0;p.grounded=false;p.supportId=null;p.jump=false;
+  p.animation=dir<0?14:dir>0?15:13;
+  const out=Poles.afterStep(s.poleState,{players:[{id:p.id,nativeState:10,lookingRight:true,anchorYRaw:Math.round(nextY*F)}]});
+  const c=out.playerConstraints.find(q=>q.playerId===p.id);
+  p.x=c.anchorXRaw/F-16;p.y=c.anchorYRaw/F-47;
+ }
+ // FloatingThorn collision: the native callback sends event 43 to a category 1
+ // (player) or 8 actor it touches, and event 43 is the player death path that
+ // still respects immortality (pole-device-report.json). A rider's box is the
+ // native pole rect from poleEnter: 20 wide, 44 tall, at (-10,-47) from the anchor.
+ function poleContacts(s,players){
+  if(!s.poleState.thorns.length)return [];
+  const F=65536,collisions=[],view=Poles.displays(s.poleState);
+  for(const p of players){
+   if(p.exit||p.dead)continue;
+   const body=p.onPole?{x:p.x+16-10,y:p.y,w:20,h:44}:p;
+   for(const t of view.thorns)for(const r of t.collisionRects)
+    if(overlap(body,{x:r.xRaw/F,y:r.yRaw/F,w:r.widthRaw/F,h:r.heightRaw/F})){collisions.push({thornId:t.id,targetId:p.id,category:1});break;}
+  }
+  if(!collisions.length)return [];
+  const riders=players.filter(p=>!p.exit&&!p.dead).map(p=>({id:p.id,nativeState:p.onPole?10:1,lookingRight:true,anchorYRaw:Math.round((p.y+47)*F)}));
+  const out=Poles.afterStep(s.poleState,{players:riders,collisions});
+  return out.events.filter(e=>e.eventType===43).map(e=>players.find(q=>q.id===e.targetId)).filter(q=>q&&!q.immortal).map(q=>q.id);
+ }
+ // Host side of source-linepath-devices.js. The module asks; this answers with
+ // the port's AABB world. Approximations are named here, not hidden.
+ function linePathHost(s,players,h){
+  const F=65536,live=players.filter(p=>!p.exit&&!p.dead);
+  const rect=d=>({x:(d.xRaw+d.rectRaw.x)/F,y:(d.yRaw+d.rectRaw.y)/F,w:d.rectRaw.width/F,h:d.rectRaw.height/F});
+  const device=id=>s.linePathState.devices.find(d=>d.id===id);
+  const riders=id=>live.filter(p=>p.grounded&&p.supportId===id);
+  return {dt:h,
+   isActorPaused:()=>false,
+   // IsCollidedByPushBackTarget(mask 3) 0x18180e291: the rect arms itself the
+   // first update nothing pushable overlaps it. Players are the pushable bodies
+   // here; whether terrain also counts under mask 3 was not established.
+   isCollidedByPushBackTarget:id=>live.some(p=>overlap(p,rect(device(id)))),
+   setCollisionActive:()=>{},
+   damageRectOwnContacts:id=>{const d=device(id);if(d.collisionInactive)return [];
+    return live.filter(p=>overlap(p,rect(d))).map(p=>({collisionType:1,entityId:p.id}));},
+   damageRectReversePlayers:()=>[],
+   // Collision.GetContactCount face 1 (getRideCount 0x18187a361): direct riders.
+   getRideCount:id=>riders(id).length,
+   // IsEnableMoveContactActor is only partly reversed (codex brief 17). The
+   // port refuses a move that would push a rider into terrain, and otherwise allows it.
+   isEnableMoveContactActor:(id,vector)=>{const dy=Math.sign(vector.yRaw);if(dy>=0)return true;
+    const solid=s.map.platforms;return !riders(id).some(p=>solid.some(b=>overlap({x:p.x,y:p.y-1,w:p.w,h:p.h},b)));},
+   // MoveContactActor 0x1816a0b70 gets (0, deltaY) only: a line-path lift lifts
+   // and lowers its riders but never carries them sideways (0x18187a1dd..221).
+   moveLinePathLiftContactActors:(id,delta)=>{for(const p of riders(id))p.y+=delta.yRaw/F;}};
+ }
+ function baseSolids(s){return [...s.map.platforms,...s.map.springs.filter(b=>s.relayState.relays.find(r=>r.id===b.id)?.visible),...Motion.solids(s.motionState),...Gates.solids(s.gateState),...Bridges.solids(s.bridgeState),...Blink.solids(s.blinkState),...BlinkThunders.solids(s.blinkThunderState),...Lifts.solids(s.liftState),...Winds.solids(s.windState),...LinePaths.solids(s.linePathState)];}
+ function solids(s){return [...baseSolids(s),...Devices.solids(s.deviceState)];}
+ function ridersOf(p,players){
+  const ids=new Set([p.id]);let added=true;
+  while(added){added=false;for(const q of players)if(q.grounded&&ids.has(q.supportId)&&!ids.has(q.id)){ids.add(q.id);added=true;}}
+  return players.filter(q=>q!==p&&ids.has(q.id));
+ }
+ function moveX(p,dx,obstacles,width){
+  let target=Math.max(0,Math.min(width-p.w,p.x+dx));
+  for(const b of obstacles){
+   if(p.y>=b.y+b.h||p.y+p.h<=b.y)continue;
+   if(dx>0&&p.x+p.w<=b.x+0.001&&target+p.w>b.x)target=Math.min(target,b.x-p.w);
+   if(dx<0&&p.x>=b.x+b.w-0.001&&target<b.x+b.w)target=Math.max(target,b.x+b.w);
+  }
+  const moved=target-p.x;p.x=target;return moved;
+ }
+ function moveY(p,dy,obstacles){
+  const before=p.y;let target=before+dy,support=null;
+  p.grounded=false;p.ground=false;p.supportId=null;
+  for(const b of obstacles){
+   if(!horizontal(p,b))continue;
+   if(dy>=0&&before+p.h<=b.y+0.001&&target+p.h>=b.y){
+    if(b.y-p.h<=target){
+     // Equal-height teammates must not change the carrier when actor array
+     // order changes. Prefer the widest contact, then a stable actor ID.
+     const contact=Math.min(p.x+p.w,b.x+b.w)-Math.max(p.x,b.x);
+     const previous=support?Math.min(p.x+p.w,support.x+support.w)-Math.max(p.x,support.x):-1;
+     if(b.y-p.h<target-1e-9||!support||contact>previous+1e-9||Math.abs(contact-previous)<=1e-9&&String(b.id)<String(support.id)){
+      target=b.y-p.h;support=b;
+     }
+    }
+   }else if(dy<0&&before>=b.y+b.h-0.001&&target<b.y+b.h){target=Math.max(target,b.y+b.h);p.vy=0;p.jumpFrame=0;}
+  }
+  p.y=target;
+  if(support){p.grounded=true;p.ground=true;p.supportId=support.id;p.vy=0;}
+ }
+ function tick(s,inputs,h){
+  const hz=s.physics.nativeTickRate,players=active(s);
+  // TimerComponent.onTimeUp 0x18172e0cb sends event 61 to the single actor named
+  // in slot5. Route it to every device signal handler in the same tick.
+  // The DeadTimer kills by broadcasting QEventType.Dead 19 to every actor
+  // (TimerComponent.onTimeUp 0x18172e132..0x18172e168) and the receiving
+  // PlayerComponent.OnRecvEvent 0x1816c174e is what actually dies, so the module
+  // needs the player list and reports the casualties. Only a DeadTimer can fill
+  // deadPlayerIds; a SwitchTimer time-up never does.
+  const timerResult=SwitchTimers.beforeStep(s.switchTimerState,{dt:h,players});
+  Bridges.beforeStep(s.bridgeState,{players,platforms:s.map.platforms,keyTaken:s.keyTaken,dt:h,nativeTickRate:hz,events:timerResult.events});
+  for(const e of timerResult.events){Gates.signal(s.gateState,e);Devices.signal(s.deviceState,e);BlinkThunders.signal(s.blinkThunderState,e);}
+  if(timerResult.deadPlayerIds.length){s.status='dead';s.deaths++;s.failure={playerId:timerResult.deadPlayerIds[0],reason:'시간이 다 됐어요'};return;}
+  Gates.beforeStep(s.gateState,{players,platforms:s.map.platforms,dt:h,nativeTickRate:hz});
+  Lifts.beforeStep(s.liftState,{players,dt:h,nativeTickRate:hz});
+  const linePathResult=LinePaths.beforeStep(s.linePathState,linePathHost(s,players,h));
+  Blink.beforeStep(s.blinkState,{players,dt:h});
+  // Bowwow2EnemyComponent has no solid body (m_PushBackTarget 0) and declares no
+  // OnRecvEvent, so it never joins the solid list and nothing can signal it.
+  Enemies.beforeStep(s.enemyState,{dt:h});
+  ThornCeilings.beforeStep(s.thornCeilingState,{dt:h});
+  BlinkThunders.beforeStep(s.blinkThunderState,{dt:h,platforms:s.map.platforms,width:s.map.width,height:s.map.height});
+  const oldMotion=Motion.solids(s.motionState);Motion.step(s.motionState,h);
+  const movingSolids=Motion.solids(s.motionState);
+  for(const p of players){
+   const carrier=movingSolids.find(b=>b.id===p.supportId),old=oldMotion.find(b=>b.id===p.supportId);
+   if(carrier&&old){p.x+=carrier.x-old.x;p.y+=carrier.y-old.y;}
+   for(const b of movingSolids){const previous=oldMotion.find(old=>old.id===b.id);if(!previous||!overlap(p,b)||previous.x===b.x&&previous.y===b.y)continue;
+    if(b.x>previous.x)p.x=b.x+b.w;else if(b.x<previous.x)p.x=b.x-p.w;else if(b.y<previous.y)p.y=b.y-p.h;else p.y=b.y+b.h;
+   }
+  }
+  Devices.beforeStep(s.deviceState,{players,inputs,platforms:baseSolids(s),dt:h,nativeTickRate:hz,width:s.map.width});
+  const terrain=solids(s);
+  // A box resting on someone's head has to travel with them: st_w_01_02 is
+  // carried-box-as-a-shield and the thorns only stop at the box's own rect.
+  // The engine moves contact actors generically (ActorComponent
+  // MoveContactActor 0x1816a0980, MoveByContactActor 0x1816a10e0,
+  // IsEnableMoveContactActor 0x1816a15c0, GetMoveContactOption 0x18169dc90);
+  // that whole system is not decoded, so this reproduces only the one case
+  // the connected rounds need, with the same one-frame lag the other carries
+  // in this runtime already have.
+  const carriedBefore=new Map(players.map(p=>[p.id,{x:p.x,y:p.y}]));
+  Poles.beforeStep(s.poleState,{dt:h});
+  // Wind: a one-tick movement offset in native px/tick, never accumulated into
+  // velocity (default Player update adds and clears m_Wind, 0x1816c3dcc..e00).
+  for(const f of Winds.beforeStep(s.windState,{}).forces){const p=players.find(q=>q.id===f.actorId);if(p)p.windDx=f.x;}
+  // SpeedSwitch: event 57 to every Player (actor type 27). The receiver replaces
+  // the walk speed, never compounds it; at scale 1 the formula gives exactly the
+  // 3 px/tick this runtime has always used, which is the cross-check.
+  for(const e of SpeedSwitches.beforeStep(s.speedSwitchState,{}).events||[])if(e.eventType===57&&e.broadcastActorType===27)
+   for(const p of players){const next=SpeedSwitches.applyPlayerSpeedEvent({stageBaseScaleRaw:s.map.stageScaleRaw||65536,iceSpeedUpRaw:s.map.iceSpeedUpRaw||65536},e);p.walkSpeed=next.walkSpeedRaw/65536;}
+  for(const p of [...players].sort((a,b)=>b.y-a.y||a.id.localeCompare(b.id))){
+   if(p.onPole){poleMove(s,p,p.inputLocked?{}:(inputs[p.id]||{}),terrain);continue;}
+   const input=p.inputLocked?{}:(inputs[p.id]||{}),held=!!input.jump,edge=held&&!p.jump,riders=ridersOf(p,players);
+   p.jumpBlocked=!!(edge&&p.grounded&&riders.length);
+   const started=edge&&p.grounded&&!riders.length;
+   if(started){p.vy=NATIVE.jump*hz;p.jumpFrame=1;p.grounded=false;p.supportId=null;}
+   // Native dec(frame)<=12 accepts frames1..13; frame0 cannot restart an
+   // airborne jump after release. The initial jump is its own update.
+   if(!started&&held&&p.jumpFrame>0&&p.jumpFrame<NATIVE.holdFrames){
+    p.vy+=NATIVE.jump*NATIVE.holdFactor*(1-p.jumpFrame/NATIVE.holdFrames)*hz;p.jumpFrame++;
+   }else if(!started)p.jumpFrame=0;
+   if(p.grounded)p.forcedVx=0;
+   p.jump=held;p.vx=p.forcedVx||((input.right?1:0)-(input.left?1:0))*(p.walkSpeed||NATIVE.walk)*hz;
+   // Keep a grounded stack together, limited by every rider's available space.
+   const obstacles=terrain.concat(players.filter(q=>q!==p&&!riders.includes(q)));let dx=p.vx*h+(p.windDx||0);p.windDx=0;
+   for(const q of [p,...riders]){const trial={...q},allowed=moveX(trial,dx,obstacles.filter(b=>b.id!==q.id),s.map.width);if(Math.abs(allowed)<Math.abs(dx))dx=allowed;}
+   p.x+=dx;for(const q of riders)q.x+=dx;
+   const wall=terrain.find(b=>b.wallId&&horizontal({x:p.x-0.01,y:p.y,w:p.w+0.02,h:p.h},b)&&p.y<b.y+b.h&&p.y+p.h>b.y&&Math.abs(dx-p.vx*h)>.001);
+   if(wall){const contact=Motion.contactWall(s.motionState,wall.wallId,{vx:p.vx/hz,vy:p.vy/hz,face:p.vx>0?'left':'right'});if(contact.impulse){p.vx=contact.impulse.vx*hz;p.forcedVx=p.vx;p.vy=contact.impulse.vy*hz;p.grounded=false;p.supportId=null;p.jumpFrame=0;}}
+   p.vy=Math.min(NATIVE.terminal*hz,p.vy+NATIVE.gravity*hz);
+   moveY(p,p.vy*h,terrain.concat(players.filter(q=>q!==p)));
+   const top=terrain.find(b=>b.wallId&&b.id===p.supportId);
+   if(top){const contact=Motion.contactWall(s.motionState,top.wallId,{vx:p.vx/hz,vy:p.vy/hz,face:'top',playerCenterX:p.x+p.w/2,blockCenterX:top.x+top.w/2});if(contact.impulse){p.forcedVx=contact.impulse.vx*hz;p.vx=p.forcedVx;p.vy=contact.impulse.vy*hz;p.grounded=false;p.supportId=null;}}
+   const board=s.motionState.dashBoards.find(b=>overlap(p,b));
+   if(board&&p.lastDashBoardId!==board.id){const impulse=Motion.triggerDash(board);p.forcedVx=impulse.vx*hz;p.vx=p.forcedVx;p.vy=impulse.vy*hz;p.grounded=false;p.supportId=null;p.jumpFrame=0;}
+   p.lastDashBoardId=board?.id||null;
+  }
+  for(const box of Devices.solids(s.deviceState)){
+   const base=box.supportId&&carriedBefore.get(box.supportId);if(!base)continue;
+   const carrier=players.find(q=>q.id===box.supportId);if(!carrier)continue;
+   box.x=Math.max(0,Math.min(s.map.width-box.w,box.x+carrier.x-base.x));
+   box.y+=carrier.y-base.y;
+  }
+  const facts={switchContacts:[],springContacts:[]};
+  for(const p of players){
+   const upContactCount=players.filter(q=>q!==p&&q.grounded&&q.supportId===p.id).length;
+   for(const spring of s.map.springs)if(p.grounded&&horizontal(p,spring)&&Math.abs(p.y+p.h-spring.y)<0.01){
+    facts.springContacts.push({relayId:spring.id,actorId:p.id,layer:1,upContactCount,velocityX:p.vx/hz});
+   }
+   // Player collision is m_Layer 1 / m_PushBackTarget 3: PlayerComponent
+   // InitCollision passes 3 to ActorComponent.CreateCollision at 0x1816bdf4b
+   // (stored to m_PushBackTarget by Collision.initialize 0x181690b08) and writes
+   // `mov byte [rax+1],1` at 0x1816bdf87.
+   for(const button of s.map.switches)if(playerPressesSwitch(p,button)){
+    facts.switchContacts.push({relayId:button.id,actorId:p.id,layer:1,attributeFlags:3});
+   }
+  }
+  // PushBox collision is m_Layer 2 / m_PushBackTarget 3 (argument 3 at
+  // 0x1816db625, `mov word [rax],0x202` at 0x1816db651) - inside the accepted set, so a
+  // box resting against a button holds it down in the original too. None of the
+  // nine already-connected rounds contains a PushBox and a Switch at once, so
+  // this cannot move them.
+  for(const box of Devices.solids(s.deviceState))for(const button of s.map.switches){
+   if(switchSensorOverlap(box,button))facts.switchContacts.push({relayId:button.id,actorId:box.id,layer:2,attributeFlags:3});
+  }
+  const speedContacts=[];
+  for(const sw of SpeedSwitches.displays(s.speedSwitchState).switches){const box={x:sw.x+sw.rect.x,y:sw.y+sw.rect.y,w:sw.rect.w,h:sw.rect.h,direction:0};
+   for(const p of players)if(!p.exit&&!p.dead&&playerPressesSwitch(p,box))speedContacts.push({switchId:sw.id,actorId:p.id,layer:1,attributeFlags:3});}
+  SpeedSwitches.afterStep(s.speedSwitchState,{switchContacts:speedContacts});
+  const windContacts=[];
+  for(const v of Winds.volumes(s.windState))for(const p of players)if(!p.exit&&!p.dead&&overlap(p,v))windContacts.push({windId:v.windId,actorId:p.id});
+  const relay=Relay.step(s.relayState,h,facts);
+  Winds.afterStep(s.windState,{events:relay.events,windContacts});
+  // The coop count-up machine takes only its own players' switch events and
+  // answers with an event 1 to every Key, so it runs before the gate layer
+  // recomputes whether the key can be touched. Its other outgoing event is the
+  // lost-round broadcast 47, which no other module in scope reacts to.
+  const countUpResult=CountUps.beforeStep(s.countUpState,{dt:h,events:relay.events});
+  const landmineResult=Landmines.beforeStep(s.landmineState,{dt:h,players,switchContacts:facts.switchContacts});
+  s.landmines=Landmines.displays(s.landmineState);
+  const gateResult=Gates.afterStep(s.gateState,{relayState:s.relayState,events:[...relay.events,...countUpResult.events,...landmineResult.events],keyTaken:s.keyTaken});s.keyActive=gateResult.keyActive;
+  s.countUps=CountUps.displays(s.countUpState);
+  s.lastContacts=facts;s.lastRelayEvents=relay.events;s.lastImpulses=relay.impulses;
+  for(const impulse of relay.impulses){
+   const p=players.find(q=>q.id===impulse.actorId);if(!p)continue;
+   p.vx=impulse.velocity.x*hz;p.vy=impulse.velocity.y*hz;p.grounded=false;p.ground=false;p.supportId=null;p.jumpFrame=0;
+  }
+  for(const button of s.map.switches){const r=s.relayState.relays.find(r=>r.id===button.id);button.pressed=r.pressed;button.remaining=r.remaining||0;}
+  for(const spring of s.map.springs){const r=s.relayState.relays.find(r=>r.id===spring.id);spring.phase=r.phase;spring.visible=r.visible;}
+  const deviceResult=Devices.afterStep(s.deviceState,{players,platforms:baseSolids(s),dt:h,nativeTickRate:hz,width:s.map.width,height:s.map.height});
+  SwitchTimers.afterStep(s.switchTimerState,{events:[...relay.events,...deviceResult.events]});
+  const bridgeResult=Bridges.afterStep(s.bridgeState,{players,platforms:s.map.platforms,width:s.map.width,height:s.map.height,events:[...relay.events,...deviceResult.events]});
+  const blinkThunderResult=BlinkThunders.afterStep(s.blinkThunderState,{players,platforms:s.map.platforms,width:s.map.width,height:s.map.height});
+  const enemyResult=Enemies.afterStep(s.enemyState,{players,dt:h});
+  const thornCeilingResult=ThornCeilings.afterStep(s.thornCeilingState,{players,platforms:baseSolids(s),dt:h,nativeTickRate:hz,width:s.map.width,height:s.map.height});
+  for(const e of thornCeilingResult.events)if(e.event===61){Gates.signal(s.gateState,e);Devices.signal(s.deviceState,e);BlinkThunders.signal(s.blinkThunderState,e);Bridges.signal(s.bridgeState,e);}
+  s.map.hazards=[...bridgeResult.hazards,...blinkThunderResult.hazards,...enemyResult.hazards,...thornCeilingResult.hazards];
+  // DamageRect event 43: the player death path, which immortality survives
+  // (playerEvent43Outcome, Player.OnRecvEvent 0x1816c14a2..16e1).
+  const damageDeaths=(linePathResult.events||[]).filter(e=>e.eventType===43)
+   .map(e=>players.find(p=>p.id===e.targetId)).filter(p=>p&&LinePaths.playerEvent43Outcome({life:1,immortal:!!p.immortal})==='dead').map(p=>p.id);
+  if(damageDeaths.length){s.status='dead';s.deaths++;s.failure={playerId:damageDeaths[0],reason:'위험 구역에 닿았어요'};return;}
+  const poleDeaths=poleContacts(s,players);
+  if(poleDeaths.length){s.status='dead';s.deaths++;s.failure={playerId:poleDeaths[0],reason:'가시에 찔렸어요'};return;}
+  if(landmineResult.deadPlayerIds.length){s.status='dead';s.deaths++;s.failure={playerId:landmineResult.deadPlayerIds[0],reason:'지뢰를 밟았어요'};return;}
+  if(enemyResult.deadPlayerIds.length){s.status='dead';s.deaths++;s.failure={playerId:enemyResult.deadPlayerIds[0],reason:'적에게 당했어요'};return;}
+  if(thornCeilingResult.deadPlayerIds.length){s.status='dead';s.deaths++;s.failure={playerId:thornCeilingResult.deadPlayerIds[0],reason:'가시에 닿았어요'};return;}
+  if(blinkThunderResult.deadPlayerIds.length){s.status='dead';s.deaths++;s.failure={playerId:blinkThunderResult.deadPlayerIds[0],reason:'전기에 닿았어요'};return;}
+  // Native OnPost1 0x18169e260 applies a pending warp before CheckOutMap, so
+  // every warp resolves ahead of the out-of-map test below.
+  WarpInit.afterStep(s.warpInitState,{players,boxes:Devices.solids(s.deviceState),dt:h,nativeTickRate:hz});
+  if(bridgeResult.deadPlayerIds.length){s.status='dead';s.deaths++;s.failure={playerId:bridgeResult.deadPlayerIds[0],reason:'전기에 닿았어요'};return;}
+  if(deviceResult.deadPlayerIds.length){s.status='dead';s.deaths++;s.failure={playerId:deviceResult.deadPlayerIds[0],reason:'가시에 닿았어요'};return;}
+  for(const p of players){
+   for(const warp of s.map.warps||[])if(overlap(p,warp)){
+    const ordinal=warp.counter;
+    p.x=warp.destination.x+warp.ordinalOffset.x*ordinal-16;
+    p.y=warp.destination.y+warp.ordinalOffset.y*ordinal-47;
+    p.vx=0;p.vy=0;p.grounded=false;p.ground=false;p.supportId=null;p.jumpFrame=0;
+    warp.counter=(ordinal+1)%s.players.length;
+    for(const q of players)if(q.supportId===p.id){q.supportId=null;q.grounded=false;q.ground=false;}
+    break;
+   }
+   // ActorComponent.OnPost1 0x18169e260 applies warpProc 0x18169e460 and only
+   // then runs CheckOutMap 0x1816a1cb0, which additionally early-outs while a
+   // warp is pending. A warped player is therefore never out of the map.
+   if(p.y>s.map.killY){s.status='dead';s.failure={playerId:p.id,reason:'fall'};s.deaths++;return;}
+   if(!s.keyTaken&&s.keyActive&&s.map.key&&overlap(p,s.map.key)){s.keyTaken=true;s.map.key.taken=true;}
+   if(Actor.canEnterGoal({open:s.keyTaken,overlapping:overlap(p,s.map.exit),upPressed:!p.inputLocked&&!!inputs[p.id]?.up,cleared:p.exit,playerState:p.playerState})){
+    p.exit=true;p.visible=false;p.playerState=5;p.vx=0;p.vy=0;p.grounded=false;p.ground=false;p.supportId=null;
+    for(const q of players)if(q.supportId===p.id){q.supportId=null;q.grounded=false;q.ground=false;}
+   }
+  }
+  if(s.players.every(p=>p.exit))s.status='clear';
+ }
+ function step(s,inputs={},dt=1/60){
+  if(!Number.isFinite(dt)||dt<0||dt>10)throw new Error('dt must be 0..10 seconds');
+  if(s.status!=='play')return s;
+  const h=1/s.physics.nativeTickRate;s.accumulator+=dt;
+  while(s.accumulator+1e-10>=h&&s.status==='play'){tick(s,inputs,h);s.accumulator-=h;s.elapsed+=h;s.ticks++;}
+  return s;
+ }
+ return {compile,create,step,solids,overlap,NATIVE};
+});

@@ -1,0 +1,1019 @@
+{
+  "schemaVersion": 1,
+  "status": "frozen — lossless raw Actor codec, runtime synchronization not integrated",
+  "module": "source-native-actor-codec.js",
+  "nativeCodeExecuted": false,
+  "componentId": 20,
+  "size": 336,
+  "mappedFields": [
+    {
+      "name": "jumpEventType",
+      "offset": 0,
+      "kind": "u8",
+      "native": "m_JumpEventType",
+      "size": 1
+    },
+    {
+      "name": "playingAnimationId",
+      "offset": 1,
+      "kind": "u8",
+      "native": "m_PlayingAnimationId",
+      "size": 1
+    },
+    {
+      "name": "requestAnimationId",
+      "offset": 2,
+      "kind": "u8",
+      "native": "m_RequestAnimationId",
+      "size": 1
+    },
+    {
+      "name": "sortingOrder",
+      "offset": 4,
+      "kind": "i16",
+      "native": "m_SortingOrder",
+      "size": 2
+    },
+    {
+      "name": "actorType",
+      "offset": 6,
+      "kind": "u16",
+      "native": "m_ActorType",
+      "size": 2
+    },
+    {
+      "name": "collisionHolderListHandle",
+      "offset": 8,
+      "kind": "i32",
+      "native": "m_CollisionHolderListPtr",
+      "size": 4
+    },
+    {
+      "name": "flags",
+      "offset": 12,
+      "kind": "u32",
+      "native": "m_Flags",
+      "size": 4
+    },
+    {
+      "name": "disableAnimationEntity",
+      "offset": 16,
+      "kind": "ref",
+      "native": "m_DisableAnimationEntity",
+      "size": 8
+    },
+    {
+      "name": "disableDisplayEntity",
+      "offset": 24,
+      "kind": "ref",
+      "native": "m_DisableDisplayEntity",
+      "size": 8
+    },
+    {
+      "name": "entityId",
+      "offset": 32,
+      "kind": "ref",
+      "native": "m_EntityRef",
+      "size": 8
+    },
+    {
+      "name": "inactiveCollisionEntity",
+      "offset": 40,
+      "kind": "ref",
+      "native": "m_InactiveCollisionEntity",
+      "size": 8
+    },
+    {
+      "name": "inactiveEntity",
+      "offset": 48,
+      "kind": "ref",
+      "native": "m_InactiveEntity",
+      "size": 8
+    },
+    {
+      "name": "invisibleEntity",
+      "offset": 56,
+      "kind": "ref",
+      "native": "m_InvisibleEntity",
+      "size": 8
+    },
+    {
+      "name": "pauseEntity",
+      "offset": 64,
+      "kind": "ref",
+      "native": "m_PauseEntity",
+      "size": 8
+    },
+    {
+      "name": "angleRaw",
+      "offset": 72,
+      "kind": "i64",
+      "native": "m_Angle",
+      "size": 8
+    },
+    {
+      "name": "baseScaleRaw",
+      "offset": 80,
+      "kind": "i64",
+      "native": "m_BaseScale",
+      "size": 8
+    },
+    {
+      "name": "weightRaw",
+      "offset": 88,
+      "kind": "i64",
+      "native": "m_Weight",
+      "size": 8
+    },
+    {
+      "name": "accelerationRaw",
+      "offset": 96,
+      "kind": "vec",
+      "native": "m_Accel",
+      "size": 16
+    },
+    {
+      "name": "collisionVelocityRaw",
+      "offset": 112,
+      "kind": "vec",
+      "native": "m_CollisionVelo",
+      "size": 16
+    },
+    {
+      "name": "initPositionRaw",
+      "offset": 128,
+      "kind": "vec",
+      "native": "m_InitPos",
+      "size": 16
+    },
+    {
+      "name": "jumpVelocityRaw",
+      "offset": 144,
+      "kind": "vec",
+      "native": "m_JumpVelo",
+      "size": 16
+    },
+    {
+      "name": "offsetDrawPositionRaw",
+      "offset": 160,
+      "kind": "vec",
+      "native": "m_OffsetDrawPos",
+      "size": 16
+    },
+    {
+      "name": "positionRaw",
+      "offset": 176,
+      "kind": "vec",
+      "native": "m_Pos",
+      "size": 16
+    },
+    {
+      "name": "prePositionRaw",
+      "offset": 192,
+      "kind": "vec",
+      "native": "m_PrePos",
+      "size": 16
+    },
+    {
+      "name": "preVelocityRaw",
+      "offset": 208,
+      "kind": "vec",
+      "native": "m_PreVelo",
+      "size": 16
+    },
+    {
+      "name": "scaleXRaw",
+      "offset": 224,
+      "kind": "i64",
+      "native": "m_Scale",
+      "size": 8
+    },
+    {
+      "name": "scaleYRaw",
+      "offset": 232,
+      "kind": "i64",
+      "native": "m_Scale",
+      "size": 8
+    },
+    {
+      "name": "velocityRaw",
+      "offset": 240,
+      "kind": "vec",
+      "native": "m_Velo",
+      "size": 16
+    },
+    {
+      "name": "warpPositionRaw",
+      "offset": 256,
+      "kind": "vec",
+      "native": "m_WarpPos",
+      "size": 16
+    },
+    {
+      "name": "warpVelocityRaw",
+      "offset": 272,
+      "kind": "vec",
+      "native": "m_WarpVelo",
+      "size": 16
+    },
+    {
+      "name": "windRaw",
+      "offset": 288,
+      "kind": "vec",
+      "native": "m_Wind",
+      "size": 16
+    },
+    {
+      "name": "nameQStringBytes",
+      "offset": 304,
+      "kind": "bytes32",
+      "native": "m_Name",
+      "size": 32
+    }
+  ],
+  "aliases": {
+    "Velo": "velocityRaw",
+    "WorldVelo": "velocityRaw",
+    "worldVelocityRaw": "velocityRaw",
+    "Accel": "accelerationRaw",
+    "MoveVelo": "accelerationRaw",
+    "moveVelocityRaw": "accelerationRaw",
+    "Pos": "positionRaw",
+    "PrePos": "prePositionRaw",
+    "PreVelo": "preVelocityRaw"
+  },
+  "dllSha256": "dc554e2008b23c7d52f0c063886ea19acf20369ac698c77be7c67cfb516edd71",
+  "metadataSha256": "a2b7b05e180d948652be00322bc11dba5f5942c2df2803f9a4e6ebbbdca4a7c1",
+  "metadataRegistration": "0x182ca8eb0",
+  "fieldOffsetTableVA": "0x1830f9df0",
+  "metadataFieldEvidence": [
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_Accel",
+      "offset": 112,
+      "typeIndex": 19351,
+      "unboxedOffset": 96,
+      "fieldOffsetEntryVA": "0x182809780",
+      "metadataFieldIndex": 16936,
+      "runtimeType": {
+        "name": "FPVector2",
+        "typeIndex": 12975,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa0a0",
+      "runtimeTypeBytes": "af320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_ActorType",
+      "offset": 22,
+      "typeIndex": 28513,
+      "unboxedOffset": 6,
+      "fieldOffsetEntryVA": "0x182809784",
+      "metadataFieldIndex": 16937,
+      "runtimeType": {
+        "kind": 7,
+        "data": "0x148"
+      },
+      "runtimeTypePointerVA": "0x1831f5660",
+      "runtimeTypeBytes": "48010000000000000600078000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_Angle",
+      "offset": 88,
+      "typeIndex": 19318,
+      "unboxedOffset": 72,
+      "fieldOffsetEntryVA": "0x182809788",
+      "metadataFieldIndex": 16938,
+      "runtimeType": {
+        "name": "FP",
+        "typeIndex": 12977,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa310",
+      "runtimeTypeBytes": "b1320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_BaseScale",
+      "offset": 96,
+      "typeIndex": 19318,
+      "unboxedOffset": 80,
+      "fieldOffsetEntryVA": "0x18280978c",
+      "metadataFieldIndex": 16939,
+      "runtimeType": {
+        "name": "FP",
+        "typeIndex": 12977,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa310",
+      "runtimeTypeBytes": "b1320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_CollisionHolderListPtr",
+      "offset": 24,
+      "typeIndex": 24456,
+      "unboxedOffset": 8,
+      "fieldOffsetEntryVA": "0x182809790",
+      "metadataFieldIndex": 16940,
+      "runtimeType": {
+        "name": "Ptr",
+        "typeIndex": 8195,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831f79b0",
+      "runtimeTypeBytes": "03200000000000000100118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_CollisionVelo",
+      "offset": 128,
+      "typeIndex": 19351,
+      "unboxedOffset": 112,
+      "fieldOffsetEntryVA": "0x182809794",
+      "metadataFieldIndex": 16941,
+      "runtimeType": {
+        "name": "FPVector2",
+        "typeIndex": 12975,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa0a0",
+      "runtimeTypeBytes": "af320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_DisableAnimationEntity",
+      "offset": 32,
+      "typeIndex": 18961,
+      "unboxedOffset": 16,
+      "fieldOffsetEntryVA": "0x182809798",
+      "metadataFieldIndex": 16942,
+      "runtimeType": {
+        "name": "EntityRef",
+        "typeIndex": 8317,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa560",
+      "runtimeTypeBytes": "7d200000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_DisableDisplayEntity",
+      "offset": 40,
+      "typeIndex": 18961,
+      "unboxedOffset": 24,
+      "fieldOffsetEntryVA": "0x18280979c",
+      "metadataFieldIndex": 16943,
+      "runtimeType": {
+        "name": "EntityRef",
+        "typeIndex": 8317,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa560",
+      "runtimeTypeBytes": "7d200000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_EntityRef",
+      "offset": 48,
+      "typeIndex": 18961,
+      "unboxedOffset": 32,
+      "fieldOffsetEntryVA": "0x1828097a0",
+      "metadataFieldIndex": 16944,
+      "runtimeType": {
+        "name": "EntityRef",
+        "typeIndex": 8317,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa560",
+      "runtimeTypeBytes": "7d200000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_Flags",
+      "offset": 28,
+      "typeIndex": 28530,
+      "unboxedOffset": 12,
+      "fieldOffsetEntryVA": "0x1828097a4",
+      "metadataFieldIndex": 16945,
+      "runtimeType": {
+        "kind": 9,
+        "data": "0x149"
+      },
+      "runtimeTypePointerVA": "0x1831f5550",
+      "runtimeTypeBytes": "49010000000000000600098000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_InactiveCollisionEntity",
+      "offset": 56,
+      "typeIndex": 18961,
+      "unboxedOffset": 40,
+      "fieldOffsetEntryVA": "0x1828097a8",
+      "metadataFieldIndex": 16946,
+      "runtimeType": {
+        "name": "EntityRef",
+        "typeIndex": 8317,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa560",
+      "runtimeTypeBytes": "7d200000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_InactiveEntity",
+      "offset": 64,
+      "typeIndex": 18961,
+      "unboxedOffset": 48,
+      "fieldOffsetEntryVA": "0x1828097ac",
+      "metadataFieldIndex": 16947,
+      "runtimeType": {
+        "name": "EntityRef",
+        "typeIndex": 8317,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa560",
+      "runtimeTypeBytes": "7d200000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_InitPos",
+      "offset": 144,
+      "typeIndex": 19351,
+      "unboxedOffset": 128,
+      "fieldOffsetEntryVA": "0x1828097b0",
+      "metadataFieldIndex": 16948,
+      "runtimeType": {
+        "name": "FPVector2",
+        "typeIndex": 12975,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa0a0",
+      "runtimeTypeBytes": "af320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_InvisibleEntity",
+      "offset": 72,
+      "typeIndex": 18961,
+      "unboxedOffset": 56,
+      "fieldOffsetEntryVA": "0x1828097b4",
+      "metadataFieldIndex": 16949,
+      "runtimeType": {
+        "name": "EntityRef",
+        "typeIndex": 8317,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa560",
+      "runtimeTypeBytes": "7d200000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_JumpEventType",
+      "offset": 16,
+      "typeIndex": 15580,
+      "unboxedOffset": 0,
+      "fieldOffsetEntryVA": "0x1828097b8",
+      "metadataFieldIndex": 16950,
+      "runtimeType": {
+        "kind": 5,
+        "data": "0xc0"
+      },
+      "runtimeTypePointerVA": "0x1831fbb10",
+      "runtimeTypeBytes": "c0000000000000000600058000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_JumpVelo",
+      "offset": 160,
+      "typeIndex": 19351,
+      "unboxedOffset": 144,
+      "fieldOffsetEntryVA": "0x1828097bc",
+      "metadataFieldIndex": 16951,
+      "runtimeType": {
+        "name": "FPVector2",
+        "typeIndex": 12975,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa0a0",
+      "runtimeTypeBytes": "af320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_Name",
+      "offset": 320,
+      "typeIndex": 24616,
+      "unboxedOffset": 304,
+      "fieldOffsetEntryVA": "0x1828097c0",
+      "metadataFieldIndex": 16952,
+      "runtimeType": {
+        "name": "QStringUtf8_32",
+        "typeIndex": 4427,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x18327e200",
+      "runtimeTypeBytes": "4b110000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_OffsetDrawPos",
+      "offset": 176,
+      "typeIndex": 19351,
+      "unboxedOffset": 160,
+      "fieldOffsetEntryVA": "0x1828097c4",
+      "metadataFieldIndex": 16953,
+      "runtimeType": {
+        "name": "FPVector2",
+        "typeIndex": 12975,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa0a0",
+      "runtimeTypeBytes": "af320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_PauseEntity",
+      "offset": 80,
+      "typeIndex": 18961,
+      "unboxedOffset": 64,
+      "fieldOffsetEntryVA": "0x1828097c8",
+      "metadataFieldIndex": 16954,
+      "runtimeType": {
+        "name": "EntityRef",
+        "typeIndex": 8317,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa560",
+      "runtimeTypeBytes": "7d200000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_PlayingAnimationId",
+      "offset": 17,
+      "typeIndex": 15580,
+      "unboxedOffset": 1,
+      "fieldOffsetEntryVA": "0x1828097cc",
+      "metadataFieldIndex": 16955,
+      "runtimeType": {
+        "kind": 5,
+        "data": "0xc0"
+      },
+      "runtimeTypePointerVA": "0x1831fbb10",
+      "runtimeTypeBytes": "c0000000000000000600058000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_Pos",
+      "offset": 192,
+      "typeIndex": 19351,
+      "unboxedOffset": 176,
+      "fieldOffsetEntryVA": "0x1828097d0",
+      "metadataFieldIndex": 16956,
+      "runtimeType": {
+        "name": "FPVector2",
+        "typeIndex": 12975,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa0a0",
+      "runtimeTypeBytes": "af320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_PrePos",
+      "offset": 208,
+      "typeIndex": 19351,
+      "unboxedOffset": 192,
+      "fieldOffsetEntryVA": "0x1828097d4",
+      "metadataFieldIndex": 16957,
+      "runtimeType": {
+        "name": "FPVector2",
+        "typeIndex": 12975,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa0a0",
+      "runtimeTypeBytes": "af320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_PreVelo",
+      "offset": 224,
+      "typeIndex": 19351,
+      "unboxedOffset": 208,
+      "fieldOffsetEntryVA": "0x1828097d8",
+      "metadataFieldIndex": 16958,
+      "runtimeType": {
+        "name": "FPVector2",
+        "typeIndex": 12975,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa0a0",
+      "runtimeTypeBytes": "af320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_RequestAnimationId",
+      "offset": 18,
+      "typeIndex": 15580,
+      "unboxedOffset": 2,
+      "fieldOffsetEntryVA": "0x1828097dc",
+      "metadataFieldIndex": 16959,
+      "runtimeType": {
+        "kind": 5,
+        "data": "0xc0"
+      },
+      "runtimeTypePointerVA": "0x1831fbb10",
+      "runtimeTypeBytes": "c0000000000000000600058000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_Scale",
+      "offset": 240,
+      "typeIndex": 19351,
+      "unboxedOffset": 224,
+      "fieldOffsetEntryVA": "0x1828097e0",
+      "metadataFieldIndex": 16960,
+      "runtimeType": {
+        "name": "FPVector2",
+        "typeIndex": 12975,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa0a0",
+      "runtimeTypeBytes": "af320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_SortingOrder",
+      "offset": 20,
+      "typeIndex": 21474,
+      "unboxedOffset": 4,
+      "fieldOffsetEntryVA": "0x1828097e4",
+      "metadataFieldIndex": 16961,
+      "runtimeType": {
+        "kind": 6,
+        "data": "0xfe"
+      },
+      "runtimeTypePointerVA": "0x1831f9570",
+      "runtimeTypeBytes": "fe000000000000000600068000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_Velo",
+      "offset": 256,
+      "typeIndex": 19351,
+      "unboxedOffset": 240,
+      "fieldOffsetEntryVA": "0x1828097e8",
+      "metadataFieldIndex": 16962,
+      "runtimeType": {
+        "name": "FPVector2",
+        "typeIndex": 12975,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa0a0",
+      "runtimeTypeBytes": "af320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_WarpPos",
+      "offset": 272,
+      "typeIndex": 19351,
+      "unboxedOffset": 256,
+      "fieldOffsetEntryVA": "0x1828097ec",
+      "metadataFieldIndex": 16963,
+      "runtimeType": {
+        "name": "FPVector2",
+        "typeIndex": 12975,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa0a0",
+      "runtimeTypeBytes": "af320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_WarpVelo",
+      "offset": 288,
+      "typeIndex": 19351,
+      "unboxedOffset": 272,
+      "fieldOffsetEntryVA": "0x1828097f0",
+      "metadataFieldIndex": 16964,
+      "runtimeType": {
+        "name": "FPVector2",
+        "typeIndex": 12975,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa0a0",
+      "runtimeTypeBytes": "af320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_Weight",
+      "offset": 104,
+      "typeIndex": 19318,
+      "unboxedOffset": 88,
+      "fieldOffsetEntryVA": "0x1828097f4",
+      "metadataFieldIndex": 16965,
+      "runtimeType": {
+        "name": "FP",
+        "typeIndex": 12977,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa310",
+      "runtimeTypeBytes": "b1320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4490,
+      "owner": "ActorComponent",
+      "name": "m_Wind",
+      "offset": 304,
+      "typeIndex": 19351,
+      "unboxedOffset": 288,
+      "fieldOffsetEntryVA": "0x1828097f8",
+      "metadataFieldIndex": 16966,
+      "runtimeType": {
+        "name": "FPVector2",
+        "typeIndex": 12975,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa0a0",
+      "runtimeTypeBytes": "af320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 8195,
+      "owner": "Ptr",
+      "name": "Offset",
+      "offset": 16,
+      "typeIndex": 21489,
+      "unboxedOffset": 0,
+      "fieldOffsetEntryVA": "0x182814394",
+      "metadataFieldIndex": 38381,
+      "runtimeType": {
+        "kind": 8,
+        "data": "0xff"
+      },
+      "runtimeTypePointerVA": "0x1831f9480",
+      "runtimeTypeBytes": "ff000000000000000600088000000000"
+    },
+    {
+      "ownerTypeIndex": 8317,
+      "owner": "EntityRef",
+      "name": "Index",
+      "offset": 16,
+      "typeIndex": 21489,
+      "unboxedOffset": 0,
+      "fieldOffsetEntryVA": "0x182813bf4",
+      "metadataFieldIndex": 38796,
+      "runtimeType": {
+        "kind": 8,
+        "data": "0xff"
+      },
+      "runtimeTypePointerVA": "0x1831f9480",
+      "runtimeTypeBytes": "ff000000000000000600088000000000"
+    },
+    {
+      "ownerTypeIndex": 8317,
+      "owner": "EntityRef",
+      "name": "Version",
+      "offset": 20,
+      "typeIndex": 21489,
+      "unboxedOffset": 4,
+      "fieldOffsetEntryVA": "0x182813bf8",
+      "metadataFieldIndex": 38797,
+      "runtimeType": {
+        "kind": 8,
+        "data": "0xff"
+      },
+      "runtimeTypePointerVA": "0x1831f9480",
+      "runtimeTypeBytes": "ff000000000000000600088000000000"
+    },
+    {
+      "ownerTypeIndex": 8317,
+      "owner": "EntityRef",
+      "name": "Raw",
+      "offset": 16,
+      "typeIndex": 28548,
+      "unboxedOffset": 0,
+      "fieldOffsetEntryVA": "0x182813bfc",
+      "metadataFieldIndex": 38798,
+      "runtimeType": {
+        "kind": 11,
+        "data": "0x14a"
+      },
+      "runtimeTypePointerVA": "0x1831f5440",
+      "runtimeTypeBytes": "4a0100000000000003000b8000000000"
+    },
+    {
+      "ownerTypeIndex": 12977,
+      "owner": "FP",
+      "name": "RawValue",
+      "offset": 16,
+      "typeIndex": 21520,
+      "unboxedOffset": 0,
+      "fieldOffsetEntryVA": "0x18282f980",
+      "metadataFieldIndex": 58111,
+      "runtimeType": {
+        "kind": 10,
+        "data": "0x100"
+      },
+      "runtimeTypePointerVA": "0x1831f92a0",
+      "runtimeTypeBytes": "000100000000000006000a8000000000"
+    },
+    {
+      "ownerTypeIndex": 12975,
+      "owner": "FPVector2",
+      "name": "X",
+      "offset": 16,
+      "typeIndex": 19318,
+      "unboxedOffset": 0,
+      "fieldOffsetEntryVA": "0x18282f944",
+      "metadataFieldIndex": 58095,
+      "runtimeType": {
+        "name": "FP",
+        "typeIndex": 12977,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa310",
+      "runtimeTypeBytes": "b1320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 12975,
+      "owner": "FPVector2",
+      "name": "Y",
+      "offset": 24,
+      "typeIndex": 19318,
+      "unboxedOffset": 8,
+      "fieldOffsetEntryVA": "0x18282f948",
+      "metadataFieldIndex": 58096,
+      "runtimeType": {
+        "name": "FP",
+        "typeIndex": 12977,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x1831fa310",
+      "runtimeTypeBytes": "b1320000000000000600118000000000"
+    },
+    {
+      "ownerTypeIndex": 4427,
+      "owner": "QStringUtf8_32",
+      "name": "ByteCount",
+      "offset": 16,
+      "typeIndex": 28513,
+      "unboxedOffset": 0,
+      "fieldOffsetEntryVA": "0x182809de0",
+      "metadataFieldIndex": 16629,
+      "runtimeType": {
+        "kind": 7,
+        "data": "0x148"
+      },
+      "runtimeTypePointerVA": "0x1831f5660",
+      "runtimeTypeBytes": "48010000000000000600078000000000"
+    },
+    {
+      "ownerTypeIndex": 4427,
+      "owner": "QStringUtf8_32",
+      "name": "Bytes",
+      "offset": 18,
+      "typeIndex": 34309,
+      "unboxedOffset": 2,
+      "fieldOffsetEntryVA": "0x182809de4",
+      "metadataFieldIndex": 16630,
+      "runtimeType": {
+        "name": "<Bytes>e__FixedBuffer",
+        "typeIndex": 4426,
+        "kind": 17
+      },
+      "runtimeTypePointerVA": "0x183258990",
+      "runtimeTypeBytes": "4a110000000000000600118000000000"
+    }
+  ],
+  "nativeEvidence": [
+    {
+      "va": "0x18072ab26",
+      "bytes": "8918488b473848",
+      "meaning": "Actor numeric id assignment"
+    },
+    {
+      "va": "0x18072ab48",
+      "bytes": "c7400450010000",
+      "meaning": "Actor stride336"
+    },
+    {
+      "va": "0x1801f9d5e",
+      "bytes": "48895f20",
+      "meaning": "wrapper EntityRef after Set"
+    },
+    {
+      "va": "0x18169cc8e",
+      "bytes": "488947200f57c00fb743184533c066894706",
+      "meaning": "Initialize EntityRef and ushort actorType"
+    },
+    {
+      "va": "0x18169ccbd",
+      "bytes": "0f1187300100000f118f40010000",
+      "meaning": "Initialize QString full32 copy"
+    },
+    {
+      "va": "0x18169cd02",
+      "bytes": "488947500f1187e000000048c7475800000100",
+      "meaning": "Initialize BaseScale Scale Weight"
+    },
+    {
+      "va": "0x18169cdc5",
+      "bytes": "895f084c8d5c24708b470c498b5b100fbae80e498b731889470c49",
+      "meaning": "holder signed32 handle and Actor flags bit14"
+    },
+    {
+      "va": "0x18169e0b0",
+      "bytes": "4883ec280f57c00f1181a00000000f1081b00000000f1181c00000000f1081f00000000f1181d00000004885d2741a807a1800740f0fb6410284c07407884101c64102004883c428c3e8e2c4c8fecccc",
+      "meaning": "OnUpdate snapshots distinct Pos/Pre and Velo/PreVelo"
+    }
+  ],
+  "unknownRanges": [
+    {
+      "offset": 3,
+      "bytes": 1,
+      "meaning": "padding; preserved from input baseline"
+    }
+  ],
+  "verification": {
+    "dedicated": {
+      "tests": 18,
+      "passed": 18,
+      "failed": 0
+    },
+    "full": {
+      "tests": 2220,
+      "passed": 2220,
+      "failed": 0
+    },
+    "commands": [
+      "node --test source-migration/source-native-actor-codec.test.cjs",
+      "node --test source-migration/*.test.cjs"
+    ],
+    "evidence": "Actual PE instruction bytes, metadata field records/runtime types/native fieldOffset entries, independent manual raw byte fixtures, arbitrary336-byte roundtrips and existing PoolStorage/ActorAdd/ActorInitialization/Motion crosschecks.",
+    "originalCodeExecuted": false
+  },
+  "api": {
+    "decode": "decode(rawHex336) -> mapped canonical field values; signed64 safe Number else canonical decimal string; raw ref0=null",
+    "patch": "patch(rawHex336,partialCanonicalChanges) -> new rawHex336; copies baseline and changes selected known fields only; vector patch may select xRaw/yRaw independently",
+    "patchFlags": "patchFlags(rawHex336,{setMask:uint32,clearMask:uint32}) -> new raw with Actor flag word only; rejects overlapping set/clear, preserves unknown bits",
+    "normalizeAliases": "normalizeAliases(legacyPatch) -> one canonical patch; duplicate target authorities rejected even if equal",
+    "toProjection": "toProjection(rawHex336,{collisionHolders:actualHeapSidecar,...otherUnmappedSidecars}) -> existing safe-number canonical Actor; refuses unsafe FP, bad QString count and duplicate field authorities",
+    "patchProjection": "patchProjection(rawHex336,projection,{fields?:uniqueMappedNames}) -> new raw; default selects ALL mapped fields, sidecars not serialized, aliases refused"
+  },
+  "representations": {
+    "raw": "Exact336 bytes as lowercase hex, little endian; never generated from fields without input baseline",
+    "small": "jump/playing/request uint8; sorting signed16; actorType uint16; holder Ptr.Offset signed32; flags uint32",
+    "FP": "Signed64 raw 16.16 integer; no float conversion, multiplication or truncation. All64 bits preserved; unsafe values use decimal strings in decode but cannot enter existing numeric projection.",
+    "EntityRef": "Raw uint64 canonical decimal string, zero decoded null. Codec preserves all bits without requiring issued/live refs; allocator validity remains caller responsibility.",
+    "QString": "All32 bytes at304 including ushortByteCount+30 payload/tail bytes. No text re-encoding or tail normalization. decode/patch even preserve corrupt count/malformed UTF8; toProjection refuses count>30 and does not decode UTF8.",
+    "heap": "collisionHolderListHandle is input signed32 Ptr.Offset at8. collisionHolders is external heap sidecar; no heap pointer/address or contents synthesized."
+  },
+  "authorityContract": [
+    "At storage boundary raw payload is authority; decode once into canonical Actor for one logic transaction, run existing helpers, patch the same original raw baseline once, then PoolStorage.setBytes. Lead owns atomic adoption and stale-baseline/concurrent write checks.",
+    "No live duplicate alias fields/accessors created. Explicit normalizeAliases converts supported legacy names and rejects duplicate targets; patch accepts canonical names only. Pos(+b0) and PrePos(+c0), Velo(+f0) and PreVelo(+d0), Accel(+60) remain distinct.",
+    "Actor.flags is only uint32 word at0xc. Player.flags(+0x20 within its separate component), Collision.flags and equipment/event flag spaces are not mapped. Flat xRaw/yRaw aliases and actorType/Player cached ordinals are not interchangeable.",
+    "All unselected raw bytes preserved, including padding3. Full projection patch requires every mapped field and does not infer defaults; verified native default Add may explicitly supply zero336 baseline.",
+    "Actor Add implicit zero raw is seen by OnAdded before wrapper EntityRef+20 write; common Initialize later writes entity/type/name/scales/weight/holderhandle/Actor bit14. Codec performs no Add/Initialize effects itself."
+  ],
+  "unresolved": [
+    "Actual heap handle/list allocation, pointer validity and heap contents remain explicit host evidence; codec never allocates or dereferences them.",
+    "Unsafe signed64 FP values roundtrip losslessly through decode/patch but existing safe-number simulation helpers cannot process them; toProjection explicitly refuses.",
+    "Runtime/projection↔raw synchronization, masks/callback dispatch, stale baseline conflict detection and factory/bridge integration remain lead scope.",
+    "QString malformed UTF8 is preserved but no unknown fallback policy is implemented; text operations stay existing QString helper responsibility.",
+    "Layout is tied to installed DLL/metadata hashes in report. No other version/Actor layout or unknown projection fields are inferred."
+  ],
+  "corrections": [
+    "No prior frozen helper modified. Mapping explicitly resolves capture worldVelocityRaw=>native Velo and moveVelocityRaw=>native Accel, as documented by frozen bridge/schema audit; no alias is given independent storage authority."
+  ]
+}

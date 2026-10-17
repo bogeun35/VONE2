@@ -1,0 +1,573 @@
+{
+  "schemaVersion": 1,
+  "devices": [
+    "PlayerWarpGun"
+  ],
+  "status": "partial_native_device_core_verified_host_actor_motion_query_event_integration_pending",
+  "settledOn": "2026-10-14",
+  "nativeCodeExecuted": false,
+  "owner": "보조 세션3",
+  "methods": [
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "GetHashCode",
+      "va": "0x1816d79b0",
+      "fileOffset": 23945648,
+      "token": "0x6000e71"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "Serialize",
+      "va": "0x1816d7a10",
+      "fileOffset": 23945744,
+      "token": "0x6000e72"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "SetEntityRef",
+      "va": "0x181507220",
+      "fileOffset": 22043168,
+      "token": "0x6000e73"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "Creator",
+      "va": "0x1816d7b70",
+      "fileOffset": 23946096,
+      "token": "0x6000e74"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "Initialize",
+      "va": "0x1816d7d30",
+      "fileOffset": 23946544,
+      "token": "0x6000e75"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "InitCollision",
+      "va": "0x1816d7d40",
+      "fileOffset": 23946560,
+      "token": "0x6000e76"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "InitPost",
+      "va": "0x1816d7e20",
+      "fileOffset": 23946784,
+      "token": "0x6000e77"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "OnStart",
+      "va": "0x180476130",
+      "fileOffset": 4671792,
+      "token": "0x6000e78"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "OnUpdate",
+      "va": "0x1816d7fa0",
+      "fileOffset": 23947168,
+      "token": "0x6000e79"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "waitDisappear",
+      "va": "0x1816d8020",
+      "fileOffset": 23947296,
+      "token": "0x6000e7a"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "checkOffScreen",
+      "va": "0x1816d80e0",
+      "fileOffset": 23947488,
+      "token": "0x6000e7b"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "OnPost",
+      "va": "0x1816d8230",
+      "fileOffset": 23947824,
+      "token": "0x6000e7c"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "OnExit",
+      "va": "0x1816d8300",
+      "fileOffset": 23948032,
+      "token": "0x6000e7d"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "notifyDisappeared",
+      "va": "0x1816d83d0",
+      "fileOffset": 23948240,
+      "token": "0x6000e7e"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "OnContacted",
+      "va": "0x1816d8460",
+      "fileOffset": 23948384,
+      "token": "0x6000e7f"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "OnCollided",
+      "va": "0x1816d8510",
+      "fileOffset": 23948560,
+      "token": "0x6000e80"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "contactProc",
+      "va": "0x1816d8670",
+      "fileOffset": 23948912,
+      "token": "0x6000e81"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "requestDisappear",
+      "va": "0x1816d8820",
+      "fileOffset": 23949344,
+      "token": "0x6000e82"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "captureTarget",
+      "va": "0x1816d8900",
+      "fileOffset": 23949568,
+      "token": "0x6000e83"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": "releaseTarget",
+      "va": "0x1816d8af0",
+      "fileOffset": 23950064,
+      "token": "0x6000e84"
+    },
+    {
+      "type": "PlayerWarpGunBulletComponent",
+      "namespace": "Quantum",
+      "method": ".cctor",
+      "va": "0x1816d8e20",
+      "fileOffset": 23950880,
+      "token": "0x6000e85"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "GetHashCode",
+      "va": "0x1816d8fc0",
+      "fileOffset": 23951296,
+      "token": "0x6000e86"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "Serialize",
+      "va": "0x1816d9050",
+      "fileOffset": 23951440,
+      "token": "0x6000e87"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "SetEntityRef",
+      "va": "0x180538380",
+      "fileOffset": 5467008,
+      "token": "0x6000e88"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "GetEntityRef",
+      "va": "0x180491c00",
+      "fileOffset": 4785152,
+      "token": "0x6000e89"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "Creator",
+      "va": "0x1816d9110",
+      "fileOffset": 23951632,
+      "token": "0x6000e8a"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "Initialize",
+      "va": "0x180476130",
+      "fileOffset": 4671792,
+      "token": "0x6000e8b"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "ParseParameter",
+      "va": "0x1816d92c0",
+      "fileOffset": 23952064,
+      "token": "0x6000e8c"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "InitPost",
+      "va": "0x1816d9400",
+      "fileOffset": 23952384,
+      "token": "0x6000e8d"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "OnStart",
+      "va": "0x1816d9460",
+      "fileOffset": 23952480,
+      "token": "0x6000e8e"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "syncPlayerPos",
+      "va": "0x1816d94d0",
+      "fileOffset": 23952592,
+      "token": "0x6000e8f"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "OnUpdate",
+      "va": "0x1816d9780",
+      "fileOffset": 23953280,
+      "token": "0x6000e90"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "createBullet",
+      "va": "0x1816d98a0",
+      "fileOffset": 23953568,
+      "token": "0x6000e91"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "NotifyBulletDisappeared",
+      "va": "0x1816d9ca0",
+      "fileOffset": 23954592,
+      "token": "0x6000e92"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "OnPost",
+      "va": "0x1816d9cb0",
+      "fileOffset": 23954608,
+      "token": "0x6000e93"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "OnRecvEvent",
+      "va": "0x1816d9d50",
+      "fileOffset": 23954768,
+      "token": "0x6000e94"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "SetTarget",
+      "va": "0x1816d9e60",
+      "fileOffset": 23955040,
+      "token": "0x6000e95"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "GetPlayerIndex",
+      "va": "0x1816d9fc0",
+      "fileOffset": 23955392,
+      "token": "0x6000e96"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "GetTarget",
+      "va": "0x180493ea0",
+      "fileOffset": 4794016,
+      "token": "0x6000e97"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": "GetTargetPlayerIndex",
+      "va": "0x1816d9fd0",
+      "fileOffset": 23955408,
+      "token": "0x6000e98"
+    },
+    {
+      "type": "PlayerWarpGunComponent",
+      "namespace": "Quantum",
+      "method": ".cctor",
+      "va": "0x1816da0c0",
+      "fileOffset": 23955648,
+      "token": "0x6000e99"
+    }
+  ],
+  "fields": [
+    {
+      "typeIndex": 4800,
+      "type": "PlayerWarpGunBulletComponent",
+      "fields": [
+        {
+          "name": "m_ColorIndex",
+          "offset": 16,
+          "typeIndex": 25582
+        },
+        {
+          "name": "m_DisappearTime",
+          "offset": 40,
+          "typeIndex": 19318
+        },
+        {
+          "name": "m_EntityRef",
+          "offset": 24,
+          "typeIndex": 18961
+        },
+        {
+          "name": "m_IsDisappear",
+          "offset": 20,
+          "typeIndex": 24495
+        },
+        {
+          "name": "m_PlayerIndex",
+          "offset": 17,
+          "typeIndex": 25582
+        },
+        {
+          "name": "m_WarpGun",
+          "offset": 32,
+          "typeIndex": 18961
+        },
+        {
+          "name": "RESOURCE_PATH",
+          "offset": 0,
+          "typeIndex": 13801
+        },
+        {
+          "name": "COLLISION_RECT",
+          "offset": 8,
+          "typeIndex": 24987
+        },
+        {
+          "name": "DISSAPEAR_TIME",
+          "offset": 40,
+          "typeIndex": 19321
+        },
+        {
+          "name": "MARGIN",
+          "offset": 48,
+          "typeIndex": 19321
+        }
+      ]
+    },
+    {
+      "typeIndex": 4801,
+      "type": "PlayerWarpGunComponent",
+      "fields": [
+        {
+          "name": "m_Bullet",
+          "offset": 24,
+          "typeIndex": 18961
+        },
+        {
+          "name": "m_ColorIndex",
+          "offset": 16,
+          "typeIndex": 25582
+        },
+        {
+          "name": "m_EntityRef",
+          "offset": 32,
+          "typeIndex": 18961
+        },
+        {
+          "name": "m_OffsetPos",
+          "offset": 56,
+          "typeIndex": 19351
+        },
+        {
+          "name": "m_Player",
+          "offset": 40,
+          "typeIndex": 18961
+        },
+        {
+          "name": "m_PlayerIndex",
+          "offset": 17,
+          "typeIndex": 25582
+        },
+        {
+          "name": "m_Target",
+          "offset": 48,
+          "typeIndex": 18961
+        },
+        {
+          "name": "RESOURCE_PATH",
+          "offset": 0,
+          "typeIndex": 13801
+        },
+        {
+          "name": "OFFSET_X",
+          "offset": 8,
+          "typeIndex": 19322
+        },
+        {
+          "name": "OFFSET_Y",
+          "offset": 16,
+          "typeIndex": 19322
+        },
+        {
+          "name": "BULLET_X",
+          "offset": 24,
+          "typeIndex": 19321
+        },
+        {
+          "name": "BULLET_Y",
+          "offset": 32,
+          "typeIndex": 19321
+        },
+        {
+          "name": "BULLET_SPEED",
+          "offset": 40,
+          "typeIndex": 19321
+        }
+      ]
+    }
+  ],
+  "stage": "5-4 모든2..8 variant에 PlayerWarpGun1..8; slot0 각각0..7, 위치0,0, playerCount0, createThreshold0. Parse가 실제 GetPlayerByActorIndex를 조회하고 없으면 장착하지 않음.",
+  "confirmed": [
+    "Parse0x1816d92c0: slot0 sar16 ->Frame.GetPlayerByActorIndex0x181749610@9367; found player EntityRef/color/index 복사@9389..939c, Player.Equip@93bf, SetHoldGun(true)@93d0",
+    "OnUpdate0x1816d9780: Actor.flags bit3 또는 existing bullet이면 종료. Input9 IsPressInput0x1816be4c0@9847 true면 createBullet@9871, returnedentity 저장@9876. IsPressInput는 enable입력/state gating을 포함하고 normal input sequence equality positive를 확인@6d2..70b; host resolved edge 계약 필요.",
+    "Gun constants cctor0x1816da0c0: OFFSET_X20@a1af OFFSET_Y-10@a1c5 BULLET_X10@a1db BULLET_Y-7@a1f1 BULLET_SPEED6@a207",
+    "createBullet0x1816d98a0: gunActor direction+0xe0 *scale+0x50; Xbullet offset10,velocity6; Yoffset-7,velocity0. PlayerActor flags0x400 flipsXoffset/velocity,0x1000 flipsYoffset. GunActor.Pos+offset spawn; FactoryParam18, dynamic bullet component, InitCollision/InitPost, ActorScene.AddActor.",
+    "Bullet cctor0x1816d8e20: rect H10/W10/X-5/Y-5,margin10@8fa2. DISSAPEAR_TIME copies QFP._0_50 static+0x90 at8f89..90; raw32768 established QFP constant, finaladdress cite remaining.",
+    "Bullet.OnUpdate calls waitDisappear then checkOffScreen. disappearingtimer-=dt; <=0 setsActor flagbit13 deletion and clearsdisappearing. checkOffScreen onlyX: x<cameraX-margin OR x>=cameraX+width+margin delete; lowerinclusive/upperexclusive.",
+    "requestDisappear0x1816d8820: idempotent; velocity(0,0), collisionflags bit0 set, Actor.procbyte+2=2, disappear=1,timer0.5.",
+    "contactProc0x1816d8670: already disappearing no-op, requestDisappear FIRST, findgunactor and requireflags bit3 clear; ifgun.target null captureTarget else releaseTarget.",
+    "captureTarget0x1816d8900: only actorType7 or27; for27 rejects same playerindex; sendtarget event65 then gun.SetTarget(targetentity); unsupported/nulltarget causes SetTarget(null) andsound1 ratherthan9.",
+    "releaseTarget0x1816d8af0: targetcollision GetRect, bullet.Pos-based trial candidates; horizontalnormal>0 choosesleft ofbullet (-1-rectX-width), else right(+1-rectX); firstY=-1-rectY-height, secondY+=2+height. writescollision current/pre position and clearsflag6; IsCollidedByPushBackTarget mask3 tested twice. bothblocked restoresoldcollision and retainscapture; success sends targetevent66 withcandidatePos@8dd4/8dd8,SetTarget(null)@8dfe,sound8. Exact native scenequery implementation remains to connect.",
+    "SetTarget0x1816d9e60 storesentity first; synchronous event30 queries targetindex+1 viaFrame.NotifyEvent,dec result, derivecolor; negative response usesownercolor. OnRecvEvent handles30 returnownindex+1,41 refreshowner index/color only if no target,54 increments event+0x68 then forwardscommonActor.",
+    "Creator0x1816d91c0 calls IsExistPlayerByActorIndex before actor creation, so nonexistent indices skip the entire gun. Default compile uses actual count contiguous indices; options.playerActorIndexes supports native sparse existence list.",
+    "Gun.OnStart0x1816d94c9 tailcalls syncPlayerPos. Gun.InitPost setsActor flags7/9/11 OR0xa80, no local pause emulation. syncPlayerPos copiesowner direction/Look/invertY/sorting+1 and adds scaled20/-10 offset to ownerPos. Gun.OnPost performs sync only if gunActor.flags bit3 clear.",
+    "Bullet.InitCollision0x1816d7dff CreateCollision pushBackTarget3,true; +1 layer5 at7e09, Actor.CreateCollision+2 type0. Bullet.InitPost flagsbit7,sorting samegun and color fromtarget queriedindex elseownerindex.",
+    "Bullet.OnExit0x1816d83ad and notifyDisappeared0x1816d8447 both clear gun.bullet ref without identity comparison; delete request alone does not permit newbullet.",
+    "Actual prefab roots1778 PlayerWarpGun and2578 PlayerWarpGunBullet, descendants PlayerColorController/GameAnimator/SortingGroup/SpriteRenderer only; serialized device component absent. Static fixture7GameObjects; no gameexecution.",
+    "Scenequery0x1817f73b0 checks map if mask&1 andtarget.pushBackTarget&1 viaMap.IsContacted0x18187ecc0. mask&2 andtarget.pushBackTarget&2 walks actual activecollisionlist, skips samecollisionid andother.pushBackTarget without2, respectslayerCheck, testsother IsCollidedPre first thenIsCollided(current). Exact host query facts required, no simpleAABB/booleanallow callback."
+  ],
+  "verification": {
+    "unitCommand": "node --test source-migration/source-playerwarpgun-devices.test.cjs",
+    "unitTests": {
+      "tests": 25,
+      "pass": 25,
+      "fail": 0
+    },
+    "fullCommand": "node --test source-migration/*.test.cjs",
+    "fullSuite": {
+      "tests": 928,
+      "pass": 928,
+      "fail": 0
+    },
+    "nativeExecuted": false,
+    "checked": [
+      "real5-4 allpopulations skipnonexistentguns",
+      "sparseactorindexexistence",
+      "Equip/HoldGun once",
+      "scaledfacing/invert muzzle",
+      "singlebullet gate andOnExitunlock",
+      "capture65->query30 order",
+      "self/unsupported rejection andBox capture",
+      "release candidates normal sign",
+      "upper success stopssecondquery",
+      "lower success",
+      "bothblocked keepscapture",
+      "candidateidentity/maskguard",
+      "31framefade deletionvsExit",
+      "offscreen Xbounds only",
+      "hostmotionpositions vsno fakeintegrator",
+      "event30/41/54 mutation",
+      "JSON replay",
+      "actualstaticprefabs",
+      "OnCollided negativevelocity before disappearzero",
+      "Actor53 unresolved atomicguard andresolvedfade/gunsync pause"
+    ]
+  },
+  "unresolved": [
+    "sharedActor bullet movement/collision pipeline/storage creation/deletion +GunActor/Player65/66commonhandlers +native synchronousdispatch integration is hostwork. Bulletposition is returnedfromhostActor motion, not fullyimplemented standalonephysics.",
+    "Scenequery0x1817f73b0 map/activecollision/pre+current/layerchecks adapter integration remainshost; suppliedexactqueryfacts verified but notactualgameplay adapter.",
+    "ActualGun/Bullet scale/Actorflags/priority metadata providedbyhost;module has ORmasks andexplicitrawscales ratherthan guessedActor defaults.",
+    "Actual5-4 playable/originalparallel verification/render notperformed; completePhysicsFidelity=false."
+  ],
+  "nextCommands": [
+    "read sections playerwarpgun-native.local.txt: syncPlayerPos, InitPost, InitCollision, OnExit, notifyDisappeared",
+    "python -I -B tools/disasm.py 0x1817f73b0 0x1816be4c0; recover IsCollidedByPushBackTarget and input edge",
+    "existing PlayerBlockGun/ThrowBall files read only; native Player65/66 handler read",
+    "bundled Python3.12 -I -B UnityPy prototype extraction using corrected TypeTreeGenerator alignment; UpDownLift extractor reference read-only"
+  ],
+  "frozen": [
+    "SearchLight",
+    "DistanceConstraint",
+    "UpDownLift",
+    "shared runtime/PlayerBlockGun/ThrowBall/Git/deploy"
+  ],
+  "module": "source-playerwarpgun-devices.js",
+  "integration": {
+    "players": "Native actualPlayerActor index/entity/index/color/flags/direction/scale/position and gunScaleRaw. pressInput9 is native Player.IsPressInput(9) includingstate/enable/stage inputmode. No heldbutton substitute.",
+    "initialization": "compile exposes selectedguns; firstbeforeStep emitsEquip/HoldGun effects. Host createsgunactors withActorflags OR0xa80 andsets actualscale; OnStart sync. Module default compile contiguous actorindices fromcount; native sparse existence viaoptions.playerActorIndexes.",
+    "motion": "Persistent bullet JSONstate includesposition/velocity/direction/color/rect/disappear/delete. actorMotionRequests are initial/native currentvelocities for host sharedActor movement andcollision phases; afterStep consumesbulletActorStates. No independent guessedvelocity*dt orframepixel integration. Collisiontype0,layer5,pushBackTarget3; fullflags/priority comehostmetadata.",
+    "captureRelease": "Host dispatchActorEvent must synchronously execute65/66 andreturnevent30 int32result forSetTarget. Player/Box/commonbehavior is NOT implementedhere. effects/eventslist is audit output, not a second dispatch request. Hostmust not applyevents twice.",
+    "query": "releaseQueries mustprovide native IsCollidedByPushBackTarget mask3 resultswithtargetId andexactcandidateposition. Hosttrialposition mustwritecollision current+pre andclearflag6 asnativebeforequery. firstblocked permitssecondcandidate; bothblocked restoresoriginalcollision currentposition andderivedmovementflag exactlyasnative. Nativeactivecollisionlist/layerchecks/map needed. Diagnostic suppliedfacts do not proveplayable.",
+    "atomicity": "beforeStep/afterStep commit moduleclones onlyafter success. Synchronousdispatch maymutatehostbeforelatererror; hostwholeframetransactionmustrollbackitsownstate aswell. Direct exported contact/setTarget helpers follow native mutationorder andrequire callertransaction/verifiedfacts.",
+    "lifetime": "Host confirmsOnExit through exitedBulletIds. Deletionrequested preservesgunbulletrefuntilExit; OnPost guninactive requestsdisappear. Do not unlockoncontact orfade request.",
+    "events": "onRecvEvent exports30/41/54 response. Other eventsforwardcommonActor; incoming53 needs resolvedpausedGunIds andpausedBulletIds. Hostcanusepause arrays anyframe. Deviceownpause semantics not invented.",
+    "renderer": "Gun flags/offset/direction/color andbulletproc2/disappear time returnedin displays. Actual animation/renderer/nativeActor integration remain lead.",
+    "ownership": "Onlynew PlayerWarpGunmodule/test/report/prototypeextractor/evidence/result/claim files modified. ExistingPlayerBlockGun/ThrowBall/common runtime and frozenSearchLight/UpDownLift/DistanceConstraint unchanged."
+  },
+  "correctionHistory": [
+    {
+      "previous": "첫 checkpoint는 Parse가없는player에게장착하지않음만기록했다.",
+      "correction": "Creator0x1816d91c0/c7가실제존재를actor생성전에검사함을확인하여 없는gun을compile에서skip. release OnCollided normal은requestDisappear로velocity0이되기전현재Xvelocity부호로결정;nativefacts.velocityXRaw orownedcurrentvelocity를먼저저장.",
+      "note": "일반Actor proc초기값은확인없이0으로추정하지않고null로두며 requestDisappear에서만2설정. 첫테스트의staleobjectref 기대값은잘못된검증이라제거; 실제 JSONstate의gunref/재발사검증 유지."
+    }
+  ],
+  "files": [
+    "source-playerwarpgun-devices.js",
+    "source-playerwarpgun-devices.test.cjs",
+    "playerwarpgun-device-report.json",
+    "playerwarpgun-native.local.txt",
+    "extract-playerwarpgun-prototype.local.py",
+    "playerwarpgun-prototype-evidence.json"
+  ],
+  "completePhysicsFidelity": false
+}

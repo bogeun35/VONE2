@@ -1,0 +1,48 @@
+
+== MapComponent.IsMovable 0x18187dd30
+0x18187dd30 mov qword ptr [rsp + 8], rbx
+0x18187dd35 mov qword ptr [rsp + 0x10], rsi
+0x18187dd3a push rdi
+0x18187dd3b sub rsp, 0x20
+0x18187dd3f cmp byte ptr [rip + 0x1add8c6], 0
+0x18187dd46 mov edi, r8d
+0x18187dd49 mov ebx, edx
+0x18187dd4b mov rsi, rcx
+0x18187dd4e jne 0x18187dd68
+0x18187dd50 lea rcx, [rip + 0x194b1b1]
+0x18187dd57 call 0x1802c5dc0 ; 
+0x18187dd5c lock or dword ptr [rsp], 0
+0x18187dd61 mov byte ptr [rip + 0x1add8a4], 1
+0x18187dd68 mov rcx, qword ptr [rip + 0x194b199]
+0x18187dd6f cmp dword ptr [rcx + 0xe0], 0
+0x18187dd76 jne 0x18187dd7d
+0x18187dd78 call 0x1802ec040 ; 
+0x18187dd7d xor r8d, r8d
+0x18187dd80 test ebx, ebx
+0x18187dd82 js 0x18187dd94
+0x18187dd84 movzx edx, word ptr [rsi + 0x1004]
+0x18187dd8b dec edx
+0x18187dd8d cmp ebx, edx
+0x18187dd8f cmovle edx, ebx
+0x18187dd92 jmp 0x18187dd97 ; 
+0x18187dd94 mov edx, r8d
+0x18187dd97 test edi, edi
+0x18187dd99 js 0x18187ddad
+0x18187dd9b movzx r8d, word ptr [rsi + 0x1002]
+0x18187dda3 dec r8d
+0x18187dda6 cmp edi, r8d
+0x18187dda9 cmovle r8d, edi
+0x18187ddad xor r9d, r9d
+0x18187ddb0 mov rcx, rsi
+0x18187ddb3 call 0x18187daa0 ; MapComponent.GetMapChipAttr
+0x18187ddb8 mov rbx, qword ptr [rsp + 0x30]
+0x18187ddbd not al
+0x18187ddbf mov rsi, qword ptr [rsp + 0x38]
+0x18187ddc4 and al, 1
+0x18187ddc6 add rsp, 0x20
+0x18187ddca pop rdi
+0x18187ddcb ret 
+0x18187ddcc int3 
+0x18187ddcd int3 
+0x18187ddce int3 
+0x18187ddcf int3 

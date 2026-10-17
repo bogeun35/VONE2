@@ -1,0 +1,17 @@
+✔ only lobby host can select a stage, readiness resets and stale-stage start is rejected (19.2254ms)
+✔ 2–8 player room lifecycle, readiness, inputs, authority and empty-room cleanup (26.9675ms)
+✔ disconnect elects a successor and callback errors remain contained (1.6022ms)
+✔ leave waits for delayed snapshot and input acknowledgements before deleting room (9.7101ms)
+✔ leave drains start and host election transactions as well (2.0422ms)
+✔ leave submits cached-null transaction and retries with actual server membership (2.4964ms)
+✔ leave reports an uncommitted cleanup instead of silently accepting it (2.0232ms)
+✔ acknowledged member removal survives metadata transaction contention and delay (2.4279ms)
+✔ inputs travel outside the room node and carry restart requests (4.6067ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 363.2374

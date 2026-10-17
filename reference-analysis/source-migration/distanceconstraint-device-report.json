@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 1,
+  "devices": [
+    "DistanceConstraint"
+  ],
+  "module": "source-distanceconstraint-devices.js",
+  "status": "native_math_and_full_force_core_verified_host_transport_pending",
+  "settledOn": "2026-10-13",
+  "nativeCodeExecuted": false,
+  "summary": "DistanceConstraint의 전체 FP 조회표 length/normalize, calcPrev/NextTension 및 두 calcF를 순수 정수 함수로 복원했다. 네이티브 접촉 사실과 mode2 이동 전파를 공급하는 호스트만 nativeConstraintFacts:true로 compile 가능. 기본 compile은 접촉 전파 계약이 없어 거부하며, 실제 공용 런타임 등록은 아직 수행하지 않았다.",
+  "creator": {
+    "actorOrdinal": 11,
+    "delegateSite": "0x18177666c",
+    "componentCreator": "0x181819e10",
+    "initialize": "0x181819f70",
+    "collision": "Creator에는 InitCollision 호출 없음. 그 사실만으로 prototype의 충돌이 없다고 판정하지 않음."
+  },
+  "fields": {
+    "flags": "unboxed+0",
+    "forceMoves": "unboxed+4, eight int32",
+    "entity": "unboxed+0x28",
+    "distance": "unboxed+0x30",
+    "gravityTension": "unboxed+0x38",
+    "evidence": "quantum-field-offsets.json boxed offset minus16"
+  },
+  "parameters": {
+    "method": "0x181819fd0",
+    "index": "0x18181a000: i = playerActorCount*2-4",
+    "distance": "0x18181a03f..093: datas[i] t==1 FP; abs(raw)>=4이면 채택, 미만이면datas[0]。비float는0。",
+    "gravity": "0x18181a0be..118: datas[i+1] t==1 FP; abs(raw)>=4이면 채택, 미만이면datas[1]. 거리와 독립적으로 폴백.",
+    "defaultOverwrite": "0x181819f3b가 default raw32768을 먼저 쓰지만 ParseParameter의0x18181a102/118이 무조건 덮어씀. 최종0을 default로 바꾸면 오동작.",
+    "notPopulationTable": "QPlayerCountParam 문자열도 아니며 이전 인원의 첫 비영 값까지 거슬러 올라가지 않음. 해당 인원과2인 슬롯만 읽음.",
+    "conversion": "0x180554373 -> FP.FromString_UNSAFE0x18163fcb0 -> FP.FromFloat_UNSAFE0x18163fc40. float32 곱셈 후 signed truncation. 0.7 raw45875, 0.5 raw32768.",
+    "realStages": {
+      "st_w_02_01": {
+        "distanceRaw": 9175040,
+        "gravityRawsByCount2To8": [
+          65536,
+          45875,
+          32768,
+          32768,
+          32768,
+          32768,
+          32768
+        ]
+      },
+      "st_w_02_03": {
+        "distanceRaw": 13107200,
+        "gravityRawsByCount2To8": [
+          65536,
+          45875,
+          32768,
+          32768,
+          32768,
+          32768,
+          32768
+        ]
+      },
+      "st_w_09_04": {
+        "distanceRaw": 15728640,
+        "gravityRawsByCount2To8": [
+          65536,
+          65536,
+          65536,
+          65536,
+          65536,
+          65536,
+          65536
+        ]
+      }
+    }
+  },
+  "constants": {
+    "method": "0x18181c460",
+    "kRaw": {
+      "value": 13107,
+      "store": "0x18181c68d"
+    },
+    "gravityDefaultRaw": {
+      "value": 32768,
+      "store": "0x18181c6a3"
+    },
+    "resultYMaxRaw": {
+      "value": 1320550,
+      "store": "0x18181c739"
+    },
+    "minXRaw": {
+      "value": 6553,
+      "store": "0x18181c74f"
+    },
+    "frictionScaleRaw": {
+      "value": 65536,
+      "store": "0x18181c765"
+    },
+    "frictionMoveBeginRaw": {
+      "value": 0,
+      "store": "0x18181c77b"
+    },
+    "frictionMoveScaleRaw": {
+      "value": 78643,
+      "store": "0x18181c7a7",
+      "literalSlot": "0x1831c9e70",
+      "text": "1.2",
+      "verification": "resolve-string-literals.local.py --cctor0x18181c460 실행"
+    }
+  },
+  "events": {
+    "method": "0x18181c2e0",
+    "forceMove": "0x18181c34c: event24; payload+0x20 index0..7이면 forceMoves[index]=1 (0x18181c38d..445). 그 밖의 index는 무시.",
+    "other": "ActorComponent.OnRecvEvent0x18169e840에 위임(0x18181c373)",
+    "clear": "clearEnableForceMoves0x18181c180, eight int32 zero stores0x18181c202..267. OnUpdate의 force 적용 뒤0x18181a723에 호출."
+  },
+  "floorSlide": {
+    "evidence": "0x18181c0e6..146",
+    "formula": "forced이고 chainLength>=0이면 min(65536, (trunc(65536/(chainLength+1))*78643)>>16); 아니면65536",
+    "valuesForChain0To7": [
+      65536,
+      39321,
+      26213,
+      19660,
+      15728,
+      13106,
+      11234,
+      9830
+    ]
+  },
+  "physicsEvidence": {
+    "order": "OnUpdate0x18181a130: 모든 tension 계산(0x18181a360/38b) -> 모든calcF(0x18181a4e6) -> 모든force 적용 -> forceMove flags clear(0x18181a723). 이 순서의 동시 스냅샷이 필요.",
+    "tension": "calcTension0x18181b210: separation squared components sar16 -> length helper0x181640c40. abs(length)<4 또는length<=distance면 zero(0x18181b368..377). 이후normalization helper0x1816463a0, contact count가 양수면unit vector에(count+1)를 곱함(0x18181b42a..45e).",
+    "chains": "calcPrevTension0x18181a9e0는 이전 player 링크를 순회, calcNextTension0x18181adf0는 이후 링크 순회. IsFloating0x1816bee20와Collision.GetContactCount0x181695050를 읽으며 접지된 player를 만나면floating-chain count를0으로 되돌리고 증가를 중단.",
+    "force": "calcF0x18181b4c0는 앞/뒤 이웃의 pair calcF0x18181baa0를 합산. pair는distance 초과분과 장력의내적에서 배분을 계산한 뒤K를 곱하고 접촉면별 힘을 다른 축으로 전환. 단순 거리 clamp가 아님.",
+    "normalization": "0x181646465..496는 조회표 원소를 읽어shift/value pair를 반환. calcTension0x18181b38b..3bd는0x100000000000/value와shift+14로 unit vector를 계산. Math.hypot로 대체하지 않음.",
+    "knownResource": "R2: 전체FPSqrt LUT를DistanceConstraint전용math파일로추출하고signedint64알고리즘복원완료. R1 sparse범위미지원거부해소.",
+    "movement": "OnUpdate0x18181a5da..61e는Actor+0xb0와+0xf0에force를 더함. MoveContactOption+0x1c=2(0x18181a636), normalized direction과원래force로ActorComponent.moveContactActor0x1816a0d40 호출(0x18181a6f5)."
+  },
+  "integration": {
+    "status": "pure native core완료; shared runtime registration/transport는리드담당",
+    "compile": "compile(actors,count,{nativeConstraintFacts:true})로실제3스테이지21인원조합가능. option없는활성compile은정확한hostcontract거부. 단순true옵션만으로runtime실행성공으로보고하지말것.",
+    "beforeStep": "ctx.constraintPlayers: dense native actor-index snapshots, ctx.applyConstraintUpdate(update): synchronous transaction callback. callback은실제완료후true. false/미존재는오류및module상태변경없음.",
+    "snapshotFields": {
+      "index": "0..count-1 dense native actor index",
+      "xRaw/yRaw": "ActorComponent current +0xb0 FP vector",
+      "vxRaw/vyRaw": "ActorComponent +0xf0 FP vector",
+      "state": "PlayerComponent byte+3(native struct), 정확한원작byte. state5skip",
+      "flags": "PlayerComponent uint32+0x20(native struct). bit9whole-skip,bit0coreclear",
+      "hasActor/hasCollision": "native Frame.GetActor/Actor.GetCollision availability",
+      "floating": "PlayerComponent.IsFloating0x1816bee20 ->isFloating_Rec. 단순 grounded대체금지",
+      "contactCount0": "Collision.GetContactCount(face0, true, null,-1)에서반환객체int+0x18. 의미를추측한AABB count금지",
+      "contacted1": "Collision.IsContacted(face1,true) 원작판정",
+      "mapFaces": "Collision.IsContactedMapOrRect(face0..3) 정확한bool4개"
+    },
+    "transaction": [
+      "모든tension/force계산은같은pretransport스냅샷",
+      "playerflagresults적용및각moves를actorindex순서로처리",
+      "각actor의현재position/velocity에delta를더한뒤moveContactActor(mode2,deltaRaw,directionRaw)",
+      "이전player의transport가이후player를이미움직일수있음: update.players는pretransportpreview이며절대좌표를일괄대입하면안됨",
+      "수송완료후8event24flagszero,bit9skip이면그대로보존",
+      "비24이벤트는공용ActorComponent.OnRecvEvent별도위임"
+    ],
+    "mathBrowserOrder": "source-distanceconstraint-math.js먼저로드후source-distanceconstraint-devices.js; Node는require자동연결",
+    "dependencies": {
+      "st_w_09_04": [
+        "TopViewPlayer"
+      ],
+      "st_w_02_01": [
+        "StepEnemy",
+        "WarpAll"
+      ],
+      "st_w_02_03": [
+        "DistanceConstraint 이외의기존스캔 blocker 및그guard"
+      ]
+    },
+    "stageCompilesAlone": "코어계약옵션으로2..8인파라미터compile가능. 실제스테이지런타임/미구현타장치때문에독립playable아님."
+  },
+  "verification": {
+    "unitCommand": "node --test source-migration/source-distanceconstraint-devices.test.cjs",
+    "unitTests": {
+      "tests": 32,
+      "pass": 32,
+      "fail": 0
+    },
+    "fullCommand": "node --test source-migration/*.test.cjs",
+    "fullSuite": {
+      "tests": 592,
+      "pass": 592,
+      "fail": 0
+    },
+    "intermediateFullRun": {
+      "tests": 572,
+      "pass": 568,
+      "fail": 4,
+      "file": "source-gear-devices.test.cjs",
+      "note": "타세션작업중4실패,수정없음. 최종전체실행592/592통과."
+    },
+    "realData": "3실제스테이지x2..8인21조합:기본compile거부와명시hostfactscompile둘다검증.",
+    "nativeMath": "65,537 lookup항목전수및SHA256; signedaxis/diagonal,shiftthreshold,zero,overflow거부,브라우저decode",
+    "forceBranches": [
+      "distanceepsilon/threshold",
+      "peercontactmass",
+      "prev/next비대칭및floatingchainreset",
+      "inactivepeerfullshare",
+      "양음diagonalraw",
+      "projectionshare정수절삭",
+      "left/rightwall",
+      "ceiling/floor 및 corneroriginalsign",
+      "strict65threshold",
+      "event24opposingvxbrake",
+      "flag0clear",
+      "weakgroundedYcancel",
+      "redirectedUpvelocitystrict비교",
+      "signedYcap",
+      "bit9eventhold다음tickclear",
+      "state5->normaltransition",
+      "pureJSONtransaction",
+      "hostcommit실패원자성"
+    ],
+    "independentArithmetic": "설치FPSqrtbytes를읽는Python정수검산으로180/240diagonal및signedforce확인. +force(786408,1048544), -force(-786428,-1048564); 축200 rawnormalize65535/-65536."
+  },
+  "unresolved": [
+    "공용런타임nativefloating/contact사실공급및mode2moveContactActor와PlayercontactResponse연결은리드담당. 해당파일을수정하지않았음.",
+    "실제GameFramecollisiongraph수송후라운드동작대조미검증. ctx.applyConstraintUpdate의true는호스트책임이며가짜callback으로검증완료라고주장하지않음.",
+    "multipleDistanceConstraint의nativeupdate순서는미검증으로step거부. actor-index가성기거나nullactor기하에진입하는경로는특정오류로거부.",
+    "TopViewPlayer,StepEnemy,WarpAll등타장치범위는침범하지않음.",
+    "원작실행/사람playable대조검수미실시."
+  ],
+  "previousPass": {
+    "status": "partial_verified_primitives_compile_refused",
+    "verification": {
+      "unitCommand": "node --test source-migration/source-distanceconstraint-devices.test.cjs",
+      "unitTests": {
+        "tests": 14,
+        "pass": 14,
+        "fail": 0
+      },
+      "realData": "3스테이지 x2..8인=21조합. population-rules의실제 variant 선택으로 정확한raw, 선택slot,거부를검증.",
+      "boundaries": [
+        "독립폴백",
+        "이전인원값무시",
+        "abs(raw)=4포함",
+        "nonfloat->0",
+        "default덮어쓰기",
+        "event24인덱스",
+        "native정수마찰계산",
+        "JSON roundtrip",
+        "임의활성상태주입거부"
+      ],
+      "independentArithmetic": "Python정수계산으로floor slide reciprocal/multiply 확인. 테스트초기 chain6기대값11233을 실제정수계산11234로수정, 모듈알고리즘변경없음.",
+      "fullCommand": "node --test source-migration/*.test.cjs",
+      "fullSuite": {
+        "tests": 533,
+        "pass": 530,
+        "fail": 3,
+        "failedFile": "source-gear-devices.test.cjs",
+        "failures": [
+          "standby braking is one raw unit per tick, clamps signs, no dt",
+          "rotation exactly follows FP intermediate truncations, direction and zero pre-position",
+          "host contract fails loudly and phased velocity/event/rotation payloads are serializable"
+        ],
+        "note": "다른세션의진행중파일. 수정하지않음."
+      }
+    },
+    "unresolved": [
+      "전체 lookup-table length/normalization을동적player separation에이식하지않았다. sparse선로값만으로일반player입력지원불가. 정확한계산계약구현전 compile거부.",
+      "calcPrev/NextTension 및두calcF의전체분기구현과실제접촉그래프 검증미완료. 방향별접촉을AABB로가정하지않았다.",
+      "기존공용런타임이필요한floating/contact/state/velocity사실과mode2전파를아직이장치에제공하지않음. 사용자지시에따라공용파일수정금지.",
+      "TopViewPlayer,StepEnemy,WarpAll등타장치의범위는침범하지않음. 해당모듈과리드통합후라운드검증필요.",
+      "원작실행이나사람플레이대조검수는하지않았다. 상태머신틱/실제force 이동완료를주장하지않음."
+    ]
+  },
+  "moduleDependencies": [
+    "source-distanceconstraint-math.js (new DistanceConstraint-owned UMD numerical LUT)"
+  ],
+  "math": {
+    "resource": "D:/SteamLibrary/steamapps/common/PICO PARK 2/pico_park_2_Data/resources.assets",
+    "bodyOffset": 11384408,
+    "byteLength": 262148,
+    "entryCount": 65537,
+    "sha256": "de5265f651730f20b54cc24bdcd3047e61320be44a5ae54796d290a189f4bca5",
+    "loader": "0x18165af8a..0x18165b074",
+    "sqrt": "q = (low64(x*x)>>16)+(low64(y*y)>>16). q>65536이면 shift=evenHighestBit(q)-14. table[q>>shift]<<floor(shift/2)>>6; 작은q는table[q]>>6. 0x181640c40..d69",
+    "normalization": "q=low64(x*x+y*y), q==0이면zero. 같은shift/index에서 tableentry와floor(shift/2)를 packed return. r=trunc(2^44/tableentry); n=low64(component*r)>>(floor(shift/2)+14). 0x1816463a0..4c8 및0x18163df00..9f /0x18181b37d..3bd",
+    "proof": "전체65,537항목을설치자산int32와비교; Browser에서Buffer/require없이동일decode. 200px양의축normalize=65535, 음의축=-65536: 실수unit vector로65536을돌리면틀림.",
+    "refused": "int64 square overflow로음수q나native divide-by-zero, JS safe integer범위외input/output은특정오류. 원작게임코드를실행하지않음."
+  },
+  "forceCore": {
+    "tension": "calcTension0x18181b210: abs(length)<4 또는length<=distance면zero. peer collider의contactCount0가양수면normalized vector*(count+1).",
+    "prev": "0x18181a9e0: 자기floating이고collider가있으면Y=(contactCount0+1)*gravity. index-1부터0까지이전링크tension합산. grounded peer를만나면floatingCount=0,후속증가중단. 그이후의tension합산은계속.",
+    "next": "0x18181adf0: 초기gravity같음. i=index부터STRICT i<count-2로이후링크합산. 마지막링크를포함하지않는비대칭을원작그대로유지. count-2=0인2인은next링크순회없음. 근거0x18181af37,af4c..4f,b1d5..d8.",
+    "pair": "calcF0x18181baa0: peer.state5면share=1. 그외a=1+max(dot(-n,tensionA),0), b=1+max(dot(n,tensionB),0); share=1-trunc((a<<16)/(a+b)). force=n*((length-distance)*share*K), 모든FP곱은low64sar16. 앞pair는prev.prev/current.next, 뒤pair는current.prev/next.next 사용(0x18181b5b9..61a,b670..6cf).",
+    "contacts": "abs(X)>65와side2/3 mapOrRect면X를0으로만들고abs(X)*원래sign(Y)*frictionScale를Y에더함. 이어Y<-65&side0 또는Y>65&side1이면abs(Y)*원래sign(X)*friction을X에더하고Y0. 바닥의forcedfriction은floorSlideScaleRaw(floatingCount). sign(0)=+1. redirectedUp는벽전환의원래Y음수일때true,각pair의실제전환이공유flag를덮어씀. 0x18181be1d..c171.",
+    "aggregate": "두pair합산. Event24flag>0이고vx*forceXlow64음수이며abs(vx)<minX+abs(forceX)이면X=(minX-abs(vx))*sign(vx). Y<-minX이고collider존재&&!contacted1이면Playerflagsbit0clear. redirectedUp&&vy<forceY이면Y0. 그외Y<-65,contacted1,forceY+42598>0이면Y0. 마지막Y는양음모두abs1320550cap. 0x18181b7e4..ba0f.",
+    "update": "어느player.flagsbit9(0x200)이든set면전체Update중단및pendingeventflags보존(0x18181a21a..221). statebyte5player는tension/force/move적용skip. 전체tension스냅샷->전체force->각actor index순서position/velocitydelta및mode2contacttransport->forceMovesclear. JSON으로동일재생가능.",
+    "pureApi": [
+      "calcTension",
+      "calcPrevTension",
+      "calcNextTension",
+      "calcPairF",
+      "calcF",
+      "updateConstraint",
+      "createConstraintFacts"
+    ],
+    "correction": "초기R1에서원래구현하지않았던length/normalize와forcebranches를복원. 이전확정파라미터/이벤트/마찰값은변경없음."
+  },
+  "correctionHistory": [
+    "R1: 파라미터/event/마찰만구현,활성compile전부거부.",
+    "R2: 전체nativeFPSqrt/normalize및calcPrev/Next/두calcF이식완료. 거부이유를수학미복원에서hostcontacttransport계약미제공으로좁힘. 기존확정파라미터상수불변.",
+    "R2: nexttension의strictindex<count-2비대칭을주소로확인,의도적으로대칭화하지않음."
+  ]
+}

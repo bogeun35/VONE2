@@ -1,0 +1,25 @@
+✔ st_w_03_02 converter matches independently audited28 population selections before filtering (12.2432ms)
+✔ st_w_10_04 converter matches independently audited28 population selections before filtering (9.8394ms)
+✔ priority pass moves equal-priority pairs indirectly rather than using stable sort (0.4348ms)
+✔ threshold second pass also swaps indirectly after priority pass and uses converted FP ties (0.3679ms)
+✔ priority constants and explicit malformed parameter refusal (0.7087ms)
+✔ factory requires absent Actor and maps zero owner fields into actual lifecycle schema (1.3333ms)
+✔ factory Player completion allocates live collider and projects full native initialization into bridge schema (8.859ms)
+✔ factory preserves current allocator generation and refuses stale identity or unverified registration without mutation (3.3559ms)
+✔ factory uses live issueId rather than authored index and refuses exhausted collider storage transactionally (2.4558ms)
+✔ actual3-2 authored Player factory output enters typed first frame without partial Default.compile snapshot (30.4852ms)
+✔ factory registers exact native name and type before returning and rejects duplicate transaction (2.0694ms)
+✔ Key typed OnStart resolves factory-registered Player through actual QString dictionary and generation (3.7966ms)
+✔ Scene unique-name registration records exact QString and present type before position work (4.8901ms)
+✔ Scene equality ignores unused QString tail and duplicate refuses overwrite (0.9289ms)
+✔ Scene stale dictionary ref returns null immediately after Destroy, without actor-name scan repair (1.1567ms)
+✔ Scene empty dictionary key can be registered but FindActor rejects empty before lookup (0.951ms)
+✔ Scene requires complete existing dictionary and never invents missing state (0.4775ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 313.6742

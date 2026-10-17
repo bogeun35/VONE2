@@ -1,0 +1,177 @@
+{
+  "device": "BoundBallPitcher / dedicated BoundBall",
+  "status": "partial — verified native component core complete, frozen; shared scene/physics/runtime integration pending",
+  "supportedTypes": [
+    "BoundBallPitcher"
+  ],
+  "completePhysicsFidelity": false,
+  "ownership": [
+    "source-boundballpitcher-devices.js",
+    "source-boundball.js",
+    "source-boundballpitcher-devices.test.cjs",
+    "boundballpitcher-native.local.txt",
+    "boundballpitcher-device-report.json",
+    "codex-briefs/BoundBallPitcher.result.md",
+    "codex-briefs/작업중-BoundBallPitcher.md"
+  ],
+  "verification": {
+    "dedicatedTests": 35,
+    "dedicatedPassed": 35,
+    "fullSuiteTests": 1525,
+    "fullSuitePassed": 1525,
+    "originalGameExecuted": false,
+    "runtimeRegistered": false,
+    "stagePlayableVerified": false,
+    "frozenBallKeyBoxEdited": false,
+    "gitActions": false
+  },
+  "actualStage": {
+    "id": "st_w_10_03",
+    "counts": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "actorsPerCount": 1,
+    "ordinal": 61,
+    "creator": "BallPitcherComponent.Creator 0x1816b2280, delegate0x181776e7a",
+    "position": [
+      1826,
+      336
+    ],
+    "slots0to8": [
+      270,
+      null,
+      48.5,
+      49.5,
+      53.25,
+      90,
+      80,
+      70,
+      "62 for2..4;65 for5..8"
+    ],
+    "slotSemantics": "slot0 angle; actual Frame.GetPlayerActorCount selects slot[count] at0x1816b2709..273e. slot1 not consumed by BoundBall type0. Slot value multiplied6553 then arithmetic>>16 at0x1816b2742..2751. Not a period.",
+    "speedRawByCount": {
+      "2": 317820,
+      "3": 324373,
+      "4": 348947,
+      "5": 589770,
+      "6": 524240,
+      "7": 458710,
+      "8": 425945
+    }
+  },
+  "birth": {
+    "zeroComponent": "Static UnityPy/IL2CPP typetree: BallPitcher GameObject2388/EntityPrototype6985 and BoundBall1298/EntityPrototype6710; descendants no serialized BallPitcher/BoundBall simulation component. Generic getters0x1801f6b80->0x180684320 and0x1802125a0->0x180685a40 construct default boxed structs through0x1814dc9b0; no instance component ctor indexed. Component fields begin zero; explicit Initialize/Parse/post writes applied. Shared Actor default values must be supplied by host.",
+    "pitcherCollider": {
+      "rectH_W_X_Y": [
+        40,
+        54,
+        -40,
+        -54
+      ],
+      "collisionType": 0,
+      "layer": 4,
+      "pushBackTarget": 3,
+      "syncPos": true,
+      "addresses": [
+        "0x1816b42bc..42ec",
+        "0x1816b329f..32a9"
+      ]
+    },
+    "ballCollider": {
+      "circleRadius": 12,
+      "circleCenter": [
+        0,
+        0
+      ],
+      "collisionType": 1,
+      "layer": 5,
+      "pushBackTarget": 3,
+      "syncPos": true,
+      "addresses": [
+        "0x1817d4315..4347",
+        "0x1817d32b3..32bd",
+        "0x18169f694 shape=1"
+      ]
+    },
+    "sequence": "0x1816b347b..3758: read actual Actor.InitPos(+80)/baseScale(+50), gunY=-34*baseScale, add(dir*20*baseScale); ballCount++; factory119/CreateActorEntity; assign BoundBall.pitcherRef,activeVelo=dir*currentSpeed,activeDelay32768; InitCollision; InitPost(weight50,manyPeople=count>=5,SetVisible(false)); ActorScene.AddActor(position); returned native entity becomes pitcher.ball, state increments0->1. Uses InitPos rather than currentPos. Pitcher.m_Scale is not used in this BoundBall spawn branch.",
+    "muzzleRawAtScale1": [
+      118358036,
+      19796272
+    ],
+    "activeVelocityRawCount2": [
+      -317816,
+      1066
+    ]
+  },
+  "direction": {
+    "addresses": [
+      "0x1816b2535..25d8",
+      "0x181644e70..45123",
+      "0x181645b90..45d3b"
+    ],
+    "conversion": "slot0raw*0x477>>16 then half angle arithmetic>>1; EulerZ quaternion rotated(0,-65536).",
+    "packedSinCosResourceOffset": 4908336,
+    "packedStride": 8,
+    "halfAngleRaw270": 154305,
+    "sinRaw": 46419,
+    "cosRaw": -46262,
+    "directionRaw": [
+      -65535,
+      220
+    ],
+    "restriction": "Only recovered actual270 accepted; other angles compile throw. No Math.sin/cos or idealized(-1,0)."
+  },
+  "ballCore": {
+    "fieldsUnboxed": {
+      "stallSignedByte": 0,
+      "flags": 2,
+      "isDisappear": 4,
+      "isManyPeople": 8,
+      "pitcherRef": 16,
+      "entityRef": 24,
+      "activeDelay": 32,
+      "disappearTime": 40,
+      "activeVelo": 48
+    },
+    "constants": {
+      "radiusRaw": 786432,
+      "frictionRaw": 62259,
+      "weightRaw": 3276800,
+      "disappearRaw": 32768,
+      "reflectRaw": 65536,
+      "minimumNormalSpeedRaw": 78643,
+      "smallPeopleReflectMultiplierRaw": 78643
+    },
+    "constantEvidence": "0x1817d4220..43d0; friction0.95 via literal0x183164fa8/FP.FromString_UNSAFE, inline weight50,fade.5,reflect1,min1.1999969482,smallMultiplier1.1999969482. Resolver run on both cctors.",
+    "updateOrder": "waitActivate0x1817d3470 ->checkStall3580 ->frictionSpeedDown36b0 ->waitDisappear3810, including same-tick fade decrement if stall invokes inactive. Activation positive timer only; tick31 of1092 (30ticks leaves8), clamps0, copiesActiveVelo, writes Actor.AccelY(+68)=Frame.GetGravity,SetVisible(true). No dt multiplication on gravity in this component.",
+    "stall": "Only if not fading and stallByte!=0. abs(VeloY)<4: threshold2 for2..4,0 for5..8; threshold>signedcounter increments signedbyte else velocity0/inactive. abs(VeloY)>=4 resetscounter0.",
+    "friction": "Only not fading. manyPeople setsflagsbit1 before IsContacted(faceDown1,includeMap=true); absent clearsbit1; first smallPeople floorcontactsetsbit, subsequent contact scalesVeloX by62259. Actual native collision cache host required.",
+    "energy": "OnContacted0x1817d3bb8..3c4e: E=mul(mul(PreVeloY,PreVeloY),32768)-mul(PrePosY,g)+mul(PosY,g); VeloY=sign(currentVeloY)*FPSqrt(mul(E,131072)). Existing source-distanceconstraint-math.js exact LUT reused. Independent original asset sqrt28: q1835008,shift6,index28672,entry2774271 =>346783. Negative native sqrt domain refused.",
+    "mapReflection": "0x1817d3c68..3e54: projection=n*dot(n,velocity); if native length<78643 projection0; tangent=velocity-projection; result=tangent-projection*65536. If not fading andabs(n.y-65536)<4, velocity0/inactive. No guessed restitution.",
+    "actorReflection": "0x1817d3e59..413a: native target Actor/weight/Velo required; e=65536 for5..8 ormul(65536,78643) for2..4. u=dot(n,selfV),v=dot(n,targetV); native sign/magnitude separating predicate preserved includinglow64(u*v)&-65536. Out=FPDiv(mul(selfWeight-mul(targetWeight,e),u)+mul(mul(1+e,targetWeight),v),selfWeight+targetWeight). abs(out)<78643=>out0; keep tangent+normal*out. ResultY<-6FP PlaySe4. Not fading,targetlayer1or5,abs(resultY)<4 increments signedstallbyte.",
+    "event39": "0x1817d3a9c..3b17: actual Actor.PosX=Event.PositionX,keepY,Actor.Velo=(0,196608); if not alreadyfading inactive; returnint32=1 always. Even duringfade position/velocity overwrite, timer not reset. Otherevents delegatecommonActor.",
+    "inactiveAndExit": "0x1817d4150..4213: Actor.SetCollisionActive(false,owner=ballEntity),requestAnimationId2,componentisDisappear1,timer32768. Fade0x1817d3810 subtractdt;<=0 Actorflagsbit13 andclearisDisappear, retainnegative timer. Actual scene removal invokesOnExit0x1817d38d0->notify3930, resolvesactualpitcherandclearsballref unconditionally. Does not call BallPitcher.NotifyBallDisappeared failure/hint path."
+  },
+  "pitcherState": "0x1816b32c0: state0create+state1. state1 whileballrefnonzero waitsindefinitely. Once null, optionalmanager sendsEvent1 andSetPause(true,owner=manager), then state0. Nextcomponentupdate createsagain. No fixedperiod. Event13 storesmanager sender andSetPause(eventbyte+76),returns1;14 sets scale from+50;8sets scale104857;10speedmultiply(event+58 orfallback131072 ifabsraw<4) andincrementwaveorderbyte;11resetdefaultspeed/order0. OthereventscommonActor. Native NotifyBallDisappeared0x1816b4060 is uninvoked by dedicatedBoundBall path and not exposed as fakeexitbehavior.",
+  "hostContract": {
+    "shared": "Actual Frame/entity generations, Actor initialization/Update2/gravity/movement/outmap, SetVisible/SetCollisionActive owner semantics, pause, renderer, contact cache/normal and target resolution, collision allocation/scene, eventpool/Key.Creator remain existing shared cores or explicit synchronous hosts. ActorChanges are facts to apply in native order, not a second physics engine.",
+    "transaction": "Host transaction rolls back external entity allocation, scene/collider registration, ballreceiver, Key creation andeventpool as well as module. Direct low-levelbirth/update/contact/receive mutate actual records in native order and require caller transaction. Async birth hooks rejected.",
+    "ordering": "Wrapper beforeStep performs pitchers then ballUpdateEntityIds supplied in native visitation order. It must only be used when that order matches actual scene; otherwise integrate low-level callbacks individually. Missing selection orselectedActor refuses. afterStep contact list likewise must be actual orderedcallbacks, not recomputed AABB contacts.",
+    "box": "Frozen BallKeyBox read-only contract tested: event39actualsender/target; receiver changes actual ball andreturns1; Key creation follows receiver; box thenfade. External state rollback remains host responsibility."
+  },
+  "unresolved": [
+    "Shared runtime integration and actual scene callback traversal/registration not part of helperownership; completePhysicsFidelity=false, solids[] deliberately no fallback geometry.",
+    "Other angles compile throw; delayed stage creation compile throw; Laser/Wave/otherpitcher actor types excluded.",
+    "Native actual collision histories/weights/generations cannot be synthesized. Render and playability unverified; originalgame neverexecuted."
+  ],
+  "correctionHistory": [
+    "Two first-pass test expectation arithmetic errors corrected against independent native asset table/integer product: sqrt28=346783 (not346775); repeated0.95 frictionraw=591458 (not591456). Native algorithm didnotchange.",
+    "Actor activation writes actual accelerationRaw.yRaw correspondingActor+68, not a synthetic gravity scalar. Dedicated BoundBall exit clearsrefdirectly anddoesnot increment pitchfailurecounter."
+  ]
+}

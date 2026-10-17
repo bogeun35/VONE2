@@ -1,0 +1,62 @@
+
+== Collision.GetRect 0x181690610
+0x181690610 push rbp
+0x181690612 lea rbp, [rsp - 0x57]
+0x181690617 sub rsp, 0xd0
+0x18169061e xorps xmm0, xmm0
+0x181690621 movups xmmword ptr [rcx], xmm0
+0x181690624 movups xmmword ptr [rcx + 0x10], xmm0
+0x181690628 movups xmm1, xmmword ptr [rdx + 0xa8]
+0x18169062f movups xmm0, xmmword ptr [rdx + 0xb8]
+0x181690636 movups xmmword ptr [rcx], xmm1
+0x181690639 movups xmmword ptr [rcx + 0x10], xmm0
+0x18169063d mov rax, qword ptr [rdx + 0x80]
+0x181690644 sub qword ptr [rcx + 0x10], rax
+0x181690648 mov rax, qword ptr [rdx + 0x88]
+0x18169064f sub qword ptr [rcx + 0x18], rax
+0x181690653 movups xmm0, xmmword ptr [rdx + 0x70]
+0x181690657 movups xmm1, xmmword ptr [rcx + 0x10]
+0x18169065b movups xmmword ptr [rbp - 0x79], xmm0
+0x18169065f mov rax, qword ptr [rbp - 0x79]
+0x181690663 movups xmmword ptr [rbp - 0x19], xmm1
+0x181690667 imul rax, qword ptr [rbp - 0x19]
+0x18169066c movups xmmword ptr [rbp - 0x59], xmm0
+0x181690670 movups xmmword ptr [rbp + 7], xmm1
+0x181690674 movups xmm1, xmm0
+0x181690677 movups xmm0, xmmword ptr [rcx]
+0x18169067a sar rax, 0x10
+0x18169067e mov qword ptr [rbp - 0x69], rax
+0x181690682 mov rax, qword ptr [rbp - 0x51]
+0x181690686 imul rax, qword ptr [rbp + 0xf]
+0x18169068b movups xmmword ptr [rbp - 0x49], xmm1
+0x18169068f movups xmmword ptr [rbp + 0x17], xmm0
+0x181690693 movups xmm0, xmm1
+0x181690696 movups xmm1, xmmword ptr [rcx]
+0x181690699 sar rax, 0x10
+0x18169069d mov qword ptr [rbp - 0x61], rax
+0x1816906a1 mov rax, qword ptr [rbp - 0x49]
+0x1816906a5 imul rax, qword ptr [rbp + 0x1f]
+0x1816906aa movups xmmword ptr [rbp - 0x39], xmm0
+0x1816906ae movups xmmword ptr [rbp + 0x37], xmm1
+0x1816906b2 movups xmm1, xmmword ptr [rbp - 0x69]
+0x1816906b6 sar rax, 0x10
+0x1816906ba mov qword ptr [rbp - 0x71], rax
+0x1816906be mov rax, qword ptr [rbp - 0x31]
+0x1816906c2 imul rax, qword ptr [rbp + 0x37]
+0x1816906c7 sar rax, 0x10
+0x1816906cb mov qword ptr [rbp - 0x79], rax
+0x1816906cf movups xmm0, xmmword ptr [rbp - 0x79]
+0x1816906d3 movups xmmword ptr [rcx], xmm0
+0x1816906d6 movups xmmword ptr [rcx + 0x10], xmm1
+0x1816906da mov rax, qword ptr [rdx + 0x80]
+0x1816906e1 add qword ptr [rcx + 0x10], rax
+0x1816906e5 mov rax, qword ptr [rdx + 0x88]
+0x1816906ec add qword ptr [rcx + 0x18], rax
+0x1816906f0 mov rax, rcx
+0x1816906f3 add rsp, 0xd0
+0x1816906fa pop rbp
+0x1816906fb ret 
+0x1816906fc int3 
+0x1816906fd int3 
+0x1816906fe int3 
+0x1816906ff int3 

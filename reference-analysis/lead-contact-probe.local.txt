@@ -1,0 +1,141 @@
+
+== Collision.IsContacted 0x1816927a0
+0x1816927a0 mov byte ptr [rsp + 0x20], r9b
+0x1816927a5 mov qword ptr [rsp + 8], rcx
+0x1816927aa push rbp
+0x1816927ab push rdi
+0x1816927ac push r12
+0x1816927ae push r15
+0x1816927b0 sub rsp, 0x68
+0x1816927b4 cmp byte ptr [rip + 0x1cc7e3b], 0
+0x1816927bb mov r12, r8
+0x1816927be mov rbp, rdx
+0x1816927c1 mov rdi, rcx
+0x1816927c4 jne 0x181692811
+0x1816927c6 lea rcx, [rip + 0x1b2ffc3]
+0x1816927cd call 0x1802c5dc0 ; 
+0x1816927d2 lock or dword ptr [rsp], 0
+0x1816927d7 lea rcx, [rip + 0x1b2fefa]
+0x1816927de call 0x1802c5dc0 ; 
+0x1816927e3 lock or dword ptr [rsp], 0
+0x1816927e8 lea rcx, [rip + 0x1b2ff31]
+0x1816927ef call 0x1802c5dc0 ; 
+0x1816927f4 lock or dword ptr [rsp], 0
+0x1816927f9 lea rcx, [rip + 0x1b2ff10]
+0x181692800 call 0x1802c5dc0 ; 
+0x181692805 lock or dword ptr [rsp], 0
+0x18169280a mov byte ptr [rip + 0x1cc7de5], 1
+0x181692811 mov qword ptr [rsp + 0xa0], rbx
+0x181692819 xor r15b, r15b
+0x18169281c mov qword ptr [rsp + 0x60], rsi
+0x181692821 mov qword ptr [rsp + 0x58], r13
+0x181692826 mov qword ptr [rsp + 0x50], r14
+0x18169282b test rbp, rbp
+0x18169282e je 0x1816929bf
+0x181692834 xor edx, edx
+0x181692836 mov rcx, rbp
+0x181692839 call 0x18174a4a0 ; Frame.GetCollisionScene
+0x18169283e cmp byte ptr [rip + 0x1cc7da2], r15b
+0x181692845 mov qword ptr [rsp + 0x98], rax
+0x18169284d jne 0x181692867
+0x18169284f lea rcx, [rip + 0x1b3009a]
+0x181692856 call 0x1802c5dc0 ; 
+0x18169285b lock or dword ptr [rsp], 0
+0x181692860 mov byte ptr [rip + 0x1cc7d80], 1
+0x181692867 mov r9, qword ptr [rip + 0x1b2fe6a]
+0x18169286e lea rcx, [rsp + 0x40]
+0x181692873 mov r8d, dword ptr [rdi + 8]
+0x181692877 mov rdx, rbp
+0x18169287a call 0x180005a50 ; 
+0x18169287f xor ebx, ebx
+0x181692881 movups xmm0, xmmword ptr [rax]
+0x181692884 movq rax, xmm0
+0x181692889 movups xmmword ptr [rsp + 0x20], xmm0
+0x18169288e test rax, rax
+0x181692891 je 0x1816929bf
+0x181692897 mov r14d, dword ptr [rax]
+0x18169289a test r14d, r14d
+0x18169289d jle 0x18169296c
+0x1816928a3 mov rsi, qword ptr [rsp + 0xb8]
+0x1816928ab movzx r13d, byte ptr [rsp + 0xb0]
+0x1816928b4 nop dword ptr [rax]
+0x1816928b8 nop dword ptr [rax + rax]
+0x1816928c0 mov r8, qword ptr [rip + 0x1b2fe59]
+0x1816928c7 lea rcx, [rsp + 0x20]
+0x1816928cc mov edx, ebx
+0x1816928ce call 0x180035970 ; 
+0x1816928d3 mov rdx, rax
+0x1816928d6 test rax, rax
+0x1816928d9 je 0x1816929bf
+0x1816928df movups xmm1, xmmword ptr [r12]
+0x1816928e4 movups xmm0, xmmword ptr [rax + 8]
+0x1816928e8 movups xmmword ptr [rsp + 0x30], xmm1
+0x1816928ed mov rcx, qword ptr [rsp + 0x30]
+0x1816928f2 movups xmmword ptr [rsp + 0x40], xmm0
+0x1816928f7 cmp qword ptr [rsp + 0x40], rcx
+0x1816928fc jne 0x181692954
+0x1816928fe movups xmmword ptr [rsp + 0x40], xmm1
+0x181692903 mov rax, qword ptr [rsp + 0x48]
+0x181692908 movups xmmword ptr [rsp + 0x30], xmm0
+0x18169290d cmp qword ptr [rsp + 0x38], rax
+0x181692912 jne 0x181692954
+0x181692914 mov r15b, 1
+0x181692917 test r13b, r13b
+0x18169291a je 0x181692997
+0x18169291c mov rcx, qword ptr [rip + 0x1b2fe6d]
+0x181692923 mov edi, dword ptr [rdx + 4]
+0x181692926 cmp dword ptr [rcx + 0xe0], 0
+0x18169292d jne 0x181692934
+0x18169292f call 0x1802ec040 ; 
+0x181692934 mov rcx, qword ptr [rsp + 0x98]
+0x18169293c xor r9d, r9d
+0x18169293f mov r8d, edi
+0x181692942 mov rdx, rbp
+0x181692945 call 0x1817f6940 ; CollisionSceneComponent.GetCollisionById
+0x18169294a test rax, rax
+0x18169294d je 0x181692954
+0x18169294f movzx eax, byte ptr [rax]
+0x181692952 or byte ptr [rsi], al
+0x181692954 inc ebx
+0x181692956 cmp ebx, r14d
+0x181692959 jl 0x1816928c0
+0x18169295f test r15b, r15b
+0x181692962 jne 0x181692997
+0x181692964 mov rdi, qword ptr [rsp + 0x90]
+0x18169296c cmp byte ptr [rsp + 0xa8], 0
+0x181692974 je 0x1816929bb
+0x181692976 movups xmm0, xmmword ptr [r12]
+0x18169297b xor r9d, r9d
+0x18169297e lea r8, [rsp + 0x40]
+0x181692983 mov rdx, rbp
+0x181692986 mov rcx, rdi
+0x181692989 movaps xmmword ptr [rsp + 0x40], xmm0
+0x18169298e call 0x181692b70 ; Collision.IsContactedMap
+0x181692993 test al, al
+0x181692995 je 0x1816929bb
+0x181692997 mov al, 1
+0x181692999 mov r14, qword ptr [rsp + 0x50]
+0x18169299e mov r13, qword ptr [rsp + 0x58]
+0x1816929a3 mov rsi, qword ptr [rsp + 0x60]
+0x1816929a8 mov rbx, qword ptr [rsp + 0xa0]
+0x1816929b0 add rsp, 0x68
+0x1816929b4 pop r15
+0x1816929b6 pop r12
+0x1816929b8 pop rdi
+0x1816929b9 pop rbp
+0x1816929ba ret 
+0x1816929bb xor al, al
+0x1816929bd jmp 0x181692999 ; 
+0x1816929bf call 0x18032a5e0 ; 
+0x1816929c4 int3 
+0x1816929c5 int3 
+0x1816929c6 int3 
+0x1816929c7 int3 
+0x1816929c8 int3 
+0x1816929c9 int3 
+0x1816929ca int3 
+0x1816929cb int3 
+0x1816929cc int3 
+0x1816929cd int3 
+0x1816929ce int3 
+0x1816929cf int3 

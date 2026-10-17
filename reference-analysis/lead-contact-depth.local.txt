@@ -1,0 +1,188 @@
+
+== Collision.GetContactRecursiveMax 0x181695110
+0x181695110 mov dword ptr [rsp + 0x20], r9d
+0x181695115 push rbx
+0x181695116 push rsi
+0x181695117 push r12
+0x181695119 push r13
+0x18169511b push r15
+0x18169511d sub rsp, 0xb0
+0x181695124 cmp byte ptr [rip + 0x1cc54d8], 0
+0x18169512b mov r13, r8
+0x18169512e mov r12, rdx
+0x181695131 mov rbx, rcx
+0x181695134 jne 0x181695192
+0x181695136 lea rcx, [rip + 0x1b2d653]
+0x18169513d call 0x1802c5dc0 ; 
+0x181695142 lock or dword ptr [rsp], 0
+0x181695147 lea rcx, [rip + 0x1b2d58a]
+0x18169514e call 0x1802c5dc0 ; 
+0x181695153 lock or dword ptr [rsp], 0
+0x181695158 lea rcx, [rip + 0x1b213e9]
+0x18169515f call 0x1802c5dc0 ; 
+0x181695164 lock or dword ptr [rsp], 0
+0x181695169 lea rcx, [rip + 0x1b2d5b0]
+0x181695170 call 0x1802c5dc0 ; 
+0x181695175 lock or dword ptr [rsp], 0
+0x18169517a lea rcx, [rip + 0x1b2d58f]
+0x181695181 call 0x1802c5dc0 ; 
+0x181695186 lock or dword ptr [rsp], 0
+0x18169518b mov byte ptr [rip + 0x1cc5471], 1
+0x181695192 xor esi, esi
+0x181695194 mov qword ptr [rsp + 0xe0], rbp
+0x18169519c xor r15d, r15d
+0x18169519f mov qword ptr [rsp + 0xa8], rdi
+0x1816951a7 mov qword ptr [rsp + 0xa0], r14
+0x1816951af mov dword ptr [rsp + 0xe8], esi
+0x1816951b6 test r12, r12
+0x1816951b9 je 0x1816953da
+0x1816951bf xor edx, edx
+0x1816951c1 mov rcx, r12
+0x1816951c4 call 0x18174a4a0 ; Frame.GetCollisionScene
+0x1816951c9 cmp byte ptr [rip + 0x1cc5417], sil
+0x1816951d0 mov qword ptr [rsp + 0x38], rax
+0x1816951d5 jne 0x1816951ee
+0x1816951d7 lea rcx, [rip + 0x1b2d712]
+0x1816951de call 0x1802c5dc0 ; 
+0x1816951e3 lock or dword ptr [rsp], esi
+0x1816951e7 mov byte ptr [rip + 0x1cc53f9], 1
+0x1816951ee mov r9, qword ptr [rip + 0x1b2d4e3]
+0x1816951f5 lea rcx, [rsp + 0x90]
+0x1816951fd mov r8d, dword ptr [rbx + 8]
+0x181695201 mov rdx, r12
+0x181695204 call 0x180005a50 ; 
+0x181695209 xor edi, edi
+0x18169520b movups xmm0, xmmword ptr [rax]
+0x18169520e movq r14, xmm0
+0x181695213 movups xmmword ptr [rsp + 0x50], xmm0
+0x181695218 test r14, r14
+0x18169521b je 0x1816953da
+0x181695221 mov eax, dword ptr [r14]
+0x181695224 mov dword ptr [rsp + 0x30], eax
+0x181695228 test eax, eax
+0x18169522a jle 0x1816953ae
+0x181695230 mov rbp, qword ptr [rsp + 0x58]
+0x181695235 nop word ptr [rax + rax]
+0x181695240 cmp byte ptr [rip + 0x1cc18ca], 0
+0x181695247 mov rsi, qword ptr [rip + 0x1b2d4d2]
+0x18169524e jne 0x181695272
+0x181695250 lea rcx, [rip + 0x1b35529]
+0x181695257 call 0x1802c5dc0 ; 
+0x18169525c lock or dword ptr [rsp], 0
+0x181695261 mov rbp, qword ptr [rsp + 0x58]
+0x181695266 mov r14, qword ptr [rsp + 0x50]
+0x18169526b mov byte ptr [rip + 0x1cc189f], 1
+0x181695272 test rbp, rbp
+0x181695275 je 0x18169540d
+0x18169527b cmp edi, dword ptr [r14]
+0x18169527e jae 0x1816953e0
+0x181695284 movsd xmm0, qword ptr [r14 + 4]
+0x18169528a mov r8, rbp
+0x18169528d mov r9d, dword ptr [r14 + 0xc]
+0x181695291 movsd qword ptr [rsp + 0x40], xmm0
+0x181695297 mov dword ptr [rsp + 0x48], r9d
+0x18169529c call 0x1800255c0 ; 
+0x1816952a1 mov ecx, dword ptr [rsp + 0x44]
+0x1816952a5 mov rbx, rax
+0x1816952a8 imul ecx, edi
+0x1816952ab movsxd rcx, ecx
+0x1816952ae add rbx, rcx
+0x1816952b1 je 0x1816953da
+0x1816952b7 mov rcx, qword ptr [rip + 0x1b2d4d2]
+0x1816952be mov esi, dword ptr [rbx + 4]
+0x1816952c1 cmp dword ptr [rcx + 0xe0], 0
+0x1816952c8 jne 0x1816952cf
+0x1816952ca call 0x1802ec040 ; 
+0x1816952cf mov rcx, qword ptr [rsp + 0x38]
+0x1816952d4 xor r9d, r9d
+0x1816952d7 mov r8d, esi
+0x1816952da mov rdx, r12
+0x1816952dd call 0x1817f6940 ; CollisionSceneComponent.GetCollisionById
+0x1816952e2 mov r10, rax
+0x1816952e5 test rax, rax
+0x1816952e8 je 0x18169539b
+0x1816952ee movzx ecx, byte ptr [rax + 1]
+0x1816952f2 mov edx, 1
+0x1816952f7 mov r8d, dword ptr [rsp + 0xf8]
+0x1816952ff and ecx, 0x1f
+0x181695302 shl edx, cl
+0x181695304 movsxd rdx, edx
+0x181695307 test r8, rdx
+0x18169530a je 0x18169539b
+0x181695310 movups xmm1, xmmword ptr [r13]
+0x181695315 movups xmm0, xmmword ptr [rbx + 8]
+0x181695319 movups xmmword ptr [rsp + 0x60], xmm1
+0x18169531e mov rax, qword ptr [rsp + 0x60]
+0x181695323 movups xmmword ptr [rsp + 0x70], xmm0
+0x181695328 cmp qword ptr [rsp + 0x70], rax
+0x18169532d jne 0x18169539b
+0x18169532f movups xmmword ptr [rsp + 0x70], xmm1
+0x181695334 mov rax, qword ptr [rsp + 0x78]
+0x181695339 movups xmmword ptr [rsp + 0x60], xmm0
+0x18169533e cmp qword ptr [rsp + 0x68], rax
+0x181695343 jne 0x18169539b
+0x181695345 mov r9d, r8d
+0x181695348 movaps xmmword ptr [rsp + 0x80], xmm1
+0x181695350 mov esi, 1
+0x181695355 mov qword ptr [rsp + 0x20], 0
+0x18169535e lea r8, [rsp + 0x80]
+0x181695366 mov dword ptr [rsp + 0xe8], esi
+0x18169536d mov rdx, r12
+0x181695370 mov rcx, r10
+0x181695373 call 0x181695110 ; Collision.GetContactRecursiveMax
+0x181695378 mov rcx, qword ptr [rip + 0x1b211c9]
+0x18169537f mov ebx, eax
+0x181695381 cmp dword ptr [rcx + 0xe0], 0
+0x181695388 jne 0x18169538f
+0x18169538a call 0x1802ec040 ; 
+0x18169538f cmp r15d, ebx
+0x181695392 cmovge ebx, r15d
+0x181695396 mov r15d, ebx
+0x181695399 jmp 0x1816953a2 ; 
+0x18169539b mov esi, dword ptr [rsp + 0xe8]
+0x1816953a2 inc edi
+0x1816953a4 cmp edi, dword ptr [rsp + 0x30]
+0x1816953a8 jl 0x181695240
+0x1816953ae mov r14, qword ptr [rsp + 0xa0]
+0x1816953b6 lea eax, [r15 + rsi]
+0x1816953ba mov rdi, qword ptr [rsp + 0xa8]
+0x1816953c2 mov rbp, qword ptr [rsp + 0xe0]
+0x1816953ca add rsp, 0xb0
+0x1816953d1 pop r15
+0x1816953d3 pop r13
+0x1816953d5 pop r12
+0x1816953d7 pop rsi
+0x1816953d8 pop rbx
+0x1816953d9 ret 
+0x1816953da call 0x18032a5e0 ; 
+0x1816953df int3 
+0x1816953e0 lea rcx, [rip + 0x1acd3f9]
+0x1816953e7 call 0x1802fe900 ; 
+0x1816953ec mov rcx, rax
+0x1816953ef call 0x18032a5a0 ; 
+0x1816953f4 xor edx, edx
+0x1816953f6 mov rcx, rax
+0x1816953f9 mov rbx, rax
+0x1816953fc call 0x181487850 ; 
+0x181695401 mov rdx, rsi
+0x181695404 mov rcx, rbx
+0x181695407 call 0x18032a5b0 ; 
+0x18169540c int3 
+0x18169540d lea rcx, [rip + 0x1b01c6c]
+0x181695414 call 0x1802fe900 ; 
+0x181695419 mov rcx, rax
+0x18169541c call 0x18032a5a0 ; 
+0x181695421 xor edx, edx
+0x181695423 mov rcx, rax
+0x181695426 mov rbx, rax
+0x181695429 call 0x18148e2f0 ; 
+0x18169542e mov rdx, rsi
+0x181695431 mov rcx, rbx
+0x181695434 call 0x18032a5b0 ; 
+0x181695439 int3 
+0x18169543a int3 
+0x18169543b int3 
+0x18169543c int3 
+0x18169543d int3 
+0x18169543e int3 
+0x18169543f int3 

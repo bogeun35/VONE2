@@ -1,0 +1,401 @@
+{
+  "schemaVersion": 2,
+  "devices": [
+    "LinePathGear"
+  ],
+  "module": "source-linepathgear-devices.js",
+  "status": "native_numeric_core_complete_runtime_unregistered",
+  "settledOn": "2026-10-13",
+  "nativeCodeExecuted": false,
+  "binary": "D:/SteamLibrary/steamapps/common/PICO PARK 2/GameAssembly.dll, image base0x180000000",
+  "summary": "경로를 따라 왕복하는 원형 톱니 장치. 실제 두 스테이지의 모든 인원별 경로 길이·좌표 보간·왕복 끝점 전이·회전 숫자 코어와 Actor.SetPosForce 적용 계획을 완성했다. 공용 Actor/원형 충돌/phase dispatcher는 리드·보조1의 별도 연결 범위이며, 등록된 플레이 가능 스테이지를 주장하지 않는다.",
+  "creator": {
+    "ordinal": 153,
+    "delegateSite": "0x181776daf",
+    "address": "0x181876b50",
+    "separateFromGear": true,
+    "sequence": "Initialize0x181876c49, Parse0x181876c5a, InitCollision0x181876c6b, QLinePath.Initialize0x181876cbb (pathLoop=false)"
+  },
+  "fields": {
+    "rawOffsets": {
+      "m_Flags": 0,
+      "m_AbsLoop": 4,
+      "m_EnableLine": 8,
+      "m_IsStandby": 12,
+      "m_Return": 16,
+      "m_PathPositionsPtr": 20,
+      "m_EntityRef": 24,
+      "m_Angle": 32,
+      "m_EndPointYOffset": 40,
+      "m_Speed": 48,
+      "m_Timer": 56,
+      "m_Dir": 64,
+      "m_PrePos": 80
+    },
+    "source": "quantum-field-offsets.json; instance IL2CPP offset minus16"
+  },
+  "parameters": {
+    "0": "signed int slot, >0 gives dirX=-65536, else+65536 (0x181876f6f,0x18187703f..59). dirY remains0. OnUpdate does not read it.",
+    "1": "absolute FP base speed when magnitude>=4, otherwise Gear.SPEED=65536 (0x181877064..71,0x181876d6e,0x1818536ca)",
+    "2": "signed int !=0 gives standby=true (0x181876fc5,0x1818770e9..f1)",
+    "3": "seven signed64 FP speed additions; DIRECT current playerActorCount-2 indexing. Zero means zero addition, no downward fallback. Negative resulting speed is not clamped (0x181877037,0x18187709f..e5)",
+    "5": "signed int>0 sets loop bit1; exactly2 sets absLoop (0x1818772b8..d5)",
+    "6": "signed int==1 enables guide line (0x1818772d8..2ff)",
+    "7..26": "ten FP x/y pairs maximum, first(0,0) ends list (0x18187713f..15d;0x1817868e6..8f2)",
+    "27": "direct indexed FP endpointYOffset added only to final authored path point's Y, only if paths exist (0x181877178..1d4,0x18187723c..29e)",
+    "others": "not read by this component ParseParameter"
+  },
+  "fixedPoint": {
+    "loader": "float32 authored f -> convertFP0x180554310 -> FromString0x180554373 -> float32 conversion0x18163fd46 -> float32 multiply0x18163fc6d -> trunc0x18163fc7e",
+    "intSlots": "sar16 then low32 signed int",
+    "tables": "low UTF16 byte minus0x21; seven little-endian signed64 values; wrong width/nonstring/empty becomes all zero (0x18096f80c..81d,0x18096f933,0x18096fcb1..fd0a)",
+    "representation": "safe integer raw restrictions are explicit JS guards; full unrestricted64-bit state not supported"
+  },
+  "nativeTraversal": {
+    "address": "OnUpdate0x1818774e0",
+    "delta": "timer+=Frame.DeltaTime*speed>>16 (0x181877588..596)",
+    "progress": "clamp((timer<<16)/QLinePath.m_TotalLengthWS,0,65536); nonpositive length gives0 (0x18187759a..5c6)",
+    "direction": "return=0 uses progress, return>0 uses65536-progress (0x1818775cb..5d9)",
+    "position": "QLinePath.GetPathPosition0x1818775e9 -> initialActorPosition+offset0x181877631..640 -> Actor.SetPosForce0x181877650",
+    "endpoint": "at clamped progress65536, timer resets0, overshoot discarded, return toggles. Continue iff loop&&(absLoop||oldReturn==0); else standby=true (0x181877655..682)",
+    "modeMeaning": "0/no positive loop: stop at far end. Positive mode except2: go out then return and stop.2: repeat ping-pong. absLoop does NOT close QLinePath geometry; Creator passes pathLoop=false.",
+    "primitiveScope": "advanceTraversal은 기존 fraction primitive를 유지하고, updatePosition이 컴파일된 실제 path.totalLengthWSRaw와 pathPosition을 사용해 actual Actor.initPos 기준 위치를 산출한다. beforeStep은 그 위치의 SetPosForce 계획을 반환한다.",
+    "overflowCorrection": "ratio numerator shift16는 now native signed64 low-bit shift 후 idiv. R1은 무한정밀 numerator 사용; 실제 두 스테이지 범위의 결과는 동일."
+  },
+  "collision": {
+    "evidence": "Gear.COLLISION_CIRCLE reused at0x1818773cf/3da, attribute0x18187742d; Gear.cctor0x1818536ba,0x1818536f6/723/755/769; Actor.CreateCollision shape1 at0x18169f694",
+    "contacted": "contactType1, existing Actor, otherLayer1 -> targeted event43,causeDead0 (0x181877941..9af; event pool reset0x181780c31). 반복 콜백 전달 유지.",
+    "collided": "otherLayer1, existing Player, Player.m_PlayerState raw+3==1 -> targeted event43,causeDead0 (0x181877a20..ab3).",
+    "solids": "숫자 compile 후에도 AABB solids는 빈 목록. 실제 circle response/contact graph는 보조1·리드 소유.",
+    "descriptor": {
+      "shape": "circle",
+      "radiusRaw": 2949120,
+      "xRaw": -131072,
+      "yRaw": -3145728,
+      "layer": 8,
+      "pushBackTarget": 0,
+      "isEnableSyncPos": true
+    },
+    "correction": "R1 attribute8/otherAttribute는 잘못된 필드명. Collision.m_Layer는 raw byte+1. LinePathGear는 CreateCollision r9b0이라 pushBackTarget0이며 일반 Gear의3을 복사하지 않는다(0x18187740a/40d..423; Collision.initialize0x181690b08)."
+  },
+  "rotation": {
+    "address": "OnPost0x1818776fa->rotate0x181877710; standby does not suppress rotate",
+    "formula": "actual postActor world displacement squared with sar16 and native FPSqrt0x1818777a9..7bc; if distance magnitude>=4, direction=-1 iff previousX<currentX; distance/(radius*411774>>16)*direction*411774*3754936 with FP truncation (0x1818777d7..84e), then save current position0x18187785c",
+    "implementation": "source-linepathgear-path.js.rotatePost 완성. complete native sqrt와 signed64 FP 연산을 사용하며 afterStep이 실제 post-Actor xRaw/yRaw를 요구한다. standby 장치도 회전 갱신. 첫 prePos(0,0)부터 원작처럼 계산한다."
+  },
+  "shippedValues": {
+    "st_w_15_01": {
+      "gearCount": 3,
+      "positions": [
+        [
+          110,
+          480
+        ],
+        [
+          2832,
+          144
+        ],
+        [
+          2832,
+          240
+        ]
+      ],
+      "baseSpeedRaws": [
+        229376,
+        262144,
+        262144
+      ],
+      "standby": [
+        false,
+        true,
+        true
+      ],
+      "gear2and3SpeedAdditionsBy2to8": [
+        0,
+        0,
+        0,
+        0,
+        -19660,
+        -98304,
+        -117964
+      ],
+      "paths": [
+        [
+          [
+            800,
+            0
+          ],
+          [
+            800,
+            -350
+          ]
+        ],
+        [
+          [
+            -1104,
+            0
+          ],
+          [
+            -1104,
+            300
+          ]
+        ],
+        [
+          [
+            -1008,
+            0
+          ],
+          [
+            -1008,
+            204
+          ]
+        ]
+      ],
+      "allMode": 2,
+      "allEnableLine": true
+    },
+    "st_l_04_02": {
+      "gearCount": 1,
+      "position": [
+        120,
+        168
+      ],
+      "speedRaw": 170393,
+      "authoredSpeed": 2.6,
+      "authoredPaths": [
+        [
+          1464,
+          0
+        ],
+        [
+          1464,
+          528
+        ]
+      ],
+      "lastYAdditionsBy2to8": [
+        0,
+        0,
+        -3145728,
+        -3145728,
+        -3145728,
+        -6291456,
+        -6291456
+      ],
+      "mode": 2,
+      "enableLine": true
+    },
+    "guideLineWidthRaw": 4915,
+    "guideEvidence": "cctor0x181877bca..bdd, metadata literal0x1831c3b78='0.075' decoded by resolve-string-literals.local.py"
+  },
+  "verification": {
+    "unitTests": "45/45 passed: node --test source-migration/source-linepathgear-devices.test.cjs",
+    "realData": "실제15-1 및 라이트4-2를 selectVariant(...,count,true)로2..8 모두 컴파일.21 world gears+7 light gears.",
+    "nativeOracle": "설치 LUT를 직접 읽는 독립 test oracle; production helper 함수 호출로 expected를 생성하지 않음. 모든 작은 q와 큰 signed64 경계 검증.",
+    "realPaths": "14개 stage/population 조합의28개 장치를 왕복2회씩 전 틱 계산. 독립 길이/보간/각도/상태와 일치; 고정 golden totalLength/WS 배열도 검증.",
+    "hostPlans": "SetPosForce의Actor+collision current/prePos,bit6 clear, valid/null ref 분기; missing host snapshot에서 atomic refusal; 실제 post movement 회전 및standby 회전; JSON 재현.",
+    "browser": "require/설치 파일/network 없는vm에서 math->path->device UMD 로드 및 실제 라이트8인compile 성공.",
+    "fullSuite": "655 tests,653 passed,2 failed. 다른 세션 source-searchlight-devices.test.cjs:50,57의 fade 상태 테스트2건. 타 소유 파일 수정하지 않음.",
+    "limits": "테스트의 rail-only positions는 컴포넌트 수학 검증을 위한 순수 입력. generic Actor acceleration/Map.Move/circle response 또는 전체 playable route의 검증으로 주장하지 않음."
+  },
+  "integration": {
+    "status": "장치 숫자 코어 완료, 공용 runtime 미등록",
+    "compile": "compile(actors,count,{chipSize:실제 mapInitParam.chipSize}); 실제 두 스테이지2..8 모두 성공. chipSize가 없으면 정확한 입력 사유로 거부. nativeActorBridge:true 등 임의boolean은 실제 호스트 연결 증거가 아님.",
+    "scripts": [
+      "source-distanceconstraint-math.js",
+      "source-linepathgear-path.js",
+      "source-linepathgear-devices.js"
+    ],
+    "beforeStep": "exact dtRaw; actorSnapshots with actorId,initXRaw/initYRaw,collisionSlots[{valid,collision:null|{id,flags}}]. positionPlans를 native OnUpdate 즉시 적용. 정상 입력 모두 검증 후 device state commit. 미구현 callback을 호출하거나 true로 우회하지 않음.",
+    "afterStep": "actual post-Actor pixel FP xRaw/yRaw snapshots. every scheduled device, includingstandby, at native LinePathGear.OnPost. Actor/Collision phase order must be supplied by lead.",
+    "contactCallbacks": "보조1 circle response/리드 collision graph의 정확한 순서에서 contacted/collided를 호출. otherLayer 사용. event43CauseDead0 처리/공통Actor event 위임은 호스트 책임.",
+    "ownership": "보조1 Gear/원형 response, 보조3 DistanceConstraint/math, 리드 common Map.Move/contact/inertia/runtime. 타 소유 파일은 수정하지 않음. 이전 SwitchTargetGroup도 수정하지 않음.",
+    "stageCompilesAlone": "숫자 모듈은14/14 인원선택compile. 전체15-1/라이트4-2 runtime playable은아님; 공용상태/충돌/정확한phase연결필요."
+  },
+  "unresolved": [
+    "실제 공용 Actor.SetPosForce plan 적용, Map.Move/contact/inertia 및 generic Actor pause/warp/acceleration phase와 native delegate 순서의 runtime 연결(리드 소유).",
+    "원형 response/contact normal/cache 및 콜백 순서의 실제 runtime 공급(보조1·리드 소유). full sqrt와 path numeric core는 더 이상 미확정 아님.",
+    "event43CauseDead0의 Player/SharedHP 수신과 비61 공통Actor 처리 연결. 코드가 instant-death나 input stage playable을 임의 주장하지 않음.",
+    "안전 정수 범위 밖 FP state/result는 명시적 거부. supplied chipSize는 실제 authored 값이어야 함; 임의 camera matrix 변형을 지원한다고 주장하지 않음.",
+    "원작 실행/사람 side-by-side/등록된 전체 route 검증/배포/커밋/푸시 없음."
+  ],
+  "corrections": [
+    "R2: 전체 native FPSqrt65537 항목 복원된 dependency를 재사용하고 직접 설치 LUT와 검증. R1 sparse/미확정 sqrt 거부 제거.",
+    "R2: authored pixel Actor 좌표와 Camera.ViewMatrix world-space length를 분리하여 QLinePath 총길이·보간 완성. 숫자 compile은 actual chipSize로 성공.",
+    "R2: R1 attribute8/otherAttribute는 Collision.m_Layer를 잘못 부른 것. layer8/otherLayer로 정정. 일반Gear pushBackTarget3과달리 LinePathGear 자체 native argument는0.",
+    "R2: event pool CauseDead0 초기화 근거0x181780c31를 반영해 event43 payload에causeDead0 추가.",
+    "R2: OnPost actual movement rotation과 Actor.SetPosForce current/prePos·collision bit6 계약 완성. 기존 R1 미구현 문구는 previousPass에만 보존.",
+    "R2: FP ratio shift16를 signed low64/idiv로 정정; 실제 shipped-safe range 결과 유지."
+  ],
+  "previousPass": {
+    "status": "partial_analysis_primitives_tested_active_compile_refused",
+    "verification": {
+      "unitTests": "node --test source-migration/source-linepathgear-devices.test.cjs:23/23 passed",
+      "realData": "installed-stage-decoded.local.json, selectVariant(...,count,true),2..8 for both shipped stages;21 world gears+7 light gears exact parameters",
+      "transitions": "Explicit diagnostic length2 raw units at actual gear1 speed3.5 and deltaRaw1092: endpoint tick35, previous timer129948, discard overshoot; mode1 stops after return, mode2 continues; pause keeps timer;61 toggle resumes;negative speed and nonpositive length do not reach endpoint",
+      "contacts": "native attribute/category/existence/playerState conditions checked,43 retained as targeted event and never fabricated kill",
+      "runtimeGuards": "active compile refuses all actual counts, even nativeActorBridge:true/callback options; forged active snapshots refuse all hooks; empty module inert and JSON serializable",
+      "fullSuite": "node --test source-migration/*.test.cjs failed in10 other-session tests:6 source-distanceconstraint-devices.test.cjs,4 source-gear-devices.test.cjs. Those files were not modified. No failures in the23 LinePathGear tests."
+    },
+    "unresolved": [
+      "QLinePath world-space total length and path position conversion with complete native FPSqrt table. No guessed Math.sqrt or fake callback used to open stages.",
+      "Actor.SetPosForce and native circle collision discovery/callback ordering; exact collision masks/flags from resource/default initialize remain outside this descriptor.",
+      "OnPost rotation depends on actual world positions and verified native sqrt. Formula recovered, implementation not attached.",
+      "Actor shared lifecycle/events and recipient Player event43 immortality/life handling are common runtime responsibilities.",
+      "Full signed64 FP value ranges beyond JavaScript safe integers are refused. Diagnostic ratio assumes a safely representable quotient; it is not unrestricted native overflow emulation.",
+      "No registered runtime, gameplay route, human comparison, deploy, commit or push. Active compile refusal: LinePathGear requires verified QLinePath world-space length/position, Actor.SetPosForce and native circle collision callbacks; active stage compilation is not implemented."
+    ],
+    "rotation": {
+      "address": "OnPost0x1818776fa->rotate0x181877710; standby does not suppress rotate",
+      "formula": "actual postActor world displacement squared with sar16 and native FPSqrt0x1818777a9..7bc; if distance magnitude>=4, direction=-1 iff previousX<currentX; distance/(radius*411774>>16)*direction*411774*3754936 with FP truncation (0x1818777d7..84e), then save current position0x18187785c",
+      "implementation": "source-linepathgear-path.js.rotatePost 완성. complete native sqrt와 signed64 FP 연산을 사용하며 afterStep이 실제 post-Actor xRaw/yRaw를 요구한다. standby 장치도 회전 갱신. 첫 prePos(0,0)부터 원작처럼 계산한다."
+    },
+    "integration": {
+      "status": "partial; no runtime registration requested or performed",
+      "leadWork": "QLinePath.Initialize/GetPathPosition uses native sqrt and camera coordinate transform (0x1816dd170,0x1816dd27f/2ab,0x1816dd53c); native Actor.SetPosForce and postmovement circle contacts required. Receiver43 owns life/immortality. Confirm parser count equals native Frame.GetPlayerActorCount at creation.",
+      "ownership": "Gear is auxiliary1, DistanceConstraint auxiliary3, common move-contact/runtime lead. Existing linepath/gear/switchtargetgroup/common modules unchanged.",
+      "stageCompilesAlone": "No. All active LinePathGear compile calls intentionally throw. 15-1 remains blocked; a decoded device is not a playable stage."
+    }
+  },
+  "helper": "source-linepathgear-path.js",
+  "moduleDependencies": [
+    "source-distanceconstraint-math.js",
+    "source-linepathgear-path.js"
+  ],
+  "nativeMath": {
+    "dependency": "source-distanceconstraint-math.js (보조3 소유, 읽기/재사용만)",
+    "source": "resources.assets body11384408, 65537 int32 entries,262148 bytes",
+    "sha256": "de5265f651730f20b54cc24bdcd3047e61320be44a5ae54796d290a189f4bca5",
+    "verification": "테스트에서 설치본 LUT를 직접 읽어 SHA256과 모든 q=0..65536 결과, signed64 bit boundaries를 독립 명령식 oracle과 비교. sqrt 미확정 거부 제거.",
+    "numericRules": "FP product low64 then signed sar16; division signed low64 numerator shift16 then idiv; exact safe Number outputs only"
+  },
+  "coordinates": {
+    "actor": "ActorFactory/AddActor/SetInitPos가 authored pixel FP를 그대로 복사한다(0x1816a3351..373,0x1816a73c7..3ee,0x18169d2ca..2d6). initial/current/pre position에 chip reciprocal을 적용하지 않는다.",
+    "pathTotal": "QLinePath.Initialize0x1816dd138..178: origin->point1->point2 등의 각 pixel vector 길이를 native sqrt로 계산해 합한다. LinePathGear Creator는 pathLoop=false.",
+    "worldTotal": "합한 전체 길이를 벡터(totalLength,0,0)로 만들고 Camera.ViewMatrix(raw0x130) 변환 후 다시 native sqrt(0x1816dd219..2b8). Camera.Initialize0x1817df592/5bc의 view scale은(+trunc(65536/chipSize),-trunc(65536/chipSize)); 실제 chipSize48에서+/-1365. 정확한 total/chipSize 또는 world segment length의 합으로 대체하면 틀린다.",
+    "matrix": "homogeneous matrix multiply0x181644610..7cd, initialize matrix translation0/w1. setCameraPosition0x1817dffb5/bd는cameraPosition만 바꾸며 view matrix를 바꾸지 않는다.",
+    "interpolation": "GetPathPosition0x1816dd34c..36b: clamped fraction*pixel totalLength; 0x1816dd548/54b >=로 segment 선택; 0x1816dd5ac..604 local FP divide/clamp/lerp. 경로 offset은 pixel FP이며 actual Actor.initPos에 더한다."
+  },
+  "setPosForce": {
+    "address": "ActorComponent.SetPosForce0x18169d4e0",
+    "actorWrites": "currentPos+0xb0 and prePos+0xc0 both assigned (0x18169d592/59a)",
+    "collisionWrites": "iterate all valid native collision refs; lookup-null skipped; Collision.pos+0x40 and prePos+0x50 both assigned; flags word+6 bit6 cleared (0x18169d692..6fa).",
+    "plan": "forcePositionPlan returns actorPatch and ordered collisionPatches from supplied real collisionSlots. Does not mutate input, velocity, expectedPos, scale or caches. No callback true stands for actual application.",
+    "responsibility": "호스트는 positionPlans를 native LinePathGear.OnUpdate 시점에 실제 actor/collision에 적용하고, 이후 검증된 Actor phase/원형 response를 실행해야 함."
+  },
+  "measuredPaths": {
+    "st_w_15_01": {
+      "pixelTotalRaws": [
+        75366400,
+        92012544,
+        79429632
+      ],
+      "worldTotalRaws": [
+        1569746,
+        1916455,
+        1654378
+      ],
+      "oneWayTicksAtDelta1092By2to8": [
+        [
+          411,
+          439,
+          379
+        ],
+        [
+          411,
+          439,
+          379
+        ],
+        [
+          411,
+          439,
+          379
+        ],
+        [
+          411,
+          439,
+          379
+        ],
+        [
+          411,
+          475,
+          410
+        ],
+        [
+          411,
+          702,
+          606
+        ],
+        [
+          411,
+          798,
+          689
+        ]
+      ],
+      "note": "톱니2/3의 authored standby는 event61로 해제한 후 측정한 traversal core tick count. 기존 Actor physics/collision 등록된 route 아님."
+    },
+    "st_l_04_02": {
+      "pixelTotalRawsBy2to8": [
+        130547712,
+        130547712,
+        127401984,
+        127401984,
+        127401984,
+        124256256,
+        124256256
+      ],
+      "worldTotalRawsBy2to8": [
+        2719053,
+        2719053,
+        2653551,
+        2653551,
+        2653551,
+        2587998,
+        2587998
+      ],
+      "oneWayTicksAtDelta1092By2to8": [
+        958,
+        958,
+        935,
+        935,
+        935,
+        912,
+        912
+      ]
+    }
+  },
+  "reaGhidraCrossCheck": {
+    "readExistingOutputs": true,
+    "files": {
+      "first-run.md": 15880,
+      "gameassembly.json": 17787
+    },
+    "modifiedLocal": "2026-10-13 22:32 Asia/Seoul",
+    "provider": "Ghidra12.1.4, REA CLI6.4.0",
+    "targetProcedure": "0x1818713e0 (LandmineSwitchObserver.ParseParameter)",
+    "evidenceId": "ev_7cd9619f629cc359f91b7812b0eb00381412744dbf37dbfe2b79ac8698ff05f8",
+    "pseudocode": "signed high64(-0x5c28f5c28f5c28f5*(n<<32))+(n<<32), then >>22 minus sign; stores offset0x30 first percentage and0x28 second percentage",
+    "assemblyComparison": "0x181871571 magic0xa3d70a3d70a3d70b; signed imul0x181871585; add0x18187159b; sar22 at0x18187159e/5c2; shr63 sign-correction0x1818715a5/5c9; stores0x1818715af/5d0",
+    "verifiedSamples": [
+      -2147483648,
+      -101,
+      -100,
+      -99,
+      -66,
+      -5,
+      -1,
+      0,
+      1,
+      5,
+      66,
+      99,
+      100,
+      101,
+      2147483647
+    ],
+    "result": "all15 match trunc(n*65536/100);5=>3276,66=>43253. Typed-slot tag1/raw+0x18 and string tag2/QString construction also agree with assembly. This validates this function/result, not every decompiler output.",
+    "snapshotMeaning": "CLI help says --snapshot loads/updates local analysis snapshot. Actual JSON binding+target+evidence_bundle with one procedure_pseudo_code record, entries0/workflow_entries0. No persistent full Ghidra database or whole-image cache claimed. Output limitations say ephemeral Program/project deleted on close.",
+    "newAnalysisRun": false,
+    "resourceDecision": "Existing report states elapsed56.3min, ephemeral re-import can be expensive. No LinePath-specific pseudocode cached. Its completed math/SetPosForce path was independently assembly-derived and45 tests passed; another heavy full import was unnecessary. Original snapshot not overwritten, original game never executed.",
+    "currentTaskUse": "Use validated typed-parameter/FP decompiler expression pattern as supplementary reading aid. All final LinePath constants/branches retain direct assembly addresses; no LinePath-specific Ghidra pseudocode acquisition is claimed."
+  }
+}

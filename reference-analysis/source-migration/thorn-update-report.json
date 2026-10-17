@@ -1,0 +1,5526 @@
+{
+  "task": "ThornUpdate",
+  "status": "independent native update helper; explicit hosts required",
+  "verification": {
+    "method": "static native PE/metadata disassembly only",
+    "originalGameExecuted": false,
+    "dllSha256": "dc554e2008b23c7d52f0c063886ea19acf20369ac698c77be7c67cfb516edd71",
+    "dedicatedTests": "pending",
+    "fullSuite": "pending",
+    "existingFilesModified": false,
+    "gitActions": false,
+    "fixtureScope": "Existing Factory.finishThornCreation reused unchanged for actual3-2 Reset/Parse. New tests explicitly alter phase/belt/speed/wait and trigger61 as separate native state variants. Allocator, typed Add and holder are isolated named fixtures, not stage snapshot."
+  },
+  "methods": {
+    "NormalOnUpdate": "0x1818894a0",
+    "NormalOnRecvEvent": "0x181889560",
+    "ThornOnUpdate": "0x181720fb0",
+    "belt": "0x181721050",
+    "phase": "0x1817212a0",
+    "phaseTable": "0x181721704",
+    "startMove": "0x181721720",
+    "pushTarget": "0x181721750",
+    "distance": "0x181721910",
+    "receive": "0x181721a40"
+  },
+  "phaseJumpTable": [
+    "0x18172132e",
+    "0x1817213a7",
+    "0x181721561",
+    "0x181721537",
+    "0x1817214db",
+    "0x1817215ec"
+  ],
+  "fieldOffsets": {
+    "typeIndex": 4873,
+    "type": "ThornComponent",
+    "fields": [
+      {
+        "name": "m_Alpha",
+        "offset": 32,
+        "typeIndex": 19318
+      },
+      {
+        "name": "m_BeltDistance",
+        "offset": 40,
+        "typeIndex": 19318
+      },
+      {
+        "name": "m_BeltMoveDistance",
+        "offset": 48,
+        "typeIndex": 19318
+      },
+      {
+        "name": "m_BeltPhase",
+        "offset": 18,
+        "typeIndex": 27605
+      },
+      {
+        "name": "m_BeltPosition0",
+        "offset": 104,
+        "typeIndex": 19351
+      },
+      {
+        "name": "m_BeltPosition1",
+        "offset": 120,
+        "typeIndex": 19351
+      },
+      {
+        "name": "m_BeltSpeed",
+        "offset": 56,
+        "typeIndex": 19318
+      },
+      {
+        "name": "m_BeltVelo",
+        "offset": 136,
+        "typeIndex": 19351
+      },
+      {
+        "name": "m_Direction",
+        "offset": 16,
+        "typeIndex": 24520
+      },
+      {
+        "name": "m_Distance",
+        "offset": 64,
+        "typeIndex": 19318
+      },
+      {
+        "name": "m_EntityRef",
+        "offset": 24,
+        "typeIndex": 18961
+      },
+      {
+        "name": "m_Flags",
+        "offset": 20,
+        "typeIndex": 28513
+      },
+      {
+        "name": "m_MoveDirection",
+        "offset": 17,
+        "typeIndex": 24520
+      },
+      {
+        "name": "m_MoveDistance",
+        "offset": 72,
+        "typeIndex": 19318
+      },
+      {
+        "name": "m_Phase",
+        "offset": 19,
+        "typeIndex": 27610
+      },
+      {
+        "name": "m_Speed",
+        "offset": 80,
+        "typeIndex": 19318
+      },
+      {
+        "name": "m_Timer",
+        "offset": 88,
+        "typeIndex": 19318
+      },
+      {
+        "name": "m_Velo",
+        "offset": 152,
+        "typeIndex": 19351
+      },
+      {
+        "name": "m_WaitTime",
+        "offset": 96,
+        "typeIndex": 19318
+      },
+      {
+        "name": "RESOURCE_PATH",
+        "offset": 0,
+        "typeIndex": 13801
+      },
+      {
+        "name": "FADEOUT_SPEED",
+        "offset": 8,
+        "typeIndex": 19322
+      },
+      {
+        "name": "CollisionTable",
+        "offset": 16,
+        "typeIndex": 14212
+      },
+      {
+        "name": "DirectionVectorTable",
+        "offset": 24,
+        "typeIndex": 13350
+      }
+    ]
+  },
+  "rawFields": {
+    "m_Alpha": 16,
+    "m_BeltDistance": 24,
+    "m_BeltMoveDistance": 32,
+    "m_BeltPhase": 2,
+    "m_BeltPosition0": 88,
+    "m_BeltPosition1": 104,
+    "m_BeltSpeed": 40,
+    "m_BeltVelo": 120,
+    "m_Direction": 0,
+    "m_Distance": 48,
+    "m_EntityRef": 8,
+    "m_Flags": 4,
+    "m_MoveDirection": 1,
+    "m_MoveDistance": 56,
+    "m_Phase": 3,
+    "m_Speed": 64,
+    "m_Timer": 72,
+    "m_Velo": 136,
+    "m_WaitTime": 80
+  },
+  "constants": {
+    "fadeSpeedRaw": 262144,
+    "fadeSpeedEvidence": "0x1817227b1 static+8",
+    "sortingOrder": 1100,
+    "sortingEvidence": "0x18172140d",
+    "epsilonRaw": 4,
+    "epsilonEvidence": "0x181721394/181721732/181721b05",
+    "moveDistanceMarginRaw": 13107200,
+    "marginEvidence": "0x181721a28 0xc80000",
+    "mapChipSizeRaw": 3145728,
+    "chipEvidence": "0x1817219ca..19d2 /19fc..1a04, dimension*3<<20",
+    "directionVectors": [
+      {
+        "xRaw": 0,
+        "yRaw": -65536
+      },
+      {
+        "xRaw": 0,
+        "yRaw": 65536
+      },
+      {
+        "xRaw": -65536,
+        "yRaw": 0
+      },
+      {
+        "xRaw": 65536,
+        "yRaw": 0
+      }
+    ],
+    "vectorsEvidence": "0x181722aca..2b57"
+  },
+  "nativeBlocks": [
+    {
+      "va": "0x1818894fa",
+      "bytes": 66,
+      "sha256": "b6e6c2b35ee8ac91e029970482efc7216bd1e25b51a530b670cb639d0000c493",
+      "instructions": [
+        {
+          "va": "0x1818894fa",
+          "text": "test rbx, rbx"
+        },
+        {
+          "va": "0x1818894fd",
+          "text": "je 0x18188954c"
+        },
+        {
+          "va": "0x1818894ff",
+          "text": "mov rdx, qword ptr [rdi]"
+        },
+        {
+          "va": "0x181889502",
+          "text": "mov rcx, rbx"
+        },
+        {
+          "va": "0x181889505",
+          "text": "call 0x18000a0b0"
+        },
+        {
+          "va": "0x18188950a",
+          "text": "mov rcx, qword ptr [rip + 0x192c127]"
+        },
+        {
+          "va": "0x181889511",
+          "text": "mov rdi, rax"
+        },
+        {
+          "va": "0x181889514",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x18188951b",
+          "text": "jne 0x181889522"
+        },
+        {
+          "va": "0x18188951d",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181889522",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x181889525",
+          "text": "mov qword ptr [rsp + 0x20], 0"
+        },
+        {
+          "va": "0x18188952e",
+          "text": "mov r8, rsi"
+        },
+        {
+          "va": "0x181889531",
+          "text": "mov rdx, rbx"
+        },
+        {
+          "va": "0x181889534",
+          "text": "mov rcx, rdi"
+        },
+        {
+          "va": "0x181889537",
+          "text": "call 0x181720fb0"
+        }
+      ]
+    },
+    {
+      "va": "0x1818895c2",
+      "bytes": 91,
+      "sha256": "4e68fe7a3b8bd71dc5f25daa7e23957b4933cd28e37986e4da524bc884dd87d1",
+      "instructions": [
+        {
+          "va": "0x1818895c2",
+          "text": "test rbx, rbx"
+        },
+        {
+          "va": "0x1818895c5",
+          "text": "je 0x181889618"
+        },
+        {
+          "va": "0x1818895c7",
+          "text": "mov rdx, qword ptr [rdi]"
+        },
+        {
+          "va": "0x1818895ca",
+          "text": "mov rcx, rbx"
+        },
+        {
+          "va": "0x1818895cd",
+          "text": "call 0x18000a0b0"
+        },
+        {
+          "va": "0x1818895d2",
+          "text": "mov rcx, qword ptr [rip + 0x192c05f]"
+        },
+        {
+          "va": "0x1818895d9",
+          "text": "mov rdi, rax"
+        },
+        {
+          "va": "0x1818895dc",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x1818895e3",
+          "text": "jne 0x1818895ea"
+        },
+        {
+          "va": "0x1818895e5",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x1818895ea",
+          "text": "mov r9, rsi"
+        },
+        {
+          "va": "0x1818895ed",
+          "text": "mov qword ptr [rsp + 0x60], 0"
+        },
+        {
+          "va": "0x1818895f6",
+          "text": "mov r8, rbp"
+        },
+        {
+          "va": "0x1818895f9",
+          "text": "mov rdx, rbx"
+        },
+        {
+          "va": "0x1818895fc",
+          "text": "mov rcx, rdi"
+        },
+        {
+          "va": "0x1818895ff",
+          "text": "mov rbx, qword ptr [rsp + 0x40]"
+        },
+        {
+          "va": "0x181889604",
+          "text": "mov rbp, qword ptr [rsp + 0x48]"
+        },
+        {
+          "va": "0x181889609",
+          "text": "mov rsi, qword ptr [rsp + 0x50]"
+        },
+        {
+          "va": "0x18188960e",
+          "text": "add rsp, 0x30"
+        },
+        {
+          "va": "0x181889612",
+          "text": "pop rdi"
+        },
+        {
+          "va": "0x181889613",
+          "text": "jmp 0x181721a40"
+        },
+        {
+          "va": "0x181889618",
+          "text": "call 0x18032a5e0"
+        }
+      ]
+    },
+    {
+      "va": "0x181720ff2",
+      "bytes": 85,
+      "sha256": "444435970a13be6061c112075aba0fd3a077f921b95375a9cc2876905cbb982d",
+      "instructions": [
+        {
+          "va": "0x181720ff2",
+          "text": "mov rcx, qword ptr [rip + 0x1a9463f]"
+        },
+        {
+          "va": "0x181720ff9",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x181721000",
+          "text": "jne 0x181721007"
+        },
+        {
+          "va": "0x181721002",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181721007",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18172100a",
+          "text": "mov r8, rbx"
+        },
+        {
+          "va": "0x18172100d",
+          "text": "mov rdx, rdi"
+        },
+        {
+          "va": "0x181721010",
+          "text": "mov rcx, rsi"
+        },
+        {
+          "va": "0x181721013",
+          "text": "call 0x181721050"
+        },
+        {
+          "va": "0x181721018",
+          "text": "movzx r9d, bpl"
+        },
+        {
+          "va": "0x18172101c",
+          "text": "mov qword ptr [rsp + 0x60], 0"
+        },
+        {
+          "va": "0x181721025",
+          "text": "mov r8, rbx"
+        },
+        {
+          "va": "0x181721028",
+          "text": "mov rdx, rdi"
+        },
+        {
+          "va": "0x18172102b",
+          "text": "mov rcx, rsi"
+        },
+        {
+          "va": "0x18172102e",
+          "text": "mov rbx, qword ptr [rsp + 0x40]"
+        },
+        {
+          "va": "0x181721033",
+          "text": "mov rbp, qword ptr [rsp + 0x48]"
+        },
+        {
+          "va": "0x181721038",
+          "text": "mov rsi, qword ptr [rsp + 0x50]"
+        },
+        {
+          "va": "0x18172103d",
+          "text": "add rsp, 0x30"
+        },
+        {
+          "va": "0x181721041",
+          "text": "pop rdi"
+        },
+        {
+          "va": "0x181721042",
+          "text": "jmp 0x1817212a0"
+        }
+      ]
+    },
+    {
+      "va": "0x181721081",
+      "bytes": 72,
+      "sha256": "ef8288bacc21785bb3a8ff7c0fb2e48b19e0029c85226f58bbad4a9810f554eb",
+      "instructions": [
+        {
+          "va": "0x181721081",
+          "text": "cmp byte ptr [rbp + 3], 0"
+        },
+        {
+          "va": "0x181721085",
+          "text": "je 0x18172108b"
+        },
+        {
+          "va": "0x181721087",
+          "text": "mov byte ptr [rbp + 2], 0"
+        },
+        {
+          "va": "0x18172108b",
+          "text": "mov qword ptr [rsp + 0x70], rbx"
+        },
+        {
+          "va": "0x181721090",
+          "text": "xor r12d, r12d"
+        },
+        {
+          "va": "0x181721093",
+          "text": "mov qword ptr [rsp + 0x78], rsi"
+        },
+        {
+          "va": "0x181721098",
+          "text": "mov qword ptr [rsp + 0x80], rdi"
+        },
+        {
+          "va": "0x1817210a0",
+          "text": "mov qword ptr [rsp + 0x88], r14"
+        },
+        {
+          "va": "0x1817210a8",
+          "text": "movaps xmmword ptr [rsp + 0x40], xmm6"
+        },
+        {
+          "va": "0x1817210ad",
+          "text": "nop dword ptr [rax]"
+        },
+        {
+          "va": "0x1817210b0",
+          "text": "movzx ecx, byte ptr [rbp + 2]"
+        },
+        {
+          "va": "0x1817210b4",
+          "text": "test ecx, ecx"
+        },
+        {
+          "va": "0x1817210b6",
+          "text": "je 0x18172126f"
+        },
+        {
+          "va": "0x1817210bc",
+          "text": "sub ecx, 1"
+        },
+        {
+          "va": "0x1817210bf",
+          "text": "je 0x181721193"
+        },
+        {
+          "va": "0x1817210c5",
+          "text": "cmp ecx, 1"
+        },
+        {
+          "va": "0x1817210c8",
+          "text": ".byte 0x0f"
+        }
+      ]
+    },
+    {
+      "va": "0x1817210ce",
+      "bytes": 197,
+      "sha256": "fe69e340c407dc77803bfa0006367bfe77c9370a5dac1c6c6c0a0d3da2924913",
+      "instructions": [
+        {
+          "va": "0x1817210ce",
+          "text": "mov rsi, qword ptr [rbp + 0x28]"
+        },
+        {
+          "va": "0x1817210d2",
+          "text": "mov rax, qword ptr [rbp + 0x20]"
+        },
+        {
+          "va": "0x1817210d6",
+          "text": "mov rdi, rsi"
+        },
+        {
+          "va": "0x1817210d9",
+          "text": "sub rax, qword ptr [rbp + 0x18]"
+        },
+        {
+          "va": "0x1817210dd",
+          "text": "movups xmm6, xmmword ptr [rbp + 0x78]"
+        },
+        {
+          "va": "0x1817210e1",
+          "text": "mov rcx, rax"
+        },
+        {
+          "va": "0x1817210e4",
+          "text": "sar rcx, 0x3f"
+        },
+        {
+          "va": "0x1817210e8",
+          "text": "movaps xmmword ptr [rsp + 0x20], xmm6"
+        },
+        {
+          "va": "0x1817210ed",
+          "text": "lea rbx, [rcx + rax]"
+        },
+        {
+          "va": "0x1817210f1",
+          "text": "xor rbx, rcx"
+        },
+        {
+          "va": "0x1817210f4",
+          "text": "cmp rbx, rsi"
+        },
+        {
+          "va": "0x1817210f7",
+          "text": "cmovle rdi, rbx"
+        },
+        {
+          "va": "0x1817210fb",
+          "text": "mov rcx, qword ptr [rip + 0x1a99f8e]"
+        },
+        {
+          "va": "0x181721102",
+          "text": "cmp dword ptr [rcx + 0xe0], r12d"
+        },
+        {
+          "va": "0x181721109",
+          "text": "jne 0x181721110"
+        },
+        {
+          "va": "0x18172110b",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181721110",
+          "text": "movups xmm0, xmmword ptr [r15 + 0xb0]"
+        },
+        {
+          "va": "0x181721118",
+          "text": "mov rdx, qword ptr [rsp + 0x20]"
+        },
+        {
+          "va": "0x18172111d",
+          "text": "imul rdx, rdi"
+        },
+        {
+          "va": "0x181721121",
+          "text": "movaps xmmword ptr [rsp + 0x20], xmm0"
+        },
+        {
+          "va": "0x181721126",
+          "text": "movq rax, xmm0"
+        },
+        {
+          "va": "0x18172112b",
+          "text": "movdqa xmmword ptr [rsp + 0x30], xmm6"
+        },
+        {
+          "va": "0x181721131",
+          "text": "mov rcx, qword ptr [rsp + 0x38]"
+        },
+        {
+          "va": "0x181721136",
+          "text": "imul rcx, rdi"
+        },
+        {
+          "va": "0x18172113a",
+          "text": "sar rdx, 0x10"
+        },
+        {
+          "va": "0x18172113e",
+          "text": "add rax, rdx"
+        },
+        {
+          "va": "0x181721141",
+          "text": "sar rcx, 0x10"
+        },
+        {
+          "va": "0x181721145",
+          "text": "add qword ptr [rsp + 0x28], rcx"
+        },
+        {
+          "va": "0x18172114a",
+          "text": "mov qword ptr [rsp + 0x20], rax"
+        },
+        {
+          "va": "0x18172114f",
+          "text": "movaps xmm0, xmmword ptr [rsp + 0x20]"
+        },
+        {
+          "va": "0x181721154",
+          "text": "movups xmmword ptr [r15 + 0xb0], xmm0"
+        },
+        {
+          "va": "0x18172115c",
+          "text": "add qword ptr [rbp + 0x18], rdi"
+        },
+        {
+          "va": "0x181721160",
+          "text": "cmp rbx, rsi"
+        },
+        {
+          "va": "0x181721163",
+          "text": "jg 0x18172126f"
+        },
+        {
+          "va": "0x181721169",
+          "text": "mov rcx, qword ptr [rip + 0x1a99f20]"
+        },
+        {
+          "va": "0x181721170",
+          "text": "movups xmm6, xmmword ptr [rbp + 0x58]"
+        },
+        {
+          "va": "0x181721174",
+          "text": "cmp dword ptr [rcx + 0xe0], r12d"
+        },
+        {
+          "va": "0x18172117b",
+          "text": "jne 0x181721182"
+        },
+        {
+          "va": "0x18172117d",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181721182",
+          "text": "movups xmmword ptr [r15 + 0xb0], xmm6"
+        },
+        {
+          "va": "0x18172118a",
+          "text": "mov byte ptr [rbp + 2], 1"
+        },
+        {
+          "va": "0x18172118e",
+          "text": "jmp 0x1817210b0"
+        }
+      ]
+    },
+    {
+      "va": "0x181721193",
+      "bytes": 220,
+      "sha256": "e2e075c041067078e62f590aee99dcf5f37d9241ccfaeefa48d4e0e5f18ed000",
+      "instructions": [
+        {
+          "va": "0x181721193",
+          "text": "mov rcx, qword ptr [rip + 0x1a99ef6]"
+        },
+        {
+          "va": "0x18172119a",
+          "text": "cmp dword ptr [rcx + 0xe0], r12d"
+        },
+        {
+          "va": "0x1817211a1",
+          "text": "jne 0x1817211a8"
+        },
+        {
+          "va": "0x1817211a3",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x1817211a8",
+          "text": "movups xmm1, xmmword ptr [rbp + 0x68]"
+        },
+        {
+          "va": "0x1817211ac",
+          "text": "movups xmm0, xmmword ptr [r15 + 0xb0]"
+        },
+        {
+          "va": "0x1817211b4",
+          "text": "movaps xmmword ptr [rsp + 0x20], xmm1"
+        },
+        {
+          "va": "0x1817211b9",
+          "text": "movq rsi, xmm1"
+        },
+        {
+          "va": "0x1817211be",
+          "text": "mov r14, qword ptr [rsp + 0x28]"
+        },
+        {
+          "va": "0x1817211c3",
+          "text": "xorps xmm1, xmm1"
+        },
+        {
+          "va": "0x1817211c6",
+          "text": "movups xmmword ptr [rsp + 0x30], xmm0"
+        },
+        {
+          "va": "0x1817211cb",
+          "text": "sub rsi, qword ptr [rsp + 0x30]"
+        },
+        {
+          "va": "0x1817211d0",
+          "text": "movups xmmword ptr [rsp + 0x30], xmm0"
+        },
+        {
+          "va": "0x1817211d5",
+          "text": "sub r14, qword ptr [rsp + 0x38]"
+        },
+        {
+          "va": "0x1817211da",
+          "text": "mov rdi, rsi"
+        },
+        {
+          "va": "0x1817211dd",
+          "text": "imul rdi, rsi"
+        },
+        {
+          "va": "0x1817211e1",
+          "text": "mov qword ptr [rsp + 0x20], rsi"
+        },
+        {
+          "va": "0x1817211e6",
+          "text": "mov rbx, r14"
+        },
+        {
+          "va": "0x1817211e9",
+          "text": "imul rbx, r14"
+        },
+        {
+          "va": "0x1817211ed",
+          "text": "mov qword ptr [rsp + 0x28], r14"
+        },
+        {
+          "va": "0x1817211f2",
+          "text": "movaps xmm0, xmmword ptr [rsp + 0x20]"
+        },
+        {
+          "va": "0x1817211f7",
+          "text": "movdqa xmmword ptr [rsp + 0x20], xmm0"
+        },
+        {
+          "va": "0x1817211fd",
+          "text": "lea rcx, [rbx + rdi]"
+        },
+        {
+          "va": "0x181721201",
+          "text": "test rcx, rcx"
+        },
+        {
+          "va": "0x181721204",
+          "text": "je 0x181721247"
+        },
+        {
+          "va": "0x181721206",
+          "text": "call 0x1816463a0"
+        },
+        {
+          "va": "0x18172120b",
+          "text": "mov rcx, rax"
+        },
+        {
+          "va": "0x18172120e",
+          "text": "shr rax, 0x20"
+        },
+        {
+          "va": "0x181721212",
+          "text": "movsxd r8, eax"
+        },
+        {
+          "va": "0x181721215",
+          "text": "add ecx, 0xe"
+        },
+        {
+          "va": "0x181721218",
+          "text": "movabs rax, 0x100000000000"
+        },
+        {
+          "va": "0x181721222",
+          "text": "and ecx, 0x3f"
+        },
+        {
+          "va": "0x181721225",
+          "text": "cqo "
+        },
+        {
+          "va": "0x181721227",
+          "text": "idiv r8"
+        },
+        {
+          "va": "0x18172122a",
+          "text": "imul rsi, rax"
+        },
+        {
+          "va": "0x18172122e",
+          "text": "imul r14, rax"
+        },
+        {
+          "va": "0x181721232",
+          "text": "sar rsi, cl"
+        },
+        {
+          "va": "0x181721235",
+          "text": "mov qword ptr [rsp + 0x20], rsi"
+        },
+        {
+          "va": "0x18172123a",
+          "text": "sar r14, cl"
+        },
+        {
+          "va": "0x18172123d",
+          "text": "mov qword ptr [rsp + 0x28], r14"
+        },
+        {
+          "va": "0x181721242",
+          "text": "movaps xmm1, xmmword ptr [rsp + 0x20]"
+        },
+        {
+          "va": "0x181721247",
+          "text": "sar rbx, 0x10"
+        },
+        {
+          "va": "0x18172124b",
+          "text": "xor edx, edx"
+        },
+        {
+          "va": "0x18172124d",
+          "text": "sar rdi, 0x10"
+        },
+        {
+          "va": "0x181721251",
+          "text": "movups xmmword ptr [rbp + 0x78], xmm1"
+        },
+        {
+          "va": "0x181721255",
+          "text": "lea rcx, [rdi + rbx]"
+        },
+        {
+          "va": "0x181721259",
+          "text": "call 0x181640c40"
+        },
+        {
+          "va": "0x18172125e",
+          "text": "mov qword ptr [rbp + 0x20], rax"
+        },
+        {
+          "va": "0x181721262",
+          "text": "mov qword ptr [rbp + 0x18], r12"
+        },
+        {
+          "va": "0x181721266",
+          "text": "mov byte ptr [rbp + 2], 2"
+        },
+        {
+          "va": "0x18172126a",
+          "text": "jmp 0x1817210b0"
+        }
+      ]
+    },
+    {
+      "va": "0x181721247",
+      "bytes": 40,
+      "sha256": "75d33717034054e300fc6afece0f243965e86f381ccd21b917ff34384d8ac812",
+      "instructions": [
+        {
+          "va": "0x181721247",
+          "text": "sar rbx, 0x10"
+        },
+        {
+          "va": "0x18172124b",
+          "text": "xor edx, edx"
+        },
+        {
+          "va": "0x18172124d",
+          "text": "sar rdi, 0x10"
+        },
+        {
+          "va": "0x181721251",
+          "text": "movups xmmword ptr [rbp + 0x78], xmm1"
+        },
+        {
+          "va": "0x181721255",
+          "text": "lea rcx, [rdi + rbx]"
+        },
+        {
+          "va": "0x181721259",
+          "text": "call 0x181640c40"
+        },
+        {
+          "va": "0x18172125e",
+          "text": "mov qword ptr [rbp + 0x20], rax"
+        },
+        {
+          "va": "0x181721262",
+          "text": "mov qword ptr [rbp + 0x18], r12"
+        },
+        {
+          "va": "0x181721266",
+          "text": "mov byte ptr [rbp + 2], 2"
+        },
+        {
+          "va": "0x18172126a",
+          "text": "jmp 0x1817210b0"
+        }
+      ]
+    },
+    {
+      "va": "0x1817212ed",
+      "bytes": 65,
+      "sha256": "9578b35a1f988b431aeb002966b2ca2c72675368edc45f0537d10db64fe69fc5",
+      "instructions": [
+        {
+          "va": "0x1817212ed",
+          "text": "movzx eax, byte ptr [rsi + 3]"
+        },
+        {
+          "va": "0x1817212f1",
+          "text": "cmp eax, 5"
+        },
+        {
+          "va": "0x1817212f4",
+          "text": "ja 0x18172154f"
+        },
+        {
+          "va": "0x1817212fa",
+          "text": "mov qword ptr [rsp + 0x88], rdi"
+        },
+        {
+          "va": "0x181721302",
+          "text": "lea rdi, [rip - 0x1721309]"
+        },
+        {
+          "va": "0x181721309",
+          "text": "mov qword ptr [rsp + 0x90], r12"
+        },
+        {
+          "va": "0x181721311",
+          "text": "xor r12d, r12d"
+        },
+        {
+          "va": "0x181721314",
+          "text": "mov qword ptr [rsp + 0x80], rbx"
+        },
+        {
+          "va": "0x18172131c",
+          "text": "nop dword ptr [rax]"
+        },
+        {
+          "va": "0x181721320",
+          "text": "cdqe "
+        },
+        {
+          "va": "0x181721322",
+          "text": "mov ecx, dword ptr [rdi + rax*4 + 0x1721704]"
+        },
+        {
+          "va": "0x181721329",
+          "text": "add rcx, rdi"
+        },
+        {
+          "va": "0x18172132c",
+          "text": "jmp rcx"
+        }
+      ]
+    },
+    {
+      "va": "0x18172132e",
+      "bytes": 121,
+      "sha256": "fe0a38103117b475494562fe491a9baf7ed75ba459ba3a11c3b118d299614919",
+      "instructions": [
+        {
+          "va": "0x18172132e",
+          "text": "cmp qword ptr [rsi + 0x50], r12"
+        },
+        {
+          "va": "0x181721332",
+          "text": "jle 0x181721537"
+        },
+        {
+          "va": "0x181721338",
+          "text": "mov rbx, qword ptr [rsi + 0x48]"
+        },
+        {
+          "va": "0x18172133c",
+          "text": "test r14, r14"
+        },
+        {
+          "va": "0x18172133f",
+          "text": "je 0x1817216f7"
+        },
+        {
+          "va": "0x181721345",
+          "text": "mov rdx, qword ptr [r14]"
+        },
+        {
+          "va": "0x181721348",
+          "text": "mov rcx, r14"
+        },
+        {
+          "va": "0x18172134b",
+          "text": "mov rax, qword ptr [rdx + 0x248]"
+        },
+        {
+          "va": "0x181721352",
+          "text": "mov rdx, qword ptr [rdx + 0x250]"
+        },
+        {
+          "va": "0x181721359",
+          "text": "call rax"
+        },
+        {
+          "va": "0x18172135b",
+          "text": "lea rcx, [rax + rbx]"
+        },
+        {
+          "va": "0x18172135f",
+          "text": "mov qword ptr [rsi + 0x48], rcx"
+        },
+        {
+          "va": "0x181721363",
+          "text": "cmp rcx, qword ptr [rsi + 0x50]"
+        },
+        {
+          "va": "0x181721367",
+          "text": "jl 0x181721537"
+        },
+        {
+          "va": "0x18172136d",
+          "text": "mov rcx, qword ptr [rip + 0x1a942c4]"
+        },
+        {
+          "va": "0x181721374",
+          "text": "cmp dword ptr [rcx + 0xe0], r12d"
+        },
+        {
+          "va": "0x18172137b",
+          "text": "jne 0x181721382"
+        },
+        {
+          "va": "0x18172137d",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181721382",
+          "text": "mov rax, qword ptr [rsi + 0x40]"
+        },
+        {
+          "va": "0x181721386",
+          "text": "mov rdx, rax"
+        },
+        {
+          "va": "0x181721389",
+          "text": "sar rdx, 0x3f"
+        },
+        {
+          "va": "0x18172138d",
+          "text": "lea rcx, [rdx + rax]"
+        },
+        {
+          "va": "0x181721391",
+          "text": "xor rcx, rdx"
+        },
+        {
+          "va": "0x181721394",
+          "text": "cmp rcx, 4"
+        },
+        {
+          "va": "0x181721398",
+          "text": "jl 0x181721537"
+        },
+        {
+          "va": "0x18172139e",
+          "text": "mov byte ptr [rsi + 3], 1"
+        },
+        {
+          "va": "0x1817213a2",
+          "text": "jmp 0x18172152a"
+        }
+      ]
+    },
+    {
+      "va": "0x1817213f2",
+      "bytes": 254,
+      "sha256": "ce9a6b8026bdd4952bf632e756df8d3625334e829ad18e6055fecdbdc27765d7",
+      "instructions": [
+        {
+          "va": "0x1817213f2",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x1817213f5",
+          "text": "mov rcx, rbp"
+        },
+        {
+          "va": "0x1817213f8",
+          "text": "lea edx, [r8 + 0x36]"
+        },
+        {
+          "va": "0x1817213fc",
+          "text": "call 0x18169dbd0"
+        },
+        {
+          "va": "0x181721401",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x181721404",
+          "text": "je 0x1817216f7"
+        },
+        {
+          "va": "0x18172140a",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18172140d",
+          "text": "mov dword ptr [rax + 0x68], 0x44c"
+        },
+        {
+          "va": "0x181721414",
+          "text": "mov r8, rax"
+        },
+        {
+          "va": "0x181721417",
+          "text": "mov rdx, r14"
+        },
+        {
+          "va": "0x18172141a",
+          "text": "mov rcx, rbp"
+        },
+        {
+          "va": "0x18172141d",
+          "text": "call 0x18169eb70"
+        },
+        {
+          "va": "0x181721422",
+          "text": "mov rcx, qword ptr [rip + 0x1a9420f]"
+        },
+        {
+          "va": "0x181721429",
+          "text": "cmp dword ptr [rcx + 0xe0], r12d"
+        },
+        {
+          "va": "0x181721430",
+          "text": "jne 0x181721437"
+        },
+        {
+          "va": "0x181721432",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181721437",
+          "text": "mov r9b, 3"
+        },
+        {
+          "va": "0x18172143a",
+          "text": "mov qword ptr [rsp + 0x20], r12"
+        },
+        {
+          "va": "0x18172143f",
+          "text": "mov r8, rbp"
+        },
+        {
+          "va": "0x181721442",
+          "text": "mov rdx, r14"
+        },
+        {
+          "va": "0x181721445",
+          "text": "mov rcx, rsi"
+        },
+        {
+          "va": "0x181721448",
+          "text": "call 0x181721750"
+        },
+        {
+          "va": "0x18172144d",
+          "text": "mov rax, qword ptr [rip + 0x1a941e4]"
+        },
+        {
+          "va": "0x181721454",
+          "text": "mov rcx, qword ptr [rax + 0xb8]"
+        },
+        {
+          "va": "0x18172145b",
+          "text": "mov rdx, qword ptr [rcx + 0x18]"
+        },
+        {
+          "va": "0x18172145f",
+          "text": "test rdx, rdx"
+        },
+        {
+          "va": "0x181721462",
+          "text": "je 0x1817216f7"
+        },
+        {
+          "va": "0x181721468",
+          "text": "movzx ecx, byte ptr [rsi + 1]"
+        },
+        {
+          "va": "0x18172146c",
+          "text": "cmp ecx, dword ptr [rdx + 0x18]"
+        },
+        {
+          "va": "0x18172146f",
+          "text": "jae 0x1817216fd"
+        },
+        {
+          "va": "0x181721475",
+          "text": "add rcx, 2"
+        },
+        {
+          "va": "0x181721479",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x18172147c",
+          "text": "add rcx, rcx"
+        },
+        {
+          "va": "0x18172147f",
+          "text": "mov r8, rbp"
+        },
+        {
+          "va": "0x181721482",
+          "text": "movups xmm0, xmmword ptr [rdx + rcx*8]"
+        },
+        {
+          "va": "0x181721486",
+          "text": "mov rdx, r14"
+        },
+        {
+          "va": "0x181721489",
+          "text": "movaps xmmword ptr [rsp + 0x30], xmm0"
+        },
+        {
+          "va": "0x18172148e",
+          "text": "movups xmmword ptr [rsp + 0x50], xmm0"
+        },
+        {
+          "va": "0x181721493",
+          "text": "mov rcx, qword ptr [rsp + 0x50]"
+        },
+        {
+          "va": "0x181721498",
+          "text": "imul rcx, qword ptr [rsi + 0x40]"
+        },
+        {
+          "va": "0x18172149d",
+          "text": "sar rcx, 0x10"
+        },
+        {
+          "va": "0x1817214a1",
+          "text": "mov qword ptr [rsp + 0x30], rcx"
+        },
+        {
+          "va": "0x1817214a6",
+          "text": "mov rcx, qword ptr [rsp + 0x38]"
+        },
+        {
+          "va": "0x1817214ab",
+          "text": "imul rcx, qword ptr [rsi + 0x40]"
+        },
+        {
+          "va": "0x1817214b0",
+          "text": "sar rcx, 0x10"
+        },
+        {
+          "va": "0x1817214b4",
+          "text": "mov qword ptr [rsp + 0x38], rcx"
+        },
+        {
+          "va": "0x1817214b9",
+          "text": "mov rcx, rsi"
+        },
+        {
+          "va": "0x1817214bc",
+          "text": "movaps xmm0, xmmword ptr [rsp + 0x30]"
+        },
+        {
+          "va": "0x1817214c1",
+          "text": "movups xmmword ptr [rsi + 0x88], xmm0"
+        },
+        {
+          "va": "0x1817214c8",
+          "text": "call 0x181721910"
+        },
+        {
+          "va": "0x1817214cd",
+          "text": "mov qword ptr [rsi + 0x38], rax"
+        },
+        {
+          "va": "0x1817214d1",
+          "text": "mov qword ptr [rsi + 0x30], r12"
+        },
+        {
+          "va": "0x1817214d5",
+          "text": "mov byte ptr [rsi + 3], 2"
+        },
+        {
+          "va": "0x1817214d9",
+          "text": "jmp 0x18172152a"
+        },
+        {
+          "va": "0x1817214db",
+          "text": "mov rcx, qword ptr [rip + 0x1a94156]"
+        },
+        {
+          "va": "0x1817214e2",
+          "text": "cmp dword ptr [rcx + 0xe0], r12d"
+        },
+        {
+          "va": "0x1817214e9",
+          "text": "jne 0x1817214f0"
+        },
+        {
+          "va": "0x1817214eb",
+          "text": "call 0x1802ec040"
+        }
+      ]
+    },
+    {
+      "va": "0x1817214f0",
+      "bytes": 58,
+      "sha256": "a040039039d3c459ca2ec09267c7b8da018f5d56c6e9876c76c91027bfa22721",
+      "instructions": [
+        {
+          "va": "0x1817214f0",
+          "text": "mov rcx, qword ptr [rip + 0x1a99b99]"
+        },
+        {
+          "va": "0x1817214f7",
+          "text": "mov rbx, qword ptr [rsi + 8]"
+        },
+        {
+          "va": "0x1817214fb",
+          "text": "cmp dword ptr [rcx + 0xe0], r12d"
+        },
+        {
+          "va": "0x181721502",
+          "text": "jne 0x181721509"
+        },
+        {
+          "va": "0x181721504",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181721509",
+          "text": "mov r9, rbx"
+        },
+        {
+          "va": "0x18172150c",
+          "text": "mov qword ptr [rsp + 0x20], r12"
+        },
+        {
+          "va": "0x181721511",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x181721514",
+          "text": "mov rdx, r14"
+        },
+        {
+          "va": "0x181721517",
+          "text": "mov rcx, rbp"
+        },
+        {
+          "va": "0x18172151a",
+          "text": "call 0x18169ff50"
+        },
+        {
+          "va": "0x18172151f",
+          "text": "inc byte ptr [rsi + 3]"
+        },
+        {
+          "va": "0x181721522",
+          "text": "mov qword ptr [rsi + 0x48], 0x10000"
+        }
+      ]
+    },
+    {
+      "va": "0x181721561",
+      "bytes": 139,
+      "sha256": "ccbc5cd4b4149a1e161ecc3014fe91a454396c08411437a19196e4dffd215c53",
+      "instructions": [
+        {
+          "va": "0x181721561",
+          "text": "mov rcx, qword ptr [rip + 0x1a99b28]"
+        },
+        {
+          "va": "0x181721568",
+          "text": "cmp dword ptr [rcx + 0xe0], r12d"
+        },
+        {
+          "va": "0x18172156f",
+          "text": "jne 0x181721576"
+        },
+        {
+          "va": "0x181721571",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181721576",
+          "text": "movups xmm0, xmmword ptr [rsi + 0x88]"
+        },
+        {
+          "va": "0x18172157d",
+          "text": "movaps xmmword ptr [rsp + 0x40], xmm0"
+        },
+        {
+          "va": "0x181721582",
+          "text": "mov rcx, qword ptr [rsp + 0x48]"
+        },
+        {
+          "va": "0x181721587",
+          "text": "imul rcx, qword ptr [rsi + 0x40]"
+        },
+        {
+          "va": "0x18172158c",
+          "text": "movups xmmword ptr [rsp + 0x50], xmm0"
+        },
+        {
+          "va": "0x181721591",
+          "text": "movups xmm0, xmmword ptr [rbp + 0xb0]"
+        },
+        {
+          "va": "0x181721598",
+          "text": "mov rdx, qword ptr [rsp + 0x50]"
+        },
+        {
+          "va": "0x18172159d",
+          "text": "imul rdx, qword ptr [rsi + 0x40]"
+        },
+        {
+          "va": "0x1817215a2",
+          "text": "movaps xmmword ptr [rsp + 0x40], xmm0"
+        },
+        {
+          "va": "0x1817215a7",
+          "text": "movq rax, xmm0"
+        },
+        {
+          "va": "0x1817215ac",
+          "text": "sar rcx, 0x10"
+        },
+        {
+          "va": "0x1817215b0",
+          "text": "add qword ptr [rsp + 0x48], rcx"
+        },
+        {
+          "va": "0x1817215b5",
+          "text": "sar rdx, 0x10"
+        },
+        {
+          "va": "0x1817215b9",
+          "text": "add rax, rdx"
+        },
+        {
+          "va": "0x1817215bc",
+          "text": "mov qword ptr [rsp + 0x40], rax"
+        },
+        {
+          "va": "0x1817215c1",
+          "text": "movaps xmm0, xmmword ptr [rsp + 0x40]"
+        },
+        {
+          "va": "0x1817215c6",
+          "text": "movups xmmword ptr [rbp + 0xb0], xmm0"
+        },
+        {
+          "va": "0x1817215cd",
+          "text": "mov rax, qword ptr [rsi + 0x40]"
+        },
+        {
+          "va": "0x1817215d1",
+          "text": "add qword ptr [rsi + 0x30], rax"
+        },
+        {
+          "va": "0x1817215d5",
+          "text": "mov rax, qword ptr [rsi + 0x30]"
+        },
+        {
+          "va": "0x1817215d9",
+          "text": "cmp rax, qword ptr [rsi + 0x38]"
+        },
+        {
+          "va": "0x1817215dd",
+          "text": "jl 0x181721537"
+        },
+        {
+          "va": "0x1817215e3",
+          "text": "mov byte ptr [rsi + 3], 4"
+        },
+        {
+          "va": "0x1817215e7",
+          "text": "jmp 0x181721537"
+        }
+      ]
+    },
+    {
+      "va": "0x1817215ec",
+      "bytes": 267,
+      "sha256": "0c9f02b9d6d238ec9de3d715d74d1705183674ad6e9fd51b92caf98033a872f6",
+      "instructions": [
+        {
+          "va": "0x1817215ec",
+          "text": "mov rdi, qword ptr [rip + 0x1a94045]"
+        },
+        {
+          "va": "0x1817215f3",
+          "text": "mov rbx, qword ptr [rsi + 0x48]"
+        },
+        {
+          "va": "0x1817215f7",
+          "text": "cmp dword ptr [rdi + 0xe0], r12d"
+        },
+        {
+          "va": "0x1817215fe",
+          "text": "jne 0x18172160f"
+        },
+        {
+          "va": "0x181721600",
+          "text": "mov rcx, rdi"
+        },
+        {
+          "va": "0x181721603",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181721608",
+          "text": "mov rdi, qword ptr [rip + 0x1a94029]"
+        },
+        {
+          "va": "0x18172160f",
+          "text": "mov rdi, qword ptr [rdi + 0xb8]"
+        },
+        {
+          "va": "0x181721616",
+          "text": "mov rdi, qword ptr [rdi + 8]"
+        },
+        {
+          "va": "0x18172161a",
+          "text": "test r14, r14"
+        },
+        {
+          "va": "0x18172161d",
+          "text": "je 0x1817216f7"
+        },
+        {
+          "va": "0x181721623",
+          "text": "mov rdx, qword ptr [r14]"
+        },
+        {
+          "va": "0x181721626",
+          "text": "mov rcx, r14"
+        },
+        {
+          "va": "0x181721629",
+          "text": "mov rax, qword ptr [rdx + 0x248]"
+        },
+        {
+          "va": "0x181721630",
+          "text": "mov rdx, qword ptr [rdx + 0x250]"
+        },
+        {
+          "va": "0x181721637",
+          "text": "call rax"
+        },
+        {
+          "va": "0x181721639",
+          "text": "imul rax, rdi"
+        },
+        {
+          "va": "0x18172163d",
+          "text": "sar rax, 0x10"
+        },
+        {
+          "va": "0x181721641",
+          "text": "sub rbx, rax"
+        },
+        {
+          "va": "0x181721644",
+          "text": "mov qword ptr [rsi + 0x48], rbx"
+        },
+        {
+          "va": "0x181721648",
+          "text": "test rbx, rbx"
+        },
+        {
+          "va": "0x18172164b",
+          "text": "jg 0x1817216ee"
+        },
+        {
+          "va": "0x181721651",
+          "text": "test r15b, r15b"
+        },
+        {
+          "va": "0x181721654",
+          "text": "jne 0x181721682"
+        },
+        {
+          "va": "0x181721656",
+          "text": "mov rcx, qword ptr [rip + 0x1a99a33]"
+        },
+        {
+          "va": "0x18172165d",
+          "text": "cmp dword ptr [rcx + 0xe0], r12d"
+        },
+        {
+          "va": "0x181721664",
+          "text": "jne 0x18172166b"
+        },
+        {
+          "va": "0x181721666",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18172166b",
+          "text": "mov eax, dword ptr [rbp + 0xc]"
+        },
+        {
+          "va": "0x18172166e",
+          "text": "bts eax, 0xd"
+        },
+        {
+          "va": "0x181721672",
+          "text": "mov dword ptr [rbp + 0xc], eax"
+        },
+        {
+          "va": "0x181721675",
+          "text": "mov qword ptr [rsi + 0x48], r12"
+        },
+        {
+          "va": "0x181721679",
+          "text": "mov byte ptr [rsi + 3], r12b"
+        },
+        {
+          "va": "0x18172167d",
+          "text": "jmp 0x181721537"
+        },
+        {
+          "va": "0x181721682",
+          "text": "mov rcx, qword ptr [rip + 0x1a93faf]"
+        },
+        {
+          "va": "0x181721689",
+          "text": "cmp dword ptr [rcx + 0xe0], r12d"
+        },
+        {
+          "va": "0x181721690",
+          "text": "jne 0x181721697"
+        },
+        {
+          "va": "0x181721692",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181721697",
+          "text": "mov rcx, qword ptr [rip + 0x1a999f2]"
+        },
+        {
+          "va": "0x18172169e",
+          "text": "mov rbx, qword ptr [rsi + 8]"
+        },
+        {
+          "va": "0x1817216a2",
+          "text": "cmp dword ptr [rcx + 0xe0], r12d"
+        },
+        {
+          "va": "0x1817216a9",
+          "text": "jne 0x1817216b0"
+        },
+        {
+          "va": "0x1817216ab",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x1817216b0",
+          "text": "mov r9, rbx"
+        },
+        {
+          "va": "0x1817216b3",
+          "text": "mov qword ptr [rsp + 0x20], r12"
+        },
+        {
+          "va": "0x1817216b8",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x1817216bb",
+          "text": "mov rdx, r14"
+        },
+        {
+          "va": "0x1817216be",
+          "text": "mov rcx, rbp"
+        },
+        {
+          "va": "0x1817216c1",
+          "text": "call 0x18169ed70"
+        },
+        {
+          "va": "0x1817216c6",
+          "text": "xorps xmm0, xmm0"
+        },
+        {
+          "va": "0x1817216c9",
+          "text": "movups xmmword ptr [rbp + 0xb0], xmm0"
+        },
+        {
+          "va": "0x1817216d0",
+          "text": "movzx eax, word ptr [rsi + 4]"
+        },
+        {
+          "va": "0x1817216d4",
+          "text": "mov ecx, 1"
+        },
+        {
+          "va": "0x1817216d9",
+          "text": "btr ax, cx"
+        },
+        {
+          "va": "0x1817216dd",
+          "text": "mov word ptr [rsi + 4], ax"
+        },
+        {
+          "va": "0x1817216e1",
+          "text": "mov qword ptr [rsi + 0x48], r12"
+        },
+        {
+          "va": "0x1817216e5",
+          "text": "mov byte ptr [rsi + 3], r12b"
+        },
+        {
+          "va": "0x1817216e9",
+          "text": "jmp 0x181721537"
+        },
+        {
+          "va": "0x1817216ee",
+          "text": "mov qword ptr [rsi + 0x10], rbx"
+        },
+        {
+          "va": "0x1817216f2",
+          "text": "jmp 0x181721537"
+        }
+      ]
+    },
+    {
+      "va": "0x181721720",
+      "bytes": 34,
+      "sha256": "8b0e6729b36fd192161a9ac1db9ec212b132dfbc62f0891dce8509ded998d710",
+      "instructions": [
+        {
+          "va": "0x181721720",
+          "text": "mov rax, qword ptr [rcx + 0x40]"
+        },
+        {
+          "va": "0x181721724",
+          "text": "mov r8, rax"
+        },
+        {
+          "va": "0x181721727",
+          "text": "sar r8, 0x3f"
+        },
+        {
+          "va": "0x18172172b",
+          "text": "lea rdx, [r8 + rax]"
+        },
+        {
+          "va": "0x18172172f",
+          "text": "xor rdx, r8"
+        },
+        {
+          "va": "0x181721732",
+          "text": "cmp rdx, 4"
+        },
+        {
+          "va": "0x181721736",
+          "text": "jge 0x18172173b"
+        },
+        {
+          "va": "0x181721738",
+          "text": "xor al, al"
+        },
+        {
+          "va": "0x18172173a",
+          "text": "ret "
+        },
+        {
+          "va": "0x18172173b",
+          "text": "mov byte ptr [rcx + 3], 1"
+        },
+        {
+          "va": "0x18172173f",
+          "text": "mov al, 1"
+        },
+        {
+          "va": "0x181721741",
+          "text": "ret "
+        }
+      ]
+    },
+    {
+      "va": "0x181721850",
+      "bytes": 155,
+      "sha256": "dacff0003b4b3a82877e53ae76bbf1cd24505619d4d2eed31fe28129c4917fba",
+      "instructions": [
+        {
+          "va": "0x181721850",
+          "text": "test rsi, rsi"
+        },
+        {
+          "va": "0x181721853",
+          "text": "je 0x181721909"
+        },
+        {
+          "va": "0x181721859",
+          "text": "mov r9, qword ptr [rip + 0x1aa05b8]"
+        },
+        {
+          "va": "0x181721860",
+          "text": "lea rcx, [rsp + 0x30]"
+        },
+        {
+          "va": "0x181721865",
+          "text": "mov r8d, dword ptr [r15 + 8]"
+        },
+        {
+          "va": "0x181721869",
+          "text": "mov rdx, rsi"
+        },
+        {
+          "va": "0x18172186c",
+          "text": "call 0x180005a50"
+        },
+        {
+          "va": "0x181721871",
+          "text": "movups xmm0, xmmword ptr [rax]"
+        },
+        {
+          "va": "0x181721874",
+          "text": "movq rax, xmm0"
+        },
+        {
+          "va": "0x181721879",
+          "text": "movups xmmword ptr [rsp + 0x20], xmm0"
+        },
+        {
+          "va": "0x18172187e",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x181721881",
+          "text": "je 0x181721909"
+        },
+        {
+          "va": "0x181721887",
+          "text": "cmp ebx, dword ptr [rax]"
+        },
+        {
+          "va": "0x181721889",
+          "text": "jge 0x1817218e5"
+        },
+        {
+          "va": "0x18172188b",
+          "text": "mov r8, qword ptr [rip + 0x1aa056e]"
+        },
+        {
+          "va": "0x181721892",
+          "text": "lea rcx, [rsp + 0x20]"
+        },
+        {
+          "va": "0x181721897",
+          "text": "mov edx, ebx"
+        },
+        {
+          "va": "0x181721899",
+          "text": "call 0x180034ef0"
+        },
+        {
+          "va": "0x18172189e",
+          "text": "mov rdi, rax"
+        },
+        {
+          "va": "0x1817218a1",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x1817218a4",
+          "text": "je 0x1817218e5"
+        },
+        {
+          "va": "0x1817218a6",
+          "text": "xor edx, edx"
+        },
+        {
+          "va": "0x1817218a8",
+          "text": "mov rcx, rsi"
+        },
+        {
+          "va": "0x1817218ab",
+          "text": "call 0x18174a4a0"
+        },
+        {
+          "va": "0x1817218b0",
+          "text": "mov rcx, qword ptr [rip + 0x1aa0ed9]"
+        },
+        {
+          "va": "0x1817218b7",
+          "text": "mov rbp, rax"
+        },
+        {
+          "va": "0x1817218ba",
+          "text": "mov edi, dword ptr [rdi + 4]"
+        },
+        {
+          "va": "0x1817218bd",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x1817218c4",
+          "text": "jne 0x1817218cb"
+        },
+        {
+          "va": "0x1817218c6",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x1817218cb",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x1817218ce",
+          "text": "mov r8d, edi"
+        },
+        {
+          "va": "0x1817218d1",
+          "text": "mov rdx, rsi"
+        },
+        {
+          "va": "0x1817218d4",
+          "text": "mov rcx, rbp"
+        },
+        {
+          "va": "0x1817218d7",
+          "text": "call 0x1817f6940"
+        },
+        {
+          "va": "0x1817218dc",
+          "text": "test rax, rax"
+        },
+        {
+          "va": "0x1817218df",
+          "text": "je 0x1817218e5"
+        },
+        {
+          "va": "0x1817218e1",
+          "text": "mov byte ptr [rax + 3], r14b"
+        },
+        {
+          "va": "0x1817218e5",
+          "text": "inc ebx"
+        },
+        {
+          "va": "0x1817218e7",
+          "text": "cmp ebx, 2"
+        },
+        {
+          "va": "0x1817218ea",
+          "text": ".byte 0x0f"
+        }
+      ]
+    },
+    {
+      "va": "0x181721985",
+      "bytes": 175,
+      "sha256": "c69ffd78b42545243688bbf06c0b7f9e060fad26ab94adb850982666fbd3452e",
+      "instructions": [
+        {
+          "va": "0x181721985",
+          "text": "movups xmm0, xmmword ptr [rdi + 0xb0]"
+        },
+        {
+          "va": "0x18172198c",
+          "text": "movzx r8d, byte ptr [rsi]"
+        },
+        {
+          "va": "0x181721990",
+          "text": "xor ecx, ecx"
+        },
+        {
+          "va": "0x181721992",
+          "text": "movups xmmword ptr [rsp + 0x20], xmm0"
+        },
+        {
+          "va": "0x181721997",
+          "text": "test r8d, r8d"
+        },
+        {
+          "va": "0x18172199a",
+          "text": "je 0x181721a0b"
+        },
+        {
+          "va": "0x18172199c",
+          "text": "sub r8d, 1"
+        },
+        {
+          "va": "0x1817219a0",
+          "text": "je 0x1817219e0"
+        },
+        {
+          "va": "0x1817219a2",
+          "text": "sub r8d, 1"
+        },
+        {
+          "va": "0x1817219a6",
+          "text": "je 0x1817219d9"
+        },
+        {
+          "va": "0x1817219a8",
+          "text": "cmp r8d, 1"
+        },
+        {
+          "va": "0x1817219ac",
+          "text": "jne 0x181721a10"
+        },
+        {
+          "va": "0x1817219ae",
+          "text": "mov rcx, qword ptr [rip + 0x1aa7553]"
+        },
+        {
+          "va": "0x1817219b5",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x1817219bc",
+          "text": "jne 0x1817219c3"
+        },
+        {
+          "va": "0x1817219be",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x1817219c3",
+          "text": "movzx eax, word ptr [rbx + 0x1004]"
+        },
+        {
+          "va": "0x1817219ca",
+          "text": "lea rcx, [rax + rax*2]"
+        },
+        {
+          "va": "0x1817219ce",
+          "text": "shl rcx, 0x14"
+        },
+        {
+          "va": "0x1817219d2",
+          "text": "sub rcx, qword ptr [rsp + 0x20]"
+        },
+        {
+          "va": "0x1817219d7",
+          "text": "jmp 0x181721a10"
+        },
+        {
+          "va": "0x1817219d9",
+          "text": "mov rcx, qword ptr [rsp + 0x20]"
+        },
+        {
+          "va": "0x1817219de",
+          "text": "jmp 0x181721a10"
+        },
+        {
+          "va": "0x1817219e0",
+          "text": "mov rcx, qword ptr [rip + 0x1aa7521]"
+        },
+        {
+          "va": "0x1817219e7",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x1817219ee",
+          "text": "jne 0x1817219f5"
+        },
+        {
+          "va": "0x1817219f0",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x1817219f5",
+          "text": "movzx eax, word ptr [rbx + 0x1002]"
+        },
+        {
+          "va": "0x1817219fc",
+          "text": "lea rcx, [rax + rax*2]"
+        },
+        {
+          "va": "0x181721a00",
+          "text": "shl rcx, 0x14"
+        },
+        {
+          "va": "0x181721a04",
+          "text": "sub rcx, qword ptr [rsp + 0x28]"
+        },
+        {
+          "va": "0x181721a09",
+          "text": "jmp 0x181721a10"
+        },
+        {
+          "va": "0x181721a0b",
+          "text": "mov rcx, qword ptr [rsp + 0x28]"
+        },
+        {
+          "va": "0x181721a10",
+          "text": "mov rbx, qword ptr [rsp + 0x40]"
+        },
+        {
+          "va": "0x181721a15",
+          "text": "mov rdx, rcx"
+        },
+        {
+          "va": "0x181721a18",
+          "text": "mov rsi, qword ptr [rsp + 0x48]"
+        },
+        {
+          "va": "0x181721a1d",
+          "text": "sar rdx, 0x3f"
+        },
+        {
+          "va": "0x181721a21",
+          "text": "lea rax, [rdx + rcx]"
+        },
+        {
+          "va": "0x181721a25",
+          "text": "xor rax, rdx"
+        },
+        {
+          "va": "0x181721a28",
+          "text": "add rax, 0xc80000"
+        },
+        {
+          "va": "0x181721a2e",
+          "text": "add rsp, 0x30"
+        },
+        {
+          "va": "0x181721a32",
+          "text": "pop rdi"
+        },
+        {
+          "va": "0x181721a33",
+          "text": "ret "
+        }
+      ]
+    },
+    {
+      "va": "0x181721a92",
+      "bytes": 134,
+      "sha256": "275494cec9efc499bb7cf618b3f452afa80f1f3f541f45666d24441a469bc241",
+      "instructions": [
+        {
+          "va": "0x181721a92",
+          "text": "test rdi, rdi"
+        },
+        {
+          "va": "0x181721a95",
+          "text": "je 0x181721b13"
+        },
+        {
+          "va": "0x181721a97",
+          "text": "cmp dword ptr [rdi + 0x10], 0x3d"
+        },
+        {
+          "va": "0x181721a9b",
+          "text": "je 0x181721ad8"
+        },
+        {
+          "va": "0x181721a9d",
+          "text": "mov rcx, qword ptr [rip + 0x1a995ec]"
+        },
+        {
+          "va": "0x181721aa4",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x181721aab",
+          "text": "jne 0x181721ab2"
+        },
+        {
+          "va": "0x181721aad",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181721ab2",
+          "text": "xor r9d, r9d"
+        },
+        {
+          "va": "0x181721ab5",
+          "text": "mov r8, rdi"
+        },
+        {
+          "va": "0x181721ab8",
+          "text": "mov rdx, rbp"
+        },
+        {
+          "va": "0x181721abb",
+          "text": "mov rcx, rsi"
+        },
+        {
+          "va": "0x181721abe",
+          "text": "call 0x18169e840"
+        },
+        {
+          "va": "0x181721ac3",
+          "text": "mov rbx, qword ptr [rsp + 0x30]"
+        },
+        {
+          "va": "0x181721ac8",
+          "text": "mov rbp, qword ptr [rsp + 0x38]"
+        },
+        {
+          "va": "0x181721acd",
+          "text": "mov rsi, qword ptr [rsp + 0x40]"
+        },
+        {
+          "va": "0x181721ad2",
+          "text": "add rsp, 0x20"
+        },
+        {
+          "va": "0x181721ad6",
+          "text": "pop rdi"
+        },
+        {
+          "va": "0x181721ad7",
+          "text": "ret "
+        },
+        {
+          "va": "0x181721ad8",
+          "text": "cmp byte ptr [rbx + 3], 0"
+        },
+        {
+          "va": "0x181721adc",
+          "text": "jne 0x181721b0f"
+        },
+        {
+          "va": "0x181721ade",
+          "text": "mov rcx, qword ptr [rip + 0x1a93b53]"
+        },
+        {
+          "va": "0x181721ae5",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x181721aec",
+          "text": "jne 0x181721af3"
+        },
+        {
+          "va": "0x181721aee",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181721af3",
+          "text": "mov rax, qword ptr [rbx + 0x40]"
+        },
+        {
+          "va": "0x181721af7",
+          "text": "mov rdx, rax"
+        },
+        {
+          "va": "0x181721afa",
+          "text": "sar rdx, 0x3f"
+        },
+        {
+          "va": "0x181721afe",
+          "text": "lea rcx, [rdx + rax]"
+        },
+        {
+          "va": "0x181721b02",
+          "text": "xor rcx, rdx"
+        },
+        {
+          "va": "0x181721b05",
+          "text": "cmp rcx, 4"
+        },
+        {
+          "va": "0x181721b09",
+          "text": "jl 0x181721b0f"
+        },
+        {
+          "va": "0x181721b0b",
+          "text": "mov byte ptr [rbx + 3], 1"
+        },
+        {
+          "va": "0x181721b0f",
+          "text": "xor eax, eax"
+        },
+        {
+          "va": "0x181721b11",
+          "text": "jmp 0x181721ac3"
+        },
+        {
+          "va": "0x181721b13",
+          "text": "call 0x18032a5e0"
+        }
+      ]
+    },
+    {
+      "va": "0x181722789",
+      "bytes": 48,
+      "sha256": "27edd6be86b64b90a64991ac96af9cede751d348ccac5decdb567e10f1e19daa",
+      "instructions": [
+        {
+          "va": "0x181722789",
+          "text": "mov rax, qword ptr [rip + 0x1a92ea8]"
+        },
+        {
+          "va": "0x181722790",
+          "text": "lea rdx, [rsp + 0x20]"
+        },
+        {
+          "va": "0x181722795",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x181722798",
+          "text": "mov qword ptr [rsp + 0x20], 4"
+        },
+        {
+          "va": "0x1817227a1",
+          "text": "mov qword ptr [rsp + 0x28], 2"
+        },
+        {
+          "va": "0x1817227aa",
+          "text": "mov rcx, qword ptr [rax + 0xb8]"
+        },
+        {
+          "va": "0x1817227b1",
+          "text": "mov qword ptr [rcx + 8], 0x40000"
+        }
+      ]
+    },
+    {
+      "va": "0x181722aca",
+      "bytes": 159,
+      "sha256": "684801b096842381736cb89c09786ba388f22a075d600d551529904a8edd1b85",
+      "instructions": [
+        {
+          "va": "0x181722aca",
+          "text": "mov rdx, rax"
+        },
+        {
+          "va": "0x181722acd",
+          "text": "mov qword ptr [rsp + 0x38], 0xffffffffffff0000"
+        },
+        {
+          "va": "0x181722ad6",
+          "text": "xor eax, eax"
+        },
+        {
+          "va": "0x181722ad8",
+          "text": "mov qword ptr [rsp + 0x30], rax"
+        },
+        {
+          "va": "0x181722add",
+          "text": "test rdx, rdx"
+        },
+        {
+          "va": "0x181722ae0",
+          "text": "je 0x181722bda"
+        },
+        {
+          "va": "0x181722ae6",
+          "text": "cmp dword ptr [rdx + 0x18], eax"
+        },
+        {
+          "va": "0x181722ae9",
+          "text": "jbe 0x181722be0"
+        },
+        {
+          "va": "0x181722aef",
+          "text": "movups xmm0, xmmword ptr [rsp + 0x30]"
+        },
+        {
+          "va": "0x181722af4",
+          "text": "mov qword ptr [rsp + 0x40], rax"
+        },
+        {
+          "va": "0x181722af9",
+          "text": "mov qword ptr [rsp + 0x48], 0x10000"
+        },
+        {
+          "va": "0x181722b02",
+          "text": "movups xmmword ptr [rdx + 0x20], xmm0"
+        },
+        {
+          "va": "0x181722b06",
+          "text": "cmp dword ptr [rdx + 0x18], 1"
+        },
+        {
+          "va": "0x181722b0a",
+          "text": "jbe 0x181722be0"
+        },
+        {
+          "va": "0x181722b10",
+          "text": "movups xmm0, xmmword ptr [rsp + 0x40]"
+        },
+        {
+          "va": "0x181722b15",
+          "text": "mov qword ptr [rsp + 0x58], rax"
+        },
+        {
+          "va": "0x181722b1a",
+          "text": "mov qword ptr [rsp + 0x50], 0xffffffffffff0000"
+        },
+        {
+          "va": "0x181722b23",
+          "text": "movups xmmword ptr [rdx + 0x30], xmm0"
+        },
+        {
+          "va": "0x181722b27",
+          "text": "cmp dword ptr [rdx + 0x18], 2"
+        },
+        {
+          "va": "0x181722b2b",
+          "text": "jbe 0x181722be0"
+        },
+        {
+          "va": "0x181722b31",
+          "text": "movups xmm0, xmmword ptr [rsp + 0x50]"
+        },
+        {
+          "va": "0x181722b36",
+          "text": "mov qword ptr [rsp + 0x68], rax"
+        },
+        {
+          "va": "0x181722b3b",
+          "text": "mov qword ptr [rsp + 0x60], 0x10000"
+        },
+        {
+          "va": "0x181722b44",
+          "text": "movups xmmword ptr [rdx + 0x40], xmm0"
+        },
+        {
+          "va": "0x181722b48",
+          "text": "cmp dword ptr [rdx + 0x18], 3"
+        },
+        {
+          "va": "0x181722b4c",
+          "text": "jbe 0x181722be0"
+        },
+        {
+          "va": "0x181722b52",
+          "text": "movups xmm0, xmmword ptr [rsp + 0x60]"
+        },
+        {
+          "va": "0x181722b57",
+          "text": "movups xmmword ptr [rdx + 0x50], xmm0"
+        },
+        {
+          "va": "0x181722b5b",
+          "text": "mov rax, qword ptr [rip + 0x1a92ad6]"
+        },
+        {
+          "va": "0x181722b62",
+          "text": "mov rcx, qword ptr [rax + 0xb8]"
+        }
+      ]
+    },
+    {
+      "va": "0x1817221d0",
+      "bytes": 272,
+      "sha256": "212cca92f1613ac2321542d668bdd99c6dc8a9fa02f93206a00afa97ff3f209b",
+      "instructions": [
+        {
+          "va": "0x1817221d0",
+          "text": "mov qword ptr [rsp + 0x10], rbp"
+        },
+        {
+          "va": "0x1817221d5",
+          "text": "mov qword ptr [rsp + 0x18], rsi"
+        },
+        {
+          "va": "0x1817221da",
+          "text": "push rdi"
+        },
+        {
+          "va": "0x1817221db",
+          "text": "sub rsp, 0x30"
+        },
+        {
+          "va": "0x1817221df",
+          "text": "cmp byte ptr [rip + 0x1c38864], 0"
+        },
+        {
+          "va": "0x1817221e6",
+          "text": "mov rsi, r8"
+        },
+        {
+          "va": "0x1817221e9",
+          "text": "mov rbp, rdx"
+        },
+        {
+          "va": "0x1817221ec",
+          "text": "mov rdi, rcx"
+        },
+        {
+          "va": "0x1817221ef",
+          "text": "jne 0x18172221a"
+        },
+        {
+          "va": "0x1817221f1",
+          "text": "lea rcx, [rip + 0x1a98e98]"
+        },
+        {
+          "va": "0x1817221f8",
+          "text": "call 0x1802c5dc0"
+        },
+        {
+          "va": "0x1817221fd",
+          "text": "lock or dword ptr [rsp], 0"
+        },
+        {
+          "va": "0x181722202",
+          "text": "lea rcx, [rip + 0x1a9342f]"
+        },
+        {
+          "va": "0x181722209",
+          "text": "call 0x1802c5dc0"
+        },
+        {
+          "va": "0x18172220e",
+          "text": "lock or dword ptr [rsp], 0"
+        },
+        {
+          "va": "0x181722213",
+          "text": "mov byte ptr [rip + 0x1c38830], 1"
+        },
+        {
+          "va": "0x18172221a",
+          "text": "movzx eax, byte ptr [rdi + 3]"
+        },
+        {
+          "va": "0x18172221e",
+          "text": "dec al"
+        },
+        {
+          "va": "0x181722220",
+          "text": "cmp al, 2"
+        },
+        {
+          "va": "0x181722222",
+          "text": "ja 0x1817222c9"
+        },
+        {
+          "va": "0x181722228",
+          "text": "mov rcx, qword ptr [rip + 0x1a93409]"
+        },
+        {
+          "va": "0x18172222f",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x181722236",
+          "text": "jne 0x181722244"
+        },
+        {
+          "va": "0x181722238",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18172223d",
+          "text": "mov rcx, qword ptr [rip + 0x1a933f4]"
+        },
+        {
+          "va": "0x181722244",
+          "text": "test byte ptr [rdi + 4], 1"
+        },
+        {
+          "va": "0x181722248",
+          "text": "jbe 0x1817222a6"
+        },
+        {
+          "va": "0x18172224a",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x181722251",
+          "text": "mov qword ptr [rsp + 0x40], rbx"
+        },
+        {
+          "va": "0x181722256",
+          "text": "jne 0x18172225d"
+        },
+        {
+          "va": "0x181722258",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x18172225d",
+          "text": "movzx eax, word ptr [rdi + 4]"
+        },
+        {
+          "va": "0x181722261",
+          "text": "mov ecx, 1"
+        },
+        {
+          "va": "0x181722266",
+          "text": "bts ax, cx"
+        },
+        {
+          "va": "0x18172226a",
+          "text": "mov word ptr [rdi + 4], ax"
+        },
+        {
+          "va": "0x18172226e",
+          "text": "mov rcx, qword ptr [rip + 0x1a98e1b]"
+        },
+        {
+          "va": "0x181722275",
+          "text": "mov rbx, qword ptr [rdi + 8]"
+        },
+        {
+          "va": "0x181722279",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x181722280",
+          "text": "jne 0x181722287"
+        },
+        {
+          "va": "0x181722282",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x181722287",
+          "text": "mov r9, rbx"
+        },
+        {
+          "va": "0x18172228a",
+          "text": "mov qword ptr [rsp + 0x20], 0"
+        },
+        {
+          "va": "0x181722293",
+          "text": "xor r8d, r8d"
+        },
+        {
+          "va": "0x181722296",
+          "text": "mov rdx, rbp"
+        },
+        {
+          "va": "0x181722299",
+          "text": "mov rcx, rsi"
+        },
+        {
+          "va": "0x18172229c",
+          "text": "call 0x18169ff50"
+        },
+        {
+          "va": "0x1817222a1",
+          "text": "mov rbx, qword ptr [rsp + 0x40]"
+        },
+        {
+          "va": "0x1817222a6",
+          "text": "mov rcx, qword ptr [rip + 0x1a98de3]"
+        },
+        {
+          "va": "0x1817222ad",
+          "text": "cmp dword ptr [rcx + 0xe0], 0"
+        },
+        {
+          "va": "0x1817222b4",
+          "text": "jne 0x1817222bb"
+        },
+        {
+          "va": "0x1817222b6",
+          "text": "call 0x1802ec040"
+        },
+        {
+          "va": "0x1817222bb",
+          "text": "xorps xmm0, xmm0"
+        },
+        {
+          "va": "0x1817222be",
+          "text": "movups xmmword ptr [rsi + 0xf0], xmm0"
+        },
+        {
+          "va": "0x1817222c5",
+          "text": "mov byte ptr [rdi + 3], 4"
+        },
+        {
+          "va": "0x1817222c9",
+          "text": "mov rbp, qword ptr [rsp + 0x48]"
+        },
+        {
+          "va": "0x1817222ce",
+          "text": "mov rsi, qword ptr [rsp + 0x50]"
+        },
+        {
+          "va": "0x1817222d3",
+          "text": "add rsp, 0x30"
+        },
+        {
+          "va": "0x1817222d7",
+          "text": "pop rdi"
+        },
+        {
+          "va": "0x1817222d8",
+          "text": "ret "
+        },
+        {
+          "va": "0x1817222d9",
+          "text": "int3 "
+        },
+        {
+          "va": "0x1817222da",
+          "text": "int3 "
+        },
+        {
+          "va": "0x1817222db",
+          "text": "int3 "
+        },
+        {
+          "va": "0x1817222dc",
+          "text": "int3 "
+        },
+        {
+          "va": "0x1817222dd",
+          "text": "int3 "
+        },
+        {
+          "va": "0x1817222de",
+          "text": "int3 "
+        },
+        {
+          "va": "0x1817222df",
+          "text": "int3 "
+        }
+      ]
+    }
+  ],
+  "order": [
+    "Normal wrapper resolves common Thorn from NormalThorn.EntityRef; passes reusable=false",
+    "belt: ifphase!=0 clear beltPhase, then belt state loop",
+    "phase0 wait positive ->timer+=dt, threshold>= and absSpeed>=4 ->phase1 same call",
+    "phase1 sorting54=1100 ->first2 holders push3 ->directionVector(moveDirection)*speed stored in Thorn.Velo ->calc distance using direction and CURRENT Actor position ->distance0/phase2 ->same-call move",
+    "phase2 Actor.Pos +=Thorn.Velo*speed, distance+=speed, distance>=limit setsphase4 and RETURNS",
+    "phase4 SetCollisionActive(false,Thorn.EntityRef), livephase byte++, timer1 ->redispatch",
+    "phase5 timer-=dt*4; positive writesAlpha, expires normal Actor.exitbit13 or reusable SetActive(false) thenPos0/clearThornflag1; timer0/phase0; Alpha never zeroed"
+  ],
+  "belt": {
+    "normalize": "reuse exact source-distanceconstraint-math normalizeRaw; native packed helper0x1816463a0 at181721206, callsite same integer reciprocal/shift",
+    "length": "same helper lengthRaw; native separately shifted squares sqrt0x181640c40 at181721259",
+    "LUTsha256": "de5265f651730f20b54cc24bdcd3047e61320be44a5ae54796d290a189f4bca5",
+    "timing": "No dt. phase1 computes direction from current Actor pos to endpoint1, resets distance and phase2 immediately moves. phase2 step=min(abs(total-distance),beltSpeed), on completion SNAP endpoint0, phase1, then full new step same callback; no remaining frame budget.",
+    "precision": "normalize(+5px,0)=(65535,0), normalize(-5px,0)=(-65536,0); never snap to ideal units.",
+    "cycle": "If a state repeats during deterministic belt redispatch (e.g zero-length/full-leg<=speed perpetual wrap), native call never returns. Helper explicitly refuses detected native cycle, no guard8/guess/fractional budget."
+  },
+  "events": {
+    "49": "Reusable expiration requires exact pooled Actor.SetActive(false,Thorn.EntityRef) host, before native tail zeroPos/clearflag1. Normal false path never calls SetActive here.",
+    "54": "Shared native8slot pool; source Actor, SortingOrder1100. Null explicitly fails at181721404. Synchronous receiver mutations of speed/direction/position are read later; phase2 assignment after callback overwrites callback phase. Exceptions retain leased slot in-place.",
+    "61": "Normal forwards to Thorn; onlyphase0 may call startMove (absSpeed>=4) ->phase1; no immediate movement/reset/alpha/collision changes. Other events to base Actor host. Direct native startMove itself has no phase0 gate."
+  },
+  "ownersAndCaches": {
+    "push": "First TWO holder positions only, current lookup, missing skipped; write pushBackTarget3, not flags/contacts.",
+    "disable": "Phase4 ALL holders through existing Motion.SetCollisionActive owner gate; rejection does not block phase/fade progression.",
+    "requestDisappear": "Exact function aliases from source-thorn-native; no duplicate collision/kill/requests implementation. Existing request clears Actor velocity, setsphase4 for1..3; once flag additionallybit1 and disables collisions.",
+    "position": "Belt/phase2 mutate Actor.Pos only; Actor.Velo unchanged except existing requestDisappear callback. Existing ActorMotion.Update1/Update2/Post and cache sync remain outside component callback."
+  },
+  "corrections": [
+    "Existing ThornCeiling update is separate pooled approximation and is not used as runtime body here. NormalThorn fade expiry leaves Alpha at last positive sample and sets exitbit13; pooled expiry also does not zero Alpha. No existing file changed.",
+    "Initial test expectations of ideal65536 horizontal normalization were corrected to actual extracted LUT65535; implementation was not rounded or snapped.",
+    "Belt wrap consumes a full NEW step after snap in the same call; does not distribute unused step/time."
+  ],
+  "unresolved": [
+    "Actual Actor/NormalThorn/common Thorn typed identity/generation and current full collision storage remain explicit host state. No Reset/Parse or allocation implementation copied.",
+    "Only safe-number signed64 projection; results outside safe exact range and negative/overflowed native sqrt branch refused by existing math helper. Negative frame DeltaTime refused.",
+    "Detected nonterminating native belt cycles throw instead of hanging. Managed/native allocator/pool/heap growth not implemented.",
+    "Full native synchronous receiver dispatch, base Actor events, reusable SetActive and shared static event pool lifetime/transaction remain caller responsibilities.",
+    "Existing callbacks native hosts (actor/player lookup, damage, disappear audio) required; helper exports same existing function references.",
+    "No fullstage creator scheduling/runtime integration/collision cache rebuild/OnStart or legacy carry claim."
+  ],
+  "actualFixture": [
+    {
+      "stageId": "st_w_03_02",
+      "count": 2,
+      "online": false,
+      "source": {
+        "createThreshold": 0,
+        "playerCount": 0,
+        "posX": 1488,
+        "posY": 48,
+        "type": 93,
+        "typeName": "Thorn",
+        "name": "Thorn1",
+        "datas": [
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 3,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          }
+        ]
+      },
+      "expectedNativeReset": {
+        "direction": 1,
+        "moveDirection": 1,
+        "speedRaw": 196608,
+        "waitTimeRaw": 0,
+        "beltSpeedRaw": 65536,
+        "phase": 0,
+        "beltPhase": 0,
+        "alphaRaw": 65536,
+        "positionRaw": {
+          "xRaw": 97517568,
+          "yRaw": 3145728
+        }
+      },
+      "idleMeaning": "No trigger supplied: wait0 staysidle. Explicit event61 fixture thenphase2 positionY3735552/distance196608. No authored scene event schedule inferred."
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 3,
+      "online": false,
+      "source": {
+        "createThreshold": 0,
+        "playerCount": 0,
+        "posX": 1488,
+        "posY": 48,
+        "type": 93,
+        "typeName": "Thorn",
+        "name": "Thorn1",
+        "datas": [
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 3,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          }
+        ]
+      },
+      "expectedNativeReset": {
+        "direction": 1,
+        "moveDirection": 1,
+        "speedRaw": 196608,
+        "waitTimeRaw": 0,
+        "beltSpeedRaw": 65536,
+        "phase": 0,
+        "beltPhase": 0,
+        "alphaRaw": 65536,
+        "positionRaw": {
+          "xRaw": 97517568,
+          "yRaw": 3145728
+        }
+      },
+      "idleMeaning": "No trigger supplied: wait0 staysidle. Explicit event61 fixture thenphase2 positionY3735552/distance196608. No authored scene event schedule inferred."
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 4,
+      "online": false,
+      "source": {
+        "createThreshold": 0,
+        "playerCount": 0,
+        "posX": 1488,
+        "posY": 48,
+        "type": 93,
+        "typeName": "Thorn",
+        "name": "Thorn1",
+        "datas": [
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 3,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          }
+        ]
+      },
+      "expectedNativeReset": {
+        "direction": 1,
+        "moveDirection": 1,
+        "speedRaw": 196608,
+        "waitTimeRaw": 0,
+        "beltSpeedRaw": 65536,
+        "phase": 0,
+        "beltPhase": 0,
+        "alphaRaw": 65536,
+        "positionRaw": {
+          "xRaw": 97517568,
+          "yRaw": 3145728
+        }
+      },
+      "idleMeaning": "No trigger supplied: wait0 staysidle. Explicit event61 fixture thenphase2 positionY3735552/distance196608. No authored scene event schedule inferred."
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 5,
+      "online": false,
+      "source": {
+        "createThreshold": 0,
+        "playerCount": 0,
+        "posX": 1488,
+        "posY": 48,
+        "type": 93,
+        "typeName": "Thorn",
+        "name": "Thorn1",
+        "datas": [
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 3,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          }
+        ]
+      },
+      "expectedNativeReset": {
+        "direction": 1,
+        "moveDirection": 1,
+        "speedRaw": 196608,
+        "waitTimeRaw": 0,
+        "beltSpeedRaw": 65536,
+        "phase": 0,
+        "beltPhase": 0,
+        "alphaRaw": 65536,
+        "positionRaw": {
+          "xRaw": 97517568,
+          "yRaw": 3145728
+        }
+      },
+      "idleMeaning": "No trigger supplied: wait0 staysidle. Explicit event61 fixture thenphase2 positionY3735552/distance196608. No authored scene event schedule inferred."
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 6,
+      "online": false,
+      "source": {
+        "createThreshold": 0,
+        "playerCount": 0,
+        "posX": 1488,
+        "posY": 48,
+        "type": 93,
+        "typeName": "Thorn",
+        "name": "Thorn1",
+        "datas": [
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 3,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          }
+        ]
+      },
+      "expectedNativeReset": {
+        "direction": 1,
+        "moveDirection": 1,
+        "speedRaw": 196608,
+        "waitTimeRaw": 0,
+        "beltSpeedRaw": 65536,
+        "phase": 0,
+        "beltPhase": 0,
+        "alphaRaw": 65536,
+        "positionRaw": {
+          "xRaw": 97517568,
+          "yRaw": 3145728
+        }
+      },
+      "idleMeaning": "No trigger supplied: wait0 staysidle. Explicit event61 fixture thenphase2 positionY3735552/distance196608. No authored scene event schedule inferred."
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 7,
+      "online": false,
+      "source": {
+        "createThreshold": 0,
+        "playerCount": 0,
+        "posX": 1488,
+        "posY": 48,
+        "type": 93,
+        "typeName": "Thorn",
+        "name": "Thorn1",
+        "datas": [
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 3,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          }
+        ]
+      },
+      "expectedNativeReset": {
+        "direction": 1,
+        "moveDirection": 1,
+        "speedRaw": 196608,
+        "waitTimeRaw": 0,
+        "beltSpeedRaw": 65536,
+        "phase": 0,
+        "beltPhase": 0,
+        "alphaRaw": 65536,
+        "positionRaw": {
+          "xRaw": 97517568,
+          "yRaw": 3145728
+        }
+      },
+      "idleMeaning": "No trigger supplied: wait0 staysidle. Explicit event61 fixture thenphase2 positionY3735552/distance196608. No authored scene event schedule inferred."
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 8,
+      "online": false,
+      "source": {
+        "createThreshold": 0,
+        "playerCount": 0,
+        "posX": 1488,
+        "posY": 48,
+        "type": 93,
+        "typeName": "Thorn",
+        "name": "Thorn1",
+        "datas": [
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 3,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          }
+        ]
+      },
+      "expectedNativeReset": {
+        "direction": 1,
+        "moveDirection": 1,
+        "speedRaw": 196608,
+        "waitTimeRaw": 0,
+        "beltSpeedRaw": 65536,
+        "phase": 0,
+        "beltPhase": 0,
+        "alphaRaw": 65536,
+        "positionRaw": {
+          "xRaw": 97517568,
+          "yRaw": 3145728
+        }
+      },
+      "idleMeaning": "No trigger supplied: wait0 staysidle. Explicit event61 fixture thenphase2 positionY3735552/distance196608. No authored scene event schedule inferred."
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 2,
+      "online": true,
+      "source": {
+        "createThreshold": 0,
+        "playerCount": 0,
+        "posX": 1488,
+        "posY": 48,
+        "type": 93,
+        "typeName": "Thorn",
+        "name": "Thorn1",
+        "datas": [
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 3,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          }
+        ]
+      },
+      "expectedNativeReset": {
+        "direction": 1,
+        "moveDirection": 1,
+        "speedRaw": 196608,
+        "waitTimeRaw": 0,
+        "beltSpeedRaw": 65536,
+        "phase": 0,
+        "beltPhase": 0,
+        "alphaRaw": 65536,
+        "positionRaw": {
+          "xRaw": 97517568,
+          "yRaw": 3145728
+        }
+      },
+      "idleMeaning": "No trigger supplied: wait0 staysidle. Explicit event61 fixture thenphase2 positionY3735552/distance196608. No authored scene event schedule inferred."
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 3,
+      "online": true,
+      "source": {
+        "createThreshold": 0,
+        "playerCount": 0,
+        "posX": 1488,
+        "posY": 48,
+        "type": 93,
+        "typeName": "Thorn",
+        "name": "Thorn1",
+        "datas": [
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 3,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          }
+        ]
+      },
+      "expectedNativeReset": {
+        "direction": 1,
+        "moveDirection": 1,
+        "speedRaw": 196608,
+        "waitTimeRaw": 0,
+        "beltSpeedRaw": 65536,
+        "phase": 0,
+        "beltPhase": 0,
+        "alphaRaw": 65536,
+        "positionRaw": {
+          "xRaw": 97517568,
+          "yRaw": 3145728
+        }
+      },
+      "idleMeaning": "No trigger supplied: wait0 staysidle. Explicit event61 fixture thenphase2 positionY3735552/distance196608. No authored scene event schedule inferred."
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 4,
+      "online": true,
+      "source": {
+        "createThreshold": 0,
+        "playerCount": 0,
+        "posX": 1488,
+        "posY": 48,
+        "type": 93,
+        "typeName": "Thorn",
+        "name": "Thorn1",
+        "datas": [
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 3,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          }
+        ]
+      },
+      "expectedNativeReset": {
+        "direction": 1,
+        "moveDirection": 1,
+        "speedRaw": 196608,
+        "waitTimeRaw": 0,
+        "beltSpeedRaw": 65536,
+        "phase": 0,
+        "beltPhase": 0,
+        "alphaRaw": 65536,
+        "positionRaw": {
+          "xRaw": 97517568,
+          "yRaw": 3145728
+        }
+      },
+      "idleMeaning": "No trigger supplied: wait0 staysidle. Explicit event61 fixture thenphase2 positionY3735552/distance196608. No authored scene event schedule inferred."
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 5,
+      "online": true,
+      "source": {
+        "createThreshold": 0,
+        "playerCount": 0,
+        "posX": 1488,
+        "posY": 48,
+        "type": 93,
+        "typeName": "Thorn",
+        "name": "Thorn1",
+        "datas": [
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 3,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          }
+        ]
+      },
+      "expectedNativeReset": {
+        "direction": 1,
+        "moveDirection": 1,
+        "speedRaw": 196608,
+        "waitTimeRaw": 0,
+        "beltSpeedRaw": 65536,
+        "phase": 0,
+        "beltPhase": 0,
+        "alphaRaw": 65536,
+        "positionRaw": {
+          "xRaw": 97517568,
+          "yRaw": 3145728
+        }
+      },
+      "idleMeaning": "No trigger supplied: wait0 staysidle. Explicit event61 fixture thenphase2 positionY3735552/distance196608. No authored scene event schedule inferred."
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 6,
+      "online": true,
+      "source": {
+        "createThreshold": 0,
+        "playerCount": 0,
+        "posX": 1488,
+        "posY": 48,
+        "type": 93,
+        "typeName": "Thorn",
+        "name": "Thorn1",
+        "datas": [
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 3,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          }
+        ]
+      },
+      "expectedNativeReset": {
+        "direction": 1,
+        "moveDirection": 1,
+        "speedRaw": 196608,
+        "waitTimeRaw": 0,
+        "beltSpeedRaw": 65536,
+        "phase": 0,
+        "beltPhase": 0,
+        "alphaRaw": 65536,
+        "positionRaw": {
+          "xRaw": 97517568,
+          "yRaw": 3145728
+        }
+      },
+      "idleMeaning": "No trigger supplied: wait0 staysidle. Explicit event61 fixture thenphase2 positionY3735552/distance196608. No authored scene event schedule inferred."
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 7,
+      "online": true,
+      "source": {
+        "createThreshold": 0,
+        "playerCount": 0,
+        "posX": 1488,
+        "posY": 48,
+        "type": 93,
+        "typeName": "Thorn",
+        "name": "Thorn1",
+        "datas": [
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 3,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          }
+        ]
+      },
+      "expectedNativeReset": {
+        "direction": 1,
+        "moveDirection": 1,
+        "speedRaw": 196608,
+        "waitTimeRaw": 0,
+        "beltSpeedRaw": 65536,
+        "phase": 0,
+        "beltPhase": 0,
+        "alphaRaw": 65536,
+        "positionRaw": {
+          "xRaw": 97517568,
+          "yRaw": 3145728
+        }
+      },
+      "idleMeaning": "No trigger supplied: wait0 staysidle. Explicit event61 fixture thenphase2 positionY3735552/distance196608. No authored scene event schedule inferred."
+    },
+    {
+      "stageId": "st_w_03_02",
+      "count": 8,
+      "online": true,
+      "source": {
+        "createThreshold": 0,
+        "playerCount": 0,
+        "posX": 1488,
+        "posY": 48,
+        "type": 93,
+        "typeName": "Thorn",
+        "name": "Thorn1",
+        "datas": [
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 3,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 1,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 1,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 2,
+            "f": 0,
+            "s": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          },
+          {
+            "t": 0,
+            "f": 0,
+            "s": null
+          }
+        ]
+      },
+      "expectedNativeReset": {
+        "direction": 1,
+        "moveDirection": 1,
+        "speedRaw": 196608,
+        "waitTimeRaw": 0,
+        "beltSpeedRaw": 65536,
+        "phase": 0,
+        "beltPhase": 0,
+        "alphaRaw": 65536,
+        "positionRaw": {
+          "xRaw": 97517568,
+          "yRaw": 3145728
+        }
+      },
+      "idleMeaning": "No trigger supplied: wait0 staysidle. Explicit event61 fixture thenphase2 positionY3735552/distance196608. No authored scene event schedule inferred."
+    }
+  ],
+  "api": {
+    "normalOnUpdate": "(world,actor,dtRaw,host) => trace; exact NormalThorn.entityId lookup, reusable=false",
+    "onUpdate": "(world,actor,dtRaw,host,{reusable:boolean,thorn?:actual common Thorn pointer}) => trace; explicit generic argument, in-place",
+    "updateBeltPhase": "(world,actor,commonThorn) => trace; exact current native state, no Reset/defaults",
+    "updatePhase": "(world,actor,commonThorn,dtRaw,reusable,host) => trace",
+    "normalReceive": "(world,actor,nativeQEventParam,host) => int32",
+    "receive": "(world,actor,commonThorn,nativeQEventParam,host) => int32",
+    "startMove": "(commonThorn) => boolean; native direct function epsilon only (event61 separately gates idle)",
+    "createHost": "({getWorld?,thornByEntity,mapDimensions,invokeOnRecvEvent,setActive,commonActorReceive}) => physical collision/ActorMotion adapter; typed lookup must return live component, mapDimensions must actual native UInt16 width/height",
+    "update": "(inputWorld,entityRef,dtRaw,hostOptions including actorByEntity) => {world,trace}; JSON whole-world draft",
+    "nativeCallbacks": "Exact same function references from source-thorn-native requestDisappear/onCollided/onContacted/onPushedBack/killPlayer"
+  }
+}

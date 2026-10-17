@@ -1,0 +1,113 @@
+
+== ActorComponent.Initialize 0x18169cc10
+0x18169cc10 mov qword ptr [rsp + 8], rbx
+0x18169cc15 mov qword ptr [rsp + 0x10], rsi
+0x18169cc1a push rdi
+0x18169cc1b sub rsp, 0x70
+0x18169cc1f cmp byte ptr [rip + 0x1cbda0f], 0
+0x18169cc26 mov rbx, r8
+0x18169cc29 mov rsi, rdx
+0x18169cc2c mov rdi, rcx
+0x18169cc2f jne 0x18169cc7c
+0x18169cc31 lea rcx, [rip + 0x1b1e458]
+0x18169cc38 call 0x1802c5dc0 ; 
+0x18169cc3d lock or dword ptr [rsp], 0
+0x18169cc42 lea rcx, [rip + 0x1b25227]
+0x18169cc49 call 0x1802c5dc0 ; 
+0x18169cc4e lock or dword ptr [rsp], 0
+0x18169cc53 lea rcx, [rip + 0x1b2520e]
+0x18169cc5a call 0x1802c5dc0 ; 
+0x18169cc5f lock or dword ptr [rsp], 0
+0x18169cc64 lea rcx, [rip + 0x1b3429d]
+0x18169cc6b call 0x1802c5dc0 ; 
+0x18169cc70 lock or dword ptr [rsp], 0
+0x18169cc75 mov byte ptr [rip + 0x1cbd9b9], 1
+0x18169cc7c test rbx, rbx
+0x18169cc7f je 0x18169cde4
+0x18169cc85 mov rax, qword ptr [rbx + 0x38]
+0x18169cc89 lea rcx, [rsp + 0x50]
+0x18169cc8e mov qword ptr [rdi + 0x20], rax
+0x18169cc92 xorps xmm0, xmm0
+0x18169cc95 movzx eax, word ptr [rbx + 0x18]
+0x18169cc99 xor r8d, r8d
+0x18169cc9c mov word ptr [rdi + 6], ax
+0x18169cca0 mov rdx, qword ptr [rbx + 0x20]
+0x18169cca4 movups xmmword ptr [rsp + 0x50], xmm0
+0x18169cca9 movups xmmword ptr [rsp + 0x60], xmm0
+0x18169ccae call 0x18168e770 ; QStringUtf8_32..ctor
+0x18169ccb3 movups xmm0, xmmword ptr [rsp + 0x50]
+0x18169ccb8 movups xmm1, xmmword ptr [rsp + 0x60]
+0x18169ccbd movups xmmword ptr [rdi + 0x130], xmm0
+0x18169ccc4 movups xmmword ptr [rdi + 0x140], xmm1
+0x18169cccb test rsi, rsi
+0x18169ccce je 0x18169cde4
+0x18169ccd4 xor edx, edx
+0x18169ccd6 mov rcx, rsi
+0x18169ccd9 call 0x18174ab40 ; Frame.GetStage
+0x18169ccde mov rcx, qword ptr [rip + 0x1b34223]
+0x18169cce5 mov rbx, rax
+0x18169cce8 cmp dword ptr [rcx + 0xe0], 0
+0x18169ccef jne 0x18169ccf6
+0x18169ccf1 call 0x1802ec040 ; 
+0x18169ccf6 mov rax, qword ptr [rbx + 0x10]
+0x18169ccfa movdqa xmm0, xmmword ptr [rip + 0x17eadee]
+0x18169cd02 mov qword ptr [rdi + 0x50], rax
+0x18169cd06 movups xmmword ptr [rdi + 0xe0], xmm0
+0x18169cd0d mov qword ptr [rdi + 0x58], 0x10000
+0x18169cd15 mov rbx, qword ptr [rip + 0x1b25154]
+0x18169cd1c movdqu xmmword ptr [rsp + 0x30], xmm0
+0x18169cd22 cmp qword ptr [rbx + 0x38], 0
+0x18169cd27 jne 0x18169cd31
+0x18169cd29 mov rcx, rbx
+0x18169cd2c call 0x180306dd0 ; 
+0x18169cd31 mov rax, qword ptr [rbx + 0x38]
+0x18169cd35 lea rcx, [rsp + 0x40]
+0x18169cd3a mov rdx, qword ptr [rsi + 0x90]
+0x18169cd41 mov r8d, 4
+0x18169cd47 mov r9, qword ptr [rax]
+0x18169cd4a call 0x18001ce80 ; 
+0x18169cd4f cmp byte ptr [rip + 0x1cb9dad], 0
+0x18169cd56 mov rsi, qword ptr [rip + 0x1b2510b]
+0x18169cd5d movups xmm0, xmmword ptr [rax]
+0x18169cd60 movaps xmmword ptr [rsp + 0x20], xmm0
+0x18169cd65 jne 0x18169cd7f
+0x18169cd67 lea rcx, [rip + 0x1b2da12]
+0x18169cd6e call 0x1802c5dc0 ; 
+0x18169cd73 lock or dword ptr [rsp], 0
+0x18169cd78 mov byte ptr [rip + 0x1cb9d84], 1
+0x18169cd7f mov r8, qword ptr [rsp + 0x28]
+0x18169cd84 test r8, r8
+0x18169cd87 je 0x18169cdae
+0x18169cd89 mov r9, qword ptr [rsp + 0x20]
+0x18169cd8e test r9, r9
+0x18169cd91 je 0x18169cdae
+0x18169cd93 call 0x180025330 ; 
+0x18169cd98 mov rcx, qword ptr [rsi + 0x20]
+0x18169cd9c mov ebx, eax
+0x18169cd9e test byte ptr [rcx + 0x135], 1
+0x18169cda5 jne 0x18169cdb0
+0x18169cda7 call 0x180306d50 ; 
+0x18169cdac jmp 0x18169cdb0 ; 
+0x18169cdae xor ebx, ebx
+0x18169cdb0 mov rcx, qword ptr [rip + 0x1b1e2d9]
+0x18169cdb7 cmp dword ptr [rcx + 0xe0], 0
+0x18169cdbe jne 0x18169cdc5
+0x18169cdc0 call 0x1802ec040 ; 
+0x18169cdc5 mov dword ptr [rdi + 8], ebx
+0x18169cdc8 lea r11, [rsp + 0x70]
+0x18169cdcd mov eax, dword ptr [rdi + 0xc]
+0x18169cdd0 mov rbx, qword ptr [r11 + 0x10]
+0x18169cdd4 bts eax, 0xe
+0x18169cdd8 mov rsi, qword ptr [r11 + 0x18]
+0x18169cddc mov dword ptr [rdi + 0xc], eax
+0x18169cddf mov rsp, r11
+0x18169cde2 pop rdi
+0x18169cde3 ret 
+0x18169cde4 call 0x18032a5e0 ; 
+0x18169cde9 int3 
+0x18169cdea int3 
+0x18169cdeb int3 
+0x18169cdec int3 
+0x18169cded int3 
+0x18169cdee int3 
+0x18169cdef int3 

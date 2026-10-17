@@ -1,0 +1,926 @@
+
+== CollisionCallbacks.initCallbacks 0x18177baa0
+0x18177baa0 sub rsp, 0x28
+0x18177baa4 cmp byte ptr [rip + 0x1bdf177], 0
+0x18177baab jne 0x18177c239
+0x18177bab1 lea rcx, [rip + 0x19e9b38]
+0x18177bab8 call 0x1802c5dc0 ; 
+0x18177babd lock or dword ptr [rsp], 0
+0x18177bac2 lea rcx, [rip + 0x19e9b0f]
+0x18177bac9 call 0x1802c5dc0 ; 
+0x18177bace lock or dword ptr [rsp], 0
+0x18177bad3 lea rcx, [rip + 0x19e9b06]
+0x18177bada call 0x1802c5dc0 ; 
+0x18177badf lock or dword ptr [rsp], 0
+0x18177bae4 lea rcx, [rip + 0x19e99b5]
+0x18177baeb call 0x1802c5dc0 ; 
+0x18177baf0 lock or dword ptr [rsp], 0
+0x18177baf5 lea rcx, [rip + 0x19e99b4]
+0x18177bafc call 0x1802c5dc0 ; 
+0x18177bb01 lock or dword ptr [rsp], 0
+0x18177bb06 lea rcx, [rip + 0x19e9983]
+0x18177bb0d call 0x1802c5dc0 ; 
+0x18177bb12 lock or dword ptr [rsp], 0
+0x18177bb17 lea rcx, [rip + 0x19e997a]
+0x18177bb1e call 0x1802c5dc0 ; 
+0x18177bb23 lock or dword ptr [rsp], 0
+0x18177bb28 lea rcx, [rip + 0x19e9949]
+0x18177bb2f call 0x1802c5dc0 ; 
+0x18177bb34 lock or dword ptr [rsp], 0
+0x18177bb39 lea rcx, [rip + 0x19e9940]
+0x18177bb40 call 0x1802c5dc0 ; 
+0x18177bb45 lock or dword ptr [rsp], 0
+0x18177bb4a lea rcx, [rip + 0x19e9917]
+0x18177bb51 call 0x1802c5dc0 ; 
+0x18177bb56 lock or dword ptr [rsp], 0
+0x18177bb5b lea rcx, [rip + 0x19e990e]
+0x18177bb62 call 0x1802c5dc0 ; 
+0x18177bb67 lock or dword ptr [rsp], 0
+0x18177bb6c lea rcx, [rip + 0x19e98e5]
+0x18177bb73 call 0x1802c5dc0 ; 
+0x18177bb78 lock or dword ptr [rsp], 0
+0x18177bb7d lea rcx, [rip + 0x19e98dc]
+0x18177bb84 call 0x1802c5dc0 ; 
+0x18177bb89 lock or dword ptr [rsp], 0
+0x18177bb8e lea rcx, [rip + 0x19e98b3]
+0x18177bb95 call 0x1802c5dc0 ; 
+0x18177bb9a lock or dword ptr [rsp], 0
+0x18177bb9f lea rcx, [rip + 0x19e98aa]
+0x18177bba6 call 0x1802c5dc0 ; 
+0x18177bbab lock or dword ptr [rsp], 0
+0x18177bbb0 lea rcx, [rip + 0x19e9881]
+0x18177bbb7 call 0x1802c5dc0 ; 
+0x18177bbbc lock or dword ptr [rsp], 0
+0x18177bbc1 lea rcx, [rip + 0x19e9878]
+0x18177bbc8 call 0x1802c5dc0 ; 
+0x18177bbcd lock or dword ptr [rsp], 0
+0x18177bbd2 lea rcx, [rip + 0x19e984f]
+0x18177bbd9 call 0x1802c5dc0 ; 
+0x18177bbde lock or dword ptr [rsp], 0
+0x18177bbe3 lea rcx, [rip + 0x19e9846]
+0x18177bbea call 0x1802c5dc0 ; 
+0x18177bbef lock or dword ptr [rsp], 0
+0x18177bbf4 lea rcx, [rip + 0x19e992d]
+0x18177bbfb call 0x1802c5dc0 ; 
+0x18177bc00 lock or dword ptr [rsp], 0
+0x18177bc05 lea rcx, [rip + 0x19e9924]
+0x18177bc0c call 0x1802c5dc0 ; 
+0x18177bc11 lock or dword ptr [rsp], 0
+0x18177bc16 lea rcx, [rip + 0x19e98fb]
+0x18177bc1d call 0x1802c5dc0 ; 
+0x18177bc22 lock or dword ptr [rsp], 0
+0x18177bc27 lea rcx, [rip + 0x19e98f2]
+0x18177bc2e call 0x1802c5dc0 ; 
+0x18177bc33 lock or dword ptr [rsp], 0
+0x18177bc38 lea rcx, [rip + 0x19e98c9]
+0x18177bc3f call 0x1802c5dc0 ; 
+0x18177bc44 lock or dword ptr [rsp], 0
+0x18177bc49 lea rcx, [rip + 0x19e98c0]
+0x18177bc50 call 0x1802c5dc0 ; 
+0x18177bc55 lock or dword ptr [rsp], 0
+0x18177bc5a lea rcx, [rip + 0x19e9897]
+0x18177bc61 call 0x1802c5dc0 ; 
+0x18177bc66 lock or dword ptr [rsp], 0
+0x18177bc6b lea rcx, [rip + 0x19e988e]
+0x18177bc72 call 0x1802c5dc0 ; 
+0x18177bc77 lock or dword ptr [rsp], 0
+0x18177bc7c lea rcx, [rip + 0x19e9865]
+0x18177bc83 call 0x1802c5dc0 ; 
+0x18177bc88 lock or dword ptr [rsp], 0
+0x18177bc8d lea rcx, [rip + 0x19e985c]
+0x18177bc94 call 0x1802c5dc0 ; 
+0x18177bc99 lock or dword ptr [rsp], 0
+0x18177bc9e lea rcx, [rip + 0x19e9833]
+0x18177bca5 call 0x1802c5dc0 ; 
+0x18177bcaa lock or dword ptr [rsp], 0
+0x18177bcaf lea rcx, [rip + 0x19e982a]
+0x18177bcb6 call 0x1802c5dc0 ; 
+0x18177bcbb lock or dword ptr [rsp], 0
+0x18177bcc0 lea rcx, [rip + 0x19e9801]
+0x18177bcc7 call 0x1802c5dc0 ; 
+0x18177bccc lock or dword ptr [rsp], 0
+0x18177bcd1 lea rcx, [rip + 0x19e97f8]
+0x18177bcd8 call 0x1802c5dc0 ; 
+0x18177bcdd lock or dword ptr [rsp], 0
+0x18177bce2 lea rcx, [rip + 0x19e97cf]
+0x18177bce9 call 0x1802c5dc0 ; 
+0x18177bcee lock or dword ptr [rsp], 0
+0x18177bcf3 lea rcx, [rip + 0x19e97c6]
+0x18177bcfa call 0x1802c5dc0 ; 
+0x18177bcff lock or dword ptr [rsp], 0
+0x18177bd04 lea rcx, [rip + 0x19e968d]
+0x18177bd0b call 0x1802c5dc0 ; 
+0x18177bd10 lock or dword ptr [rsp], 0
+0x18177bd15 lea rcx, [rip + 0x19e9684]
+0x18177bd1c call 0x1802c5dc0 ; 
+0x18177bd21 lock or dword ptr [rsp], 0
+0x18177bd26 lea rcx, [rip + 0x19e965b]
+0x18177bd2d call 0x1802c5dc0 ; 
+0x18177bd32 lock or dword ptr [rsp], 0
+0x18177bd37 lea rcx, [rip + 0x19e9652]
+0x18177bd3e call 0x1802c5dc0 ; 
+0x18177bd43 lock or dword ptr [rsp], 0
+0x18177bd48 lea rcx, [rip + 0x19e9629]
+0x18177bd4f call 0x1802c5dc0 ; 
+0x18177bd54 lock or dword ptr [rsp], 0
+0x18177bd59 lea rcx, [rip + 0x19e9620]
+0x18177bd60 call 0x1802c5dc0 ; 
+0x18177bd65 lock or dword ptr [rsp], 0
+0x18177bd6a lea rcx, [rip + 0x19e95f7]
+0x18177bd71 call 0x1802c5dc0 ; 
+0x18177bd76 lock or dword ptr [rsp], 0
+0x18177bd7b lea rcx, [rip + 0x19e95ee]
+0x18177bd82 call 0x1802c5dc0 ; 
+0x18177bd87 lock or dword ptr [rsp], 0
+0x18177bd8c lea rcx, [rip + 0x19e95c5]
+0x18177bd93 call 0x1802c5dc0 ; 
+0x18177bd98 lock or dword ptr [rsp], 0
+0x18177bd9d lea rcx, [rip + 0x19e95bc]
+0x18177bda4 call 0x1802c5dc0 ; 
+0x18177bda9 lock or dword ptr [rsp], 0
+0x18177bdae lea rcx, [rip + 0x19e9593]
+0x18177bdb5 call 0x1802c5dc0 ; 
+0x18177bdba lock or dword ptr [rsp], 0
+0x18177bdbf lea rcx, [rip + 0x19e958a]
+0x18177bdc6 call 0x1802c5dc0 ; 
+0x18177bdcb lock or dword ptr [rsp], 0
+0x18177bdd0 lea rcx, [rip + 0x19e9561]
+0x18177bdd7 call 0x1802c5dc0 ; 
+0x18177bddc lock or dword ptr [rsp], 0
+0x18177bde1 lea rcx, [rip + 0x19e9558]
+0x18177bde8 call 0x1802c5dc0 ; 
+0x18177bded lock or dword ptr [rsp], 0
+0x18177bdf2 lea rcx, [rip + 0x19e952f]
+0x18177bdf9 call 0x1802c5dc0 ; 
+0x18177bdfe lock or dword ptr [rsp], 0
+0x18177be03 lea rcx, [rip + 0x19e9526]
+0x18177be0a call 0x1802c5dc0 ; 
+0x18177be0f lock or dword ptr [rsp], 0
+0x18177be14 lea rcx, [rip + 0x19e95fd]
+0x18177be1b call 0x1802c5dc0 ; 
+0x18177be20 lock or dword ptr [rsp], 0
+0x18177be25 lea rcx, [rip + 0x19e95f4]
+0x18177be2c call 0x1802c5dc0 ; 
+0x18177be31 lock or dword ptr [rsp], 0
+0x18177be36 lea rcx, [rip + 0x19e95cb]
+0x18177be3d call 0x1802c5dc0 ; 
+0x18177be42 lock or dword ptr [rsp], 0
+0x18177be47 lea rcx, [rip + 0x19e95c2]
+0x18177be4e call 0x1802c5dc0 ; 
+0x18177be53 lock or dword ptr [rsp], 0
+0x18177be58 lea rcx, [rip + 0x19e9599]
+0x18177be5f call 0x1802c5dc0 ; 
+0x18177be64 lock or dword ptr [rsp], 0
+0x18177be69 lea rcx, [rip + 0x19e9590]
+0x18177be70 call 0x1802c5dc0 ; 
+0x18177be75 lock or dword ptr [rsp], 0
+0x18177be7a lea rcx, [rip + 0x19e9567]
+0x18177be81 call 0x1802c5dc0 ; 
+0x18177be86 lock or dword ptr [rsp], 0
+0x18177be8b lea rcx, [rip + 0x19e955e]
+0x18177be92 call 0x1802c5dc0 ; 
+0x18177be97 lock or dword ptr [rsp], 0
+0x18177be9c lea rcx, [rip + 0x19e9535]
+0x18177bea3 call 0x1802c5dc0 ; 
+0x18177bea8 lock or dword ptr [rsp], 0
+0x18177bead lea rcx, [rip + 0x19e952c]
+0x18177beb4 call 0x1802c5dc0 ; 
+0x18177beb9 lock or dword ptr [rsp], 0
+0x18177bebe lea rcx, [rip + 0x19e9503]
+0x18177bec5 call 0x1802c5dc0 ; 
+0x18177beca lock or dword ptr [rsp], 0
+0x18177becf lea rcx, [rip + 0x19e94fa]
+0x18177bed6 call 0x1802c5dc0 ; 
+0x18177bedb lock or dword ptr [rsp], 0
+0x18177bee0 lea rcx, [rip + 0x19e94d1]
+0x18177bee7 call 0x1802c5dc0 ; 
+0x18177beec lock or dword ptr [rsp], 0
+0x18177bef1 lea rcx, [rip + 0x19e94c8]
+0x18177bef8 call 0x1802c5dc0 ; 
+0x18177befd lock or dword ptr [rsp], 0
+0x18177bf02 lea rcx, [rip + 0x19e949f]
+0x18177bf09 call 0x1802c5dc0 ; 
+0x18177bf0e lock or dword ptr [rsp], 0
+0x18177bf13 lea rcx, [rip + 0x19e9496]
+0x18177bf1a call 0x1802c5dc0 ; 
+0x18177bf1f lock or dword ptr [rsp], 0
+0x18177bf24 lea rcx, [rip + 0x19e936d]
+0x18177bf2b call 0x1802c5dc0 ; 
+0x18177bf30 lock or dword ptr [rsp], 0
+0x18177bf35 lea rcx, [rip + 0x19e9364]
+0x18177bf3c call 0x1802c5dc0 ; 
+0x18177bf41 lock or dword ptr [rsp], 0
+0x18177bf46 lea rcx, [rip + 0x19e933b]
+0x18177bf4d call 0x1802c5dc0 ; 
+0x18177bf52 lock or dword ptr [rsp], 0
+0x18177bf57 lea rcx, [rip + 0x19e9332]
+0x18177bf5e call 0x1802c5dc0 ; 
+0x18177bf63 lock or dword ptr [rsp], 0
+0x18177bf68 lea rcx, [rip + 0x19e9309]
+0x18177bf6f call 0x1802c5dc0 ; 
+0x18177bf74 lock or dword ptr [rsp], 0
+0x18177bf79 lea rcx, [rip + 0x19e9300]
+0x18177bf80 call 0x1802c5dc0 ; 
+0x18177bf85 lock or dword ptr [rsp], 0
+0x18177bf8a lea rcx, [rip + 0x19e92d7]
+0x18177bf91 call 0x1802c5dc0 ; 
+0x18177bf96 lock or dword ptr [rsp], 0
+0x18177bf9b lea rcx, [rip + 0x19e92ce]
+0x18177bfa2 call 0x1802c5dc0 ; 
+0x18177bfa7 lock or dword ptr [rsp], 0
+0x18177bfac lea rcx, [rip + 0x19e92a5]
+0x18177bfb3 call 0x1802c5dc0 ; 
+0x18177bfb8 lock or dword ptr [rsp], 0
+0x18177bfbd lea rcx, [rip + 0x19e929c]
+0x18177bfc4 call 0x1802c5dc0 ; 
+0x18177bfc9 lock or dword ptr [rsp], 0
+0x18177bfce lea rcx, [rip + 0x19e9273]
+0x18177bfd5 call 0x1802c5dc0 ; 
+0x18177bfda lock or dword ptr [rsp], 0
+0x18177bfdf lea rcx, [rip + 0x19e926a]
+0x18177bfe6 call 0x1802c5dc0 ; 
+0x18177bfeb lock or dword ptr [rsp], 0
+0x18177bff0 lea rcx, [rip + 0x19e9241]
+0x18177bff7 call 0x1802c5dc0 ; 
+0x18177bffc lock or dword ptr [rsp], 0
+0x18177c001 lea rcx, [rip + 0x19e9238]
+0x18177c008 call 0x1802c5dc0 ; 
+0x18177c00d lock or dword ptr [rsp], 0
+0x18177c012 lea rcx, [rip + 0x19e920f]
+0x18177c019 call 0x1802c5dc0 ; 
+0x18177c01e lock or dword ptr [rsp], 0
+0x18177c023 lea rcx, [rip + 0x19e9206]
+0x18177c02a call 0x1802c5dc0 ; 
+0x18177c02f lock or dword ptr [rsp], 0
+0x18177c034 lea rcx, [rip + 0x19e92dd]
+0x18177c03b call 0x1802c5dc0 ; 
+0x18177c040 lock or dword ptr [rsp], 0
+0x18177c045 lea rcx, [rip + 0x19e92d4]
+0x18177c04c call 0x1802c5dc0 ; 
+0x18177c051 lock or dword ptr [rsp], 0
+0x18177c056 lea rcx, [rip + 0x19e92ab]
+0x18177c05d call 0x1802c5dc0 ; 
+0x18177c062 lock or dword ptr [rsp], 0
+0x18177c067 lea rcx, [rip + 0x19e92a2]
+0x18177c06e call 0x1802c5dc0 ; 
+0x18177c073 lock or dword ptr [rsp], 0
+0x18177c078 lea rcx, [rip + 0x19e9279]
+0x18177c07f call 0x1802c5dc0 ; 
+0x18177c084 lock or dword ptr [rsp], 0
+0x18177c089 lea rcx, [rip + 0x19e9270]
+0x18177c090 call 0x1802c5dc0 ; 
+0x18177c095 lock or dword ptr [rsp], 0
+0x18177c09a lea rcx, [rip + 0x19e9247]
+0x18177c0a1 call 0x1802c5dc0 ; 
+0x18177c0a6 lock or dword ptr [rsp], 0
+0x18177c0ab lea rcx, [rip + 0x19e923e]
+0x18177c0b2 call 0x1802c5dc0 ; 
+0x18177c0b7 lock or dword ptr [rsp], 0
+0x18177c0bc lea rcx, [rip + 0x19e9215]
+0x18177c0c3 call 0x1802c5dc0 ; 
+0x18177c0c8 lock or dword ptr [rsp], 0
+0x18177c0cd lea rcx, [rip + 0x19e920c]
+0x18177c0d4 call 0x1802c5dc0 ; 
+0x18177c0d9 lock or dword ptr [rsp], 0
+0x18177c0de lea rcx, [rip + 0x19e91e3]
+0x18177c0e5 call 0x1802c5dc0 ; 
+0x18177c0ea lock or dword ptr [rsp], 0
+0x18177c0ef lea rcx, [rip + 0x19e91da]
+0x18177c0f6 call 0x1802c5dc0 ; 
+0x18177c0fb lock or dword ptr [rsp], 0
+0x18177c100 lea rcx, [rip + 0x19e91b1]
+0x18177c107 call 0x1802c5dc0 ; 
+0x18177c10c lock or dword ptr [rsp], 0
+0x18177c111 lea rcx, [rip + 0x19e91a8]
+0x18177c118 call 0x1802c5dc0 ; 
+0x18177c11d lock or dword ptr [rsp], 0
+0x18177c122 lea rcx, [rip + 0x19e917f]
+0x18177c129 call 0x1802c5dc0 ; 
+0x18177c12e lock or dword ptr [rsp], 0
+0x18177c133 lea rcx, [rip + 0x19e9176]
+0x18177c13a call 0x1802c5dc0 ; 
+0x18177c13f lock or dword ptr [rsp], 0
+0x18177c144 lea rcx, [rip + 0x19e9065]
+0x18177c14b call 0x1802c5dc0 ; 
+0x18177c150 lock or dword ptr [rsp], 0
+0x18177c155 lea rcx, [rip + 0x19e905c]
+0x18177c15c call 0x1802c5dc0 ; 
+0x18177c161 lock or dword ptr [rsp], 0
+0x18177c166 lea rcx, [rip + 0x19e9033]
+0x18177c16d call 0x1802c5dc0 ; 
+0x18177c172 lock or dword ptr [rsp], 0
+0x18177c177 lea rcx, [rip + 0x19e902a]
+0x18177c17e call 0x1802c5dc0 ; 
+0x18177c183 lock or dword ptr [rsp], 0
+0x18177c188 lea rcx, [rip + 0x19e9001]
+0x18177c18f call 0x1802c5dc0 ; 
+0x18177c194 lock or dword ptr [rsp], 0
+0x18177c199 lea rcx, [rip + 0x19e8ff8]
+0x18177c1a0 call 0x1802c5dc0 ; 
+0x18177c1a5 lock or dword ptr [rsp], 0
+0x18177c1aa lea rcx, [rip + 0x19e8fcf]
+0x18177c1b1 call 0x1802c5dc0 ; 
+0x18177c1b6 lock or dword ptr [rsp], 0
+0x18177c1bb lea rcx, [rip + 0x19e8fc6]
+0x18177c1c2 call 0x1802c5dc0 ; 
+0x18177c1c7 lock or dword ptr [rsp], 0
+0x18177c1cc lea rcx, [rip + 0x19e8f9d]
+0x18177c1d3 call 0x1802c5dc0 ; 
+0x18177c1d8 lock or dword ptr [rsp], 0
+0x18177c1dd lea rcx, [rip + 0x19e8f94]
+0x18177c1e4 call 0x1802c5dc0 ; 
+0x18177c1e9 lock or dword ptr [rsp], 0
+0x18177c1ee lea rcx, [rip + 0x19e8f6b]
+0x18177c1f5 call 0x1802c5dc0 ; 
+0x18177c1fa lock or dword ptr [rsp], 0
+0x18177c1ff lea rcx, [rip + 0x19e8f62]
+0x18177c206 call 0x1802c5dc0 ; 
+0x18177c20b lock or dword ptr [rsp], 0
+0x18177c210 lea rcx, [rip + 0x19e8f41]
+0x18177c217 call 0x1802c5dc0 ; 
+0x18177c21c lock or dword ptr [rsp], 0
+0x18177c221 lea rcx, [rip + 0x1a14cd8]
+0x18177c228 call 0x1802c5dc0 ; 
+0x18177c22d lock or dword ptr [rsp], 0
+0x18177c232 mov byte ptr [rip + 0x1bde9e9], 1
+0x18177c239 mov rcx, qword ptr [rip + 0x1a14cc0]
+0x18177c240 cmp dword ptr [rcx + 0xe0], 0
+0x18177c247 jne 0x18177c24e
+0x18177c249 call 0x1802ec040 ; 
+0x18177c24e mov rdx, qword ptr [rip + 0x19e904b]
+0x18177c255 mov ecx, 0x1b
+0x18177c25a call 0x1807267a0 ; 
+0x18177c25f mov rdx, qword ptr [rip + 0x19e908a]
+0x18177c266 mov ecx, 0x1b
+0x18177c26b call 0x1807269f0 ; 
+0x18177c270 mov rdx, qword ptr [rip + 0x19e9061]
+0x18177c277 mov ecx, 0x12
+0x18177c27c call 0x1807269f0 ; 
+0x18177c281 mov rdx, qword ptr [rip + 0x19e90d0]
+0x18177c288 mov ecx, 0x12
+0x18177c28d call 0x180726550 ; 
+0x18177c292 mov rdx, qword ptr [rip + 0x19e9037]
+0x18177c299 mov ecx, 0x81
+0x18177c29e call 0x1807269f0 ; 
+0x18177c2a3 mov rdx, qword ptr [rip + 0x19e908e]
+0x18177c2aa mov ecx, 0x81
+0x18177c2af call 0x180726550 ; 
+0x18177c2b4 mov rdx, qword ptr [rip + 0x19e902d]
+0x18177c2bb mov ecx, 0xa2
+0x18177c2c0 call 0x1807269f0 ; 
+0x18177c2c5 mov rdx, qword ptr [rip + 0x19e90ac]
+0x18177c2cc mov ecx, 0xa2
+0x18177c2d1 call 0x180726550 ; 
+0x18177c2d6 mov rdx, qword ptr [rip + 0x19e90b3]
+0x18177c2dd mov ecx, 0xa3
+0x18177c2e2 call 0x180726550 ; 
+0x18177c2e7 mov rdx, qword ptr [rip + 0x19e9092]
+0x18177c2ee mov ecx, 0x48
+0x18177c2f3 call 0x180726550 ; 
+0x18177c2f8 mov rdx, qword ptr [rip + 0x19e8e81]
+0x18177c2ff mov ecx, 0x48
+0x18177c304 call 0x180726c40 ; 
+0x18177c309 mov rdx, qword ptr [rip + 0x19e9058]
+0x18177c310 mov ecx, 0x80
+0x18177c315 call 0x180726550 ; 
+0x18177c31a mov rdx, qword ptr [rip + 0x19e9067]
+0x18177c321 mov ecx, 0x87
+0x18177c326 call 0x180726550 ; 
+0x18177c32b mov rdx, qword ptr [rip + 0x19e903e]
+0x18177c332 mov ecx, 0x86
+0x18177c337 call 0x180726550 ; 
+0x18177c33c mov rdx, qword ptr [rip + 0x19e8f55]
+0x18177c343 mov ecx, 0x93
+0x18177c348 call 0x1807267a0 ; 
+0x18177c34d mov rdx, qword ptr [rip + 0x19e905c]
+0x18177c354 mov ecx, 0xad
+0x18177c359 call 0x1807267a0 ; 
+0x18177c35e mov rdx, qword ptr [rip + 0x19e917b]
+0x18177c365 mov ecx, 0x11
+0x18177c36a call 0x180726550 ; 
+0x18177c36f mov rdx, qword ptr [rip + 0x19e9172]
+0x18177c376 mov ecx, 0xe
+0x18177c37b call 0x180726550 ; 
+0x18177c380 mov rdx, qword ptr [rip + 0x19e90f9]
+0x18177c387 mov ecx, 3
+0x18177c38c call 0x180726550 ; 
+0x18177c391 mov rdx, qword ptr [rip + 0x19e9038]
+0x18177c398 mov ecx, 0x29
+0x18177c39d call 0x180726550 ; 
+0x18177c3a2 mov rdx, qword ptr [rip + 0x19e9027]
+0x18177c3a9 mov ecx, 0x2a
+0x18177c3ae call 0x180726550 ; 
+0x18177c3b3 mov rdx, qword ptr [rip + 0x19e9016]
+0x18177c3ba mov ecx, 0x2c
+0x18177c3bf call 0x180726550 ; 
+0x18177c3c4 mov rdx, qword ptr [rip + 0x19e9005]
+0x18177c3cb mov ecx, 0x2b
+0x18177c3d0 call 0x180726550 ; 
+0x18177c3d5 mov rdx, qword ptr [rip + 0x19e9114]
+0x18177c3dc mov ecx, 0xf
+0x18177c3e1 call 0x180726550 ; 
+0x18177c3e6 mov rdx, qword ptr [rip + 0x19e8d9b]
+0x18177c3ed mov ecx, 2
+0x18177c3f2 call 0x180726e90 ; 
+0x18177c3f7 mov rdx, qword ptr [rip + 0x19e91f2]
+0x18177c3fe mov ecx, 2
+0x18177c403 call 0x180726300 ; 
+0x18177c408 mov rdx, qword ptr [rip + 0x19e8d61]
+0x18177c40f mov ecx, 0xd
+0x18177c414 call 0x180726e90 ; 
+0x18177c419 mov rdx, qword ptr [rip + 0x19e91b8]
+0x18177c420 mov ecx, 0xd
+0x18177c425 call 0x180726300 ; 
+0x18177c42a mov rdx, qword ptr [rip + 0x19e8f67]
+0x18177c431 mov ecx, 0x23
+0x18177c436 call 0x180726550 ; 
+0x18177c43b mov rdx, qword ptr [rip + 0x19e8fd6]
+0x18177c442 mov ecx, 0x20
+0x18177c447 call 0x180726550 ; 
+0x18177c44c mov rdx, qword ptr [rip + 0x19e8fd5]
+0x18177c453 mov ecx, 0x30
+0x18177c458 call 0x180726550 ; 
+0x18177c45d mov rdx, qword ptr [rip + 0x19e8dec]
+0x18177c464 mov ecx, 0x30
+0x18177c469 call 0x1807269f0 ; 
+0x18177c46e mov rdx, qword ptr [rip + 0x19e8fbb]
+0x18177c475 mov ecx, 0x4a
+0x18177c47a call 0x180726550 ; 
+0x18177c47f mov rdx, qword ptr [rip + 0x19e9052]
+0x18177c486 mov ecx, 0x4b
+0x18177c48b call 0x180726550 ; 
+0x18177c490 mov rdx, qword ptr [rip + 0x19e8f69]
+0x18177c497 mov ecx, 0x60
+0x18177c49c call 0x180726550 ; 
+0x18177c4a1 mov rdx, qword ptr [rip + 0x19e9020]
+0x18177c4a8 mov ecx, 0xa7
+0x18177c4ad call 0x180726550 ; 
+0x18177c4b2 mov rdx, qword ptr [rip + 0x19e904f]
+0x18177c4b9 mov ecx, 0xce
+0x18177c4be call 0x180726550 ; 
+0x18177c4c3 mov rdx, qword ptr [rip + 0x19e8dbe]
+0x18177c4ca mov ecx, 0x1d
+0x18177c4cf call 0x1807267a0 ; 
+0x18177c4d4 mov rdx, qword ptr [rip + 0x19e8d65]
+0x18177c4db mov ecx, 0xc
+0x18177c4e0 call 0x1807269f0 ; 
+0x18177c4e5 mov rdx, qword ptr [rip + 0x19e8c74]
+0x18177c4ec mov ecx, 0x17
+0x18177c4f1 call 0x180726e90 ; 
+0x18177c4f6 mov rdx, qword ptr [rip + 0x19e8fc3]
+0x18177c4fd mov ecx, 0x17
+0x18177c502 call 0x180726550 ; 
+0x18177c507 mov rdx, qword ptr [rip + 0x19e8d6a]
+0x18177c50e mov ecx, 0x41
+0x18177c513 call 0x1807267a0 ; 
+0x18177c518 mov rdx, qword ptr [rip + 0x19e8f41]
+0x18177c51f mov ecx, 6
+0x18177c524 call 0x180726550 ; 
+0x18177c529 mov rdx, qword ptr [rip + 0x19e8f28]
+0x18177c530 mov ecx, 0x40
+0x18177c535 call 0x180726550 ; 
+0x18177c53a mov rdx, qword ptr [rip + 0x19e8f2f]
+0x18177c541 mov ecx, 0x44
+0x18177c546 call 0x180726550 ; 
+0x18177c54b mov rdx, qword ptr [rip + 0x19e8ef6]
+0x18177c552 mov ecx, 0x4e
+0x18177c557 call 0x180726550 ; 
+0x18177c55c mov rdx, qword ptr [rip + 0x19e8eed]
+0x18177c563 mov ecx, 0x4c
+0x18177c568 call 0x180726550 ; 
+0x18177c56d mov rdx, qword ptr [rip + 0x19e8e84]
+0x18177c574 mov ecx, 0x83
+0x18177c579 call 0x180726550 ; 
+0x18177c57e mov rdx, qword ptr [rip + 0x19e8e5b]
+0x18177c585 mov ecx, 0x26
+0x18177c58a call 0x180726550 ; 
+0x18177c58f mov rdx, qword ptr [rip + 0x19e8efa]
+0x18177c596 mov ecx, 0xdc
+0x18177c59b call 0x180726550 ; 
+0x18177c5a0 mov rdx, qword ptr [rip + 0x19e8e91]
+0x18177c5a7 mov ecx, 0xdf
+0x18177c5ac call 0x180726550 ; 
+0x18177c5b1 mov rdx, qword ptr [rip + 0x19e8eb0]
+0x18177c5b8 mov ecx, 4
+0x18177c5bd call 0x180726550 ; 
+0x18177c5c2 mov rdx, qword ptr [rip + 0x19e8bd7]
+0x18177c5c9 mov ecx, 0x21
+0x18177c5ce call 0x1807269f0 ; 
+0x18177c5d3 mov rdx, qword ptr [rip + 0x19e8dee]
+0x18177c5da mov ecx, 0x27
+0x18177c5df call 0x180726550 ; 
+0x18177c5e4 mov rdx, qword ptr [rip + 0x19e8e8d]
+0x18177c5eb mov ecx, 0x31
+0x18177c5f0 call 0x180726550 ; 
+0x18177c5f5 mov rdx, qword ptr [rip + 0x19e8e9c]
+0x18177c5fc mov ecx, 0x7b
+0x18177c601 call 0x180726550 ; 
+0x18177c606 mov rdx, qword ptr [rip + 0x19e8f03]
+0x18177c60d mov ecx, 0x37
+0x18177c612 call 0x180726550 ; 
+0x18177c617 mov rdx, qword ptr [rip + 0x19e8c12]
+0x18177c61e mov ecx, 0x5e
+0x18177c623 call 0x1807269f0 ; 
+0x18177c628 mov rdx, qword ptr [rip + 0x19e8ce1]
+0x18177c62f mov ecx, 0x99
+0x18177c634 call 0x1807269f0 ; 
+0x18177c639 mov rdx, qword ptr [rip + 0x19e8e90]
+0x18177c640 mov ecx, 0x99
+0x18177c645 call 0x180726550 ; 
+0x18177c64a mov rdx, qword ptr [rip + 0x19e8cc7]
+0x18177c651 mov ecx, 0x82
+0x18177c656 call 0x1807269f0 ; 
+0x18177c65b mov rdx, qword ptr [rip + 0x19e8b16]
+0x18177c662 mov ecx, 0x82
+0x18177c667 call 0x180726e90 ; 
+0x18177c66c mov rdx, qword ptr [rip + 0x19e8eb5]
+0x18177c673 mov ecx, 0x9d
+0x18177c678 call 0x180726550 ; 
+0x18177c67d mov rdx, qword ptr [rip + 0x19e8bb4]
+0x18177c684 mov ecx, 0x9d
+0x18177c689 call 0x1807269f0 ; 
+0x18177c68e mov rdx, qword ptr [rip + 0x19e8e63]
+0x18177c695 mov ecx, 0xc3
+0x18177c69a call 0x180726550 ; 
+0x18177c69f mov rdx, qword ptr [rip + 0x19e8e5a]
+0x18177c6a6 mov ecx, 0xc4
+0x18177c6ab call 0x180726550 ; 
+0x18177c6b0 mov rdx, qword ptr [rip + 0x19e8b01]
+0x18177c6b7 mov ecx, 0x70
+0x18177c6bc call 0x1807269f0 ; 
+0x18177c6c1 mov rdx, qword ptr [rip + 0x19e8d48]
+0x18177c6c8 mov ecx, 0x70
+0x18177c6cd call 0x180726550 ; 
+0x18177c6d2 mov rdx, qword ptr [rip + 0x19e8bd7]
+0x18177c6d9 mov ecx, 0x6d
+0x18177c6de call 0x1807269f0 ; 
+0x18177c6e3 mov rdx, qword ptr [rip + 0x19e8d36]
+0x18177c6ea mov ecx, 0x6d
+0x18177c6ef call 0x180726550 ; 
+0x18177c6f4 mov rdx, qword ptr [rip + 0x19e8ab5]
+0x18177c6fb mov ecx, 0x75
+0x18177c700 call 0x1807269f0 ; 
+0x18177c705 mov rdx, qword ptr [rip + 0x19e8cfc]
+0x18177c70c mov ecx, 0x75
+0x18177c711 call 0x180726550 ; 
+0x18177c716 mov rdx, qword ptr [rip + 0x19e8b9b]
+0x18177c71d mov ecx, 0x8c
+0x18177c722 call 0x1807269f0 ; 
+0x18177c727 mov rdx, qword ptr [rip + 0x19e8c12]
+0x18177c72e mov ecx, 0x8c
+0x18177c733 call 0x180726550 ; 
+0x18177c738 mov rdx, qword ptr [rip + 0x19e8b81]
+0x18177c73f mov ecx, 0x8d
+0x18177c744 call 0x1807269f0 ; 
+0x18177c749 mov rdx, qword ptr [rip + 0x19e8bd8]
+0x18177c750 mov ecx, 0x8d
+0x18177c755 call 0x180726550 ; 
+0x18177c75a mov rdx, qword ptr [rip + 0x19e8af7]
+0x18177c761 mov ecx, 0x77
+0x18177c766 call 0x1807269f0 ; 
+0x18177c76b mov rdx, qword ptr [rip + 0x19e8bae]
+0x18177c772 mov ecx, 0x76
+0x18177c777 call 0x1807269f0 ; 
+0x18177c77c mov rdx, qword ptr [rip + 0x19e8a0d]
+0x18177c783 mov ecx, 0xaa
+0x18177c788 call 0x1807269f0 ; 
+0x18177c78d mov rdx, qword ptr [rip + 0x19e8adc]
+0x18177c794 mov ecx, 0x50
+0x18177c799 call 0x1807269f0 ; 
+0x18177c79e mov rdx, qword ptr [rip + 0x19e8cfb]
+0x18177c7a5 mov ecx, 0x3e
+0x18177c7aa call 0x180726550 ; 
+0x18177c7af mov rdx, qword ptr [rip + 0x19e8b52]
+0x18177c7b6 mov ecx, 0x3a
+0x18177c7bb call 0x1807269f0 ; 
+0x18177c7c0 mov rdx, qword ptr [rip + 0x19e89d1]
+0x18177c7c7 mov ecx, 0xab
+0x18177c7cc call 0x1807269f0 ; 
+0x18177c7d1 mov rdx, qword ptr [rip + 0x19e8be0]
+0x18177c7d8 mov ecx, 0x4d
+0x18177c7dd call 0x180726550 ; 
+0x18177c7e2 mov rdx, qword ptr [rip + 0x19e8b0f]
+0x18177c7e9 mov ecx, 0x3c
+0x18177c7ee call 0x1807269f0 ; 
+0x18177c7f3 mov rdx, qword ptr [rip + 0x19e8a4e]
+0x18177c7fa mov ecx, 0x5b
+0x18177c7ff call 0x1807269f0 ; 
+0x18177c804 mov rdx, qword ptr [rip + 0x19e8c35]
+0x18177c80b mov ecx, 0x65
+0x18177c810 call 0x180726550 ; 
+0x18177c815 mov rdx, qword ptr [rip + 0x19e8a0c]
+0x18177c81c mov ecx, 0x69
+0x18177c821 call 0x1807269f0 ; 
+0x18177c826 mov rdx, qword ptr [rip + 0x19e8ad3]
+0x18177c82d mov ecx, 0x5d
+0x18177c832 call 0x1807269f0 ; 
+0x18177c837 mov rdx, qword ptr [rip + 0x19e8b62]
+0x18177c83e mov ecx, 0x5d
+0x18177c843 call 0x180726550 ; 
+0x18177c848 mov rdx, qword ptr [rip + 0x19e8919]
+0x18177c84f mov ecx, 0x5d
+0x18177c854 call 0x180726e90 ; 
+0x18177c859 mov rdx, qword ptr [rip + 0x19e8a48]
+0x18177c860 mov ecx, 0x7a
+0x18177c865 call 0x1807269f0 ; 
+0x18177c86a mov rdx, qword ptr [rip + 0x19e8abf]
+0x18177c871 mov ecx, 0x7a
+0x18177c876 call 0x180726550 ; 
+0x18177c87b mov rdx, qword ptr [rip + 0x19e88d6]
+0x18177c882 mov ecx, 0x7a
+0x18177c887 call 0x180726e90 ; 
+0x18177c88c mov rdx, qword ptr [rip + 0x19e8c8d]
+0x18177c893 mov ecx, 0x7e
+0x18177c898 call 0x180726550 ; 
+0x18177c89d mov rdx, qword ptr [rip + 0x19e8904]
+0x18177c8a4 mov ecx, 0x8f
+0x18177c8a9 call 0x1807269f0 ; 
+0x18177c8ae mov rdx, qword ptr [rip + 0x19e8b33]
+0x18177c8b5 mov ecx, 0x8f
+0x18177c8ba call 0x180726550 ; 
+0x18177c8bf mov rdx, qword ptr [rip + 0x19e8b2a]
+0x18177c8c6 mov ecx, 0x9f
+0x18177c8cb call 0x180726550 ; 
+0x18177c8d0 mov rdx, qword ptr [rip + 0x19e8d09]
+0x18177c8d7 mov ecx, 0x88
+0x18177c8dc call 0x180726550 ; 
+0x18177c8e1 mov rdx, qword ptr [rip + 0x19e8bd0]
+0x18177c8e8 mov ecx, 0x97
+0x18177c8ed call 0x180726550 ; 
+0x18177c8f2 mov rdx, qword ptr [rip + 0x19e8adf]
+0x18177c8f9 mov ecx, 0x94
+0x18177c8fe call 0x180726550 ; 
+0x18177c903 mov rdx, qword ptr [rip + 0x19e895e]
+0x18177c90a mov ecx, 0x94
+0x18177c90f call 0x1807267a0 ; 
+0x18177c914 mov rdx, qword ptr [rip + 0x19e8965]
+0x18177c91b mov ecx, 0x95
+0x18177c920 call 0x1807267a0 ; 
+0x18177c925 mov rdx, qword ptr [rip + 0x19e8a94]
+0x18177c92c mov ecx, 0xae
+0x18177c931 call 0x1807267a0 ; 
+0x18177c936 mov rdx, qword ptr [rip + 0x19e8bf3]
+0x18177c93d mov ecx, 0xb0
+0x18177c942 call 0x180726550 ; 
+0x18177c947 mov rdx, qword ptr [rip + 0x19e8a5a]
+0x18177c94e mov ecx, 0xb0
+0x18177c953 call 0x1807267a0 ; 
+0x18177c958 mov rdx, qword ptr [rip + 0x19e8b51]
+0x18177c95f mov ecx, 0x9c
+0x18177c964 call 0x180726550 ; 
+0x18177c969 mov rdx, qword ptr [rip + 0x19e8ba8]
+0x18177c970 mov ecx, 0xb6
+0x18177c975 call 0x180726550 ; 
+0x18177c97a mov rdx, qword ptr [rip + 0x19e89df]
+0x18177c981 mov ecx, 0x9e
+0x18177c986 call 0x180726550 ; 
+0x18177c98b mov rdx, qword ptr [rip + 0x19e89b6]
+0x18177c992 mov ecx, 0xbf
+0x18177c997 call 0x180726550 ; 
+0x18177c99c mov rdx, qword ptr [rip + 0x19e88ed]
+0x18177c9a3 mov ecx, 0xbf
+0x18177c9a8 call 0x1807267a0 ; 
+0x18177c9ad mov rdx, qword ptr [rip + 0x19e892c]
+0x18177c9b4 mov ecx, 0xbf
+0x18177c9b9 call 0x1807269f0 ; 
+0x18177c9be mov rdx, qword ptr [rip + 0x19e889b]
+0x18177c9c5 mov ecx, 0xc2
+0x18177c9ca call 0x1807269f0 ; 
+0x18177c9cf mov rdx, qword ptr [rip + 0x19e88f2]
+0x18177c9d6 mov ecx, 0xcc
+0x18177c9db call 0x1807269f0 ; 
+0x18177c9e0 mov rdx, qword ptr [rip + 0x19e8969]
+0x18177c9e7 mov ecx, 0xcc
+0x18177c9ec add rsp, 0x28
+0x18177c9f0 jmp 0x180726550 ; 
+0x18177c9f5 int3 
+0x18177c9f6 int3 
+0x18177c9f7 int3 
+0x18177c9f8 int3 
+0x18177c9f9 int3 
+0x18177c9fa int3 
+0x18177c9fb int3 
+0x18177c9fc int3 
+0x18177c9fd int3 
+0x18177c9fe int3 
+0x18177c9ff int3 
+
+== CollisionCallbacks..cctor 0x18177ca00
+0x18177ca00 mov qword ptr [rsp + 8], rbx
+0x18177ca05 push rdi
+0x18177ca06 sub rsp, 0x20
+0x18177ca0a cmp byte ptr [rip + 0x1bde212], 0
+0x18177ca11 jne 0x18177cafb
+0x18177ca17 lea rcx, [rip + 0x1a144e2]
+0x18177ca1e call 0x1802c5dc0 ; 
+0x18177ca23 lock or dword ptr [rsp], 0
+0x18177ca28 lea rcx, [rip + 0x19e8721]
+0x18177ca2f call 0x1802c5dc0 ; 
+0x18177ca34 lock or dword ptr [rsp], 0
+0x18177ca39 lea rcx, [rip + 0x19e87d8]
+0x18177ca40 call 0x1802c5dc0 ; 
+0x18177ca45 lock or dword ptr [rsp], 0
+0x18177ca4a lea rcx, [rip + 0x19e87cf]
+0x18177ca51 call 0x1802c5dc0 ; 
+0x18177ca56 lock or dword ptr [rsp], 0
+0x18177ca5b lea rcx, [rip + 0x19e87a6]
+0x18177ca62 call 0x1802c5dc0 ; 
+0x18177ca67 lock or dword ptr [rsp], 0
+0x18177ca6c lea rcx, [rip + 0x19e879d]
+0x18177ca73 call 0x1802c5dc0 ; 
+0x18177ca78 lock or dword ptr [rsp], 0
+0x18177ca7d lea rcx, [rip + 0x19e8774]
+0x18177ca84 call 0x1802c5dc0 ; 
+0x18177ca89 lock or dword ptr [rsp], 0
+0x18177ca8e lea rcx, [rip + 0x19e876b]
+0x18177ca95 call 0x1802c5dc0 ; 
+0x18177ca9a lock or dword ptr [rsp], 0
+0x18177ca9f lea rcx, [rip + 0x19e8742]
+0x18177caa6 call 0x1802c5dc0 ; 
+0x18177caab lock or dword ptr [rsp], 0
+0x18177cab0 lea rcx, [rip + 0x19e8739]
+0x18177cab7 call 0x1802c5dc0 ; 
+0x18177cabc lock or dword ptr [rsp], 0
+0x18177cac1 lea rcx, [rip + 0x19e8710]
+0x18177cac8 call 0x1802c5dc0 ; 
+0x18177cacd lock or dword ptr [rsp], 0
+0x18177cad2 lea rcx, [rip + 0x19e8707]
+0x18177cad9 call 0x1802c5dc0 ; 
+0x18177cade lock or dword ptr [rsp], 0
+0x18177cae3 lea rcx, [rip + 0x19e86e6]
+0x18177caea call 0x1802c5dc0 ; 
+0x18177caef lock or dword ptr [rsp], 0
+0x18177caf4 mov byte ptr [rip + 0x1bde128], 1
+0x18177cafb mov rcx, qword ptr [rip + 0x19e86e6]
+0x18177cb02 call 0x180319f60 ; 
+0x18177cb07 mov rdx, qword ptr [rip + 0x19e86fa]
+0x18177cb0e mov rcx, rax
+0x18177cb11 mov rbx, rax
+0x18177cb14 call 0x180db24e0 ; 
+0x18177cb19 mov rcx, qword ptr [rip + 0x1a143e0]
+0x18177cb20 lea rdi, [rip + 0x1be8e19]
+0x18177cb27 mov rdx, qword ptr [rcx + 0xb8]
+0x18177cb2e mov qword ptr [rdx], rbx
+0x18177cb31 cmp dword ptr [rip + 0x1bd78a4], 0
+0x18177cb38 je 0x18177cb89
+0x18177cb3a mov rax, qword ptr [rip + 0x1a143bf]
+0x18177cb41 mov r8, qword ptr [rax + 0xb8]
+0x18177cb48 shr r8, 0xc
+0x18177cb4c and r8d, 0x1fffff
+0x18177cb53 mov eax, r8d
+0x18177cb56 shr rax, 6
+0x18177cb5a and r8d, 0x3f
+0x18177cb5e lea rdx, [rdi + rax*8]
+0x18177cb62 prefetchw byte ptr [rdx + 0x462e0]
+0x18177cb69 nop dword ptr [rax]
+0x18177cb70 mov rax, qword ptr [rdx + 0x462e0]
+0x18177cb77 mov rcx, rax
+0x18177cb7a bts rcx, r8
+0x18177cb7e lock cmpxchg qword ptr [rdx + 0x462e0], rcx
+0x18177cb87 jne 0x18177cb70
+0x18177cb89 mov rcx, qword ptr [rip + 0x19e8670]
+0x18177cb90 call 0x180319f60 ; 
+0x18177cb95 mov rdx, qword ptr [rip + 0x19e8684]
+0x18177cb9c mov rcx, rax
+0x18177cb9f mov rbx, rax
+0x18177cba2 call 0x180db24e0 ; 
+0x18177cba7 mov rcx, qword ptr [rip + 0x1a14352]
+0x18177cbae mov rdx, qword ptr [rcx + 0xb8]
+0x18177cbb5 mov qword ptr [rdx + 8], rbx
+0x18177cbb9 cmp dword ptr [rip + 0x1bd781c], 0
+0x18177cbc0 je 0x18177cc19
+0x18177cbc2 mov rax, qword ptr [rip + 0x1a14337]
+0x18177cbc9 mov r8, qword ptr [rax + 0xb8]
+0x18177cbd0 add r8, 8
+0x18177cbd4 shr r8, 0xc
+0x18177cbd8 and r8d, 0x1fffff
+0x18177cbdf mov eax, r8d
+0x18177cbe2 shr rax, 6
+0x18177cbe6 and r8d, 0x3f
+0x18177cbea lea rdx, [rdi + rax*8]
+0x18177cbee prefetchw byte ptr [rdx + 0x462e0]
+0x18177cbf5 nop word ptr [rax + rax]
+0x18177cc00 mov rax, qword ptr [rdx + 0x462e0]
+0x18177cc07 mov rcx, rax
+0x18177cc0a bts rcx, r8
+0x18177cc0e lock cmpxchg qword ptr [rdx + 0x462e0], rcx
+0x18177cc17 jne 0x18177cc00
+0x18177cc19 mov rcx, qword ptr [rip + 0x19e85b0]
+0x18177cc20 call 0x180319f60 ; 
+0x18177cc25 mov rdx, qword ptr [rip + 0x19e85e4]
+0x18177cc2c mov rcx, rax
+0x18177cc2f mov rbx, rax
+0x18177cc32 call 0x180db24e0 ; 
+0x18177cc37 mov rcx, qword ptr [rip + 0x1a142c2]
+0x18177cc3e mov rdx, qword ptr [rcx + 0xb8]
+0x18177cc45 mov qword ptr [rdx + 0x10], rbx
+0x18177cc49 cmp dword ptr [rip + 0x1bd778c], 0
+0x18177cc50 je 0x18177cca9
+0x18177cc52 mov rax, qword ptr [rip + 0x1a142a7]
+0x18177cc59 mov r8, qword ptr [rax + 0xb8]
+0x18177cc60 add r8, 0x10
+0x18177cc64 shr r8, 0xc
+0x18177cc68 and r8d, 0x1fffff
+0x18177cc6f mov eax, r8d
+0x18177cc72 shr rax, 6
+0x18177cc76 and r8d, 0x3f
+0x18177cc7a lea rdx, [rdi + rax*8]
+0x18177cc7e prefetchw byte ptr [rdx + 0x462e0]
+0x18177cc85 nop word ptr [rax + rax]
+0x18177cc90 mov rax, qword ptr [rdx + 0x462e0]
+0x18177cc97 mov rcx, rax
+0x18177cc9a bts rcx, r8
+0x18177cc9e lock cmpxchg qword ptr [rdx + 0x462e0], rcx
+0x18177cca7 jne 0x18177cc90
+0x18177cca9 mov rcx, qword ptr [rip + 0x19e8528]
+0x18177ccb0 call 0x180319f60 ; 
+0x18177ccb5 mov rdx, qword ptr [rip + 0x19e855c]
+0x18177ccbc mov rcx, rax
+0x18177ccbf mov rbx, rax
+0x18177ccc2 call 0x180db24e0 ; 
+0x18177ccc7 mov rcx, qword ptr [rip + 0x1a14232]
+0x18177ccce mov rdx, qword ptr [rcx + 0xb8]
+0x18177ccd5 mov qword ptr [rdx + 0x18], rbx
+0x18177ccd9 cmp dword ptr [rip + 0x1bd76fc], 0
+0x18177cce0 je 0x18177cd39
+0x18177cce2 mov rax, qword ptr [rip + 0x1a14217]
+0x18177cce9 mov r8, qword ptr [rax + 0xb8]
+0x18177ccf0 add r8, 0x18
+0x18177ccf4 shr r8, 0xc
+0x18177ccf8 and r8d, 0x1fffff
+0x18177ccff mov eax, r8d
+0x18177cd02 shr rax, 6
+0x18177cd06 and r8d, 0x3f
+0x18177cd0a lea rdx, [rdi + rax*8]
+0x18177cd0e prefetchw byte ptr [rdx + 0x462e0]
+0x18177cd15 nop word ptr [rax + rax]
+0x18177cd20 mov rax, qword ptr [rdx + 0x462e0]
+0x18177cd27 mov rcx, rax
+0x18177cd2a bts rcx, r8
+0x18177cd2e lock cmpxchg qword ptr [rdx + 0x462e0], rcx
+0x18177cd37 jne 0x18177cd20
+0x18177cd39 mov rcx, qword ptr [rip + 0x19e84b0]
+0x18177cd40 call 0x180319f60 ; 
+0x18177cd45 mov rdx, qword ptr [rip + 0x19e8404]
+0x18177cd4c mov rcx, rax
+0x18177cd4f mov rbx, rax
+0x18177cd52 call 0x180db24e0 ; 
+0x18177cd57 mov rcx, qword ptr [rip + 0x1a141a2]
+0x18177cd5e mov rdx, qword ptr [rcx + 0xb8]
+0x18177cd65 mov qword ptr [rdx + 0x20], rbx
+0x18177cd69 cmp dword ptr [rip + 0x1bd766c], 0
+0x18177cd70 je 0x18177cdc9
+0x18177cd72 mov rax, qword ptr [rip + 0x1a14187]
+0x18177cd79 mov r8, qword ptr [rax + 0xb8]
+0x18177cd80 add r8, 0x20
+0x18177cd84 shr r8, 0xc
+0x18177cd88 and r8d, 0x1fffff
+0x18177cd8f mov eax, r8d
+0x18177cd92 shr rax, 6
+0x18177cd96 and r8d, 0x3f
+0x18177cd9a lea rdx, [rdi + rax*8]
+0x18177cd9e prefetchw byte ptr [rdx + 0x462e0]
+0x18177cda5 nop word ptr [rax + rax]
+0x18177cdb0 mov rax, qword ptr [rdx + 0x462e0]
+0x18177cdb7 mov rcx, rax
+0x18177cdba bts rcx, r8
+0x18177cdbe lock cmpxchg qword ptr [rdx + 0x462e0], rcx
+0x18177cdc7 jne 0x18177cdb0
+0x18177cdc9 mov rcx, qword ptr [rip + 0x19e8410]
+0x18177cdd0 call 0x180319f60 ; 
+0x18177cdd5 mov rdx, qword ptr [rip + 0x19e841c]
+0x18177cddc mov rcx, rax
+0x18177cddf mov rbx, rax
+0x18177cde2 call 0x180db24e0 ; 
+0x18177cde7 mov rcx, qword ptr [rip + 0x1a14112]
+0x18177cdee mov rdx, qword ptr [rcx + 0xb8]
+0x18177cdf5 mov qword ptr [rdx + 0x28], rbx
+0x18177cdf9 cmp dword ptr [rip + 0x1bd75dc], 0
+0x18177ce00 je 0x18177ce59
+0x18177ce02 mov rax, qword ptr [rip + 0x1a140f7]
+0x18177ce09 mov r8, qword ptr [rax + 0xb8]
+0x18177ce10 add r8, 0x28
+0x18177ce14 shr r8, 0xc
+0x18177ce18 and r8d, 0x1fffff
+0x18177ce1f mov eax, r8d
+0x18177ce22 shr rax, 6
+0x18177ce26 and r8d, 0x3f
+0x18177ce2a lea rdx, [rdi + rax*8]
+0x18177ce2e prefetchw byte ptr [rdx + 0x462e0]
+0x18177ce35 nop word ptr [rax + rax]
+0x18177ce40 mov rax, qword ptr [rdx + 0x462e0]
+0x18177ce47 mov rcx, rax
+0x18177ce4a bts rcx, r8
+0x18177ce4e lock cmpxchg qword ptr [rdx + 0x462e0], rcx
+0x18177ce57 jne 0x18177ce40
+0x18177ce59 xor ecx, ecx
+0x18177ce5b mov rbx, qword ptr [rsp + 0x30]
+0x18177ce60 add rsp, 0x20
+0x18177ce64 pop rdi
+0x18177ce65 jmp 0x18177baa0 ; CollisionCallbacks.initCallbacks
+0x18177ce6a int3 
+0x18177ce6b int3 
+0x18177ce6c int3 
+0x18177ce6d int3 
+0x18177ce6e int3 
+0x18177ce6f int3 

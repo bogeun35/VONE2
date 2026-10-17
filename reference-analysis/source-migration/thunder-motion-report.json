@@ -1,0 +1,106 @@
+{
+  "task": "ThunderMotion",
+  "status": "verified private motion/disappear phase machine and receiver; native Base/common hosts required",
+  "readOnlyStatic": true,
+  "nativeCodeExecuted": false,
+  "verification": {
+    "ownTests": 74,
+    "ownPass": 74,
+    "ownFail": 0,
+    "fullSuiteTests": 2294,
+    "fullSuitePass": 2294,
+    "fullSuiteFail": 0,
+    "commands": ["node --test source-migration/source-thunder-motion.test.cjs", "node --test source-migration/*.test.cjs"],
+    "instructionOracle": "Installed DLL bytes only: read jump table as six RVA data entries, OnUpdate phase call/Base tailjump, Length/Normalize calls, collision/common receiver/animation calls, LIVE phase inc/dec, Base cache load, disappear raw4 threshold and Actor ExitScene bit13 setter. No original executable load/run.",
+    "actualStaticFixtures": "3-2/10-4,2..8,offline/online28 cases, all selected Thunder first9 parameters[3,1,0,0,0,0,0,0,0]. One Thunder in3-2/seven in10-4. Confirm unchanged primitive position/phase/disappear counter while actual frozen Base.update executes.",
+    "additionalAuthoredMotionFixtures": "4-1 four actual Thunder[3,0,0,1,0,0.3,280,0,0] and11-4 one selected Thunder per variant with disappear20. Complete stage boot/physics contacts/identities not claimed; exact Base probe geometry runs on an explicit wall-map fixture."
+  },
+  "api": {
+    "global": "SourceThunderMotion",
+    "state": "Existing factory canonical fields: Actor.thunder=ThunderBase, Actor.thunderState=Thunder motion. create(explicitCompleteMotionSnapshot) copies/validates exact fields only; does not parse authored data or replace existing Creator/InitPost.",
+    "methods": ["onUpdate(world,actor,host)", "updateDisappear(world,motion,host)", "updatePhase(world,actor,motion,base,host)", "onRecvEvent(world,actor,event,host)"],
+    "notDoubleCounted": "onUpdate already performs the inlined native disappear update. Calling updateDisappear separately before onUpdate would double-count time and is not the native sequence. Standalone helper corresponds to0x18172ca80.",
+    "representation": "JSON-safe numeric FP raws within exact safe-integer range. Native signed64 wraps before shifts/adds; unsafe stored results and unsupported numeric sqrt/normalization overflow are explicit errors, never rounded JS numbers. Phase/lastPhase/switchType are signed bytes."
+  },
+  "nativeLayout": {
+    "ThunderComponent": {"0x00": "lastPhase", "0x01": "phase signed byte", "0x02": "switchType signed byte", "0x04": "flags ushort/repeat bit0", "0x08": "entityRef", "0x10": "disappearTimeRaw", "0x18": "disappearTimerRaw", "0x20": "distanceRaw", "0x28": "moveDistanceRaw", "0x30": "speedRaw (Length of private velocity)", "0x38": "timerRaw", "0x40": "moveVelocityRaw", "0x50": "private velocityRaw"},
+    "ThunderBase": {"0x02": "flags ushort:Through0,ShootBlock1,mapCached2,pretendPause3", "0x10": "alphaRaw", "0x18": "lengthRaw", "0x20": "lengthToMapRaw"},
+    "source": "quantum-field-offsets.json instance struct offsets minus16. Actor.Pos native+b0,Actor.Velo native+f0,Actor.entityRef native+20."
+  },
+  "constants": {
+    "waitRaw": 65536,
+    "fadeSpeedRaw": 262144,
+    "negativeOneRaw": -65536,
+    "disappearEpsilonRaw": 4,
+    "exitSceneFlag": 8192,
+    "source": "Thunder.cctor0x18172d260 copies SPEED from QFP static+138(_4)@d2ca..d2d1, WAIT from QFP+f0(_1)@d2f0..d2f7. QFP.cctor0x181780cc0 inline values resolved read-only: +f0=65536,+138=262144,+240=0xffffffffffff0000(Minus_1). Phase3 uses Minus_1@18172ccaa. Disappear tests native raw4@c9da/caa4, not4 pixels/seconds or invented tolerance. Actor.ExitScene0x18169df60 sets bit13."
+  },
+  "onUpdate": {
+    "va": "0x18172c8f0",
+    "order": "Resolve live ThunderBase using motion.entityRef@c97a..c986; capture Base pointer. If Base.flags bit3 clear, perform disappear clock@c9c2..ca12 then updatePhase@ca2b. Always tail-call Base.OnUpdate0x18172ac00@ca66 after normal return, even phase0/6/default or pretendPause. No finally after exception.",
+    "pretendPause": "Base bit3@c9a3 bypasses both disappear counter and private phase, but Base beam/probe update remains called. This does not automatically disable laser collisions, hide Actor or set common Actor pause flag.",
+    "visibility": "No Actor hidden/verified gate in Thunder motion body. Existing Base.OnUpdate independently skips geometry if Actor hidden bit3. Common ActorScene scheduling remains upstream.",
+    "pointers": "Native motion and Base pointers captured once per call. Host reentry/property replacement does not make implementation reacquire motion pointer mid-call. Caller must maintain actual component identity across transaction adoption."
+  },
+  "disappearClock": {
+    "va": "0x18172ca80 (same logic inlined in OnUpdate)",
+    "condition": "signed phase<4 and abs(disappearTimeRaw)>=4. Phase0 from switch stop still accumulates disappear; switch stop is not pretendPause. Constructor's nonpositive-time clamp is upstream; helper compares supplied live native state literally.",
+    "operation": "Capture old disappearTimer before virtual dt call@c9eb/cab3; signed64 add then store@ca08/cad2. Compare stored sum with LIVE disappearTimeRaw@ca0c/cad6; >=setsphase4@ca12/cadc. updatePhase executes phase4 immediately in same OnUpdate.",
+    "failure": "Missing dt host when reached throws. No timer initialization/reset beyond native writes; event61 never resets disappear counter."
+  },
+  "phaseTable": {
+    "tableVA": "0x18172d018",
+    "targets": ["0x18172cf0a", "0x18172cbbe", "0x18172cd82", "0x18172cc1e", "0x18172cd0c", "0x18172cf41"],
+    "dispatch": "signed phase sign-extended, unsigned compare<=5@cb7b..cb82. Negative and>5 return. Internal transitions atcd6d/cd03 read LIVE phase and may redispatch same call. Jump table bytes treated only as data, not executable instructions.",
+    "0": "Return, no private movement. Base update still follows.",
+    "1": "Copy moveVelocityRaw to private velocityRaw@cbbe..cbc4; speedRaw=exact native Length@cbe3/cbe8; distanceRaw=QFP0@cc15; ++LIVEphase@cd6d, immediately dispatch phase2 normally.",
+    "2": "Clear Base map-cache bit2 FIRST@cd97..cda8. Compute remaining=abs(signed64(moveDistance-distance))@cdad..cdc8, capture private velocity locally. If remaining<=speed, normalize exact private vector via packed sqrt1816463a0@ce00, multiply by remaining with wrap/>>16, set speedRaw=remaining@ce5f and reached=true. Add local displacement directly to Actor.Pos@ce99..cebe, distance+=speedRaw@ceca. Does NOT assign Actor.Velo or overwrite private vector with clipped local displacement. No dt multiplication. If reached and repeat flag0 set, timer=WAIT1@ceff and ++phase@cf07 then return; if one-shot phase=0@cf3b. Otherwise return.",
+    "3": "Capture old timer@cc1e then timer-=DeltaTime@cc3f..cc44. If>0 return. <=0 multiplies private vector by QFP.Minus_1@ccaa..ccca, recomputes Length@cce9, resets distance0@cd06, decrements LIVEphase@cd03 and redispatches immediately, moving reverse direction on same call.",
+    "4": "Actor.SetCollisionActive(false,Actor.entityRef)@cd21..cd37 (all-holder owner behavior remains exact host). Then timer=QFP1@cd69; ++LIVEphase@cd6d and redispatch, normally entering phase5 immediately. Owner denial/void result does not cancel fade setup.",
+    "5": "Capture old timer@cf48, read dt@cf8b, subtract FP multiply(dt,SPEED4)@cf8d..cf98. If remaining>0, Base.alphaRaw=timer@d006 then return. <=0 sets Actor.ExitScene bit13@cfe0 and ++LIVEphase@cf07, returns WITHOUT writing alpha0. OnUpdate still calls Base; actual scene exit/destruction remains upstream."
+  },
+  "numericReuse": {
+    "helper": "Frozen source-distanceconstraint-math.js Length/sqrtRaw/normalizeRaw: exact numeric FPSqrt LUT SHA256de5265f651730f20b54cc24bdcd3047e61320be44a5ae54796d290a189f4bca5,65537 entries. Same native Length181640c40/packed normalization1816463a0 called by Thunder. No floating sqrt, hypot, unit-vector approximation or dt movement conversion.",
+    "products": "Native vector squares/products and normalization products use low64 wrap before arithmetic shifts. Position/distance/timer adds/subs wrap64. Safe JS representation guard remains explicit for stored results.",
+    "diagonalWitness": "Vector(3F,4F),target2F clips using normalized(39321,52428), displacement(78642,104856),speedRaw=131072; private vector remains(196608,262144)."
+  },
+  "receiver": {
+    "va": "0x18172d120",
+    "event61": "Intercept before Base lookup@d17b. phase0 and switchType bit0: saved lastPhase!=0 ->phase=saved,lastPhase=0@d227..d233; otherwisephase1@d237. phase1..3 and switch bit1 ->lastPhase=current,phase0@d23f..d24e. Other phases/disabled bits ignored. All return0. Does not reset timers,distance,velocity,alpha or cache and does not move immediately.",
+    "event53": "Non61 resolves Base@d1cb then Base.OnRecvEvent18172af10. Event53 toggles Base pretendPause bit3@af9b..afb4 BEFORE Actor.SetEnableAnimation(!IsPause,NotifiedActor)@afee,returns0. It does NOT delegate common Actor pause53 or mutate Actor.pauseOwner/flag4. Animation owner denial can leave animation unchanged while Base bit still toggles.",
+    "other": "Base.OnRecvEvent delegates exact Actor.OnRecvEvent0x18169e840@af81; mandatory actorOnRecvEvent host, native int32 return forwarded. No inferred no-op for unknown events.",
+    "pool": "Receiver never releases incoming QEventParam. Caller NotifyEvent/registry owns lifetime. Source event ownership is forwarded exactly; no fabricated self-owner except phase4's actual Actor entityRef argument."
+  },
+  "baseMotionContactBoundary": {
+    "host": "Mandatory getThunderBase(world,motion.entityId), getDeltaTime(world) only when clock reached, baseUpdate(world,actor,base), setCollisionActive(world,actor,false,actor.entityId), setEnableAnimation(world,actor,enabled,NotifiedActor), actorOnRecvEvent(world,actor,event). All synchronous; no default successful callback.",
+    "reuse": "Dedicated host uses existing source-thunder-native.update for real map-probe/cache/beam resize, existing ActorMotion.setCollisionActive for both beam/probe ownership and common ActorLifecycle for animation/common receiver. Helper does not modify existing modules.",
+    "cache": "Moving phase2 clears only Base cached-length bit2 before displacement. Base.update measures from new emitter after phase completion; private movement does not directly sync beam current/pre position, clear reciprocal contacts, update Actor.prePosition or Actor.velocity. Common Actor motion/collision phase does that later.",
+    "contact": "Existing Base.onCollided remains upstream: Player/173 event26, Through and nonThrough shortening callbacks. Moving helper does not invent calcLengthCollided/contact transport or suppress unknown callbacks. Explicit wall-map fixtures are not complete stage collision/play validation."
+  },
+  "boundaryWitnesses": {
+    "repeat": "At dt1092, WAIT65536:60 waiting Updates leave16raw;61st leaves-1076 and reverses/moves that call. Reaching endpoint initializes wait and returns instead of immediately subtracting dt.",
+    "fade": "timer65536 -4*1092 each call:15 fade calls leave16raw/alpha16;16th leaves-4352,sets ExitScene/phase6,alpha remains16. Equality timer0 likewise exits without alpha0 store.",
+    "4-1": "Actual four Thunder switch1,moveY0.3,target280,repeat0. Native converted moveY19660; frozen native Length19658. Signal61 starts phase1. After933 full steps distance18340914;934th clips9166,ends distance18350080=280F but actual position displacement18351946 (1866raw beyond target due difference between accumulated Length and per-tick vector). No correction/snap invented.",
+    "11-4": "Default variant(count2) has one Thunder1; needPlayerCount5 variant has one Thunder2, both20-second disappear. dt1092:tick1200 timer1310400<1310720;tick1201 timer1311492 starts phase4->5 andalpha61168;tick1216 ExitScene,alpha16. Not two Thunder in one selected variant.",
+    "3-2_10-4": "All actual first9 params[3,1,0,0,0,0,0,0,0], so actual static motion/disappear branch. Synthetic explicit native state fixtures cover movement/repeat/fade/reentry boundaries separately."
+  },
+  "exceptionAndReentry": {
+    "partialWrites": "Collision host exception preserves earlier collider owner/flags, leaves phase4/timer prior value, skips Base tail. Base host exception leaves already committed position/distance/phase. No internal rollback/finally.",
+    "livePhase": "Collision/dt callbacks can reenter receivers or change live phase; increments/decrements use live byte. Base pretendPause gate captured before private processing; newly setting pause during phase4 callback does not retroactively skip current fade, but next OnUpdate freezes.",
+    "componentIdentity": "Captured motion/Base references retained for current call. Transaction layer must preserve actual native pointer semantics; helper does not assume replacing Actor.thunderState property changes existing native pointer."
+  },
+  "unresolved": [
+    "Full Creator/ParseParameter/InitPost, prototype/entity materialization, Scene registration and common Actor scheduling remain existing lead-owned factory/runtime; create requires exact already-initialized state.",
+    "Base map/probe/collision callbacks, nonThrough shorten and event26 targets/registry are required existing hosts. No complete moving/contact stage physics integration claim.",
+    "Final ExitScene bit13 handling, actual scene dictionary removal/actor destruction and renderer alpha consumption remain upstream.",
+    "Generic Actor.OnRecvEvent and animation/collision owner side effects require actual exact common host; no custom receiver guessed.",
+    "Extreme int64 values outside safe numeric representation, overflowed/negative sqrt domains and unsupported native math preconditions explicitly refuse through safe-raw/frozen math guards.",
+    "Real3-2/10-4 motion parameters are static; additional4-1/11-4 fixtures prove authored moving/disappear parameter branches without claiming those complete stages boot/play identically."
+  ],
+  "corrections": [
+    "Initial11-4 test incorrectly combined Thunder1/Thunder2 from two selected variants into count2; metadata stage selection establishes one per variant and fixture corrected before final verification.",
+    "SPEED4 is fade decrement factor, not a factor applied to authored movement. Movement is raw vector per Update, and native Length can differ from that vector's component magnitude.",
+    "Phase4 initializes WAIT1 then immediately runs phase5; fade completion sets ExitScene but leaves last positive Base.alpha, rather than writing0 or destroying entity in this helper."
+  ],
+  "filesPolicy": "Only source-thunder-motion.js/.test.cjs, thunder-motion-report.json, ThunderMotion.result.md and claim marker created. Existing Thunder native/Base/factory/bridge/runtime/HANDOFF/Git read-only."
+}
