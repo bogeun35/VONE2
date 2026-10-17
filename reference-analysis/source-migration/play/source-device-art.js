@@ -299,19 +299,48 @@ function cardboards(c,s){
   if(pop>.8){eyes(c,k.x,y+h*.62,18,6,4);c.fillStyle='#ffb3c6';c.beginPath();c.ellipse(k.x-17,y+h*.72,5,3,0,0,Math.PI*2);c.ellipse(k.x+17,y+h*.72,5,3,0,0,Math.PI*2);c.fill();}
   c.restore();}
 }
+// 9-2 CapturingConstraint ring and CapturingTargets. The rope joins each
+// player's Pos + CONSTRAINT_OFFSET to the next one's, closing the ring.
+function capturingRope(c,s){
+ const C=root.SourceCapturingDevices;if(!C||!s.capturingState||!s.capturingState.constraints.length)return;
+ const d=C.displays(s.capturingState),k=d.constraint,pts=s.players.map(p=>({x:p.x+16+k.offset.x,y:p.y+47+k.offset.y}));
+ if(pts.length<2)return;c.save();c.lineCap='round';c.lineJoin='round';
+ c.strokeStyle=k.capturable?(k.any?'#ff6f9f':'#f2a7c3'):'#b9b3c9';c.lineWidth=k.any?5:4;c.setLineDash(k.capturable?[]:[8,6]);
+ c.beginPath();pts.forEach((q,i)=>{if(i===0)c.moveTo(q.x,q.y);else c.lineTo(q.x,q.y);});if(pts.length>2)c.closePath();c.stroke();c.restore();
+}
+function capturingTargets(c,s,time){
+ const C=root.SourceCapturingDevices;if(!C||!s.capturingState||!s.capturingState.targets.length)return;
+ for(const t of C.displays(s.capturingState).targets){if(t.gone)continue;
+  // collider (-12,-12,24,24) centred on Pos
+  const bob=t.moving?Math.sin(time*16+t.x)*1.5:0,x=t.x,y=t.y+bob;c.save();
+  c.fillStyle='rgba(40,30,60,.2)';c.beginPath();c.ellipse(t.x,t.y+11,11,4,0,0,Math.PI*2);c.fill();
+  c.beginPath();c.ellipse(x,y,13,12,0,0,Math.PI*2);fillStroke(c,t.capturing?'#ffd1e0':'#bfe8d4',INK,2);
+  c.fillStyle=t.capturing?'#ffd1e0':'#bfe8d4';c.beginPath();c.ellipse(x-7,y-11,4,5,-.4,0,Math.PI*2);c.ellipse(x+7,y-11,4,5,.4,0,Math.PI*2);c.fill();c.stroke();
+  if(t.capturing){c.strokeStyle=INK;c.lineWidth=1.6;c.beginPath();c.moveTo(x-6,y-2);c.lineTo(x-2,y);c.moveTo(x+6,y-2);c.lineTo(x+2,y);c.stroke();}
+  else eyes(c,x,y-1,9,4,3);
+  if(t.meter>0){c.strokeStyle='#ff6f9f';c.lineWidth=3;c.beginPath();c.arc(x,y,18,-Math.PI/2,-Math.PI/2+Math.PI*2*t.meter);c.stroke();}
+  c.restore();}
+}
+function capturingCounter(c,s,view){
+ const C=root.SourceCapturingDevices;if(!C||!s.capturingState||!s.capturingState.constraints.length)return;
+ const k=C.displays(s.capturingState).constraint;if(k.hideUi)return;
+ c.save();rr(c,view.width/2-58,12,116,30,15);fillStroke(c,'rgba(255,253,246,.92)',INK,2);label(c,(k.done?'다 잡았어요! ':'잡은 수 ')+k.captured+' / '+k.total,view.width/2,27,INK,14);c.restore();
+}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
+ try{topViewFloor(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
 function drawAbove(c,s){if(!s)return;const time=performance.now()/1000;c.save();try{cardboards(c,s);bats(c,s,time);fallingCages(c,s);blackoutLabels(c,s);}finally{c.restore();}}
 // Screen pass: the blackout darkness covers the whole view.
 function overlay(c,s,view){
+ if(s)capturingCounter(c,s,view);
  const B=root.SourceBlackoutDevices;if(!B||!s||!s.blackoutState||!s.blackoutState.blackouts.length)return;
  for(const b of B.displays(s.blackoutState).blackouts){const a=Math.max(0,Math.min(1,b.alpha*(b.darknessRaw/F)));
   if(a>0){c.fillStyle='rgba(0,0,0,'+a+')';c.fillRect(0,0,view.width,view.height);}}
 }
+
 root.SourceDeviceArt={draw,drawAbove,overlay};
 })(typeof window!=='undefined'?window:globalThis);
