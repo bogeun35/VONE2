@@ -59,11 +59,13 @@
   "st_w_06_03",
   "st_w_06_01",
   "st_w_06_02",
-  "st_w_13_02"
+  "st_w_13_02",
+  "st_w_11_01",
+  "st_w_11_03"
  ],
  "worldStages": 60,
- "remainingStages": 4,
- "remainingDistinctBlockers": 11,
+ "remainingStages": 2,
+ "remainingDistinctBlockers": 6,
  "nearest": [
   {
    "id": "st_w_06_04",
@@ -73,30 +75,6 @@
     "PlayerGuard",
     "ShootingEnemyBoss",
     "ShootingSuperApple"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_11_01",
-   "blockerCount": 5,
-   "blockers": [
-    "DanmakuEmitter",
-    "DanmakuLocator",
-    "DanmakuModifier",
-    "DanmakuObserver",
-    "DanmakuThunder"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_11_03",
-   "blockerCount": 5,
-   "blockers": [
-    "DanmakuEmitter",
-    "DanmakuLocator",
-    "DanmakuModifier",
-    "DanmakuObserver",
-    "DanmakuThunder"
    ],
    "guardsAfterTypes": []
   },
@@ -115,51 +93,6 @@
   }
  ],
  "byType": [
-  {
-   "type": "DanmakuEmitter",
-   "stages": [
-    "st_w_11_01",
-    "st_w_11_03"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "DanmakuLocator",
-   "stages": [
-    "st_w_11_01",
-    "st_w_11_03"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "DanmakuModifier",
-   "stages": [
-    "st_w_11_01",
-    "st_w_11_03"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "DanmakuObserver",
-   "stages": [
-    "st_w_11_01",
-    "st_w_11_03"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "DanmakuThunder",
-   "stages": [
-    "st_w_11_01",
-    "st_w_11_03"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
   {
    "type": "BgmChanger",
    "stages": [
@@ -290,86 +223,38 @@
   },
   {
    "id": "st_w_11_01",
-   "connected": false,
-   "distinctBlockers": [
-    "DanmakuEmitter",
-    "DanmakuLocator",
-    "DanmakuModifier",
-    "DanmakuObserver",
-    "DanmakuThunder"
-   ],
-   "blockerCount": 5,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "DanmakuThunder",
-      "DanmakuObserver",
-      "DanmakuEmitter",
-      "DanmakuModifier",
-      "DanmakuLocator"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "DanmakuThunder",
-      "DanmakuObserver",
-      "DanmakuEmitter",
-      "DanmakuModifier",
-      "DanmakuLocator"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "DanmakuThunder",
-      "DanmakuObserver",
-      "DanmakuEmitter",
-      "DanmakuModifier",
-      "DanmakuLocator"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "DanmakuThunder",
-      "DanmakuObserver",
-      "DanmakuEmitter",
-      "DanmakuModifier",
-      "DanmakuLocator"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "DanmakuThunder",
-      "DanmakuObserver",
-      "DanmakuEmitter",
-      "DanmakuModifier",
-      "DanmakuLocator"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "DanmakuThunder",
-      "DanmakuObserver",
-      "DanmakuEmitter",
-      "DanmakuModifier",
-      "DanmakuLocator"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "DanmakuThunder",
-      "DanmakuObserver",
-      "DanmakuEmitter",
-      "DanmakuModifier",
-      "DanmakuLocator"
-     ]
+     "missing": []
     }
    }
   },
@@ -1319,86 +1204,38 @@
   },
   {
    "id": "st_w_11_03",
-   "connected": false,
-   "distinctBlockers": [
-    "DanmakuEmitter",
-    "DanmakuLocator",
-    "DanmakuModifier",
-    "DanmakuObserver",
-    "DanmakuThunder"
-   ],
-   "blockerCount": 5,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "DanmakuObserver",
-      "DanmakuEmitter",
-      "DanmakuModifier",
-      "DanmakuLocator",
-      "DanmakuThunder"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "DanmakuObserver",
-      "DanmakuEmitter",
-      "DanmakuModifier",
-      "DanmakuLocator",
-      "DanmakuThunder"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "DanmakuObserver",
-      "DanmakuEmitter",
-      "DanmakuModifier",
-      "DanmakuLocator",
-      "DanmakuThunder"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "DanmakuObserver",
-      "DanmakuEmitter",
-      "DanmakuModifier",
-      "DanmakuLocator",
-      "DanmakuThunder"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "DanmakuObserver",
-      "DanmakuEmitter",
-      "DanmakuModifier",
-      "DanmakuLocator",
-      "DanmakuThunder"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "DanmakuObserver",
-      "DanmakuEmitter",
-      "DanmakuModifier",
-      "DanmakuLocator",
-      "DanmakuThunder"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "DanmakuObserver",
-      "DanmakuEmitter",
-      "DanmakuModifier",
-      "DanmakuLocator",
-      "DanmakuThunder"
-     ]
+     "missing": []
     }
    }
   },

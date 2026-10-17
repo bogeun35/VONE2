@@ -27,6 +27,10 @@
  *   checkContact 0x18188c230: the 10x10 box against the living players (event 21,
  *   tryAddDamageToPlayer 0x18188c950), then the map (any blocking chip, both ends of the
  *   chip range included) -> gone without moving.
+ *  Danmaku bullets (stage type 1, DanmakuLocator.createBullet 0x181811380): their own hit
+ *   square (Size byte px), colour and turn per frame (updatePosition 0x18188bf90 rotates
+ *   the velocity by AngularVelocity * 0x477 >> 16 before moving); a player hit takes
+ *   the shared HP (addDamageProcess 0x18188c620) instead of event 21.
  *  MapBlockReplacer.OnStart 0x18187c400: x outer, y inner over BreakColor chips; the k-th
  *   colour met becomes gun colours[k % n]. MapBreakBlockRect.OnStart 0x18187ce60: option 1
  *   / 2 picks from the (gun) colours (Next(0, n) when the slot is -1), then paints
@@ -35,7 +39,7 @@
  *  - one module PCG stream stands for the frame RNG; OnStart runs in actor order;
  *  - the map check of a bullet uses the runtime's merged terrain rectangles.
  */
-(function(root,factory){const c=typeof module==='object'&&module.exports;const api=factory(c?require('./source-distanceconstraint-math.js'):root.SourceDistanceConstraintMath);if(c)module.exports=api;root.SourceShootingRuntime=api;})(typeof globalThis!=='undefined'?globalThis:this,function(N){
+(function(root,factory){const c=typeof module==='object'&&module.exports;const api=factory(c?require('./source-distanceconstraint-math.js'):root.SourceDistanceConstraintMath,c?require('./source-fplut-math.js'):root.SourceFPLutMath);if(c)module.exports=api;root.SourceShootingRuntime=api;})(typeof globalThis!=='undefined'?globalThis:this,function(N,Lut){
 'use strict';
 const F=65536,B=BigInt,i64=v=>BigInt.asIntN(64,v);
 const num=v=>{const n=Number(v);if(!Number.isSafeInteger(n))throw Error('Shooting raw outside safe range');return n;};
@@ -118,17 +122,23 @@ function enemyUpdate(st,e,dt,host,out){
  if(tx===0&&ty===0)return;
  const u=N.normalizeRaw({xRaw:tx-e.xRaw,yRaw:ty-e.yRaw});createBullet(st,{xRaw:e.xRaw,yRaw:e.yRaw},{xRaw:mul(u.xRaw,e.bulletSpeedRaw),yRaw:mul(u.yRaw,e.bulletSpeedRaw)},host,out);}
 // OptimizedBulletObserverComponent.CreateBullet 0x18188dc30
-function createBullet(st,pos,velo,host,out){let b=st.bullets.find(q=>!q.active);
+function createBullet(st,pos,velo,host,out,extra){let b=st.bullets.find(q=>!q.active);
  if(!b){if(st.bullets.length>=st.pool)return false;b={};st.bullets.push(b);}
- Object.assign(b,{active:true,fading:false,seed:randomFP(host.rng),timerRaw:BULLET.validRaw,xRaw:pos.xRaw,yRaw:pos.yRaw,veloRaw:velo});out.sounds.push({se:0x14});return true;}
+ Object.assign(b,{active:true,fading:false,seed:randomFP(host.rng),timerRaw:BULLET.validRaw,xRaw:pos.xRaw,yRaw:pos.yRaw,veloRaw:velo,
+  sizeRaw:extra?extra.sizePx<<16:BULLET.sizeRaw,angVelRaw:extra?extra.angVelRaw:0,color:extra?extra.color:null,danmaku:!!extra});if(out)out.sounds.push({se:0x14});return true;}
+// DanmakuLocator.createBullet -> CreateBullet(stage type 1); a full pool creates nothing
+function createDanmakuBullet(st,param,rng){return createBullet(st,{xRaw:param.xRaw,yRaw:param.yRaw},{...param.veloRaw},{rng},null,param);}
+// OptimizedBulletObserver.RemoveAllBullet (named approximation: gone at once)
+function removeAllBullets(st){for(const b of st.bullets)b.active=false;}
 function bulletUpdate(st,b,dt,host,out){
  if(b.fading){b.timerRaw-=dt;if(b.timerRaw<1)b.active=false;return;}
  b.timerRaw-=dt;if(b.timerRaw<=0){b.fading=true;b.timerRaw=BULLET.fadeRaw;return;}
+ if(b.angVelRaw){const th=mul(b.angVelRaw,0x477),[s,c]=Lut.sincosRaw(th),v0=b.veloRaw;b.veloRaw={xRaw:mul(v0.xRaw,c)-mul(v0.yRaw,s),yRaw:mul(v0.xRaw,s)+mul(v0.yRaw,c)};}
  const nx=b.xRaw+b.veloRaw.xRaw,ny=b.yRaw+b.veloRaw.yRaw,v=host.viewRaw;
  if(!(v.x-BULLET.marginRaw<=nx&&nx<v.x+v.w+BULLET.marginRaw)){b.fading=true;b.timerRaw=BULLET.fadeRaw;return;}
- const half=BULLET.sizeRaw>>1,box={x:nx-half,y:ny-half,w:BULLET.sizeRaw,h:BULLET.sizeRaw};
+ const size=b.sizeRaw||BULLET.sizeRaw,half=size>>1,box={x:nx-half,y:ny-half,w:size,h:size};
  const hitP=host.players.find(p=>p.alive&&p.bodyRaw&&overlap(box,p.bodyRaw));
- if(hitP){out.damage.push({player:hitP.index});b.fading=true;b.timerRaw=BULLET.fadeRaw;return;}
+ if(hitP){out.damage.push(b.danmaku?{player:hitP.index,danmaku:true}:{player:hitP.index});b.fading=true;b.timerRaw=BULLET.fadeRaw;return;}
  if(host.mapBlocked(box)){b.fading=true;b.timerRaw=BULLET.fadeRaw;return;}
  b.xRaw=nx;b.yRaw=ny;}
 /* One frame. host: {dtRaw, viewRaw:{x,w}, rng, players:[{index, xRaw, yRaw, alive, bodyRaw}],
@@ -150,8 +160,8 @@ function chipSolids(st){return Object.entries(st.chips).map(([k,v])=>{const [gx,
 function targets(st){return st.enemies.filter(e=>e.active&&e.collision).map(e=>{const r=enemyRect(e);return {id:e.id,x:r.x/F,y:r.y/F,w:r.w/F,h:r.h/F};});}
 function displays(st){return {
  enemies:st.enemies.filter(e=>e.shown&&!e.gone).map(e=>({id:e.id,x:e.xRaw/F,y:e.yRaw/F,blast:e.disappear,blink:e.blink>0,t:e.disappear?1-e.disappearRaw/ENEMY.blastRaw:0})),
- bullets:st.bullets.filter(b=>b.active).map(b=>({x:b.xRaw/F,y:b.yRaw/F,r:5,fading:b.fading})),
+ bullets:st.bullets.filter(b=>b.active).map(b=>({x:b.xRaw/F,y:b.yRaw/F,r:b.danmaku?(b.sizeRaw/F)*1.5:5,fading:b.fading,color:b.color||null})),
  chips:Object.entries(st.chips).map(([k,v])=>{const [gx,gy]=k.split(',').map(Number);return {gx,gy,colorIndex:v-CHIP_BASE};})};}
-return {compile,create,start,step,signal,enemyHit,breakChip,chipSolids,targets,displays,cutPath,pcg32,nextInt,
+return {compile,create,start,step,signal,enemyHit,createDanmakuBullet,removeAllBullets,breakChip,chipSolids,targets,displays,cutPath,pcg32,nextInt,
  supportedTypes:['ShootingEnemySpawner','OptimizedBulletObserver','MapBlockReplacer','MapBreakBlockRect'],nativeConstants:{ENEMY,BULLET},completePhysicsFidelity:false};
 });

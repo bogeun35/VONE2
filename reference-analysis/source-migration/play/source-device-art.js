@@ -538,8 +538,22 @@ function shootingArt(c,s,time){const S=root.SourceShootingRuntime;const st=s.sho
   for(const sy of [-1,1]){c.beginPath();c.ellipse(-8,sy*4-1,2.2,3,0,0,Math.PI*2);fillStroke(c,INK,null);}
   c.strokeStyle=INK;c.lineWidth=2;c.beginPath();c.moveTo(-13,-9);c.lineTo(-5,-6);c.stroke();
   c.restore();}
- for(const b of d.bullets){c.save();c.globalAlpha=b.fading?.4:1;c.beginPath();c.arc(b.x,b.y,b.r,0,Math.PI*2);fillStroke(c,'#e2557a',INK,1.5);
-  c.fillStyle='rgba(255,255,255,.7)';c.beginPath();c.arc(b.x-1.5,b.y-1.5,1.5,0,Math.PI*2);c.fill();c.restore();}
+ for(const b of d.bullets){c.save();c.globalAlpha=b.fading?.4:1;c.beginPath();c.arc(b.x,b.y,b.r,0,Math.PI*2);
+  fillStroke(c,b.color?`rgb(${b.color[0]},${b.color[1]},${b.color[2]})`:'#e2557a',INK,b.color?Math.max(1,b.r/5):1.5);
+  c.fillStyle='rgba(255,255,255,.7)';c.beginPath();c.arc(b.x-b.r*.3,b.y-b.r*.3,Math.max(1,b.r*.3),0,Math.PI*2);c.fill();c.restore();}
+}
+// 11-1 / 11-3: the four DanmakuThunder beams, the Locator's core, the shared HP (hearts)
+// and the seconds left (DanmakuObserverView is not analysed: placed at the top centre).
+function danmakuArt(c,s,time){const D=root.SourceDanmakuRuntime;if(!D||!s.danmakuState||!s.danmakuState.observer)return;const d=D.displays(s.danmakuState);
+ for(const b of s.danmakuBeams||[]){c.save();c.globalAlpha=.85;c.fillStyle='#fff6a8';c.fillRect(b.x-1,b.y-1,b.w+2,b.h+2);
+  c.strokeStyle='#ffd84d';c.lineWidth=2;c.beginPath();const horiz=b.w>b.h,len=horiz?b.w:b.h;
+  for(let k=0;k<=len;k+=12){const j=((k/12+Math.floor(time*20))%2?5:-5);if(horiz){const x=b.x+k;k?c.lineTo(x,b.y+2+j):c.moveTo(x,b.y+2+j);}else{const y=b.y+k;k?c.lineTo(b.x+2+j,y):c.moveTo(b.x+2+j,y);}}c.stroke();c.restore();}
+ const L=d.locators[0];if(L&&d.state<4){c.save();c.translate(L.x,L.y);c.rotate(time*1.5);for(let k=0;k<6;k++){c.rotate(Math.PI/3);rr(c,-4,-26,8,14,4);fillStroke(c,'#ffb3c7',INK,1.5);}
+  c.beginPath();c.arc(0,0,14,0,Math.PI*2);fillStroke(c,'#fff0f5',INK,2.5);c.restore();}
+ const cx=(s.map.width||0)/2,top=150;
+ for(let k=0;k<d.hpMax;k++){const x=cx-(d.hpMax-1)*20+k*40,full=k<d.hp;c.save();c.translate(x,top);c.beginPath();c.moveTo(0,8);c.bezierCurveTo(-18,-4,-10,-18,0,-8);c.bezierCurveTo(10,-18,18,-4,0,8);
+  fillStroke(c,full?'#ff7a98':'rgba(255,255,255,.25)',INK,2);c.restore();}
+ if(d.state<4)label(c,d.warmUp?'준비 '+d.seconds:String(d.seconds),cx,top+36,'#fffdf6',d.warmUp?22:26);
 }
 // 13-2 graphs (UI prefabs; sizes are named approximations): a bar graph has three bars
 // [left, right, jump] of levelMax cells (cell = 288 / max(6, levelMax)); a circle graph
@@ -570,7 +584,7 @@ function graphArt(c,s){const G=root.SourceGraphRuntime;if(!G||!s.graphState||!s.
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);moleArt(c,s,time);throwArt(c,s,time);planeObstacleArt(c,s);shootingArt(c,s,time);graphArt(c,s);planeArt(c,s,time);}
+ try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);moleArt(c,s,time);throwArt(c,s,time);planeObstacleArt(c,s);shootingArt(c,s,time);danmakuArt(c,s,time);graphArt(c,s);planeArt(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).

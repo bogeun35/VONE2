@@ -418,7 +418,7 @@ function drawFriend(c,p,i,o){
  if(!grounded){if((p.vy||0)<0){sy=1.07;sx=.95;}else{sy=1.02;sx=.98;}}
  else if(landAge<.12){const k=1-landAge/.12;sy=1-.09*k;sx=1+.07*k;}
  const walking=grounded&&Math.abs(p.vx||0)>1,step=walking?Math.sin(t*16+i):0;
- const dead=o.deadId===p.id,flash=o.flash&&o.flash[p.id]>0;
+ const dead=o.deadId===p.id,flash=o.flash&&o.flash[p.id]>0||!!(p.tv&&p.tv.isFlashing);
  c.save();if(flash&&Math.floor(t*14)%2)c.globalAlpha*=.35;
  // changeControlablePlayer 0x181872cc0 greys out everyone who cannot move
  if(p.grayscale){c.filter='grayscale(1)';c.globalAlpha*=.75;}
