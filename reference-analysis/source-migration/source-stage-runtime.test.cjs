@@ -374,3 +374,25 @@ test('a box carried on a player shields them from the thorns of 01-02',()=>{
  assert.equal(shielded.status,'play','the carried box must block them');
  assert.ok(shielded.x>bare.x+1000,'the shielded run must get much further: '+shielded.x+' vs '+bare.x);
 });
+
+// shufflePlayer (14-4 and 27 more connected rounds): InitPlayerIndexList 0x1816a6310 swaps
+// i = 1..n-1 with Next(0, i + 1) on the RNGSession; the k-th player actor takes list[k] and its colour.
+test('shufflePlayer: the stage order matches source-player-index-list.js initialize for the same RNGSession seed', () => {
+ const L = require('./source-player-index-list.js');
+ for (const n of [2, 3, 5, 8]) {
+  const c = R.compile({source, geometry, count:n, stageId:'st_w_14_04'});
+  assert.equal(c.map.shufflePlayer, true);
+  for (const seed of [1, 7, -3, 123456789, 2147483647]) {
+   const s = R.create(c, {shuffleSeed:seed});
+   const infos = Array.from({length:n}, (_, i) => ({playerRefRaw:i + 1, colorIndex:i, battleWinCount:0, playerHatNo:0, flags:0}));
+   const want = L.initialize(infos, {shufflePlayer:1, limitPlayer:1, existingIndexList:[], sceneFlags:0, rngSnapshot:L.rngSnapshotFromNativeSeed(seed)}).indexList;
+   assert.deepEqual(s.players.map(p => p.colorIndex), want, 'n ' + n + ' seed ' + seed);
+   assert.deepEqual(s.players.map(p => p.id), want.map(i => 'p' + (i + 1)));
+  }
+ }
+ // no seed (tests, replays) or no shuffle: actor order
+ const plain = R.create(R.compile({source, geometry, count:4, stageId:'st_w_14_04'}));
+ assert.deepEqual(plain.players.map(p => p.id), ['p1', 'p2', 'p3', 'p4']);
+ const one = R.create(R.compile({source, geometry, count:4, stageId:'st_w_01_01'}), {shuffleSeed:7});
+ assert.deepEqual(one.players.map(p => p.id), ['p1', 'p2', 'p3', 'p4']);
+});

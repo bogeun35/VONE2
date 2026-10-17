@@ -86,10 +86,10 @@ class SourceParkOnlineController{
   // the room still delivers the superseded snapshot once; adopting it would
   // replay the lost round before the new one takes hold.
   const superseded=this.net.host&&!!this.runId&&p.runId!==this.runId&&!this.net.justBecameHost;
-  if(!superseded&&(this.runId!==p.runId||!this.app.getState()||this.app.getState().players[0]?.id!==p.ids[0])){
+  if(!superseded&&(this.runId!==p.runId||!this.app.getState()||(this.app.getState().ids||[])[0]!==p.ids[0])){
    const c=await this.getCompiled(p.count,p.stageId||'st_w_01_01');if(!this.active||this.net.room?.snapshot?.runId!==p.runId)return;
-   this.runId=p.runId;this.endStatus='';this.panelOpen=false;const s=apply(SourceStageRuntime.create(c,{ids:p.ids}),p);this.app.replaceState(s,p.ids.indexOf(this.net.id),!!p.paused);this.target=null;this.jumpSeen=Object.fromEntries(Object.entries(this.net.rawInputs||{}).map(([id,v])=>[id,v.jumpSeq||0]));
-  }else if(this.net.justBecameHost){this.target=null;this.app.replaceState(apply(this.app.getState(),p),p.ids.indexOf(this.net.id),!!p.paused);}
+   this.runId=p.runId;this.endStatus='';this.panelOpen=false;const s=apply(SourceStageRuntime.create(c,{ids:p.ids}),p);this.app.replaceState(s,s.players.findIndex(q=>q.id===this.net.id),!!p.paused);this.target=null;this.jumpSeen=Object.fromEntries(Object.entries(this.net.rawInputs||{}).map(([id,v])=>[id,v.jumpSeq||0]));
+  }else if(this.net.justBecameHost){this.target=null;{const s=apply(this.app.getState(),p);this.app.replaceState(s,s.players.findIndex(q=>q.id===this.net.id),!!p.paused);}}
   else if(!this.net.host){this.target=copy(p);if(p.status!=='play')apply(this.app.getState(),p);}
   $('online-panel').hidden=!this.panelOpen;this.app.showOnlineGame(!!p.paused,this.net.host,p.status);
  }
@@ -104,19 +104,20 @@ class SourceParkOnlineController{
    const ids=memberIds(room).filter(id=>this.net.connected(id));
    if(ids.length<2){await this.net.lobby();this.message('인원이 부족해 대기실로 돌아갔습니다.');return;}
    const c=await this.getCompiled(ids.length,room.stageId||'st_w_01_01');
-   const s=SourceStageRuntime.restart(c,this.app.getState(),{ids});
+   // shufflePlayer: a fresh index-list order every attempt (InitPlayerIndexList 0x1816a6310)
+   const s=SourceStageRuntime.restart(c,this.app.getState(),{ids,shuffleSeed:(Math.random()*4294967296)|0});
    this.runId=Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7);
    // Baseline every member's jump counter at the restart; an empty map would
    // turn each earlier jump into a phantom jump on the new round's first tick.
    this.endStatus='';this.deadAt=0;this.panelOpen=false;$('online-panel').hidden=true;this.jumpSeen=Object.fromEntries(Object.entries(this.net.rawInputs||{}).map(([id,v])=>[id,v.jumpSeq||0]));
-   this.app.replaceState(s,ids.indexOf(this.net.id),false);
+   this.app.replaceState(s,s.players.findIndex(q=>q.id===this.net.id),false);
    // publish keeps the room in play; net.start would require the lobby again.
    await this.net.publish(pack(s,this.runId,false));
   }catch(e){this.message(e.message);}finally{this.restarting=false;}
  }
  async start(){if(!this.net?.host||this.busy)return;this.busy=true;
   try{if(this.net.room.status!=='lobby'){await this.net.lobby();this.message('모두 준비한 뒤 다시 시작해주세요.');return;}
-   const ids=memberIds(this.net.room),c=await this.getCompiled(ids.length,this.net.room.stageId||'st_w_01_01'),s=SourceStageRuntime.create(c,{ids});const run=Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7);
+   const ids=memberIds(this.net.room),c=await this.getCompiled(ids.length,this.net.room.stageId||'st_w_01_01'),s=SourceStageRuntime.create(c,{ids,shuffleSeed:(Math.random()*4294967296)|0});const run=Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7);
    await this.net.start(pack(s,run,false));
   }catch(e){this.message(e.message);$('online-panel').hidden=false;}finally{this.busy=false;}
  }

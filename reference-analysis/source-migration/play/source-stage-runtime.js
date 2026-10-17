@@ -218,6 +218,8 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
    spawns:topViews.players.length?t.actors.filter(a=>a.typeName==='TopViewPlayer'&&Actor.actorPopulationAllowed(a.playerCount||0,count)).slice(0,count).map(a=>({x:a.posX-16*SCALE,y:a.posY-0.5-46*SCALE-1}))
     :playerActorSpawns(t.actors,count,SCALE),
    stageScaleRaw:SCALE_RAW,
+   // stageInitParam.shufflePlayer: InitPlayerIndexList 0x1816a6310 shuffles the index list (create)
+   shufflePlayer:!!(sourceVariant&&sourceVariant.shufflePlayer),
    // top view: TopViewPlayer.initialize 0x1816c9d20 and the stage's raw map chips (fall attribute 16)
    ice:(t.cells.some(c=>c.flags&2)||frontSwitches.ices.length||frontSwitches.rects.some(r=>r.ice))&&sourceVariant?{resistivityRaw:cfp(sourceVariant.iceResistivity),frictionRaw:cfp(sourceVariant.iceFriction),speedUpRaw:cfp(sourceVariant.iceSpeedUp),
     cells:t.cells.filter(c=>c.flags&2).map(c=>c.gridX+','+c.gridY)}:null,
@@ -263,7 +265,8 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   if(ids.length!==count||new Set(ids).size!==count||ids.some(id=>typeof id!=='string'||!id))throw new Error('Unique IDs must match player count');
   const initPositions=(compiled.warpInit&&compiled.warpInit.initPositions)||[];
   const SC=(map.stageScaleRaw||65536)/65536;
-  const state={map,players:ids.map((id,i)=>({id,...map.spawns[i],initPos:initPositions[i]||{x:map.spawns[i].x+16*SC,y:map.spawns[i].y+46*SC+1.5},onPole:!!(compiled.poles&&compiled.poles.poles&&compiled.poles.poles.length),lookingRight:!map.spawns[i].lookLeft,facingLeft:!!map.spawns[i].lookLeft,...(map.spawns[i].plane?{plane:{...map.spawns[i].plane,life:map.spawns[i].plane.battle?Planes.createLife():null}}:{}),w:32*SC,h:46*SC,...(SC!==1?{walkSpeed:3*SC}:{}),vx:0,vy:0,grounded:false,ground:false,
+  const order=map.shufflePlayer&&Number.isInteger(options.shuffleSeed)?shuffledOrder(count,options.shuffleSeed):ids.map((_,i)=>i);
+  const state={map,ids:ids.slice(),shuffleSeed:Number.isInteger(options.shuffleSeed)?options.shuffleSeed:null,players:ids.map((_,i)=>({id:ids[order[i]],colorIndex:order[i],...map.spawns[i],initPos:initPositions[i]||{x:map.spawns[i].x+16*SC,y:map.spawns[i].y+46*SC+1.5},onPole:!!(compiled.poles&&compiled.poles.poles&&compiled.poles.poles.length),lookingRight:!map.spawns[i].lookLeft,facingLeft:!!map.spawns[i].lookLeft,...(map.spawns[i].plane?{plane:{...map.spawns[i].plane,life:map.spawns[i].plane.battle?Planes.createLife():null}}:{}),w:32*SC,h:46*SC,...(SC!==1?{walkSpeed:3*SC}:{}),vx:0,vy:0,grounded:false,ground:false,
    supportId:null,jump:false,jumpFrame:0,exit:false,visible:true,playerState:1})),
    relayState:clone(compiled.relays),deviceState:Devices.create(compiled.devices||{schemaVersion:1,count,devices:[],warnings:[]}),motionState:Motion.create(compiled.motion||{count,rects:[],dashBoards:[],walls:[]}),gateState:Gates.create(compiled.gates||{count,gates:[],observers:[],keys:[]}),bridgeState:Bridges.create(compiled.bridges||{count,bridges:[],thunders:[],keyTargets:[],keyTaken:false}),blinkState:Blink.create(compiled.blink||Blink.compile([],count)),blinkThunderState:BlinkThunders.create(compiled.blinkThunders||BlinkThunders.compile([],count)),warpInitState:WarpInit.create(compiled.warpInit||WarpInit.compile([],count)),switchTimerState:SwitchTimers.create(compiled.switchTimers||SwitchTimers.compile([],count)),enemyState:Enemies.create(compiled.enemies||Enemies.compile([],count)),thornCeilingState:ThornCeilings.create(compiled.thornCeilings||ThornCeilings.compile([],count)),countUpState:CountUps.create(compiled.countUps||CountUps.compile([],count)),liftState:Lifts.create(compiled.lifts||Lifts.compile([],count)),landmineState:Landmines.create(compiled.landmines||Landmines.compile([],count)),poleState:Poles.create(compiled.poles||Poles.compile([],count,{})),windState:Winds.create(compiled.winds||Winds.compile([],count,{})),speedSwitchState:SpeedSwitches.create(compiled.speedSwitches||SpeedSwitches.compile([],count,{})),linePathState:LinePaths.create(compiled.linePaths||LinePaths.compile([],count,{})),textsState:Texts.create(compiled.texts||Texts.compile([],count,{})),coinsState:Coins.create(compiled.coins||Coins.compile([],count,{})),checkpointsState:Checkpoints.create(compiled.checkpoints||Checkpoints.compile([],count,{})),touchEnergiesState:TouchEnergies.create(compiled.touchEnergies||TouchEnergies.compile([],count,{})),pitcherState:Pitchers.create(compiled.pitchers||Pitchers.compile([],count)),keyBoxState:KeyBoxes.create(compiled.keyBoxes||KeyBoxes.compile([],count)),blackoutState:Blackouts.create(compiled.blackouts||Blackouts.compile([],count,{})),dossunState:Dossuns.create(compiled.dossuns||Dossuns.compile([],count,{})),danmakuState:Danmakus.create(compiled.danmaku||Danmakus.compile([],count)),graphState:Graphs.create(compiled.graph||Graphs.compile([],count)),shootingState:Shootings.create(compiled.shooting||Shootings.compile([],count)),planeObstacleState:PlaneObstacles.create(compiled.planeObstacle||PlaneObstacles.compile([],count)),planeState:{...clone(compiled.planes||{guns:[]}),rng:{state:'9600629759793949339',inc:'15726070495360670683'}},throwState:ThrowBalls.create(compiled.throwball||ThrowBalls.compile([],count)),moleState:Moles.create(compiled.mole||Moles.compile([],count),{stageScaleRaw:map.stageScaleRaw||65536}),giantState:Giants.create(compiled.giant||Giants.compile([],count),{playerCount:count,stageScaleRaw:map.stageScaleRaw||65536}),arrangeState:Arranges.create(compiled.arrange||Arranges.compile([],count)),appleState:Apples.create(compiled.apple||Apples.compile([],count)),fakeState:Fakes.create(compiled.fake||Fakes.compile([],count)),rallyState:Rallies.create(compiled.rally||Rallies.compile([],count)),goKartState:GoKarts.create(compiled.goKarts||GoKarts.compile([],count)),frontSwitchState:FrontSwitches.create(compiled.frontSwitches||FrontSwitches.compile([],count)),autoScrollState:compiled.autoScroll?(()=>{const sc=AutoScroll.create(compiled.autoScroll.scroll,{freshStageComponent:true}),cam=CameraNative.create(compiled.autoScroll.camera,null);return {scroll:sc,camera:cam,cameraAreaRaw:CameraNative.stageAreaRaw(cam),steps:0};})():null,halfInputState:HalfInputs.create(compiled.halfInput||HalfInputs.compile([],count)),stepEnemyState:StepEnemies.create(compiled.stepEnemies||StepEnemies.compile([],count)),capturingState:Capturings.create(compiled.capturing||Capturings.compile([],count)),batState:BatEnemies.create(compiled.batEnemies||BatEnemies.compile([],count)),constraintState:Constraints.create(compiled.constraints||Constraints.compile([],count,{nativeConstraintFacts:true})),topViewState:TopViews.create(compiled.topViews||TopViews.compile([],count,{})),ghostState:Ghosts.create(compiled.ghosts||Ghosts.compile([],count,{checkpointInfo:{isActive:false}})),sineLiftState:SineLifts.create(compiled.sineLifts||SineLifts.compile([],count)),targetGroupState:TargetGroups.create(compiled.targetGroups||TargetGroups.compile([],count)),rollGearState:Gears.create(compiled.gears||Gears.compile([],count,{})),colorBoxState:ColorBoxes.create(compiled.colorBoxes||ColorBoxes.compile([],count,{})),magnetState:PlayerMagnets.create(compiled.playerMagnets||PlayerMagnets.compile([],count)),breakableState:BreakableRects.create(compiled.breakableRects||BreakableRects.compile([],count)),warpGunState:WarpGuns.create(compiled.warpGuns||WarpGuns.compile([],count)),upDownLiftState:UpDownLifts.create(compiled.upDownLifts||UpDownLifts.compile([],count)),gearState:LinePathGears.create(compiled.linePathGears||LinePathGears.compile([],count,{})),searchLightState:SearchLights.create(compiled.searchLights||SearchLights.compile([],count,{})),ballActors:{},boxActors:{},ballMeta:{serial:0,gone:{},key:null},playTimeRaw:0,gameOverCount:options.gameOverCount||0,keyActive:!compiled.gates||compiled.gates.keys.every(k=>k.active),sourceStatus:clone(compiled.status),physics:clone(map.physics),
    status:'play',elapsed:0,ticks:0,accumulator:0,// A BallKeyBox creates the key later (createKeyAt), so its round starts locked.
@@ -283,6 +286,8 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
     state.elapsed=state.playTimeRaw/65536;
    }
   }
+   // ColorBox slot 2 is an index-list ordinal: its colour is that player's (Frame.GetPlayerColorIndex 0x1817465c0)
+   if(state.colorBoxState&&state.colorBoxState.boxes)for(const b of state.colorBoxState.boxes){const q=state.players[b.playerIndex];if(q&&q.colorIndex!==undefined)b.colorIndex=q.colorIndex;}
   return state;
  }
  function restart(compiled,previous,options={}){
@@ -903,7 +908,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const solid=(c,r)=>s.map.platforms.some(b=>b.x<=c*48+24&&c*48+24<b.x+b.w&&b.y<=r*48+24&&r*48+24<b.y+b.h);
   const boxes=(s.colorBoxState&&s.colorBoxState.boxes||[]).map(b=>{const a=s.colorBoxActors&&s.colorBoxActors[b.id];const p0=a||ColorBoxes.initialPositionRaw(b);return {id:b.id,playerIndex:b.playerIndex,xRaw:p0.xRaw,yRaw:p0.yRaw};});
   const r=Arranges.step(st,{dtRaw:dt,cols,rows,movable:(c,rw)=>!solid(c,rw),
-   players:s.players.map((p,i)=>({index:i,colorIndex:i,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),lookingRight:p.lookingRight!==false})),colorBoxes:boxes});
+   players:s.players.map((p,i)=>({index:i,colorIndex:p.colorIndex??i,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),lookingRight:p.lookingRight!==false})),colorBoxes:boxes});
   for(const e of r.keyEvents)Gates.signal(s.gateState,e);
   if(r.retry){s.status='dead';s.deaths++;s.failure={playerId:s.players[0].id,reason:'배치가 달라요'};return true;}
   return r.paused;
@@ -993,7 +998,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const live=s.players.map((p,i)=>({p,i})).filter(o=>!o.p.exit);
   const terrain=solids(s),toRaw=b=>({x:Math.round(b.x*F),y:Math.round(b.y*F),w:Math.round(b.w*F),h:Math.round(b.h*F)}),hit=(u,v)=>u.x<v.x+v.w&&v.x<u.x+u.w&&u.y<v.y+v.h&&v.y<u.y+u.h;
   const r=Planes.gunStep(st,{dtRaw:Math.trunc(F/hz),viewRaw:view,
-   players:s.players.map((p,i)=>({index:i,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),lookLeft:!!p.facingLeft,plane:!!p.plane,state3:!!p.dead,shotHeld:!!(inputs[p.id]&&inputs[p.id].shot),alive:!p.exit&&!p.dead,colorIndex:i})),
+   players:s.players.map((p,i)=>({index:i,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),lookLeft:!!p.facingLeft,plane:!!p.plane,state3:!!p.dead,shotHeld:!!(inputs[p.id]&&inputs[p.id].shot),alive:!p.exit&&!p.dead,colorIndex:p.colorIndex??i})),
    blocked:(box,owner)=>live.some(o=>o.i!==owner&&hit(box,toRaw(o.p)))||(s.planeWalls||[]).some(w=>hit(box,toRaw(w))),
    sweep:(box,dx,dy,owner)=>{
     // the earliest body along the step: actors (players, walls) answer event 21, the map is terrain
@@ -1012,7 +1017,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
  function planeObstacleTick(s){
   const st=s.planeObstacleState;if(!st||!st.obstacles.length)return null;const F=65536;
   if(!st.started){const guns=s.planeState?s.planeState.guns:[];
-   PlaneObstacles.start(st,{rng:s.planeState.rng,playerCount:s.players.length,colors:s.players.map((p,i)=>i).filter(i=>guns.some(g=>g.playerIndex===i))});}
+   PlaneObstacles.start(st,{rng:s.planeState.rng,playerCount:s.players.length,colors:s.players.map((p,i)=>({c:p.colorIndex??i,i})).filter(o=>guns.some(g=>g.playerIndex===o.i)).map(o=>o.c)});}
   const a=s.autoScrollState;if(a)PlaneObstacles.post(st,{x:a.cameraAreaRaw.x,w:a.cameraAreaRaw.width});
   s.planeWalls=PlaneObstacles.solids(st).filter(b=>!b.chip);s.planeBreak=(chip,color)=>PlaneObstacles.breakChip(st,chip,color);
   for(const w of s.planeWalls){if(!w.damage)continue;
@@ -1025,7 +1030,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
  function shootingTick(s,hz){
   const st=s.shootingState;if(!st||!(st.spawners.length||st.pool||st.replacer||st.breakRects.length))return;const F=65536;
   const guns=s.planeState?s.planeState.guns:[];
-  if(!st.started)Shootings.start(st,{rng:s.planeState.rng,colors:s.players.map((p,i)=>i).filter(i=>guns.some(g=>g.playerIndex===i)),validColors:s.players.map((p,i)=>i)});
+  if(!st.started)Shootings.start(st,{rng:s.planeState.rng,colors:s.players.map((p,i)=>({c:p.colorIndex??i,i})).filter(o=>guns.some(g=>g.playerIndex===o.i)).map(o=>o.c),validColors:s.players.map((p,i)=>p.colorIndex??i)});
   const a=s.autoScrollState,view=a?{x:a.cameraAreaRaw.x,w:a.cameraAreaRaw.width}:s.danmakuView||{x:0,w:s.map.width*F};
   const terrain=[...s.map.platforms,...Shootings.chipSolids(st)].map(b=>({x:Math.round(b.x*F),y:Math.round(b.y*F),w:Math.round(b.w*F),h:Math.round(b.h*F)}));
   const r=Shootings.step(st,{dtRaw:Math.trunc(F/hz),viewRaw:view,rng:s.planeState.rng,
@@ -1359,7 +1364,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const F=65536,live=s.players.filter(p=>!p.exit&&!p.asBlock),solidsNow=baseSolids(s);
   s.warpShotPrev=s.warpShotPrev||{};
   const facts=s.players.map((p,i)=>{const held=!!(inputs[p.id]&&inputs[p.id].shot),edge=held&&!s.warpShotPrev[p.id];s.warpShotPrev[p.id]=held;
-   return {id:p.id,actorIndex:i,playerIndex:i,colorIndex:i,actorFlags:p.facingLeft?0x400:0,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),
+   return {id:p.id,actorIndex:i,playerIndex:i,colorIndex:p.colorIndex??i,actorFlags:p.facingLeft?0x400:0,xRaw:Math.round(AX(p)*F),yRaw:Math.round(AY(p)*F),
     scaleRaw:F,directionRaw:{xRaw:F,yRaw:F},gunScaleRaw:F,sortingOrder:0,pressInput9:edge&&!p.exit&&!p.asBlock};});
   const colorByPlayerIndex=[0,1,2,3,4,5,6,7];
   const dispatchActorEvent=e=>{const p=s.players.find(q=>q.id===e.targetId);if(!p)return 0;
@@ -1445,7 +1450,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
  function dossunSnapshots(s,hz){
   // players are actors too: Actor.Initialize gives them the same stage scale
   const stageScale=(s.dossunState.devices[0]&&s.dossunState.devices[0].actorScaleRaw)||DS_F;
-  return s.players.map((p,i)=>({id:p.id,actorIndex:i,playerIndex:i,colorIndex:i,playerState:p.dead?3:1,sortingOrder:0,
+  return s.players.map((p,i)=>({id:p.id,actorIndex:i,playerIndex:i,colorIndex:p.colorIndex??i,playerState:p.dead?3:1,sortingOrder:0,
    xRaw:Math.round(AX(p)*DS_F),yRaw:Math.round(AY(p)*DS_F),
    vxRaw:Math.round((p.vx||0)/hz*DS_F),vyRaw:Math.round((p.vy||0)/hz*DS_F),
    flipH:!!p.facingLeft,flipV:false,scaleXRaw:DS_F,scaleYRaw:DS_F,actorScaleRaw:stageScale,rectRaw:{...PLAYER_RECT_RAW}}));
@@ -1529,6 +1534,16 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
  }
  function baseSolids(s){return [...s.map.platforms,...s.map.springs.filter(b=>s.relayState.relays.find(r=>r.id===b.id)?.visible),...Motion.solids(s.motionState),...Gates.solids(s.gateState),...Bridges.solids(s.bridgeState),...Blink.solids(s.blinkState),...BlinkThunders.solids(s.blinkThunderState),...Lifts.solids(s.liftState),...Winds.solids(s.windState),...LinePaths.solids(s.linePathState),...keyBoxSolids(s),...dossunSolids(s),...UpDownLifts.solids(s.upDownLiftState),...BreakableRects.solids(s.breakableState),...colorBoxSolids(s),...SpeedSwitches.solids(s.speedSwitchState),...SineLifts.solids(s.sineLiftState),...BatEnemies.solids(s.batState),...stepEnemySolids(s),...FrontSwitches.solids(s.frontSwitchState),...Arranges.solids(s.arrangeState),...PlaneObstacles.solids(s.planeObstacleState),...Shootings.chipSolids(s.shootingState)];}
  function solids(s){return [...baseSolids(s),...Devices.solids(s.deviceState)];}
+ // InitPlayerIndexList 0x1816a6310: ascending i = 1..n-1, swap i with Next(0, i + 1) @0x1816a64e2..655d
+ // on the frame RNGSession; createPlayer gives the k-th player actor list[k] (its GamePlayerInfo
+ // and colour). The session state is the game's own, so the seed is fresh each attempt: RNGSession
+ // ctor 0x1816621c0 (two SplitMix64 steps, source-player-index-list.js) seeds the PCG32.
+ function shuffledOrder(n,seed){const M=(1n<<64n)-1n,G=0x9e3779b97f4a7c15n;
+  const mix=x=>{let z=x&M;z=((z^(z>>30n))*0xbf58476d1ce4e5b9n)&M;z=((z^(z>>27n))*0x94d049bb133111ebn)&M;return (z^(z>>31n))&M;};
+  const x=(BigInt.asIntN(32,BigInt(seed))+G)&M,rng={state:mix(x),inc:mix((x+G)&M)};
+  const pcg=()=>{const old=rng.state;rng.state=(old*6364136223846793005n+(rng.inc|1n))&M;const v=Number(((old>>45n)^(old>>27n))&0xffffffffn),rot=Number(old>>59n);return ((v>>>rot)|(v<<((32-rot)&31)))>>>0;};
+  const next=(lo,hi)=>{const u=(hi-lo)>>>0,th=(2**32-u)%u;let v;do v=pcg();while(v<th);return lo+v%u;};
+  const list=Array.from({length:n},(_,i)=>i);for(let i=1;i<n;i++){const j=next(0,i+1);const tmp=list[i];list[i]=list[j];list[j]=tmp;}return list;}
  function scaledJump(s){const SR=s.map.stageScaleRaw||65536;return SR===65536?NATIVE.jump:Number(BigInt.asIntN(64,BigInt(SR)*-334234n)>>16n)/65536;}
  function scaledGravity(s,vy,hz){const SR=s.map.stageScaleRaw||65536;if(SR===65536)return Math.min(NATIVE.terminal*hz,vy+NATIVE.gravity*hz);
   const F=65536,v=vy/hz*F;return (v+Math.min(42598,1277952-v)*SR/F)/F*hz;}

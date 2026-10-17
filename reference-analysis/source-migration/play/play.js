@@ -24,7 +24,7 @@ function syncMusic(){musicLabel();if(!musicEnabled||testMuted||paused||replay){m
 function toggleMusic(){musicEnabled=!musicEnabled;localStorage.setItem('park-source-music',musicEnabled?'on':'off');syncMusic();}
 function overlay(title,detail,button='시작 · Enter'){$('cover').hidden=false;$('headline').textContent=title;$('detail').textContent=detail;$('start').textContent=button;paused=true;keys.clear();syncMusic();}
 function start(){if(!state)return;paused=false;keys.clear();$('cover').hidden=true;last=performance.now();canvas.focus();syncMusic();}
-function reset(){if(!compiled)return;replay=null;replaySpeed=1;$('replay-speed').hidden=true;$('replay-speed').textContent='×1';state=SourceStageRuntime.restart(compiled,state);selected=0;camera=null;overlay('함께 출발',`${state.players.length}명 · 1–8로 조작할 캐릭터 선택`);}
+function reset(){if(!compiled)return;replay=null;replaySpeed=1;$('replay-speed').hidden=true;$('replay-speed').textContent='×1';state=SourceStageRuntime.restart(compiled,state,{shuffleSeed:(Math.random()*4294967296)|0});selected=0;camera=null;overlay('함께 출발',`${state.players.length}명 · 1–8로 조작할 캐릭터 선택`);}
 function toggleReplaySpeed(){if(!replay)return;replaySpeed=replaySpeed===1?4:1;$('replay-speed').textContent='×'+replaySpeed;}
 async function runReplay(){if(replayLoading)return;replayLoading=true;$('replay').disabled=true;
  if(onlineControl.active){replayLoading=false;return;}

@@ -78,7 +78,11 @@
 > 다른 플레이어를 치면 이벤트27 강제 점프(±8, -4, 착지까지 가로속도 유지). 열쇠는 Key 슬롯8 이름의 거인 등에 (열쇠-거인) 오프셋으로 붙어
 > 시작(KeyComponent.updatePhase 0x18186c340 일반 액터 경로, 0x1999 감속 추종), 거인이 죽고 1초 뒤 사라지면 그 자리에 떠 있음. 2인 봇으로 원작 체력 6 클리어 확인
 > (최소 거리 150px — 원작 판정상 아슬아슬). 근사: 프레임 = OnUpdate 전부 → 겹침 → OnPost 전부, 프레임 난수는 기본 PCG 스트림.
-> ⚠️ 14-4 는 shufflePlayer=1(플레이어 순서 섞기) — 런타임은 아직 모든 라운드에서 섞지 않음(source-player-index-list.js 에 원작 섞기 있음, 미연결).
+> **shufflePlayer 연결(2026-10-17)**: 연결 판 28개(14-4 등)가 shufflePlayer=1. create(compiled,{shuffleSeed}) 가 InitPlayerIndexList 0x1816a6310 처럼
+> i=1..n−1 을 Next(0,i+1) 과 바꿔 k번째 출발점에 그 사람(id·색)을 배정 — 시드는 RNGSession ctor 0x1816621c0(SplitMix64 두 번). 세션 RNG 상태는
+> 원작에서도 매번 달라서 play.js/online.js 가 판마다 무작위 시드를 줌(테스트·재생은 시드 없음 = 액터 순서). 플레이어마다 colorIndex(사람 색)를 두고
+> 총 든 사람 색(GetValidColorIndexArray)·색 블록·배치 퍼즐·컬러박스(GetPlayerColorIndex)·그림 팔레트가 그 색을 씀. source-player-index-list.js 와 교차 검증 테스트.
+> 온라인: 새 판 감지는 state.ids, 조작 캐릭터는 players.findIndex(id).
 > QFP 정적 상수 전체 표: `notes/qfp-table.md`.
 > 14-2: `source-mole-runtime.js` — Mole·MoleNest·MoleGroup. 펀치는 거인 모듈의 PlayerPunch 를 공유하고, `Giants.step(host.plugins)` 훅으로
 > 같은 프레임(OnUpdate → 겹침 → OnPost)에 끼워 넣음. 두더지는 둥지 방향(위/아래/좌/우)으로 0.5초에 솟고(속도2) 머문 뒤 들어감, 보일 때만 판정

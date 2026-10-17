@@ -9,6 +9,8 @@
 'use strict';
 const F=65536,INK='#463a62';
 const FRIEND_COLORS=['#ffb36b','#74e4db','#afa4ff','#ff93b8','#b5e47b','#7abaff','#f4d475','#e2a2ff'];
+// a player slot (actor order) shows that player's own colour (shufflePlayer moves people between slots)
+function slotColor(s,i){const p=s&&s.players&&s.players[i];return FRIEND_COLORS[((p&&p.colorIndex!==undefined)?p.colorIndex:i)%8];}
 function rr(c,x,y,w,h,r){r=Math.max(0,Math.min(r,w/2,h/2));c.beginPath();c.roundRect?c.roundRect(x,y,w,h,r):c.rect(x,y,w,h);}
 function fillStroke(c,fill,stroke,width=2){if(fill){c.fillStyle=fill;c.fill();}if(stroke){c.strokeStyle=stroke;c.lineWidth=width;c.stroke();}}
 function label(c,text,x,y,color='#fffdf6',size=12){c.font=`bold ${size}px system-ui`;c.textAlign='center';c.textBaseline='middle';
@@ -191,7 +193,7 @@ function breakables(c,s){
 function magnets(c,s,time){
  const M=root.SourcePlayerMagnetDevices;if(!M||!s.magnetState||!s.magnetState.magnets.length)return;
  for(const m of M.displays(s.magnetState)){if(m.xRaw===null)continue;const owner=s.players[m.ownerIndex];if(!owner||owner.exit||owner.asBlock)continue;
-  const x=m.xRaw/F,y=m.yRaw/F,col=FRIEND_COLORS[m.ownerIndex%8];
+  const x=m.xRaw/F,y=m.yRaw/F,col=slotColor(s,m.ownerIndex);
   // the pull field while X is held: the magnet's own collision rect
   if(m.input&&m.rect){c.save();c.globalAlpha=.18+.06*Math.sin(time*10);c.fillStyle=col;rr(c,m.rect.x,m.rect.y,m.rect.w,m.rect.h,10);c.fill();c.restore();}
   // horseshoe magnet in front of the owner
@@ -381,7 +383,7 @@ function rallyArt(c,s){
  const Y=root.SourceRallyRuntime;if(!Y||!s.rallyState||!s.rallyState.controllers.length)return;const d=Y.displays(s.rallyState);
  for(const m of d.mallets){c.save();c.strokeStyle='rgba(60,50,90,.22)';c.lineWidth=8;c.lineCap='round';c.beginPath();
   c.moveTo(m.initX-m.dirX*m.halfLength,m.initY-m.dirY*m.halfLength);c.lineTo(m.initX+m.dirX*m.halfLength,m.initY+m.dirY*m.halfLength);c.stroke();c.restore();}
- for(const m of d.mallets){c.save();c.beginPath();c.arc(m.x,m.y,m.radius,0,Math.PI*2);fillStroke(c,FRIEND_COLORS[m.actorIndex%8],INK,2.4);
+ for(const m of d.mallets){c.save();c.beginPath();c.arc(m.x,m.y,m.radius,0,Math.PI*2);fillStroke(c,slotColor(s,m.actorIndex),INK,2.4);
   c.fillStyle='rgba(255,255,255,.45)';c.beginPath();c.arc(m.x-m.radius*.3,m.y-m.radius*.3,m.radius*.32,0,Math.PI*2);c.fill();c.restore();}
  for(const b of d.balls){c.save();c.globalAlpha=b.fade;c.beginPath();c.arc(b.x,b.y,b.radius,0,Math.PI*2);fillStroke(c,'#fff4c2',INK,2);c.restore();}
  if(d.counter)label(c,d.counter.count+' / '+d.counter.max,d.counter.x,d.counter.y,d.counter.cleared?'#ffd84d':'#fffdf6',30);
@@ -426,7 +428,7 @@ function appleArt(c,s,time){
  for(const b of d.blasts){c.save();c.globalAlpha=Math.max(0,1-b.r/250);c.strokeStyle='#ffb04d';c.lineWidth=6;c.beginPath();c.arc(b.x,b.y,Math.max(1,b.r),0,Math.PI*2);c.stroke();c.restore();}
  for(const bk of d.baskets){c.save();c.translate(bk.x,bk.y);c.scale(k,k);rr(c,-22,-30,44,26,6);fillStroke(c,'#c98d52',INK,2);c.strokeStyle='rgba(90,55,30,.6)';c.lineWidth=1.5;
   for(let x=-14;x<=14;x+=7){c.beginPath();c.moveTo(x,-28);c.lineTo(x,-6);c.stroke();}if(bk.count)label(c,String(bk.count),0,-40,'#fffdf6',14);c.restore();}
- for(const t of d.targets){const col=FRIEND_COLORS[t.playerIndex%8];c.save();c.globalAlpha=t.cooling?.55:1;c.translate(t.x,t.y);c.scale(k,k);c.lineWidth=4;c.strokeStyle=col;c.beginPath();c.arc(0,0,16,0,Math.PI*2);c.stroke();
+ for(const t of d.targets){const col=slotColor(s,t.playerIndex);c.save();c.globalAlpha=t.cooling?.55:1;c.translate(t.x,t.y);c.scale(k,k);c.lineWidth=4;c.strokeStyle=col;c.beginPath();c.arc(0,0,16,0,Math.PI*2);c.stroke();
   c.lineWidth=2;c.strokeStyle=INK;c.beginPath();c.moveTo(-24,0);c.lineTo(-8,0);c.moveTo(8,0);c.lineTo(24,0);c.moveTo(0,-24);c.lineTo(0,-8);c.moveTo(0,8);c.lineTo(0,24);c.stroke();c.restore();}
 }
 function appleOverlay(c,s,view){const A=root.SourceAppleRuntime;if(!A||!s.appleState||!s.appleState.controller)return;const d=A.displays(s.appleState);
@@ -467,7 +469,7 @@ function giantArt(c,s,time){
   c.beginPath();c.arc(0,0,q.r-4,0,Math.PI*2);fillStroke(c,h.attacking?'#8a7fb8':'#9a8fc4',INK,3);
   c.strokeStyle='rgba(42,33,64,.55)';c.lineWidth=2.5;for(const y of [-18,-6,6,18]){c.beginPath();c.moveTo(20,y);c.lineTo(36,y);c.stroke();}
   c.restore();}
- for(const p of d.punches){if(!p.attacking)continue;const r=p.rect,col=FRIEND_COLORS[p.actorIndex%8];c.save();
+ for(const p of d.punches){if(!p.attacking)continue;const r=p.rect,col=slotColor(s,p.actorIndex);c.save();
   c.beginPath();c.arc(r.x+r.w/2,r.y+r.h/2,p.hit?14:11,0,Math.PI*2);fillStroke(c,col,INK,2);c.restore();}
 }
 function giantOverlayWorld(c,s){const G=root.SourceGiantRuntime;if(!G||!s.giantState||!s.giantState.giants.length)return;
@@ -499,7 +501,7 @@ function throwArt(c,s,time){
   c.strokeStyle='rgba(120,70,30,.45)';c.lineWidth=1.5;for(let k=1;k<4;k++){const x=r.x+r.w*k/4;c.beginPath();c.moveTo(x,r.y+2);c.lineTo(x-(k-2)*3,r.y+r.h-2);c.stroke();}
   rr(c,b.mouth.x-6,b.mouth.y-3,b.mouth.w+12,6,3);fillStroke(c,'#c98d52',INK,2);
   label(c,b.score+' / '+b.target,b.x,r.y-18,b.score>=b.target?'#ffd84d':'#fffdf6',18);c.restore();}
- for(const q of d.cannons){const col=FRIEND_COLORS[q.playerIndex%8];c.save();c.translate(q.x,q.y);
+ for(const q of d.cannons){const col=slotColor(s,q.playerIndex);c.save();c.translate(q.x,q.y);
   c.save();c.rotate(-q.angle*Math.PI/180);rr(c,-7,-30,14,24,4);fillStroke(c,'#5a5470',INK,2);c.restore();
   rr(c,-16,-12,32,14,6);fillStroke(c,col,INK,2);
   if(q.balls)label(c,'●'+q.balls,0,-40,'#fffdf6',13);

@@ -412,7 +412,7 @@ function accessory(c,kind,pal,behind){
  else if(kind==='antenna'){star(c,3,-52,4.8,2.1);fillStroke(c,'#ffe066','#a88512',1.2);}
 }
 function drawFriend(c,p,i,o){
- const pal=o.palette||FRIENDS[i%8],t=o.time,f=facingOf(p),grounded=!!p.grounded;
+ const pal=o.palette||FRIENDS[((p.colorIndex??i))%8],t=o.time,f=facingOf(p),grounded=!!p.grounded;
  const wasAir=memo.air.get(p.id);memo.air.set(p.id,!grounded);if(wasAir&&grounded)memo.land.set(p.id,t);
  let sx=1,sy=1;const landAge=t-(memo.land.get(p.id)??-9);
  if(!grounded){if((p.vy||0)<0){sy=1.07;sx=.95;}else{sy=1.02;sx=.98;}}
@@ -458,7 +458,7 @@ function drawFriend(c,p,i,o){
  c.restore();
 }
 function drawBadge(c,p,i,o){
- const pal=FRIENDS[i%8],k=Math.max(1,Math.min(1.8,.85/o.zoom)),cx=p.x+p.w/2,cy=p.y-12;
+ const pal=FRIENDS[((p.colorIndex??i))%8],k=Math.max(1,Math.min(1.8,.85/o.zoom)),cx=p.x+p.w/2,cy=p.y-12;
  c.save();c.translate(cx,cy);c.scale(k,k);
  rr(c,-8,-7,16,13,6.5);fillStroke(c,pal.dark,'#ffffff',1.5);
  c.fillStyle='#ffffff';c.font=`bold 10.5px ${FONT}`;c.textAlign='center';c.textBaseline='middle';c.fillText(String(i+1),0,0);
@@ -540,7 +540,7 @@ function render(ctx,state,camera,opts={}){
 
  // door + key first so friends walk in front of them
  const players=state.players||[];
- const inside=players.map((p,i)=>p.exit?FRIENDS[i%8]:null).filter(Boolean);
+ const inside=players.map((p,i)=>p.exit?FRIENDS[(p.colorIndex??i)%8]:null).filter(Boolean);
  if(map.exit)drawDoor(ctx,map.exit,!!state.goalOpen,time,inside,players.length);
  if(map.key&&!map.key.hidden&&intersects(map.key,view,40))drawKey(ctx,map.key,state.keyActive!==false,time,state.gateState&&state.gateState.observers);
  for(const g of (state.gateState&&state.gateState.gates)||[])if(intersects(g,view,10))drawGate(ctx,g);
@@ -595,7 +595,7 @@ function render(ctx,state,camera,opts={}){
  // sparkles when the key is taken or a friend walks through the door
  if(state.goalOpen&&memo.lastKey===false&&map.exit)sparkle(map.exit.x+map.exit.w/2,map.exit.y,['#ffe066','#ffffff','#ffb020'],14,time);
  memo.lastKey=!!state.goalOpen;
- players.forEach((p,i)=>{if(p.exit&&memo.lastExit.get(p.id)===false&&map.exit)sparkle(map.exit.x+map.exit.w/2,map.exit.y,[FRIENDS[i%8].body,'#ffffff'],10,time);memo.lastExit.set(p.id,!!p.exit);});
+ players.forEach((p,i)=>{if(p.exit&&memo.lastExit.get(p.id)===false&&map.exit)sparkle(map.exit.x+map.exit.w/2,map.exit.y,[FRIENDS[(p.colorIndex??i)%8].body,'#ffffff'],10,time);memo.lastExit.set(p.id,!!p.exit);});
  drawFx(ctx,time);
  if(opts.debugBoxes)drawDebug(ctx,state,map);
  ctx.restore();
