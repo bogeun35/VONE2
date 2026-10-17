@@ -55,31 +55,47 @@
   "st_w_14_04",
   "st_w_14_02",
   "st_w_08_02",
-  "st_w_08_04"
+  "st_w_08_04",
+  "st_w_06_03",
+  "st_w_06_01",
+  "st_w_06_02"
  ],
  "worldStages": 60,
- "remainingStages": 8,
- "remainingDistinctBlockers": 23,
+ "remainingStages": 5,
+ "remainingDistinctBlockers": 16,
  "nearest": [
   {
-   "id": "st_w_06_03",
-   "blockerCount": 3,
+   "id": "st_w_06_04",
+   "blockerCount": 4,
    "blockers": [
-    "BattlePlanePlayer",
-    "PlaneObstacle",
-    "PlayerGun"
+    "BgmChanger",
+    "PlayerGuard",
+    "ShootingEnemyBoss",
+    "ShootingSuperApple"
    ],
    "guardsAfterTypes": []
   },
   {
-   "id": "st_w_06_02",
+   "id": "st_w_11_01",
    "blockerCount": 5,
    "blockers": [
-    "BattlePlanePlayer",
-    "MapBlockReplacer",
-    "OptimizedBulletObserver",
-    "PlayerGun",
-    "ShootingEnemySpawner"
+    "DanmakuEmitter",
+    "DanmakuLocator",
+    "DanmakuModifier",
+    "DanmakuObserver",
+    "DanmakuThunder"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_11_03",
+   "blockerCount": 5,
+   "blockers": [
+    "DanmakuEmitter",
+    "DanmakuLocator",
+    "DanmakuModifier",
+    "DanmakuObserver",
+    "DanmakuThunder"
    ],
    "guardsAfterTypes": []
   },
@@ -96,137 +112,20 @@
    "guardsAfterTypes": []
   },
   {
-   "id": "st_w_06_01",
-   "blockerCount": 6,
-   "blockers": [
-    "BattlePlanePlayer",
-    "MapBlockReplacer",
-    "MapBreakBlockRect",
-    "OptimizedBulletObserver",
-    "PlayerGun",
-    "ShootingEnemySpawner"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_11_01",
-   "blockerCount": 6,
-   "blockers": [
-    "DanmakuEmitter",
-    "DanmakuLocator",
-    "DanmakuModifier",
-    "DanmakuObserver",
-    "DanmakuThunder",
-    "OptimizedBulletObserver"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_11_03",
-   "blockerCount": 6,
-   "blockers": [
-    "DanmakuEmitter",
-    "DanmakuLocator",
-    "DanmakuModifier",
-    "DanmakuObserver",
-    "DanmakuThunder",
-    "OptimizedBulletObserver"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_06_04",
-   "blockerCount": 9,
-   "blockers": [
-    "BattlePlanePlayer",
-    "BgmChanger",
-    "MapBlockReplacer",
-    "OptimizedBulletObserver",
-    "PlayerGuard",
-    "PlayerGun",
-    "ShootingEnemyBoss",
-    "ShootingEnemySpawner",
-    "ShootingSuperApple"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
    "id": "st_w_15_03",
-   "blockerCount": 10,
+   "blockerCount": 6,
    "blockers": [
-    "BattlePlanePlayer",
     "BgmChanger",
-    "OptimizedBulletObserver",
     "PlayerGuard",
-    "PlayerGun",
     "ShootingEnemyBoss",
     "ShootingEnemyBossEx",
     "ShootingEnemyBossExParamSetter",
-    "ShootingEnemySpawner",
     "ShootingSuperApple"
    ],
    "guardsAfterTypes": []
   }
  ],
  "byType": [
-  {
-   "type": "OptimizedBulletObserver",
-   "stages": [
-    "st_w_11_01",
-    "st_w_11_03",
-    "st_w_06_01",
-    "st_w_06_02",
-    "st_w_06_04",
-    "st_w_15_03"
-   ],
-   "appearsIn": 6,
-   "opensAlone": []
-  },
-  {
-   "type": "BattlePlanePlayer",
-   "stages": [
-    "st_w_06_01",
-    "st_w_06_03",
-    "st_w_06_02",
-    "st_w_06_04",
-    "st_w_15_03"
-   ],
-   "appearsIn": 5,
-   "opensAlone": []
-  },
-  {
-   "type": "PlayerGun",
-   "stages": [
-    "st_w_06_01",
-    "st_w_06_03",
-    "st_w_06_02",
-    "st_w_06_04",
-    "st_w_15_03"
-   ],
-   "appearsIn": 5,
-   "opensAlone": []
-  },
-  {
-   "type": "ShootingEnemySpawner",
-   "stages": [
-    "st_w_06_01",
-    "st_w_06_02",
-    "st_w_06_04",
-    "st_w_15_03"
-   ],
-   "appearsIn": 4,
-   "opensAlone": []
-  },
-  {
-   "type": "MapBlockReplacer",
-   "stages": [
-    "st_w_06_01",
-    "st_w_06_02",
-    "st_w_06_04"
-   ],
-   "appearsIn": 3,
-   "opensAlone": []
-  },
   {
    "type": "DanmakuEmitter",
    "stages": [
@@ -349,22 +248,6 @@
    "opensAlone": []
   },
   {
-   "type": "MapBreakBlockRect",
-   "stages": [
-    "st_w_06_01"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "PlaneObstacle",
-   "stages": [
-    "st_w_06_03"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
    "type": "ShootingEnemyBossEx",
    "stages": [
     "st_w_15_03"
@@ -464,10 +347,9 @@
     "DanmakuLocator",
     "DanmakuModifier",
     "DanmakuObserver",
-    "DanmakuThunder",
-    "OptimizedBulletObserver"
+    "DanmakuThunder"
    ],
-   "blockerCount": 6,
+   "blockerCount": 5,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
@@ -477,8 +359,7 @@
       "DanmakuObserver",
       "DanmakuEmitter",
       "DanmakuModifier",
-      "DanmakuLocator",
-      "OptimizedBulletObserver"
+      "DanmakuLocator"
      ]
     },
     "3": {
@@ -488,8 +369,7 @@
       "DanmakuObserver",
       "DanmakuEmitter",
       "DanmakuModifier",
-      "DanmakuLocator",
-      "OptimizedBulletObserver"
+      "DanmakuLocator"
      ]
     },
     "4": {
@@ -499,8 +379,7 @@
       "DanmakuObserver",
       "DanmakuEmitter",
       "DanmakuModifier",
-      "DanmakuLocator",
-      "OptimizedBulletObserver"
+      "DanmakuLocator"
      ]
     },
     "5": {
@@ -510,8 +389,7 @@
       "DanmakuObserver",
       "DanmakuEmitter",
       "DanmakuModifier",
-      "DanmakuLocator",
-      "OptimizedBulletObserver"
+      "DanmakuLocator"
      ]
     },
     "6": {
@@ -521,8 +399,7 @@
       "DanmakuObserver",
       "DanmakuEmitter",
       "DanmakuModifier",
-      "DanmakuLocator",
-      "OptimizedBulletObserver"
+      "DanmakuLocator"
      ]
     },
     "7": {
@@ -532,8 +409,7 @@
       "DanmakuObserver",
       "DanmakuEmitter",
       "DanmakuModifier",
-      "DanmakuLocator",
-      "OptimizedBulletObserver"
+      "DanmakuLocator"
      ]
     },
     "8": {
@@ -543,8 +419,7 @@
       "DanmakuObserver",
       "DanmakuEmitter",
       "DanmakuModifier",
-      "DanmakuLocator",
-      "OptimizedBulletObserver"
+      "DanmakuLocator"
      ]
     }
    }
@@ -1549,10 +1424,9 @@
     "DanmakuLocator",
     "DanmakuModifier",
     "DanmakuObserver",
-    "DanmakuThunder",
-    "OptimizedBulletObserver"
+    "DanmakuThunder"
    ],
-   "blockerCount": 6,
+   "blockerCount": 5,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
@@ -1562,7 +1436,6 @@
       "DanmakuEmitter",
       "DanmakuModifier",
       "DanmakuLocator",
-      "OptimizedBulletObserver",
       "DanmakuThunder"
      ]
     },
@@ -1573,7 +1446,6 @@
       "DanmakuEmitter",
       "DanmakuModifier",
       "DanmakuLocator",
-      "OptimizedBulletObserver",
       "DanmakuThunder"
      ]
     },
@@ -1584,7 +1456,6 @@
       "DanmakuEmitter",
       "DanmakuModifier",
       "DanmakuLocator",
-      "OptimizedBulletObserver",
       "DanmakuThunder"
      ]
     },
@@ -1595,7 +1466,6 @@
       "DanmakuEmitter",
       "DanmakuModifier",
       "DanmakuLocator",
-      "OptimizedBulletObserver",
       "DanmakuThunder"
      ]
     },
@@ -1606,7 +1476,6 @@
       "DanmakuEmitter",
       "DanmakuModifier",
       "DanmakuLocator",
-      "OptimizedBulletObserver",
       "DanmakuThunder"
      ]
     },
@@ -1617,7 +1486,6 @@
       "DanmakuEmitter",
       "DanmakuModifier",
       "DanmakuLocator",
-      "OptimizedBulletObserver",
       "DanmakuThunder"
      ]
     },
@@ -1628,7 +1496,6 @@
       "DanmakuEmitter",
       "DanmakuModifier",
       "DanmakuLocator",
-      "OptimizedBulletObserver",
       "DanmakuThunder"
      ]
     }
@@ -1710,94 +1577,38 @@
   },
   {
    "id": "st_w_06_01",
-   "connected": false,
-   "distinctBlockers": [
-    "BattlePlanePlayer",
-    "MapBlockReplacer",
-    "MapBreakBlockRect",
-    "OptimizedBulletObserver",
-    "PlayerGun",
-    "ShootingEnemySpawner"
-   ],
-   "blockerCount": 6,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
-      "ShootingEnemySpawner",
-      "MapBreakBlockRect",
-      "OptimizedBulletObserver"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
-      "ShootingEnemySpawner",
-      "MapBreakBlockRect",
-      "OptimizedBulletObserver"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
-      "ShootingEnemySpawner",
-      "MapBreakBlockRect",
-      "OptimizedBulletObserver"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
-      "ShootingEnemySpawner",
-      "MapBreakBlockRect",
-      "OptimizedBulletObserver"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
-      "ShootingEnemySpawner",
-      "MapBreakBlockRect",
-      "OptimizedBulletObserver"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
-      "ShootingEnemySpawner",
-      "MapBreakBlockRect",
-      "OptimizedBulletObserver"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
-      "ShootingEnemySpawner",
-      "MapBreakBlockRect",
-      "OptimizedBulletObserver"
-     ]
+     "missing": []
     }
    }
   },
@@ -1840,70 +1651,38 @@
   },
   {
    "id": "st_w_06_03",
-   "connected": false,
-   "distinctBlockers": [
-    "BattlePlanePlayer",
-    "PlaneObstacle",
-    "PlayerGun"
-   ],
-   "blockerCount": 3,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "PlaneObstacle",
-      "PlayerGun",
-      "BattlePlanePlayer"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "PlaneObstacle",
-      "PlayerGun",
-      "BattlePlanePlayer"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "PlaneObstacle",
-      "PlayerGun",
-      "BattlePlanePlayer"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "PlaneObstacle",
-      "PlayerGun",
-      "BattlePlanePlayer"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "PlaneObstacle",
-      "PlayerGun",
-      "BattlePlanePlayer"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "PlaneObstacle",
-      "PlayerGun",
-      "BattlePlanePlayer"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "PlaneObstacle",
-      "PlayerGun",
-      "BattlePlanePlayer"
-     ]
+     "missing": []
     }
    }
   },
@@ -2134,86 +1913,38 @@
   },
   {
    "id": "st_w_06_02",
-   "connected": false,
-   "distinctBlockers": [
-    "BattlePlanePlayer",
-    "MapBlockReplacer",
-    "OptimizedBulletObserver",
-    "PlayerGun",
-    "ShootingEnemySpawner"
-   ],
-   "blockerCount": 5,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
-      "ShootingEnemySpawner",
-      "OptimizedBulletObserver"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
-      "ShootingEnemySpawner",
-      "OptimizedBulletObserver"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
-      "ShootingEnemySpawner",
-      "OptimizedBulletObserver"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
-      "ShootingEnemySpawner",
-      "OptimizedBulletObserver"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
-      "ShootingEnemySpawner",
-      "OptimizedBulletObserver"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
-      "ShootingEnemySpawner",
-      "OptimizedBulletObserver"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
-      "ShootingEnemySpawner",
-      "OptimizedBulletObserver"
-     ]
+     "missing": []
     }
    }
   },
@@ -2258,29 +1989,19 @@
    "id": "st_w_06_04",
    "connected": false,
    "distinctBlockers": [
-    "BattlePlanePlayer",
     "BgmChanger",
-    "MapBlockReplacer",
-    "OptimizedBulletObserver",
     "PlayerGuard",
-    "PlayerGun",
     "ShootingEnemyBoss",
-    "ShootingEnemySpawner",
     "ShootingSuperApple"
    ],
-   "blockerCount": 9,
+   "blockerCount": 4,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
       "PlayerGuard",
-      "ShootingEnemySpawner",
       "ShootingEnemyBoss",
-      "OptimizedBulletObserver",
       "BgmChanger",
       "ShootingSuperApple"
      ]
@@ -2288,13 +2009,8 @@
     "3": {
      "variant": 0,
      "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
       "PlayerGuard",
-      "ShootingEnemySpawner",
       "ShootingEnemyBoss",
-      "OptimizedBulletObserver",
       "BgmChanger",
       "ShootingSuperApple"
      ]
@@ -2302,13 +2018,8 @@
     "4": {
      "variant": 0,
      "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
       "PlayerGuard",
-      "ShootingEnemySpawner",
       "ShootingEnemyBoss",
-      "OptimizedBulletObserver",
       "BgmChanger",
       "ShootingSuperApple"
      ]
@@ -2316,13 +2027,8 @@
     "5": {
      "variant": 0,
      "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
       "PlayerGuard",
-      "ShootingEnemySpawner",
       "ShootingEnemyBoss",
-      "OptimizedBulletObserver",
       "BgmChanger",
       "ShootingSuperApple"
      ]
@@ -2330,13 +2036,8 @@
     "6": {
      "variant": 0,
      "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
       "PlayerGuard",
-      "ShootingEnemySpawner",
       "ShootingEnemyBoss",
-      "OptimizedBulletObserver",
       "BgmChanger",
       "ShootingSuperApple"
      ]
@@ -2344,13 +2045,8 @@
     "7": {
      "variant": 0,
      "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
       "PlayerGuard",
-      "ShootingEnemySpawner",
       "ShootingEnemyBoss",
-      "OptimizedBulletObserver",
       "BgmChanger",
       "ShootingSuperApple"
      ]
@@ -2358,13 +2054,8 @@
     "8": {
      "variant": 0,
      "missing": [
-      "BattlePlanePlayer",
-      "MapBlockReplacer",
-      "PlayerGun",
       "PlayerGuard",
-      "ShootingEnemySpawner",
       "ShootingEnemyBoss",
-      "OptimizedBulletObserver",
       "BgmChanger",
       "ShootingSuperApple"
      ]
@@ -3004,31 +2695,23 @@
    "id": "st_w_15_03",
    "connected": false,
    "distinctBlockers": [
-    "BattlePlanePlayer",
     "BgmChanger",
-    "OptimizedBulletObserver",
     "PlayerGuard",
-    "PlayerGun",
     "ShootingEnemyBoss",
     "ShootingEnemyBossEx",
     "ShootingEnemyBossExParamSetter",
-    "ShootingEnemySpawner",
     "ShootingSuperApple"
    ],
-   "blockerCount": 10,
+   "blockerCount": 6,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "BattlePlanePlayer",
-      "PlayerGun",
       "PlayerGuard",
-      "ShootingEnemySpawner",
       "ShootingEnemyBoss",
       "ShootingEnemyBossEx",
       "ShootingEnemyBossExParamSetter",
-      "OptimizedBulletObserver",
       "BgmChanger",
       "ShootingSuperApple"
      ]
@@ -3036,14 +2719,10 @@
     "3": {
      "variant": 0,
      "missing": [
-      "BattlePlanePlayer",
-      "PlayerGun",
       "PlayerGuard",
-      "ShootingEnemySpawner",
       "ShootingEnemyBoss",
       "ShootingEnemyBossEx",
       "ShootingEnemyBossExParamSetter",
-      "OptimizedBulletObserver",
       "BgmChanger",
       "ShootingSuperApple"
      ]
@@ -3051,14 +2730,10 @@
     "4": {
      "variant": 0,
      "missing": [
-      "BattlePlanePlayer",
-      "PlayerGun",
       "PlayerGuard",
-      "ShootingEnemySpawner",
       "ShootingEnemyBoss",
       "ShootingEnemyBossEx",
       "ShootingEnemyBossExParamSetter",
-      "OptimizedBulletObserver",
       "BgmChanger",
       "ShootingSuperApple"
      ]
@@ -3066,14 +2741,10 @@
     "5": {
      "variant": 0,
      "missing": [
-      "BattlePlanePlayer",
-      "PlayerGun",
       "PlayerGuard",
-      "ShootingEnemySpawner",
       "ShootingEnemyBoss",
       "ShootingEnemyBossEx",
       "ShootingEnemyBossExParamSetter",
-      "OptimizedBulletObserver",
       "BgmChanger",
       "ShootingSuperApple"
      ]
@@ -3081,14 +2752,10 @@
     "6": {
      "variant": 0,
      "missing": [
-      "BattlePlanePlayer",
-      "PlayerGun",
       "PlayerGuard",
-      "ShootingEnemySpawner",
       "ShootingEnemyBoss",
       "ShootingEnemyBossEx",
       "ShootingEnemyBossExParamSetter",
-      "OptimizedBulletObserver",
       "BgmChanger",
       "ShootingSuperApple"
      ]
@@ -3096,14 +2763,10 @@
     "7": {
      "variant": 0,
      "missing": [
-      "BattlePlanePlayer",
-      "PlayerGun",
       "PlayerGuard",
-      "ShootingEnemySpawner",
       "ShootingEnemyBoss",
       "ShootingEnemyBossEx",
       "ShootingEnemyBossExParamSetter",
-      "OptimizedBulletObserver",
       "BgmChanger",
       "ShootingSuperApple"
      ]
@@ -3111,14 +2774,10 @@
     "8": {
      "variant": 0,
      "missing": [
-      "BattlePlanePlayer",
-      "PlayerGun",
       "PlayerGuard",
-      "ShootingEnemySpawner",
       "ShootingEnemyBoss",
       "ShootingEnemyBossEx",
       "ShootingEnemyBossExParamSetter",
-      "OptimizedBulletObserver",
       "BgmChanger",
       "ShootingSuperApple"
      ]

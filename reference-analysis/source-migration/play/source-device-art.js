@@ -523,10 +523,28 @@ function planeObstacleArt(c,s){const O=root.SourcePlaneObstacleRuntime;if(!O||!s
 // Shooting rounds: player gun bullets (circle 7) in the shooter's colour.
 function planeArt(c,s,time){const P=root.SourcePlaneRuntime;if(!P||!s.planeState||!s.planeState.guns.length)return;
  for(const b of P.displays(s.planeState).bullets){c.save();c.globalAlpha=b.fading?.4:1;c.beginPath();c.ellipse(b.x,b.y,b.r+3,b.r-2,0,0,Math.PI*2);fillStroke(c,FRIEND_COLORS[(b.colorIndex||0)%8],INK,1.5);c.restore();}}
+// 6-1 / 6-2 ShootingEnemy (48x48, facing left), its blast (0.5 s), the enemy bullets
+// (10x10) and the BreakColor blocks MapBlockReplacer / MapBreakBlockRect painted.
+function shootingArt(c,s,time){const S=root.SourceShootingRuntime;const st=s.shootingState;if(!S||!st||!(st.spawners.length||st.replacer||st.breakRects.length||st.pool))return;const d=S.displays(st);
+ for(const b of d.chips){const x=b.gx*48,y=b.gy*48,col=FRIEND_COLORS[b.colorIndex%8];rr(c,x+2,y+2,44,44,7);fillStroke(c,col,INK,2);
+  c.strokeStyle='rgba(255,255,255,.55)';c.lineWidth=2;rr(c,x+8,y+8,32,32,5);c.stroke();label(c,String(b.colorIndex+1),x+24,y+24,'#fffdf6',18);}
+ for(const e of d.enemies){c.save();c.translate(e.x,e.y);
+  if(e.blast){c.globalAlpha=Math.max(0,1-e.t);c.strokeStyle='#ffb04d';c.lineWidth=6;c.beginPath();c.arc(0,0,10+30*e.t,0,Math.PI*2);c.stroke();
+   c.fillStyle='#ffe07a';for(let k=0;k<6;k++){const a=k*Math.PI/3+e.t*2;c.beginPath();c.arc(Math.cos(a)*(8+26*e.t),Math.sin(a)*(8+26*e.t),4*(1-e.t)+1,0,Math.PI*2);c.fill();}c.restore();continue;}
+  const body=e.blink&&Math.floor(time*30)%2?'#fffdf6':'#8a7bb8';
+  c.beginPath();c.moveTo(6,-4);c.lineTo(22,-16);c.lineTo(20,-2);c.closePath();fillStroke(c,'#6c5f99',INK,2);
+  c.beginPath();c.moveTo(6,4);c.lineTo(22,16);c.lineTo(20,2);c.closePath();fillStroke(c,'#6c5f99',INK,2);
+  c.beginPath();c.ellipse(0,0,20,15,0,0,Math.PI*2);fillStroke(c,body,INK,2.5);
+  for(const sy of [-1,1]){c.beginPath();c.ellipse(-8,sy*4-1,2.2,3,0,0,Math.PI*2);fillStroke(c,INK,null);}
+  c.strokeStyle=INK;c.lineWidth=2;c.beginPath();c.moveTo(-13,-9);c.lineTo(-5,-6);c.stroke();
+  c.restore();}
+ for(const b of d.bullets){c.save();c.globalAlpha=b.fading?.4:1;c.beginPath();c.arc(b.x,b.y,b.r,0,Math.PI*2);fillStroke(c,'#e2557a',INK,1.5);
+  c.fillStyle='rgba(255,255,255,.7)';c.beginPath();c.arc(b.x-1.5,b.y-1.5,1.5,0,Math.PI*2);c.fill();c.restore();}
+}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);moleArt(c,s,time);throwArt(c,s,time);planeObstacleArt(c,s);planeArt(c,s,time);}
+ try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);moleArt(c,s,time);throwArt(c,s,time);planeObstacleArt(c,s);shootingArt(c,s,time);planeArt(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
