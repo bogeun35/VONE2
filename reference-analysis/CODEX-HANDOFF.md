@@ -158,7 +158,10 @@
 > 15-3 Ex 도착 k+193·첫 유도탄 k+347. 봇(무적)으로 2·4·8인 두 판 클리어. 사양과 다른 점 1개: 미사일 셋째 속력 85191(사양 85188) — 음수 방향 내림, 메모에 적음.
 > 근사: 프레임 RNG = 비행기 모듈 PCG 하나, 방패 위치는 이번 프레임 플레이어 위치, 사과 판정 72×72(액터 배율 1.5), HP 막대는 보스 머리 위(원작은 UI 위치).
 > 리소스 읽기: UnityPy 는 cp312 빌드라 3.13 에선 lz4/brotli 스텁 + 시스템 PIL 로 띄움(스크래치 probe.py 방식, resources.assets 무압축).
-> 다음 작업: 60라운드 한 번에 배포(deploy-source-play.cjs) → 브라우저 실플레이 검수(사격·탄막은 사람이 회피해야 함) → 문제 수정.
+> **배포 완료 2026-10-18 (v20261017-06, 배포 커밋 cbd587b)**: 60라운드 라이브. 라운드 선택을 카드형으로 바꿈 — package-source-play.cjs 가 catalogue.json 에
+> 판마다 `kinds`(종류 태그)·`thumb`(2인 지형을 칸 단위로: rects/spawns/key/exit) 를 넣고, play.js 가 월드별 카드 그리드(`#picker`)·머리글 칩(`#stage-pick`)·인원 세그먼트(`#count-seg`)를
+> 만든다. 숨긴 `<select id=stage|count>` 가 여전히 값의 주인(online.js 는 roster 뒤 `app.stageChanged()` 로 칩을 맞춤). 테스트는 `index.html?mute` 로(소리 끔).
+> 다음 작업: 브라우저 실플레이 검수(사격·탄막은 사람이 회피해야 함) → 문제 수정.
 > FrontSwitch 메모: 감지 20x20, 고체(byte3&2)+층1~3/8 접촉 시 켜짐(61/60 to 대상·보조대상), 슬롯2≠0 순간형(매 프레임 접촉 해제), 슬롯3/4 인원별 위치 오프셋.
 > 얼음 메모: IceRect 고체(우선순위6/층6). 얼음 위 걷기 = 속도×IceResistivity(감속) + 입력×walk×IceFriction(가속), ±walk×IceSpeedUp 상한(OnUpdate_Default).
 > 새 도구: `tools/xref_static.py 0x<전역주소>` — RIP 상대 참조 스캔으로 TypeInfo 슬롯의 주인(.cctor) 찾기 (0.6초).
