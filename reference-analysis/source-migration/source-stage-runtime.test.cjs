@@ -71,11 +71,18 @@ test('standing stack suppresses bottom player jump and spring top-contact launch
  for(let i=0;i<20;i++){R.step(s);assert.equal(s.lastImpulses.some(e=>e.actorId==='p1'),false);}
  assert.equal(s.lastContacts.springContacts[0].upContactCount,1);
 });
-test('key overlap opens goal; each player must press Up; entered bodies no longer block remaining team',()=>{
+test('the key is carried to the goal to open it; each player must press Up; entered bodies no longer block remaining team',()=>{
+ // KeyComponent.OnCollided 0x18186cc20 attaches the key to the player; only the
+ // key's own collision (layer 10) opens the Goal (GoalComponent.OnCollided 0x18185f970).
  for(let count=2;count<=8;count++){
   const s=R.create(compile(count));
-  Object.assign(s.players[0],{x:s.map.key.x,y:s.map.key.y});R.step(s);assert.equal(s.keyTaken,true);
+  Object.assign(s.players[0],{x:s.map.key.x,y:s.map.key.y});R.step(s);
+  assert.equal(s.keyTaken,true);assert.equal(s.keyState.holderId,'p1');assert.equal(s.goalOpen,false,'picking the key up does not open the door');
   const goal=s.map.exit;
+  // carry it: the holder stands at the door and the key follows onto it
+  Object.assign(s.players[0],{x:goal.x+8,y:goal.y-14,vy:0});
+  for(let t=0;t<60&&!s.goalOpen;t++)R.step(s);
+  assert.equal(s.goalOpen,true);
   for(let i=0;i<count;i++){
    const p=s.players[i];Object.assign(p,{x:goal.x+8,y:goal.y-14,vy:0});
    R.step(s);assert.equal(p.exit,false,'overlap alone cannot enter');
@@ -83,6 +90,13 @@ test('key overlap opens goal; each player must press Up; entered bodies no longe
    assert.equal(s.status,i===count-1?'clear':'play');
   }
  }
+});
+test('another player touching the key takes it; the previous holder is excluded for QFP._0_25',()=>{
+ const s=R.create(compile(2)),[a,b]=s.players;
+ Object.assign(a,{x:s.map.key.x,y:s.map.key.y});R.step(s);assert.equal(s.keyState.holderId,'p1');
+ for(let t=0;t<30;t++)R.step(s);
+ Object.assign(b,{x:s.map.key.x,y:s.map.key.y,vy:0});R.step(s);
+ assert.equal(s.keyState.holderId,'p2');assert.equal(s.keyState.excludeId,'p1');
 });
 test('closed goal rejects Up and unsupported stages fail explicitly',()=>{
  const s=R.create(compile(2)),p=s.players[0];Object.assign(p,{x:s.map.exit.x,y:s.map.exit.y});

@@ -50,7 +50,7 @@ function render(){
  camera=ParkCamera.update(camera,state.players,state.map,{width:view.width,height:view.height},1/60);
  if(window.ParkArt&&!artFailed){try{ParkArt.render(ctx,state,camera,{canvas,viewport:view,selected,time:performance.now()/1000,debugBoxes});}catch(e){artFailed=true;console.error('ParkArt',e);renderFlat();}}
  else renderFlat();
- $('progress').textContent=`${state.keyTaken?'🔑 ✓':'🔑'}　${state.players.filter(p=>p.exit).length} / ${state.players.length}`;
+ $('progress').textContent=`${state.goalOpen?'🔑 ✓':state.keyTaken?'🔑 …':'🔑'}　${state.players.filter(p=>p.exit).length} / ${state.players.length}`;
 }
 function renderFlat(){const k=canvas.height/675,w=canvas.width/k;ctx.setTransform(k,0,0,k,0,0);ctx.clearRect(0,0,w,675);ctx.fillStyle='#0c1c2b';ctx.fillRect(0,0,w,675);
  ctx.save();ctx.scale(camera.zoom,camera.zoom);ctx.translate(-camera.x,-camera.y);
@@ -79,8 +79,8 @@ function renderFlat(){const k=canvas.height/675,w=canvas.width/k;ctx.setTransfor
   ctx.strokeStyle=lit?'#fff0fb':'#ffb7e8';ctx.lineWidth=2;ctx.beginPath();for(let i=0;i<5;i++){const x=b.x+(i%2?b.w-5:5),y=b.y+compression+5+i*(b.h-compression-10)/4;i?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.stroke();
   if(b.phase===3){ctx.strokeStyle='#ffd6f2';ctx.beginPath();for(let i=0;i<3;i++){const x=b.x+4+i*12;ctx.moveTo(x,b.y-8);ctx.lineTo(x,b.y-28);}ctx.stroke();}
  }
- const door=state.map.exit;if(door){box(door,state.keyTaken?'#44bc91':'#5c6475',7);ctx.fillStyle='#091925';ctx.fillRect(door.x+7,door.y+7,door.w-14,Math.max(4,door.h-7));}
- if(state.map.key&&!state.keyTaken){const k=state.map.key;ctx.strokeStyle=state.keyActive?'#ffdb72':'#586270';ctx.lineWidth=4;ctx.beginPath();ctx.arc(k.x+k.w/2,k.y+12,8,0,Math.PI*2);ctx.moveTo(k.x+k.w/2,k.y+20);ctx.lineTo(k.x+k.w/2,k.y+k.h-3);ctx.lineTo(k.x+k.w-3,k.y+k.h-3);ctx.stroke();for(const o of state.gateState.observers)for(let i=0;i<o.total;i++){ctx.fillStyle=i<o.pushedCount?'#7ef0bc':'#586270';ctx.beginPath();ctx.arc(k.x+k.w/2+(i-(o.total-1)/2)*10,k.y-12,3,0,Math.PI*2);ctx.fill();}}
+ const door=state.map.exit;if(door){box(door,state.goalOpen?'#44bc91':'#5c6475',7);ctx.fillStyle='#091925';ctx.fillRect(door.x+7,door.y+7,door.w-14,Math.max(4,door.h-7));}
+ if(state.map.key&&!state.map.key.hidden){const k=state.map.key;ctx.strokeStyle=state.keyActive?'#ffdb72':'#586270';ctx.lineWidth=4;ctx.beginPath();ctx.arc(k.x+k.w/2,k.y+12,8,0,Math.PI*2);ctx.moveTo(k.x+k.w/2,k.y+20);ctx.lineTo(k.x+k.w/2,k.y+k.h-3);ctx.lineTo(k.x+k.w-3,k.y+k.h-3);ctx.stroke();for(const o of state.gateState.observers)for(let i=0;i<o.total;i++){ctx.fillStyle=i<o.pushedCount?'#7ef0bc':'#586270';ctx.beginPath();ctx.arc(k.x+k.w/2+(i-(o.total-1)/2)*10,k.y-12,3,0,Math.PI*2);ctx.fill();}}
  const blackoutView=state.blackoutState&&state.blackoutState.blackouts.length?SourceBlackoutDevices.displays(state.blackoutState):null;
  state.players.forEach((p,i)=>{if(p.exit||p.asBlock)return;
   // changeControlablePlayer 0x181872cc0 greys out everyone who cannot move, so

@@ -151,6 +151,7 @@
    key:key?{...box(Actor.collisionRect(key,1,count)),id:'key'}:null,
    // Key slot 3: the name KeyComponent notifies with event 61 on first pickup
    keyTarget:key&&key.datas&&key.datas[3]&&key.datas[3].t===2&&key.datas[3].s?key.datas[3].s:null,
+   keyHoldYRaw:key&&key.datas&&key.datas[4]&&key.datas[4].t===1?Math.trunc(Math.fround(Math.fround(key.datas[4].f)*65536)):0,
    exit:{...box(Actor.collisionRect(goal)),id:'goal'},
    // StageComponent.prepare3 0x18170aad0 writes FailFallY = mapHeight*chipSize +
    // stageInitParam.failDownY. failDownY is 0.0 for every World stage, so the
@@ -176,7 +177,9 @@
    supportId:null,jump:false,jumpFrame:0,exit:false,visible:true,playerState:1})),
    relayState:clone(compiled.relays),deviceState:Devices.create(compiled.devices||{schemaVersion:1,count,devices:[],warnings:[]}),motionState:Motion.create(compiled.motion||{count,rects:[],dashBoards:[],walls:[]}),gateState:Gates.create(compiled.gates||{count,gates:[],observers:[],keys:[]}),bridgeState:Bridges.create(compiled.bridges||{count,bridges:[],thunders:[],keyTargets:[],keyTaken:false}),blinkState:Blink.create(compiled.blink||Blink.compile([],count)),blinkThunderState:BlinkThunders.create(compiled.blinkThunders||BlinkThunders.compile([],count)),warpInitState:WarpInit.create(compiled.warpInit||WarpInit.compile([],count)),switchTimerState:SwitchTimers.create(compiled.switchTimers||SwitchTimers.compile([],count)),enemyState:Enemies.create(compiled.enemies||Enemies.compile([],count)),thornCeilingState:ThornCeilings.create(compiled.thornCeilings||ThornCeilings.compile([],count)),countUpState:CountUps.create(compiled.countUps||CountUps.compile([],count)),liftState:Lifts.create(compiled.lifts||Lifts.compile([],count)),landmineState:Landmines.create(compiled.landmines||Landmines.compile([],count)),poleState:Poles.create(compiled.poles||Poles.compile([],count,{})),windState:Winds.create(compiled.winds||Winds.compile([],count,{})),speedSwitchState:SpeedSwitches.create(compiled.speedSwitches||SpeedSwitches.compile([],count,{})),linePathState:LinePaths.create(compiled.linePaths||LinePaths.compile([],count,{})),textsState:Texts.create(compiled.texts||Texts.compile([],count,{})),coinsState:Coins.create(compiled.coins||Coins.compile([],count,{})),checkpointsState:Checkpoints.create(compiled.checkpoints||Checkpoints.compile([],count,{})),touchEnergiesState:TouchEnergies.create(compiled.touchEnergies||TouchEnergies.compile([],count,{})),pitcherState:Pitchers.create(compiled.pitchers||Pitchers.compile([],count)),keyBoxState:KeyBoxes.create(compiled.keyBoxes||KeyBoxes.compile([],count)),blackoutState:Blackouts.create(compiled.blackouts||Blackouts.compile([],count,{})),dossunState:Dossuns.create(compiled.dossuns||Dossuns.compile([],count,{})),sineLiftState:SineLifts.create(compiled.sineLifts||SineLifts.compile([],count)),targetGroupState:TargetGroups.create(compiled.targetGroups||TargetGroups.compile([],count)),rollGearState:Gears.create(compiled.gears||Gears.compile([],count,{})),colorBoxState:ColorBoxes.create(compiled.colorBoxes||ColorBoxes.compile([],count,{})),magnetState:PlayerMagnets.create(compiled.playerMagnets||PlayerMagnets.compile([],count)),breakableState:BreakableRects.create(compiled.breakableRects||BreakableRects.compile([],count)),warpGunState:WarpGuns.create(compiled.warpGuns||WarpGuns.compile([],count)),upDownLiftState:UpDownLifts.create(compiled.upDownLifts||UpDownLifts.compile([],count)),gearState:LinePathGears.create(compiled.linePathGears||LinePathGears.compile([],count,{})),searchLightState:SearchLights.create(compiled.searchLights||SearchLights.compile([],count,{})),ballActors:{},boxActors:{},ballMeta:{serial:0,gone:{},key:null},playTimeRaw:0,keyActive:!compiled.gates||compiled.gates.keys.every(k=>k.active),sourceStatus:clone(compiled.status),physics:clone(map.physics),
    status:'play',elapsed:0,ticks:0,accumulator:0,// A BallKeyBox creates the key later (createKeyAt), so its round starts locked.
-   keyTaken:!map.key&&!((compiled.keyBoxes&&compiled.keyBoxes.boxes)||[]).length,coinsTaken:0,deaths:0,failure:null,
+   keyTaken:!map.key&&!((compiled.keyBoxes&&compiled.keyBoxes.boxes)||[]).length,
+   // GoalComponent flag 1: opened only by the key's collision (layer 10) or event 61
+   goalOpen:!map.key&&!((compiled.keyBoxes&&compiled.keyBoxes.boxes)||[]).length,keyState:null,coinsTaken:0,deaths:0,failure:null,
    lastRelayEvents:[],lastImpulses:[],lastContacts:{switchContacts:[],springContacts:[]}};
   if(options.checkpointInfo){
    state.checkpointsState=Checkpoints.create({...compiled.checkpoints,checkpointInfo:clone(options.checkpointInfo)});
@@ -319,7 +322,7 @@
  // the box with the established Key rect around that anchor.
  function createKeyAt(s,positionRaw){
   const ax=positionRaw.xRaw/BALL_F,ay=positionRaw.yRaw/BALL_F,r=Actor.rects.Key;
-  s.map.key={x:ax+r.x,y:ay+r.y,w:r.width,h:r.height,id:'key',taken:false};s.keyTaken=false;s.ballMeta.key={...s.map.key};
+  s.map.key={x:ax+r.x,y:ay+r.y,w:r.width,h:r.height,id:'key',taken:false};s.keyTaken=false;s.keyState=null;s.ballMeta.key={...s.map.key};
  }
  function ballTick(s,players,hz){
   if(!s.pitcherState||!(s.pitcherState.pitchers||[]).length)return;
@@ -382,6 +385,52 @@
   for(const [id,a] of Object.entries(s.boxActors))if(a.flags&8192){delete s.boxActors[id];s.ballMeta.gone[id]=true;}
  }
  function keyBoxSolids(s){return s.boxActors?boxRects(s).filter(r=>r.index===0).map(r=>({id:'keybox:'+r.boxId,x:r.x,y:r.y,w:r.w,h:r.h})):[];}
+ // ---- Key carry (every round with a key) ------------------------------------
+ // KeyComponent, from the saved Ghidra project: OnCollided 0x18186cc20,
+ // updatePhase 0x18186c340, OnUpdate 0x18186c2c0, .cctor 0x18186d310.
+ //  - the first player (layer 1) it touches becomes its holder (pickup SE, event
+ //    61 to slot 3's name); another player touching it takes it over, and the
+ //    previous holder is excluded for QFP._0_25 (refreshed while it keeps touching);
+ //  - it moves 0x1999/0x10000 of the way to its target each update and snaps
+ //    when (d.x^2 + d.y^2) >> 16 < 0x1999: for a player holder the target is the
+ //    holder's Pos + rect X (+ W when facing left), + rect Y + slot-4 offset;
+ //  - touching the Goal (layer 12) opens it (Goal.OnCollided layer 10) and uses
+ //    the key: hidden next update, event 40 to the holder.
+ const KEY_RECT={x:-16,y:-28,w:32,h:56},KEY_EXCLUDE=Math.trunc(0.25*65536);
+ function keyInit(s){
+  if(!s.map.key)return null;const k=s.map.key;
+  return {holderId:null,excludeId:null,excludeRaw:0,phase:0,used:false,justAttached:false,
+   xRaw:Math.round((k.x-KEY_RECT.x)*65536),yRaw:Math.round((k.y-KEY_RECT.y)*65536),
+   initXRaw:Math.round((k.x-KEY_RECT.x)*65536),initYRaw:Math.round((k.y-KEY_RECT.y)*65536),holdYRaw:s.map.keyHoldYRaw||0};
+ }
+ function keyTick(s,inputs,hz){
+  if(!s.map.key)return;if(!s.keyState)s.keyState=keyInit(s);const k=s.keyState;if(!k||k.used&&k.phase>=3)return;const F=65536;
+  // OnUpdate: the exclusion timer runs down
+  if(k.excludeRaw>0){k.excludeRaw-=Math.trunc(F/hz);if(k.excludeRaw<=0){k.excludeRaw=0;k.excludeId=null;}}
+  // updatePhase
+  const holder=k.holderId&&s.players.find(p=>p.id===k.holderId&&!p.exit);
+  let target=null;
+  if(holder){target={xRaw:Math.round((holder.x+16-16+(holder.facingLeft?32:0))*F),yRaw:Math.round((holder.y+47-47)*F)+k.holdYRaw};}
+  if(k.phase===2){k.phase=3;s.map.key.hidden=true;return;}
+  if(k.phase===1&&!holder)target={xRaw:k.initXRaw,yRaw:k.initYRaw};
+  if(target){const dx=target.xRaw-k.xRaw,dy=target.yRaw-k.yRaw;
+   if(Number((BigInt(dy)*BigInt(dy))>>16n)+Number((BigInt(dx)*BigInt(dx))>>16n)<0x1999){k.xRaw=target.xRaw;k.yRaw=target.yRaw;if(k.phase===1)k.phase=0;}
+   else{k.xRaw+=Number((BigInt(dx)*0x1999n)>>16n);k.yRaw+=Number((BigInt(dy)*0x1999n)>>16n);}}
+  k.justAttached=false;
+  s.map.key.x=k.xRaw/F+KEY_RECT.x;s.map.key.y=k.yRaw/F+KEY_RECT.y;
+ }
+ function keyCollide(s){
+  const k=s.keyState;if(!k||k.used||!s.keyActive||!s.map.key)return;
+  for(const p of s.players){if(p.exit||p.asBlock||p.dead||!overlap(p,s.map.key))continue;
+   if(p.id===k.holderId)continue;
+   if(p.id===k.excludeId){k.excludeRaw=KEY_EXCLUDE;continue;}
+   if(k.justAttached)continue;
+   if(!k.holderId){s.keyTaken=true;s.map.key.taken=true;if(s.map.keyTarget)notifyByName(s,s.map.keyTarget,61);}
+   else{k.excludeId=k.holderId;k.excludeRaw=KEY_EXCLUDE;}
+   k.holderId=p.id;k.justAttached=true;}
+  // the key against the Goal: Goal opens, key is used
+  if(s.map.exit&&overlap(s.map.key,s.map.exit)){if(!s.goalOpen)s.goalOpen=true;k.used=true;k.phase=2;}
+ }
  // ---- 7-4: Lift (sine) host ----------------------------------------------
  // source-sinelift-devices.js holds LiftComponent; preflight and vertical carry
  // go through the shared contact transport over the four-face contact world
@@ -1061,14 +1110,12 @@
    // then runs CheckOutMap 0x1816a1cb0, which additionally early-outs while a
    // warp is pending. A warped player is therefore never out of the map.
    if(p.y>s.map.killY){s.status='dead';s.failure={playerId:p.id,reason:'fall'};s.deaths++;return;}
-   if(!s.keyTaken&&s.keyActive&&s.map.key&&overlap(p,s.map.key)){s.keyTaken=true;s.map.key.taken=true;
-    // KeyComponent.OnCollided 0x18186cc20: the first pickup sends event 61 to the key's target name
-    if(s.map.keyTarget)notifyByName(s,s.map.keyTarget,61);}
-   if(Actor.canEnterGoal({open:s.keyTaken,overlapping:overlap(p,s.map.exit),upPressed:!p.inputLocked&&!!inputs[p.id]?.up,cleared:p.exit,playerState:p.playerState})){
+   if(Actor.canEnterGoal({open:s.goalOpen,overlapping:overlap(p,s.map.exit),upPressed:!p.inputLocked&&!!inputs[p.id]?.up,cleared:p.exit,playerState:p.playerState})){
     p.exit=true;p.visible=false;p.playerState=5;p.vx=0;p.vy=0;p.grounded=false;p.ground=false;p.supportId=null;
     for(const q of players)if(q.supportId===p.id){q.supportId=null;q.grounded=false;q.ground=false;}
    }
   }
+  keyTick(s,inputs,hz);keyCollide(s);
   inertiaCarry(s,solidXBefore);
   magnetPost(s,hz);
   if(s.players.every(p=>p.exit))s.status='clear';

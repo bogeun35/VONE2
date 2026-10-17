@@ -506,7 +506,7 @@ function render(ctx,state,camera,opts={}){
  const time=opts.time??(performance.now()/1000),map=state.map,theme=themeOf(map);
  ctx.setTransform(scale,0,0,scale,0,0);ctx.imageSmoothingEnabled=true;
  if(memo.layerKey!==theme.key+'|'+scale){memo.layers=buildLayers(theme,scale);memo.layerKey=theme.key+'|'+scale;}
- if(memo.stateRef!==state){memo.stateRef=state;memo.lastKey=state.keyTaken;memo.lastExit=new Map(state.players.map(p=>[p.id,p.exit]));memo.fx=[];memo.land.clear();memo.air.clear();}
+ if(memo.stateRef!==state){memo.stateRef=state;memo.lastKey=!!state.goalOpen;memo.lastExit=new Map(state.players.map(p=>[p.id,p.exit]));memo.fx=[];memo.land.clear();memo.air.clear();}
  drawSky(ctx,theme,camera,map,time,sw);
  const z=camera.zoom,view={x0:camera.x,y0:camera.y,x1:camera.x+sw/z,y1:camera.y+VH/z};
  const terrain=prepareTerrain(map,theme,scale);
@@ -527,8 +527,8 @@ function render(ctx,state,camera,opts={}){
  // door + key first so friends walk in front of them
  const players=state.players||[];
  const inside=players.map((p,i)=>p.exit?FRIENDS[i%8]:null).filter(Boolean);
- if(map.exit)drawDoor(ctx,map.exit,!!state.keyTaken,time,inside,players.length);
- if(map.key&&!state.keyTaken&&intersects(map.key,view,40))drawKey(ctx,map.key,state.keyActive!==false,time,state.gateState&&state.gateState.observers);
+ if(map.exit)drawDoor(ctx,map.exit,!!state.goalOpen,time,inside,players.length);
+ if(map.key&&!map.key.hidden&&intersects(map.key,view,40))drawKey(ctx,map.key,state.keyActive!==false,time,state.gateState&&state.gateState.observers);
  for(const g of (state.gateState&&state.gateState.gates)||[])if(intersects(g,view,10))drawGate(ctx,g);
  const bridges=(state.bridgeState&&state.bridgeState.bridges)||[];
  for(const b of bridges)if(intersects(b,view,10))drawBridge(ctx,b);
@@ -579,8 +579,8 @@ function render(ctx,state,camera,opts={}){
  if(root.SourceDeviceArt)root.SourceDeviceArt.drawAbove(ctx,state);
 
  // sparkles when the key is taken or a friend walks through the door
- if(state.keyTaken&&memo.lastKey===false&&map.key)sparkle(map.key.x+map.key.w/2,map.key.y+map.key.h/2,['#ffe066','#ffffff','#ffb020'],14,time);
- memo.lastKey=!!state.keyTaken;
+ if(state.goalOpen&&memo.lastKey===false&&map.exit)sparkle(map.exit.x+map.exit.w/2,map.exit.y,['#ffe066','#ffffff','#ffb020'],14,time);
+ memo.lastKey=!!state.goalOpen;
  players.forEach((p,i)=>{if(p.exit&&memo.lastExit.get(p.id)===false&&map.exit)sparkle(map.exit.x+map.exit.w/2,map.exit.y,[FRIENDS[i%8].body,'#ffffff'],10,time);memo.lastExit.set(p.id,!!p.exit);});
  drawFx(ctx,time);
  if(opts.debugBoxes)drawDebug(ctx,state,map);
