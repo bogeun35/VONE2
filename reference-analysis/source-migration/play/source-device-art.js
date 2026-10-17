@@ -488,10 +488,32 @@ function moleArt(c,s,time){
 }
 function moleOverlayWorld(c,s){const M=root.SourceMoleRuntime;if(!M||!s.moleState||!s.moleState.moles.length)return;
  for(const m of M.displays(s.moleState).moles)if(m.life)label(c,m.life.text,m.life.x,m.life.y,'#fffdf6',22);}
+// 8-2 / 8-4 Cannons: each player carries a cannon (44x24 box) whose barrel points
+// -90 - angle; a power bar while charging and the loaded ball count above it. Baskets
+// stand on a pole of height * 16; cannon balls are circles 8 in the shooter's colour.
+function throwArt(c,s,time){
+ const T=root.SourceThrowBallRuntime;if(!T||!s.throwState||!s.throwState.controller)return;const d=T.displays(s.throwState);
+ for(const b of d.baskets){c.save();c.strokeStyle='#8a7a6a';c.lineWidth=5;c.beginPath();c.moveTo(b.x,b.y);c.lineTo(b.x,b.body.y+b.body.h);c.stroke();
+  const r=b.body;c.beginPath();c.moveTo(r.x,r.y);c.lineTo(r.x+r.w*0.12,r.y+r.h);c.lineTo(r.x+r.w*0.88,r.y+r.h);c.lineTo(r.x+r.w,r.y);c.closePath();fillStroke(c,'#e9b46f',INK,2.5);
+  c.strokeStyle='rgba(120,70,30,.45)';c.lineWidth=1.5;for(let k=1;k<4;k++){const x=r.x+r.w*k/4;c.beginPath();c.moveTo(x,r.y+2);c.lineTo(x-(k-2)*3,r.y+r.h-2);c.stroke();}
+  rr(c,b.mouth.x-6,b.mouth.y-3,b.mouth.w+12,6,3);fillStroke(c,'#c98d52',INK,2);
+  label(c,b.score+' / '+b.target,b.x,r.y-18,b.score>=b.target?'#ffd84d':'#fffdf6',18);c.restore();}
+ for(const q of d.cannons){const col=FRIEND_COLORS[q.playerIndex%8];c.save();c.translate(q.x,q.y);
+  c.save();c.rotate(-q.angle*Math.PI/180);rr(c,-7,-30,14,24,4);fillStroke(c,'#5a5470',INK,2);c.restore();
+  rr(c,-16,-12,32,14,6);fillStroke(c,col,INK,2);
+  if(q.balls)label(c,'●'+q.balls,0,-40,'#fffdf6',13);
+  if(q.charging){rr(c,-20,8,40,6,3);fillStroke(c,'rgba(0,0,0,.35)',null);rr(c,-20,8,40*q.power,6,3);fillStroke(c,'#ffd84d',null);}
+  c.restore();}
+ for(const b of d.shots){c.save();c.globalAlpha=b.fading?.45:1;c.beginPath();c.arc(b.x,b.y,b.r,0,Math.PI*2);fillStroke(c,FRIEND_COLORS[b.colorIndex%8],INK,2);c.restore();}
+ for(const b of d.drops){c.save();c.globalAlpha=b.fading?.45:1;c.beginPath();c.arc(b.x,b.y,b.r,0,Math.PI*2);
+  if(b.bomb){fillStroke(c,'#3b3550',INK,2);c.fillStyle=(Math.floor(time*8)%2)?'#ffd84d':'#ff7a3d';c.beginPath();c.arc(b.x+5,b.y-8,2.2,0,Math.PI*2);c.fill();}
+  else fillStroke(c,'#fff4c2',INK,2);c.restore();}
+ for(const b of d.blasts){c.save();c.globalAlpha=Math.max(0,1-b.t);c.strokeStyle='#ffb04d';c.lineWidth=5;c.beginPath();c.arc(b.x,b.y,8+40*b.t,0,Math.PI*2);c.stroke();c.restore();}
+}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);moleArt(c,s,time);}
+ try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);rallyArt(c,s);fakeArt(c,s,time);appleArt(c,s,time);arrangeArt(c,s,time);giantArt(c,s,time);moleArt(c,s,time);throwArt(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).

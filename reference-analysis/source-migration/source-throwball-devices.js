@@ -1,6 +1,6 @@
 /* Static recovery of CannonPlayer / ThrowBallBasket / ThrowBallController.
-   PARTIAL: compile refuses these devices; recovered helpers are analysis units,
-   not a playable implementation. No original native code was executed.
+   SUPERSEDED: the playable 8-2 / 8-4 reconstruction is source-throwball-runtime.js;
+   this file keeps the earlier parameter checks. No original native code was executed.
 
    ActorFactory.createCannonPlayer 0x1816a49ea calls createPlayer, then reads
    datas[14]/[15] at 0x1816a4a28/48 and calls PlayerCannon.Creator 0x181895360.
@@ -79,7 +79,8 @@ function inspectParameters(actors,count){
 }
 function basketRects(b){
  const mul=(a,c)=>Number((BigInt(a)*BigInt(c))>>16n);
- return [[36,42,-21,-49],[8,20,-10,-50]].map(([w,h,x,y])=>({wRaw:mul(w*FP_ONE,b.scaleRaw),hRaw:mul(h*FP_ONE,b.scaleRaw),xRaw:mul(x*FP_ONE,b.scaleRaw),yRaw:mul(y*FP_ONE,b.scaleRaw)-16*b.heightRaw}));
+ // .cctor rows are H W X Y (Collision +0xa8 is scaled by scale Y in GetRect 0x181690610)
+ return [[36,42,-21,-49],[8,20,-10,-50]].map(([h,w,x,y])=>({wRaw:mul(w*FP_ONE,b.scaleRaw),hRaw:mul(h*FP_ONE,b.scaleRaw),xRaw:mul(x*FP_ONE,b.scaleRaw),yRaw:mul(y*FP_ONE,b.scaleRaw)-16*b.heightRaw}));
 }
 // Recovered sensor branch only. Wall reflection is deliberately excluded.
 function basketSensorContact(b,ball,contact){

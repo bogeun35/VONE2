@@ -27,7 +27,7 @@ test('compile original 01-01 for all 2..8 populations without source mutation or
  const before=JSON.stringify(source),gBefore=JSON.stringify(geometry);
  for(let count=2;count<=8;count++){
   const c=compile(count);assert.equal(c.map.width,2976);assert.equal(c.map.height,960);
-  assert.equal(c.map.spawns.length,count);assert.deepEqual(c.map.spawns[0],{x:84,y:864.5});
+  assert.equal(c.map.spawns.length,count);assert.deepEqual(c.map.spawns[0],{x:84,y:864.5,lookLeft:false});
   assert.equal(c.map.exit.y,64);assert.equal(c.map.springs.length,15);assert.equal(c.map.switches.length,2);
   assert.equal(c.map.springs[0].y,874);assert.equal(c.map.springs[0].h,38);
   assert.ok(c.status.missingMechanics.some(x=>x.includes('tick frequency')));

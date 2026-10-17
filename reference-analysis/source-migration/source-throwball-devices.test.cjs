@@ -15,8 +15,8 @@ for(const id of ['st_w_08_02','st_w_08_04'])for(let count=2;count<=8;count++)tes
 });
 test('basket collision rectangles preserve native FP scaling and height shift',()=>{
  assert.deepEqual(api.basketRects({heightRaw:655360,scaleRaw:98304}),[
-  {wRaw:3538944,hRaw:4128768,xRaw:-2064384,yRaw:-15302656},
-  {wRaw:786432,hRaw:1966080,xRaw:-983040,yRaw:-15400960}]);
+  {wRaw:4128768,hRaw:3538944,xRaw:-2064384,yRaw:-15302656},
+  {wRaw:1966080,hRaw:786432,xRaw:-983040,yRaw:-15400960}]);
 });
 test('sensor consumes scoring balls, clamps score and disables on target',()=>{
  const b={score:0,target:2,sensorDisabled:false},ball={actorType:147,destroyRequested:false};
