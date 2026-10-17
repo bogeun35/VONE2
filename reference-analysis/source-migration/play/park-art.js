@@ -422,6 +422,8 @@ function drawFriend(c,p,i,o){
  // changeControlablePlayer 0x181872cc0 greys out everyone who cannot move
  if(p.grayscale){c.filter='grayscale(1)';c.globalAlpha*=.75;}
  c.translate(p.x+p.w/2,p.y+p.h);
+ // top-view fall (fallStep 0x1816caba0) shrinks the player to nothing
+ if(p.tvScale!==undefined&&p.tvScale<1){if(p.tvScale<=0){c.restore();return;}c.scale(p.tvScale,p.tvScale);}
  if(grounded){c.fillStyle='rgba(30,20,40,.2)';ellipse(c,0,0,14,3);c.fill();}
  c.scale(sx*f,sy);
  // tail (behind the body, a fork that barely leaves the box)

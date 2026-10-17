@@ -31,39 +31,18 @@
   "st_w_05_04",
   "st_w_14_01",
   "st_w_05_03",
-  "st_w_03_03"
+  "st_w_03_03",
+  "st_w_12_02",
+  "st_w_15_02",
+  "st_w_12_04",
+  "st_w_02_04",
+  "st_w_04_02",
+  "st_w_07_04"
  ],
  "worldStages": 60,
- "remainingStages": 32,
- "remainingDistinctBlockers": 69,
+ "remainingStages": 26,
+ "remainingDistinctBlockers": 61,
  "nearest": [
-  {
-   "id": "st_w_02_04",
-   "blockerCount": 2,
-   "blockers": [
-    "ColorBox",
-    "MoveWall"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_04_02",
-   "blockerCount": 2,
-   "blockers": [
-    "Gear",
-    "SwitchTargetGroup"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_07_04",
-   "blockerCount": 2,
-   "blockers": [
-    "Ghost",
-    "Lift"
-   ],
-   "guardsAfterTypes": []
-  },
   {
    "id": "st_w_09_03",
    "blockerCount": 2,
@@ -92,24 +71,6 @@
    "guardsAfterTypes": []
   },
   {
-   "id": "st_w_12_02",
-   "blockerCount": 2,
-   "blockers": [
-    "ColorBox",
-    "DeadSwitch"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_12_04",
-   "blockerCount": 2,
-   "blockers": [
-    "MoveWall",
-    "SpeedSwitch"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
    "id": "st_w_13_03",
    "blockerCount": 2,
    "blockers": [
@@ -128,21 +89,72 @@
    "guardsAfterTypes": []
   },
   {
-   "id": "st_w_15_02",
-   "blockerCount": 2,
-   "blockers": [
-    "ColorBox",
-    "DeadSwitch"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
    "id": "st_w_02_01",
    "blockerCount": 3,
    "blockers": [
     "DistanceConstraint",
     "StepEnemy",
     "WarpAll"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_06_03",
+   "blockerCount": 3,
+   "blockers": [
+    "BattlePlanePlayer",
+    "PlaneObstacle",
+    "PlayerGun"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_07_01",
+   "blockerCount": 3,
+   "blockers": [
+    "ArrowSign",
+    "HalfOperator",
+    "StepEnemy"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_08_02",
+   "blockerCount": 3,
+   "blockers": [
+    "CannonPlayer",
+    "ThrowBallBasket",
+    "ThrowBallController"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_08_04",
+   "blockerCount": 3,
+   "blockers": [
+    "CannonPlayer",
+    "ThrowBallBasket",
+    "ThrowBallController"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_09_01",
+   "blockerCount": 3,
+   "blockers": [
+    "BatEnemy",
+    "FallingCage",
+    "TopViewPlayer"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
+   "id": "st_w_09_02",
+   "blockerCount": 3,
+   "blockers": [
+    "CapturingConstraint",
+    "CapturingTarget",
+    "TopViewPlayer"
    ],
    "guardsAfterTypes": []
   }
@@ -196,28 +208,6 @@
     "st_w_15_03"
    ],
    "appearsIn": 5,
-   "opensAlone": []
-  },
-  {
-   "type": "ColorBox",
-   "stages": [
-    "st_w_02_04",
-    "st_w_15_02",
-    "st_w_03_04",
-    "st_w_12_02"
-   ],
-   "appearsIn": 4,
-   "opensAlone": []
-  },
-  {
-   "type": "SwitchTargetGroup",
-   "stages": [
-    "st_w_04_02",
-    "st_w_02_03",
-    "st_w_06_04",
-    "st_w_15_03"
-   ],
-   "appearsIn": 4,
    "opensAlone": []
   },
   {
@@ -306,15 +296,6 @@
    "opensAlone": []
   },
   {
-   "type": "MoveWall",
-   "stages": [
-    "st_w_02_04",
-    "st_w_12_04"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
    "type": "FrontSwitch",
    "stages": [
     "st_w_15_04",
@@ -391,15 +372,6 @@
    "stages": [
     "st_w_08_03",
     "st_w_08_01"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "DeadSwitch",
-   "stages": [
-    "st_w_15_02",
-    "st_w_12_02"
    ],
    "appearsIn": 2,
    "opensAlone": []
@@ -523,14 +495,6 @@
    "opensAlone": []
   },
   {
-   "type": "SpeedSwitch",
-   "stages": [
-    "st_w_12_04"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
    "type": "IceRect",
    "stages": [
     "st_w_15_04"
@@ -574,14 +538,6 @@
    "type": "SwitchTimerActor",
    "stages": [
     "st_w_14_04"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "Gear",
-   "stages": [
-    "st_w_04_02"
    ],
    "appearsIn": 1,
    "opensAlone": []
@@ -646,22 +602,6 @@
    "type": "RallyMallet",
    "stages": [
     "st_w_13_03"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "Ghost",
-   "stages": [
-    "st_w_07_04"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "Lift",
-   "stages": [
-    "st_w_07_04"
    ],
    "appearsIn": 1,
    "opensAlone": []
@@ -1087,60 +1027,52 @@
   },
   {
    "id": "st_w_02_04",
-   "connected": false,
+   "connected": true,
    "distinctBlockers": [
-    "ColorBox",
     "MoveWall"
    ],
-   "blockerCount": 2,
+   "blockerCount": 1,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "ColorBox",
       "MoveWall"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
-      "ColorBox",
       "MoveWall"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
-      "ColorBox",
       "MoveWall"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
-      "ColorBox",
       "MoveWall"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
-      "ColorBox",
       "MoveWall"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
-      "ColorBox",
       "MoveWall"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
-      "ColorBox",
       "MoveWall"
      ]
     }
@@ -1317,7 +1249,7 @@
   },
   {
    "id": "st_w_12_04",
-   "connected": false,
+   "connected": true,
    "distinctBlockers": [
     "MoveWall",
     "SpeedSwitch"
@@ -2125,62 +2057,38 @@
   },
   {
    "id": "st_w_04_02",
-   "connected": false,
-   "distinctBlockers": [
-    "Gear",
-    "SwitchTargetGroup"
-   ],
-   "blockerCount": 2,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "Gear",
-      "SwitchTargetGroup"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "Gear",
-      "SwitchTargetGroup"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "Gear",
-      "SwitchTargetGroup"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "Gear",
-      "SwitchTargetGroup"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "Gear",
-      "SwitchTargetGroup"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "Gear",
-      "SwitchTargetGroup"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "Gear",
-      "SwitchTargetGroup"
-     ]
+     "missing": []
     }
    }
   },
@@ -2669,62 +2577,38 @@
   },
   {
    "id": "st_w_15_02",
-   "connected": false,
-   "distinctBlockers": [
-    "ColorBox",
-    "DeadSwitch"
-   ],
-   "blockerCount": 2,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "ColorBox",
-      "DeadSwitch"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "ColorBox",
-      "DeadSwitch"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "ColorBox",
-      "DeadSwitch"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "ColorBox",
-      "DeadSwitch"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "ColorBox",
-      "DeadSwitch"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "ColorBox",
-      "DeadSwitch"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "ColorBox",
-      "DeadSwitch"
-     ]
+     "missing": []
     }
    }
   },
@@ -2805,10 +2689,9 @@
     "DistanceConstraint",
     "FrontSwitch",
     "SwitchRect",
-    "SwitchTargetGroup",
     "WarpAll"
    ],
-   "blockerCount": 6,
+   "blockerCount": 5,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
@@ -2818,8 +2701,7 @@
       "WarpAll",
       "CollisionConstraintMove",
       "SwitchRect",
-      "FrontSwitch",
-      "SwitchTargetGroup"
+      "FrontSwitch"
      ]
     },
     "3": {
@@ -2829,8 +2711,7 @@
       "WarpAll",
       "CollisionConstraintMove",
       "SwitchRect",
-      "FrontSwitch",
-      "SwitchTargetGroup"
+      "FrontSwitch"
      ]
     },
     "4": {
@@ -2840,8 +2721,7 @@
       "WarpAll",
       "CollisionConstraintMove",
       "SwitchRect",
-      "FrontSwitch",
-      "SwitchTargetGroup"
+      "FrontSwitch"
      ]
     },
     "5": {
@@ -2851,8 +2731,7 @@
       "WarpAll",
       "CollisionConstraintMove",
       "SwitchRect",
-      "FrontSwitch",
-      "SwitchTargetGroup"
+      "FrontSwitch"
      ]
     },
     "6": {
@@ -2862,8 +2741,7 @@
       "WarpAll",
       "CollisionConstraintMove",
       "SwitchRect",
-      "FrontSwitch",
-      "SwitchTargetGroup"
+      "FrontSwitch"
      ]
     },
     "7": {
@@ -2873,8 +2751,7 @@
       "WarpAll",
       "CollisionConstraintMove",
       "SwitchRect",
-      "FrontSwitch",
-      "SwitchTargetGroup"
+      "FrontSwitch"
      ]
     },
     "8": {
@@ -2884,8 +2761,7 @@
       "WarpAll",
       "CollisionConstraintMove",
       "SwitchRect",
-      "FrontSwitch",
-      "SwitchTargetGroup"
+      "FrontSwitch"
      ]
     }
    }
@@ -3061,10 +2937,9 @@
     "PlayerGun",
     "ShootingEnemyBoss",
     "ShootingEnemySpawner",
-    "ShootingSuperApple",
-    "SwitchTargetGroup"
+    "ShootingSuperApple"
    ],
-   "blockerCount": 10,
+   "blockerCount": 9,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
@@ -3078,7 +2953,6 @@
       "ShootingEnemyBoss",
       "OptimizedBulletObserver",
       "BgmChanger",
-      "SwitchTargetGroup",
       "ShootingSuperApple"
      ]
     },
@@ -3093,7 +2967,6 @@
       "ShootingEnemyBoss",
       "OptimizedBulletObserver",
       "BgmChanger",
-      "SwitchTargetGroup",
       "ShootingSuperApple"
      ]
     },
@@ -3108,7 +2981,6 @@
       "ShootingEnemyBoss",
       "OptimizedBulletObserver",
       "BgmChanger",
-      "SwitchTargetGroup",
       "ShootingSuperApple"
      ]
     },
@@ -3123,7 +2995,6 @@
       "ShootingEnemyBoss",
       "OptimizedBulletObserver",
       "BgmChanger",
-      "SwitchTargetGroup",
       "ShootingSuperApple"
      ]
     },
@@ -3138,7 +3009,6 @@
       "ShootingEnemyBoss",
       "OptimizedBulletObserver",
       "BgmChanger",
-      "SwitchTargetGroup",
       "ShootingSuperApple"
      ]
     },
@@ -3153,7 +3023,6 @@
       "ShootingEnemyBoss",
       "OptimizedBulletObserver",
       "BgmChanger",
-      "SwitchTargetGroup",
       "ShootingSuperApple"
      ]
     },
@@ -3168,7 +3037,6 @@
       "ShootingEnemyBoss",
       "OptimizedBulletObserver",
       "BgmChanger",
-      "SwitchTargetGroup",
       "ShootingSuperApple"
      ]
     }
@@ -3383,62 +3251,38 @@
   },
   {
    "id": "st_w_07_04",
-   "connected": false,
-   "distinctBlockers": [
-    "Ghost",
-    "Lift"
-   ],
-   "blockerCount": 2,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "Ghost",
-      "Lift"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "Ghost",
-      "Lift"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "Ghost",
-      "Lift"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "Ghost",
-      "Lift"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "Ghost",
-      "Lift"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "Ghost",
-      "Lift"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "Ghost",
-      "Lift"
-     ]
+     "missing": []
     }
    }
   },
@@ -3709,18 +3553,16 @@
    "connected": false,
    "distinctBlockers": [
     "Arrangement",
-    "ColorBox",
     "DummyColorBox",
     "DummyGoal",
     "DummyPlayer"
    ],
-   "blockerCount": 5,
+   "blockerCount": 4,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "ColorBox",
       "Arrangement",
       "DummyPlayer",
       "DummyColorBox",
@@ -3730,7 +3572,6 @@
     "3": {
      "variant": 0,
      "missing": [
-      "ColorBox",
       "Arrangement",
       "DummyPlayer",
       "DummyColorBox",
@@ -3740,7 +3581,6 @@
     "4": {
      "variant": 0,
      "missing": [
-      "ColorBox",
       "Arrangement",
       "DummyPlayer",
       "DummyColorBox",
@@ -3750,7 +3590,6 @@
     "5": {
      "variant": 0,
      "missing": [
-      "ColorBox",
       "Arrangement",
       "DummyPlayer",
       "DummyColorBox",
@@ -3760,7 +3599,6 @@
     "6": {
      "variant": 0,
      "missing": [
-      "ColorBox",
       "Arrangement",
       "DummyPlayer",
       "DummyColorBox",
@@ -3770,7 +3608,6 @@
     "7": {
      "variant": 0,
      "missing": [
-      "ColorBox",
       "Arrangement",
       "DummyPlayer",
       "DummyColorBox",
@@ -3780,7 +3617,6 @@
     "8": {
      "variant": 0,
      "missing": [
-      "ColorBox",
       "Arrangement",
       "DummyPlayer",
       "DummyColorBox",
@@ -3926,62 +3762,38 @@
   },
   {
    "id": "st_w_12_02",
-   "connected": false,
-   "distinctBlockers": [
-    "ColorBox",
-    "DeadSwitch"
-   ],
-   "blockerCount": 2,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "DeadSwitch",
-      "ColorBox"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "DeadSwitch",
-      "ColorBox"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "DeadSwitch",
-      "ColorBox"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "DeadSwitch",
-      "ColorBox"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "DeadSwitch",
-      "ColorBox"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "DeadSwitch",
-      "ColorBox"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "DeadSwitch",
-      "ColorBox"
-     ]
+     "missing": []
     }
    }
   },
@@ -4072,10 +3884,9 @@
     "ShootingEnemyBossEx",
     "ShootingEnemyBossExParamSetter",
     "ShootingEnemySpawner",
-    "ShootingSuperApple",
-    "SwitchTargetGroup"
+    "ShootingSuperApple"
    ],
-   "blockerCount": 11,
+   "blockerCount": 10,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
@@ -4090,7 +3901,6 @@
       "ShootingEnemyBossExParamSetter",
       "OptimizedBulletObserver",
       "BgmChanger",
-      "SwitchTargetGroup",
       "ShootingSuperApple"
      ]
     },
@@ -4106,7 +3916,6 @@
       "ShootingEnemyBossExParamSetter",
       "OptimizedBulletObserver",
       "BgmChanger",
-      "SwitchTargetGroup",
       "ShootingSuperApple"
      ]
     },
@@ -4122,7 +3931,6 @@
       "ShootingEnemyBossExParamSetter",
       "OptimizedBulletObserver",
       "BgmChanger",
-      "SwitchTargetGroup",
       "ShootingSuperApple"
      ]
     },
@@ -4138,7 +3946,6 @@
       "ShootingEnemyBossExParamSetter",
       "OptimizedBulletObserver",
       "BgmChanger",
-      "SwitchTargetGroup",
       "ShootingSuperApple"
      ]
     },
@@ -4154,7 +3961,6 @@
       "ShootingEnemyBossExParamSetter",
       "OptimizedBulletObserver",
       "BgmChanger",
-      "SwitchTargetGroup",
       "ShootingSuperApple"
      ]
     },
@@ -4170,7 +3976,6 @@
       "ShootingEnemyBossExParamSetter",
       "OptimizedBulletObserver",
       "BgmChanger",
-      "SwitchTargetGroup",
       "ShootingSuperApple"
      ]
     },
@@ -4186,7 +3991,6 @@
       "ShootingEnemyBossExParamSetter",
       "OptimizedBulletObserver",
       "BgmChanger",
-      "SwitchTargetGroup",
       "ShootingSuperApple"
      ]
     }

@@ -237,6 +237,13 @@ function ghosts(c,s,time){
   else{eyes(c,0,-6,14,8,5);c.fillStyle=INK;c.beginPath();c.ellipse(0,6,5,3,0,0,Math.PI*2);c.fill();}
   c.restore();}
 }
+function topViewFloor(c,s){
+ // top view: the walkable chips get a floor, fall chips (attribute 16, chip 69) a pit
+ const g=s.map&&s.map.tvChips;if(!g)return;const T=48,ATTR16=new Set([69]);
+ for(let y=0;y<g.height;y++)for(let x=0;x<g.width;x++){const chip=g.chips[y*g.width+x];
+  if(ATTR16.has(chip)){c.fillStyle='#2b2440';c.fillRect(x*T,y*T,T,T);c.fillStyle='rgba(0,0,0,.25)';c.fillRect(x*T,y*T,T,8);}
+  else if(chip<=1){c.fillStyle='#eddfc0';c.fillRect(x*T,y*T,T,T);}}
+}
 function blackoutLabels(c,s){
  const bc=s.blackoutState&&s.blackoutState.controllers&&s.blackoutState.controllers[0];
  if(!bc||!bc.visibleUI)return;const p=s.players[bc.playerIndex];if(!p||p.exit)return;
@@ -245,7 +252,7 @@ function blackoutLabels(c,s){
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
+ try{topViewFloor(c,s);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
