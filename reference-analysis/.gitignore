@@ -1,2 +1,5 @@
 # Local analysis outputs (test logs, Ghidra/disassembly dumps, probes) never go into git.
 *.local.*
+
+# raw dumps of the installed game (asset catalogs, inspection logs) stay on this PC
+local-data/
