@@ -336,14 +336,29 @@ function stepEnemies(c,s,time){
   c.fillStyle='#ffd7b8';rr(c,e.x+8,e.y+2,e.w-16,6,3);c.fill();
   eyes(c,cx+(e.left?-5:5),e.y+e.h*.5,12,6,4);c.restore();}
 }
+// 7-1 ArrowSign (direction 3 right / 2 left) and the half-input marks: a
+// player who currently holds an input right gets a small badge.
+function arrowSigns(c,s){
+ const H=root.SourceHalfInputDevices;if(!H||!s.halfInputState||!s.halfInputState.signs.length)return;
+ for(const g of s.halfInputState.signs){const right=g.direction===3;c.save();
+  c.fillStyle='#8b6a4a';rr(c,g.x-3,g.y-40,6,40,2);c.fill();
+  c.translate(g.x,g.y-52);if(!right)c.scale(-1,1);
+  c.beginPath();c.moveTo(-22,-10);c.lineTo(6,-10);c.lineTo(6,-18);c.lineTo(24,0);c.lineTo(6,18);c.lineTo(6,10);c.lineTo(-22,10);c.closePath();fillStroke(c,'#ffe7a8',INK,2);c.restore();}
+}
+function halfInputMarks(c,s){
+ const H=root.SourceHalfInputDevices;if(!H||!s.halfInputState||!s.halfInputState.enabled)return;
+ s.players.forEach((p,i)=>{if(p.exit||!s.halfInputState.flags[i])return;c.save();
+  c.beginPath();c.arc(p.x+p.w/2,p.y-18,7,0,Math.PI*2);fillStroke(c,'#ffd84d',INK,1.6);
+  c.fillStyle=INK;c.beginPath();c.moveTo(p.x+p.w/2-3,p.y-21);c.lineTo(p.x+p.w/2+4,p.y-18);c.lineTo(p.x+p.w/2-3,p.y-15);c.closePath();c.fill();c.restore();});
+}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);}
+ try{topViewFloor(c,s);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
-function drawAbove(c,s){if(!s)return;const time=performance.now()/1000;c.save();try{cardboards(c,s);bats(c,s,time);fallingCages(c,s);blackoutLabels(c,s);}finally{c.restore();}}
+function drawAbove(c,s){if(!s)return;const time=performance.now()/1000;c.save();try{cardboards(c,s);bats(c,s,time);fallingCages(c,s);halfInputMarks(c,s);blackoutLabels(c,s);}finally{c.restore();}}
 // Screen pass: the blackout darkness covers the whole view.
 function overlay(c,s,view){
  if(s)capturingCounter(c,s,view);
