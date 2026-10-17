@@ -31,7 +31,13 @@
 > ⚠️ 실기 확인 필요: 2-1 밧줄(DistanceConstraint)이 붙은 상태에선 밟기 튕김이 거의 상쇄됨(밧줄 없으면 ~20px 튕김). 원작과 같은지 볼 것.
 > 7-1: `source-halfinput-devices.js` — HalfOperator 가 스테이지 입력 모드 3(절반 조작)을 켬. tick 맨 앞에서 조작권 갱신
 > (StageComponent.updateInput 순서), 권한 없는 플레이어 입력은 비움. 최대 = ((인원-1)>>1)+1, 모든 버튼 떼면 권한 잃음. ArrowSign 은 표지판.
-> 다음 작업: 남은 라운드는 scan-remaining-work.cjs (가까운 순: 12-1, 13-3, 13-4 …).
+> **자동 스크롤(QScrollType 2) 구현 — 이미 연결된 12-4·11-2·12-2 도 이제 원작처럼 화면이 강제로 흘러감**(예전엔 플레이어 추적 카메라였음).
+> source-stage-autoscroll.js(생산자, convertFP 로 속도) + source-camera-native.js(funcAuto) 를 런타임 상태 `autoScrollState` 로,
+> 플레이어는 checkAutoScroll 0x1816c4f70(왼쪽 끝에 밀림, 32px(+속도5 이상이면 100px) 넘게 뒤처지면 이벤트43 '화면 밖으로 밀려났어요').
+> 밀리는 플레이어 앞 동료는 MoveContactActor 근사(걷기 이동 연쇄)로 함께 밀림. 렌더러는 rebuild/camera.js `fromAutoScroll`(⚠️ play/camera.js 는 패키징 때 덮어써짐).
+> 다음 작업: 15-4(FrontSwitch·IceRect·SwitchIceRect — 앞쪽 스위치·얼음 원작 분석 완료, CODEX-HANDOFF 아래 메모), 12-1, 2-3(점프대 switchType 2), 13-3, 13-4 …
+> FrontSwitch 메모: 감지 20x20, 고체(byte3&2)+층1~3/8 접촉 시 켜짐(61/60 to 대상·보조대상), 슬롯2≠0 순간형(매 프레임 접촉 해제), 슬롯3/4 인원별 위치 오프셋.
+> 얼음 메모: IceRect 고체(우선순위6/층6). 얼음 위 걷기 = 속도×IceResistivity(감속) + 입력×walk×IceFriction(가속), ±walk×IceSpeedUp 상한(OnUpdate_Default).
 > 새 도구: `tools/xref_static.py 0x<전역주소>` — RIP 상대 참조 스캔으로 TypeInfo 슬롯의 주인(.cctor) 찾기 (0.6초).
 > 상수 문자열(FP.FromString)은 `source-migration/resolve-string-literals.local.py --cctor 0x<cctor>` 로 값 확인.
 

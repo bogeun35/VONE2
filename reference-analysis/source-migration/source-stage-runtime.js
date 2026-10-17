@@ -48,9 +48,11 @@
   common?require('./source-batenemy-devices.js'):root.SourceBatEnemyDevices,
   common?require('./source-capturing-devices.js'):root.SourceCapturingDevices,
   common?require('./source-stepenemy-devices.js'):root.SourceStepEnemyDevices,
-  common?require('./source-halfinput-devices.js'):root.SourceHalfInputDevices);
+  common?require('./source-halfinput-devices.js'):root.SourceHalfInputDevices,
+  common?require('./source-stage-autoscroll.js'):root.SourceStageAutoScroll,
+  common?require('./source-camera-native.js'):root.SourceCameraNative);
  if(common)module.exports=api;root.SourceStageRuntime=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges,Blink,BlinkThunders,WarpInit,SwitchTimers,Enemies,ThornCeilings,CountUps,Lifts,Landmines,Poles,Winds,SpeedSwitches,LinePaths,Texts,Coins,Checkpoints,TouchEnergies,Pitchers,Balls,KeyBoxes,Blackouts,Players,Dossuns,SearchLights,LinePathGears,UpDownLifts,WarpGuns,BreakableRects,PlayerMagnets,ColorBoxes,MoveContact,Gears,TargetGroups,SineLifts,Ghosts,TopViews,Constraints,BatEnemies,Capturings,StepEnemies,HalfInputs){
+})(typeof globalThis!=='undefined'?globalThis:this,function(Terrain,Actor,Relay,Devices,Motion,Gates,Bridges,Blink,BlinkThunders,WarpInit,SwitchTimers,Enemies,ThornCeilings,CountUps,Lifts,Landmines,Poles,Winds,SpeedSwitches,LinePaths,Texts,Coins,Checkpoints,TouchEnergies,Pitchers,Balls,KeyBoxes,Blackouts,Players,Dossuns,SearchLights,LinePathGears,UpDownLifts,WarpGuns,BreakableRects,PlayerMagnets,ColorBoxes,MoveContact,Gears,TargetGroups,SineLifts,Ghosts,TopViews,Constraints,BatEnemies,Capturings,StepEnemies,HalfInputs,AutoScroll,CameraNative){
  'use strict';
  const clone=x=>JSON.parse(JSON.stringify(x));
  const overlap=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
@@ -74,6 +76,14 @@
    scrollType:sourceVariant?Number(sourceVariant.scrollType)||0:0,
    zoomOut:sourceVariant?Number(sourceVariant.zoomOut)||0:0,
    scrollingPorted:false};
+  // Auto scroll (QScrollType 2): StageComponent.prepare3 fills the speed/delay/
+  // end offset (source-stage-autoscroll.js), Camera.funcAuto follows
+  // Stage.scrollPosition (source-camera-native.js). Stage floats go through
+  // convertFP (trunc(float32 * 65536)).
+  const cfp=v=>Math.trunc(Math.fround(Math.fround(Number(v)||0)*65536));
+  const autoScroll=view.scrollType===2?{scroll:AutoScroll.compile(t.actors,count,{stage:sourceVariant,nativeParamRaws:{autoScrollDelayTime:cfp(sourceVariant.autoScrollDelayTime),autoScrollSpeed:cfp(sourceVariant.autoScrollSpeed),autoScrollSpeedOffset:cfp(sourceVariant.autoScrollSpeedOffset),autoScrollEndOffset:cfp(sourceVariant.autoScrollEndOffset)}}),
+   camera:CameraNative.compile({...sourceVariant,mapInitParam:{...mapInit,width:Number(mapInit.width),height:Number(mapInit.height),chipSize:Number(mapInit.chipSize),displayTileHeight:Number(mapInit.displayTileHeight)||0,startTileX:Number(mapInit.startTileX)||0,startTileY:Number(mapInit.startTileY)||0}})}:null;
+  if(autoScroll)view.scrollingPorted=true;
   const relays=Relay.create(t.actors,count);
   const devices=Devices.compile(t.actors,count);
   const motion=Motion.compile(t.actors,count);
@@ -185,7 +195,7 @@
    physics:{playerWidth:32,playerHeight:46,nativeTickRate,status:'calibration_pending'},
    unsupportedActors:t.actors.filter(a=>!supported.has(a.typeName)).map(a=>({type:a.typeName,x:a.x,y:a.y})),
    view,coordinateSystem:'Y-down'};
-  return {schemaVersion:1,count,map,relays,devices,motion,gates,bridges,blink,blinkThunders,warpInit,switchTimers,enemies,thornCeilings,countUps,lifts,landmines,poles,winds,speedSwitches,linePaths,texts,coins,checkpoints,touchEnergies,pitchers,keyBoxes,blackouts,dossuns,halfInput,stepEnemies,capturing,batEnemies,constraints,topViews,ghosts,sineLifts,targetGroups,gears,colorBoxes,playerMagnets,breakableRects,warpGuns,upDownLifts,linePathGears,searchLights,status:{state:'calibration_pending',missingMechanics,
+  return {schemaVersion:1,count,map,relays,devices,motion,gates,bridges,blink,blinkThunders,warpInit,switchTimers,enemies,thornCeilings,countUps,lifts,landmines,poles,winds,speedSwitches,linePaths,texts,coins,checkpoints,touchEnergies,pitchers,keyBoxes,blackouts,dossuns,autoScroll,halfInput,stepEnemies,capturing,batEnemies,constraints,topViews,ghosts,sineLifts,targetGroups,gears,colorBoxes,playerMagnets,breakableRects,warpGuns,upDownLifts,linePathGears,searchLights,status:{state:'calibration_pending',missingMechanics,
    unsupportedActorTypes:unsupported,sourceStage:stageId,sourceY:'down',completePhysicsFidelity:false}};
  }
  function create(compiled,options={}){
@@ -195,7 +205,7 @@
   const initPositions=(compiled.warpInit&&compiled.warpInit.initPositions)||[];
   const state={map,players:ids.map((id,i)=>({id,...map.spawns[i],initPos:initPositions[i]||{x:map.spawns[i].x+16,y:map.spawns[i].y+47.5},onPole:!!(compiled.poles&&compiled.poles.poles&&compiled.poles.poles.length),lookingRight:true,w:32,h:46,vx:0,vy:0,grounded:false,ground:false,
    supportId:null,jump:false,jumpFrame:0,exit:false,visible:true,playerState:1})),
-   relayState:clone(compiled.relays),deviceState:Devices.create(compiled.devices||{schemaVersion:1,count,devices:[],warnings:[]}),motionState:Motion.create(compiled.motion||{count,rects:[],dashBoards:[],walls:[]}),gateState:Gates.create(compiled.gates||{count,gates:[],observers:[],keys:[]}),bridgeState:Bridges.create(compiled.bridges||{count,bridges:[],thunders:[],keyTargets:[],keyTaken:false}),blinkState:Blink.create(compiled.blink||Blink.compile([],count)),blinkThunderState:BlinkThunders.create(compiled.blinkThunders||BlinkThunders.compile([],count)),warpInitState:WarpInit.create(compiled.warpInit||WarpInit.compile([],count)),switchTimerState:SwitchTimers.create(compiled.switchTimers||SwitchTimers.compile([],count)),enemyState:Enemies.create(compiled.enemies||Enemies.compile([],count)),thornCeilingState:ThornCeilings.create(compiled.thornCeilings||ThornCeilings.compile([],count)),countUpState:CountUps.create(compiled.countUps||CountUps.compile([],count)),liftState:Lifts.create(compiled.lifts||Lifts.compile([],count)),landmineState:Landmines.create(compiled.landmines||Landmines.compile([],count)),poleState:Poles.create(compiled.poles||Poles.compile([],count,{})),windState:Winds.create(compiled.winds||Winds.compile([],count,{})),speedSwitchState:SpeedSwitches.create(compiled.speedSwitches||SpeedSwitches.compile([],count,{})),linePathState:LinePaths.create(compiled.linePaths||LinePaths.compile([],count,{})),textsState:Texts.create(compiled.texts||Texts.compile([],count,{})),coinsState:Coins.create(compiled.coins||Coins.compile([],count,{})),checkpointsState:Checkpoints.create(compiled.checkpoints||Checkpoints.compile([],count,{})),touchEnergiesState:TouchEnergies.create(compiled.touchEnergies||TouchEnergies.compile([],count,{})),pitcherState:Pitchers.create(compiled.pitchers||Pitchers.compile([],count)),keyBoxState:KeyBoxes.create(compiled.keyBoxes||KeyBoxes.compile([],count)),blackoutState:Blackouts.create(compiled.blackouts||Blackouts.compile([],count,{})),dossunState:Dossuns.create(compiled.dossuns||Dossuns.compile([],count,{})),halfInputState:HalfInputs.create(compiled.halfInput||HalfInputs.compile([],count)),stepEnemyState:StepEnemies.create(compiled.stepEnemies||StepEnemies.compile([],count)),capturingState:Capturings.create(compiled.capturing||Capturings.compile([],count)),batState:BatEnemies.create(compiled.batEnemies||BatEnemies.compile([],count)),constraintState:Constraints.create(compiled.constraints||Constraints.compile([],count,{nativeConstraintFacts:true})),topViewState:TopViews.create(compiled.topViews||TopViews.compile([],count,{})),ghostState:Ghosts.create(compiled.ghosts||Ghosts.compile([],count,{checkpointInfo:{isActive:false}})),sineLiftState:SineLifts.create(compiled.sineLifts||SineLifts.compile([],count)),targetGroupState:TargetGroups.create(compiled.targetGroups||TargetGroups.compile([],count)),rollGearState:Gears.create(compiled.gears||Gears.compile([],count,{})),colorBoxState:ColorBoxes.create(compiled.colorBoxes||ColorBoxes.compile([],count,{})),magnetState:PlayerMagnets.create(compiled.playerMagnets||PlayerMagnets.compile([],count)),breakableState:BreakableRects.create(compiled.breakableRects||BreakableRects.compile([],count)),warpGunState:WarpGuns.create(compiled.warpGuns||WarpGuns.compile([],count)),upDownLiftState:UpDownLifts.create(compiled.upDownLifts||UpDownLifts.compile([],count)),gearState:LinePathGears.create(compiled.linePathGears||LinePathGears.compile([],count,{})),searchLightState:SearchLights.create(compiled.searchLights||SearchLights.compile([],count,{})),ballActors:{},boxActors:{},ballMeta:{serial:0,gone:{},key:null},playTimeRaw:0,keyActive:!compiled.gates||compiled.gates.keys.every(k=>k.active),sourceStatus:clone(compiled.status),physics:clone(map.physics),
+   relayState:clone(compiled.relays),deviceState:Devices.create(compiled.devices||{schemaVersion:1,count,devices:[],warnings:[]}),motionState:Motion.create(compiled.motion||{count,rects:[],dashBoards:[],walls:[]}),gateState:Gates.create(compiled.gates||{count,gates:[],observers:[],keys:[]}),bridgeState:Bridges.create(compiled.bridges||{count,bridges:[],thunders:[],keyTargets:[],keyTaken:false}),blinkState:Blink.create(compiled.blink||Blink.compile([],count)),blinkThunderState:BlinkThunders.create(compiled.blinkThunders||BlinkThunders.compile([],count)),warpInitState:WarpInit.create(compiled.warpInit||WarpInit.compile([],count)),switchTimerState:SwitchTimers.create(compiled.switchTimers||SwitchTimers.compile([],count)),enemyState:Enemies.create(compiled.enemies||Enemies.compile([],count)),thornCeilingState:ThornCeilings.create(compiled.thornCeilings||ThornCeilings.compile([],count)),countUpState:CountUps.create(compiled.countUps||CountUps.compile([],count)),liftState:Lifts.create(compiled.lifts||Lifts.compile([],count)),landmineState:Landmines.create(compiled.landmines||Landmines.compile([],count)),poleState:Poles.create(compiled.poles||Poles.compile([],count,{})),windState:Winds.create(compiled.winds||Winds.compile([],count,{})),speedSwitchState:SpeedSwitches.create(compiled.speedSwitches||SpeedSwitches.compile([],count,{})),linePathState:LinePaths.create(compiled.linePaths||LinePaths.compile([],count,{})),textsState:Texts.create(compiled.texts||Texts.compile([],count,{})),coinsState:Coins.create(compiled.coins||Coins.compile([],count,{})),checkpointsState:Checkpoints.create(compiled.checkpoints||Checkpoints.compile([],count,{})),touchEnergiesState:TouchEnergies.create(compiled.touchEnergies||TouchEnergies.compile([],count,{})),pitcherState:Pitchers.create(compiled.pitchers||Pitchers.compile([],count)),keyBoxState:KeyBoxes.create(compiled.keyBoxes||KeyBoxes.compile([],count)),blackoutState:Blackouts.create(compiled.blackouts||Blackouts.compile([],count,{})),dossunState:Dossuns.create(compiled.dossuns||Dossuns.compile([],count,{})),autoScrollState:compiled.autoScroll?(()=>{const sc=AutoScroll.create(compiled.autoScroll.scroll,{freshStageComponent:true}),cam=CameraNative.create(compiled.autoScroll.camera,null);return {scroll:sc,camera:cam,cameraAreaRaw:CameraNative.stageAreaRaw(cam),steps:0};})():null,halfInputState:HalfInputs.create(compiled.halfInput||HalfInputs.compile([],count)),stepEnemyState:StepEnemies.create(compiled.stepEnemies||StepEnemies.compile([],count)),capturingState:Capturings.create(compiled.capturing||Capturings.compile([],count)),batState:BatEnemies.create(compiled.batEnemies||BatEnemies.compile([],count)),constraintState:Constraints.create(compiled.constraints||Constraints.compile([],count,{nativeConstraintFacts:true})),topViewState:TopViews.create(compiled.topViews||TopViews.compile([],count,{})),ghostState:Ghosts.create(compiled.ghosts||Ghosts.compile([],count,{checkpointInfo:{isActive:false}})),sineLiftState:SineLifts.create(compiled.sineLifts||SineLifts.compile([],count)),targetGroupState:TargetGroups.create(compiled.targetGroups||TargetGroups.compile([],count)),rollGearState:Gears.create(compiled.gears||Gears.compile([],count,{})),colorBoxState:ColorBoxes.create(compiled.colorBoxes||ColorBoxes.compile([],count,{})),magnetState:PlayerMagnets.create(compiled.playerMagnets||PlayerMagnets.compile([],count)),breakableState:BreakableRects.create(compiled.breakableRects||BreakableRects.compile([],count)),warpGunState:WarpGuns.create(compiled.warpGuns||WarpGuns.compile([],count)),upDownLiftState:UpDownLifts.create(compiled.upDownLifts||UpDownLifts.compile([],count)),gearState:LinePathGears.create(compiled.linePathGears||LinePathGears.compile([],count,{})),searchLightState:SearchLights.create(compiled.searchLights||SearchLights.compile([],count,{})),ballActors:{},boxActors:{},ballMeta:{serial:0,gone:{},key:null},playTimeRaw:0,keyActive:!compiled.gates||compiled.gates.keys.every(k=>k.active),sourceStatus:clone(compiled.status),physics:clone(map.physics),
    status:'play',elapsed:0,ticks:0,accumulator:0,// A BallKeyBox creates the key later (createKeyAt), so its round starts locked.
    keyTaken:!map.key&&!((compiled.keyBoxes&&compiled.keyBoxes.boxes)||[]).length,
    // GoalComponent flag 1: opened only by the key's collision (layer 10) or event 61
@@ -628,6 +638,37 @@
     if(ev&&ev.eventType===36){p.vy=ev.jumpRaw.yRaw/65536*hz;p.grounded=false;p.ground=false;p.supportId=null;p.jumpFrame=0;}
     else if(ev&&ev.eventType===43&&!p.immortal)dead.push(p.id);}}
   return dead;
+ }
+ // ---- Auto scroll (QScrollType 2) ---------------------------------------------
+ // PlayerComponent.checkAutoScroll 0x1816c4f70, called from OnUpdate_Default for
+ // a scroll-type-2 stage with the walk velocity: a player whose next x would
+ // fall behind the camera's left edge by more than this update's scroll step is
+ // carried to (left + step); one whose x minus that velocity is more than 32 px
+ // (plus 100 when the stage speed is QFP._5 or more, else 0) behind the left
+ // edge gets event 43. The carried player's MoveContactActor(left - x, face 3)
+ // moves the players touching its right face (and theirs) along first; named
+ // approximation: that transport is a chain of walk moves stopped by terrain.
+ function autoScrollSpeedRaw(s){const a=s.autoScrollState;return AutoScroll.calculateStepRaw(a.scroll,{stageFlags:0,players:s.players.map(()=>({flags:0})),cameraAreaRaw:a.cameraAreaRaw});}
+ function autoScrollPush(s,p,hz){
+  const a=s.autoScrollState,F=65536;if(!a)return false;
+  let velo=Math.round((p.vx||0)/hz*F);const pos=Math.round((p.x+16)*F),left=a.cameraAreaRaw.x,step=autoScrollSpeedRaw(s);
+  const next=pos+velo;if(next-step<left){velo+=(left-next)+step;if(left>pos)autoScrollCarry(s,p,(left-pos)/F,new Set([p.id]));}
+  const margin=a.scroll.autoScrollSpeedRaw<5*F?0:100*F;
+  p.vx=velo/F*hz;
+  return (pos-velo)+32*F<left-margin;
+ }
+ function autoScrollCarry(s,p,d,seen){
+  const terrain=solids(s);
+  for(const q of s.players){if(q.exit||q.asBlock||seen.has(q.id))continue;
+   if(Math.abs(q.x-(p.x+p.w))<0.5&&q.y<p.y+p.h&&q.y+q.h>p.y){seen.add(q.id);autoScrollCarry(s,q,d,seen);
+    moveX(q,d,terrain.concat(s.players.filter(o=>o!==q&&!o.exit&&!seen.has(o.id))),s.map.width);}}
+ }
+ // Stage.onUpdate: the producer runs after the collision pass, then Actor.Post,
+ // then Camera.funcAuto.
+ function autoScrollStep(s,hz){
+  const a=s.autoScrollState;if(!a)return;
+  AutoScroll.updateAutoScroll(a.scroll,{dtRaw:Math.trunc(65536/hz),stageFlags:0,players:s.players.map(()=>({flags:0})),cameraAreaRaw:a.cameraAreaRaw});
+  a.cameraAreaRaw=CameraNative.updateAuto(a.camera,a.scroll.scrollPositionRaw).cameraAreaRaw;a.steps++;
  }
  // ---- Key carry (every round with a key) ------------------------------------
  // KeyComponent, from the saved Ghidra project: OnCollided 0x18186cc20,
@@ -1215,6 +1256,7 @@
    }else if(!started)p.jumpFrame=0;
    if(p.grounded)p.forcedVx=0;
    p.jump=held;p.vx=p.forcedVx||((input.right?1:0)-(input.left?1:0))*(p.walkSpeed||NATIVE.walk)*hz;
+   if(s.autoScrollState&&autoScrollPush(s,p,hz)&&!p.immortal){s.status='dead';s.deaths++;s.failure={playerId:p.id,reason:'화면 밖으로 밀려났어요'};return;}
    // Keep a grounded stack together, limited by every rider's available space.
    const obstacles=terrain.concat(players.filter(q=>q!==p&&!riders.includes(q)));let dx=p.vx*h+(p.windDx||0);p.windDx=0;
    for(const q of [p,...riders]){const trial={...q},allowed=moveX(trial,dx,obstacles.filter(b=>b.id!==q.id),s.map.width);if(Math.abs(allowed)<Math.abs(dx))dx=allowed;}
@@ -1364,6 +1406,7 @@
   if(enemyResult.deadPlayerIds.length){s.status='dead';s.deaths++;s.failure={playerId:enemyResult.deadPlayerIds[0],reason:'적에게 당했어요'};return;}
   if(thornCeilingResult.deadPlayerIds.length){s.status='dead';s.deaths++;s.failure={playerId:thornCeilingResult.deadPlayerIds[0],reason:'가시에 닿았어요'};return;}
   if(blinkThunderResult.deadPlayerIds.length){s.status='dead';s.deaths++;s.failure={playerId:blinkThunderResult.deadPlayerIds[0],reason:'전기에 닿았어요'};return;}
+  autoScrollStep(s,hz);
   // Native OnPost1 0x18169e260 applies a pending warp before CheckOutMap, so
   // every warp resolves ahead of the out-of-map test below.
   WarpInit.afterStep(s.warpInitState,{players,boxes:Devices.solids(s.deviceState),dt:h,nativeTickRate:hz});

@@ -47,7 +47,7 @@ function render(){
  // The view keeps a fixed logical height and takes the screen's shape, so the
  // camera gets the real width instead of a stretched 1200x675 picture.
  const view=window.ParkArt?ParkArt.viewport(canvas):{width:1200,height:675,scale:canvas.height/675};
- camera=ParkCamera.update(camera,state.players,state.map,{width:view.width,height:view.height},1/60);
+ camera=state.autoScrollState&&ParkCamera.fromAutoScroll?ParkCamera.fromAutoScroll(state.autoScrollState,{width:view.width,height:view.height}):ParkCamera.update(camera,state.players,state.map,{width:view.width,height:view.height},1/60);
  if(window.ParkArt&&!artFailed){try{ParkArt.render(ctx,state,camera,{canvas,viewport:view,selected,time:performance.now()/1000,debugBoxes});}catch(e){artFailed=true;console.error('ParkArt',e);renderFlat();}}
  else renderFlat();
  $('progress').textContent=`${state.goalOpen?'🔑 ✓':state.keyTaken?'🔑 …':'🔑'}　${state.players.filter(p=>p.exit).length} / ${state.players.length}`;
