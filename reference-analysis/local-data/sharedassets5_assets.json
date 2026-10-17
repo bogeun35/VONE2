@@ -1,0 +1,13 @@
+{
+  "file": "sharedassets5.assets",
+  "bytes": 8504,
+  "sha256": "67a84c67ff0e40f2f93c5f149d0335c4b6ccd6c79dd0fef05ac3caccd4751b70",
+  "type_counts": {
+    "PreloadData": 1,
+    "Texture2D": 1,
+    "AnimationClip": 1,
+    "AnimatorController": 1
+  },
+  "objects": [],
+  "errors": []
+}

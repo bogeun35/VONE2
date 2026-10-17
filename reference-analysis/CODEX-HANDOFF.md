@@ -5,10 +5,15 @@
 
 ## 현재 상태
 
-> **2026-10-17 Claude 재개**: 라이브 **18라운드**(+10-3), 배포 `v=20261017-01` / chamchicode `69134d5`, VONE2 `e37a5ac1`.
-> Codex 의 미푸시 커밋 37개를 푸시했고, `.local` 산출물은 git 에서 뺐다(`reference-analysis/.gitignore`).
-> Codex 의 native 재구성 경로(source-native-*.js)는 라이브 런타임과 분리된 채 보존돼 있다 — 연결 안 됨.
-> 다음 후보: 5-1(Coin 등록됨 + WeightedLift 슬롯맵은 lift 모듈 unresolved 에), 14-3(쏘기 입력), 02_02·03_03·05_03.
+> **2026-10-17 저녁 (Claude)**: 라이브 **22라운드**, 배포 `v=20261017-05` / chamchicode `ddb3d46`.
+> 1-1 1-2 1-3 1-4 4-1 4-3 4-4 5-2 10-2 11-4 7-2 10-1 10-4 13-1 11-2 12-3 3-2 10-3 5-1 2-2 7-3 **14-3**.
+> - 14-3: Dossun(쿵쿵 블록) + PlayerBlockGun(X키로 동료를 블록으로) 연결. 호스트는 `source-stage-runtime.js` 의 `dossunTick`.
+> - **화면 버그 수정**: 라이브 그림은 `park-art.js` 가 그리고, `play.js` 의 `renderFlat` 은 실패 시 대체 경로뿐이었다.
+>   그래서 12라운드 이후 장치(리프트·폴/가시·적·공/투수/상자·바람·선로·카운트업·지뢰 표시·암전)가 **라이브에서 안 보였다**.
+>   이제 `play/source-device-art.js` 하나가 두 경로 모두에서 그린다(아래 등록 순서 참고).
+> - 10-3: 열쇠가 상자에서 나중에 생기는데 "시작 시 열쇠 없음 = 문 열림"으로 처리돼 문이 처음부터 열려 있었다 → 잠긴 채 시작.
+> - `check-source-play.cjs` 가 `restart()` 를 감시하지 않아 예전부터 깨져 있던 것 수정(지금 통과).
+> - 테스트 2384 통과. 다음 후보(차단 1개): 03_01(SearchLight chipSize), 03_03·05_03(PlayerMagnet), 14_01, 15_01(LinePathGear).
 
 
 - **최신 로컬 상태**: v20261013-12 배포 커밋 `ec50e31` 준비됨(3-2 재귀 탑승 인원 수정). 라이브는 v20261013-11 / `4dd3947` 유지. VONE2 로컬 `f69a3bfa`, `791c5a8d` 및 후속 커밋이 원격 `cec72c8e`보다 앞서며 푸시 보류. 원격 승인 심사가 다시 거절한 정확한 내역과 재개 명령은 문서 마지막 절에 있음. 이전 “현재 차단 아님” 문구는 당시 기록이다.
@@ -22,9 +27,9 @@
 
 ## 리드 세션이 할 일 (우선순위)
 
-1. **14-3 연결** — `source-dossun-devices.js` + `source-playerblock-devices.js` 는 모듈 단위로 2..8인 컴파일된다.
-   필요한 런타임 작업: 새 입력 "input9"(쏘기 버튼, 키 하나 추가 — 아래 `down` 추가한 방식 참고),
-   총알/블록 상태, 이벤트 65/66, `moveActors` 콜백, `cameraAreaRaw`. 두 모듈의 `integration` 필드가 계약이다.
+0. (완료 2026-10-17) 14-3, 5-1, 2-2, 7-3 은 열렸다. 아래 1~4 는 기록용.
+   지금 할 일은 `node source-migration/scan-remaining-work.cjs` 의 `nearest` 순서.
+1. ~~14-3 연결~~ — 완료.
 2. **5-1 열기** — `source-coin-devices.js`(완성, 미등록) + `WeightedLift`.
    WeightedLift(=NormalWeightedLiftComponent)의 슬롯 맵은 `source-lift-devices.js` 의 `unresolved.siblingSlotMaps`
    에 주소까지 적혀 있다. 그 모듈이 거부하던 "1/65536 배수가 아닌 슬롯"(datas[4]=-0.1)은 이제 풀렸다 —
@@ -54,7 +59,11 @@
 - `deploy-source-play.cjs`: `app` 목록에 모듈 파일
 - `play/index.html`: `<script src="모듈.js?v=20261010-01">` 를 `source-stage-runtime.js` 보다 앞에
 - `play/online.js`: `DEVICE_STATES` 에 `['xs','xState']` — **빠뜨리면 온라인 동료 화면에서 장치가 멈춘다**
-- `play/play.js`: 렌더링(안 그리면 안 보인다). `scan-remaining-work.cjs` 의 `MODULES` 에도 추가
+- **그리기는 `play/source-device-art.js`** 에 함수 하나 추가 후 `draw()` 목록에 넣는다. 라이브는 `park-art.js` 가
+  그리고 이 파일을 훅으로 부른다(장치=친구들 아래, `drawAbove`=친구들 위, `overlay`=화면 전체).
+  `play.js` 의 `renderFlat` 에만 그리면 **라이브에서 안 보인다**(2026-10-17 까지 실제로 그랬음).
+  확인은 헤드리스 크롬 스크린샷으로: 기본 그림 경로가 park-art 인지 눈으로 볼 것.
+- `scan-remaining-work.cjs` 의 `MODULES` 에도 추가
 
 플레이어를 바꾸는 장치용 공통 필드(이미 런타임이 지원): `p.inputLocked`(입력 무시), `p.grayscale`,
 `p.onPole`, `p.walkSpeed`(개인 걷기 속도), `p.windDx`(한 틱짜리 수평 오프셋). 새 입력 키를 추가할 땐
@@ -93,7 +102,14 @@ cd .. && git add reference-analysis/... && git commit -m "..." && git push      
 2. DamageRect 의 활성 조건 mask 3 에 지형도 포함되는지(지금은 플레이어만 봄).
 3. `source-move-contact.js` 부분 완료 — 원작 충돌 캐시 생성과 타입별 콜백 근거.
 4. 11-2 기둥: 원작은 좌/우로 기둥 반대편(52px)으로 도는 것으로 보이나 미구현, 탑승자끼리 충돌 없음.
-5. 새로 연 라운드(10-1 10-4 13-1 11-2 12-3 3-2)는 **사람이 끝까지 해본 적 없다**.
+5. 새로 연 라운드(10-1 10-4 13-1 11-2 12-3 3-2 10-3 5-1 2-2 7-3 14-3)는 **사람이 끝까지 해본 적 없다**.
+5a. **무대 `scale`**: `stageInitParam.scale` 이 10-1(5인 이상)·10-2·10-3 에서 1.5 인데 런타임은 무시한다.
+    StageComponent 액터 배율(Actor.Initialize 0x18169cd02)이 이 값이면 그 라운드의 캐릭터·장치 크기가 원작과 다르다.
+    지금은 Dossun 만 이 값을 읽는다(14-3 은 1).
+5b. 14-3 호스트 근사(이름 붙여 둠): 총알은 쏜 사람과 충돌하지 않음(collideBullet 이 소유자 확인보다 먼저
+    사라지기를 요청하므로 원작 레이어 필터가 자기 충돌을 안 낸다고 판단), 총알은 블록을 통과,
+    PlayerBlock 은 떨어지지 않음(모듈에 가속 없음), 쿵쿵은 지형·플레이어·블록(충돌 종류 3)에서 멈춘다,
+    카메라 영역 = 살아있는 플레이어 범위 ±반 화면.
 
 6. **14-3 런타임 계약 차단**: source-dossun-devices.js moveActors는 원작 Actor 이동·ordered contact discovery 콜백을 요구한다. PlayerBlock 65/66의 pause/hide/returnKey와 cameraAreaRaw/equipment도 필요. source-move-contact.js는 cached contacts/mapNormals 필수, 일반 Player27 callback 부재는 registry에서 확인했다. PlayerMagnet72는 여전히 거부한다(0x1816a1517). 센서 Map.Move 결과를 단순 바닥 AABB로 대체하지 않았다. 모듈 컴파일 성공을 라운드 개방으로 집계하지 않음.
 7. **5-1 수직 리프트 차단**: 실제 2/8인 모두 moveDirection.Y=-310, X=0. -0.1의 FP 변환은 확정(0x180554310 → 0x18163fcb0 → 0x18163fc40)이나 축 방향 IsEnableMoveContactActor core 및 일반 Player callback 부재는 해결했지만 native contact cache adapter가 미완료다. fractional refusal 해제만으로 개방 불가.

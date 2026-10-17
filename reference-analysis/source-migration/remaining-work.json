@@ -24,12 +24,21 @@
   "st_w_10_03",
   "st_w_05_01",
   "st_w_02_02",
-  "st_w_07_03"
+  "st_w_07_03",
+  "st_w_14_03"
  ],
  "worldStages": 60,
- "remainingStages": 39,
- "remainingDistinctBlockers": 79,
+ "remainingStages": 38,
+ "remainingDistinctBlockers": 75,
  "nearest": [
+  {
+   "id": "st_w_03_01",
+   "blockerCount": 1,
+   "blockers": [
+    "SearchLight"
+   ],
+   "guardsAfterTypes": []
+  },
   {
    "id": "st_w_03_03",
    "blockerCount": 1,
@@ -47,6 +56,14 @@
    "guardsAfterTypes": []
   },
   {
+   "id": "st_w_14_01",
+   "blockerCount": 1,
+   "blockers": [
+    "BreakableRect"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
    "id": "st_w_15_01",
    "blockerCount": 1,
    "blockers": [
@@ -60,15 +77,6 @@
    "blockers": [
     "ColorBox",
     "MoveWall"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_03_01",
-   "blockerCount": 2,
-   "blockers": [
-    "Blackout",
-    "SearchLight"
    ],
    "guardsAfterTypes": []
   },
@@ -100,6 +108,15 @@
    "guardsAfterTypes": []
   },
   {
+   "id": "st_w_09_03",
+   "blockerCount": 2,
+   "blockers": [
+    "BatEnemy",
+    "TopViewPlayer"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
    "id": "st_w_09_04",
    "blockerCount": 2,
    "blockers": [
@@ -116,24 +133,6 @@
     "Stick"
    ],
    "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_12_02",
-   "blockerCount": 2,
-   "blockers": [
-    "ColorBox",
-    "DeadSwitch"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_12_04",
-   "blockerCount": 2,
-   "blockers": [
-    "MoveWall",
-    "SpeedSwitch"
-   ],
-   "guardsAfterTypes": []
   }
  ],
  "byType": [
@@ -148,6 +147,26 @@
    "opensAlone": [
     "st_w_03_03",
     "st_w_05_03"
+   ]
+  },
+  {
+   "type": "SearchLight",
+   "stages": [
+    "st_w_03_01"
+   ],
+   "appearsIn": 1,
+   "opensAlone": [
+    "st_w_03_01"
+   ]
+  },
+  {
+   "type": "BreakableRect",
+   "stages": [
+    "st_w_14_01"
+   ],
+   "appearsIn": 1,
+   "opensAlone": [
+    "st_w_14_01"
    ]
   },
   {
@@ -208,17 +227,6 @@
     "st_w_15_03"
    ],
    "appearsIn": 5,
-   "opensAlone": []
-  },
-  {
-   "type": "Blackout",
-   "stages": [
-    "st_w_09_01",
-    "st_w_03_01",
-    "st_w_09_03",
-    "st_w_15_02"
-   ],
-   "appearsIn": 4,
    "opensAlone": []
   },
   {
@@ -333,15 +341,6 @@
    "stages": [
     "st_w_02_04",
     "st_w_12_04"
-   ],
-   "appearsIn": 2,
-   "opensAlone": []
-  },
-  {
-   "type": "PlayerBlockGun",
-   "stages": [
-    "st_w_14_03",
-    "st_w_14_01"
    ],
    "appearsIn": 2,
    "opensAlone": []
@@ -563,22 +562,6 @@
    "opensAlone": []
   },
   {
-   "type": "SearchLight",
-   "stages": [
-    "st_w_03_01"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "Dossun",
-   "stages": [
-    "st_w_14_03"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
    "type": "IceRect",
    "stages": [
     "st_w_15_04"
@@ -646,14 +629,6 @@
    "type": "PlaneObstacle",
    "stages": [
     "st_w_06_03"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "BlackoutController",
-   "stages": [
-    "st_w_15_02"
    ],
    "appearsIn": 1,
    "opensAlone": []
@@ -742,14 +717,6 @@
    "type": "MoleNest",
    "stages": [
     "st_w_14_02"
-   ],
-   "appearsIn": 1,
-   "opensAlone": []
-  },
-  {
-   "type": "BreakableRect",
-   "stages": [
-    "st_w_14_01"
    ],
    "appearsIn": 1,
    "opensAlone": []
@@ -878,17 +845,15 @@
    "connected": false,
    "distinctBlockers": [
     "BatEnemy",
-    "Blackout",
     "FallingCage",
     "TopViewPlayer"
    ],
-   "blockerCount": 4,
+   "blockerCount": 3,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "TopViewPlayer",
       "BatEnemy",
       "FallingCage"
@@ -897,7 +862,6 @@
     "3": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "TopViewPlayer",
       "BatEnemy",
       "FallingCage"
@@ -906,7 +870,6 @@
     "4": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "TopViewPlayer",
       "BatEnemy",
       "FallingCage"
@@ -915,7 +878,6 @@
     "5": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "TopViewPlayer",
       "BatEnemy",
       "FallingCage"
@@ -924,7 +886,6 @@
     "6": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "TopViewPlayer",
       "BatEnemy",
       "FallingCage"
@@ -933,7 +894,6 @@
     "7": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "TopViewPlayer",
       "BatEnemy",
       "FallingCage"
@@ -942,7 +902,6 @@
     "8": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "TopViewPlayer",
       "BatEnemy",
       "FallingCage"
@@ -1237,61 +1196,37 @@
   {
    "id": "st_w_10_03",
    "connected": true,
-   "distinctBlockers": [
-    "BallKeyBox",
-    "BoundBallPitcher"
-   ],
-   "blockerCount": 2,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "BoundBallPitcher",
-      "BallKeyBox"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "BoundBallPitcher",
-      "BallKeyBox"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "BoundBallPitcher",
-      "BallKeyBox"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 1,
-     "missing": [
-      "BoundBallPitcher",
-      "BallKeyBox"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 1,
-     "missing": [
-      "BoundBallPitcher",
-      "BallKeyBox"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 1,
-     "missing": [
-      "BoundBallPitcher",
-      "BallKeyBox"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 1,
-     "missing": [
-      "BoundBallPitcher",
-      "BallKeyBox"
-     ]
+     "missing": []
     }
    }
   },
@@ -1393,61 +1328,37 @@
   {
    "id": "st_w_07_03",
    "connected": true,
-   "distinctBlockers": [
-    "Blackout",
-    "BlackoutController"
-   ],
-   "blockerCount": 2,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "Blackout",
-      "BlackoutController"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "Blackout",
-      "BlackoutController"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "Blackout",
-      "BlackoutController"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "Blackout",
-      "BlackoutController"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "Blackout",
-      "BlackoutController"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "Blackout",
-      "BlackoutController"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "Blackout",
-      "BlackoutController"
-     ]
+     "missing": []
     }
    }
   },
@@ -1516,58 +1427,50 @@
    "id": "st_w_03_01",
    "connected": false,
    "distinctBlockers": [
-    "Blackout",
     "SearchLight"
    ],
-   "blockerCount": 2,
+   "blockerCount": 1,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "SearchLight"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "SearchLight"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "SearchLight"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "SearchLight"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "SearchLight"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "SearchLight"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "SearchLight"
      ]
     }
@@ -1575,62 +1478,38 @@
   },
   {
    "id": "st_w_14_03",
-   "connected": false,
-   "distinctBlockers": [
-    "Dossun",
-    "PlayerBlockGun"
-   ],
-   "blockerCount": 2,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "Dossun",
-      "PlayerBlockGun"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "Dossun",
-      "PlayerBlockGun"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "Dossun",
-      "PlayerBlockGun"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "Dossun",
-      "PlayerBlockGun"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "Dossun",
-      "PlayerBlockGun"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "Dossun",
-      "PlayerBlockGun"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "Dossun",
-      "PlayerBlockGun"
-     ]
+     "missing": []
     }
    }
   },
@@ -2145,16 +2024,14 @@
    "connected": false,
    "distinctBlockers": [
     "BatEnemy",
-    "Blackout",
     "TopViewPlayer"
    ],
-   "blockerCount": 3,
+   "blockerCount": 2,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "TopViewPlayer",
       "BatEnemy"
      ]
@@ -2162,7 +2039,6 @@
     "3": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "TopViewPlayer",
       "BatEnemy"
      ]
@@ -2170,7 +2046,6 @@
     "4": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "TopViewPlayer",
       "BatEnemy"
      ]
@@ -2178,7 +2053,6 @@
     "5": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "TopViewPlayer",
       "BatEnemy"
      ]
@@ -2186,7 +2060,6 @@
     "6": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "TopViewPlayer",
       "BatEnemy"
      ]
@@ -2194,7 +2067,6 @@
     "7": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "TopViewPlayer",
       "BatEnemy"
      ]
@@ -2202,7 +2074,6 @@
     "8": {
      "variant": 0,
      "missing": [
-      "Blackout",
       "TopViewPlayer",
       "BatEnemy"
      ]
@@ -2879,19 +2750,15 @@
    "id": "st_w_15_02",
    "connected": false,
    "distinctBlockers": [
-    "Blackout",
-    "BlackoutController",
     "ColorBox",
     "DeadSwitch"
    ],
-   "blockerCount": 4,
+   "blockerCount": 2,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "Blackout",
-      "BlackoutController",
       "ColorBox",
       "DeadSwitch"
      ]
@@ -2899,8 +2766,6 @@
     "3": {
      "variant": 0,
      "missing": [
-      "Blackout",
-      "BlackoutController",
       "ColorBox",
       "DeadSwitch"
      ]
@@ -2908,8 +2773,6 @@
     "4": {
      "variant": 0,
      "missing": [
-      "Blackout",
-      "BlackoutController",
       "ColorBox",
       "DeadSwitch"
      ]
@@ -2917,8 +2780,6 @@
     "5": {
      "variant": 0,
      "missing": [
-      "Blackout",
-      "BlackoutController",
       "ColorBox",
       "DeadSwitch"
      ]
@@ -2926,8 +2787,6 @@
     "6": {
      "variant": 0,
      "missing": [
-      "Blackout",
-      "BlackoutController",
       "ColorBox",
       "DeadSwitch"
      ]
@@ -2935,8 +2794,6 @@
     "7": {
      "variant": 0,
      "missing": [
-      "Blackout",
-      "BlackoutController",
       "ColorBox",
       "DeadSwitch"
      ]
@@ -2944,8 +2801,6 @@
     "8": {
      "variant": 0,
      "missing": [
-      "Blackout",
-      "BlackoutController",
       "ColorBox",
       "DeadSwitch"
      ]
@@ -3911,58 +3766,50 @@
    "id": "st_w_14_01",
    "connected": false,
    "distinctBlockers": [
-    "BreakableRect",
-    "PlayerBlockGun"
+    "BreakableRect"
    ],
-   "blockerCount": 2,
+   "blockerCount": 1,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
-      "PlayerBlockGun",
       "BreakableRect"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
-      "PlayerBlockGun",
       "BreakableRect"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
-      "PlayerBlockGun",
       "BreakableRect"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
-      "PlayerBlockGun",
       "BreakableRect"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
-      "PlayerBlockGun",
       "BreakableRect"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
-      "PlayerBlockGun",
       "BreakableRect"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
-      "PlayerBlockGun",
       "BreakableRect"
      ]
     }

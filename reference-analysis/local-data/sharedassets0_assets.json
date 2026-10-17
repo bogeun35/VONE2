@@ -1,0 +1,254 @@
+{
+  "file": "sharedassets0.assets",
+  "bytes": 9720,
+  "sha256": "57b4a75c0e9d917d2437c702029221e4103d8e418b09a3b3c262aef0c26dd581",
+  "type_counts": {
+    "PreloadData": 1,
+    "MonoBehaviour": 11
+  },
+  "objects": [
+    {
+      "path_id": 2,
+      "type": "MonoBehaviour",
+      "typetree_error": "Expected to read 96 bytes, but only read 44 bytes",
+      "partial_fields_only": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": 3413
+        },
+        "m_Name": "UI/Navigate"
+      },
+      "m_Name": "UI/Navigate",
+      "script_pointer": {
+        "file_id": 1,
+        "path_id": 3413
+      }
+    },
+    {
+      "path_id": 3,
+      "type": "MonoBehaviour",
+      "typetree_error": "Expected to read 100 bytes, but only read 48 bytes",
+      "partial_fields_only": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": 3413
+        },
+        "m_Name": "UI/RightClick"
+      },
+      "m_Name": "UI/RightClick",
+      "script_pointer": {
+        "file_id": 1,
+        "path_id": 3413
+      }
+    },
+    {
+      "path_id": 4,
+      "type": "MonoBehaviour",
+      "typetree_error": "Expected to read 100 bytes, but only read 48 bytes",
+      "partial_fields_only": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": 3413
+        },
+        "m_Name": "UI/MiddleClick"
+      },
+      "m_Name": "UI/MiddleClick",
+      "script_pointer": {
+        "file_id": 1,
+        "path_id": 3413
+      }
+    },
+    {
+      "path_id": 5,
+      "type": "MonoBehaviour",
+      "typetree_error": "Expected to read 92 bytes, but only read 40 bytes",
+      "partial_fields_only": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": 3413
+        },
+        "m_Name": "UI/Point"
+      },
+      "m_Name": "UI/Point",
+      "script_pointer": {
+        "file_id": 1,
+        "path_id": 3413
+      }
+    },
+    {
+      "path_id": 6,
+      "type": "MonoBehaviour",
+      "typetree_error": "Expected to read 7980 bytes, but only read 52 bytes",
+      "partial_fields_only": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": 734
+        },
+        "m_Name": "DefaultInputActions"
+      },
+      "m_Name": "DefaultInputActions",
+      "script_pointer": {
+        "file_id": 1,
+        "path_id": 734
+      }
+    },
+    {
+      "path_id": 7,
+      "type": "MonoBehaviour",
+      "typetree_error": "Expected to read 96 bytes, but only read 44 bytes",
+      "partial_fields_only": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": 3413
+        },
+        "m_Name": "UI/Submit"
+      },
+      "m_Name": "UI/Submit",
+      "script_pointer": {
+        "file_id": 1,
+        "path_id": 3413
+      }
+    },
+    {
+      "path_id": 8,
+      "type": "MonoBehaviour",
+      "typetree_error": "Expected to read 92 bytes, but only read 40 bytes",
+      "partial_fields_only": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": 3413
+        },
+        "m_Name": "UI/Click"
+      },
+      "m_Name": "UI/Click",
+      "script_pointer": {
+        "file_id": 1,
+        "path_id": 3413
+      }
+    },
+    {
+      "path_id": 9,
+      "type": "MonoBehaviour",
+      "typetree_error": "Expected to read 100 bytes, but only read 48 bytes",
+      "partial_fields_only": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": 3413
+        },
+        "m_Name": "UI/ScrollWheel"
+      },
+      "m_Name": "UI/ScrollWheel",
+      "script_pointer": {
+        "file_id": 1,
+        "path_id": 3413
+      }
+    },
+    {
+      "path_id": 10,
+      "type": "MonoBehaviour",
+      "typetree_error": "Expected to read 108 bytes, but only read 56 bytes",
+      "partial_fields_only": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": 3413
+        },
+        "m_Name": "UI/TrackedDevicePosition"
+      },
+      "m_Name": "UI/TrackedDevicePosition",
+      "script_pointer": {
+        "file_id": 1,
+        "path_id": 3413
+      }
+    },
+    {
+      "path_id": 11,
+      "type": "MonoBehaviour",
+      "typetree_error": "Expected to read 96 bytes, but only read 44 bytes",
+      "partial_fields_only": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": 3413
+        },
+        "m_Name": "UI/Cancel"
+      },
+      "m_Name": "UI/Cancel",
+      "script_pointer": {
+        "file_id": 1,
+        "path_id": 3413
+      }
+    },
+    {
+      "path_id": 12,
+      "type": "MonoBehaviour",
+      "typetree_error": "Expected to read 112 bytes, but only read 60 bytes",
+      "partial_fields_only": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": 3413
+        },
+        "m_Name": "UI/TrackedDeviceOrientation"
+      },
+      "m_Name": "UI/TrackedDeviceOrientation",
+      "script_pointer": {
+        "file_id": 1,
+        "path_id": 3413
+      }
+    }
+  ],
+  "errors": []
+}

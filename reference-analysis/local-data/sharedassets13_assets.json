@@ -1,0 +1,12 @@
+{
+  "file": "sharedassets13.assets",
+  "bytes": 24320,
+  "sha256": "b525aff9d889cd68b94d963a1ba50ef5b0788b809de7a7a17fb975ddc85ac38d",
+  "type_counts": {
+    "PreloadData": 1,
+    "Texture2D": 2,
+    "Sprite": 2
+  },
+  "objects": [],
+  "errors": []
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "file": "resources.assets",
+    "bytes": 14809632,
+    "type_counts": {
+      "Material": 29,
+      "Texture2D": 52,
+      "Mesh": 8,
+      "Shader": 17,
+      "TextAsset": 15,
+      "AnimationClip": 126,
+      "AudioClip": 28,
+      "AnimatorController": 47,
+      "MonoScript": 9,
+      "Font": 2,
+      "Sprite": 473,
+      "GameObject": 1847,
+      "Transform": 881,
+      "MeshRenderer": 20,
+      "MeshFilter": 6,
+      "BoxCollider2D": 24,
+      "Animator": 77,
+      "TrailRenderer": 1,
+      "LineRenderer": 10,
+      "ParticleSystem": 6,
+      "ParticleSystemRenderer": 6,
+      "SortingGroup": 154,
+      "SpriteRenderer": 359,
+      "CanvasRenderer": 661,
+      "Canvas": 27,
+      "RectTransform": 966,
+      "CanvasGroup": 30,
+      "Grid": 2,
+      "TilemapRenderer": 4,
+      "SpriteAtlas": 3,
+      "Tilemap": 4,
+      "MonoBehaviour": 2348
+    },
+    "errors": [],
+    "typetree_failures": 2348
+  }
+]

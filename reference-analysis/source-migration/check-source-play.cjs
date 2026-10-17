@@ -5,7 +5,7 @@ const http=require('node:http'),fs=require('node:fs'),path=require('node:path'),
  server=http.createServer(require('./atlas-preview.cjs').handler);await new Promise(r=>server.listen(0,'127.0.0.1',r));
  browser=await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',args:['--mute-audio']});
  const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.addInitScript(()=>{let api;Object.defineProperty(window,'SourceStageRuntime',{configurable:true,get(){return api},set(value){api={...value,create(...args){const s=value.create(...args);window.__sourceTestState=s;return s}}}});});
+ await page.addInitScript(()=>{let api;Object.defineProperty(window,'SourceStageRuntime',{configurable:true,get(){return api},set(value){api={...value,create(...args){const s=value.create(...args);window.__sourceTestState=s;return s},restart(...args){const s=value.restart(...args);window.__sourceTestState=s;return s}}}});});
  await page.addInitScript(()=>{const OriginalAudio=window.Audio;window.Audio=function(...args){const a=new OriginalAudio(...args);window.__sourceTestMusic=a;return a;};});
  await page.goto(`http://127.0.0.1:${server.address().port}/play/?mute=1`);
  for(let count=2;count<=8;count++){
