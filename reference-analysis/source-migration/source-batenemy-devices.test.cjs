@@ -22,8 +22,38 @@ test('QPlayerCountParam decode and the walk-down lookup',()=>{
  assert.equal(B.findCount([1,0,0,0,0,0,0],5),1);assert.equal(B.findCount(t,1),0);
  assert.deepEqual(B.countTable({datas:[{t:2,s:'#!!!'}]},0),[0,0,0,0,0,0,0]);
 });
-test('a bat with a patrol path is refused until QLinePath is reconstructed',()=>{
- assert.throws(()=>B.compile(actors('st_w_09_03'),2,{chipSize:48}),/QLinePath/);
+test('9-3 bats patrol their QLinePath: one way, 1 s rest, back again',()=>{
+ const c=B.compile(actors('st_w_09_03'),2,{chipSize:48}),b=c.bats[0];
+ assert.deepEqual(b.path.paths,[{xRaw:0,yRaw:60*F}]);// slots 12/13, stopped at the (0,0) pair
+ assert.equal(b.path.totalLengthRaw,60*F);
+ const ys=[];for(let i=0;i<200;i++){B.update(b,{dtRaw:1092,chipSize:48,players:[]});B.post(b);ys.push(b.yRaw/F);}
+ assert.equal(Math.max(...ys),156);
+ // back at ratio 0 the patrol vector is (0,0) and phase 0 skips the SetPos
+ // (0x1816bb000..012), so the bat keeps its last step short of the start
+ assert.ok(Math.min(...ys)>96&&Math.min(...ys)<97);
+ // the update that reaches the end sets the 1.0 s idle before phase 0 would
+ // SetPos, so the bat rests one step short (155.2) for 61 updates, shows the
+ // end point once when the idle runs out, then flies back
+ const far=ys.indexOf(156);assert.ok(far>60);
+ assert.ok(ys.slice(far-61,far).every(y=>Math.abs(y-155.2)<0.01));assert.ok(ys[far+1]<156);
+});
+const mk3=n=>R.create(R.compile({source,geometry,count:n,stageId:'st_w_09_03'}));
+test('9-3: only player 1 (slot8 0) owns a Cardboard; Shot toggles it and covers a player inside',()=>{
+ const s=mk3(2);const [a,b]=s.players;b.x=a.x+10;b.y=a.y;R.step(s,{});
+ assert.equal(s.batState.cardboards.length,1);assert.equal(s.batState.cardboards[0].playerId,a.id);
+ assert.equal(a.tv.flags&0x40000,0);assert.ok(b.tv.flags&0x40000);
+ R.step(s,{[a.id]:{shot:true}});for(let i=0;i<20;i++)R.step(s,{[a.id]:{shot:true,right:true},[b.id]:{right:true}});
+ const cb=s.batState.cardboards[0];
+ assert.equal(cb.phase,1);assert.ok(a.tv.flags&0x80000);assert.equal(b.tv.cardboardCoveredFlags,1);
+ assert.equal(Math.round(a.x),80);assert.equal(Math.round(b.x),90);// equipped / covered players do not walk
+ R.step(s,{});R.step(s,{[a.id]:{shot:true}});for(let i=0;i<20;i++)R.step(s,{});
+ assert.equal(cb.phase,0);assert.equal(a.tv.flags&0x80000,0);assert.equal(b.tv.cardboardCoveredFlags,0);
+});
+test('9-3: a hidden player is neither seen nor touched by a patrolling bat',()=>{
+ for(const hide of [false,true]){const s=mk3(2);const [a,b]=s.players;b.x=40;b.y=300;a.x=1100;a.y=67;R.step(s,{});
+  if(hide)R.step(s,{[a.id]:{shot:true}});
+  let found=false;for(let i=0;i<240&&s.status==='play';i++){R.step(s,{});if(s.batState.bats.some(x=>x.phase===1))found=true;}
+  if(hide){assert.equal(s.status,'play');assert.equal(found,false);}else{assert.equal(s.status,'dead');assert.equal(s.failure.reason,'박쥐에게 잡혔어요');}}
 });
 test('the first update turns the light to QDirectionVector[direction]',()=>{
  const c=B.compile(actors('st_w_09_01'),2,{chipSize:48}),b=c.bats[0];

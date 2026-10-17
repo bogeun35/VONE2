@@ -575,7 +575,7 @@ function render(ctx,state,camera,opts={}){
  // friends: the controlled one last so it is never hidden
  const deadId=state.status==='dead'&&state.failure?state.failure.playerId:null;
  const o={time,selected:opts.selected,zoom:z,deadId,flash:ceil&&ceil.flash};
- const order=players.map((p,i)=>i).filter(i=>!players[i].exit&&!players[i].asBlock).sort((a,b)=>(a===opts.selected)-(b===opts.selected));
+ const order=players.map((p,i)=>i).filter(i=>!players[i].exit&&!players[i].asBlock&&!players[i].hiddenByCardboard).sort((a,b)=>(a===opts.selected)-(b===opts.selected));
  for(const i of order){const p=players[i];if(p.x>view.x1+60||p.x+p.w<view.x0-60)continue;drawFriend(ctx,p,i,o);}
  for(const i of order){const p=players[i];drawBadge(ctx,p,i,o);}
  if(root.SourceDeviceArt)root.SourceDeviceArt.drawAbove(ctx,state);

@@ -64,7 +64,7 @@
  *   captured -> Bat.Capture(cage pos - (0, QFP._4)), event 1 to every actor of
  *   type 0x11 (Key), own collision pushBackTarget 2 and COLLISION_RECT2, flag 4.
  */
-(function(root,factory){const c=typeof module==='object'&&module.exports;const api=factory(c?require('./source-distanceconstraint-math.js'):root.SourceDistanceConstraintMath,c?require('./source-updownlift-math.js'):root.SourceUpDownLiftMath);if(c)module.exports=api;root.SourceBatEnemyDevices=api;})(typeof globalThis!=='undefined'?globalThis:this,function(N,SinMath){
+(function(root,factory){const c=typeof module==='object'&&module.exports;const api=factory(c?require('./source-distanceconstraint-math.js'):root.SourceDistanceConstraintMath,c?require('./source-updownlift-math.js'):root.SourceUpDownLiftMath,c?require('./source-linepathgear-path.js'):root.SourceLinePathGearPath);if(c)module.exports=api;root.SourceBatEnemyDevices=api;})(typeof globalThis!=='undefined'?globalThis:this,function(N,SinMath,LinePath){
 'use strict';
 const F=65536;
 const BAT_RECT={heightRaw:40*F,widthRaw:28*F,xRaw:-14*F,yRaw:-40*F};
@@ -97,15 +97,22 @@ function compile(actors,count,options={}){
     cageYRaw:START_Y,speedRaw:0,timerRaw:0,shadowAlphaRaw:0,collisionActive:false,pushBackTarget:0,rect:{...CAGE_RECT},landed:0});
    return;
   }
-  // Path points (slots 12..) drive QLinePath patrol; the path component and
-  // GetPathPosition are not reconstructed yet, so a bat with a path is refused.
-  for(let k=12;k<32;k++){const d=(a.datas||[])[k];if(d&&d.t!==0)throw Error('BatEnemy patrol path (QLinePath) not reconstructed');}
+  // Path points: UnpackVector2ArrayParam 0x181786800 reads (x, y) float slot
+  // pairs from 12, at most 10, and stops at the first (0, 0). Creator 0x1816b9090
+  // then builds the entity's QLinePath from them (Initialize 0x1816dcf60): the
+  // path starts at the origin, m_TotalLength sums native-sqrt segment lengths,
+  // m_TotalLengthWS is the length through the camera view matrix
+  // (source-linepathgear-path.js has the same verified numeric core).
+  const points=[];for(let k=12;k+1<32&&points.length<10;k+=2){const x=slotRaw(a,k),y=slotRaw(a,k+1);if(x===0&&y===0)break;points.push({xRaw:x,yRaw:y});}
+  const pathLoop=(slotRaw(a,11)>>16)===1;
+  if(points.length&&pathLoop)throw Error('BatEnemy looped QLinePath (closing segment) not verified');
+  const path=points.length?LinePath.compilePath(points,options.chipSize):null;
   const s0=(a.datas||[])[0],dirRaw=s0&&s0.t===1?fp(s0.f):0,direction=((dirRaw>>>0)>>>16)&0xff;
   if(direction>3)throw Error('BatEnemy direction byte outside the QDirectionVector table');
   const speed=slotRaw(a,1),range=slotRaw(a,2),angle=slotRaw(a,3);let attack=slotRaw(a,4);if(attack<=0)attack=mul(speed,2*F);
   const look=INIT_LOOK[direction];
   bats.push({id,name:a.name||'',type:'BatEnemy',initXRaw:xRaw,initYRaw:yRaw,xRaw,yRaw,preXRaw:xRaw,preYRaw:yRaw,veloRaw:{xRaw:0,yRaw:0},collisionVeloRaw:{xRaw:0,yRaw:0},
-   direction,phase:0,flags:0,isReturn:0,pathLoop:(slotRaw(a,11)>>16)===1,speedRaw:speed,searchRangeRaw:range,searchAngleRaw:angle,attackSpeedRaw:attack,
+   direction,phase:0,flags:0,isReturn:0,pathLoop,path,speedRaw:speed,searchRangeRaw:range,searchAngleRaw:angle,attackSpeedRaw:attack,
    shadowHeightRaw:slotRaw(a,5),shadowOffsetRaw:F,idleTimerRaw:0,patrolTimerRaw:0,timerRaw:0,targetId:null,playerTimersRaw:Array(8).fill(0),
    lookRaw:{...look},targetLookRaw:{...look},patrolRaw:{xRaw:0,yRaw:0},drawOffsetRaw:{xRaw:0,yRaw:0},animation:0,paused:false,collisionActive:true,
    light:{xRaw,yRaw,worldDirectionRaw:{xRaw:0,yRaw:-F},rangeRaw:range,angleRaw:angle,criteriaRaw:LEVEL,brightRaw:F,darkRaw:0,mulBrightnessRaw:F,phase:0,timerRaw:0,alphaRaw:0}});
@@ -157,6 +164,18 @@ function update(b,ctx){
   else{if(n.yRaw<0)b.direction=0;else if(n.yRaw>0)b.direction=1;}}
  b.animation=b.direction+1;
  updateSpotLight(b,dt);
+ // updatePhase 0x1816ba719..ba808: the patrol advances in every phase. Idle
+ // (1.0 s at an end) counts down first; ratio = PatrolTimer / max(TotalLengthWS,
+ // 0x28f) clamped 0..1; a one-way path flips m_IsReturn at the end and plays
+ // backwards while it is set.
+ if(b.path&&b.path.totalLengthRaw>0){
+  if(b.idleTimerRaw>0)b.idleTimerRaw-=dt;
+  else{b.patrolTimerRaw+=mul(dt,b.speedRaw);const denom=Math.max(b.path.totalLengthWSRaw,0x28f);
+   let ratio=Number((BigInt(b.patrolTimerRaw)<<16n)/BigInt(denom));if(ratio<0)ratio=0;else if(ratio>F)ratio=F;
+   if(!b.pathLoop){const back=b.isReturn;if(ratio===F){b.patrolTimerRaw=0;b.idleTimerRaw=F;b.isReturn=back===0?1:0;}if(back!==0)ratio=F-ratio;}
+   else if(ratio===F)b.patrolTimerRaw=0;
+   b.patrolRaw=LinePath.pathPosition(b.path,ratio);}
+ }
  const found=searchingPlayer(b,players,dt,ctx.chipSize);
  const spotted=players.filter(p=>p.spotted).map(p=>p.id);
  const targetOf=()=>b.targetId===null?null:players.find(p=>p.id===b.targetId)||null;
@@ -246,6 +265,58 @@ function solids(state){return state.cages.filter(c=>c.collisionActive&&c.pushBac
 function displays(state){return {bats:state.bats.map(b=>({id:b.id,x:b.xRaw/F,y:b.yRaw/F,direction:b.direction,phase:b.phase,captured:!!(b.flags&2),shadowOffset:b.shadowOffsetRaw/F,shadowHeight:b.shadowHeightRaw/F,
   light:{x:b.light.xRaw/F,y:b.light.yRaw/F,dx:b.lookRaw.xRaw/F,dy:b.lookRaw.yRaw/F,range:mul(b.light.rangeRaw,b.light.criteriaRaw)/F,halfAngle:mul(b.light.angleRaw,b.light.criteriaRaw)/F/2,on:b.light.phase<2&&b.light.brightRaw>0,brightness:b.light.mulBrightnessRaw/F}})),
  cages:state.cages.map(c=>({id:c.id,x:c.xRaw/F,y:c.yRaw/F,offsetY:c.cageYRaw/F,shadowAlpha:c.shadowAlphaRaw/F,phase:c.phase,captured:!!(c.flags&4),need:c.needSwitchCount,count:c.switchCount}))};}
-return {compile,create,update,post,lightUpdate,cageUpdate,cageReceiveEvent,collide,capture,solids,displays,batRect,cageRect,lightInsidePoint,lightInsideRect,countTable,findCount,
- supportedTypes:['BatEnemy','FallingCage'],nativeConstants:{BAT_RECT,CAGE_RECT,CAGE_RECT2,DETECT,SMOOTH,LEVEL,ALERT,HIDE,START_Y,RETURN_ACCEL,FALL_SPEED,LAND_TIME,DIR_VECTOR},completePhysicsFidelity:false};
+/* Cardboard (actor 154), created by the TopViewPlayer factory for a player
+ * whose slot8 is 0 (no Player flag 0x40000), CardboardComponent from the saved
+ * Ghidra project:
+ *  Creator 0x1817ebcd0: ColorIndex 8, m_Player = the player. InitCollision
+ *   0x1817ebf60: COLLISION_RECTS (.cctor 0x1817ed5e0) (128,120,-60,-132) and
+ *   (72,146,-73,-72), pushBack 0, layer 2. InitPost 0x1817ec1a0: m_Flags |= 5
+ *   (1 personal, 4 follow), collision and display off, PlayerIndex = the
+ *   player's m_PlayerIndex.
+ *  OnUpdate 0x1817ec300: 0 equips on checkStartEquip 0x1817ed470 (alive, not
+ *   equipped, not flagged 0x8000 by a bat this update, Shot (button 9) pressed
+ *   this frame - IsPressInput 0x1816be4c0 is down == current) / 1 after
+ *   ANIM_TIME (QFP._0_25) checkRemove 0x1817ec8e0 (dead, 0x8000 or Shot pressed)
+ *   or checkMove (animation only) / 2 remove 0x1817ecb70 (player 0x80000 off,
+ *   collision off, OffsetY = BACK_OFFSET_Y = -QFP._0_10, timer ANIM_TIME) /
+ *   3 timer, remove2 0x1817ecde0 (display off) -> 0. Every update then covers
+ *   each other top-view (state 9) player whose collider 0 lies strictly inside
+ *   rect 0 (or, failing that, rect 1) while collider 0 is active:
+ *   PlayerComponent.CoverCardboard 0x1816cb6c0 sets/clears bit PlayerIndex of
+ *   the covered byte. equipCardboard 0x1817ec600: display on, OffsetY =
+ *   FRONT_OFFSET_Y 48, timer ANIM_TIME, collision on, player flag 0x80000.
+ *  OnPost 0x1817ed3b0: following -> Pos = player Pos + (0, OffsetY).
+ *  An equipped or covered top-view player does not walk (Default 0x1816ca190).
+ */
+const CB_RECTS=[{heightRaw:128*F,widthRaw:120*F,xRaw:-60*F,yRaw:-132*F},{heightRaw:72*F,widthRaw:146*F,xRaw:-73*F,yRaw:-72*F}];
+const CB_ANIM=16384,CB_FRONT=48*F,CB_BACK=-6553,PLAYER_EQUIP=0x80000,PLAYER_SPOTTED=0x8000;
+function cardboardCreate(player){return {id:'cardboard:'+player.id,playerId:player.id,playerIndex:player.index,colorIndex:8,phase:0,flags:5,offsetYRaw:0,timerRaw:0,
+ collisionActive:false,display:false,animation:0,xRaw:player.xRaw,yRaw:player.yRaw};}
+// owner: {flags, alive, shotPressed, vxRaw, vyRaw}. Returns the owner's new flags.
+function cardboardUpdate(cb,owner,dtRaw){
+ let flags=owner?owner.flags:0;const usable=o=>o&&o.alive;
+ const equip=()=>{cb.display=true;cb.offsetYRaw=CB_FRONT;cb.animation=2;cb.timerRaw=CB_ANIM;cb.collisionActive=true;flags|=PLAYER_EQUIP;cb.flags|=0x10;};
+ switch(cb.phase){
+ case 0:if((cb.flags&1)&&usable(owner)&&!(flags&PLAYER_EQUIP)&&!(flags&PLAYER_SPOTTED)&&owner.shotPressed){equip();cb.phase=1;}break;
+ case 1:{cb.timerRaw-=dtRaw;if(cb.timerRaw>0)break;
+  const keep=usable(owner)&&!(flags&PLAYER_SPOTTED)&&!owner.shotPressed;
+  if(keep){if(cb.flags&0x10){const still=abs(owner.vxRaw)<4&&abs(owner.vyRaw)<4;if(still&&(cb.flags&8)){cb.animation=4;cb.flags&=~8;}else if(!still&&!(cb.flags&8)){cb.animation=3;cb.flags|=8;}}break;}
+  cb.phase=2;break;}
+ case 2:flags&=~PLAYER_EQUIP;cb.collisionActive=false;
+  if(!(cb.flags&1)){cb.colorIndex=8;cb.flags&=~4;cb.yRaw-=6553;}else cb.offsetYRaw=CB_BACK;
+  if(cb.flags&0x10){cb.animation=5;cb.timerRaw=CB_ANIM;}cb.phase=3;break;
+ case 3:cb.timerRaw-=dtRaw;if(cb.timerRaw<=0){cb.flags&=~0x10;if(cb.flags&1)cb.display=false;else{cb.playerId=null;cb.collisionActive=true;}cb.phase=0;}break;
+ }
+ return flags;
+}
+// others: [{id, state9, bodyRaw}] (owner excluded). Returns [{id, inside}].
+function cardboardCover(cb,others){
+ const r0=rectAt(cb.xRaw,cb.yRaw,CB_RECTS[0]),r1=rectAt(cb.xRaw,cb.yRaw,CB_RECTS[1]);
+ const within=(r,b)=>r.xRaw<b.xRaw&&r.yRaw<b.yRaw&&b.widthRaw+b.xRaw<r.widthRaw+r.xRaw&&b.heightRaw+b.yRaw<r.heightRaw+r.yRaw;
+ return others.filter(o=>o.state9&&o.bodyRaw).map(o=>({id:o.id,inside:cb.collisionActive&&(within(r0,o.bodyRaw)||within(r1,o.bodyRaw))}));
+}
+function cardboardPost(cb,ownerPos){if((cb.flags&4)&&cb.playerId&&ownerPos){cb.xRaw=ownerPos.xRaw;cb.yRaw=ownerPos.yRaw+cb.offsetYRaw;}}
+function cardboardDisplays(list){return (list||[]).map(cb=>({id:cb.id,playerId:cb.playerId,x:cb.xRaw/F,y:cb.yRaw/F,display:cb.display,phase:cb.phase,animation:cb.animation,timer:cb.timerRaw/CB_ANIM}));}
+return {compile,create,update,post,lightUpdate,cardboardCreate,cardboardUpdate,cardboardCover,cardboardPost,cardboardDisplays,cageUpdate,cageReceiveEvent,collide,capture,solids,displays,batRect,cageRect,lightInsidePoint,lightInsideRect,countTable,findCount,
+ supportedTypes:['BatEnemy','FallingCage'],nativeConstants:{CB_RECTS,CB_ANIM,CB_FRONT,CB_BACK,BAT_RECT,CAGE_RECT,CAGE_RECT2,DETECT,SMOOTH,LEVEL,ALERT,HIDE,START_Y,RETURN_ACCEL,FALL_SPEED,LAND_TIME,DIR_VECTOR},completePhysicsFidelity:false};
 });

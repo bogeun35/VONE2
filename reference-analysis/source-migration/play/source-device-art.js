@@ -285,6 +285,20 @@ function fallingCages(c,s){
   c.strokeStyle=INK;c.lineWidth=2;c.strokeRect(x+2,y+10,64,52);rr(c,x,y+58,68,6,3);fillStroke(c,'#9aa3b8',INK,2);
   c.restore();}
 }
+// 9-3 Cardboard: drawn while displayed, at the owner (Pos = owner + OffsetY);
+// the covering rect 0 is (-60,-132,120,128) from that position.
+function cardboards(c,s){
+ const B=root.SourceBatEnemyDevices;if(!B||!s.batState||!s.batState.cardboards)return;
+ for(const k of B.cardboardDisplays(s.batState.cardboards)){if(!k.display)continue;
+  const pop=k.phase===1?Math.min(1,1-k.timer+.4):k.phase===3?Math.max(.4,k.timer):1;
+  const w=104*pop,h=78*pop,x=k.x-w/2,y=k.y-48-h+6;c.save();
+  c.fillStyle='rgba(40,30,60,.22)';c.beginPath();c.ellipse(k.x,k.y-46,w*.5,10,0,0,Math.PI*2);c.fill();
+  rr(c,x,y,w,h,8);fillStroke(c,'#d9a66b',INK,2.2);
+  c.fillStyle='#c48f55';rr(c,x+4,y+4,w-8,h*.28,5);c.fill();
+  c.strokeStyle='#a8743f';c.lineWidth=2;c.beginPath();c.moveTo(k.x,y+4);c.lineTo(k.x,y+h*.32);c.stroke();
+  if(pop>.8){eyes(c,k.x,y+h*.62,18,6,4);c.fillStyle='#ffb3c6';c.beginPath();c.ellipse(k.x-17,y+h*.72,5,3,0,0,Math.PI*2);c.ellipse(k.x+17,y+h*.72,5,3,0,0,Math.PI*2);c.fill();}
+  c.restore();}
+}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
@@ -292,7 +306,7 @@ function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
-function drawAbove(c,s){if(!s)return;const time=performance.now()/1000;c.save();try{bats(c,s,time);fallingCages(c,s);blackoutLabels(c,s);}finally{c.restore();}}
+function drawAbove(c,s){if(!s)return;const time=performance.now()/1000;c.save();try{cardboards(c,s);bats(c,s,time);fallingCages(c,s);blackoutLabels(c,s);}finally{c.restore();}}
 // Screen pass: the blackout darkness covers the whole view.
 function overlay(c,s,view){
  const B=root.SourceBlackoutDevices;if(!B||!s||!s.blackoutState||!s.blackoutState.blackouts.length)return;

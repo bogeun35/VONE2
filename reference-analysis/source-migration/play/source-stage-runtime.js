@@ -55,7 +55,7 @@
  const box=r=>({x:r.x,y:r.y,w:r.width,h:r.height});
  const NATIVE=Object.freeze({walk:3,jump:-334234/65536,gravity:42598/65536,terminal:19.5,holdFactor:13107/65536,holdFrames:14});
  function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}={}){
-  if(!['st_w_01_01','st_w_01_02','st_w_01_03','st_w_01_04','st_w_04_01','st_w_04_03','st_w_04_04','st_w_05_02','st_w_10_02','st_w_11_04','st_w_07_02','st_w_10_01','st_w_10_04','st_w_13_01','st_w_11_02','st_w_12_03','st_w_03_02','st_w_10_03','st_w_05_01','st_w_02_02','st_w_07_03','st_w_14_03','st_w_03_01','st_w_15_01','st_w_05_04','st_w_14_01','st_w_03_03','st_w_12_02','st_w_15_02','st_w_12_04','st_w_02_04','st_w_04_02','st_w_07_04','st_w_09_04','st_w_09_01','st_w_05_03'].includes(stageId))throw new Error('Source stage runtime does not support this stage yet');
+  if(!['st_w_01_01','st_w_01_02','st_w_01_03','st_w_01_04','st_w_04_01','st_w_04_03','st_w_04_04','st_w_05_02','st_w_10_02','st_w_11_04','st_w_07_02','st_w_10_01','st_w_10_04','st_w_13_01','st_w_11_02','st_w_12_03','st_w_03_02','st_w_10_03','st_w_05_01','st_w_02_02','st_w_07_03','st_w_14_03','st_w_03_01','st_w_15_01','st_w_05_04','st_w_14_01','st_w_03_03','st_w_12_02','st_w_15_02','st_w_12_04','st_w_02_04','st_w_04_02','st_w_07_04','st_w_09_04','st_w_09_01','st_w_09_03','st_w_05_03'].includes(stageId))throw new Error('Source stage runtime does not support this stage yet');
   if(!Number.isFinite(nativeTickRate)||nativeTickRate<1||nativeTickRate>240)throw new Error('Invalid calibration tick rate');
   const t=Terrain.createTerrain({source,geometry,count,stageId});
   // The original frames a fixed window, not the whole map: mapInitParam carries
@@ -151,6 +151,7 @@
     :Actor.playerSpawns(t.actors,count).map(p=>({x:p.collision.x,y:p.collision.y-0.5})),
    // top view: TopViewPlayer.initialize 0x1816c9d20 and the stage's raw map chips (fall attribute 16)
    topView:topViews.players.length>0,
+   tvParseFlags:topViews.players.map(p=>p.parsePlayerFlagsSet),
    tvChips:topViews.players.length?{width:t.widthInTiles,height:t.heightInTiles,chips:t.grid.flat(1)}:null,
    // KeyComponent.ParseParameter 0x18186b780 moves the key off its authored
    // anchor before ActorFactoryComponent.CreateActor 0x1816a3658 reads the
@@ -438,9 +439,9 @@
  const TV_BODY={x:-16,y:-29,w:32,h:28};
  function tvBody(p){return {id:p.id,x:p.x+16+TV_BODY.x,y:p.y+47+TV_BODY.y,w:TV_BODY.w,h:TV_BODY.h};}
  function topViewMove(s,p,input,hz){
-  const F=65536;if(!p.tv)p.tv={state:0,topViewFunc:0,flags:262144|(1<<17),cardboardCoveredFlags:0,wakeUpCount:1,currentAnimationId:0,isFlashing:0,flashTimerRaw:0,waitTimerRaw:0,flags2:0,scaleRaw:F};
+  const F=65536;if(!p.tv){const pf=s.map.tvParseFlags&&s.map.tvParseFlags[s.players.indexOf(p)];p.tv={state:0,topViewFunc:0,flags:(pf===undefined?262144:pf)|(1<<17),cardboardCoveredFlags:0,wakeUpCount:1,currentAnimationId:0,isFlashing:0,flashTimerRaw:0,waitTimerRaw:0,flags2:0,scaleRaw:F};}
   const tv=p.tv,body=tvBody(p);
-  const obstacles=[...baseSolids(s),...s.players.filter(q=>q!==p&&!q.exit&&!q.asBlock&&!(q.tv&&q.tv.topViewFunc===1)).map(tvBody)];
+  const obstacles=[...baseSolids(s),...s.players.filter(q=>q!==p&&!q.exit&&!q.asBlock&&!q.hiddenByCardboard&&!(q.tv&&q.tv.topViewFunc===1)).map(tvBody)];
   const btn=k=>[0,input[k]?1:0];
   const actor={xRaw:Math.round((p.x+16)*F),yRaw:Math.round((p.y+47)*F),scaleXRaw:tv.scaleRaw,scaleYRaw:tv.scaleRaw,baseScaleRaw:F,flags:p.facingLeft?1024:0,
    windXRaw:Math.round((p.windDx||0)*F),windYRaw:0,vxRaw:0,vyRaw:0,requestAnimationId:null};
@@ -507,22 +508,55 @@
  // through its collider 1, the regular 46x32 rect at (-16,-47) from Pos.
  function batPlayers(s){
   const F=65536;
-  return s.players.map((p,i)=>{const px=Math.round((p.x+16)*F),py=Math.round((p.y+47)*F),live=!p.exit&&!p.asBlock;
-   return {index:i,id:p.id,flags:(p.tv?p.tv.flags:0)|(p.exit?0x200:0),alive:!p.exit,cardboard:false,xRaw:px,yRaw:py,spotted:false,
+  return s.players.map((p,i)=>{const px=Math.round((p.x+16)*F),py=Math.round((p.y+47)*F),live=!p.exit&&!p.asBlock&&!p.hiddenByCardboard;
+   // PlayerComponent.IsEquipOrCoverCardboard 0x1816cb8b0: covered byte != 0 or flag 0x80000
+   const cardboard=!!p.tv&&(p.tv.cardboardCoveredFlags!==0||!!(p.tv.flags&0x80000));
+   return {index:i,id:p.id,flags:(p.tv?p.tv.flags:0)|(p.exit?0x200:0),alive:!p.exit,cardboard,xRaw:px,yRaw:py,spotted:false,
     collisionRaw:live?{xRaw:px-16*F,yRaw:py-47*F,widthRaw:32*F,heightRaw:46*F}:null};});
  }
  function cageTick(s,hz){
   const st=s.batState;if(!st||!st.cages.length)return;
   for(const c of st.cages){const r=BatEnemies.cageUpdate(c,Math.trunc(65536/hz));if(r.landed)s.cageShake=(s.cageShake||0)+1;}
  }
- function batTick(s,hz){
-  const st=s.batState;if(!st||!st.bats.length&&!st.cages.length)return [];
+ // Cardboard (9-3): the top-view factory gives one to every player whose
+ // slot8 left Player flag 0x40000 clear; it updates after the bats (updater
+ // 180 vs 165) so a bat's 0x8000 mark of this update blocks equipping, and its
+ // OnPost follows the owner after everyone moved.
+ function cardboardTick(s,inputs,hz){
+  const st=s.batState,F=65536;if(!st||!s.map.topView)return;
+  if(!st.cardboards)st.cardboards=s.players.map((p,i)=>({p,i})).filter(({i})=>s.map.tvParseFlags&&!(s.map.tvParseFlags[i]&0x40000))
+   .map(({p,i})=>BatEnemies.cardboardCreate({id:p.id,index:i,xRaw:Math.round((p.x+16)*F),yRaw:Math.round((p.y+47)*F)}));
+  for(const cb of st.cardboards){
+   const owner=s.players.find(q=>q.id===cb.playerId);
+   let shotPressed=false;if(owner){const held=!!(inputs[owner.id]&&inputs[owner.id].shot)&&!owner.inputLocked;shotPressed=held&&!owner.cbShotHeld;owner.cbShotHeld=held;}
+   const facts=owner&&owner.tv?{flags:owner.tv.flags|(owner.exit?0x200:0),alive:!owner.exit,shotPressed,vxRaw:Math.round((owner.vx||0)/hz*F),vyRaw:Math.round((owner.vy||0)/hz*F)}:null;
+   const flags=BatEnemies.cardboardUpdate(cb,facts,Math.trunc(F/hz));
+   if(owner&&owner.tv)owner.tv.flags=(flags&~0x200)>>>0;
+   const others=s.players.filter(q=>q.id!==cb.playerId).map(q=>({id:q.id,state9:!q.exit&&!!q.tv,bodyRaw:{xRaw:Math.round(q.x*F),yRaw:Math.round((q.y+18)*F),widthRaw:32*F,heightRaw:28*F}}));
+   for(const c of BatEnemies.cardboardCover(cb,others)){const q=s.players.find(x=>x.id===c.id);if(!q||!q.tv)continue;
+    q.tv.cardboardCoveredFlags=c.inside?(q.tv.cardboardCoveredFlags|(1<<cb.playerIndex)):(q.tv.cardboardCoveredFlags&~(1<<cb.playerIndex));}
+  }
+  for(const p of s.players)p.hiddenByCardboard=!!p.tv&&(p.tv.cardboardCoveredFlags!==0||!!(p.tv.flags&0x80000));
+ }
+ function cardboardPost(s){
+  const st=s.batState,F=65536;if(!st||!st.cardboards)return;
+  for(const cb of st.cardboards){const o=s.players.find(q=>q.id===cb.playerId);BatEnemies.cardboardPost(cb,o?{xRaw:Math.round((o.x+16)*F),yRaw:Math.round((o.y+47)*F)}:null);}
+ }
+ function batTick(s,hz,inputs){
+  const st=s.batState;if(!st||!st.bats.length&&!st.cages.length&&!s.map.topView)return [];
   const dt=Math.trunc(65536/hz),facts=batPlayers(s);
   for(const b of st.bats){BatEnemies.update(b,{dtRaw:dt,chipSize:st.chipSize,players:facts});BatEnemies.post(b);}
+  // a bat marks the players it sees or chases with Player flag 0x8000; the
+  // player's own top-view update clears it again (updateTopView)
+  for(const f of facts){const p=s.players.find(q=>q.id===f.id);if(!p)continue;p.batSpotted=f.spotted;if(f.spotted&&p.tv)p.tv.flags=(p.tv.flags|0x8000)>>>0;}
+  cardboardTick(s,inputs||{},hz);
+  // setVisibleByCardboard 0x1816cb750 -> ActorComponent.setVisible 0x18169ee20 ends
+  // in SetCollisionActive: a hidden player has no collision in this pass
+  for(const f of facts){const p=s.players.find(q=>q.id===f.id);if(p&&p.hiddenByCardboard)f.collisionRaw=null;}
   for(const b of st.bats)BatEnemies.lightUpdate(b,dt);
-  for(const f of facts){const p=s.players.find(q=>q.id===f.id);if(p)p.batSpotted=f.spotted;}
   const r=BatEnemies.collide(st,facts);
   for(const e of r.keyEvents)Gates.signal(s.gateState,e);
+  cardboardPost(s);
   return r.kills.filter(id=>{const p=s.players.find(q=>q.id===id);return p&&!p.immortal;});
  }
  // ---- Key carry (every round with a key) ------------------------------------
@@ -1131,7 +1165,7 @@
   if(dossunDeaths.length){s.status='dead';s.deaths++;s.failure={playerId:dossunDeaths[0],reason:'쿵쿵 블록에 당했어요'};return;}
   warpGunTick(s,inputs,hz);
   const ghostDeaths=ghostTick(s,hz);
-  const batDeaths=batTick(s,hz);
+  const batDeaths=batTick(s,hz,inputs);
   if(batDeaths.length){s.status='dead';s.deaths++;s.failure={playerId:batDeaths[0],reason:'박쥐에게 잡혔어요'};return;}
   if(ghostDeaths.length){s.status='dead';s.deaths++;s.failure={playerId:ghostDeaths[0],reason:'유령에게 잡혔어요'};return;}
   const rollDeaths=rollGearTick(s,hz);
@@ -1158,7 +1192,7 @@
    // InitCollision passes 3 to ActorComponent.CreateCollision at 0x1816bdf4b
    // (stored to m_PushBackTarget by Collision.initialize 0x181690b08) and writes
    // `mov byte [rax+1],1` at 0x1816bdf87.
-   for(const button of s.map.switches)if(playerPressesSwitch(p,button,s)){
+   for(const button of s.map.switches)if(!p.hiddenByCardboard&&playerPressesSwitch(p,button,s)){
     facts.switchContacts.push({relayId:button.id,actorId:p.id,layer:1,attributeFlags:3});
    }
   }
