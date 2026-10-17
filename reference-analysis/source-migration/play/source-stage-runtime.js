@@ -288,6 +288,8 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
     state.elapsed=state.playTimeRaw/65536;
    }
   }
+   // ShootingSuperApple Creator 0x1817080b0: below its GameOverCount it is removed at creation
+   if(state.bossState&&state.bossState.apples)for(const a of state.bossState.apples)if((state.gameOverCount||0)<a.validCount)a.removed=true;
    // ColorBox slot 2 is an index-list ordinal: its colour is that player's (Frame.GetPlayerColorIndex 0x1817465c0)
    if(state.colorBoxState&&state.colorBoxState.boxes)for(const b of state.colorBoxState.boxes){const q=state.players[b.playerIndex];if(q&&q.colorIndex!==undefined)b.colorIndex=q.colorIndex;}
   return state;
