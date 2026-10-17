@@ -423,6 +423,8 @@ function drawFriend(c,p,i,o){
  // changeControlablePlayer 0x181872cc0 greys out everyone who cannot move
  if(p.grayscale){c.filter='grayscale(1)';c.globalAlpha*=.75;}
  c.translate(p.x+p.w/2,p.y+p.h);
+ // stage scale (8-1, 8-3, 10-x 1.5, 9-4 3): the body is 32s x 46s, the friend drawn s times
+ {const ps=p.w/32;if(ps!==1)c.scale(ps,ps);}
 // a plane player (OnInitialize_Plane: animation 8, 9 when damaged) rides a little plane; the
  // friend sits in its cockpit, the draw offset is OnUpdate_BattlePlane's hit shake
  if(p.plane){const o=p.plane.life&&p.plane.life.offset;if(o)c.translate(o.xRaw/65536,o.yRaw/65536);
