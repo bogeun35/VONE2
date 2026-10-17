@@ -67,6 +67,23 @@ policies.st_w_01_01=function(run){
  for(let t=0;t<900&&s.status==='play';t++){
   const input={};for(const p of s.players)input[p.id]=routeInput(p);
   step(input);for(const x of s.lastImpulses)if(P(x.actorId)?.vy<-1500)launched.add(x.actorId);
+  if(s.players.every(p=>p.exit||p.grounded&&p.y<100))break;
+ }
+ run.mark('everyone on the door ledge',{holder:s.keyState&&s.keyState.holderId});
+ // Since 183def4c the key opens the door only when it reaches it (KeyComponent / Goal layer 10):
+ // the holder walks over the heads to above the friend at the door, then that friend slides into
+ // the free cell left of the door while the holder walks right against the carry, so the holder
+ // drops onto the door floor and the key reaches the door (a carrier cannot jump, ridersOf).
+ const door=s.map.exit,opener=s.players.filter(p=>!p.exit&&p.id!==(s.keyState&&s.keyState.holderId)).sort((a,b)=>a.x-b.x)[0];
+ for(let t=0;t<1500&&s.status==='play'&&!s.players.every(p=>p.exit);t++){
+  const holder=s.players.find(p=>p.id===(s.keyState&&s.keyState.holderId)),input={};
+  for(const p of s.players){if(p.exit)continue;const ax=p.x+16,inDoor=p.x<door.x+door.w&&door.x<p.x+p.w&&p.y<door.y+door.h&&door.y<p.y+p.h;
+   if(s.goalOpen){input[p.id]=inDoor?{up:true}:{left:ax>door.x+door.w/2,right:ax<door.x+door.w/2-6};continue;}
+   if(p===holder&&p!==opener){const above=Math.abs(p.x-opener.x)<4;const onHeads=p.grounded&&p.supportId&&!String(p.supportId).startsWith('terrain');
+    const riding=onHeads&&p.supportId===opener.id;
+    input[p.id]=riding?{right:true}:above?{}:{left:p.x>opener.x,right:p.x<opener.x-4,jump:!onHeads&&(t%24)<14};continue;}
+   if(p===opener&&holder&&holder!==opener&&holder.supportId===opener.id)input[p.id]={left:p.x>door.x-48+2};}
+  step(input);
  }
  run.mark('all players in goal');
 };
