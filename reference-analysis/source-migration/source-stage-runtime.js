@@ -75,6 +75,15 @@
 function AX(p){return p.x+p.w/2;}
 function AY(p){return p.y+p.h+1;}
 function setAnchor(p,x,y){p.x=x-p.w/2;p.y=y-p.h-1;}
+// Every createPlayer actor (Player 27, PlanePlayer 26, BattlePlanePlayer 107, TargetPlayer 132,
+// BasketPlayer 133, CannonPlayer) takes the next player in actor order (ActorScene
+// m_PlayerIndexList, createPlayer 0x1816a3e40); 6-2 interleaves planes and walkers.
+const PLAYER_TYPES=['Player','PlanePlayer','BattlePlanePlayer','TargetPlayer','BasketPlayer','CannonPlayer'];
+function playerActorSpawns(actors,count){
+ return actors.filter(a=>PLAYER_TYPES.includes(a.typeName)&&Actor.actorPopulationAllowed(a.playerCount||0,count)).slice(0,count).map(a=>({x:a.posX-16,y:a.posY-47-0.5,
+  ...(a.typeName==='Player'?{}:{variant:a.typeName}),lookLeft:playerLooksLeft(a),
+  // PlayerComponent.parseParameter: plane types (0x1a / 0x6b) may look left only when slot 7 is 1
+  ...(a.typeName==='PlanePlayer'||a.typeName==='BattlePlanePlayer'?{plane:{battle:a.typeName==='BattlePlanePlayer',lookLeftAllowed:Math.trunc(Math.fround(((a.datas||[])[7]||{}).f||0))===1}}:{})}));}
 function playerLooksLeft(a){const p=a&&(a.properties||a),d=p&&p.datas&&p.datas[0];return !!(d&&d.t===1&&Math.trunc(Math.fround(Math.fround(d.f)*65536))>>16);}
 function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}={}){
   if(!['st_w_01_01','st_w_01_02','st_w_01_03','st_w_01_04','st_w_04_01','st_w_04_03','st_w_04_04','st_w_05_02','st_w_10_02','st_w_11_04','st_w_07_02','st_w_10_01','st_w_10_04','st_w_13_01','st_w_11_02','st_w_12_03','st_w_03_02','st_w_10_03','st_w_05_01','st_w_02_02','st_w_07_03','st_w_14_03','st_w_03_01','st_w_15_01','st_w_05_04','st_w_14_01','st_w_03_03','st_w_12_02','st_w_15_02','st_w_12_04','st_w_02_04','st_w_04_02','st_w_07_04','st_w_09_04','st_w_09_01','st_w_09_03','st_w_09_02','st_w_02_01','st_w_07_01','st_w_15_04','st_w_02_03','st_w_12_01','st_w_05_03','st_w_13_03','st_w_13_04','st_w_08_01','st_w_08_03','st_w_03_04','st_w_14_04','st_w_14_02','st_w_08_02','st_w_08_04'].includes(stageId))throw new Error('Source stage runtime does not support this stage yet');
@@ -195,7 +204,7 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
   const map={id:stageId,count,width:t.width,height:t.height,tileSize:t.tileSize,variant:t.variant,
    platforms:t.platforms.map((p,i)=>({...p,id:'terrain:'+i})),springs,switches,warps,constraintMoves,
    spawns:topViews.players.length?t.actors.filter(a=>a.typeName==='TopViewPlayer'&&Actor.actorPopulationAllowed(a.playerCount||0,count)).slice(0,count).map(a=>({x:a.posX-16,y:a.posY-47-0.5}))
-    :Actor.playerSpawns(t.actors,count).map(p=>({x:p.collision.x,y:p.collision.y-0.5,lookLeft:playerLooksLeft(p.sourceActor)})),
+    :playerActorSpawns(t.actors,count),
    // top view: TopViewPlayer.initialize 0x1816c9d20 and the stage's raw map chips (fall attribute 16)
    ice:(t.cells.some(c=>c.flags&2)||frontSwitches.ices.length||frontSwitches.rects.some(r=>r.ice))&&sourceVariant?{resistivityRaw:cfp(sourceVariant.iceResistivity),frictionRaw:cfp(sourceVariant.iceFriction),speedUpRaw:cfp(sourceVariant.iceSpeedUp),
     cells:t.cells.filter(c=>c.flags&2).map(c=>c.gridX+','+c.gridY)}:null,
@@ -229,12 +238,6 @@ function compile({source,geometry,count,stageId='st_w_01_01',nativeTickRate=60}=
    physics:{playerWidth:32,playerHeight:46,nativeTickRate,status:'calibration_pending'},
    unsupportedActors:t.actors.filter(a=>!supported.has(a.typeName)).map(a=>({type:a.typeName,x:a.x,y:a.y})),
    view,coordinateSystem:'Y-down'};
-  // TargetPlayer (132) / BasketPlayer (133) / CannonPlayer are Players from ActorFactory.createPlayer
-  // (createTargetPlayer 0x1816a47f0 / createBasketPlayer 0x1816a4910 / createCannonPlayer 0x1816a49a0), in actor order.
-  if(!map.spawns.length){const variants=t.actors.filter(a=>['TargetPlayer','BasketPlayer','CannonPlayer','PlanePlayer','BattlePlanePlayer'].includes(a.typeName)&&Actor.actorPopulationAllowed(a.playerCount||0,count)).slice(0,count);
-   if(variants.length)map.spawns=variants.map(a=>({x:a.posX-16,y:a.posY-47-0.5,variant:a.typeName,lookLeft:playerLooksLeft(a),
-    // PlayerComponent.parseParameter: plane types (0x1a / 0x6b) may look left only when slot 7 is 1
-    ...(a.typeName==='PlanePlayer'||a.typeName==='BattlePlanePlayer'?{plane:{battle:a.typeName==='BattlePlanePlayer',lookLeftAllowed:Math.trunc(Math.fround(((a.datas||[])[7]||{}).f||0))===1}}:{})}));}
   // 13-4 has no Player actor: the participants start on the first bodies and take
   // the assigned FakePlayers at the timer's OnStart (fakeTick).
   if(!map.spawns.length&&fake.fakes.length)map.spawns=fake.fakes.slice(0,count).map(f=>({x:f.xRaw/65536-16,y:f.yRaw/65536-47}));
