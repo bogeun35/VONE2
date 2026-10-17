@@ -364,10 +364,19 @@ function frontSwitchArt(c,s,time){
   c.beginPath();c.arc(cx,cy,10,0,Math.PI*2);fillStroke(c,w.on?'#ffd84d':'#9fb3d9',INK,2);
   c.fillStyle='rgba(255,255,255,.7)';c.beginPath();c.arc(cx-3,cy-3,3,0,Math.PI*2);c.fill();c.restore();}
 }
+// 12-1 GoKart: body (-34,-16,248,16) under the seats; Sticks are markers only.
+function goKarts(c,s,time){
+ const K=root.SourceGoKartRuntime;if(!K||!s.goKartState)return;const d=K.displays(s.goKartState);
+ for(const st of d.sticks){c.save();c.fillStyle='#b98a5c';rr(c,st.x-4,st.y-60,8,60,3);fillStroke(c,'#b98a5c',INK,1.5);c.fillStyle='#ff8fb1';c.beginPath();c.moveTo(st.x+4,st.y-58);c.lineTo(st.x+30,st.y-50);c.lineTo(st.x+4,st.y-42);c.closePath();c.fill();c.restore();}
+ for(const k of d.karts){if(k.dead&&!k.riding)continue;const b=k.rects[0];c.save();
+  const wheel=(x)=>{c.beginPath();c.arc(x,b.y+b.h+2,11,0,Math.PI*2);fillStroke(c,'#3a3550',INK,2);c.fillStyle='#8f88a8';c.beginPath();c.arc(x,b.y+b.h+2,4,0,Math.PI*2);c.fill();};
+  rr(c,b.x,b.y-6,b.w,b.h+8,8);fillStroke(c,'#ff9f6e',INK,2.2);c.fillStyle='rgba(255,255,255,.35)';rr(c,b.x+8,b.y-3,b.w-16,4,2);c.fill();
+  wheel(b.x+22);wheel(b.x+b.w-22);c.restore();}
+}
 // World pass, drawn after the terrain and before the friends.
 function draw(c,s,opts={}){if(!s)return;const time=opts.time??(performance.now()/1000);
  c.save();
- try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);}
+ try{topViewFloor(c,s);frontSwitchArt(c,s,time);arrowSigns(c,s);capturingRope(c,s);capturingTargets(c,s,time);ghosts(c,s,time);moveWalls(c,s);rollGears(c,s);breakables(c,s);colorBoxes(c,s);deadSwitches(c,s);magnets(c,s,time);searchLights(c,s);batLights(c,s);gears(c,s);upDownLifts(c,s);warpGuns(c,s);linePaths(c,s,time);lifts(c,s);poles(c,s);winds(c,s,time);speedSwitches(c,s);countUps(c,s);landmines(c,s);balls(c,s);dossuns(c,s);enemies(c,s,time);stepEnemies(c,s,time);goKarts(c,s,time);}
  finally{c.restore();}
 }
 // World pass after the friends (labels that must sit on top of them).
