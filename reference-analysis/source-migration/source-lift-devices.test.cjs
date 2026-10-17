@@ -170,10 +170,12 @@ test('the datas[19] speed table walks down to the first non-zero entry, with FP.
 
 test('st_w_12_02 datas[19] gives population 2 a different speed from everyone else',()=>{
  const a=actor('st_w_12_02','WeightedLiftEx1');
- // That actor travels vertically (datas[0] = 156), so compile() refuses it; the
- // table itself is still worth pinning because it is the only shipped
- // WeightedLiftEx whose speed changes with the population inside one world.
- assert.throws(()=>L.compile([a],2),/Unverified vertical WeightedLift travel/);
+ // That actor travels vertically (datas[0] = 156). Vertical travel is ported
+ // now, so the table can be checked where it matters: the compiled m_Speed.
+ // It is the only shipped WeightedLiftEx whose speed changes with the
+ // population inside one world.
+ assert.equal(compileOne(a,2).speedFp,9*F,'2 players ride at 9');
+ assert.equal(compileOne(a,3).speedFp,3*F,'everyone else at 3');
  const t=a.datas[19];
  assert.equal(t.t,2);
  const bytes=[...t.s].map(c=>(c.codePointAt(0)-0x21)&0xff);
@@ -193,34 +195,35 @@ test('an absent or non-string table slot decodes to seven zeros instead of faili
  assert.equal(compileOne(lift1004(),2).w,192);
 });
 
-test('compile claims only WeightedLiftEx and silently ignores the other lift actors',()=>{
- assert.deepEqual(L.supportedTypes,['WeightedLiftEx']);
+test('compile claims WeightedLiftEx and WeightedLift and silently ignores the other lift actors',()=>{
+ assert.deepEqual(L.supportedTypes,['WeightedLiftEx','WeightedLift']);
  const single=actor('st_w_02_02','WeightedLiftSingle1');
  const normal=stageActors('st_w_05_01').find(a=>a.typeName==='WeightedLift');
  assert.ok(normal,'st_w_05_01 must still carry a WeightedLift actor');
  const c=L.compile([single,normal],4);
- assert.equal(c.lifts.length,0);
+ assert.equal(c.lifts.length,1,'the WeightedLift compiles, the WeightedLiftSingle is skipped');
+ assert.equal(c.lifts[0].type,'WeightedLift');
  assert.deepEqual(c.warnings,[]);
- // but a real WeightedLiftEx in the same list does compile
- assert.equal(L.compile([single,normal,lift1004()],4).lifts.length,1);
+ assert.equal(L.compile([single,normal,lift1004()],4).lifts.length,2);
 });
 
-test('vertical travel is refused by name rather than guessed, and a zero vector is refused too',()=>{
+test('vertical WeightedLiftEx travel compiles, and a zero vector is still refused',()=>{
  // Each is asked for at a population its own playerCount filter admits
  // (st_w_02_01's two lifts split the table at 4, st_w_15_01's are unfiltered).
  for(const [stageId,name,count] of [['st_w_02_01','WeightedLiftEx1',4],['st_w_02_01','WeightedLiftEx2',2],
    ['st_w_15_01','WeightedLiftEx1',4],['st_w_15_01','WeightedLiftEx2',8],['st_w_12_02','WeightedLiftEx1',3]]){
-  assert.throws(()=>L.compile([actor(stageId,name)],count),
-   /IsEnableMoveContactActor 0x1816a15c0/,stageId+' '+name+' must be refused at '+count+'p');
+  const lift=compileOne(actor(stageId,name),count);
+  assert.notEqual(lift.moveDirYFp,0,stageId+' '+name+' travels vertically');
  }
  // st_w_02_01's actor really is vertical: datas[0] = -150 with no datas[12].
  const a=actor('st_w_02_01','WeightedLiftEx1');
  assert.equal(a.datas[0].f,-150);
  assert.equal(a.datas[12].f,0);
+ assert.equal(compileOne(a,4).moveDirYFp,-150*F);
  // Below QFP.Epsilon on both members, m_MoveDirection keeps Initialize's
- // (0,-70), which is vertical as well - so it must not slip through as "no travel".
+ // (0,-70), which is vertical as well - so it is a real lift, not "no travel".
  const flat={...a,playerCount:0,datas:a.datas.map((s,i)=>i===0?{t:1,f:0,s:null}:s)};
- assert.throws(()=>L.compile([flat],4),/IsEnableMoveContactActor 0x1816a15c0/);
+ assert.equal(compileOne(flat,4).moveDirYFp,-70*F);
 });
 
 test('a parameter that is not an exact multiple of 1/65536 is refused instead of rounded',()=>{
@@ -420,4 +423,36 @@ test('every WeightedLiftEx actor in both shipped worlds is axis aligned',()=>{
  assert.equal(horizontal,14);
  assert.equal(vertical,6);
  assert.equal(horizontal+vertical,seen,'no WeightedLiftEx relies on the (0,-70) default');
+});
+
+// WeightedLift (NormalWeightedLiftComponent.ParseParameter 0x181889b40) on
+// st_w_05_01's real actors: datas [-310, 0, 50, 1, -0.1, 0...].
+test('st_w_05_01 WeightedLift decodes through the Normal slot map',()=>{
+ const normal=stageActors('st_w_05_01').find(a=>a.typeName==='WeightedLift');
+ for(let count=2;count<=8;count++){
+  const lift=compileOne(normal,count);
+  assert.equal(lift.moveDirYFp,-310*F,'rises 310px');
+  assert.equal(lift.moveDirXFp,0);
+  assert.equal(lift.movePercent,50);
+  assert.equal(lift.moveMin,1);
+  assert.equal(lift.speedFp,F,'m_Speed is never written: MOVE_SPEED_DEFAULT');
+  // -0.1 is raw -6553 through the stage float conversion, times (count-2).
+  assert.equal(lift.returnSpeedFp,F-6553*(count-2));
+  assert.equal(lift.flags.enableReturn,true);
+  assert.equal(lift.w,192);
+ }
+});
+test('a vertical lift carries its riders and stops under a player instead of crushing',()=>{
+ const normal=stageActors('st_w_05_01').find(a=>a.typeName==='WeightedLift');
+ const state=L.create(L.compile([normal],2));const lift=state.lifts[0];
+ const rider={id:'p1',x:lift.x+20,y:lift.y-46,w:32,h:46,grounded:true,supportId:lift.id};
+ for(let i=0;i<40;i++)L.beforeStep(state,{players:[rider],platforms:[]});
+ assert.ok(lift.offsetYFp<0,'one rider of two meets 50 percent and the lift rises');
+ assert.equal(rider.y+rider.h,lift.y,'the rider stays on top');
+ // Now lower it onto a player standing underneath: the Down contact freezes it.
+ const s2=L.create(L.compile([normal],2));const l2=s2.lifts[0];
+ l2.offsetYFp=-20*F;l2.y=l2.anchor.y+l2.rectY-20;l2.proc=2;
+ const under={id:'p2',x:l2.x+20,y:l2.y+l2.h,w:32,h:46,grounded:true,supportId:null};
+ const y0=l2.y;for(let i=0;i<30;i++)L.beforeStep(s2,{players:[under],platforms:[]});
+ assert.equal(l2.y,y0,'the lift waits while something touches its underside');
 });

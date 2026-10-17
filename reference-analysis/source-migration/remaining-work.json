@@ -21,11 +21,12 @@
   "st_w_11_02",
   "st_w_12_03",
   "st_w_03_02",
-  "st_w_10_03"
+  "st_w_10_03",
+  "st_w_05_01"
  ],
  "worldStages": 60,
- "remainingStages": 42,
- "remainingDistinctBlockers": 81,
+ "remainingStages": 41,
+ "remainingDistinctBlockers": 80,
  "nearest": [
   {
    "id": "st_w_02_02",
@@ -40,14 +41,6 @@
    "blockerCount": 1,
    "blockers": [
     "PlayerMagnet"
-   ],
-   "guardsAfterTypes": []
-  },
-  {
-   "id": "st_w_05_01",
-   "blockerCount": 1,
-   "blockers": [
-    "WeightedLift"
    ],
    "guardsAfterTypes": []
   },
@@ -104,6 +97,15 @@
    "guardsAfterTypes": []
   },
   {
+   "id": "st_w_07_03",
+   "blockerCount": 2,
+   "blockers": [
+    "Blackout",
+    "BlackoutController"
+   ],
+   "guardsAfterTypes": []
+  },
+  {
    "id": "st_w_07_04",
    "blockerCount": 2,
    "blockers": [
@@ -143,18 +145,6 @@
    "opensAlone": [
     "st_w_03_03",
     "st_w_05_03"
-   ]
-  },
-  {
-   "type": "WeightedLift",
-   "stages": [
-    "st_w_07_03",
-    "st_w_05_01",
-    "st_w_12_02"
-   ],
-   "appearsIn": 3,
-   "opensAlone": [
-    "st_w_05_01"
    ]
   },
   {
@@ -1414,66 +1404,58 @@
    "connected": false,
    "distinctBlockers": [
     "Blackout",
-    "BlackoutController",
-    "WeightedLift"
+    "BlackoutController"
    ],
-   "blockerCount": 3,
+   "blockerCount": 2,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
      "missing": [
       "Blackout",
-      "BlackoutController",
-      "WeightedLift"
+      "BlackoutController"
      ]
     },
     "3": {
      "variant": 0,
      "missing": [
       "Blackout",
-      "BlackoutController",
-      "WeightedLift"
+      "BlackoutController"
      ]
     },
     "4": {
      "variant": 0,
      "missing": [
       "Blackout",
-      "BlackoutController",
-      "WeightedLift"
+      "BlackoutController"
      ]
     },
     "5": {
      "variant": 0,
      "missing": [
       "Blackout",
-      "BlackoutController",
-      "WeightedLift"
+      "BlackoutController"
      ]
     },
     "6": {
      "variant": 0,
      "missing": [
       "Blackout",
-      "BlackoutController",
-      "WeightedLift"
+      "BlackoutController"
      ]
     },
     "7": {
      "variant": 0,
      "missing": [
       "Blackout",
-      "BlackoutController",
-      "WeightedLift"
+      "BlackoutController"
      ]
     },
     "8": {
      "variant": 0,
      "missing": [
       "Blackout",
-      "BlackoutController",
-      "WeightedLift"
+      "BlackoutController"
      ]
     }
    }
@@ -3265,54 +3247,38 @@
   },
   {
    "id": "st_w_05_01",
-   "connected": false,
-   "distinctBlockers": [
-    "WeightedLift"
-   ],
-   "blockerCount": 1,
+   "connected": true,
+   "distinctBlockers": [],
+   "blockerCount": 0,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
      "variant": 0,
-     "missing": [
-      "WeightedLift"
-     ]
+     "missing": []
     },
     "3": {
      "variant": 0,
-     "missing": [
-      "WeightedLift"
-     ]
+     "missing": []
     },
     "4": {
      "variant": 0,
-     "missing": [
-      "WeightedLift"
-     ]
+     "missing": []
     },
     "5": {
      "variant": 0,
-     "missing": [
-      "WeightedLift"
-     ]
+     "missing": []
     },
     "6": {
      "variant": 0,
-     "missing": [
-      "WeightedLift"
-     ]
+     "missing": []
     },
     "7": {
      "variant": 0,
-     "missing": [
-      "WeightedLift"
-     ]
+     "missing": []
     },
     "8": {
      "variant": 0,
-     "missing": [
-      "WeightedLift"
-     ]
+     "missing": []
     }
    }
   },
@@ -4260,10 +4226,9 @@
    "connected": false,
    "distinctBlockers": [
     "ColorBox",
-    "DeadSwitch",
-    "WeightedLift"
+    "DeadSwitch"
    ],
-   "blockerCount": 3,
+   "blockerCount": 2,
    "guardsAfterTypes": [],
    "perCount": {
     "2": {
@@ -4291,7 +4256,6 @@
      "variant": 0,
      "missing": [
       "DeadSwitch",
-      "WeightedLift",
       "ColorBox"
      ]
     },
@@ -4299,7 +4263,6 @@
      "variant": 0,
      "missing": [
       "DeadSwitch",
-      "WeightedLift",
       "ColorBox"
      ]
     },
@@ -4307,7 +4270,6 @@
      "variant": 0,
      "missing": [
       "DeadSwitch",
-      "WeightedLift",
       "ColorBox"
      ]
     },
@@ -4315,7 +4277,6 @@
      "variant": 0,
      "missing": [
       "DeadSwitch",
-      "WeightedLift",
       "ColorBox"
      ]
     }
